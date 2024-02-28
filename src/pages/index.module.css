@@ -1,0 +1,93 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Figtree&display=swap');
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background-image: url(../../static/img/hero-background/Gradient-Banner.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #ffff;
+  font-family: 'Figtree', sans-serif;
+}
+
+.title {
+  font-size: 62px;
+  font-weight: 300px;
+}
+
+.subtitle {
+  font-size: 20px;
+  font-weight: 300px;
+  color: #ffff !important;
+}
+
+@media screen and (max-width: 966px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mainButton {
+  background-color: #ffffff;
+  color: #346eee;
+  border: solid 0.5px #346eee;
+  padding: 0.8rem 1.25rem;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  text-transform: uppercase;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: middle;
+  margin: 10px;
+}
+
+.mainButton:hover {
+  opacity: 0.8;
+}
+
+.secondaryButton {
+  background-color: transparent !important;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 0.8rem 1.25rem;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  border-color: #ffffff;
+  margin-left: 10px;
+  text-transform: uppercase;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.secondaryButton:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .mainButton,
+  .secondaryButton {
+    display: block;
+    margin: 0 auto;
+    margin-top: 1rem;
+  }
+}

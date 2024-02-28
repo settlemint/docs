@@ -1,0 +1,97 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":automergeMinor",
+    ":automergePr",
+    ":automergeRequireAllStatusChecks",
+    ":gitSignOff",
+    ":pinVersions",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)",
+    ":enableVulnerabilityAlerts",
+    ":combinePatchMinorReleases",
+    ":prConcurrentLimitNone",
+    ":prHourlyLimitNone",
+    "security:openssf-scorecard",
+    "schedule:nonOfficeHours"
+  ],
+  "labels": ["dependencies"],
+  "rebaseWhen": "conflicted",
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["bull-board"],
+      "groupName": "bull-board"
+    },
+    {
+      "matchPackagePatterns": ["taquito"],
+      "groupName": "taquito"
+    },
+    {
+      "matchPackagePatterns": ["nestjs"],
+      "groupName": "nestjs"
+    },
+    {
+      "matchPackagePatterns": ["pulumi"],
+      "groupName": "pulumi"
+    },
+    {
+      "matchPackagePatterns": ["hasura"],
+      "groupName": "hasura"
+    },
+    {
+      "matchPackagePatterns": ["hyperledger/fabric"],
+      "groupName": "fabric"
+    },
+    {
+      "matchPackagePatterns": ["graphiql"],
+      "groupName": "graphiql"
+    },
+    {
+      "matchPackagePatterns": ["graphiql"],
+      "groupName": "graphiql"
+    },
+    {
+      "matchPackagePatterns": ["kubo"],
+      "groupName": "kubo"
+    },
+    {
+      "matchPackagePatterns": ["0xpolygon/polygon-edge"],
+      "groupName": "0xpolygon/polygon-edge"
+    },
+    {
+      "matchPackagePatterns": ["settlemint/bpaas"],
+      "groupName": "bpaas"
+    },
+    {
+      "matchPackagePatterns": ["settlemint/bpaas/smartcontractsets"],
+      "groupName": "bpaas/smartcontractsets",
+      "excludePackagePatterns": [
+        "settlemint/bpaas/onprem",
+        "settlemint/bpaas/serivces",
+        "settlemint/bpaas/saas"
+      ]
+    },
+    {
+      "matchPackagePatterns": ["hyperledger/fabric"],
+      "groupName": "hyperledger/fabric"
+    }
+  ],
+  "hostRules": [
+    {
+      "timeout": 3000000
+    },
+    {
+      "hostType": "docker",
+      "domainName": "ghcr.io",
+      "username": "roderik",
+      "password": "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"
+    },
+    {
+      "hostType": "docker",
+      "domainName": "docker.io",
+      "username": "roderik",
+      "password": "dckr_pat_9ALhAALMPtGlj1yuv5q7mfQitzE"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+.riContainer {
+  border: 1px solid #346eee; /* Add border */
+  border-radius: var(--ifm-global-radius);
+  display: flex; /* Change to flex */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+  justify-content: center; /* Center children vertically */
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  position: relative; /* Add this line */
+  transition: box-shadow 0.3s ease; /* Add transition for smooth hover effect */
+  width: 400px;
+  height: 200px;
+}
+
+.riContainer:hover {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15); /* Add drop shadow on hover */
+}
+
+.riDescriptionShort {
+  display: flex;
+}
+
+a:hover {
+  text-decoration: none; /* Remove underline on hover */
+}
+
+.riDetail {
+  display: block;
+}
+
+.riIcon {
+  color: var(--ifm-color-primary);
+  font-size: 2rem;
+  line-height: 2rem;
+  margin: 0.25rem 0.75rem auto 0;
+}
+
+.riDescription {
+  font-size: 0.9 rem;
+  color: var(--ifm-font-color-secondary);
+  text-align: center; /* Center the text */
+  word-wrap: break-word;
+  margin-top: 5px;
+}
+
+.riTitle {
+  padding-top: 5px; /* Adjust this value as needed */
+  margin-top: 5px;
+}
+
+.riTitle {
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: center; /* Center the text */
+}
+
+.riImage {
+  width: 110px; /* Adjust the size */
+  height: 100px; /* Adjust the size */
+  border-radius: var(--ifm-global-radius);
+  margin-bottom: 0px; /* Add some space below the image */
+  margin-right: 0px; /* Reduce the right margin */
+  margin-left: 5px; /* Reduce the left margin */
+}
+/* CSS */
+
+@media (min-width: 500px) and (max-width: 1024px) {
+  .riTitle {
+    font-size: 1.5rem; /* Adjust the font size on tablet screens */
+  }
+
+  .riDescription {
+    font-size: 1rem; /* Adjust the font size on tablet screens */
+  }
+}

@@ -1,0 +1,82 @@
+---
+custom_edit_url: null
+title: SettleMint Components
+description: Overview of the SettleMint components and tools available to build blockchain applications
+sidebar_position: 1
+---
+
+import blockchainApplication from '@site/static/img/about-settlemint/blockchain-application.png';
+import blockchainNetwork from '@site/static/img/about-settlemint/network-node.png';
+import smartContract from '@site/static/img/about-settlemint/smart-contract.png';
+import middleware from '@site/static/img/about-settlemint/middleware.png';
+import storage from '@site/static/img/about-settlemint/storage.png';
+import integration from '@site/static/img/about-settlemint/integration.png';
+
+This guide will explain each of the tools and services on SettleMint and how they connected to
+build a blockchain application.
+
+## The Blockchain Application
+
+<img
+  src={blockchainApplication}
+  alt="Blockchain Application"
+  width="70%"
+  height="70%"
+  style={{ display: 'block', margin: '0 auto' }}
+/>
+The first step to building anything on SettleMint is to [create an application](../../using-platform/create-an-application).
+You can think of an application as the collection of resources that you need to build your blockchain application. This includes
+a blockchain network, smart contracts, middleware, storage, and integrations.{' '}
+
+## Add a Blockchain Network and Node
+
+<img
+  src={blockchainNetwork}
+  alt="Blockchain Network and Node"
+  width="70%"
+  height="70%"
+  style={{ display: 'block', margin: '0 auto' }}
+/>
+After creating a blockchain application, you now need to [add a blockchain network](../../using-platform/add-a-network-to-an-application)
+and node to your application. SettleMint offeres a variety of different [blockchain networks](../supported-blockchains) to
+choose from whatever your usecase may be. Networks need nodes to support the blockchain to run, once a [network is created](../../using-platform/add-a-node-to-a-network/)
+then a node is also added automatically.{' '}
+
+## Create a Smart Contract
+
+<img
+  src={smartContract}
+  alt="Add a Smart Contract"
+  width="70%"
+  height="70%"
+  style={{ display: 'block', margin: '0 auto' }}
+/>
+Smart Contracts allow us to run code on the blockchain. Developing a smart contract by [adding a smart contract set](../../using-platform/create-smart-contract-set/),
+is an important step to reaching the business and product goals of your blockchain application.
+
+## Add a Middleware
+
+<img src={middleware} alt="Middleware" width="70%" height="70%" style={{ display: 'block', margin: '0 auto' }} />
+Blockchain applications produce data that lives on the blockchain, but we need to be able to access that data in order to
+use it. Creating a [middleware](../../using-platform/middleware/) allows us SettleMint currently offers two middleware services:
+The Graph and Hyplerledger Besu Middleware.{' '}
+
+## Add Storage
+
+<img src={storage} alt="Storage" width="70%" height="70%" style={{ display: 'block', margin: '0 auto' }} />
+Your blockchain application may need to store data. Blockchains are good for running different processes in a decentralized
+way but can be costly to store large amounts of data. SettleMint offers [two storage options](../../using-platform/storage/):
+IPFS (decentralized) and MinIO (centralized) S3 storage.
+
+## Add an Integration
+
+<img src={storage} alt="Integration" width="70%" height="70%" style={{ display: 'block', margin: '0 auto' }} />
+Blockchains are not the only technology that your blockchain application may need to interact with. SettleMint offers an
+[Integration Studio](../../using-platform/integration-studio) which allows you connect your blockchain application to other
+technologies such as databases, APIs, and more. This tool is a low-code to which also offers a visualization of any business
+logic included in your integration.
+
+## Getting Started
+
+Now that you have a better idea of each of the components that make up SettleMint, try deploying
+your first application with our [Hello World Guide](../../launch-platform/managed-cloud-deployment/quickstart/).

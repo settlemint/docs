@@ -1,0 +1,27 @@
+# Monitoring tools
+
+For all your running services in a blockchain application, a set of monitoring tools is available to gain insights into the health and performance of those services.
+
+## Service statuses
+
+The service status indicates whether your service is running well, facing issues, or needs your attention. [View the list of statuses](../reference/14_statuses.md).
+
+Go to the **service's overview page** or a **service detail page** to view the status of a particular service (e.g. network, node, smart contract set, etc.).
+
+## Resource usage status & metrics
+
+You can view the resources (memory, vCPU, and disk space) allocated to your services at any time, and follow up on the current usage. When the current resource usage is about to reach its limit, you will see a warning with the recommendation to scale your resource pack to keep the service running. [More info on resource usage](15_resource-usage.md)
+
+Go to the **Resource tab** of a **service detail page** to view the resource usage status and metrics.
+
+## Network and node stats
+
+Live dashboards allow you to follow up on important stats for network and node monitoring and identify possible bottlenecks.
+
+Go to the **Details tab** of a **network or node detail page** to view the stats.
+
+## Network and node logs
+
+You can view real-time logs of your networks and nodes for granular insights into activity related to them. The logs can be used as a troubleshooting tool if something goes wrong.
+
+Go to the **Logs tab** of a **network or node detail page** to view the logs.

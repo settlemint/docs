@@ -1,0 +1,35 @@
+---
+title: Monitoring Resource Usage
+description: Guide to adding a Blockchain Node to a Network
+sidebar_position: 15
+---
+
+# Resource usage
+
+When you add a service (network, node, smart contract set, etc.), you select the amount of resources to allocate to that service by choosing a small, medium or large [resource pack](../launch-platform/managed-cloud-deployment/13_deployment-plans.md). Resources are the **memory**, **vCPU**, and **disk space** you need to keep your services running. You can see the resources allocated to your services at any time, and follow up on the current resource usage.
+
+## Resource usage metrics
+
+![Resource Usage](../../static/img/using-the-platform/resource-usage.png)
+
+Navigate to your **application**. Click **Blockchain networks**, **Blockchain nodes** or **Smart contracts** in the left navigation, depending on which resource usage you want to see, and choose the relevant one from the list.
+
+Open the **Metrics tab**.
+
+Here you have clear visual representation of **used versus allocated** memory, vCPU, and disk space.
+
+Moreover, detailed graphs are available to check memory, vCPU, and disk space usage for the last hour, day, week and month.
+
+## Resource usage status
+
+![Resource Usage CPU](../../static/img/using-the-platform/resource-usage-cpu.png)
+
+The **status** indicates whether or not your resources are still sufficient for optimal functioning of the service.
+
+The following statuses are defined:
+
+- **Healthy** - the used resources are less than 75% of the allocated resources
+- **Suboptimal** - the used resources are between 75% and 90% of the allocated resources
+- **Critical** - the used resources are over 90% of the allocated resources
+
+When the status is **Suboptimal**, and the current resource usage is about to reach its limit, you will see a **warning** with the recommendation to scale your resource pack to keep the service running.

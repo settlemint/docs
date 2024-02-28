@@ -1,0 +1,116 @@
+name: Branch
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  checks: write
+  contents: write
+  deployments: write
+  id-token: write
+  issues: write
+  discussions: write
+  packages: write
+  pages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
+env:
+  NODE_NO_WARNINGS: "1"
+  TURBO_TELEMETRY_DISABLED: "1"
+
+jobs:
+  build:
+    name: Build
+    runs-on: namespace-profile-btp-docs
+    steps:
+      - name: Checkout
+        uses: namespacelabs/nscloud-checkout-action@v2
+        with:
+          fetch-depth: 2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: latest
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup caches
+        uses: namespacelabs/nscloud-cache-action@v1
+        with:
+          path: |
+            .docusaurus
+            ${{ env.STORE_PATH }}
+            ~/.cache
+            node_modules
+            **/node_modules
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Install YQ
+        uses: alexellis/arkade-get@master
+        with:
+          print-summary: false
+          yq: latest
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile --prefer-offline
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Version
+        id: version
+        shell: bash
+        run: |
+          if [[ $GITHUB_REF_SLUG =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            VERSION=$GITHUB_REF_SLUG
+          else
+            VERSION="7.0.0-${GITHUB_REF_SLUG}.${{ github.run_id }}"
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Build
+        run: |
+          pnpm run build
+
+      - name: Build Docker container
+        run: |
+          pnpm run docker

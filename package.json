@@ -1,0 +1,51 @@
+{
+  "name": "docs",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start --port 8080 --host 0.0.0.0",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve --port 8080  --host 0.0.0.0",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "typecheck": "tsc",
+    "docker": "bash -c \"docker buildx build . --platform=linux/amd64,linux/arm64 -t ghcr.io/settlemint/btp-docs:${VERSION:-7.0.0-dev.$(date +%s)} --push --progress=plain\""
+  },
+  "dependencies": {
+    "@cmfcmf/docusaurus-search-local": "1.1.0",
+    "@docusaurus/core": "3.1.1",
+    "@docusaurus/preset-classic": "3.1.1",
+    "@fontsource/figtree": "5.0.18",
+    "@mdx-js/react": "3.0.1",
+    "@stackql/docusaurus-plugin-hubspot": "1.1.0",
+    "clsx": "2.1.0",
+    "prism-react-renderer": "2.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.1.1",
+    "@docusaurus/tsconfig": "3.1.1",
+    "@docusaurus/types": "3.1.1",
+    "typescript": "5.3.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": "21.6.2"
+  }
+}
