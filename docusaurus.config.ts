@@ -5,7 +5,7 @@ import { themes } from "prism-react-renderer";
 const config: Config = {
   title: "SettleMint Developer Hub",
   tagline:
-    "The Blockchain Transformation platform for developers to rapidly build blockchain applications",
+    "The Blockchain Transformation Platform for developers to rapidly build blockchain applications",
   url: "https://console.settlemint.com",
   baseUrl: "/documentation/",
   onBrokenLinks: "warn",
@@ -13,7 +13,7 @@ const config: Config = {
   trailingSlash: true,
   favicon: "img/favicon.ico",
   organizationName: "settlemint", // Usually your GitHub org/user name.
-  projectName: "bpaas", // Usually your repo name.
+  projectName: "btp-docs", // Usually your repo name.
   plugins: [
     [
       require.resolve("@cmfcmf/docusaurus-search-local"),
