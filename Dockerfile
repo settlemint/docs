@@ -1,5 +1,5 @@
 FROM nginxinc/nginx-unprivileged:1.25.4
-LABEL org.opencontainers.image.source="https://github.com/settlemint/btp"
+LABEL org.opencontainers.image.source="https://github.com/settlemint/btp-docs"
 
 WORKDIR /usr/share/nginx/html
 COPY --chmod=0777 ./build/ /usr/share/nginx/html
