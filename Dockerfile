@@ -1,4 +1,4 @@
-FROM nginxinc/nginx-unprivileged:1.25.4
+FROM cgr.dev/chainguard/nginx
 LABEL org.opencontainers.image.source="https://github.com/settlemint/btp-docs"
 
 WORKDIR /usr/share/nginx/html/documentation
