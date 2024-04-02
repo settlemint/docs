@@ -43,6 +43,9 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
@@ -114,3 +117,7 @@ jobs:
       - name: Build Docker container
         run: |
           pnpm run docker
+
+      - name: Cosign Docker container
+        run: |
+          pnpm run cosign
