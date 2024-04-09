@@ -15,8 +15,8 @@ dependencies:
     specifier: 3.1.1
     version: 3.1.1(@algolia/client-search@4.22.1)(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0)(search-insights@2.13.0)(typescript@5.3.3)
   '@fontsource/figtree':
-    specifier: 5.0.18
-    version: 5.0.18
+    specifier: 5.0.19
+    version: 5.0.19
   '@mdx-js/react':
     specifier: 3.0.1
     version: 3.0.1(@types/react@18.2.60)(react@18.2.0)
@@ -2413,8 +2413,8 @@ packages:
       - webpack-cli
     dev: false
 
-  /@fontsource/figtree@5.0.18:
-    resolution: {integrity: sha512-dr9BuLeFLz270lUAzuqBrWtW2w8ZVfrkDG2rv+0hHPt2EWJ/2CmXyNiVrwbXBiNwRMHyfvJp9KtsoxlEzvxhIQ==}
+  /@fontsource/figtree@5.0.19:
+    resolution: {integrity: sha512-LOKM0zQA/N4Gs+SGltaVQHwX4MjJXpglbiFr+e6pcNb36fWqbQF8k8+Q3ow+C4k8opNGt7GuIKA7+A105A8hXw==}
     dev: false
 
   /@hapi/hoek@9.3.0:
