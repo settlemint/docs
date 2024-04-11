@@ -18,9 +18,9 @@
   },
   "dependencies": {
     "@cmfcmf/docusaurus-search-local": "1.1.0",
-    "@docusaurus/core": "3.1.1",
-    "@docusaurus/preset-classic": "3.1.1",
-    "@fontsource/figtree": "5.0.18",
+    "@docusaurus/core": "3.2.1",
+    "@docusaurus/preset-classic": "3.2.1",
+    "@fontsource/figtree": "5.0.19",
     "@mdx-js/react": "3.0.1",
     "@stackql/docusaurus-plugin-hubspot": "1.1.0",
     "clsx": "2.1.0",
@@ -29,10 +29,10 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.1.1",
-    "@docusaurus/tsconfig": "3.1.1",
-    "@docusaurus/types": "3.1.1",
-    "typescript": "5.3.3"
+    "@docusaurus/module-type-aliases": "3.2.1",
+    "@docusaurus/tsconfig": "3.2.1",
+    "@docusaurus/types": "3.2.1",
+    "typescript": "5.4.5"
   },
   "browserslist": {
     "production": [
@@ -47,6 +47,6 @@
     ]
   },
   "engines": {
-    "node": "21.6.2"
+    "node": "21.7.3"
   }
 }

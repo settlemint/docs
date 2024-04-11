@@ -7,6 +7,7 @@ Before starting the installation, ensure your environment meets the following re
 
 # Infrastructure
 
+
 The following components are a prerequisite to run BTP successfully. Collect the values here to use them later in the [helm chart values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/).
 
 At this stage, we highly recommend taking a moment to explore our quick start examples, if you haven't already. This will give you a valuable overview of the different components involved.
@@ -41,6 +42,7 @@ For the successful operation of the SettleMint Blockchain Transformation Platfor
 - `hostname`: the hostname on which BTP will be available. This domain name needs to be routed to the public IP address of the ingress controller service.
 
  [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
+
 
 ```yaml
 ingress:
@@ -90,7 +92,6 @@ keycloak:
   clientSecret: ""
   issuerURL: ""
 ```
-
  [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 
 ```yaml
@@ -114,9 +115,8 @@ A typical set of parameters you should collect:
 - port: the port of the redis server
 - password: the password of the redis server
 
-
-
  [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
+
 ```yaml
  redis:
   host: redis-master.redis.svc.cluster.local
@@ -138,6 +138,7 @@ If you don't currently have a PostgreSQL server, you can set it up yourself by f
 - `database`: the database name of the PostgreSQL server
 
  [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
+
 
 ```yaml
 postgresql:
@@ -207,6 +208,7 @@ This observability suite is optional and can be activated as described below.
 
  [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 
+
 ```yaml
 features:
   observability:
@@ -254,7 +256,9 @@ To facilitate this, activate **p2pLoadBalancers** and configure DNS name managem
 
 In addition, the 'mixedLoadBalancers' option facilitates the creation of TCP/UDP load balancers on the same port, which is essential for enabling discovery mechanisms.
 
+
  [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
+
 
 ```yaml
 targets:

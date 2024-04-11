@@ -12,6 +12,7 @@ Welcome to the SettleMint Blockchain Transformation Platform (BTP) guide. This g
 - [Understand the installation process](#understand-the-installation-process)
 - [Quick Start & Trial installations](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/quick-start-examples-trial-installation/installation-trial-cluster/)
 - [Prerequisites](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/prerequisites/Infrastructure/)
+
 - [Run the Installation](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 - [Get Support](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/support-and-troubleshooting/) 
 
@@ -56,5 +57,6 @@ Should you encounter any issues or have questions during any phase of the instal
 Next: 
 - [Explore one of our trial installations](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/quick-start-examples-trial-installation/installation-trial-cluster/) to get a hands-on feel for the platform
 - [Proceed to the prerequisites page](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/prerequisites/Infrastructure/) to prepare for a full installation
+
 
 
