@@ -4,7 +4,7 @@ sidebar_label: Support and Troubleshooting
 
 ---
 
-#Support and Troubleshooting
+# Support and Troubleshooting
 
 Should you need assistance at any stage of your installation or while utilizing the platform, the SettleMint team is here to help. Feel free to contact us at support@settlemint.com for any support you may require.
 
