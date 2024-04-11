@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-sidebar_label:  'Trial Installation: prerequisites from Managed Services'
+sidebar_label:  'Trial Installation: Prerequisites from Managed Services'
 ---
 # SettleMint Platform Trial Installation Guide (all prerequisites from managed service providers)
 

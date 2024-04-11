@@ -12,8 +12,9 @@ Welcome to the SettleMint Blockchain Transformation Platform (BTP) guide. This g
 - [Understand the installation process](#understand-the-installation-process)
 - [Quick Start & Trial installations](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/quick-start-examples-trial-installation/installation-trial-cluster/)
 - [Prerequisites](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/prerequisites/Infrastructure/)
-- [Run the Installation](#)
-- [Get Support](#) 
+
+- [Run the Installation](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
+- [Get Support](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/support-and-troubleshooting/) 
 
 ## Introduction
 
@@ -25,7 +26,7 @@ It also provides numerous benefits, such as enabling you to specify the high ava
 
 <!-- DIAGRAM HERE -->
 
-After finishing the installation, you will have access to a suite of services and tools designed to support you throughout your blockchain journey. To explore these tools in detail, we invite you to visit our [Developer Hub](#). 
+After finishing the installation, you will have access to a suite of services and tools designed to support you throughout your blockchain journey. To explore these tools in detail, we invite you to visit our [Developer Hub](/docs/about-settlemint/intro/). 
 
 - **Public chains**: Polygon PoS, Polygon zkevm, Ethereum, Avalanche, Arbitrum, Optimism, Binance Smart Chain *(Internet access required)*
 - **Private chains**: Hyperledger Besu, Quorum, Hyperledger Fabric
@@ -35,7 +36,7 @@ After finishing the installation, you will have access to a suite of services an
 - **Integrated IDE**: Including smart contract sets
 - **Smart contract Indexer**: The Graph Middleware 
 
-It's essential to remember that preparing your infrastructure and necessary services is a [prerequisite](link). Once this foundation is established, you'll need to populate the helm charts values file, as detailed in the subsequent "Platform installation” section.
+It's essential to remember that preparing your infrastructure and necessary services is a [prerequisite](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/prerequisites/Infrastructure/). Once this foundation is established, you'll need to populate the helm charts values file, as detailed in the subsequent "Platform installation” section.
 
 ## Understand the Installation Process
 
@@ -54,7 +55,8 @@ Should you encounter any issues or have questions during any phase of the instal
 
 
 Next: 
-- [Explore one of our trial installations](#) to get a hands-on feel for the platform
-- [Proceed to the prerequisites page](#) to prepare for a full installation
+- [Explore one of our trial installations](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/quick-start-examples-trial-installation/installation-trial-cluster/) to get a hands-on feel for the platform
+- [Proceed to the prerequisites page](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/prerequisites/Infrastructure/) to prepare for a full installation
+
 
 
