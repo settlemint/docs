@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-sidebar_label:  'Trial Installation: Prerequisites from managed service providers, using KOTS'
+sidebar_label:  'Trial Installation: Prerequisites from Managed Service Providers, Using KOTS'
 ---
 # SettleMint Platform Trial Installation Guide with all prerequisites from managed service providers, using KOTS
 
