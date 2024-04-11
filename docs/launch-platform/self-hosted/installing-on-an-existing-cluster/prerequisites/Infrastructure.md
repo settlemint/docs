@@ -7,7 +7,7 @@ Before starting the installation, ensure your environment meets the following re
 
 # Infrastructure
 
-The following components are a prerequisite to run BTP successfully. Collect the values here to use them later in the [helm chart values file](#).
+The following components are a prerequisite to run BTP successfully. Collect the values here to use them later in the [helm chart values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/).
 
 At this stage, we highly recommend taking a moment to explore our quick start examples, if you haven't already. This will give you a valuable overview of the different components involved.
 
@@ -40,7 +40,7 @@ For the successful operation of the SettleMint Blockchain Transformation Platfor
 
 - `hostname`: the hostname on which BTP will be available. This domain name needs to be routed to the public IP address of the ingress controller service.
 
- [In your values file](#)
+ [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 
 ```yaml
 ingress:
@@ -91,7 +91,7 @@ keycloak:
   issuerURL: ""
 ```
 
- [In your values file](#)
+ [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 
 ```yaml
 auth:
@@ -116,8 +116,7 @@ A typical set of parameters you should collect:
 
 
 
- [In your values file](#)
-
+ [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 ```yaml
  redis:
   host: redis-master.redis.svc.cluster.local
@@ -138,7 +137,7 @@ If you don't currently have a PostgreSQL server, you can set it up yourself by f
 - `password`: the password of the PostgreSQL server
 - `database`: the database name of the PostgreSQL server
 
- [In your values file](#)
+ [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 
 ```yaml
 postgresql:
@@ -162,7 +161,7 @@ The state information is always encrypted. By default, encryption is performed u
 - `accessKeyId`: This is the access key for the specified bucket.
 - `secretAccessKey`: This is the secret access key for the specified bucket.
 
- [In your values file](#)
+ [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 
 ```yaml
 state:
@@ -186,7 +185,7 @@ Additionally, an AppRole is necessary to facilitate access to these secrets.
 - `roleId`: the roleId of the AppRole
 - `secretId`: the secretId of the AppRole
 
- [In your values file](#)
+ [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 
 ```yaml
 vault:
@@ -206,7 +205,7 @@ This observability suite is optional and can be activated as described below.
 - Prometheus API URL: this is an example from Grafana cloud: `https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/api/v1/`
 - Loki API URL: this is an example from Grafana cloud: `https://logs-prod-eu-west-0.grafana.net/loki/api/v1/`
 
- [In your values file](#)
+ [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 
 ```yaml
 features:
@@ -255,7 +254,7 @@ To facilitate this, activate **p2pLoadBalancers** and configure DNS name managem
 
 In addition, the 'mixedLoadBalancers' option facilitates the creation of TCP/UDP load balancers on the same port, which is essential for enabling discovery mechanisms.
 
- [In your values file](#)
+ [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 
 ```yaml
 targets:
