@@ -20,7 +20,7 @@
     "@cmfcmf/docusaurus-search-local": "1.1.0",
     "@docusaurus/core": "3.2.1",
     "@docusaurus/preset-classic": "3.2.1",
-    "@fontsource/figtree": "5.0.19",
+    "@fontsource/figtree": "5.0.20",
     "@mdx-js/react": "3.0.1",
     "@stackql/docusaurus-plugin-hubspot": "1.1.0",
     "clsx": "2.1.0",
