@@ -12,10 +12,10 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(@docusaurus/core@3.3.2(@docusaurus/types@3.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5))(search-insights@2.13.0)
       '@docusaurus/core':
-        specifier: ^3.3.2
+        specifier: 3.3.2
         version: 3.3.2(@docusaurus/types@3.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
       '@docusaurus/preset-classic':
-        specifier: ^3.3.2
+        specifier: 3.3.2
         version: 3.3.2(@algolia/client-search@4.22.1)(@types/react@18.2.60)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.13.0)(typescript@5.4.5)
       '@fontsource/figtree':
         specifier: 5.0.20
@@ -40,13 +40,13 @@ importers:
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@docusaurus/module-type-aliases':
-        specifier: ^3.3.2
+        specifier: 3.3.2
         version: 3.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@docusaurus/tsconfig':
-        specifier: ^3.3.2
+        specifier: 3.3.2
         version: 3.3.2
       '@docusaurus/types':
-        specifier: ^3.3.2
+        specifier: 3.3.2
         version: 3.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       typescript:
         specifier: 5.4.5
