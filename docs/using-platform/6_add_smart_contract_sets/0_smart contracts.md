@@ -11,9 +11,9 @@ To make developing smart contracts easier, we offer an open-source [template lib
 
 If you need a fundamental explanation of what smart contracts are and how they work, we recommend contacting our team to join our Learn World Blockchain course. Our experts will guide you through the basics, ensuring you have a solid foundation before diving into development. For a practical guide, please visit [deploy foundry](/docs/using-platform/6_add_smart_contract_sets/3_deploy_with_foundry.md).
 
-## Overview of the Smart Contract Deployment Process on Settlemint
+## Overview of the Smart Contract Deployment Process on SettleMint
 
-The following is a high-level overview of smart contract development processes at Settlemint.
+The following is a high-level overview of smart contract development processes at SettleMint.
 
 ### 1. Deploying a Smart Contract Set
 
@@ -23,7 +23,7 @@ The following is a high-level overview of smart contract development processes a
 ### 2. Compiling and Configuring The Smart Contract
 
 - **Compiling**: Convert your smart contract code into a format that the blockchain can understand and execute.
-- **Configuring**: Settlemint sets all the necessary configurations for you,
+- **Configuring**: SettleMint sets all the necessary configurations for you,
 - **Purpose**: Tailors the deployment process to your specific requirements and ensures your contract can run on the blockchain.
 
 
