@@ -329,3 +329,15 @@ section-content {
 .blog-article-card-footer a:hover {
   color: #000000;
 }
+
+
+.centered-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-image img {
+  max-width: 100%;
+  height: auto;
+}
