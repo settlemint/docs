@@ -1,14 +1,14 @@
 ---
 sidebar_position: 2
-sidebar_label: 'Trial Installation: Embedded Prerequisites Integration'
+sidebar_label: 'Sandbox Installation: Embedded Prerequisites Integration'
 ---
-# SettleMint Platform Trial Installation Guide (embedded)
+# SettleMint Platform Sandbox Installation Guide (embedded)
 
-This trial installation guide provides the steps for setting up and installing the SettleMint Blockchain Transformation Platform
+This sandbox installation guide provides the steps for setting up and installing the SettleMint Blockchain Transformation Platform
 on a managed Kubernetes cluster. The guide assumes a prior understanding of Kubernetes, CIVO Cloud,
 and other relevant technologies.
 
-**NOTE:** Trial installations are not designed or suitable for production use and cannot be upgraded to a production-ready state. Use this trial setup at your own risk.
+**NOTE:** Sandbox installations are not designed or suitable for production use and cannot be upgraded to a production-ready state. Use this sandbox setup at your own risk.
 
 ## [Requirements](#requirements)
 
@@ -26,13 +26,13 @@ This section covers the installation prerequisites, including setting up a domai
 You need to link a domain name to the external load balancer IP. Create an A record in your DNS provider that points to this IP and ensure that it resolves:
 
 ```bash
-dig trial-demo.blockchaintransformationplatform.com
+dig sandbox-demo.blockchaintransformationplatform.com
 ```
 
-You will also need to create a wildcard CNAME `*.trial-demo.blockchaintransformationplatform.com` that points to `trial-demo.blockchaintransformationplatform.com` and confirm that it resolves:
+You will also need to create a wildcard CNAME `*.sandbox-demo.blockchaintransformationplatform.com` that points to `sandbox-demo.blockchaintransformationplatform.com` and confirm that it resolves:
 
 ```bash
-dig random.trial-demo.blockchaintransformationplatform.com
+dig random.sandbox-demo.blockchaintransformationplatform.com
 ```
 
 ### [TLS Configuration](#tls-configuration)
@@ -61,7 +61,7 @@ For the Postgresql database we will be using the Serverless Postgres offering fr
 Create a new database and note the connections details (with pooling enabled) as we will need them later, it will look something like
 
 ```
-postgresql://trial-demo_owner:************@ep-morning-moon-a20p0s24-pooler.eu-central-1.aws.neon.tech/trial-demo?sslmode=require
+postgresql://sandbox-demo_owner:************@ep-morning-moon-a20p0s24-pooler.eu-central-1.aws.neon.tech/sandbox-demo?sslmode=require
 ```
 
 ### [S3 Storage Setup](#s3-setup)
@@ -129,7 +129,7 @@ Record the role id and secret id as they will be needed later.
 
 In this example we will use Google login. Browse to https://console.developers.google.com/apis/credentials and on the top use `+ CREATE CREDENTIALS`, choose `OAuth client ID` and then as type `Web application`.
 
-In `Authorised JavaScript origins` add the domain name you created in the Ingress controller section, in this example `https://trial-demo.blockchaintransformationplatform.com`. In `Authorised redirect URIs` use `https://trial-demo.blockchaintransformationplatform.com/api/auth/callback/google`.
+In `Authorised JavaScript origins` add the domain name you created in the Ingress controller section, in this example `https://sandbox-demo.blockchaintransformationplatform.com`. In `Authorised redirect URIs` use `https://sandbox-demo.blockchaintransformationplatform.com/api/auth/callback/google`.
 
 You will get a Client ID and Client secret at the end of this process, note them down for later.
 
@@ -166,7 +166,7 @@ allowVolumeExpansion: true
 EOF
 ```
 
-How to handle 
+How to handle
 
 Answer the questions and wait for it to install the KOTS admin panel.
 
@@ -187,7 +187,7 @@ From your CS contact you will have received a license file, upload it in the nex
 
 Then we will need to configure the platform using the values we collected above and then press continue.
 
-You should now be able to access the platform at https://trial-demo.blockchaintransformationplatform.com.
+You should now be able to access the platform at https://sandbox-demo.blockchaintransformationplatform.com.
 
 **IMPORTANT:** Please refer to the actual SettleMint documentation for the most up-to-date, detailed, and accurate instructions. This is an illustrative guide and may be outdated or incorrect, and there may be additional configuration steps required for a fully functional deployment.
 
@@ -223,4 +223,4 @@ You can then send the generated file to [support@settlemint.com](mailto:support@
 
 Enjoy exploring the SettleMint Platform!
 
-**NOTE:** This trial installation of the SettleMint platform might not include the full functionalities of the platform. To explore a full-scale, premium tier of the SettleMint Platform, consider reaching out to the SettleMint team for a premium trial or subscription.
+**NOTE:** This sandbox installation of the SettleMint platform might not include the full functionalities of the platform. To explore a full-scale, premium tier of the SettleMint Platform, consider reaching out to the SettleMint team for a premium sandbox or subscription.

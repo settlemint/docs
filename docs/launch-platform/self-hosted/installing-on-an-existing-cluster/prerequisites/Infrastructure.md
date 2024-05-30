@@ -240,7 +240,7 @@ You have the option to deploy services in separate namespaces for each service o
 ### 4. Setting Up Domain Names for Service Access
 
 Access to services is facilitated through domain names. The setup can involve:
- 
+
 - Wildcard DNS
 
  entries for each cluster, ensuring they include TLS termination to secure the domain.
@@ -266,8 +266,8 @@ targets:
     name: "Google Cloud"
     icon: google
     clusters:
-      - id: trial
-        name: "Trial Demo"
+      - id: sandbox
+        name: "Sandbox Demo"
         icon: belgium
         location:
           lat: 50.8505
@@ -281,7 +281,7 @@ targets:
         domains:
           service:
             tls: true
-            hostname: "trial-saeed.blockchaintransformationplatform.com"
+            hostname: "sandbox-saeed.blockchaintransformationplatform.com"
         storage:
           storageClass: "standard-rwo"
         ingress:
