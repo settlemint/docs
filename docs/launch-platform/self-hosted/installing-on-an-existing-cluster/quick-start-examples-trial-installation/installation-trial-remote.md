@@ -1,14 +1,14 @@
 ---
 sidebar_position: 4
-sidebar_label:  'Trial Installation: Prerequisites from Managed Services'
+sidebar_label:  'Sandbox Installation: Prerequisites from Managed Services'
 ---
-# SettleMint Platform Trial Installation Guide (all prerequisites from managed service providers)
+# SettleMint Platform Sandbox Installation Guide (all prerequisites from managed service providers)
 
-This trial installation guide provides the steps for setting up and installing the SettleMint Blockchain Transformation Platform
+This sandbox installation guide provides the steps for setting up and installing the SettleMint Blockchain Transformation Platform
 on a managed Kubernetes cluster. The guide assumes a prior understanding of Kubernetes, Helm, Digital Ocean,
 and other relevant technologies.
 
-**NOTE:** Trial installations are not designed or suitable for production use and cannot be upgraded to a production-ready state. Use this trial setup at your own risk.
+**NOTE:** Sandbox installations are not designed or suitable for production use and cannot be upgraded to a production-ready state. Use this sandbox setup at your own risk.
 
 ## [Requirements](#requirements)
 
@@ -32,7 +32,7 @@ To set up access to the cluster, get the kubeconfig for the cluster by following
 ```bash
 brew install doctl
 doctl auth init
-doctl kubernetes cluster kubeconfig save trial-demo
+doctl kubernetes cluster kubeconfig save sandbox-demo
 ```
 
 Ensure the cluster is set as the active context in the kubeconfig. Use `kubectl config current-context` to verify.
@@ -56,13 +56,13 @@ From the marketplace install `NGINX Ingress Controller`
 Then, you need to link a domain name to the external load balancer IP. Create an A record in your DNS provider that points to this IP and ensure that it resolves:
 
 ```bash
-dig trial-demo.blockchaintransformationplatform.com
+dig sandbox-demo.blockchaintransformationplatform.com
 ```
 
-You will also need to create a wildcard CNAME `*.trial-demo.blockchaintransformationplatform.com` that points to `trial-demo.blockchaintransformationplatform.com` and confirm that it resolves:
+You will also need to create a wildcard CNAME `*.sandbox-demo.blockchaintransformationplatform.com` that points to `sandbox-demo.blockchaintransformationplatform.com` and confirm that it resolves:
 
 ```bash
-dig random.trial-demo.blockchaintransformationplatform.com
+dig random.sandbox-demo.blockchaintransformationplatform.com
 ```
 
 ### [TLS Configuration](#tls-configuration)
@@ -99,7 +99,7 @@ metadata:
   namespace: cert-manager
 spec:
   acme:
-    email: trial-demo@settlemint.com
+    email: sandbox-demo@settlemint.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: issuer-account-key
@@ -122,7 +122,7 @@ Note the commections details as we will need them later, it will look something 
 ```
 username = default
 password = ************************
-host = trial-demo-redis-do-user-2313783-0.c.db.ondigitalocean.com
+host = sandbox-demo-redis-do-user-2313783-0.c.db.ondigitalocean.com
 port = 25061
 ```
 
@@ -136,7 +136,7 @@ Note the commections details as we will need them later, it will look something 
 ```
 username = doadmin
 password = ************************
-host = trial-demo-psql-do-user-2313783-0.c.db.ondigitalocean.com
+host = sandbox-demo-psql-do-user-2313783-0.c.db.ondigitalocean.com
 port = 25060
 database = defaultdb
 sslmode = require
@@ -148,7 +148,7 @@ with 50 connections and link it to the database. Use the database name as the po
 ### [S3 Storage Setup](#s3-setup)
 
 In the Digital Ocean dashboard launch a Spaces Object Storage bucket. Collect the orgin endpoint and note it as we need it later.
-It will look like this: https://trial-demo-s3.ams3.digitaloceanspaces.com
+It will look like this: https://sandbox-demo-s3.ams3.digitaloceanspaces.com
 Also create a spaces key on https://cloud.digitalocean.com/account/api/spaces
 
 Generate a state encryption key using `openssl rand -base64 32` and note it down.
@@ -252,7 +252,7 @@ EOF
 
 In this example we will use Google login. Browse to https://console.developers.google.com/apis/credentials and on the top use `+ CREATE CREDENTIALS`, choose `OAuth client ID` and then as type `Web application`.
 
-In `Authorised JavaScript origins` add the domain name you created in the Ingress controller section, in this example `https://trial-demo.blockchaintransformationplatform.com`. In `Authorised redirect URIs` use `https://trial-demo.blockchaintransformationplatform.com/api/auth/callback/google`.
+In `Authorised JavaScript origins` add the domain name you created in the Ingress controller section, in this example `https://sandbox-demo.blockchaintransformationplatform.com`. In `Authorised redirect URIs` use `https://sandbox-demo.blockchaintransformationplatform.com/api/auth/callback/google`.
 
 You will get a Client ID and Client secret at the end of this process, note them down for later.
 
@@ -283,22 +283,22 @@ helm upgrade --install settlemint oci://registry.settlemint.com/settlemint-platf
 ingress:
   enabled: true
   className: nginx
-  host: "trial-demo.blockchaintransformationplatform.com"
+  host: "sandbox-demo.blockchaintransformationplatform.com"
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
   tls:
     - secretName: "blockchaintransformationplatform"
       hosts:
-        - "trial-demo.blockchaintransformationplatform.com"
-        - "*.trial-demo.blockchaintransformationplatform.com"
+        - "sandbox-demo.blockchaintransformationplatform.com"
+        - "*.sandbox-demo.blockchaintransformationplatform.com"
 redis:
-  host: trial-demo-redis-do-user-2313783-0.c.db.ondigitalocean.com
+  host: sandbox-demo-redis-do-user-2313783-0.c.db.ondigitalocean.com
   password: redacted
   port: 25061
   tls: true
 postgresql:
-  host: trial-demo-psql-do-user-2313783-0.c.db.ondigitalocean.com
+  host: sandbox-demo-psql-do-user-2313783-0.c.db.ondigitalocean.com
   port: 25061
   user: doadmin
   password: redacted
@@ -312,7 +312,7 @@ auth:
       clientID: "redacted"
       clientSecret: "redacted"
 vault:
-  address: https://trial-demo-public-vault-975715c8.ba526938.z1.hashicorp.cloud:8200
+  address: https://sandbox-demo-public-vault-975715c8.ba526938.z1.hashicorp.cloud:8200
   namespace: admin
   roleId: "redacted"
   secretId: "redacted"
@@ -327,12 +327,12 @@ features:
   deploymentEngine:
     platform:
       domain:
-        hostname: "trial-demo.blockchaintransformationplatform.com"
+        hostname: "sandbox-demo.blockchaintransformationplatform.com"
     clusterManager:
       domain:
-        hostname: "trial-demo.blockchaintransformationplatform.com"
+        hostname: "sandbox-demo.blockchaintransformationplatform.com"
     state:
-      s3ConnectionUrl: "s3://trial-demo-s3?region=US&endpoint=ams3.digitaloceanspaces.com"
+      s3ConnectionUrl: "s3://sandbox-demo-s3?region=US&endpoint=ams3.digitaloceanspaces.com"
       credentials:
         encryptionKey: "r532kL19Jrp8Fnql43ScR4UhN46Sh1QmgbJXjkPC2YI="
         aws:
@@ -344,8 +344,8 @@ features:
         name: "Google Cloud"
         icon: google
         clusters:
-          - id: trial
-            name: "Trial Demo"
+          - id: sandbox
+            name: "Sandbox Demo"
             icon: belgium
             location:
               lat: 50.8505
@@ -359,7 +359,7 @@ features:
             domains:
               service:
                 tls: true
-                hostname: "trial-demo.blockchaintransformationplatform.com"
+                hostname: "sandbox-demo.blockchaintransformationplatform.com"
             storage:
               storageClass: "btp-storage"
             ingress:
@@ -381,7 +381,7 @@ docs:
 EOF
 ```
 
-You should now be able to access the platform at https://trial-demo.blockchaintransformationplatform.com.
+You should now be able to access the platform at https://sandbox-demo.blockchaintransformationplatform.com.
 
 **IMPORTANT:** Please refer to the actual SettleMint documentation for the most up-to-date, detailed, and accurate instructions. This is an illustrative guide and may be outdated or incorrect, and there may be additional configuration steps required for a fully functional deployment.
 
@@ -417,4 +417,4 @@ You can then send the generated file to [support@settlemint.com](mailto:support@
 
 Enjoy exploring the SettleMint Platform!
 
-**NOTE:** This trial installation of the SettleMint platform might not include the full functionalities of the platform. To explore a full-scale, premium tier of the SettleMint Platform, consider reaching out to the SettleMint team for a premium trial or subscription.
+**NOTE:** This sandbox installation of the SettleMint platform might not include the full functionalities of the platform. To explore a full-scale, premium tier of the SettleMint Platform, consider reaching out to the SettleMint team for a premium sandbox or subscription.

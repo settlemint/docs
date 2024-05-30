@@ -78,8 +78,8 @@ ingress:
   tls:
     - secretName: "blockchaintransformationplatform"
       hosts:
-        - "trial-demo.blockchaintransformationplatform.com"
-        - "*.trial-demo.blockchaintransformationplatform.com"
+        - "sandbox-demo.blockchaintransformationplatform.com"
+        - "*.sandbox-demo.blockchaintransformationplatform.com"
 redis:
   host: redis-master.redis.svc.cluster.local
   password: supersecretredispassword
@@ -110,10 +110,10 @@ features:
   deploymentEngine:
     platform:
       domain:
-        hostname: "trial-demo.blockchaintransformationplatform.com"
+        hostname: "sandbox-demo.blockchaintransformationplatform.com"
     clusterManager:
       domain:
-        hostname: "trial-demo.blockchaintransformationplatform.com"
+        hostname: "sandbox-demo.blockchaintransformationplatform.com"
     state:
       s3ConnectionUrl: "s3://myminiobucket?region=eu-central-1&endpoint=minio.minio.svc.cluster.local:9000&disableSSL=true&s3ForcePathStyle=true"
       credentials:
@@ -127,8 +127,8 @@ features:
         name: "Google Cloud"
         icon: google
         clusters:
-          - id: trial
-            name: "Trial Demo"
+          - id: sandbox
+            name: "Sandbox Demo"
             icon: belgium
             location:
               lat: 50.8505
@@ -142,7 +142,7 @@ features:
             domains:
               service:
                 tls: true
-                hostname: "trial-demo.blockchaintransformationplatform.com"
+                hostname: "sandbox-demo.blockchaintransformationplatform.com"
             storage:
               storageClass: "standard-rwo"
             ingress:
