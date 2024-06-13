@@ -27,7 +27,7 @@ The typical folder structure of SettleMint's smart contract set will include:
 Follow these steps to deploy a contract using the Task Manager:
 
 1. Click `View in Fullscreen Mode` for a better user experience :)
-   ![Fresh IDE](../../../static/img/deploySCs/select-fullscreen.png)
+   ![Fresh IDE](../../../static/img/deploySCs/full-screen-mode.png)
 
 2. Navigate to the `Task Manager`.
    ![Task Manager](../../../static/img/deploySCs/nav-task-mg.png)
