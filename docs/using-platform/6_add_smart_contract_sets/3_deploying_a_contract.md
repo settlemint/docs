@@ -27,16 +27,16 @@ The typical folder structure of SettleMint's smart contract set will include:
 Follow these steps to deploy a contract using the Task Manager:
 
 1. Click `View in Fullscreen Mode` for a better user experience :)
-   ![Fresh IDE](../../../static/img/deploySCs/full-screen-mode.png)
+   ![Fresh IDE](../../../static/img/deploy-scs/full-screen-mode.png)
 
 2. Navigate to the `Task Manager`.
-   ![Task Manager](../../../static/img/deploySCs/nav-task-mg.png)
+   ![Task Manager](../../../static/img/deploy-scs/nav-task-mg.png)
 
 3. Click `Foundry - Build` or `Hardhat - Build` to compile the Smart Contract.
-   ![Press Build](../../../static/img/deploySCs/task-mg-build.png)
+   ![Press Build](../../../static/img/deploy-scs/task-mg-build.png)
 
 4. Then run `Hardhat - Deploy to local network` to deploy locally or `Hardhat - Deploy to platform network` to deploy to your connected network.
-   ![Press Deploy](../../../static/img/deploySCs/task-mg-deploy.png)
+   ![Press Deploy](../../../static/img/deploy-scs/task-mg-deploy.png)
 
 Great job! Your contract has been successfully deployed.
 
@@ -45,12 +45,12 @@ Great job! Your contract has been successfully deployed.
 Follow these steps to deploy a contract using the terminal:
 
 1. Open the terminal.
-   ![Open Terminal](../../../static/img/deploySCs/open-terminal.png)
+   ![Open Terminal](../../../static/img/deploy-scs/open-terminal.png)
 
 2. Run the command `forge build` or `Hardhat compile` to compile the smart contracts.
-   ![Build Terminal](../../../static/img/deploySCs/terminal-build.png)
+   ![Build Terminal](../../../static/img/deploy-scs/terminal-build.png)
 
 3. Then run `npx hardhat ignition deploy IGNITION_MODULE_PATH` or forge create --rpc-url YOUR_RPC_URL --private-key YOUR_PRIVATE_KEY --constructor-args ARG1 ARG2` to deploy to your connected network.
-   ![Deploy Terminal](../../../static/img/deploySCs/terminal-deploy.png)
+   ![Deploy Terminal](../../../static/img/deploy-scs/terminal-deploy.png)
 
 Well done! You've successfully deployed your contract.
