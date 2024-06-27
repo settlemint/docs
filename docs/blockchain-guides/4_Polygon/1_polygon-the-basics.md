@@ -8,7 +8,7 @@ Polygon has its own cryptocurrency, called MATIC.
 
 ## Mainnet and Testnet
 
-SettleMint supports both the Polygon **Mainnet** and the **Mumbai Testnet**.
+SettleMint supports both the Polygon **Mainnet** and the **Amoy Testnet**.
 
 The Mainnet is the primary public Polygon production blockchain, where actual-value transactions take place. Each transaction requires payment of a transaction fee, payable in the native coin MATIC. The Testnet is an instance of the blockchain to be used for testing and experimentation. There are also coins used in the Testnet but they have no value, so there is no risk of real fund.
 

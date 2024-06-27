@@ -1,10 +1,10 @@
 # Connect to a node
 
-For a software application to interact with a blockchain (e.g. by sending transactions/data to the network, or even just by reading data), it must connect to a node. This section describes how to connect to your Polygon zkEVM node.
+For a software application to interact with a blockchain (e.g. by sending transactions/data to the network, or even just by reading data), it must connect to a node. This section describes how to connect to your Hedera node.
 
 ## Backend APIs
 
-Once a node has been deployed on an EVM (Ethereum Virtual Machine) compatible network, such as Polygon zkEVM, it can be accessed by different endpoints such as JSON-RPC, JSON-WS or GraphQL. You can connect to your already deployed node using these 3 most common endpoints.
+Once a node has been deployed on an EVM (Ethereum Virtual Machine) compatible network, such as Hedera Testnet, it can be accessed by different endpoints such as JSON-RPC, JSON-WS or GraphQL. You can connect to your already deployed node using these 3 most common endpoints.
 
 ### JSON-RPC
 
