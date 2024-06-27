@@ -49,7 +49,7 @@ To be able to deploy your smart contract set on the blockchain you need to have 
 
 ## Template library
 
-Every instance of the IDE contains a set of pre-built smart contract templates. These templates are easily customizable to match your specific use case. [Discover the smart contract set templates for Arbitrum.](../8_Arbitrum/Template-library/1_arbitrum-erc-20.md)
+Every instance of the IDE contains a set of pre-built smart contract templates. These templates are easily customizable to match your specific use case. [Discover the smart contract set templates for Arbitrum.](../7_Arbitrum/Template-library/1_arbitrum-erc-20.md)
 
 ## Generative AI plugin
 

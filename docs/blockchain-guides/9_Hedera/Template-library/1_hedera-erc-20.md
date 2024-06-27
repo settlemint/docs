@@ -1,6 +1,6 @@
 # ERC-20 token
 
-ERC-20 tokens are blockchain-based assets, issued on all EVM compatible blockchain networks such as Polygon zkEVM, that have value and can be sent and received. These tokens are fungible, meaning they can be exchanged with another token of the same type because they have identical properties and there is an equal value. For example, the ERC-20 token of Alice is exactly the same as the ERC-20 token of Bob. They can exchange their token without consequences.
+ERC-20 tokens are blockchain-based assets, issued on all EVM compatible blockchain networks such as Hedera, that have value and can be sent and received. These tokens are fungible, meaning they can be exchanged with another token of the same type because they have identical properties and there is an equal value. For example, the ERC-20 token of Alice is exactly the same as the ERC-20 token of Bob. They can exchange their token without consequences.
 
 Examples of fungible assets are currencies, stocks of a company, bonds, gold and other precious metals.
 
@@ -42,6 +42,8 @@ await deploy('GenericToken', {
 As soon as you are happy with the changes you made, just click on **“deploy”** in the **“task runner”** of the IDE and after a few seconds, your ERC-20 smart contract should be deployed on the network of your choice.
 
 The **“GenericToken.ts”** script in the **“test”** folder showcases all the functionalities of the ERC-20 standard. It shows you how to use the smart contract in your dapp.
+
+*Note:* On the Hedera Mainnet time to time you can get timeouts errors(`Service Unavailable` in the IDE UI). JSON RPC relay in Hedera is a complex software which relies on multiple components (the consensus nodes, and the mirror node). One Ethereum TX can generate more than ten Hedera txs and if one of the tx fails due to the connection timeout, it can cause the problem. However, it's likely to have the problem with the smart contract deployment only. If you can keep trying a couple of times and then once your contract is deployed successfully. The subsequent contract calls should not have this kind of problem.
 
 ## ERC-20 with meta transactions
 

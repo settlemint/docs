@@ -1,6 +1,6 @@
 # Smart contracts IDE
 
-The SettleMint IDE is the only tool you need to edit the smart contract set template you have selected, or **write** your own brand **new** smart contracts. The programming language used for your Optimism smart contracts is Solidity.
+The SettleMint IDE is the only tool you need to edit the smart contract set template you have selected, or **write** your own brand **new** smart contracts. The programming language used for your Hedera smart contracts is Solidity.
 
 ## Using the IDE
 
@@ -49,7 +49,7 @@ To be able to deploy your smart contract set on the blockchain you need to have 
 
 ## Template library
 
-Every instance of the IDE contains a set of pre-built smart contract templates. These templates are easily customizable to match your specific use case. [Discover the smart contract set templates for Optimism.](../9_Optimism/Template-library/1_optimism-erc-20.md)
+Every instance of the IDE contains a set of pre-built smart contract templates. These templates are easily customizable to match your specific use case. [Discover the smart contract set templates for Hedera.](../9_Hedera/Template-library/1_hedera-erc-20.md)
 
 ## Generative AI plugin
 
