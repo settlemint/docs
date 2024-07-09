@@ -177,6 +177,9 @@ Copy your Project ID and add it as the `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` va
 Open the `.env` file and add the remaining environment variables `BLOCKCHAIN_NODE`, `NEXT_PUBLIC_CONTRACT_ADDRESS` and `PORTAL_URL`.
 
 ```.env
+# Base url of the application, used for SSR
+NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+
 # API token
 BTP_TOKEN=sm_pat_...
 
@@ -197,8 +200,8 @@ NEXT_PUBLIC_CONTRACT_ADDRESS=0x...
 # Portal
 # To get this URL go to the SettleMint platform and select the `Middlewares` option on the right.
 # From there, select your deployed smart contract portal middleware and choose the `Connect` tab.
-# Copy the 'GraphQL' url
-PORTAL_URL=https://smart-contract-portal-middleware.settlemint.com/graphql
+# Copy the base url (without the `/graphql` or `/rest` part).
+PORTAL_URL=https://smart-contract-portal-middleware.settlemint.com
 ```
 
 ## Part 3: Running the Application
@@ -212,16 +215,20 @@ bun dev
 This will start your application locally on `localhost:3000`. Go to that address and you will now see the frontend using NextJS:
 ![Front-End](../../static/img/developer-guides/front-end.png)
 
-Using `wagmi` enables us to read different functions and values from our smart contract. In this template, we are reading the `symbol` function to display which token is connected to this smart contract.
+Using the `Smart Contract Portal Middleware` enables us to read different functions and values from our smart contract. In this template, we are reading the `symbol` function to display which token is connected to this smart contract.
 
 This is done in this code block in `page.tsx`
 
 ```javascript
-const { data } = useReadContract({
-  address,
-  abi: contractData.abi,
-  functionName: "symbol",
-  account: account.address,
+const { data } = useSuspenseQuery({
+  queryKey: ["symbol"],
+  queryFn: async () => {
+    const response = await portal.GET("/api/generic-erc-20/{address}/symbol", {
+      params: { path: { address } },
+      parseAs: "text",
+    });
+    return response.data;
+  },
 });
 ```
 
