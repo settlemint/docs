@@ -91,7 +91,7 @@ You can find the ERC20 contract on the left in the Explorer under `contracts/Gen
 
 We don't need to change anything in this contract's code. The current default is to deploy a token called `GenericToken` with a symbol `GT`.
 
-To change this to something less generic, we can go to the `gnition/modules` folder and open the `main.ts` file. From there we can edit the below code block that starts on line 4:
+To change this to something less generic, we can go to the `ignition/modules` folder and open the `main.ts` file. From there we can edit the below code block that starts on line 4:
 
 **Before:**
 
@@ -104,7 +104,7 @@ By editing this code block, you can create your token name and symbol:
 **After:**
 
 ```typescript
-const counter = m.contract("GenericERC20", ["DocumentationToken", "WRITE"]);
+const counter = m.contract("GenericERC20", ["DocumentationToken", "DT"]);
 ```
 
 ### Compile and Deploy the Contract
@@ -200,7 +200,7 @@ NEXT_PUBLIC_CONTRACT_ADDRESS=0x...
 # Portal
 # To get this URL go to the SettleMint platform and select the `Middlewares` option on the right.
 # From there, select your deployed smart contract portal middleware and choose the `Connect` tab.
-# Copy the base url (without the `/graphql` or `/rest` part).
+# Copy the base url (without the `/graphql` or `/api` part).
 PORTAL_URL=https://smart-contract-portal-middleware.settlemint.com
 ```
 
