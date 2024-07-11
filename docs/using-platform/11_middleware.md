@@ -209,7 +209,7 @@ async function webhookConsumerBootstrap(secret: string) {
 webhookConsumerBootstrap(process.env.WEBHOOK_SECRET!)
   .then((app) => app.listen(process.env.PORT || 5555))
   .catch((error: Error) => {
-    logger.error("Failed to start webhook consumer", error);
+    console.error("Failed to start webhook consumer", error);
     process.exit(1);
   });
 ```
