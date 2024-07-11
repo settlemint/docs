@@ -2,7 +2,7 @@
 
 For any dApp to provide good UX, you need a solution that quickly loads the data stored on chain and on IPFS. Querying data directly from blockchain is complex. This is where the middleware comes in, which is essentially a layer in between blockchain and your dApp, allowing you to index and query your blockchain data easily and efficiently.
 
-SettleMint offers two Middleware solutions: **The Graph Middleware (for all EVM-compatible chains)** and **Hyperledger Besu Middleware**.
+SettleMint offers two Middleware solutions: **The Graph Middleware (for all EVM-compatible chains)** and **Smart Contract Portal Middleware**.
 
 ## Adding a middleware
 
