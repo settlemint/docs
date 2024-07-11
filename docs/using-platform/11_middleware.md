@@ -223,7 +223,7 @@ The url can be copied from the Connect tab.
 ```ts
 import type { TransactionReceipt } from "viem";
 
-// Should include an api key (eg wss://smart-contract-portal-middleware.settlemint.com/ws/sm_pat_...)
+// Should include an api key (eg wss://smart-contract-portal-middleware.settlemint.com/sm_pat_.../ws)
 const webSocketHost = process.env.WS_URL!;
 
 /**
