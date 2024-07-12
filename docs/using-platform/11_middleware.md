@@ -23,7 +23,7 @@ When the middleware is deployed, click it from the list and start using it.
 
 ## The Graph Middleware
 
-[The Graph](https://thegraph.com/en/) is a protocol for indexing and querying blockchain data from networks. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Binance Smart Chain and Avalanche. You can run it on your own blockchain nodes (both public and permissioned) and IPFS nodes.
+[The Graph](https://thegraph.com/en/) is a protocol for indexing and querying blockchain data from networks. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Binance Smart Chain, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned) and IPFS nodes.
 
 Using the Graph protocol, you can create **subgraphs** that define which blockchain data will be indexed. These subgraphs are **defined in the smart contract set** and deployed to the middleware. The middleware will then use these subgraphs to correctly index your smart contracts and expose a developer-friendly and efficient **GraphQL API**, allowing you to query the data you need.
 
@@ -33,7 +33,7 @@ The middleware is fully preconfigured and integrated with the smart contract set
 
 Before you start, make sure you are running:
 
-- An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Binance Smart Chain or Avalanche)
+- An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Binance Smart Chain, Avalanche, etc.)
 - A smart contract set with a deployed smart contract
 - An IPFS node
 - A private key
@@ -109,7 +109,7 @@ The indexing of your smart contracts has now started. This can take a while, but
 
 ## The Smart Contract Portal Middleware
 
-The Smart Contract Portal is a middleware which creates an easy to use api on top of your smart contracts. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Binance Smart Chain and Avalanche. You can run it on your own blockchain nodes (both public and permissioned) or on a Load Balancer.
+The Smart Contract Portal is a middleware which creates an easy to use api on top of your smart contracts. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Binance Smart Chain, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned) or on a Load Balancer.
 
 Benefits of using the smart contract portal:
 
@@ -122,7 +122,7 @@ Benefits of using the smart contract portal:
 
 Before you start, make sure you are running:
 
-- An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Binance Smart Chain or Avalanche)
+- An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Binance Smart Chain, Avalanche, etc.)
 - A private key
 
 :::
@@ -133,7 +133,9 @@ A smart contract ABI (Application Binary Interface) is a standardized way for in
 
 When deploying a smart contract the ABI file can be found as part of the artificats. See [Deploying the Smart Contract](/documentation/docs/developer-guides/connect-frontend#adding-the-abi). Download the ABI json files and save them on your local filesystem.
 
-To upload the ABIs of the smart contract portal middleware navigate to the middleware, go the details and click on the 'Manage Middleware' button on the top right. Click on the 'Update ABIs' item and a dialog will open. In this dialog upload the ABI file(s) you saved on your local filesystem in the previous step.
+When creating a new middleware you'll need to upload at least one ABI.
+
+To update the ABIs of an existing smart contract portal middleware navigate to the middleware, go the details and click on the 'Manage Middleware' button on the top right. Click on the 'Update ABIs' item and a dialog will open. In this dialog upload the ABI file(s) you saved on your local filesystem in the previous step.
 
 ![Update ABIs](../../static/img/using-the-platform/scp-update-abis.png)
 
@@ -227,8 +229,8 @@ import type { TransactionReceipt } from "viem";
 const webSocketHost = process.env.WS_URL!;
 
 /**
- * Wait for the transaction receipt, take the first received one
- * @param transactionHashes hashes
+ * Wait for the transaction receipt
+ * @param transactionHash hash
  * @returns transaction receipt
  */
 export async function waitForTransactionReceipt(transactionHash: string) {
