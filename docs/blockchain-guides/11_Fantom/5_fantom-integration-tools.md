@@ -1,6 +1,6 @@
 # Smart contracts IDE
 
-The SettleMint IDE is the only tool you need to edit the smart contract set template you have selected, or **write** your own brand **new** smart contracts. The programming language used for your Optimism smart contracts is Solidity.
+The SettleMint IDE is the only tool you need to edit the smart contract set template you have selected, or **write** your own brand **new** smart contracts. The programming language used for your Fantom smart contracts is Solidity.
 
 ## Using the IDE
 
