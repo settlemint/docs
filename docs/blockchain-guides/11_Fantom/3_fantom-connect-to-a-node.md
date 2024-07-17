@@ -1,6 +1,6 @@
 # Connect to a node
 
-For a software application to interact with a blockchain (e.g. by sending transactions/data to the network, or even just by reading data), it must connect to a node. This section describes how to connect to your Optimism node.
+For a software application to interact with a blockchain (e.g. by sending transactions/data to the network, or even just by reading data), it must connect to a node. This section describes how to connect to your Fantom node.
 
 ## Backend APIs
 
