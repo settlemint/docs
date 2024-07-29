@@ -167,6 +167,7 @@ An example using Typescript, [Elysia](https://elysiajs.com/) and [standard webho
 
 ```ts
 import { Elysia, t } from "elysia";
+import { Webhook } from "standardwebhooks";
 
 async function webhookConsumerBootstrap(secret: string) {
   const webhookConsumer = new Elysia().post(
