@@ -270,3 +270,17 @@ export async function waitForTransactionReceipt(transactionHash: string) {
 The portal exposes some general purpose APIs for transactions. This could be used for example to display transactions which are pending or processed in your UI. Both REST and GraphQL offer this functionality.
 
 ![Transactions API](../../static/img/using-the-platform/scp-transactions-api.png)
+
+## Attestation Indexer
+
+The Attestation Indexer is a powerful tool that allows you to index and search attestations in a highly efficient manner. It provides a simple and intuitive GraphQL API for querying attestations based on various parameters such as the attestation type, the subject, the issuer, and more.
+
+When setting up a new middleware, you'll need to adjust the Attestation Indexer based on your requirements. For permissioned chains, this involves deploying your own attestation and schema registry contracts and inputting the appropriate addresses. For public chains, the addresses will be pre-filled with publicly available ones if they exist, but you can modify them to different addresses if necessary.
+
+![Attestations](../../static/img/using-the-platform/eas-indexer.png)
+
+### GraphQL
+
+The Attestation Indexer's GraphQL API provides the capability to execute intricate queries on attestations. It allows for filtering based on attributes such as type, issuer, and subject, enabling the retrieval of specific attestations or sets of attestations that satisfy particular conditions.
+
+![GraphQL](../../static/img/using-the-platform/eas-graphql.png)
