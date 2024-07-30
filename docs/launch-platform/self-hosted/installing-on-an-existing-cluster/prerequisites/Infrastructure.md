@@ -280,6 +280,28 @@ observability:
     enabled: true
 ```
 
+## SMTP Server
+
+An SMTP server is required to send emails, such as invitation emails, from the BTP platform.
+
+### A typical set of parameters you should collect:
+
+- `host`: the hostname of the SMTP server
+- `port`: the port of the SMTP server
+- `username`: the username for the SMTP server
+- `password`: the password for the SMTP server
+- `fromAddress`: the email address that will appear in the 'from' field of the emails sent by the BTP platform
+
+[In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
+
+```yaml
+internal:
+  email:
+    enabled: true
+    from: "fromAddress"
+    server: "smtps://username:password@host:port"
+```
+
 ## Kubernetes Target Clusters
 
 To deploy your blockchain nodes and additional services with the SettleMint Blockchain Transformation Platform (BTP), it's crucial to correctly set up your Kubernetes clusters. Here is a refined explanation that captures all the essential details:
