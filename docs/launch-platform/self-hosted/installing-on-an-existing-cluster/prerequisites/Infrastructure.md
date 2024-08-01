@@ -195,16 +195,13 @@ vault:
   secretId: "<secret id>"
 ```
 
-## Prometheus / Loki
+## Observability
 
-The observability suite within the BTP leverages Prometheus and Loki for monitoring and logging. You are required to specify the API endpoints for these services. It’s worth noting that Prometheus can be replaced with API-compatible alternatives, such as VictoriaMetrics, if preferred.
+The observability suite within the BTP leverages VictoriaMetrics for metrics, Grafana Loki for logging, Grafana tempo for traces, Grafana for dashboards.
 
 This observability suite is optional and can be activated as described below.
 
 ### A typical set of parameters you should collect:
-
-- Prometheus API URL: this is an example from Grafana cloud: `https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/api/v1/`
-- Loki API URL: this is an example from Grafana cloud: `https://logs-prod-eu-west-0.grafana.net/loki/api/v1/`
 
  [In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
 
@@ -212,12 +209,97 @@ This observability suite is optional and can be activated as described below.
 ```yaml
 features:
   observability:
+    enabled: true
     metrics:
       enabled: true
-      apiUrl: "https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/api/v1/"
     logs:
       enabled: true
-      apiUrl: "http://loki-gateway.observability.svc.cluster.local/loki/api/v1/"
+    traces:
+      enabled: true
+      collector: "http://tempo:4318/v1/traces". # internal k8s address of tempo service
+observability:
+  metrics-server:
+    # -- Most cloud providers have a metrics server already installed, so we don't need to install it. EKS does not
+    enabled: false
+  kube-state-metrics:
+    enabled: true
+  victoria-metrics-single:
+    enabled: true
+    basicAuth: "somepassword" # password in htpasswd format, use htpasswd utility to geenrate it
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: settlemint-nginx
+        hosts:
+          - name: "metrics.console.settlemint.local"
+            path: /
+            port: http
+        ingressClassName: settlemint-nginx
+  loki:
+    enabled: true
+    basicAuth: "somepassword" # password in htpasswd format, use htpasswd utility to geenrate it
+    gateway:
+      ingress:
+        enabled: true
+        ingressClassName: settlemint-nginx
+        hosts:
+          - host: "logs.console.settlemint.local"
+            paths:
+              - path: /
+                pathType: Prefix
+    singleBinary:
+    persistence:
+      size: 100Gi
+  alloy:
+    enabled: true
+    endpoints:
+      external:
+        prometheus:
+          enabled: false
+          url: ""
+        loki:
+          enabled: false
+          url: ""
+        otel:
+          enabled: false
+          url: ""
+  grafana:
+    enabled: true
+    auth:
+      username: username
+      password: password
+    ingress:
+      enabled: true
+      ingressClassName: settlemint-nginx
+      hosts:
+        - grafana.console.settlemint.local
+    grafana.ini:
+      server:
+        root_url: https://grafana.console.settlemint.local
+  tempo:
+    enabled: true
+```
+
+## SMTP Server
+
+An SMTP server is required to send emails, such as invitation emails, from the BTP platform.
+
+### A typical set of parameters you should collect:
+
+- `host`: the hostname of the SMTP server
+- `port`: the port of the SMTP server
+- `username`: the username for the SMTP server
+- `password`: the password for the SMTP server
+- `fromAddress`: the email address that will appear in the 'from' field of the emails sent by the BTP platform
+
+[In your values file](/docs/launch-platform/self-hosted/installing-on-an-existing-cluster/run-the-Installation/)
+
+```yaml
+internal:
+  email:
+    enabled: true
+    from: "fromAddress"
+    server: "smtps://username:password@host:port"
 ```
 
 ## Kubernetes Target Clusters

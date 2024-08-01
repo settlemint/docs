@@ -28,7 +28,7 @@ It also provides numerous benefits, such as enabling you to specify the high ava
 
 After finishing the installation, you will have access to a suite of services and tools designed to support you throughout your blockchain journey. To explore these tools in detail, we invite you to visit our [Developer Hub](/docs/about-settlemint/intro/).
 
-- **Public chains**: Polygon PoS, Polygon zkevm, Ethereum, Avalanche, Arbitrum, Optimism, Binance Smart Chain *(Internet access required)*
+- **Public chains**: Polygon PoS, Polygon zkevm, Ethereum, Avalanche, Arbitrum, Optimism, Binance Smart Chain, Fantom, Hedera *(Internet access required)*
 - **Private chains**: Hyperledger Besu, Quorum, Hyperledger Fabric
 - **Block Explorers**: Otterscan for Public networks, Blockscout for permissioned
 - **Storage**: IPFS, MinIO

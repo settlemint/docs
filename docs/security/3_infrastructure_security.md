@@ -1,0 +1,38 @@
+---
+id: infrastructure-security
+title: Infrastructure Security
+---
+
+# Infrastructure Security
+
+Our infrastructure is designed with multiple layers of security to protect against various threats. We employ advanced technologies and best practices to ensure the security and resilience of our systems.
+
+## Cloud Security
+
+Our cloud providers are industry leaders, offering robust security features and compliance certifications.
+
+- **DDoS Protection**: Advanced DDoS protection mechanisms to prevent and mitigate distributed denial-of-service attacks.
+- **Network Security**: Secure network architecture with firewalls, intrusion detection systems, and network segmentation to protect against unauthorized access and threats.
+
+## High Availability and Disaster Recovery
+
+Our blockchain platform is designed with a focus on ensuring high availability and robust disaster recovery to maintain uninterrupted service and secure data integrity under various conditions.
+
+- **Redundancy**: Critical components are redundant, ensuring that the failure of a single component does not affect the overall system.
+- **Backup and Recovery**: Utilize Velero for efficient backup and restoration in DR scenarios, managed by cluster operators.
+- **Geographically Distributed Nodes**: Enabling blockchain node deployment across multiple data centers in different regions to enhance resilience against regional outages and optimize performance globally.
+- **Inter-Cluster Synchronization**: We use advanced consensus protocols for real-time data synchronization across clusters, ensuring data consistency and integrity.
+- **Automatic Failover Mechanisms**: Critical components like transaction processing nodes and storage have automatic failover, with hot standby nodes for immediate takeover.
+- **Load Balancing**: We apply sophisticated load balancing to evenly distribute workloads and prevent overloads, enhancing network performance.
+
+## Tamper Audit and Software Integrity
+
+SettleMint's Kubernetes and container management infrastructure includes tamper audit and software integrity functions to detect changes in container builds or configurations. These measures ensure the integrity of release artifacts and workloads by using tools such as image signing, admission controllers, and runtime security tools to monitor and secure the environment. Continuous monitoring and automated checks help maintain a secure Kubernetes deployment.
+
+## Access Control and Monitoring
+
+SettleMint restricts, logs, and monitors access to all critical systems, including hypervisors, firewalls, vulnerability scanners, network sniffers, and APIs. This comprehensive access control and monitoring ensure that only authorized personnel can access these systems, enhancing security and accountability.
+
+### Monitoring Privileged Access
+
+SettleMint monitors and logs privileged access (administrator level) to information security management systems. This practice ensures that all administrative actions are tracked and reviewed, enhancing security and accountability by detecting and responding to any unauthorized or suspicious activities.

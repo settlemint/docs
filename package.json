@@ -17,7 +17,7 @@
     "cosign": "cosign sign --yes ghcr.io/settlemint/btp-docs:${VERSION:-7.0.0-dev.$(date +%s)}"
   },
   "dependencies": {
-    "@cmfcmf/docusaurus-search-local": "1.1.0",
+    "@cmfcmf/docusaurus-search-local": "1.2.0",
     "@docusaurus/core": "3.3.2",
     "@docusaurus/preset-classic": "3.3.2",
     "@fontsource/figtree": "5.0.20",
@@ -32,7 +32,7 @@
     "@docusaurus/module-type-aliases": "3.3.2",
     "@docusaurus/tsconfig": "3.3.2",
     "@docusaurus/types": "3.3.2",
-    "typescript": "5.4.5"
+    "typescript": "5.5.4"
   },
   "browserslist": {
     "production": [
