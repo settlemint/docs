@@ -59,9 +59,8 @@ const config: Config = {
         },
         blog: {
           showReadingTime: true,
-          blogTitle: "Releases",
-        },
-        theme: {
+          blogTitle: "Developer Blog",
+        },        theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
       } satisfies Preset.Options,
@@ -88,9 +87,9 @@ const config: Config = {
           label: "Guides",
           position: "left",
         },
-        { to: "/docs/blog/", label: "Blog", position: "left" },
-        { to: "/blog", label: "Releases", position: "left" },
-
+        { to: "/blog/", label: "Developer Blog", position: "left" },
+        { to: "https://roadmap.settlemint.com/changelog", label: "Changelog",           position: "right",
+        },
         {
           href: "https://settlemint.com",
           label: "Website",
@@ -131,8 +130,12 @@ const config: Config = {
           title: "More",
           items: [
             {
-              label: "Blog",
+              label: "Developer Blog",
               to: "/blog",
+            },
+            {
+              label: "Cangelog",
+              href: "https://roadmap.settlemint.com/changelog",
             },
             {
               label: "Website",
