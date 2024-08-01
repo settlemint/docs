@@ -150,9 +150,6 @@ and then installing them
 sudo ./settlemint-platform install --license license.yaml
 ```
 
-
-TODO:
-
 Storage class
 ```bash
 apiVersion: storage.k8s.io/v1
