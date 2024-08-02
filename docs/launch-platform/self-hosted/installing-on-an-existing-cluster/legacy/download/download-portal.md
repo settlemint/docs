@@ -30,8 +30,8 @@ There are 3 options to set up the install. Depending on your license, you can ch
 
 - License file
 - Installers
-  - [KOTS CLI](../installing-on-an-existing-cluster/install-airgap/install-kots.md)
-  - [KOTS admin console](../installing-on-an-existing-cluster/install-airgap/install-kotsadm.md)
+  - [KOTS CLI](../install-airgap/install-kots.md)
+  - [KOTS admin console](../install-airgap/install-kotsadm.md)
 - SettleMint Platform, comprising of
   - Deployer image and scripts
   - All the component images

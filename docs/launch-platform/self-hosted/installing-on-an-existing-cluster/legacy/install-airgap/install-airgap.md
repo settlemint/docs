@@ -1,7 +1,7 @@
 # Install the SettleMint Platform in an Airgap Environment
 
 When installing the SettleMint Platform on a cluster without internet access, you will need to ensure that you have
-followed the steps discribed in the [download section](../../download/download-airgap.md) to download the required license and installation files.
+followed the steps discribed in the [download section](../download/download-airgap.md) to download the required license and installation files.
 
 Airgapped install is only available for licenses that have the airgapped feature enabled.
 
@@ -33,7 +33,7 @@ details on Open Shift command line linkages. 2. **Install the [Admin Console](./
 
 3. **Install the SettleMint Platform application via the Admin Console**
 
-   As explained in the [download section](../../download/download-airgap.md),
+   As explained in the [download section](../download/download-airgap.md),
    there are 2 ways to proceed with your airgapped installations: Full or Small Bundles. In the case of **Small**
    Bundle, there is an additional step to run the script to push the images to your local registry. You must run this step
    **prior** to running the `kots install` command below.

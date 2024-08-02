@@ -6,9 +6,9 @@ sidebar_position: 3
 
 # Getting Started - Hello World
 
-##### This guide will help you explore some of the core building blocks of working with SettleMint even if this is your first time working with a Blockchain.
+##### This guide will help you explore some of the core building blocks of working with SettleMint even if this is your first time working with a Blockchain
 
-In this guide you will learn how to [create a blockchain network](../../using-platform/1_add-a-network-to-an-application.md), [deploy a node](../../using-platform/2_add-a-node-to-a-network.md), write a [smart contract](../../using-platform/6_create-smart-contract-set.md) and [create an integration](../../using-platform/9_integration-studio.md).
+In this guide you will learn how to [create a blockchain network](../../using-platform/1_add-a-network-to-an-application.md), [deploy a node](../../using-platform/2_add-a-node-to-a-network.md), write a [smart contract](../../using-platform/6_add_smart_contract_sets/0_smart_contracts.md) and [create an integration](../../using-platform/9_integration-studio.md).
 
 Below is both a video and written guide for you to build along to:
 
@@ -152,9 +152,9 @@ In the IDE, you need to locate and rename the `Example.sol` file that comes incl
 
 ![Rename Contract](../../../static/img/quickstart/renamecontract.png)
 
-1.  On the left File Explorer panel, find the `contracts` folder and click the arrow to expand.
-2.  Find the `Example.sol` file in the list
-3.  Right-click on the file and select `Rename`. Rename the file to `HelloWorld.sol`. This is case-sensitive so make sure you have named it exactly `HelloWorld
+1. On the left File Explorer panel, find the `contracts` folder and click the arrow to expand.
+2. Find the `Example.sol` file in the list
+3. Right-click on the file and select `Rename`. Rename the file to `HelloWorld.sol`. This is case-sensitive so make sure you have named it exactly `HelloWorld
 
 Now you can replace the code that is in the `HelloWorld.sol` file.
 
@@ -330,7 +330,7 @@ This is done by clicking the name of the private key. There select the `Details`
 ![Key Created](../../../static/img/quickstart/privatekeycreated.png)
 ![Alt text](../../../static/img/quickstart/copyprivatekey.png)
 
-With the private key copied, you can now go back to the Integration Studio and paste this key into the first line after `const privateKey = ` inside the ' ''. The private key should begin with `0x`.
+With the private key copied, you can now go back to the Integration Studio and paste this key into the first line after `const privateKey =` inside the ' ''. The private key should begin with `0x`.
 
 ![Paste Private Key](../../../static/img/quickstart/pasteprivatekey.png)
 
@@ -346,10 +346,10 @@ SettleMint uses Hardhat scripts to deploy smart contracts. To deploy the Hello W
 
 ![Deploy Changes](../../../static/img/quickstart/deploychanges.png)
 
-1.  Go to the `deploy` folder in the file explorer on the left
-2.  Open the `00_deploy_example.ts` file
-3.  Delete the code that is currently in this file
-4.  Copy and paste the code below:
+1. Go to the `deploy` folder in the file explorer on the left
+2. Open the `00_deploy_example.ts` file
+3. Delete the code that is currently in this file
+4. Copy and paste the code below:
 
 ```typescript
 import { DeployFunction } from 'hardhat-deploy/types';
@@ -469,10 +469,10 @@ You can now start interacting with the Hello World contract via a front-end page
 
 Your URL will look something similar to this:
 
-Before: `https://helloworld-9ece.gke-europe.settlemint.com/#flow/cfc3eb139dc03dc5`  
+Before: `https://helloworld-9ece.gke-europe.settlemint.com/#flow/cfc3eb139dc03dc5`
 After: `https://helloworld-9ece.gke-europe.settlemint.com/helloworld`
 
-In your browser you will see two options `Read-only ` and `Write`functions:
+In your browser you will see two options `Read-only` and `Write`functions:
 
 - `Read-only`: These functions can only read the data from the smart contract
 

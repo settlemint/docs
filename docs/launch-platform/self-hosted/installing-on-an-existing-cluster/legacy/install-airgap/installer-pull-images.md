@@ -8,7 +8,7 @@ Follow these steps from the machine that is connected to your airgapped cluster.
 
 2. Ensure your image registry is setup. See the [Image Registry Section](./install-airgap.md).
 
-3. Run the provided script mentioned in the [download section](../../download/download-airgap.md) to pull the images
+3. Run the provided script mentioned in the [download section](../download/download-airgap.md) to pull the images
    from our repository and push them on your registry.
 
    ```bash

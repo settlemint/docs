@@ -27,7 +27,7 @@ You can access the Admin Console to complete the SettleMint Platform setup, run 
 
   ![CleanShot 2022-10-01 at 13.01.15@2x.png](/img/completing-setup-and-deploying/CleanShot_2022-10-01_at_13.01.152x.png)
 
-- Upload the license file [downloaded from Step 1](../download/download-portal.md)
+- Upload the license file [downloaded from Step 1](./download/download-portal.md)
 
   ![CleanShot 2022-10-01 at 13.01.29@2x.png](/img/completing-setup-and-deploying/CleanShot_2022-10-01_at_13.01.292x.png)
 

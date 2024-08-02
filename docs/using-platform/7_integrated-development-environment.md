@@ -2,7 +2,7 @@
 
 The SettleMint Integrated Development Environment (IDE) is a powerful tool that simplifies the development of your smart contracts. It includes pre-built smart contract set templates for a certain use case, which are easily customizable to match your specific use case. The IDE also includes compilation and migration scripts that drastically simplify deployment to the relevant blockchain.
 
-When you [add a smart contract set](6_create-smart-contract-set.md), you get an instance of the IDE that is configured to the blockchain and smart contract set templates of your choice. Go to the **IDE tab** on the **Smart contract sets details page** to access it.
+When you [add a smart contract set](./6_add_smart_contract_sets/0_smart_contracts.md), you get an instance of the IDE that is configured to the blockchain and smart contract set templates of your choice. Go to the **IDE tab** on the **Smart contract sets details page** to access it.
 
 The IDE programming languages for smart contracts differ depending on the protocol. For blockchain networks that are EVM (Ethereum Virtual Machine) compatible, and are listed below, the programming language used is Solidity.
 
