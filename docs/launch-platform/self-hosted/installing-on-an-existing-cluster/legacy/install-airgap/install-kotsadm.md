@@ -11,7 +11,7 @@ kotsadm package.
 
 ## Install the Admin Console
 
-1.  Download the admin console binary bundle, `kotsadm.tar.gz` ([Downloads](../../download/download-airgap.md))
+1.  Download the admin console binary bundle, `kotsadm.tar.gz` ([Downloads](../download/download-airgap.md))
 
     - latest kotsadm release notes can be found [here](https://docs.replicated.com/release-notes/rn-app-manager)
 

@@ -16,7 +16,7 @@ From the SettleMint Download Portal, download the following files
    - Full Bundle or Small Bundle : If you choose the small bundle, set up separate pipeline to push images to your repository.
      See [below](#understanding-the-structure) for a more detailed explanation.
 
-Continue with [Step 2](../installing-on-an-existing-cluster/install-airgap/install-airgap.md)
+Continue with [Step 2](../install-airgap/install-airgap.md)
 
 ## Understanding the Structure
 
@@ -60,5 +60,5 @@ Please note that with this option, upgrading to a another version of the SettleM
 - You may also need to get newer versions of the framework software, but our license page will indicate if so.
 
 Once you have downloaded all the files from the link shared with you, you can check that your setup meets the minimum
-[requirements](../installing-on-an-existing-cluster/requirements.md) before continuing with the
-[installation](../installing-on-an-existing-cluster/install-airgap/install-airgap.md).
+[requirements](../requirements.md) before continuing with the
+[installation](../install-airgap/install-airgap.md).

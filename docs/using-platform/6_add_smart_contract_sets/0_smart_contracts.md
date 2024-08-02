@@ -3,14 +3,14 @@ title: Overview
 description: Overview
 sidebar_position: 0
 ---
+
 # Deploying Smart Contracts
 
 ## Introduction
 
-To make developing smart contracts easier, we offer an open-source [template library](/btp-docs/docs/using-platform/6_add_smart_contract_sets/1_smart_contract_templates.md) and an Integrated Development Environment (IDE). The template library includes pre-built smart contracts that you can customize to meet your specific needs.
+To make developing smart contracts easier, we offer an open-source [template library](./1_smart_contract_templates.md) and an Integrated Development Environment (IDE). The template library includes pre-built smart contracts that you can customize to meet your specific needs.
 
-If you need a fundamental explanation of what smart contracts are and how they work, we recommend contacting our team to join our Learn World Blockchain course. Our experts will guide you through the basics, ensuring you have a solid foundation before diving into development. For a practical guide, please visit [deploying a contract](/btp-docs/docs/using-platform/6_add_smart_contract_sets/deploying_a_contract.md).
-
+If you need a fundamental explanation of what smart contracts are and how they work, we recommend contacting our team to join our Learn World Blockchain course. Our experts will guide you through the basics, ensuring you have a solid foundation before diving into development. For a practical guide, please visit [deploying a contract](./3_deploying_a_contract.md).
 
 SettleMint's smart contract sets include both Hardhat and Foundry, enabling you to compile, test, and deploy using your preferred framework or a combination of both. This flexibility allows you to optimize your development process to best suit your project needs and preferences.
 
@@ -20,8 +20,8 @@ The following is a high-level overview of smart contract development processes a
 
 ### 1. Deploying a Smart Contract Set
 
-  - **Add Smart Contract Set**: Navigate to the smart contract sets page and press the button "Add Smart Contract Set."
-  - **Picking Your Template**: Pick the template of your choice.
+- **Add Smart Contract Set**: Navigate to the smart contract sets page and press the button "Add Smart Contract Set."
+- **Picking Your Template**: Pick the template of your choice.
 
 ### 2. Compiling and Configuring The Smart Contract
 
@@ -30,6 +30,7 @@ The following is a high-level overview of smart contract development processes a
 - **Purpose**: Tailors the deployment process to your specific requirements and ensures your contract can run on the blockchain.
 
 ### 3. Deploying and Interacting with the Smart Contract
+
 - **Deploying**: Upload your compiled smart contract to a blockchain network.
 - **Interacting**: Once deployed, interact with the smart contract through transactions that call its functions.
 - **Purpose**: Makes the contract accessible on the blockchain so users can interact with it and utilize its features to perform actions defined in its logic.
@@ -55,7 +56,8 @@ Hardhat is a development environment for EVM software. It provides a flexible an
 3. **Compile and Deploy Contract**: Convert your Solidity code into bytecode and deploy your compiled contract to the blockchain network of your choice.
 
 ## Key Points
+
 - **Smart Contracts**: Self-executing programs with predefined rules.
 - **Compiling and Configuring**: Converts code into a format the blockchain can run and tailors the deployment process.
 - **Deploying and Interacting**: Uploads the compiled code to the blockchain and makes it accessible for interaction.
-By following these steps and using the appropriate tools, you can easily create, compile, and deploy smart contracts to automate and secure your business processes on the blockchain.
+  By following these steps and using the appropriate tools, you can easily create, compile, and deploy smart contracts to automate and secure your business processes on the blockchain.
