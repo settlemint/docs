@@ -60,7 +60,11 @@ In our tests, a single Besu node was able to handle over 2,000 read requests per
 
 ### Write Transaction Performance
 
-When sending write transactions all from the same address (the slowest possible case), we observed a lower but still significant throughput of over 120 TPS accepted by the node. This reduction in throughput compared to a multi-address scenario is due to the sequential nature of transactions from a single sender.
+For write transactions, there are two scenarios. The first scenario involved sending pre-signed transactions using the `eth_sendRawTransaction` method. This approach bypasses the need for real-time transaction signing on the node, potentially reducing processing overhead. This method demonstrated impressive performance, achieving between 700 and 800 transactions per second (TPS).
+
+This high throughput is attributed to the reduced computational load on the node, as it doesn't need to perform signature verification for each incoming transaction. However, it's important to note that while this method can significantly boost transaction throughput, it requires careful management of nonces and pre-signing of transactions, which may introduce additional complexity in the transaction preparation process.
+
+For real-time signed transactions using `eth_sendTransaction`, without a nonce supplied in the call and all from a single address (the slowest possible scenario), we observed a lower but still significant throughput of over 120 TPS accepted by the node. This reduction in throughput compared to a multi-address scenario is due to the sequential nature of transactions from a single sender.
 
 Each transaction from an address must use a unique, incrementing nonce value. This nonce tracking ensures transactions are processed in the correct order and prevents double-spending, but it also means that transactions from a single address cannot be processed in parallel. This bookkeeping is handled by the buit in transaction signer, which will also retry transactions in the case of a duplicate nonce.
 
