@@ -75,6 +75,10 @@
     {
       "matchPackagePatterns": ["hyperledger/fabric"],
       "groupName": "hyperledger/fabric"
+    },
+    {
+      "matchPackagePatterns": ["docusaurus"],
+      "enabled": false
     }
   ],
   "hostRules": [
