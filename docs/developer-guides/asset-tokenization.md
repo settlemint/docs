@@ -83,7 +83,7 @@ This guide uses a simple image as the tokenized asset. This image will be pinned
 
 ![IPFS Storage](../../static/img/developer-guides/asset-tokenization/add-ipfs.png)
 
-Click on `Storage` and then select `Add storage`. Then select `IPFS` and names create a name called `Token Storage`. You can choose the same deployment plan that you did earlier with the network and node.
+Click on `Storage` and then select `Add storage`. Then select `IPFS` and create an instance called `Token Storage`. You can choose the same deployment plan that you did earlier with the network and node.
 
 ### 4. Deploy a Private Key
 
@@ -466,8 +466,7 @@ To import the below JSON file:
 }
 ]
 
-````
-
+```
 </details>
 
 ### 5. Interact with the Smart Contract
@@ -521,7 +520,3 @@ You have now created and deployed an Asset Tokenization smart contract using Set
 
 Find other guides in to help you build with SettleMint in our [Guide Library](guide-library.mdx)
 
-```
-
-```
-````
