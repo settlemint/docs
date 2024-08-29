@@ -10,7 +10,7 @@ By using smart contract sets, you can add **business logic** to your application
 
 Smart contract sets are programs that run on the blockchain and define the rules of your use case. They are self-executing with an 'if this, then that' pattern and activate when predefined conditions are met, such as a smart contract that transfers the ownership of a car once a certain amount of money is transferred to the seller's account.
 
-To expedite the process of writing and deploying smart contracts, we offer a [**template library**](./1_smart_contract_templates.md) and an **Integrated Development Environment (IDE)**. The template library includes pre-built smart contract sets for specific use cases, which are easily customizable to match your needs.
+To expedite the process of writing and deploying smart contracts, we offer a [template library](./1_smart_contract_templates.md) and an Integrated Development Environment (IDE). The template library includes pre-built smart contract sets for specific use cases, which are easily customizable to match your needs.
 
 ## How to Add a Smart Contract Set
 
