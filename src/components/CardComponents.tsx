@@ -20,7 +20,12 @@ export function CardSection({
   className?: string;
 }) {
   return (
-    <div className={clsx('homepage-section', hasSubSections && 'has-sub-sections', className)}>
+    <div
+      className={clsx(
+        'homepage-section',
+        hasSubSections && 'has-sub-sections',
+        className
+      )}>
       {title && <HeadingTag id={id}>{title}</HeadingTag>}
       {description && <p className="section-description">{description}</p>}
       <div className="section-content">{children}</div>
@@ -62,8 +67,7 @@ export function Card({
             <span
               className="absolute right-[-28px] top-[-2px] w-[80px] rotate-45 transform bg-gray-600 py-1 text-center font-semibold text-white"
               style={{ backgroundColor: tag.color }}
-              title={tag.description}
-            >
+              title={tag.description}>
               {tag.label}
             </span>
           </div>
