@@ -7,7 +7,7 @@ Firefly FabConnect is an open-source middleware that lets you interact with your
 - Check any transaction receipt.
 - Create event streams and subscriptions.
 
-:::warning
+:::warning Warning
 
 Before you start, make sure you are running:
 
