@@ -36,3 +36,29 @@ Follow these steps to fund your key:
 2. Open the **Balances tab**. You see a list of all the networks you added in your application, together with the option to fund the private key.
 3. Click **Fund**. This opens a QR code.
 4. Scan the **QR code** with the exchange or wallet of your choice to fund your private key.
+
+
+## Bring Your Own Key 
+
+In addition to creating private keys within the SettleMint platform, you can also bring and manage your own custom keys. This is useful if you've already generated a private key using an external tool like MetaMask or another wallet solution.
+
+To use your custom key material:
+
+1. **Create a New Private Key**:
+   - Navigate to your **application**, click **Private keys** in the left navigation, and then click **Create a private key**. This opens a form.
+
+2. **Select Accessible ECDSA P256**:
+   - Choose the **Accessible ECDSA P256** option to create a key from a mnemonic.
+
+3. **Use Custom Key Material**:
+   - Check the “Use custom key material” box to enable input fields for your own mnemonic and derivation path.
+
+4. **Enter Your Mnemonic and Derivation Path**:
+   - Paste your mnemonic phrase into the "Mnemonic" field and enter the derivation path you wish to use.
+
+5. **Select Nodes**:
+   - Choose the nodes on which this key will be active. You can modify this later in the **Nodes** tab of your private key.
+
+6. **Confirm**:
+   - Review your entries and click **Confirm** to import your private key.
+
