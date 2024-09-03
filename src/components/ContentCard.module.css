@@ -56,7 +56,7 @@ a:hover {
 }
 
 .riImage {
-  width: 110px; /* Adjust the size */
+  width: 100px; /* Adjust the size */
   height: 100px; /* Adjust the size */
   border-radius: var(--ifm-global-radius);
   margin-bottom: 0px; /* Add some space below the image */
