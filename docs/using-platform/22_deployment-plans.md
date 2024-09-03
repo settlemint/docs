@@ -25,7 +25,7 @@ We offer you the flexibility to deploy your services in the cloud of your choice
 
 ## Resource pack
 
-The resource pack refers to the memory, vCPU and disk space allocated to your service. You can choose between **small, medium and large**. If at some point the current resource usage is about to reach its limit, and the service risks getting stuck, you can scale the resource pack.
+The resource pack refers to the memory, vCPU, and disk space allocated to your service. You can choose between **small, medium, and large** options. You can proactively scale the resource pack if you anticipate that current resource usage might approach its limit, which could potentially impact service performance.
 
 ## Recommended setup
 
