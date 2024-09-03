@@ -16,7 +16,13 @@ const ContentCard = (props: PropsWithChildren<ContentCardProps>) => {
     <a href={props.page} className={styles.riContainer}>
       <div className={styles.riDescriptionShort}>
         <div className={styles.riIcon}>
-          {props.image && <img src={props.image} alt={props.title} className={styles.riImage} />}
+          {props.image && (
+            <img
+              src={props.image}
+              alt={props.title}
+              className={styles.riImage}
+            />
+          )}
 
           <span className="fe fe-zap" />
         </div>
