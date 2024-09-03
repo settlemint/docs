@@ -83,7 +83,7 @@ This guide uses a simple image as the tokenized asset. This image will be pinned
 
 ![IPFS Storage](../../static/img/developer-guides/asset-tokenization/add-ipfs.png)
 
-Click on `Storage` and then select `Add storage`. Then select `IPFS` and names create a name called `Token Storage`. You can choose the same deployment plan that you did earlier with the network and node.
+Click on `Storage` and then select `Add storage`. Then select `IPFS` and create an instance called `Token Storage`. You can choose the same deployment plan that you did earlier with the network and node.
 
 ### 4. Deploy a Private Key
 
@@ -130,28 +130,17 @@ With the IDE open in fullscreen, create a new file for your Asset Tokenization s
 After the file is created, copy and paste the Solidity code below:
 
 <details>
-    <summary> Solidity Code</summary>
-  
+    <summary>Solidity Code</summary>
+
 ```solidity
 // SPDX-License-Identifier: MIT
-
 // SettleMint.com
-
-/*
-- Copyright (C) SettleMint NV - All Rights Reserved
--
-- Use of this file is strictly prohibited without an active license agreement.
-- Distribution of this file, via any medium, is strictly prohibited.
--
-- For license inquiries, contact hello@settlemint.com
-*/
 
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/ERC1155SupplyUpgradeable.sol";
-import "hardhat/console.sol";
 
 /**
  * @title AssetTokenization
@@ -161,22 +150,22 @@ contract AssetTokenization is Initializable, UUPSUpgradeable, ERC1155SupplyUpgra
     /**
      * @dev Struct representing an asset.
      * @param assetId Unique identifier number.
+     * @param name Name of the asset.
+     * @param symbol Symbol of the asset.
      * @param maxSupply Maximum number of tokens for the asset.
      * @param faceValue Initial value of the asset.
      * @param maturityTimestamp Maturity date in the value of a unix timestamp.
+     * @param assetUri URI for the asset metadata.
      */
     struct Asset {
         uint256 assetId;
+        string name;
+        string symbol;
         uint256 maxSupply;
         uint256 faceValue;
         uint256 maturityTimestamp;
+        string assetUri;
     }
-
-    /// @notice Name of the asset.
-    string public name;
-
-    /// @notice Symbol of the asset.
-    string public symbol;
 
     /// @notice Mapping from asset ID to asset details.
     mapping(uint256 => Asset) public assetToDetails;
@@ -191,31 +180,35 @@ contract AssetTokenization is Initializable, UUPSUpgradeable, ERC1155SupplyUpgra
     event AssetTransferEvent(address indexed from, address indexed to, uint256[] assetIds, uint256[] amounts);
 
     /**
-     * @dev Initializes the contract with a name, symbol, and URI.
-     * @param _name Name of the asset.
-     * @param _symbol Symbol of the asset.
-     * @param _uri URI for the asset metadata.
+     * @dev Initializes the contract.
      */
-    function initialize(string memory _name, string memory _symbol, string memory _uri) external initializer {
-        __ERC1155_init(_uri);
+    function initialize() external initializer {
+        __ERC1155_init("");
         __Ownable_init(msg.sender);
-        name = _name;
-        symbol = _symbol;
+        __UUPSUpgradeable_init();
     }
 
     /**
      * @dev Creates a new asset.
      * @param assetId Unique identifier for the asset.
+     * @param name Name of the asset.
+     * @param symbol Symbol of the asset.
      * @param maxSupply Maximum supply of the asset.
      * @param faceValue Initial value of the asset.
      * @param maturityTimestamp Maturity date of the asset in unix timestamp.
+     * @param assetUri URI for the asset metadata.
      */
-    function createAsset(uint256 assetId, uint256 maxSupply, uint256 faceValue, uint256 maturityTimestamp)
-        external
-        onlyOwner
-    {
-        require(assetToDetails[assetId].assetId != assetId, "Assets already exist");
-        Asset memory asset = Asset(assetId, maxSupply, faceValue, maturityTimestamp);
+    function createAsset(
+        uint256 assetId,
+        string memory name,
+        string memory symbol,
+        uint256 maxSupply,
+        uint256 faceValue,
+        uint256 maturityTimestamp,
+        string memory assetUri
+    ) external onlyOwner {
+        require(assetToDetails[assetId].assetId != assetId, "Asset already exists");
+        Asset memory asset = Asset(assetId, name, symbol, maxSupply, faceValue, maturityTimestamp, assetUri);
         assetToDetails[assetId] = asset;
     }
 
@@ -227,24 +220,27 @@ contract AssetTokenization is Initializable, UUPSUpgradeable, ERC1155SupplyUpgra
      */
     function mint(uint256 assetId, uint256 amounts, address recipient) external onlyOwner {
         require(assetToDetails[assetId].assetId == assetId, "Asset does not exist");
-        require(totalSupply(assetId) + amounts <= assetToDetails[assetId].maxSupply, "Max Supply");
+        require(totalSupply(assetId) + amounts <= assetToDetails[assetId].maxSupply, "Max supply exceeded");
         require(assetToDetails[assetId].maturityTimestamp > block.timestamp, "Asset is already matured");
         _mint(recipient, assetId, amounts, "");
     }
 
     /**
      * @dev Mints multiple assets in a batch to a recipient.
-     * @param assetId Array of asset IDs to mint.
+     * @param assetIds Array of asset IDs to mint.
      * @param amounts Array of amounts for each asset to mint.
      * @param recipient Address to receive the minted assets.
      */
-    function mintBatch(uint256[] memory assetId, uint256[] memory amounts, address recipient) public onlyOwner {
-        for (uint256 i = 0; i < assetId.length; i++) {
-            require(assetToDetails[assetId[i]].assetId == assetId[i], "Asset does not exist");
-            require(totalSupply(assetId[i]) + amounts[i] <= assetToDetails[assetId[i]].maxSupply, "Max Supply");
-            require(assetToDetails[assetId[i]].maturityTimestamp > block.timestamp, "Asset is already matured");
+    function mintBatch(uint256[] memory assetIds, uint256[] memory amounts, address recipient) public onlyOwner {
+        uint256 length = assetIds.length;
+        for (uint256 i = 0; i < length; i++) {
+            require(assetToDetails[assetIds[i]].assetId == assetIds[i], "Asset does not exist");
+            require(
+                totalSupply(assetIds[i]) + amounts[i] <= assetToDetails[assetIds[i]].maxSupply, "Max supply exceeded"
+            );
+            require(assetToDetails[assetIds[i]].maturityTimestamp > block.timestamp, "Asset is already matured");
         }
-        _mintBatch(recipient, assetId, amounts, "");
+        _mintBatch(recipient, assetIds, amounts, "");
     }
 
     /**
@@ -259,22 +255,15 @@ contract AssetTokenization is Initializable, UUPSUpgradeable, ERC1155SupplyUpgra
 
     /**
      * @dev Burns multiple assets in a batch from the sender.
-     * @param assetId Array of asset IDs to burn.
+     * @param assetIds Array of asset IDs to burn.
      * @param amounts Array of amounts for each asset to burn.
      */
-    function burnBatch(uint256[] memory assetId, uint256[] memory amounts) external {
-        for (uint256 i = 0; i < assetId.length; i++) {
-            require(assetToDetails[assetId[i]].assetId == assetId[i], "Asset does not exist");
+    function burnBatch(uint256[] memory assetIds, uint256[] memory amounts) external {
+        uint256 length = assetIds.length;
+        for (uint256 i = 0; i < length; i++) {
+            require(assetToDetails[assetIds[i]].assetId == assetIds[i], "Asset does not exist");
         }
-        _burnBatch(msg.sender, assetId, amounts);
-    }
-
-    /**
-     * @dev Sets a new URI for all assets.
-     * @param newuri New URI to set.
-     */
-    function setURI(string memory newuri) external onlyOwner {
-        _setURI(newuri);
+        _burnBatch(msg.sender, assetIds, amounts);
     }
 
     /**
@@ -283,21 +272,22 @@ contract AssetTokenization is Initializable, UUPSUpgradeable, ERC1155SupplyUpgra
      * @return URI of the specified asset ID.
      */
     function uri(uint256 id) public view override returns (string memory) {
-        return string(abi.encodePacked(super.uri(id), id, ".json"));
+        return assetToDetails[id].assetUri;
     }
 
     /**
      * @dev Updates the state on asset transfer and emits the transfer event.
      * @param from Address from which the asset is transferred.
      * @param to Address to which the asset is transferred.
-     * @param assetId Array of asset IDs being transferred.
+     * @param assetIds Array of asset IDs being transferred.
      * @param amounts Array of amounts of each asset being transferred.
      */
-    function _update(address from, address to, uint256[] memory assetId, uint256[] memory amounts)
+    function _update(address from, address to, uint256[] memory assetIds, uint256[] memory amounts)
         internal
         override(ERC1155SupplyUpgradeable)
     {
-        emit AssetTransferEvent(from, to, assetId, amounts);
+        super._update(from, to, assetIds, amounts);
+        emit AssetTransferEvent(from, to, assetIds, amounts);
     }
 
     /**
@@ -307,7 +297,8 @@ contract AssetTokenization is Initializable, UUPSUpgradeable, ERC1155SupplyUpgra
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 }
 
-````
+```
+
 </details>
 
 ### 4. Change the Deployment Configuration
@@ -316,9 +307,28 @@ With the code pasted in the IDE, you now need to change the deployment settings 
 
 ![Edit Deployment Contract](./../../static/img/developer-guides/asset-tokenization/edit-deploy.png)
 
-In the file explorer on the left, select the `deploy` folder. Then open the `00_deploy_example.ts` file.
+In the file explorer on the left, select the `ignition` folder. Then open the `main.ts` file under `modules`.
 
-Go to line 13 and replace `Example` with `AssetTokenization`. Make sure this is the same name as your smart contract or you will receive an error.
+Replace the content of `main.ts` with the code below:
+
+<details>
+    <summary> Ignition Module Code </summary>
+
+```javascript
+// SPDX-License-Identifier: MIT
+// SettleMint.com
+import { buildModule } from '@nomicfoundation/hardhat-ignition/modules';
+
+const AssetTokenizationModule = buildModule('AssetTokenizationModule', (m) => {
+  const assetTokenization = m.contract('AssetTokenization');
+
+  return { assetTokenization };
+});
+
+export default AssetTokenizationModule;
+```
+
+</details>
 
 ### 5. Deploy the Contract
 
@@ -327,28 +337,24 @@ With those settings changed, you are now ready to compile and deploy your smart 
 ![Compile Contract](./../../static/img/developer-guides/asset-tokenization/compile-contract.png)
 
 To compile the smart contract:
+
 1. Select the `Task Manager` on the left menu
-2. Click `compile` under the hardhat folder
+2. Click `Foundry - Build` or `Hardhat - Build` to compile the contract
 3. A terminal window below will show the status of the compiling contract
 
 To deploy your smart contract:
-1. Select the `smartcontract:deploy` option under the `npm` folder
+
+1. Select the `Hardhat - Deploy to platform network` option
 2. The terminal will open to show the status of deploying your contract
-3. The terminal will show the contract address of your smart contract.
+3. The terminal will show the contract address of your smart contract
 
 ![Contract Address](./../../static/img/developer-guides/asset-tokenization/contract-address.png)
 
-The contract address is the number starting with `0x` after the `Deployed at` message in the terminal.
-
-
 :::info
-Save this contract address as you will use it later in this guide when building the integration.
+The contract address can also be found in `deployed_addresses.json` in the `deployments`folder created when deploying the smart contract code. You will need it later for the integration.
 :::
 
-
 ## Part 3: Connect the Resources
-
-
 
 ### 1. Upload an Image to IPFS
 
@@ -361,6 +367,7 @@ Save the image above to your computer. It is what you will use to represent your
 ![Add to IPFS](./../../static/img/developer-guides/asset-tokenization/add-to-ipfs.png)
 
 To upload this image to IPFS:
+
 1. Click on Storage
 2. Select File Manager
 3. Select the `Import` option
@@ -387,6 +394,7 @@ To connect to the network that you have created, you need to get your JSON-RPC c
 ![JSON RPC Node](./../../static/img/developer-guides/asset-tokenization/json-rpc.png)
 
 The URL can be found by:
+
 1. Selecting `Blockchain nodes`
 2. Clicking on the `Connect` tab
 3. Copy the `JSON-RPC` URL
@@ -395,9 +403,8 @@ The URL can be found by:
 Save this URL as you will use it later in this guide when building the integration.
 :::
 
-
-
 ### 3. Create a SettleMint API Key
+
 To ensure that your network is secure, you will also need to generate an API to have access to it.
 ![Create an API Key](./../../static/img/developer-guides/asset-tokenization/create-api-key.png)
 
@@ -424,698 +431,42 @@ Open your Integration Studio by selecting the `Interface` tab and then opening i
 
 For this guide, import the template below into the Integration Studio.
 
-
 ![Import an Integration](./../../static/img/developer-guides/asset-tokenization/import-integration.png)
 
 To import the below JSON file:
+
 1. Click on the hamburger icon in the top right next to the `Deploy` button.
 2. Select the import option
 3. Paste the below JSON code into the window
-
 
 <details>
     <summary>JSON Code</summary>
 ```json
 
 [
-    {
-        "id": "a781da6f697711d2",
-        "type": "tab",
-        "label": "Asset Tokenisation",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "0231410d77b80776",
-        "type": "inject",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "props": [
-            {
-                "p": "timestamp",
-                "v": "",
-                "vt": "date"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 210,
-        "y": 80,
-        "wires": [
-            [
-                "8154b1dd0912e484"
-            ]
-        ]
-    },
-    {
-        "id": "8154b1dd0912e484",
-        "type": "function",
-        "z": "a781da6f697711d2",
-        "name": "Set Global Variables",
-        "func": "const glbVar = {\n    privateKey: \"\",\n    privateKeyAddress: \"\",\n    smartContract: \"\",\n    bpassKey: \"\",\n    rpcEndpoint: \"\",\n    abi: \n\n}\n\nglobal.set('privateKey', glbVar.privateKey);\nglobal.set('privateKeyAddress',glbVar.privateKeyAddress)\nglobal.set('contract', glbVar.smartContract);\nglobal.set('bpassKey', glbVar.bpassKey);\nglobal.set('rpcEndpoint', glbVar.rpcEndpoint);\nglobal.set('abi',glbVar.abi)\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 1,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 460,
-        "y": 80,
-        "wires": [
-            [
-                "a7c63a0fd0d1a779"
-            ]
-        ]
-    },
-    {
-        "id": "a7c63a0fd0d1a779",
-        "type": "debug",
-        "z": "a781da6f697711d2",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 760,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "a3bf422b89eaf40e",
-        "type": "http in",
-        "z": "a781da6f697711d2",
-        "name": "Initialise Asset",
-        "url": "/initialise",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 180,
-        "y": 140,
-        "wires": [
-            [
-                "a9c266c0127bcb1a"
-            ]
-        ]
-    },
-    {
-        "id": "7b77a930a3755dfb",
-        "type": "inject",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "props": [
-            {
-                "p": "assetName",
-                "v": "",
-                "vt": "str"
-            },
-            {
-                "p": "assetSymbol",
-                "v": "",
-                "vt": "str"
-            },
-            {
-                "p": "assetUri",
-                "v": "",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 210,
-        "y": 200,
-        "wires": [
-            [
-                "a9c266c0127bcb1a"
-            ]
-        ]
-    },
-    {
-        "id": "a9c266c0127bcb1a",
-        "type": "function",
-        "z": "a781da6f697711d2",
-        "name": "Initialise Asset",
-        "func": "///////////////////////////////////////////////////////////\n// Configuration                                         //\n///////////////////////////////////////////////////////////\n\nconst bpassKey = global.get(\"bpassKey\");\nconst rpcEndpoint = global.get(\"rpcEndpoint\");\nconst privateKey = global.get(\"privateKey\");\nconst privateKeyAddress = global.get(\"privateKeyAddress\");\nconst contractAddress = global.get(\"contract\");\nconst abi = global.get(\"abi\");\n\n///////////////////////////////////////////////////////////\n// Logic                                                 //\n///////////////////////////////////////////////////////////\n\nconst provider = new ethers.providers.JsonRpcProvider(`${rpcEndpoint}/${bpassKey}`);\nconst signer = new ethers.Wallet(privateKey, provider)\nconst contract = new ethers.Contract(contractAddress, abi, signer);\n\nconst txData = await contract.interface.encodeFunctionData('initialize', [msg.assetName, msg.assetSymbol, msg.assetUri]);\n\nconst txObject = {\n    from: privateKeyAddress,\n    to: contractAddress,\n    data: txData,\n    chainId: 44467,\n    gasLimit: 300000,\n    gasPrice: 0\n}\n\nconst result = await provider.send('eth_sendTransaction', [txObject])\nmsg.payload = { txHash: result }\n\n///////////////////////////////////////////////////////////\n// End                                                   //\n///////////////////////////////////////////////////////////\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [
-            {
-                "var": "ethers",
-                "module": "ethers"
-            }
-        ],
-        "x": 440,
-        "y": 200,
-        "wires": [
-            [
-                "fccc870e4d37747a",
-                "e6ac0147c62409c5"
-            ]
-        ]
-    },
-    {
-        "id": "fccc870e4d37747a",
-        "type": "debug",
-        "z": "a781da6f697711d2",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 760,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "e6ac0147c62409c5",
-        "type": "http response",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 770,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "5d247bc6cf6cbe71",
-        "type": "http in",
-        "z": "a781da6f697711d2",
-        "name": "Create Asset",
-        "url": "/createAsset",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 190,
-        "y": 380,
-        "wires": [
-            [
-                "d2b66c8a9936d187"
-            ]
-        ]
-    },
-    {
-        "id": "34a89b0416bc6b81",
-        "type": "inject",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "props": [
-            {
-                "p": "assetId",
-                "v": "",
-                "vt": "num"
-            },
-            {
-                "p": "maxSupply",
-                "v": "",
-                "vt": "num"
-            },
-            {
-                "p": "faceValue",
-                "v": "",
-                "vt": "num"
-            },
-            {
-                "p": "maturityTimestamp",
-                "v": "",
-                "vt": "num"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 210,
-        "y": 440,
-        "wires": [
-            [
-                "d2b66c8a9936d187"
-            ]
-        ]
-    },
-    {
-        "id": "d2b66c8a9936d187",
-        "type": "function",
-        "z": "a781da6f697711d2",
-        "name": "Create Asset",
-        "func": "///////////////////////////////////////////////////////////\n// Configuration                                         //\n///////////////////////////////////////////////////////////\n\nconst bpassKey = global.get(\"bpassKey\");\nconst rpcEndpoint = global.get(\"rpcEndpoint\");\nconst privateKey = global.get(\"privateKey\");\nconst privateKeyAddress = global.get(\"privateKeyAddress\");\nconst contractAddress = global.get(\"contract\");\nconst abi = global.get(\"abi\")\n\n///////////////////////////////////////////////////////////\n// Logic                                                 //\n///////////////////////////////////////////////////////////\n\nconst provider = new ethers.providers.JsonRpcProvider(`${rpcEndpoint}/${bpassKey}`);\nconst signer = new ethers.Wallet(privateKey, provider)\nconst contract = new ethers.Contract(contractAddress, abi, signer);\n\nconst txData = await contract.interface.encodeFunctionData('createAsset', [msg.assetId, msg.maxSupply, msg.faceValue, msg.maturityTimestamp]);\n\nconst txObject = {\n    from: privateKeyAddress,\n    to: contractAddress,\n    data: txData,\n    chainId: 44467,\n    gasLimit: 300000,\n    gasPrice: 0\n}\n\nconst result = await provider.send('eth_sendTransaction', [txObject])\nmsg.payload = { txHash: result }\n\n///////////////////////////////////////////////////////////\n// End                                                   //\n///////////////////////////////////////////////////////////\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [
-            {
-                "var": "ethers",
-                "module": "ethers"
-            }
-        ],
-        "x": 440,
-        "y": 440,
-        "wires": [
-            [
-                "044fdcbdfdcd7a04",
-                "30a836f0c70cd525"
-            ]
-        ]
-    },
-    {
-        "id": "044fdcbdfdcd7a04",
-        "type": "debug",
-        "z": "a781da6f697711d2",
-        "name": "debug 4",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 760,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "30a836f0c70cd525",
-        "type": "http response",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 770,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "c23e1cab7499043b",
-        "type": "inject",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "props": [
-            {
-                "p": "timestamp",
-                "v": "",
-                "vt": "date"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 210,
-        "y": 320,
-        "wires": [
-            [
-                "23c87abb19d043c5"
-            ]
-        ]
-    },
-    {
-        "id": "23c87abb19d043c5",
-        "type": "function",
-        "z": "a781da6f697711d2",
-        "name": "Current Time + 10 Minutes",
-        "func": "const start = msg.timestamp; // 2018-01-01 00:00:00\nconst end = msg.timestamp + 60 * 10; // 2018-02-10 00:00:00\n\nmsg.end = end;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 480,
-        "y": 320,
-        "wires": [
-            [
-                "f0aa49d74372ee5f",
-                "57092e2536312a66"
-            ]
-        ]
-    },
-    {
-        "id": "f0aa49d74372ee5f",
-        "type": "debug",
-        "z": "a781da6f697711d2",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 760,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "905a9d8acd2ffc25",
-        "type": "http in",
-        "z": "a781da6f697711d2",
-        "name": "Get Maturity Time",
-        "url": "/initialise",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 170,
-        "y": 260,
-        "wires": [
-            [
-                "23c87abb19d043c5"
-            ]
-        ]
-    },
-    {
-        "id": "57092e2536312a66",
-        "type": "http response",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 770,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "3c4575afe9674c7d",
-        "type": "http in",
-        "z": "a781da6f697711d2",
-        "name": "Mint",
-        "url": "/mintAsset",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 210,
-        "y": 620,
-        "wires": [
-            [
-                "396467b890506b70"
-            ]
-        ]
-    },
-    {
-        "id": "91ddbb58a215cbc4",
-        "type": "inject",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "props": [
-            {
-                "p": "assetId",
-                "v": "",
-                "vt": "num"
-            },
-            {
-                "p": "amounts",
-                "v": "",
-                "vt": "num"
-            },
-            {
-                "p": "recipient",
-                "v": "",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 210,
-        "y": 680,
-        "wires": [
-            [
-                "396467b890506b70"
-            ]
-        ]
-    },
-    {
-        "id": "396467b890506b70",
-        "type": "function",
-        "z": "a781da6f697711d2",
-        "name": "Mint Asset",
-        "func": "///////////////////////////////////////////////////////////\n// Configuration                                         //\n///////////////////////////////////////////////////////////\n\nconst bpassKey = global.get(\"bpassKey\");\nconst rpcEndpoint = global.get(\"rpcEndpoint\");\nconst privateKey = global.get(\"privateKey\");\nconst privateKeyAddress = global.get(\"privateKeyAddress\");\nconst contractAddress = global.get(\"contract\");\nconst abi = global.get(\"abi\")\n\n///////////////////////////////////////////////////////////\n// Logic                                                 //\n///////////////////////////////////////////////////////////\n\nconst provider = new ethers.providers.JsonRpcProvider(`${rpcEndpoint}/${bpassKey}`);\nconst signer = new ethers.Wallet(privateKey, provider)\nconst contract = new ethers.Contract(contractAddress, abi, signer);\n\nconst txData = await contract.interface.encodeFunctionData('mint', [msg.assetId, msg.amounts, msg.recipient]);\n\nconst txObject = {\n    from: privateKeyAddress,\n    to: contractAddress,\n    data: txData,\n    chainId: 44467,\n    gasLimit: 300000,\n    gasPrice: 0\n}\n\nconst result = await provider.send('eth_sendTransaction', [txObject])\nmsg.payload = { txHash: result }\n\n///////////////////////////////////////////////////////////\n// End                                                   //\n///////////////////////////////////////////////////////////\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [
-            {
-                "var": "ethers",
-                "module": "ethers"
-            }
-        ],
-        "x": 430,
-        "y": 680,
-        "wires": [
-            [
-                "800e2f3264dfcd5a",
-                "8973a39a370872a0"
-            ]
-        ]
-    },
-    {
-        "id": "800e2f3264dfcd5a",
-        "type": "debug",
-        "z": "a781da6f697711d2",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 760,
-        "y": 680,
-        "wires": []
-    },
-    {
-        "id": "8973a39a370872a0",
-        "type": "http response",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 770,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "736e61d2a897367f",
-        "type": "http in",
-        "z": "a781da6f697711d2",
-        "name": "View Balance",
-        "url": "/viewBalance",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 180,
-        "y": 740,
-        "wires": [
-            [
-                "79c13e182da793bf"
-            ]
-        ]
-    },
-    {
-        "id": "4a5021a501f7fa28",
-        "type": "inject",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "props": [
-            {
-                "p": "address",
-                "v": "",
-                "vt": "str"
-            },
-            {
-                "p": "id",
-                "v": "",
-                "vt": "num"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 210,
-        "y": 800,
-        "wires": [
-            [
-                "79c13e182da793bf"
-            ]
-        ]
-    },
-    {
-        "id": "79c13e182da793bf",
-        "type": "function",
-        "z": "a781da6f697711d2",
-        "name": "View Balance",
-        "func": "///////////////////////////////////////////////////////////\n// Configuration                                         //\n///////////////////////////////////////////////////////////\n\nconst bpassKey = global.get(\"bpassKey\");\nconst rpcEndpoint = global.get(\"rpcEndpoint\");\nconst privateKey = global.get(\"privateKey\");\nconst privateKeyAddress = global.get(\"privateKeyAddress\");\nconst contractAddress = global.get(\"contract\");\nconst abi = global.get(\"abi\")\n\n///////////////////////////////////////////////////////////\n// Logic                                                 //\n///////////////////////////////////////////////////////////\n\nconst provider = new ethers.providers.JsonRpcProvider(`${rpcEndpoint}/${bpassKey}`);\nconst signer = new ethers.Wallet(privateKey, provider)\nconst contract = new ethers.Contract(contractAddress, abi, signer);\n\nconst txData = await contract.interface.encodeFunctionData('balanceOf', [msg.address, msg.id]);\n\nconst txObject = {\n    from: privateKeyAddress,\n    to: contractAddress,\n    data: txData,\n    chainId: 44467,\n    gasLimit: 300000,\n    gasPrice: 0\n}\n\nconst result = await provider.send('eth_sendTransaction', [txObject])\nmsg.payload = { txHash: result }\n\n///////////////////////////////////////////////////////////\n// End                                                   //\n///////////////////////////////////////////////////////////\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [
-            {
-                "var": "ethers",
-                "module": "ethers"
-            }
-        ],
-        "x": 440,
-        "y": 800,
-        "wires": [
-            [
-                "2a6a5fc7f077b330",
-                "4d5d69f4484e672a"
-            ]
-        ]
-    },
-    {
-        "id": "2a6a5fc7f077b330",
-        "type": "debug",
-        "z": "a781da6f697711d2",
-        "name": "debug 7",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 760,
-        "y": 800,
-        "wires": []
-    },
-    {
-        "id": "4d5d69f4484e672a",
-        "type": "http response",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 770,
-        "y": 740,
-        "wires": []
-    },
-    {
-        "id": "d4cda817f22bae82",
-        "type": "http in",
-        "z": "a781da6f697711d2",
-        "name": "View Asset",
-        "url": "/viewAsset",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 190,
-        "y": 500,
-        "wires": [
-            [
-                "2da7906165d6d5a3"
-            ]
-        ]
-    },
-    {
-        "id": "95939c685c83f962",
-        "type": "inject",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "props": [
-            {
-                "p": "assetId",
-                "v": "",
-                "vt": "num"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 210,
-        "y": 560,
-        "wires": [
-            [
-                "2da7906165d6d5a3"
-            ]
-        ]
-    },
-    {
-        "id": "2da7906165d6d5a3",
-        "type": "function",
-        "z": "a781da6f697711d2",
-        "name": "View Asset",
-        "func": "///////////////////////////////////////////////////////////\n// Configuration                                         //\n///////////////////////////////////////////////////////////\n\nconst bpassKey = global.get(\"bpassKey\");\nconst rpcEndpoint = global.get(\"rpcEndpoint\");\nconst privateKey = global.get(\"privateKey\");\nconst privateKeyAddress = global.get(\"privateKeyAddress\");\nconst contractAddress = global.get(\"contract\");\nconst abi = global.get(\"abi\")\n\n///////////////////////////////////////////////////////////\n// Logic                                                 //\n///////////////////////////////////////////////////////////\n\nconst provider = new ethers.providers.JsonRpcProvider(`${rpcEndpoint}/${bpassKey}`);\nconst signer = new ethers.Wallet(privateKey, provider)\nconst contract = new ethers.Contract(contractAddress, abi, signer);\n\nconst txData = await contract.interface.encodeFunctionData('assetToDetails', [msg.assetId]);\n\nconst txObject = {\n    from: privateKeyAddress,\n    to: contractAddress,\n    data: txData,\n    chainId: 44467,\n    gasLimit: 300000,\n    gasPrice: 0\n}\n\nconst result = await provider.send('eth_sendTransaction', [txObject])\nmsg.payload = { txHash: result }\n\n///////////////////////////////////////////////////////////\n// End                                                   //\n///////////////////////////////////////////////////////////\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [
-            {
-                "var": "ethers",
-                "module": "ethers"
-            }
-        ],
-        "x": 430,
-        "y": 560,
-        "wires": [
-            [
-                "9844d4ddf4b294ef",
-                "a31a26d871259c19"
-            ]
-        ]
-    },
-    {
-        "id": "9844d4ddf4b294ef",
-        "type": "debug",
-        "z": "a781da6f697711d2",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 760,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "a31a26d871259c19",
-        "type": "http response",
-        "z": "a781da6f697711d2",
-        "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 770,
-        "y": 500,
-        "wires": []
-    }
+{
+"id": "8154b1dd0912e484",
+"type": "function",
+"z": "a781da6f697711d2",
+"name": "Set Global Variables",
+"func": "const glbVar = {\n privateKey: \"PRIVATE_KEY\",\n privateKeyAddress: \"ADDRESS\",\n smartContract: \"ADDRESS\",\n bpassKey: \"API_KEY\",\n rpcEndpoint: \"RCP_ENDPOINT\",\n abi: [\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"target\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"AddressEmptyCode\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"sender\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"balance\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"needed\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"tokenId\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"ERC1155InsufficientBalance\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"approver\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155InvalidApprover\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"idsLength\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"valuesLength\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"ERC1155InvalidArrayLength\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155InvalidOperator\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"receiver\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155InvalidReceiver\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"sender\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155InvalidSender\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"owner\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155MissingApprovalForAll\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"implementation\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1967InvalidImplementation\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\": \"ERC1967NonPayable\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\": \"FailedInnerCall\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\": \"InvalidInitialization\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\": \"NotInitializing\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"owner\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"OwnableInvalidOwner\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"account\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"OwnableUnauthorizedAccount\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\": \"UUPSUnauthorizedCallContext\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"bytes32\",\n \"name\": \"slot\",\n \"type\": \"bytes32\"\n }\n ],\n \"name\": \"UUPSUnsupportedProxiableUUID\",\n \"type\": \"error\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"account\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"bool\",\n \"name\": \"approved\",\n \"type\": \"bool\"\n }\n ],\n \"name\": \"ApprovalForAll\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256[]\",\n \"name\": \"assetIds\",\n \"type\": \"uint256[]\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256[]\",\n \"name\": \"amounts\",\n \"type\": \"uint256[]\"\n }\n ],\n \"name\": \"AssetTransferEvent\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": false,\n \"internalType\": \"uint64\",\n \"name\": \"version\",\n \"type\": \"uint64\"\n }\n ],\n \"name\": \"Initialized\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"previousOwner\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"newOwner\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"OwnershipTransferred\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256[]\",\n \"name\": \"ids\",\n \"type\": \"uint256[]\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256[]\",\n \"name\": \"values\",\n \"type\": \"uint256[]\"\n }\n ],\n \"name\": \"TransferBatch\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256\",\n \"name\": \"value\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"TransferSingle\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": false,\n \"internalType\": \"string\",\n \"name\": \"value\",\n \"type\": \"string\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"URI\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"implementation\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"Upgraded\",\n \"type\": \"event\"\n },\n {\n \"inputs\": [],\n \"name\": \"UPGRADE_INTERFACE_VERSION\",\n \"outputs\": [\n {\n \"internalType\": \"string\",\n \"name\": \"\",\n \"type\": \"string\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"assetToDetails\",\n \"outputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"assetId\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"name\",\n \"type\": \"string\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"symbol\",\n \"type\": \"string\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"maxSupply\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"faceValue\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"maturityTimestamp\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"assetUri\",\n \"type\": \"string\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"account\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"balanceOf\",\n \"outputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\": \"uint256\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address[]\",\n \"name\": \"accounts\",\n \"type\": \"address[]\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"ids\",\n \"type\": \"uint256[]\"\n }\n ],\n \"name\": \"balanceOfBatch\",\n \"outputs\": [\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"\",\n \"type\": \"uint256[]\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"assetId\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"amounts\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"burn\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"assetIds\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"amounts\",\n \"type\": \"uint256[]\"\n }\n ],\n \"name\": \"burnBatch\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"assetId\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"name\",\n \"type\": \"string\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"symbol\",\n \"type\": \"string\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"maxSupply\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"faceValue\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"maturityTimestamp\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"assetUri\",\n \"type\": \"string\"\n }\n ],\n \"name\": \"createAsset\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"exists\",\n \"outputs\": [\n {\n \"internalType\": \"bool\",\n \"name\": \"\",\n \"type\": \"bool\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [],\n \"name\": \"initialize\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"account\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"isApprovedForAll\",\n \"outputs\": [\n {\n \"internalType\": \"bool\",\n \"name\": \"\",\n \"type\": \"bool\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"assetId\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"amounts\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"recipient\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"mint\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"assetIds\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"amounts\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"recipient\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"mintBatch\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [],\n \"name\": \"owner\",\n \"outputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"\",\n \"type\": \"address\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [],\n \"name\": \"proxiableUUID\",\n \"outputs\": [\n {\n \"internalType\": \"bytes32\",\n \"name\": \"\",\n \"type\": \"bytes32\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [],\n \"name\": \"renounceOwnership\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"ids\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"values\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"bytes\",\n \"name\": \"data\",\n \"type\": \"bytes\"\n }\n ],\n \"name\": \"safeBatchTransferFrom\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"value\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"bytes\",\n \"name\": \"data\",\n \"type\": \"bytes\"\n }\n ],\n \"name\": \"safeTransferFrom\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"bool\",\n \"name\": \"approved\",\n \"type\": \"bool\"\n }\n ],\n \"name\": \"setApprovalForAll\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"bytes4\",\n \"name\": \"interfaceId\",\n \"type\": \"bytes4\"\n }\n ],\n \"name\": \"supportsInterface\",\n \"outputs\": [\n {\n \"internalType\": \"bool\",\n \"name\": \"\",\n \"type\": \"bool\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [],\n \"name\": \"totalSupply\",\n \"outputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\": \"uint256\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"totalSupply\",\n \"outputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\": \"uint256\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"newOwner\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"transferOwnership\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"newImplementation\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"bytes\",\n \"name\": \"data\",\n \"type\": \"bytes\"\n }\n ],\n \"name\": \"upgradeToAndCall\",\n \"outputs\": [],\n \"stateMutability\": \"payable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"uri\",\n \"outputs\": [\n {\n \"internalType\": \"string\",\n \"name\": \"\",\n \"type\": \"string\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n }\n ]\n\n}\n\nglobal.set('privateKey', glbVar.privateKey);\nglobal.set('privateKeyAddress',glbVar.privateKeyAddress)\nglobal.set('contract', glbVar.smartContract);\nglobal.set('bpassKey', glbVar.bpassKey);\nglobal.set('rpcEndpoint', glbVar.rpcEndpoint);\nglobal.set('abi',glbVar.abi)\n\nreturn msg;",
+"outputs": 1,
+"timeout": "",
+"noerr": 0,
+"initialize": "",
+"finalize": "",
+"libs": [],
+"x": 460,
+"y": 80,
+"wires": [
+[
+"a7c63a0fd0d1a779"
+]
+]
+}
 ]
 
-````
-
+```
 </details>
 
 ### 5. Interact with the Smart Contract
@@ -1154,18 +505,18 @@ In this window you can set:
 
 From here you can now click on the other `inject` options to:
 
-1. Get a Maturity Tim
-2. Create an Asset
-3. View the Asset
-4. Mint the Asset
-5. View the Balance
+1. Create an Asset
+2. View the Asset
+3. Mint the Asset
+4. View the Balance
 
 ![Asset Name](./../../static/img/developer-guides/asset-tokenization/asset-debug.png)
 
 To see how the interactions with your smart contract, choose the `Debug` option under the deploy button.
 
-## Great job!
+## Great job
 
 You have now created and deployed an Asset Tokenization smart contract using SettleMint!
 
 Find other guides in to help you build with SettleMint in our [Guide Library](guide-library.mdx)
+
