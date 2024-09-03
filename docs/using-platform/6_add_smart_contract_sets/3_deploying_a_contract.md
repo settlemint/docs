@@ -3,7 +3,8 @@ title: Deploying a Smart Contract
 description: Deploying a Smart Contract
 sidebar_position: 3
 ---
-# Deploying a Smart Contract with Foundry
+
+# Deploying a Smart Contract
 
 Deploying a smart contract in SettleMint won't be much different from doing so in your own environment.
 
