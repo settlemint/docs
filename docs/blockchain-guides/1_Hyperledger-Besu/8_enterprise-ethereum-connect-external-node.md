@@ -135,4 +135,4 @@ This is a dangerous step that can break your network without a way to recover. Y
 
 Execute [qbft_proposeValidatorVote](https://besu.hyperledger.org/development/private-networks/reference/api#qbft_proposevalidatorvote) on all your validator nodes. You can find the enode address of your new node in the logs of the container or by executing [admin_nodeInfo](https://besu.hyperledger.org/stable/public-networks/reference/api#admin_nodeinfo).
 
-Similarily you can make a platform validator a regular node by executing [qbft_proposeValidatorVote](https://besu.hyperledger.org/development/private-networks/reference/api#qbft_proposevalidatorvote) with proposal "false" on every validator node.
+Similarly you can make a platform validator a regular node by executing [qbft_proposeValidatorVote](https://besu.hyperledger.org/development/private-networks/reference/api#qbft_proposevalidatorvote) with proposal "false" on every validator node.
