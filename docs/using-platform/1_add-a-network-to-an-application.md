@@ -12,11 +12,17 @@ Before setting up a blockchain network, make sure you have an application in pla
 
 ![Add A Blockchain Network](../../static/img/about-settlemint/add-network.png)
 
-You can choose to set up a **permissioned blockchain network** or to **join a public blockchain network**.
+You can choose to **create a permissioned blockchain network** or **join a public blockchain network**, **join a permissioned blockchain network**, or an existing network in SettleMint **with an invitation code**.
 
 In a public blockchain network, anyone is free to join and participate in the activities of the network. In a permissioned blockchain network (often called a consortium network), participants need to obtain permission to become part of the network. The owner of the network dictates who can or cannot join, and allocates a set of permissions to participants.
 
 SettleMint supports **multiple protocols** for both types of networks. You can learn more about these protocols in the blockchain guides included in this documentation.
+
+Permissioned networks:
+
+- [Hyperledger Besu](../blockchain-guides/1_Hyperledger-Besu/1_enterprise-ethereum-the-basics.md)
+- [Hyperledger Fabric](../blockchain-guides/5_Hyperledger-Fabric/1_hyperledger-fabric-the-basics.md)
+- [Polygon Edge](../blockchain-guides/6_Polygon-Edge/1_polygon-edge-the-basics.md)
 
 Public networks (Mainnets & Testnets):
 
@@ -25,11 +31,12 @@ Public networks (Mainnets & Testnets):
 - [Binance Smart Chain](../blockchain-guides/3_Binance-Smart-Chain/1_binance-smart-chain-the-basics.md)
 - [Polygon](../blockchain-guides/4_Polygon/1_polygon-the-basics.md)
 
-Permissioned networks:
+Joining a permissioned network:
+TODO: link to connect to external network
 
-- [Hyperledger Besu](../blockchain-guides/1_Hyperledger-Besu/1_enterprise-ethereum-the-basics.md)
-- [Hyperledger Fabric](../blockchain-guides/5_Hyperledger-Fabric/1_hyperledger-fabric-the-basics.md)
-- [Polygon Edge](../blockchain-guides/6_Polygon-Edge/1_polygon-edge-the-basics.md)
+Joining a network with an invitation code:
+
+- [How to join an existing network in SettleMint with an invitation code](./4_join-a-network-by-invitation.md). For more information on how to invite network participants, see [how to invite network participants](./3_invite-network-participants.md).
 
 ## How to add a blockchain network
 
