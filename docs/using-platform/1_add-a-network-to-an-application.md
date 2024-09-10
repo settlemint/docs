@@ -54,9 +54,9 @@ Follow these steps to set up the blockchain network:
 1. **Select the protocol** of your choice and click **Continue**.
 2. Choose a **network name** and a **node name**. Use names that are easily recognizable in your dashboards. If you are joining a public network, you do not need to provide a network name.
 
-:::info Note
+:::info
 
-Your network requires at least 1 validating node to be operational. We will deploy 1 validating node to your network initially. You can [add more nodes](2_add-a-node-to-a-network.md) later.
+Note that your network requires at least 1 validating node to be operational. We will deploy 1 validating node to your network initially. You can [add more nodes](2_add-a-node-to-a-network.md) later.
 
 :::
 
