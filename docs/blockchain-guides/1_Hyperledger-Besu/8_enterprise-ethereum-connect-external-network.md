@@ -20,8 +20,6 @@ The SettleMint platform seamlessly integrates with existing external networks. Y
 
 This will create a new node in your existing network, and run it as a non-validator.
 
-TODO: image
-
 ## Adding nodes
 
 You can add more nodes to your network by navigating to the create node form (for more details on creating a node, [refer to this guide](../../using-platform/2_add-a-node-to-a-network.md)). Here, you can choose to create the nodes as validators or non-validators. However, to successfully deploy nodes as validators, you first need to have a majority of validators running on the platform. A majority of validators is defined as 66% of the total validators on the network.
@@ -36,13 +34,15 @@ Once there is a majority of validators running on the platform, deploying new no
 
 Unless there are a majority of validators running on the platform, you need to send votes on the externally running validator nodes to add the platform node as a validator.
 
-You can do this by executing [ibft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#ibft_proposevalidatorvote) on all your validator nodes. You can find the enode address of the platform node in the details tab of the node:
+You can do this by executing [ibft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#ibft_proposevalidatorvote) on all your validator nodes. You can find the enode address of the platform node in the 'Details' tab of the node under the 'Node Identity' section.
 
-TODO: image
+Once the vote is reflected in the network, restart the node in the platform. The node will be added as a validator and will start proposing blocks.
 
 ## Removing a validator in the platform
 
 Similarily you can make a platform validator a non-validator by executing [ibft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#ibft_proposevalidatorvote) with proposal "false" on every validator node.
+
+Once the vote is reflected in the network, restart the node in the platform. The node will be removed as a validator and will stop proposing blocks.
 
 ## Node type conflict warning
 
@@ -54,5 +54,3 @@ This can happen when:
 - The node is added as a validator on the platform, but it is running as a non-validator on the network.
 
 Here you can choose to update the node type in the platform to match the node type on the network. Alternatively, you can add or remove the node as a validator on the network using the steps mentioned above. The platform will then automatically resolve the node type conflict warning soon.
-
-TODO: image
