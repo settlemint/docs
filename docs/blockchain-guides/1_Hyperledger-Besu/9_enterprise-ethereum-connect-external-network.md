@@ -36,7 +36,7 @@ Unless there are a majority of validators running on the platform, you need to s
 
 You can do this by executing:
 
-- For Hyperledger Besu: [qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposeValidatorVote) on all your validator nodes.
+- For Hyperledger Besu: [qbft_proposeValidatorVote](https://besu.hyperledger.org/development/private-networks/reference/api#qbft_proposevalidatorvote) on all your validator nodes.
 - For Quorum: [istanbul_propose](https://docs.goquorum.consensys.io/reference/api-methods#istanbul_propose) on all your validator nodes.
 
 You can find the enode URL of the platform node in the 'Details' tab of the node under the 'Node Identity' section. Once the vote is reflected in the network, restart the node in the platform. The node will be added as a validator and will start proposing blocks.
@@ -45,7 +45,7 @@ You can find the enode URL of the platform node in the 'Details' tab of the node
 
 Similarily you can make a platform validator a non-validator by executing:
 
-- For Hyperledger Besu: [qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposeValidatorVote) with proposal "false" on every validator node.
+- For Hyperledger Besu: [qbft_proposeValidatorVote](https://besu.hyperledger.org/development/private-networks/reference/api#qbft_proposevalidatorvote) with proposal "false" on every validator node.
 - For Quorum: [istanbul_propose](https://docs.goquorum.consensys.io/reference/api-methods#istanbul_propose) with proposal "false" on every validator node.
 
 Once the vote is reflected in the network, restart the node in the platform. The node will be removed as a validator and will stop proposing blocks.
