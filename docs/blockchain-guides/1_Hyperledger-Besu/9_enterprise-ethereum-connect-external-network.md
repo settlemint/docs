@@ -6,7 +6,7 @@ The SettleMint platform seamlessly integrates with existing external networks. Y
 
 - A Hyperledger Besu or Quorum OBFT network
 - The genesis file of the network
-- Atleast one enode URL of an existing running node on the network. This is needed to sync the existing network with the platform node.
+- At least one enode URL of an existing running node on the network. This is needed to sync the existing network with the platform node.
 
 ## Join a network
 
@@ -15,7 +15,7 @@ The SettleMint platform seamlessly integrates with existing external networks. Y
 3. Choose **Hyperledger Besu** or **Quorum** depending on the network you want to join
 4. Enter a name for the network and the node. These names are used for identifying the network and node in the platform.
 5. Upload the genesis file of the network. If there are bootnodes specified in the genesis file, they will automatically be identified and added as external nodes.
-6. Add atleast one enode URL of an existing running node on the network to connect to. Note that if a bootnode is specified in the genesis file, it will be added as an external node automatically, so you can skip this step.
+6. Add at least one enode URL of an existing running node on the network to connect with. Note that if a bootnode is specified in the genesis file, it will be added as an external node automatically, so you can skip this step.
 7. Choose the deployment plan. This deployment plan will be used for the node. For more information about deployment plans, [see here](../../using-platform/22_deployment-plans.md).
 
 This will create a new node in your existing network, and run it as a non-validator.
@@ -34,13 +34,19 @@ Once there is a majority of validators running on the platform, deploying new no
 
 Unless there are a majority of validators running on the platform, you need to send votes on the externally running validator nodes to add the platform node as a validator.
 
-You can do this by executing [ibft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#ibft_proposevalidatorvote) on all your validator nodes. You can find the enode address of the platform node in the 'Details' tab of the node under the 'Node Identity' section.
+You can do this by executing:
 
-Once the vote is reflected in the network, restart the node in the platform. The node will be added as a validator and will start proposing blocks.
+- For Hyperledger Besu: [qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposeValidatorVote) on all your validator nodes.
+- For Quorum: [istanbul_propose](https://docs.goquorum.consensys.io/reference/api-methods#istanbul_propose) on all your validator nodes.
+
+You can find the enode URL of the platform node in the 'Details' tab of the node under the 'Node Identity' section. Once the vote is reflected in the network, restart the node in the platform. The node will be added as a validator and will start proposing blocks.
 
 ## Removing a validator in the platform
 
-Similarily you can make a platform validator a non-validator by executing [ibft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#ibft_proposevalidatorvote) with proposal "false" on every validator node.
+Similarily you can make a platform validator a non-validator by executing:
+
+- For Hyperledger Besu: [qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposeValidatorVote) with proposal "false" on every validator node.
+- For Quorum: [istanbul_propose](https://docs.goquorum.consensys.io/reference/api-methods#istanbul_propose) with proposal "false" on every validator node.
 
 Once the vote is reflected in the network, restart the node in the platform. The node will be removed as a validator and will stop proposing blocks.
 
