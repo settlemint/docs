@@ -1,4 +1,4 @@
-# Connect an external node
+# Connect to an external node
 
 There are many usecases where not all nodes are running on the SettleMint platform. For example, you might want to connect to a node running on a different server, you might want to connect to a node running on a different blockchain platform or just for development purposes. In this guide, we will show you how to connect to an external node.
 
