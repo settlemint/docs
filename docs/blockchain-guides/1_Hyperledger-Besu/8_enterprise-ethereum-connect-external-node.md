@@ -1,4 +1,4 @@
-# Connect an external node
+# Connect to an external node
 
 There are many usecases where not all nodes are running on the SettleMint platform. For example, you might want to connect to a node running on a different server, you might want to connect to a node running on a different blockchain platform or just for development purposes. In this guide, we will show you how to connect to an external node.
 
@@ -133,6 +133,6 @@ mynetwork-my-besu-node-1  | 2023-09-12 12:08:32.009+00:00 | EthScheduler-Workers
 
 This is a dangerous step that can break your network without a way to recover. You can assign this new node as a validator in the platform. This will make it sign blocks and transactions. Note that more than 66% of your validators need to be online for the network to keep functioning.
 
-Execute [ibft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#ibft_proposevalidatorvote) on all your validator nodes. You can find the enode address of your new node in the logs of the container or by executing [admin_nodeInfo](https://besu.hyperledger.org/stable/public-networks/reference/api#admin_nodeinfo).
+Execute [qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposevalidatorvote) on all your validator nodes. You can find the enode address of your new node in the logs of the container or by executing [admin_nodeInfo](https://besu.hyperledger.org/stable/public-networks/reference/api#admin_nodeinfo).
 
-Similarily you can make a platform validator a regular node by executing [ibft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#ibft_proposevalidatorvote) with proposal "false" on every validator node. Note however that the platform will not reflect this change.
+Similarly you can make a platform validator a regular node by executing [qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposevalidatorvote) with proposal "false" on every validator node.
