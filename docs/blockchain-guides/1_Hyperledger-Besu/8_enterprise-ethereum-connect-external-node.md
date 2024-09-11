@@ -133,6 +133,6 @@ mynetwork-my-besu-node-1  | 2023-09-12 12:08:32.009+00:00 | EthScheduler-Workers
 
 This is a dangerous step that can break your network without a way to recover. You can assign this new node as a validator in the platform. This will make it sign blocks and transactions. Note that more than 66% of your validators need to be online for the network to keep functioning.
 
-Execute [qbft_proposeValidatorVote](https://besu.hyperledger.org/development/private-networks/reference/api#qbft_proposevalidatorvote) on all your validator nodes. You can find the enode address of your new node in the logs of the container or by executing [admin_nodeInfo](https://besu.hyperledger.org/stable/public-networks/reference/api#admin_nodeinfo).
+Execute [qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposevalidatorvote) on all your validator nodes. You can find the enode address of your new node in the logs of the container or by executing [admin_nodeInfo](https://besu.hyperledger.org/stable/public-networks/reference/api#admin_nodeinfo).
 
-Similarly you can make a platform validator a regular node by executing [qbft_proposeValidatorVote](https://besu.hyperledger.org/development/private-networks/reference/api#qbft_proposevalidatorvote) with proposal "false" on every validator node.
+Similarly you can make a platform validator a regular node by executing [qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposevalidatorvote) with proposal "false" on every validator node.
