@@ -24,40 +24,6 @@ The platform allows for extensive customization. To explore all available option
 helm show values oci://registry.settlemint.com/settlemint-platform/settlemint --version vX.X.X
 ```
 
-## Advanced deployment configuration
-
-The advanced deployment configuration feature allows for more detailed Kubernetes configuration when deploying and managing cluster services.
-This feature enables fine-grained control over various Kubernetes resources, allowing for more customized and optimized deployments.
-
-### Enabling the Feature
-
-To enable advanced deployment configuration, add the following to your `values.yaml` file:
-
-```yaml
-features:
- advancedDeploymentConfig:
-  enabled: true
-```
-
-### Configurable Options
-
-When enabled, you can configure the following aspects of your Kubernetes resources:
-1. **Labels and Annotations**
-  - For Deployments, Ingress, and Services
-2. **Environment Variables**
-  - Custom environment variables for your containers
-3. **Tolerations**
-  - Specify which nodes your pods can be scheduled on
-4. **Affinities**
-  - Define rules for pod scheduling preferences
-5. **Node Selectors**
-  - Constrain pods to specific nodes
-
-### Usage
-
-- These configurations can be added when creating new cluster services in the platform.
-- Existing cluster services can be edited to include or modify these configurations.
-
 ## Helm Chart Configurations
 
 To install the SettleMint Platform, you must customize the Helm chart values according to your cluster's setup and services. Here's a breakdown of essential configurations:
@@ -212,3 +178,44 @@ EOF
 
 Ensure all configurations are tailored to your infrastructure and security requirements. For comprehensive guidance, refer to the prerequisites section and quick start examples.
 
+## Advanced deployment configuration
+
+If you need to override default Kubernetes configuration settings on the services you deploy (for example to add your own labels), you can do that in the advanced deployment configuration.
+
+Basic knowledge of Kubernetes is adviced when using this feature. If you have any questions or doubts, feel free to reach out to our support team through the 'Contact us' button on the screen.
+
+### Enabling the Feature
+
+To enable advanced deployment configuration, add the following to your `values.yaml` file:
+
+```yaml
+features:
+ advancedDeploymentConfig:
+  enabled: true
+```
+
+### How to use
+
+If you, for example, want to deploy a new blockchain node with the label `app=myapp` in Kubernetes, you can do the following in the platform:
+- Navigate to your application
+- Click 'Blockchain nodes'
+- Click 'Add a blockchain node'
+- Fill in the details for your node, choose a deployment plan and click 'Confirm'
+- You'll see a form titled 'Advanced deployment configuration (optional)'
+- Click 'Deployment'
+- Add your label
+- Click 'Confirm' at the bottom of the form
+
+### Configurable Options
+
+When enabled, you can configure the following aspects of your Kubernetes resources:
+1. **Labels and Annotations**
+  - For Deployments, Ingress, and Services
+2. **Environment Variables**
+  - Custom environment variables for your containers
+3. **Tolerations**
+  - Specify which nodes your pods can be scheduled on
+4. **Affinities**
+  - Define rules for pod scheduling preferences
+5. **Node Selectors**
+  - Constrain pods to specific nodes
