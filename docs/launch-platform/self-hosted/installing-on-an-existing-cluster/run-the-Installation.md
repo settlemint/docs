@@ -182,7 +182,7 @@ Ensure all configurations are tailored to your infrastructure and security requi
 
 If you need to override default Kubernetes configuration settings on the services you deploy (for example to add your own labels), you can do that in the advanced deployment configuration.
 
-Basic knowledge of Kubernetes is adviced when using this feature. If you have any questions or doubts, feel free to reach out to our support team through the 'Contact us' button on the screen.
+Basic knowledge of Kubernetes is advised when using this feature. If you have any questions or doubts, feel free to reach out to our support team through the 'Contact us' button on the screen.
 
 ### Enabling the Feature
 
