@@ -100,6 +100,8 @@ vault:
   roleId: "<role id>"
   secretId: "<secret id>"
 features:
+  advancedDeploymentConfig:
+    enabled: true
   observability:
     metrics:
       enabled: true
@@ -176,3 +178,44 @@ EOF
 
 Ensure all configurations are tailored to your infrastructure and security requirements. For comprehensive guidance, refer to the prerequisites section and quick start examples.
 
+## Advanced deployment configuration
+
+If you need to override default Kubernetes configuration settings on the services you deploy (for example to add your own labels), you can do that in the advanced deployment configuration.
+
+Basic knowledge of Kubernetes is advised when using this feature. If you have any questions or doubts, feel free to reach out to our support team through the 'Contact us' button on the screen.
+
+### Enabling the Feature
+
+To enable advanced deployment configuration, add the following to your `values.yaml` file:
+
+```yaml
+features:
+ advancedDeploymentConfig:
+  enabled: true
+```
+
+### How to use
+
+If you, for example, want to deploy a new blockchain node with the label `app=myapp` in Kubernetes, you can do the following in the platform:
+- Navigate to your application
+- Click 'Blockchain nodes'
+- Click 'Add a blockchain node'
+- Fill in the details for your node, choose a deployment plan and click 'Confirm'
+- You'll see a form titled 'Advanced deployment configuration (optional)'
+- Click 'Deployment'
+- Add your label
+- Click 'Confirm' at the bottom of the form
+
+### Configurable Options
+
+When enabled, you can configure the following aspects of your Kubernetes resources:
+1. **Labels and Annotations**
+  - For Deployments, Ingress, and Services
+2. **Environment Variables**
+  - Custom environment variables for your containers
+3. **Tolerations**
+  - Specify which nodes your pods can be scheduled on
+4. **Affinities**
+  - Define rules for pod scheduling preferences
+5. **Node Selectors**
+  - Constrain pods to specific nodes
