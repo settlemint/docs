@@ -24,6 +24,40 @@ The platform allows for extensive customization. To explore all available option
 helm show values oci://registry.settlemint.com/settlemint-platform/settlemint --version vX.X.X
 ```
 
+## Advanced deployment configuration
+
+The advanced deployment configuration feature allows for more detailed Kubernetes configuration when deploying and managing cluster services.
+This feature enables fine-grained control over various Kubernetes resources, allowing for more customized and optimized deployments.
+
+### Enabling the Feature
+
+To enable advanced deployment configuration, add the following to your `values.yaml` file:
+
+```yaml
+features:
+ advancedDeploymentConfig:
+  enabled: true
+```
+
+### Configurable Options
+
+When enabled, you can configure the following aspects of your Kubernetes resources:
+1. **Labels and Annotations**
+  - For Deployments, Ingress, and Services
+2. **Environment Variables**
+  - Custom environment variables for your containers
+3. **Tolerations**
+  - Specify which nodes your pods can be scheduled on
+4. **Affinities**
+  - Define rules for pod scheduling preferences
+5. **Node Selectors**
+  - Constrain pods to specific nodes
+
+### Usage
+
+- These configurations can be added when creating new cluster services in the platform.
+- Existing cluster services can be edited to include or modify these configurations.
+
 ## Helm Chart Configurations
 
 To install the SettleMint Platform, you must customize the Helm chart values according to your cluster's setup and services. Here's a breakdown of essential configurations:
@@ -100,6 +134,8 @@ vault:
   roleId: "<role id>"
   secretId: "<secret id>"
 features:
+  advancedDeploymentConfig:
+    enabled: true
   observability:
     metrics:
       enabled: true
