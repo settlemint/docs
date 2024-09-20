@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'Sandbox Installation: BTP on Goodle Cloud Platform with Terraform'
+sidebar_label: 'Sandbox Installation: BTP on Google Cloud Platform with Terraform'
 ---
 
 # BTP on Goodle Cloud Platform
