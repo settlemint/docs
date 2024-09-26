@@ -326,7 +326,7 @@ Access to services is facilitated through domain names. The setup can involve:
 - Wildcard DNS
 
  entries for each cluster, ensuring they include TLS termination to secure the domain.
-- Path-based routing as an alternative method, depending on the cluster’s setup and requirements.
+- Path-based routing as an alternative method, depending on the cluster's setup and requirements.
 
 Before deploying, please verify that your provided cluster includes an Ingress controller configured to handle routing. Our deployment process assumes and relies on the presence of an Ingress controller for seamless operation. We offer a straightforward "Ingress" object designed specifically for nginx-ingress, which can be easily adjusted to align with your preferred Ingress controller.
 
@@ -372,3 +372,91 @@ targets:
           mixedLoadBalancers: false
 ```
 Once your values file is prepared, you're all set to proceed with the installation!
+
+### 6. Network Policies enforcement on the target clusters
+
+The BTP platform applies NetworkPolicies for CustomDeployment services to restrict access to services to other namespaces. However, not all cloud providers enforce NetworkPolicies by default on their Kubernetes clusters. We strongly recommend enabling NetworkPolicy enforcement on your Kubernetes cluster before creating it.
+
+Here's how to enable NetworkPolicy enforcement on different cloud providers:
+
+#### Google Kubernetes Engine (GKE)
+When creating a new cluster or updating an existing one:
+
+```bash
+gcloud container clusters create/update CLUSTER_NAME \
+    --enable-network-policy
+```
+
+or enable `Dataplane V2`, which enforce NetworkPolicies.
+
+```bash
+gcloud container clusters update CLUSTER_NAME \
+    --enable-dataplane-v2
+```
+
+#### Amazon Elastic Kubernetes Service (EKS)
+New EKS clusters will have NetworkPolicy enforcement enabled by default.
+
+If you have an existing cluster without NetworkPolicy enforcement enabled, you can update it by setting the following configuration for EKS CNI plugin:
+
+```bash
+aws eks update-addon --cluster-name YOUR_CLUSTER_NAME --addon-name vpc-cni --addon-version ADDON_VERSION --configuration-values '{"enableNetworkPolicy":"true"}'
+```
+
+#### Azure Kubernetes Service (AKS)
+When creating a new cluster:
+
+```bash
+az aks create --resource-group myResourceGroup --name myAKSCluster --network-policy calico
+```
+
+To update an existing cluster:
+
+```bash
+az aks update --resource-group myResourceGroup --name myAKSCluster --network-policy calico
+```
+
+By enforcing NetworkPolicies, you enhance the security of your BTP deployment by controlling traffic flow between pods and namespaces.
+
+NetworkPolicies look like this:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: combined-restrict-internal-allow-external
+  namespace: $namespace
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    # 1. Allow DNS resolution (covers GKE, AKS, and EKS)
+    - to:
+        - ipBlock:
+            cidr: 10.0.0.0/8      # For the GKE cluster
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    # 2. Allow traffic within the same namespace (curl)
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: $namespace
+    # 3. Allow traffic to all external IPs but block internal IP ranges
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+```
