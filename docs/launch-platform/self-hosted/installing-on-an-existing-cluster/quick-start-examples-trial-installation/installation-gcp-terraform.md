@@ -3,7 +3,7 @@ sidebar_position: 1
 sidebar_label: 'Sandbox Installation: BTP on Google Cloud Platform with Terraform'
 ---
 
-# BTP on Goodle Cloud Platform
+# BTP on Google Cloud Platform
 
 ## **For DEMO purposes only.**
 *This is not production ready solution. We run all components locally and not in HA mode. For production, we suggest running PostgreSQL, Redis, and Vault outside of the cluster.*
@@ -74,7 +74,7 @@ You will get a Client ID and Client secret at the end of this process, note them
 Below you will find instruction how to setup BTP platform on GCP with terraform code. It consist 2 steps and manual step, as we need to preconfigure public DNS zone to access BTP platform.
 
 clone the following github repository:
-```sh 
+```sh
 git clone git@github.com:settlemint/tutorial-btp-on-gcp.git
 ```
 
