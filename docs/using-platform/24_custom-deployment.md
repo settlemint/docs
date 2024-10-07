@@ -60,7 +60,7 @@ When using Custom Deployment, keep the following limitations in mind:
 
 2. **Read-Only Filesystem**: The filesystem is read-only. For data persistence, consider using:
    - Hasura: A GraphQL engine that provides a scalable database solution. See [Backend-as-a-service
- documentation](../backend-as-a-service/).
+ documentation](../backend-as-a-service).
    - Other External Services: Depending on your specific needs, you may use other cloud-based storage or database services.
 
 3. **Stateless Applications**: Your applications should be designed to be stateless. This ensures better scalability and reliability in a cloud environment.
