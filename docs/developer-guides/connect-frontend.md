@@ -260,6 +260,13 @@ After clicking `Confirm`, you will see a `Tokens Sent` confirmation on your fron
 
 Congrats! You will now see the transaction confirmed in your Metamask activity.
 
+
 ## Next Steps
 
 Now that you have built your custom frontend, you can now explore more [smart contract use cases](../guide-library) you can build on SettleMint!
+
+## Deploy Your Frontend as a Custom Deployment
+
+After building your custom frontend, you can deploy it on the SettleMint platform using the Custom Deployment feature. This allows you to host your frontend application alongside your blockchain components, providing a seamless integration within the SettleMint ecosystem.
+
+For more detailed information on Custom Deployments, refer to the [Custom Deployment documentation](../../using-platform/custom-deployment).
