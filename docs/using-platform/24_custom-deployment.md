@@ -1,6 +1,6 @@
 # Custom Deployment
 
-Custom Deployment allows you to deploy your own Docker images, such as frontend applications, on the SettleMint platform. This feature provides flexibility for integrating custom solutions within your blockchain-based applications.
+A Custom Deployment allows you to deploy your own Docker images, such as frontend applications, on the SettleMint platform. This feature provides flexibility for integrating custom solutions within your blockchain-based applications.
 
 ## Create a Custom Deployment
 
@@ -15,7 +15,7 @@ To create a Custom Deployment on the SettleMint platform, follow these steps:
    - Environment variables (if required)
    - Custom domain information (if applicable)
 5. Configure any additional settings as needed.
-6. Click on Confirm and wait for the Custom Deployment to be in the Running status. [View the list of statuses](../reference/14_statuses.md).
+6. Click on 'Confirm' and wait for the Custom Deployment to be in the Running status. [View the list of statuses](../reference/14_statuses.md).
 
 ## DNS Configuration for Custom Domains
 
