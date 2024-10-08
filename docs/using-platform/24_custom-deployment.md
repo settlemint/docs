@@ -33,12 +33,12 @@ When using custom domains with your Custom Deployment, you'll need to configure 
 3. **Access Your Domain's DNS Settings**: Log in to your domain registrar or DNS provider's control panel.
 
 4. **Create DNS Records**:
-   - Create a CNAME record pointing your custom domain to the provided hostname.
-   - Example: `CNAME example.com your-app.settlemint-platform.com`
+   - Create an ALIAS record pointing your custom domain to the provided hostname.
+   - Example: `ALIAS example.com gke-europe.settlemint.com`
 
 5. **Configure Subdomains (Optional)**:
    - If you want to use subdomains, create additional CNAME records as needed.
-   - Example: `CNAME app.example.com your-app.settlemint-platform.com`
+   - Example: `CNAME app.example.com gke-europe.settlemint.com`
 
 6. **Set TTL (Time to Live)**:
    - Set a lower TTL (e.g., 300 seconds) initially to allow for quicker propagation.
