@@ -36,13 +36,13 @@ When using custom domains with your Custom Deployment, you'll need to configure 
 
    For Top-Level Domains (e.g., example.com):
    - Remove any existing A and AAAA records for the domain you're configuring.
-   - Remove any existing A and AAAA records for the www domain (e.g., www.example.com) if you're using it.
+   - Remove any existing A and AAAA records for the www domain (e.g., <span>www</span>.example.com) if you're using it.
    - Create ALIAS records pointing your custom domain to the provided hostname.
-   - Example: `ALIAS example.com gke-europe.settlemint.com` and `ALIAS www.example.com gke-europe.settlemint.com`
+   - Example: <br />`ALIAS example.com gke-europe.settlemint.com` and `ALIAS www.example.com gke-europe.settlemint.com`
 
    For Subdomains (e.g., app.example.com):
    - Create a CNAME record pointing your subdomain to the provided hostname.
-   - Example: `CNAME app.example.com gke-europe.settlemint.com`
+   - Example: <br />`CNAME app.example.com gke-europe.settlemint.com`
 
 5. **Set TTL (Time to Live)**:
    - Set a lower TTL (e.g., 300 seconds) initially to allow for quicker propagation.
