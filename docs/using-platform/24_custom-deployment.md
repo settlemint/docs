@@ -23,36 +23,40 @@ When using custom domains with your Custom Deployment, you'll need to configure 
 
 1. **Add Custom Domain to the SettleMint Platform**:
    - Navigate to your Custom Deployment in the SettleMint platform.
-   - In the manager custom deployment menu, click on the edit custom deployment action
-   - Locate the custom domains configuration section
-   - Enter your desired custom domain (e.g., example.com or app.example.com).
+   - In the manage custom deployment menu, click on the edit custom deployment action.
+   - Locate the custom domains configuration section.
+   - Enter your desired custom domain (e.g., example.com for top-level domain or app.example.com for subdomain).
    - Save the changes to update your Custom Deployment settings.
 
-2. **Obtain Your Application's Hostname**: After adding your custom domain, the SettleMint platform will provide you with a CNAME record. This can be found in the "Connect" tab of your Custom Deployment.
+2. **Obtain Your Application's Hostname**: After adding your custom domain, the SettleMint platform will provide you with an ALIAS (for top-level domains) or CNAME (for subdomains) record. This can be found in the "Connect" tab of your Custom Deployment.
 
 3. **Access Your Domain's DNS Settings**: Log in to your domain registrar or DNS provider's control panel.
 
-4. **Create DNS Records**:
+4. **Configure DNS Records**:
+
+   For Top-Level Domains (e.g., example.com):
    - Remove any existing A and AAAA records for the domain you're configuring.
    - Remove any existing A and AAAA records for the www domain (e.g., www.example.com) if you're using it.
    - Create ALIAS records pointing your custom domain to the provided hostname.
    - Example: `ALIAS example.com gke-europe.settlemint.com` and `ALIAS www.example.com gke-europe.settlemint.com`
 
-5. **Configure Subdomains (Optional)**:
-   - If you want to use subdomains, create additional CNAME records as needed.
+   For Subdomains (e.g., app.example.com):
+   - Create a CNAME record pointing your subdomain to the provided hostname.
    - Example: `CNAME app.example.com gke-europe.settlemint.com`
 
-6. **Set TTL (Time to Live)**:
+5. **Set TTL (Time to Live)**:
    - Set a lower TTL (e.g., 300 seconds) initially to allow for quicker propagation.
    - You can increase it later for better caching (e.g., 3600 seconds).
 
-7. **Verify DNS Propagation**:
+6. **Verify DNS Propagation**:
    - Use online DNS lookup tools to check if your DNS changes have propagated.
    - Note that DNS propagation can take up to 48 hours, although it's often much quicker.
 
-8. **SSL/TLS Configuration**:
-   - The SettleMint platform typically handles SSL/TLS certificates automatically.
+7. **SSL/TLS Configuration**:
+   - The SettleMint platform typically handles SSL/TLS certificates automatically for both top-level domains and subdomains.
    - If you need to use your own certificates, please contact us for assistance and further instructions.
+
+Note: The configuration process is similar for both top-level domains and subdomains. The main difference lies in the type of DNS record you create (ALIAS for top-level domains, CNAME for subdomains) and whether you need to remove existing records.
 
 ## Limitations and Considerations
 
