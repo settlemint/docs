@@ -1,13 +1,17 @@
 # Application Access Tokens
 
-If you want to set up an integration between your SettleMint services and other applications, you need application access tokens to authenticate your requests with the SettleMint API. Application access tokens allow any user to interact with all or selected services of an application. They identify the application, not the user, and are not associated to a personal account. Both admins and users of an organization can create application access tokens for it's applications.
+If you want to set up an integration between your SettleMint services and other applications, you need application access tokens to authenticate your requests with the SettleMint API.
+
+Application access tokens allow any user to interact with all or selected services of an application. They identify the application, not the user, and are not associated to a personal account.
+
+Both admins and users of an organization can create application access tokens for it's applications.
 
 ## Create an application access token
 
 Navigate to the **application** for which you want to create an application access token. Click on the **Add an application access token** button, this opens a form where you can create your new application access token.
 
 1. Choose a **name** for your application access token.
-2. Select an **expiration date**. Be sure to select an appropriate expiration date, since you cannot update it later.
+2. Select an **expiration date**. You cannot update this later.
 3. Select a scope type. There are two types of scope: **All** or **Specific**.
    1. If you selected **All**, you grant access to all services of the application. If you add more services to the application later, this access token will grant access to these new services as well.
    2. If you selected **Specific**, you can choose which specific services this access token will grant access to.
