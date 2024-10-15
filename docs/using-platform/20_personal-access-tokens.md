@@ -35,3 +35,9 @@ You can use these personal access tokens in three ways depending on what works f
 - As the last part of the URL `https://myservice.settlemint.com/TOKEN`.
   - For IPFS nodes build your uri so it becomes `https://myservice.settlemint.com/TOKEN/api/v0/...`
   - For Avalanche and Fuji build your uri so they look like `https://myservice.settlemint.com/ext/bc/C/rpc/TOKEN`
+
+## Using application access tokens vs personal access tokens
+
+For most use cases, you should use application access tokens. Since they are directly linked to the application, the token continues to work even if the user leaves the organization. They also provide more granular access control.
+
+Personal access tokens are a simpler way to authenticate, but they are linked to the user's account. If the user leaves the organization, the token will no longer work for the services of that organization.
