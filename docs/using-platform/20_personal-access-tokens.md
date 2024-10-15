@@ -1,8 +1,6 @@
 # Personal access tokens
 
-If you want to set up an integration between your SettleMint services and other applications, you need personal access tokens (or [Application access tokens](19_application-access-tokens.md)) to authenticate your requests with the SettleMint API.
-
-Personal access tokens allow one single user to interact with any SettleMint service, with the rights attached to the user's role in the organization (admin or user). They allow access to all services that the user has access to, and are linked to the personal account of the user.
+Personal access tokens (or [Application access tokens](19_application-access-tokens.md)) let you connect your SettleMint services with other apps securely. They represent an individual user, and have the same rights as the user's role in the organization (admin or user). They can be used to connect to all services that the user has access to.
 
 ## Create a personal access token
 
@@ -10,13 +8,13 @@ In the upper right corner of any page, click your **profile picture or avatar**,
 
 Click on the **Add a personal access token** button, this opens a form where you can create your personal access token.
 
-1. Choose a **name** for your personal access token. Make sure the name is descriptive so you know which application uses it.
+1. Choose a **name** for your personal access token.
 2. Select an **expiration date**. You cannot update this later.
 3. Click **Confirm** to create your personal access token.
 
 :::warning Warning
 
-Make sure to copy your personal access token and store it somewhere safe, as you will not be able to see it again. Treat it like a password and keep it secret.
+Copy and save your token securely - you won't see it again. Treat it like a password and keep it secret.
 
 :::
 
