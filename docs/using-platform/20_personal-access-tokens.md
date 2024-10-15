@@ -1,40 +1,39 @@
-# API keys
+# Personal access tokens
 
-If you want to set up an integration between your SettleMint account and other applications, you need API keys (or personal access tokens) to authenticate your request to the SettleMint API. Different API keys are suited for different functionality, and the scopes are unique for each key.
+If you want to set up an integration between your SettleMint services and other applications, you need personal access tokens (or [Application access tokens](19_application-access-tokens.md)) to authenticate your requests with the SettleMint API.
 
-## Generate an API key
+Personal access tokens allow one single user to interact with any SettleMint service, with the rights attached to the user's role in the organization (admin or user). They allow access to all services that the user has access to, and are linked to the personal account of the user.
 
-In the upper right corner of any page, click your **profile picture or avatar**, and then click **API keys**.
+## Create a personal access token
 
-Click **Generate new API key**.
+In the upper right corner of any page, click your **profile picture or avatar**, and then click **Personal access tokens**.
 
-Follow these steps to generate an API key:
+Click on the **Add a personal access token** button, this opens a form where you can create your personal access token.
 
-1. Choose a **name** for your API key. Make sure the name is descriptive so you know which application uses it.
-2. Select one or more **scopes** you want to grant this API key.
-3. Click **Confirm** to generate and view the API key.
-4. Click the API key to **copy it**.
+1. Choose a **name** for your personal access token. Make sure the name is descriptive so you know which application uses it.
+2. Select an **expiration date**. You cannot update this later.
+3. Click **Confirm** to create your personal access token.
 
 :::warning Warning
 
-Make sure to copy your API key and store it somewhere safe, as you will not be able to see it again. Treat it like a password and keep it secret.
+Make sure to copy your personal access token and store it somewhere safe, as you will not be able to see it again. Treat it like a password and keep it secret.
 
 :::
 
-## Delete an API key
+## Delete a personal access token
 
-If you are worried that an API key has been compromised, or you no longer use the integration for which you had generated a particular API key, you can delete that API key.
+If you are worried that your personal access token has been compromised, or you no longer use the integration for which you had generated a particular personal access token, you can delete that personal access token.
 
-1. Navigate to the list of your API keys, and find the API key you want to delete.
-2. Click **Delete** next to the API key.
-3. Type **DELETE** to confirm. The API key will no longer be usable.
+1. Navigate to the list of your personal access tokens, and find the personal access token you want to delete.
+2. Click **Delete** next to the personal access token.
+3. Type **DELETE** to confirm. The personal access token will no longer be usable.
 
-## Use an API key
+## Use a personal access token
 
-You can use these API keys in three ways depending on what works for your use case.
+You can use these personal access tokens in three ways depending on what works for your use case.
 
-- As a header, you can use the header `x-auth-token: KEY`.
-- As a query parameter using `https://myservice.settlemint.com/?token=APIKEY` appended to any URL.
-- As the last part of the URL `https://myservice.settlemint.com/APIKEY`.
-  - For IPFS nodes build your uri so it becomes `https://myservice.settlemint.com/APIKEY/api/v0/...`
-  - For Avalanche and Fuji build your uri so they look like `https://myservice.settlemint.com/ext/bc/C/rpc/APIKEY`
+- As a header, you can use the header `x-auth-token: TOKEN`.
+- As a query parameter using `https://myservice.settlemint.com/?token=TOKEN` appended to any URL.
+- As the last part of the URL `https://myservice.settlemint.com/TOKEN`.
+  - For IPFS nodes build your uri so it becomes `https://myservice.settlemint.com/TOKEN/api/v0/...`
+  - For Avalanche and Fuji build your uri so they look like `https://myservice.settlemint.com/ext/bc/C/rpc/TOKEN`
