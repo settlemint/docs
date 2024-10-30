@@ -5,7 +5,7 @@ sidebar_position: 2
 keywords: [integration studio, OpenAI, Hasura, pgvector, AI, SettleMint]
 ---
 
-This guide will demonstrate how to use the **SettleMint Integration Studio** to create a flow that incorporates OpenAI nodes for vectorization and utilizes the `pgvector` plugin in Hasura for similarity searches. If you are new to SettleMint, check out the **Getting Started Guide**.
+This guide will demonstrate how to use the **SettleMint Integration Studio** to create a flow that incorporates OpenAI nodes for vectorization and utilizes the `pgvector` plugin in Hasura for similarity searches. If you are new to SettleMint, check out the [Getting Started Guide](../about-settlemint/0_intro.mdx).
 
 In this guide, you will learn to create workflows that:
 - Use **OpenAI nodes** to vectorize data.
@@ -15,6 +15,7 @@ In this guide, you will learn to create workflows that:
 ### Prerequisites
 - A SettleMint Platform account with **Integration Studio** and **Hasura** deployed
 - Access to the Integration Studio and Hasura consoles in your SettleMint environment
+- An OpenAI API key for using the OpenAI nodes
 - A data source to vectorize (e.g., Graph Node, Attestation Indexer, or external API endpoint)
 
 ### Example Flow Available
@@ -32,7 +33,7 @@ You can use this flow as a reference while building your own implementation. Eac
 
 ### Step 1: Set Up Vector Storage in Hasura
 
-1. Access your SettleMints Hasura instance through the admin console.
+1. Access your SettleMint's Hasura instance through the admin console.
 
 2. Create a new table called `document_embeddings` with the following columns:
    - `id` (type: UUID, primary key)
