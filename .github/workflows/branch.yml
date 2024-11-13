@@ -91,7 +91,7 @@ jobs:
           pnpm install --frozen-lockfile --prefer-offline
 
       - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
+        uses: rlespinasse/github-slug-action@v5
 
       - name: Version
         id: version
