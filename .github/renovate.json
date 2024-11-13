@@ -88,14 +88,14 @@
     {
       "hostType": "docker",
       "domainName": "ghcr.io",
-      "username": "roderik",
-      "password": "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"
+      "username": "{{ secrets.GITHUB_USER }}",
+      "password": "{{ secrets.GITHUB_PASS }}"
     },
     {
       "hostType": "docker",
       "domainName": "docker.io",
-      "username": "roderik",
-      "password": "dckr_pat_9ALhAALMPtGlj1yuv5q7mfQitzE"
+      "username": "{{ secrets.DOCKER_USER }}",
+      "password": "{{ secrets.DOCKER_PASS }}"
     }
   ]
 }
