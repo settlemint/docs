@@ -309,10 +309,6 @@ contract AssetTokenization is Initializable, UUPSUpgradeable, ERC1155SupplyUpgra
 
 ```
 
-
-
-
-
 </details>
 
 ### 4. Change the Deployment Configuration
