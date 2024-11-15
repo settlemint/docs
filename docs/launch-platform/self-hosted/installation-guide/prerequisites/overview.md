@@ -9,25 +9,25 @@ Before installing the SettleMint Platform, you'll need to set up several core se
 
 ## Required Services
 
-1. **PostgreSQL Database**
+1. **Domain and TLS**
+   - Domain name configuration
+   - SSL/TLS certificates
+   - Secure communication setup
+
+2. **Ingress Controller**
+   - Traffic management
+   - Load balancing
+   - SSL/TLS termination
+
+3. **PostgreSQL Database**
    - Primary database for the platform
    - Stores user data, configurations, and platform state
    - Minimum version: PostgreSQL 13+
 
-2. **Redis Cache**
+4. **Redis Cache**
    - In-memory data structure store
    - Used for session management and caching
    - Handles real-time features
-
-3. **OAuth Provider**
-   - Authentication and authorization service
-   - User identity management
-   - Single sign-on capabilities
-
-4. **Domain and TLS**
-   - Domain name configuration
-   - SSL/TLS certificates
-   - Secure communication setup
 
 5. **S3-Compatible Storage**
    - Object storage for platform assets
@@ -39,10 +39,10 @@ Before installing the SettleMint Platform, you'll need to set up several core se
    - Encryption key storage
    - Secure credentials handling
 
-7. **Ingress Controller**
-   - Traffic management
-   - Load balancing
-   - SSL/TLS termination
+7. **OAuth Provider**
+   - Authentication and authorization service
+   - User identity management
+   - Single sign-on capabilities
 
 8. **Metrics and Logs**
    - Prometheus for metrics collection
