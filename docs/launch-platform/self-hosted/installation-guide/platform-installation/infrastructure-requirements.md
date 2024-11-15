@@ -1,106 +1,298 @@
 ---
 title: Infrastructure Requirements
 sidebar_position: 4
+description: Infrastructure requirements for self-hosting the platform
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Infrastructure Requirements
 
-:::note
-The requirements listed below are for the core platform components only. If you plan to host prerequisites (databases, caches, etc.) or additional services on the same infrastructure, you'll need to add their requirements to these baseline specifications.
+:::caution
+The requirements listed below are for the core platform components only. Additional resources will be needed for prerequisites and services you plan to deploy.
 :::
 
 ## Compute Resources
 
-### Minimum Requirements (Platform Only)
-- **CPU**: 4 cores
-- **RAM**: 16GB
-- **Storage**: 100GB SSD
+<Tabs>
+  <TabItem value="minimum" label="Minimum Requirements" default>
 
-### Recommended Specifications (Platform Only)
-- **CPU**: 8+ cores
-- **RAM**: 32GB
-- **Storage**: 250GB+ SSD
+* **CPU**: 4 cores
+* **RAM**: 16GB
+* **Storage**: 100GB SSD
+
+:::note
+Minimum requirements are suitable for testing and development environments only.
+:::
+
+  </TabItem>
+  <TabItem value="recommended" label="Recommended Specifications">
+
+* **CPU**: 8+ cores
+* **RAM**: 32GB
+* **Storage**: 250GB+ SSD
+
+:::tip
+These specifications provide headroom for growth and better performance.
+:::
+
+  </TabItem>
+</Tabs>
 
 ## Network Requirements
 
-### Connectivity
-- Outbound internet access for container images and updates
-- Load balancer configuration
-- Ingress controller
-- SSL/TLS certificates
+The platform requires specific network configurations to ensure secure and reliable communication between components:
 
-### Ports
-- HTTP/HTTPS (80/443)
-- Custom ports for services
-- Internal communication ports
+<div className="row">
+<div className="col col--6">
+
+### Connectivity
+* **Internet Access**: Required for pulling container images and updates
+* **Load Balancer**: For distributing traffic across nodes
+* **Ingress Controller**: For routing external traffic
+* **SSL/TLS**: Valid certificates for secure communication
+
+</div>
+<div className="col col--6">
+
+### Required Ports
+* **80/443**: HTTP/HTTPS traffic
+* **6443**: Kubernetes API server
+* **30000-32767**: NodePort services range
+* **10250**: Kubelet API
+* **179**: Calico BGP (if using Calico)
+
+</div>
+</div>
+
+:::note Network Security
+We recommend implementing network policies and security groups to control traffic flow between components.
+:::
 
 ## Storage Requirements
 
-### Performance
-- SSD storage for databases
-- Redundant storage for critical data
-- Backup storage considerations
+Proper storage configuration is crucial for platform stability and performance. Consider the following requirements:
+
+<div className="row">
+<div className="col col--6">
+
+### Performance Requirements
+* **Type**: SSD storage required for all components
+* **IOPS**: Minimum 3000 IOPS for database volumes
+* **Latency**: < 10ms average latency
+* **Throughput**: 125MB/s minimum for database volumes
+
+</div>
+<div className="col col--6">
 
 ### Capacity Planning
-- Initial storage requirements
-- Growth projections
-- Backup storage allocation
+* **Initial Allocation**: Start with recommended sizes
+* **Growth Buffer**: Plan for 30% annual growth
+* **Backup Storage**: Equal to primary storage
+* **Monitoring**: Implement storage usage alerts
 
-## Security Requirements
+</div>
+</div>
 
-### Access Control
-- RBAC configuration
-- Network policies
-- Security groups
-
-### Compliance
-- Data residency requirements
-- Encryption requirements
-- Audit logging capabilities
-
-## High Availability Considerations
-
-### Multi-Zone Deployment
-- Zone redundancy
-- Failover configuration
-- Backup and recovery planning
-
-## Additional Resource Requirements
-
-### Prerequisites Resource Requirements
-If you plan to host prerequisites on the same infrastructure, add these approximate requirements:
-
-- **PostgreSQL**:
-  - CPU: 2 cores
-  - RAM: 4GB
-  - Storage: 50GB SSD
-- **Redis**:
-  - CPU: 2 cores
-  - RAM: 4GB
-  - Storage: 20GB SSD
-- **HashiCorp Vault**:
-  - CPU: 2 cores
-  - RAM: 4GB
-  - Storage: 20GB SSD
-- **MinIO**:
-  - CPU: 2 cores
-  - RAM: 8GB
-  - Storage: 100GB+ SSD (varies based on usage)
-
-### Example Total Requirements with Prerequisites
-For a production setup hosting both the platform and prerequisites:
-
-- **Total CPU**: 16+ cores (8 platform + 8 prerequisites)
-- **Total RAM**: 52GB+ (32GB platform + 20GB prerequisites)
-- **Total Storage**: 440GB+ SSD (250GB platform + 190GB prerequisites)
-
-### Service-Specific Requirements
-Since this platform is designed for deploying blockchain nodes, middlewares, integrations and other services, you'll need to carefully plan your infrastructure capacity based on the number and types of services you intend to deploy. Please refer to our [Service Requirements Documentation](link-to-service-requirements) for detailed specifications of each service.
-
-:::tip
-We recommend:
-1. List all services you plan to deploy initially
-2. Calculate their combined resource requirements
-3. Add those to the platform and prerequisite requirements above
-4. Include a 30% buffer for growth and peak loads
+:::tip Storage Best Practices
+* Use separate volumes for different components
+* Implement regular backup procedures
+* Monitor storage performance metrics
+* Set up alerts for capacity thresholds
 :::
+
+## Prerequisites Resource Requirements
+
+:::info Prerequisites Impact
+When hosting prerequisites on the same infrastructure, these requirements must be added to the base platform specifications. Each component can be hosted separately or together depending on your architecture.
+:::
+
+<Tabs>
+  <TabItem value="database" label="Database Layer" default>
+
+### PostgreSQL
+<div className="row">
+<div className="col col--6">
+
+#### Resource Requirements
+* **CPU**: 2 cores
+* **RAM**: 4GB
+* **Storage**: 50GB SSD
+
+</div>
+<div className="col col--6">
+
+#### Recommendations
+* High IOPS SSD storage
+* Regular backups
+* Consider high availability setup
+
+</div>
+</div>
+
+### Redis
+<div className="row">
+<div className="col col--6">
+
+#### Resource Requirements
+* **CPU**: 2 cores
+* **RAM**: 4GB
+* **Storage**: 20GB SSD
+
+</div>
+<div className="col col--6">
+
+#### Recommendations
+* In-memory performance
+* Persistence configuration
+* Consider clustering for HA
+
+</div>
+</div>
+
+  </TabItem>
+  <TabItem value="storage" label="Object Storage">
+
+### MinIO
+<div className="row">
+<div className="col col--6">
+
+#### Resource Requirements
+* **CPU**: 2 cores
+* **RAM**: 8GB
+* **Storage**: 100GB+ SSD
+
+</div>
+<div className="col col--6">
+
+#### Recommendations
+* Scalable storage setup
+* Regular capacity monitoring
+* Backup strategy required
+
+</div>
+</div>
+
+  </TabItem>
+  <TabItem value="security" label="Security Services">
+
+### HashiCorp Vault
+<div className="row">
+<div className="col col--6">
+
+#### Resource Requirements
+* **CPU**: 2 cores
+* **RAM**: 4GB
+* **Storage**: 20GB SSD
+
+</div>
+<div className="col col--6">
+
+#### Recommendations
+* High availability setup
+* Auto-unsealing configuration
+* Regular key rotation
+
+</div>
+</div>
+
+  </TabItem>
+</Tabs>
+
+<div className="alert alert--warning margin-top--md">
+<h4>Production Considerations</h4>
+<p>
+These are baseline requirements. For production environments, consider:
+</p>
+<ul>
+  <li>High availability configurations may require 2-3x these resources</li>
+  <li>Monitoring and logging overhead</li>
+  <li>Backup storage requirements</li>
+  <li>Scaling headroom for growth</li>
+</ul>
+</div>
+
+### Total Resource Summary
+
+For a production setup hosting both platform and prerequisites:
+
+<div className="row">
+<div className="col col--4">
+
+### CPU
+* Platform: 8 cores
+* Prerequisites: 8 cores
+* **Total: 16+ cores**
+
+</div>
+<div className="col col--4">
+
+### RAM
+* Platform: 32GB
+* Prerequisites: 20GB
+* **Total: 52GB+**
+
+</div>
+<div className="col col--4">
+
+### Storage
+* Platform: 250GB
+* Prerequisites: 190GB
+* **Total: 440GB+**
+
+</div>
+</div>
+
+## Service Requirements
+
+The platform allows you to deploy services in two ways:
+1. On the same cluster as the platform
+2. On separate target clusters
+
+<div className="row">
+<div className="col col--6">
+
+### Same Cluster Deployment
+If you plan to deploy services on the same cluster as the platform:
+* Add service requirements to the platform requirements
+* Include them in capacity planning
+* Account for resource overhead
+* Plan for scaling headroom
+
+</div>
+<div className="col col--6">
+
+### Target Cluster Deployment
+Using separate target clusters for services:
+* Keeps platform and service workloads isolated
+* Requires separate infrastructure planning
+* Can be optimized for specific service needs
+* Enables geographic distribution
+
+</div>
+</div>
+
+:::tip Infrastructure Planning Strategy
+We recommend:
+1. List all services you plan to deploy
+2. Decide on deployment strategy (same cluster or target clusters)
+3. For same cluster: Add service requirements to platform requirements
+4. For target clusters: Plan separate infrastructure
+5. Include 30% buffer for growth and peak loads
+:::
+
+:::info Example Calculation
+If deploying an Ethereum node (8 cores, 16GB RAM, 2TB storage):
+
+**Same Cluster Approach:**
+* Total CPU: 24+ cores (16 platform/prereqs + 8 node)
+* Total RAM: 68GB+ (52GB platform/prereqs + 16GB node)
+* Total Storage: 2.5TB+ (440GB platform/prereqs + 2TB node)
+
+**Target Cluster Approach:**
+* Platform Cluster: 16+ cores, 52GB+ RAM, 440GB+ storage
+* Service Cluster: 8+ cores, 16GB+ RAM, 2TB+ storage
+:::
+
+For detailed specifications of each service, please refer to our [Service Requirements Documentation](link-to-service-requirements).
