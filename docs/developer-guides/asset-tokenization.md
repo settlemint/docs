@@ -127,7 +127,17 @@ With the IDE open in fullscreen, create a new file for your Asset Tokenization s
 2. Right Click and select `New File...`
 3. Create a new file called `AssetTokenization.sol`
 
-After the file is created, copy and paste the Solidity code below:
+Before adding the contract code, you'll need to install the OpenZeppelin contracts dependency. This provides the base contracts we'll inherit from for features like upgradability and access control.
+
+Open the terminal in the IDE and run:
+
+```bash
+npm install @openzeppelin/contracts-upgradeable
+```
+
+This package provides the base contracts we'll use like `UUPSUpgradeable`, `OwnableUpgradeable`, and `ERC1155SupplyUpgradeable`.
+
+After installing the dependency, copy and paste the Solidity code below:
 
 <details>
     <summary>Solidity Code</summary>
