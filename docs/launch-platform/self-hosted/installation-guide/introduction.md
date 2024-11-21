@@ -27,7 +27,7 @@ Start here to ensure your infrastructure meets all necessary specifications befo
 * Network and storage specifications
 * Access and security requirements
 
-[View Requirements Guide](./infrastructure-requirements)
+[View Requirements Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/infrastructure-requirements)
 
 </TabItem>
 <TabItem value="prerequisites" label="2. Prerequisites">
@@ -38,7 +38,7 @@ After confirming requirements, set up the required supporting services. This sec
 * Configuration requirements
 * Information collection checklists
 
-[View Prerequisites Guide](./prerequisites/overview)
+[View Prerequisites Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/overview)
 
 </TabItem>
 <TabItem value="installation" label="3. Installation">
@@ -48,7 +48,7 @@ Finally, deploy the SettleMint Platform using Helm:
 * Flexible configuration options
 * Production-ready setup
 
-[View Installation Guide](./platform-installation/overview)
+[View Installation Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/platform-installation)
 
 </TabItem>
 </Tabs>
@@ -136,23 +136,23 @@ To complete platform installation, you'll need:
 <div className="col col--6">
 
 ### Documentation Resources
-* [Troubleshooting Guide](../troubleshooting)
-* [FAQ](../faq)
-* [Best Practices](../best-practices)
-* [Architecture Overview](../architecture)
+* Review installation guides
+* Check troubleshooting sections
+* Follow best practices
+* Consult platform architecture
 
 </div>
 <div className="col col--6">
 
 ### Support Channels
-* [Technical Support Portal](https://support.settlemint.com)
-* [Community Discord](https://discord.gg/settlemint)
-* [GitHub Issues](https://github.com/settlemint/platform/issues)
 * Email: support@settlemint.com
+* Join our Discord community
+* Schedule technical consultation
+* Contact your account manager
 
 </div>
 </div>
 
 :::tip Next Step
-Start by reviewing the [Infrastructure Requirements](./infrastructure-requirements) to ensure your environment meets all necessary specifications.
+Start by reviewing the [Infrastructure Requirements](/documentation/docs/launch-platform/self-hosted/installation-guide/infrastructure-requirements) to ensure your environment meets all necessary specifications.
 :::

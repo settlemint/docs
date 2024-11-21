@@ -147,7 +147,7 @@ Common issues and solutions:
 
 1. ✅ Configure OAuth provider
 2. ✅ Generate JWT signing key
-3. ➡️ Proceed to [PostgreSQL Setup](./postgresql)
+3. ➡️ Proceed to [PostgreSQL Setup](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/postgresql)
 
 :::tip Need Help?
 Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.

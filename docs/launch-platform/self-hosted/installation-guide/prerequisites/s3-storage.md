@@ -154,7 +154,7 @@ Common issues and solutions:
 
 1. ✅ Set up S3-compatible storage
 2. ✅ Generate encryption key
-3. ➡️ Proceed to [HashiCorp Vault Setup](./hashicorp-vault)
+3. ➡️ Proceed to [HashiCorp Vault Setup](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/hashicorp-vault)
 
 :::tip Need Help?
 Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.

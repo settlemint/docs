@@ -35,18 +35,18 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
 #### Ingress Controller
 * Traffic management and load balancing
 * SSL/TLS termination
-* [Setup Guide](./ingress-controller)
+* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/ingress-controller)
 
 #### Domain and TLS
 * Domain name configuration
 * SSL/TLS certificates
-* [Setup Guide](./domain-and-tls)
+* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/domain-and-tls)
 
 #### Metrics and Logs
 * Prometheus metrics collection
 * Grafana visualization
 * Loki log aggregation
-* [Setup Guide](./metrics-and-logs)
+* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/metrics-and-logs)
 
 </TabItem>
 <TabItem value="databases" label="Databases & Cache">
@@ -55,13 +55,13 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
 * Primary platform database
 * Stores user data and configurations
 * Minimum version: PostgreSQL 13+
-* [Setup Guide](./postgresql)
+* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/postgresql)
 
 #### Redis Cache
 * Session management
 * Real-time features
 * Performance optimization
-* [Setup Guide](./redis)
+* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/redis)
 
 </TabItem>
 <TabItem value="security" label="Security & Storage">
@@ -69,17 +69,17 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
 #### S3-Compatible Storage
 * Platform assets storage
 * Blockchain data persistence
-* [Setup Guide](./s3-storage)
+* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/s3-storage)
 
 #### HashiCorp Vault
 * Secrets management
 * Encryption keys
-* [Setup Guide](./hashicorp-vault)
+* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/hashicorp-vault)
 
 #### OAuth Provider
 * Authentication service
 * User identity management
-* [Setup Guide](./oauth)
+* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/oauth)
 
 </TabItem>
 </Tabs>
@@ -137,10 +137,10 @@ As you complete each prerequisite, you'll need to collect specific information r
 
 ## Next Steps
 
-1. Start with the [Ingress Controller](./ingress-controller) setup
+1. Start with the [Ingress Controller](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/ingress-controller) setup
 2. Follow each prerequisite guide in order
 3. Validate your configurations
-4. Proceed to [Platform Installation](../platform-installation/overview)
+4. Proceed to [Platform Installation](/documentation/docs/launch-platform/self-hosted/installation-guide/platform-installation)
 
 ## Need Help?
 
@@ -148,17 +148,19 @@ As you complete each prerequisite, you'll need to collect specific information r
 <div className="col col--6">
 
 ### Documentation
-* Individual service guides
-* Troubleshooting tips
-* Best practices
+* Review the prerequisites guides
+* Check troubleshooting sections
+* Follow best practices
+* Consult platform architecture
 
 </div>
 <div className="col col--6">
 
 ### Support
-* Contact SettleMint support
-* Join community channels
-* Schedule a consultation
+* Email: support@settlemint.com
+* Join our Discord community
+* Schedule technical consultation
+* Contact your account manager
 
 </div>
 </div>

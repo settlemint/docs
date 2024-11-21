@@ -180,7 +180,7 @@ Common issues and solutions:
 
 1. ✅ Set up Vault instance
 2. ✅ Configure authentication
-3. ➡️ Proceed to [Metrics and Logs Setup](./metrics-and-logs)
+3. ➡️ Proceed to [Metrics and Logs Setup](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/metrics-and-logs)
 
 :::tip Need Help?
 Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.

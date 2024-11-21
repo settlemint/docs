@@ -232,7 +232,7 @@ deploymentEngine:
 
 1. ✅ Verify DNS resolution
 2. ✅ Confirm TLS certificate issuance
-3. ➡️ Proceed to [OAuth Provider Setup](./oauth)
+3. ➡️ Proceed to [OAuth Provider Setup](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/oauth)
 
 :::tip Need Help?
 Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.

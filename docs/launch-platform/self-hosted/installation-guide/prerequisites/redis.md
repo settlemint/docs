@@ -160,7 +160,7 @@ Common issues and solutions:
 
 1. ✅ Set up Redis instance
 2. ✅ Configure security settings
-3. ➡️ Proceed to [S3 Storage Setup](./s3-storage)
+3. ➡️ Proceed to [S3 Storage Setup](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/s3-storage)
 
 :::tip Need Help?
 Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.

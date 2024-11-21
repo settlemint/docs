@@ -3,6 +3,9 @@ title: Ingress Controller
 sidebar_position: 2
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Ingress Controller Setup
 
 ## Overview
@@ -106,7 +109,7 @@ Common issues and solutions:
 
 1. ✅ Verify ingress controller is running
 2. ✅ Note down the load balancer IP
-3. ➡️ Proceed to [Domain and TLS Setup](./domain-and-tls)
+3. ➡️ Proceed to [Domain and TLS Setup](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/domain-and-tls)
 
 :::tip Need Help?
 Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.

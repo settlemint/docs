@@ -170,7 +170,7 @@ Common issues and solutions:
 
 1. ✅ Set up metrics collection
 2. ✅ Configure log aggregation
-3. ➡️ Ready for [Platform Installation](../platform-installation/overview)
+3. ➡️ Ready for [Platform Installation](/documentation/docs/launch-platform/self-hosted/installation-guide/platform-installation)
 
 :::tip Need Help?
 Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
