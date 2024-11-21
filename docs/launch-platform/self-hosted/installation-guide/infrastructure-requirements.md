@@ -283,16 +283,49 @@ We recommend:
 :::
 
 :::info Example Calculation
-If deploying 4 Ethereum nodes (8 cores, 16GB RAM, 2TB storage):
+Let's calculate requirements for a setup with:
+- 2 Polygon nodes (Mainnet & Mumbai)
+- 1 Hyperledger Besu node
+- 1 Smart Contract Portal
+- 1 Integration Studio
+- 1 Blocksout Explorer
+
+**Service Requirements (Medium size, Dedicated mode):**
+* Polygon Nodes (2x):
+  * CPU: 2 × 1.5 cores = 3 cores
+  * RAM: 2 × 1.0 GB = 2 GB
+  * Storage: Minimal
+
+* Besu Node (1x):
+  * CPU: 1.5 cores
+  * RAM: 2.5 GB
+  * Storage: 100 GB
+
+* Smart Contract Portal:
+  * CPU: 2.0 cores
+  * RAM: 2.0 GB
+  * Storage: 10 GB
+
+* Integration Studio:
+  * CPU: 2.0 cores
+  * RAM: 4.0 GB
+  * Storage: 10 GB
+
+* Blocksout Explorer:
+  * CPU: 2.0 cores
+  * RAM: 4.0 GB
+  * Storage: 50 GB
 
 **Same Cluster Approach:**
-* Total CPU: 24+ cores (16 platform/prereqs + 8 node)
-* Total RAM: 68GB+ (52GB platform/prereqs + 16GB node)
-* Total Storage: 2.5TB+ (440GB platform/prereqs + 2TB node)
+* Total CPU: 27+ cores (16 platform/prereqs + 11 services)
+* Total RAM: 67GB+ (52GB platform/prereqs + 15GB services)
+* Total Storage: 620GB+ (440GB platform/prereqs + 180GB services)
 
 **Target Cluster Approach:**
 * Platform Cluster: 16+ cores, 52GB+ RAM, 440GB+ storage
-* Service Cluster: 8+ cores, 16GB+ RAM, 2TB+ storage
+* Service Cluster: 11+ cores, 15GB+ RAM, 180GB+ storage
 :::
 
-For detailed specifications of each service, please refer to our [Service Requirements Documentation](link-to-service-requirements).
+:::tip Service Requirements Reference
+For detailed specifications of all available services and their resource requirements, please refer to our [Service Requirements Documentation](/documentation/docs/reference/service-requirements).
+:::

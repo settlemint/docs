@@ -106,17 +106,11 @@ To connect with a certified partner or for direct assistance, please contact us 
 
 Throughout the installation process, you'll need to collect configuration details from each prerequisite service. We've made this easy by including "Information Collection Boxes" in each guide.
 
-<div className="row margin-bottom--lg">
-<div className="col col--6">
-
 ### How It Works
 * Each prerequisite guide contains an Information Collection Box
 * Required values are clearly marked
 * Values are needed during platform installation
 * Keep track of sensitive information securely
-
-</div>
-<div className="col col--6">
 
 ### Example Collection Box
 :::info Required Values
@@ -126,14 +120,7 @@ To complete platform installation, you'll need:
 - Port: 6379
 :::
 
-</div>
-</div>
-
-
 ## Need Help?
-
-<div className="row margin-bottom--lg">
-<div className="col col--6">
 
 ### Documentation Resources
 * Review installation guides
@@ -141,17 +128,11 @@ To complete platform installation, you'll need:
 * Follow best practices
 * Consult platform architecture
 
-</div>
-<div className="col col--6">
-
 ### Support Channels
 * Email: support@settlemint.com
 * Join our Discord community
 * Schedule technical consultation
 * Contact your account manager
-
-</div>
-</div>
 
 :::tip Next Step
 Start by reviewing the [Infrastructure Requirements](/documentation/docs/launch-platform/self-hosted/installation-guide/infrastructure-requirements) to ensure your environment meets all necessary specifications.
