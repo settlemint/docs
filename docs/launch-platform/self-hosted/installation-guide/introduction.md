@@ -84,6 +84,24 @@ We recommend:
 </div>
 </div>
 
+## Partner Support
+
+A thorough understanding of Kubernetes concepts, architecture, and operation is essential for successfully deploying and managing the SettleMint Platform. This includes expertise in:
+- Kubernetes cluster management
+- Helm chart deployment and customization
+- Infrastructure maintenance and monitoring
+- Security best practices
+
+If your team lacks the in-house expertise required for managing these deployments, we strongly recommend collaborating with one of our certified partners. Our partners are specifically trained to:
+- Guide you through the installation process
+- Help with infrastructure setup and configuration
+- Provide ongoing maintenance and support
+- Assist with troubleshooting and optimizations
+
+Additionally, our blockchain technology experts are available to support you with any technical questions or challenges you might encounter.
+
+To connect with a certified partner or for direct assistance, please contact us at support@settlemint.com.
+
 ## Information Collection
 
 Throughout the installation process, you'll need to collect configuration details from each prerequisite service. We've made this easy by including "Information Collection Boxes" in each guide.
