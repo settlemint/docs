@@ -103,7 +103,7 @@ Each prerequisite service can be deployed in multiple ways:
 ### Managed Services
 * ✅ Lower maintenance
 * ✅ Managed updates
-* ⚠️ Vendor lock-in
+* ⚠️ Limited customization
 * ⚠️ Higher costs
 
 </div>

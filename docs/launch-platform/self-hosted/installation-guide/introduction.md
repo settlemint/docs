@@ -113,11 +113,15 @@ Throughout the installation process, you'll need to collect configuration detail
 * Keep track of sensitive information securely
 
 ### Example Collection Box
-:::info Required Values
-To complete platform installation, you'll need:
+Here's what an Information Collection Box looks like in the prerequisite guides:
+
+:::info Required Values Example
+This is a sample of what you'll see in the guides. For Redis setup, you would collect values like:
 - Endpoint: redis-master.default.svc.cluster.local
 - Password: your-secure-password
 - Port: 6379
+
+Note: This is just an example. Actual values will be collected during the prerequisite setup.
 :::
 
 ## Need Help?
