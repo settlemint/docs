@@ -1,147 +1,167 @@
 ---
 title: Redis Cache
-sidebar_position: 3
+sidebar_position: 5
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Redis Cache Setup
 
 ## Overview
 
-Redis is a critical component of the SettleMint Platform, serving as an in-memory data store for:
-- Session management
-- Caching
-- Real-time features
-- Temporary data storage
+Redis serves as a critical component for:
+* Session management
+* Real-time features
+* Caching layer
+* Performance optimization
 
 ## Deployment Options
 
-Choose the deployment method that best suits your infrastructure:
+<Tabs>
+<TabItem value="managed" label="Managed Service (Recommended)" default>
 
-### Self-Hosted Options
-- [Helm Chart Deployment](#helm-chart)
-- [Docker Deployment](#docker)
+### Cloud Provider Options
 
-### Managed Services
-- [Redis Cloud](#redis-cloud)
-- [DigitalOcean Redis](#digitalocean)
-- [Google Cloud Memorystore](#google-cloud)
+#### Redis Cloud
+1. Create account at [Redis Cloud](https://app.redislabs.com)
+2. Create new subscription:
+   * Fixed plan (minimum 1GB)
+   * Choose region
+   * Enable password protection
+3. Create database with default settings
 
-## Self-Hosted Deployment
+#### Digital Ocean Redis
+1. Access Digital Ocean Console
+2. Create Database > Redis
+3. Configure:
+   * Choose smallest plan
+   * Select datacenter
+   * Enable eviction policy
 
-### <a name="helm-chart"></a>Helm Chart Deployment
+:::tip
+Managed services provide:
+* Automatic backups
+* High availability
+* Security patches
+* Performance monitoring
+:::
 
-1. Add the Redis Helm repository:
+</TabItem>
+<TabItem value="helm" label="Helm Chart">
 
-```
+### Bitnami Redis Chart
+
+1. Add repository:
+```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 ```
 
-2. Create values file (redis-values.yaml):
-
-```
-architecture: standalone
-auth:
-  enabled: true
-  password: "your-secure-password"
-master:
-  persistence:
-    size: 8Gi
+2. Install Redis:
+```bash
+helm upgrade --install redis oci://registry-1.docker.io/bitnamicharts/redis \
+  --namespace redis \
+  --version 18.19.2 \
+  --create-namespace \
+  --set architecture=standalone \
+  --set global.redis.password=your-secure-password
 ```
 
-3. Install Redis:
-
+3. Wait for deployment:
+```bash
+kubectl -n redis get pods -w
 ```
-helm install redis bitnami/redis -f redis-values.yaml
-```
 
-:::info Required Values
-To complete platform installation, you'll need:
-- Endpoint: redis-master.default.svc.cluster.local
-- Password: Value from auth.password
-- Port: 6379 (default)
+:::caution
+For production use:
+* Configure proper resource limits
+* Set up persistence
+* Consider high availability setup
 :::
 
-### <a name="docker"></a>Docker Deployment
-
-1. Create persistent volume:
-
-```
-docker volume create redis_data
-```
-
-2. Run Redis container:
-
-```
-docker run -d \
-  --name redis \
-  -p 6379:6379 \
-  -v redis_data:/data \
-  redis:7 --requirepass "your-secure-password"
-```
-
-:::info Required Values
-To complete platform installation, you'll need:
-- Endpoint: Container host IP or hostname
-- Password: Value from --requirepass
-- Port: 6379 (mapped port)
-:::
-
-## Managed Services
-
-### <a name="redis-cloud"></a>Redis Cloud
-
-1. Sign up at [Redis Cloud](https://redis.com/cloud/overview/)
-2. Create new subscription:
-   - Select fixed subscription
-   - Choose region
-   - Set memory limit (minimum 2GB)
-   - Enable password protection
-
-:::info Required Values
-To complete platform installation, you'll need:
-- Endpoint: Provided public endpoint
-- Password: Generated password
-- Port: Provided port number
-:::
-
-### <a name="digitalocean"></a>DigitalOcean Redis
-
-1. Access DigitalOcean Console
-2. Create Database > Redis
-3. Configure:
-   - Choose plan (minimum 2GB)
-   - Select datacenter
-   - Enable eviction policy
-
-:::info Required Values
-To complete platform installation, you'll need:
-- Endpoint: Provided connection string
-- Password: Default password (shown in overview)
-- Port: Provided port number
-:::
-
-### <a name="google-cloud"></a>Google Cloud Memorystore
-
-1. Open Google Cloud Console
-2. Navigate to Memorystore > Redis
-3. Create Instance:
-   - Set capacity (minimum 2GB)
-   - Choose region
-   - Configure network
-
-:::info Required Values
-To complete platform installation, you'll need:
-- Endpoint: Instance IP address
-- Authentication: IAM-based
-- Port: 6379 (default)
-:::
+</TabItem>
+</Tabs>
 
 ## Requirements
 
-Regardless of deployment method, ensure:
-- Minimum 2GB RAM allocated
-- Network accessibility from platform
-- Authentication enabled
-- Persistence configured (if needed)
-- Monitoring setup
+<div className="row margin-bottom--lg">
+<div className="col col--6">
+
+### Minimum Specifications
+* Redis 6.0 or higher
+* 1GB memory
+* Network access from platform
+* Password protection enabled
+
+</div>
+<div className="col col--6">
+
+### Recommended Features
+* Persistence enabled
+* Automatic backups
+* Monitoring setup
+* Eviction policies configured
+
+</div>
+</div>
+
+## Information Collection
+
+<div className="alert alert--success" role="alert">
+
+### Required Values for Platform Installation
+
+* [ ] Redis hostname/endpoint
+* [ ] Port number (default: 6379)
+* [ ] Password
+* [ ] TLS enabled/disabled
+
+:::note Example Configuration
+```yaml
+redis:
+  host: "your-redis-host"
+  port: 6379
+  password: "your-secure-password"
+  tls: true  # Set to false for local development
+```
+:::
+
+</div>
+
+## Validation
+
+Test your Redis connection:
+```bash
+# Using redis-cli
+redis-cli -h your-redis-host -p 6379 -a your-password ping
+
+# Expected response
+PONG
+```
+
+## Troubleshooting
+
+Common issues and solutions:
+
+1. **Connection Failures**
+   * Verify credentials
+   * Check network/firewall rules
+   * Confirm TLS settings
+   * Validate endpoint format
+
+2. **Performance Issues**
+   * Monitor memory usage
+   * Check eviction policies
+   * Review connection limits
+   * Verify resource allocation
+
+## Next Steps
+
+1. ✅ Set up Redis instance
+2. ✅ Configure security settings
+3. ➡️ Proceed to [S3 Storage Setup](./s3-storage)
+
+:::tip Need Help?
+Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
+:::

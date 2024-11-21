@@ -1,135 +1,113 @@
 ---
 title: Ingress Controller
-sidebar_position: 7
+sidebar_position: 2
 ---
 
 # Ingress Controller Setup
 
 ## Overview
 
-An Ingress Controller is required for the SettleMint Platform to manage external access to services. We recommend using NGINX Ingress Controller for its reliability and features:
-- HTTP/HTTPS routing
-- TLS termination
-- Load balancing
-- Path-based routing
+The ingress controller is responsible for:
+* Managing external access to services
+* Load balancing
+* SSL/TLS termination
+* Routing rules
 
 ## Deployment Options
 
-Choose the deployment method that best suits your infrastructure:
+<Tabs>
+<TabItem value="helm" label="Helm Chart" default>
 
-### Self-Hosted Options
-- [Helm Chart Deployment](#helm-chart)
-- [Manifest Deployment](#manifest)
+### Install with Helm
 
-### Cloud Provider Options
-- [AWS Load Balancer Controller](#aws)
-- [GCP HTTP(S) Load Balancing](#gcp)
-- [Azure Application Gateway](#azure)
-
-## Self-Hosted Deployment
-
-### <a name="helm-chart"></a>Helm Chart Deployment
-
-1. Add the NGINX Ingress Helm repository:
-
-```
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
-```
-
-2. Create values file (ingress-values.yaml):
-
-```
-controller:
-  service:
-    type: LoadBalancer
-  config:
-    use-forwarded-headers: "true"
-    proxy-buffer-size: "16k"
-  metrics:
-    enabled: true
-```
-
-3. Install NGINX Ingress:
-
-```
-helm install ingress-nginx ingress-nginx/ingress-nginx \
+```bash
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
   --namespace ingress-nginx \
-  --create-namespace \
-  -f ingress-values.yaml
+  --create-namespace
 ```
 
-:::info Required Values
-To complete platform installation, you'll need:
-- Ingress Class Name: nginx
-- Load Balancer IP/Hostname
-- SSL Configuration (if enabled)
-:::
-
-### <a name="manifest"></a>Manifest Deployment
-
-1. Apply the mandatory manifests:
-
-```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
+Wait for the load balancer IP to be assigned:
+```bash
+kubectl get service -n ingress-nginx ingress-nginx-controller \
+  --output jsonpath='{.status.loadBalancer.ingress[0].ip}'
 ```
 
-:::info Required Values
-To complete platform installation, you'll need:
-- Ingress Class Name: nginx
-- Load Balancer IP/Hostname
-- SSL Configuration (if enabled)
+</TabItem>
+<TabItem value="marketplace" label="Cloud Marketplace">
+
+### Cloud Provider Marketplaces
+
+Choose your cloud provider's marketplace offering:
+
+* **Digital Ocean**:
+  * Install "NGINX Ingress Controller" from marketplace
+  * Automatically configures load balancer
+
+* **CIVO**:
+  * Enable "Nginx ingress controller" during cluster creation
+  * Or add from marketplace post-creation
+
+* **Other Providers**:
+  * Most cloud providers offer similar marketplace solutions
+  * Follow provider-specific installation steps
+
+</TabItem>
+</Tabs>
+
+## Validation
+
+Verify your installation:
+
+```bash
+# Check pods are running
+kubectl get pods -n ingress-nginx
+
+# Verify service and IP allocation
+kubectl get svc -n ingress-nginx
+```
+
+## Information Collection
+
+<div className="alert alert--success" role="alert">
+
+### Required Values for Platform Installation
+
+* [ ] Ingress class name (default: `nginx`)
+* [ ] Load balancer IP address
+* [ ] Ingress controller namespace
+
+:::note Example Configuration
+```yaml
+ingress:
+  enabled: true
+  className: nginx
+  # Other ingress settings will be configured in Domain & TLS section
+```
 :::
 
-## Cloud Provider Options
+</div>
 
-### <a name="aws"></a>AWS Load Balancer Controller
+## Troubleshooting
 
-1. Install AWS Load Balancer Controller:
-   - Set up IAM roles
-   - Configure service account
-   - Deploy controller
+Common issues and solutions:
 
-:::info Required Values
-To complete platform installation, you'll need:
-- ALB Ingress Class Name: alb
-- SSL Certificate ARN
-- VPC ID
+1. **No Load Balancer IP**
+* Verify cloud provider load balancer service is running
+* Check cloud provider quotas
+* Ensure correct service annotations
+
+2. **Controller Not Ready**
+* Check pod logs: `kubectl logs -n ingress-nginx <pod-name>`
+* Verify resource requirements are met
+* Check network policies
+
+## Next Steps
+
+1. ✅ Verify ingress controller is running
+2. ✅ Note down the load balancer IP
+3. ➡️ Proceed to [Domain and TLS Setup](./domain-and-tls)
+
+:::tip Need Help?
+Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
 :::
-
-### <a name="gcp"></a>GCP HTTP(S) Load Balancing
-
-1. Enable GKE Ingress:
-   - Configure backend configuration
-   - Set up SSL certificates
-   - Configure health checks
-
-:::info Required Values
-To complete platform installation, you'll need:
-- GCE Ingress Class Name: gce
-- SSL Certificate Name
-- Static IP (if used)
-:::
-
-### <a name="azure"></a>Azure Application Gateway
-
-1. Set up Application Gateway Ingress:
-   - Configure Application Gateway
-   - Set up SSL certificates
-   - Deploy controller
-
-:::info Required Values
-To complete platform installation, you'll need:
-- AGIC Ingress Class Name: azure/application-gateway
-- SSL Certificate Reference
-- Application Gateway Resource ID
-:::
-
-## Requirements
-
-Regardless of deployment method, ensure:
-- Load balancer accessibility
-- SSL/TLS configuration
-- Sufficient resources allocated
-- Network policies configured
-- Monitoring enabled 

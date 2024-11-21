@@ -1,60 +1,154 @@
 ---
-title: OAuth Configuration
+title: OAuth Provider
 sidebar_position: 3
 ---
 
-# OAuth Configuration
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# OAuth Provider Setup
 
 ## Overview
 
-The SettleMint Platform requires OAuth authentication for user management and access control. We support various OAuth providers.
+The SettleMint Platform requires OAuth authentication for:
+* User authentication
+* Access control
+* Single sign-on capabilities
+* Identity management
 
-## Supported Providers
+## Provider Options
 
-### Option 1: Azure Active Directory
+<Tabs>
+<TabItem value="google" label="Google OAuth" default>
 
-1. Navigate to Azure Portal > Azure Active Directory
-2. Register a new application:
-   - Set redirect URIs
-   - Enable the following permissions:
-     - OpenID Connect
-     - Email
-     - Profile
+### Google OAuth Setup
 
-### Option 2: Google OAuth
+1. **Access Google Cloud Console**
+   * Go to [Google Cloud Console](https://console.developers.google.com/apis/credentials)
+   * Select or create a project
 
-1. Access Google Cloud Console
-2. Create OAuth 2.0 credentials:
-   - Configure authorized redirect URIs
-   - Set application type as "Web application"
-   - Enable necessary scopes:
-     - email
-     - profile
-     - openid
+2. **Create OAuth Client**
+   * Click `+ CREATE CREDENTIALS`
+   * Select `OAuth client ID`
+   * Choose `Web application` type
 
-### Option 3: Okta
+3. **Configure OAuth Client**
+   * Add Authorized JavaScript origins:
+     ```
+     https://your-domain.com
+     ```
+   * Add Authorized redirect URIs:
+     ```
+     https://your-domain.com/api/auth/callback/google
+     ```
 
-1. Log into Okta Developer Console
-2. Create a new application:
-   - Choose "Web Application"
-   - Configure redirect URIs
-   - Enable OIDC features
+:::tip
+Make sure to replace `your-domain.com` with your actual platform domain.
+:::
 
-## Configuration Requirements
+</TabItem>
+<TabItem value="azure" label="Azure AD">
 
-For any OAuth provider, you'll need to configure:
-- Authorized redirect URIs
-- Allowed origins
-- Required scopes
-- User attribute mappings
+### Azure Active Directory Setup
 
-:::info Information Collection Box
-Save the following information for platform installation:
-- Client ID
-- Client Secret
-- OAuth Provider URL
-- Redirect URIs
-- Token endpoint
-- Authorization endpoint
-- User info endpoint
-::: 
+1. **Access Azure Portal**
+   * Go to Azure Active Directory
+   * Register a new application
+
+2. **Configure Application**
+   * Add redirect URIs
+   * Set up platform configurations
+   * Configure authentication settings
+
+3. **Set Required Permissions**
+   * OpenID Connect permissions
+   * User.Read permissions
+   * Additional scopes as needed
+
+</TabItem>
+<TabItem value="custom" label="Custom OIDC">
+
+### Custom OIDC Provider
+
+For enterprise setups, you can use any OpenID Connect compliant provider:
+* Okta
+* Auth0
+* Keycloak
+* Other OIDC-compliant providers
+
+Required provider capabilities:
+* OpenID Connect support
+* OAuth 2.0 compliance
+* User profile information
+* Email verification
+
+</TabItem>
+</Tabs>
+
+## JWT Configuration
+
+Generate a secure signing key for JWT tokens:
+```bash
+openssl rand -base64 32
+```
+
+:::caution
+Store this key securely - it's used to sign user sessions.
+:::
+
+## Information Collection
+
+<div className="alert alert--success" role="alert">
+
+### Required Values for Platform Installation
+
+* [ ] OAuth Client ID
+* [ ] OAuth Client Secret
+* [ ] JWT signing key
+* [ ] Configured redirect URI
+
+:::note Example Configuration
+```yaml
+auth:
+  jwtSigningKey: "your-generated-key"  # From openssl command
+  providers:
+    google:
+      enabled: true
+      clientID: "your-client-id"       # From OAuth provider
+      clientSecret: "your-secret"      # From OAuth provider
+```
+:::
+
+</div>
+
+## Validation
+
+Before proceeding, verify:
+1. OAuth client is properly configured
+2. Redirect URIs match your domain
+3. JWT signing key is generated and saved
+4. Required scopes are enabled
+
+## Troubleshooting
+
+Common issues and solutions:
+
+1. **Invalid Redirect URI**
+   * Verify exact URI match
+   * Check for protocol (https) mismatch
+   * Confirm domain spelling
+
+2. **Authentication Failures**
+   * Verify client credentials
+   * Check scope configurations
+   * Validate JWT signing key
+
+## Next Steps
+
+1. ✅ Configure OAuth provider
+2. ✅ Generate JWT signing key
+3. ➡️ Proceed to [PostgreSQL Setup](./postgresql)
+
+:::tip Need Help?
+Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
+:::
