@@ -22,7 +22,6 @@ Permissioned networks:
 
 - [Hyperledger Besu](../blockchain-guides/1_Hyperledger-Besu/1_enterprise-ethereum-the-basics.md)
 - [Hyperledger Fabric](../blockchain-guides/5_Hyperledger-Fabric/1_hyperledger-fabric-the-basics.md)
-- [Polygon Edge](../blockchain-guides/6_Polygon-Edge/1_polygon-edge-the-basics.md)
 
 Public networks (Mainnets & Testnets):
 

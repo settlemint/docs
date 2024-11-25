@@ -45,7 +45,7 @@ The installation procedure encompasses a series of crucial steps, including acqu
 
 ### The Installation Process
 
-1. **Obtain a License:** Contact SettleMint at <hello@settlemint.com> to obtain a licence key.
+1. **Obtain a License:** Contact SettleMint at [support@settlemint.com](mailto:support@settlemint.com) to obtain a licence key.
 2. **Registry Authentication:** Authenticate with our container registry using the credentials provided via email.
 3. **Prepare Your Environment:** Set up your Kubernetes cluster, configure the domain, TLS, storage, and authentication provider (see prerequisites).
 4. **Service Preparation:** Deploy and configure the required services (Redis, Postgres, Vault) as per your HA and configurability needs.
