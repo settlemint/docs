@@ -52,7 +52,7 @@ The installation procedure encompasses a series of crucial steps, including acqu
 5. **Deploy the Platform:** Use Helm to add the SettleMint repository, update it, and install BTP v7 with your custom configurations.
 6. **Enjoy the Platform 🥳:** Access and explore the functionalities of SettleMint BTP.
 
-Should you encounter any issues or have questions during any phase of the installation process, feel free to contact us at <support@settlemint.com>. Our team is ready to assist you.
+Should you encounter any issues or have questions during any phase of the installation process, feel free to contact us at [support@settlemint.com](mailto:support@settlemint.com). Our team is ready to assist you.
 
 Next:
 
