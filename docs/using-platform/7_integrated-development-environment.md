@@ -9,6 +9,5 @@ The IDE programming languages for smart contracts differ depending on the protoc
 - [Hyperledger Besu smart contracts IDE](../blockchain-guides/1_Hyperledger-Besu/6_enterprise-ethereum-integration-tools.md)
 - [Ethereum smart contracts IDE](../blockchain-guides/0_Ethereum/5_ethereum-integration-tools.md)
 - [Avalanche smart contracts IDE](../blockchain-guides/2_Avalanche/5_avalanche-integration-tools.md)
-- [Binance Smart Chain smart contracts IDE](../blockchain-guides/3_Binance-Smart-Chain/5_binance-smart-chain-integration-tools.md)
 - [Polygon smart contracts IDE](../blockchain-guides/4_Polygon/5_polygon-integration-tools.md)
 - [Hyperledger Fabric smart contracts IDE](../blockchain-guides/5_Hyperledger-Fabric/6_hyperledger-fabric-integration-tools.md)
