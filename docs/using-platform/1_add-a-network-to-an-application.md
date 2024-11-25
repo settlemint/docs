@@ -22,13 +22,11 @@ Permissioned networks:
 
 - [Hyperledger Besu](../blockchain-guides/1_Hyperledger-Besu/1_enterprise-ethereum-the-basics.md)
 - [Hyperledger Fabric](../blockchain-guides/5_Hyperledger-Fabric/1_hyperledger-fabric-the-basics.md)
-- [Polygon Edge](../blockchain-guides/6_Polygon-Edge/1_polygon-edge-the-basics.md)
 
 Public networks (Mainnets & Testnets):
 
 - [Ethereum](../blockchain-guides/0_Ethereum/1_ethereum-the-basics.md)
 - [Avalanche](../blockchain-guides/2_Avalanche/1_avalanche-the-basics.md)
-- [Binance Smart Chain](../blockchain-guides/3_Binance-Smart-Chain/1_binance-smart-chain-the-basics.md)
 - [Polygon](../blockchain-guides/4_Polygon/1_polygon-the-basics.md)
 
 Joining a permissioned network:

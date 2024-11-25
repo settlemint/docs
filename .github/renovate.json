@@ -56,10 +56,6 @@
       "groupName": "kubo"
     },
     {
-      "matchPackagePatterns": ["0xpolygon/polygon-edge"],
-      "groupName": "0xpolygon/polygon-edge"
-    },
-    {
       "matchPackagePatterns": ["settlemint/bpaas"],
       "groupName": "bpaas"
     },
