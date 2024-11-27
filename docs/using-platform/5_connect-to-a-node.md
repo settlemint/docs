@@ -11,6 +11,5 @@ For protocol-specific information about connecting to a node, refer to the relev
 - [Connect to a Hyperledger Besu node](../blockchain-guides/1_Hyperledger-Besu/4_enterprise-ethereum-connect-to-a-node.md)
 - [Connect to an Ethereum node](../blockchain-guides/0_Ethereum/3_ethereum-connect-to-a-node.md)
 - [Connect to an Avalanche node](../blockchain-guides/2_Avalanche/3_avalanche-connect-to-a-node.md)
-- [Connect to a Binance Smart Chain node](../blockchain-guides/3_Binance-Smart-Chain/3_binance-smart-chain-connect-to-a-node.md)
 - [Connect to a Polygon node](../blockchain-guides/4_Polygon/3_polygon-connect-to-a-node.md)
 - [Connect to a Hyperledger Fabric node](../blockchain-guides/5_Hyperledger-Fabric/3_hyperledger-fabric-node-types.md)

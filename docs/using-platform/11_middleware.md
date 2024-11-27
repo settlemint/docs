@@ -23,7 +23,7 @@ When the middleware is deployed, click it from the list and start using it.
 
 ## The Graph Middleware
 
-[The Graph](https://thegraph.com/en/) is a protocol for indexing and querying blockchain data from networks. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Binance Smart Chain, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned) and IPFS nodes.
+[The Graph](https://thegraph.com/en/) is a protocol for indexing and querying blockchain data from networks. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned) and IPFS nodes.
 
 Using the Graph protocol, you can create **subgraphs** that define which blockchain data will be indexed. These subgraphs are **defined in the smart contract set** and deployed to the middleware. The middleware will then use these subgraphs to correctly index your smart contracts and expose a developer-friendly and efficient **GraphQL API**, allowing you to query the data you need.
 
@@ -33,7 +33,7 @@ The middleware is fully preconfigured and integrated with the smart contract set
 
 Before you start, make sure you are running:
 
-- An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Binance Smart Chain, Avalanche, etc.)
+- An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Avalanche, etc.)
 - A smart contract set with a deployed smart contract
 - An IPFS node
 - A private key
@@ -104,7 +104,7 @@ The indexing of your smart contracts has now started. This can take a while, but
 
 ## The Smart Contract Portal Middleware
 
-The Smart Contract Portal is a middleware which creates an easy to use api on top of your smart contracts. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Binance Smart Chain, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned) or on a Load Balancer.
+The Smart Contract Portal is a middleware which creates an easy to use api on top of your smart contracts. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned) or on a Load Balancer.
 
 Benefits of using the smart contract portal:
 
@@ -117,7 +117,7 @@ Benefits of using the smart contract portal:
 
 Before you start, make sure you are running:
 
-- An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Binance Smart Chain, Avalanche, etc.)
+- An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Avalanche, etc.)
 - A private key
 
 :::

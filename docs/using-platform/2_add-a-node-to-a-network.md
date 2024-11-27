@@ -19,7 +19,6 @@ This section describes the general flow for adding nodes to a network. For proto
 - [Hyperledger Besu nodes](../blockchain-guides/1_Hyperledger-Besu/3_enterprise-ethereum-node-types.md)
 - [Ethereum nodes](../blockchain-guides/0_Ethereum/2_ethereum-node-types.md)
 - [Avalanche nodes](../blockchain-guides/2_Avalanche/2_avalanche-node-types.md)
-- [Binance Smart Chain nodes](../blockchain-guides/3_Binance-Smart-Chain/2_binance-smart-chain-node-types.md)
 - [Polygon nodes](../blockchain-guides/4_Polygon/2_polygon-node-types.md)
 - [Polygon Edge nodes](../blockchain-guides/4_Polygon/2_polygon-node-types.md)
 - [Hyperledger Fabric nodes](../blockchain-guides/5_Hyperledger-Fabric/3_hyperledger-fabric-node-types.md)
