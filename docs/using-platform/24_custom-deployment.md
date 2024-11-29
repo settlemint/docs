@@ -22,6 +22,7 @@ To create a Custom Deployment on the SettleMint platform, follow these steps:
 When using custom domains with your Custom Deployment, you'll need to configure your DNS settings correctly. Here's how to set it up:
 
 1. **Add Custom Domain to the SettleMint Platform**:
+
    - Navigate to your Custom Deployment in the SettleMint platform.
    - In the manage custom deployment menu, click on the edit custom deployment action.
    - Locate the custom domains configuration section.
@@ -35,20 +36,24 @@ When using custom domains with your Custom Deployment, you'll need to configure 
 4. **Configure DNS Records**:
 
    For Top-Level Domains (e.g., example.com):
+
    - Remove any existing A and AAAA records for the domain you're configuring.
    - Remove any existing A and AAAA records for the www domain (e.g., <span>www</span>.example.com) if you're using it.
    - Create ALIAS records pointing your custom domain to the provided hostname.
    - Example: <br />`ALIAS example.com gke-europe.settlemint.com` and `ALIAS www.example.com gke-europe.settlemint.com`
 
    For Subdomains (e.g., app.example.com):
+
    - Create a CNAME record pointing your subdomain to the provided hostname.
    - Example: <br />`CNAME app.example.com gke-europe.settlemint.com`
 
 5. **Set TTL (Time to Live)**:
+
    - Set a lower TTL (e.g., 300 seconds) initially to allow for quicker propagation.
    - You can increase it later for better caching (e.g., 3600 seconds).
 
 6. **Verify DNS Propagation**:
+
    - Use online DNS lookup tools to check if your DNS changes have propagated.
    - Note that DNS propagation can take up to 48 hours, although it's often much quicker.
 
@@ -65,11 +70,14 @@ When using Custom Deployment, keep the following limitations in mind:
 1. **No Root User Privileges**: Your application will run without root user privileges for security reasons.
 
 2. **Read-Only Filesystem**: The filesystem is read-only. For data persistence, consider using:
+
    - Hasura: A GraphQL engine that provides a scalable database solution. See [Backend-as-a-service
- documentation](../backend-as-a-service).
+     documentation](../backend-as-a-service).
    - Other External Services: Depending on your specific needs, you may use other cloud-based storage or database services.
 
 3. **Stateless Applications**: Your applications should be designed to be stateless. This ensures better scalability and reliability in a cloud environment.
+
+4. **Use AMD-based Images**: Currently, our platform supports AMD-based container images. Ensure your Docker images are built for AMD architecture to guarantee smooth compatibility with our infrastructure.
 
 ## Best Practices
 
