@@ -158,7 +158,6 @@ As you complete each prerequisite, you'll need to collect specific information r
 
 ### Support
 * Email: support@settlemint.com
-* Join our Discord community
 * Schedule technical consultation
 * Contact your account manager
 

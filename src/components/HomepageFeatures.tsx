@@ -27,17 +27,7 @@ const FeatureList: FeatureItem[] = [
         <a href={'/documentation/docs/about-settlemint/intro/'}>Discover features</a>
       </>
     ),
-  },
-  {
-    title: 'Join the community',
-    image: '/img/undraw_docusaurus_react.svg',
-    description: (
-      <>
-        Ask all your questions, chat with other users and with the people who build the platform.{' '}
-        <a href={'https://discord.gg/4WPatxDJ6A'}>Join us on Discord</a>
-      </>
-    ),
-  },
+  }
 ];
 
 function Feature({ title, image, description }: FeatureItem) {

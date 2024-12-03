@@ -134,7 +134,6 @@ Note: This is just an example. Actual values will be collected during the prereq
 
 ### Support Channels
 * Email: support@settlemint.com
-* Join our Discord community
 * Schedule technical consultation
 * Contact your account manager
 
