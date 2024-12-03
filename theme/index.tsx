@@ -4,7 +4,6 @@ import "@fontsource/figtree/400.css";
 import "@fontsource/figtree/700.css";
 import "@fontsource/figtree/900.css";
 import aikidoIcon from "../static/img/about-settlemint/aikido-icon.png";
-import discordIcon from "../static/img/about-settlemint/discord-icon.png";
 import platformImage from "../static/img/about-settlemint/platformModelBlue.png";
 import platformScreenshot from "../static/img/about-settlemint/platformScreenshot.webp";
 import supportIcon from "../static/img/about-settlemint/support-icon.png";
@@ -137,7 +136,7 @@ function Navigation() {
         </div>
       </div>
 
-      <div className={styles.container} style={{ marginBottom: "80px" }}>
+      <div className={styles.container} style={{ marginBottom: "80px", display: "flex", justifyContent: "center" }}>
         <div className="row justify-content-center align-items-center">
           <div className="col-12">
             <div
@@ -145,7 +144,7 @@ function Navigation() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                marginBottom: "20px",
+                marginBottom: "40px",
               }}
             >
               <div style={{ textAlign: "center" }}>
@@ -159,11 +158,13 @@ function Navigation() {
                 </p>
               </div>
             </div>
+
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "40px",
               }}
             >
               <div style={{ textAlign: "center" }}>
@@ -175,44 +176,12 @@ function Navigation() {
                 />
                 <h3 className={styles.contactSupport}>Contact Support</h3>
                 <p>
-                  Have an issue or question?
+                  Have a question or need assistance?
                   <br />
-                  Log a support ticket and we will contact you!
+                  Email us at <a href="mailto:support@settlemint.com">support@settlemint.com</a>
                 </p>
-                <a
-                  className={styles.btnLink}
-                  href="https://client.support.settlemint.com/"
-                >
-                  Create a Ticket
-                </a>
               </div>
-              <div style={{ textAlign: "center" }}>
-                <img
-                  className={styles.icons}
-                  src={discordIcon}
-                  alt="SettleMint Platform"
-                  style={{ width: "30%" }}
-                />
-                <h3 style={{ marginTop: "0px" }}>Join Discord</h3>
-                <p>
-                  Ask a question in our Discord community and chat with other
-                  users
-                </p>
-                <a
-                  className={styles.btnLink}
-                  href="https://discord.com/invite/Mt5yqFrey9"
-                >
-                  Join Discord Channel
-                </a>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-            >
+
               <div style={{ textAlign: "center" }}>
                 <img
                   className={styles.icons}

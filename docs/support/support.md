@@ -1,11 +1,9 @@
-# Contact us
+# Contact Us
 
 We are here to provide support for all your troubleshooting and technical questions.
 
-## Discord community
+## Reach Us
 
-Join our [Discord server](https://discord.com/invite/Mt5yqFrey9) and get answers from our team as well as meet other developers working with SettleMint.
+Email us at **[support@settlemint.com](mailto:support@settlemint.com)** for any assistance. 
 
-## Create a ticket
-
-Create a support ticket on our [support portal](http://client.support.settlemint.com/)
+Our team is ready to help you with your queries.
