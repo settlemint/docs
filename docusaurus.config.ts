@@ -117,10 +117,6 @@ const config: Config = {
               href: "https://console.settlemint.com",
             },
             {
-              label: "Discord",
-              href: "https://discord.gg/4WPatxDJ6A",
-            },
-            {
               label: "Twitter",
               href: "https://twitter.com/settlemintcom",
             },

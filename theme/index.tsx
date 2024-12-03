@@ -4,7 +4,6 @@ import "@fontsource/figtree/400.css";
 import "@fontsource/figtree/700.css";
 import "@fontsource/figtree/900.css";
 import aikidoIcon from "../static/img/about-settlemint/aikido-icon.png";
-import discordIcon from "../static/img/about-settlemint/discord-icon.png";
 import platformImage from "../static/img/about-settlemint/platformModelBlue.png";
 import platformScreenshot from "../static/img/about-settlemint/platformScreenshot.webp";
 import supportIcon from "../static/img/about-settlemint/support-icon.png";
@@ -184,25 +183,6 @@ function Navigation() {
                   href="https://client.support.settlemint.com/"
                 >
                   Create a Ticket
-                </a>
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <img
-                  className={styles.icons}
-                  src={discordIcon}
-                  alt="SettleMint Platform"
-                  style={{ width: "30%" }}
-                />
-                <h3 style={{ marginTop: "0px" }}>Join Discord</h3>
-                <p>
-                  Ask a question in our Discord community and chat with other
-                  users
-                </p>
-                <a
-                  className={styles.btnLink}
-                  href="https://discord.com/invite/Mt5yqFrey9"
-                >
-                  Join Discord Channel
                 </a>
               </div>
             </div>
