@@ -118,7 +118,7 @@ Once the contract set is ready, you can deploy it using either the **Task Menu**
    ```
 
 2. **Run the Deployment Command**:  
-   Execute the following command in your txerminal:
+   Execute the following command in your terminal:
 
    ```bash
    scs-btp hardhat deploy --module ignition/modules/main.ts
