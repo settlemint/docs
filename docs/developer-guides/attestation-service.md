@@ -1,3 +1,10 @@
+---
+title: Complete Guide to Ethereum Attestation Service (EAS)
+description: A comprehensive guide to implementing and using the Ethereum Attestation Service (EAS) for creating, managing, and verifying on-chain attestations
+sidebar_position: 2
+keywords: [ethereum, eas, attestation, blockchain, web3, smart contracts, verification, schema registry, resolver]
+---
+
 # Complete Guide to Ethereum Attestation Service (EAS)
 
 import Tabs from '@theme/Tabs';
@@ -145,7 +152,7 @@ Imagine building a service where users prove ownership of their social media pro
 ### Example
 
 ```javascript
-const { ethers }const { ethers } = require("ethers");
+const { ethers } = require("ethers");
 
 // Configuration object for network and contract details
 const config = {
