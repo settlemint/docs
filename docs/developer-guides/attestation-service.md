@@ -125,7 +125,7 @@ Once the contract set is ready, you can deploy it using either the **Task Menu**
    ```
 
 2. **Run the Deployment Command**:  
-   Execute the following command in your txerminal:
+   Execute the following command in your terminal:
 
    ```bash
    scs-btp hardhat deploy --module ignition/modules/main.ts
@@ -152,7 +152,7 @@ Imagine building a service where users prove ownership of their social media pro
 ### Example
 
 ```javascript
-const { ethers }const { ethers } = require("ethers");
+const { ethers } = require("ethers");
 
 // Configuration object for network and contract details
 const config = {
