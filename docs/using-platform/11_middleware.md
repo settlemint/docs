@@ -32,7 +32,7 @@ We have some prebuilt subgraph indexing modules included in the smart contract s
 
 Before you start, make sure you are running:
 
-- An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Avalanche, etc.)
+- An EVM-compatible network (Ethereum, Polygon, Hyperledger Besu, Avalanche, etc.)
 
 :::
 
@@ -113,7 +113,7 @@ Benefits of using the smart contract portal:
 
 Before you start, make sure you are running:
 
-- An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Avalanche, etc.)
+- An EVM-compatible network (Ethereum, Polygon, Hyperledger Besu, Avalanche, etc.)
 - A private key
 
 :::
