@@ -6,37 +6,33 @@ SettleMint offers two Middleware solutions: **The Graph Middleware (for all EVM-
 
 ## Adding a middleware
 
-Before adding a middleware make sure that you have installed **smart contract sets** and **IPFS (decentralized)** storage
+Before adding a middleware make sure that you have a **blockchain node** running.
 
 Navigate to the **application** where you want to add a middleware. Click **Middleware** in the left navigation, and then click **Add a middleware**. This opens a form.
 
 Follow these steps to add the middleware:
 
-1. Select to which of your **smart contract sets** the middleware needs to connect, and click **Continue**.
-2. Choose [Graph Middleware](#the-graph-middleware) or [Smart Contract Portal Middleware](#the-smart-contract-portal-middleware)
-3. Choose a **Middleware name**. Choose one that will be easily recognizable in your dashboards.
-4. Select the **storage provider** if needed.
-5. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans.](../launch-platform/managed-cloud-deployment/13_deployment-plans.md)
-6. You see the **resource cost** for this middleware displayed at the bottom of the form. Click **Confirm** to add the smart contract set.
+1. Choose [Graph Middleware](#the-graph-middleware) or [Smart Contract Portal Middleware](#the-smart-contract-portal-middleware)
+2. Choose a **Middleware name**. Choose one that will be easily recognizable in your dashboards.
+3. Select the **blockchain node** you want to connect to. This is the blockchain node that will be used to index the blockchain data.
+4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans.](../launch-platform/managed-cloud-deployment/13_deployment-plans.md)
+5. You see the **resource cost** for this middleware displayed at the bottom of the form. Click **Confirm** to add the smart contract set.
 
 When the middleware is deployed, click it from the list and start using it.
 
 ## The Graph Middleware
 
-[The Graph](https://thegraph.com/en/) is a protocol for indexing and querying blockchain data from networks. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned) and IPFS nodes.
+[The Graph](https://thegraph.com/en/) is a protocol for indexing and querying blockchain data from networks. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned).
 
-Using the Graph protocol, you can create **subgraphs** that define which blockchain data will be indexed. These subgraphs are **defined in the smart contract set** and deployed to the middleware. The middleware will then use these subgraphs to correctly index your smart contracts and expose a developer-friendly and efficient **GraphQL API**, allowing you to query the data you need.
+Using the Graph protocol, you can create **subgraphs** that define which blockchain data will be indexed. The middleware will then use these subgraphs to correctly index your smart contracts and expose a developer-friendly and efficient **GraphQL API**, allowing you to query the data you need.
 
-The middleware is fully preconfigured and integrated with the smart contract sets. We have some prebuild subgraph indexing modules, but you can build your own modules if you have a custom smart contract set.
+We have some prebuilt subgraph indexing modules included in the smart contract set IDE, and you can build your own modules if you have a custom smart contract set.
 
 :::warning Warning
 
 Before you start, make sure you are running:
 
 - An EVM-compatible network (Ethereum, Polygon, Hyperleder Besu, Avalanche, etc.)
-- A smart contract set with a deployed smart contract
-- An IPFS node
-- A private key
 
 :::
 
@@ -44,7 +40,7 @@ When the middleware is deployed, follow these steps to start using it:
 
 ### Define and deploy a subgraph
 
-Navigate to the **smart contract set** that you connected to the middleware, go the **details** and open the **IDE**. Here you will define the subgraph to set the indexing specifications, and deploy it so it can be loaded into the middleware.
+Navigate to the **smart contract set** which you want to index, go the **details** and open the **IDE**. Here you will define the subgraph to set the indexing specifications, and deploy it so it can be loaded into the middleware. There are instructions included in the IDE to help you.
 
 #### Subgraph raw configuration
 
@@ -161,25 +157,25 @@ Standard Webhooks has built [SDKs and useful tools](https://www.standardwebhooks
 An example using Typescript, [Elysia](https://elysiajs.com/) and [standard webhooks](https://www.standardwebhooks.com/).
 
 ```ts
-import { Elysia, t } from 'elysia';
-import { Webhook } from 'standardwebhooks';
+import { Elysia, t } from "elysia";
+import { Webhook } from "standardwebhooks";
 
 async function webhookConsumerBootstrap(secret: string) {
   const webhookConsumer = new Elysia().post(
-    '/scp-listener',
+    "/scp-listener",
     ({ headers, body }) => {
       try {
         const wh = new Webhook(btoa(secret));
         const verifiedPayload = wh.verify(JSON.stringify(body.payload), {
-          'webhook-id': headers['btp-portal-event-id']!,
-          'webhook-signature': headers['btp-portal-event-signature']!,
-          'webhook-timestamp': headers['btp-portal-event-timestamp']!,
+          "webhook-id": headers["btp-portal-event-id"]!,
+          "webhook-signature": headers["btp-portal-event-signature"]!,
+          "webhook-timestamp": headers["btp-portal-event-timestamp"]!,
         });
         console.log(
           `Received a webhook event: ${JSON.stringify(verifiedPayload)}`
         );
       } catch (err) {
-        console.error('Webhook payload invalid', err);
+        console.error("Webhook payload invalid", err);
         throw err;
       }
     },
@@ -206,7 +202,7 @@ async function webhookConsumerBootstrap(secret: string) {
 webhookConsumerBootstrap(process.env.WEBHOOK_SECRET!)
   .then((app) => app.listen(process.env.PORT || 5555))
   .catch((error: Error) => {
-    console.error('Failed to start webhook consumer', error);
+    console.error("Failed to start webhook consumer", error);
     process.exit(1);
   });
 ```
@@ -218,7 +214,7 @@ The websocket endpoint exposes functionality to get real time updates on process
 The url can be copied from the Connect tab.
 
 ```ts
-import type { TransactionReceipt } from 'viem';
+import type { TransactionReceipt } from "viem";
 
 // Should include an api key (eg wss://smart-contract-portal-middleware.settlemint.com/sm_pat_.../ws)
 const webSocketHost = process.env.WS_URL!;
@@ -242,7 +238,7 @@ export async function waitForTransactionReceipt(transactionHash: string) {
     webSocket.onerror = reject;
     webSocket.onclose = () => {
       if (!isResolved) {
-        reject(new Error('Nothing received from the WebSocket'));
+        reject(new Error("Nothing received from the WebSocket"));
       }
     };
     if (webSocket.readyState === WebSocket.OPEN) {
