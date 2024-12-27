@@ -26,7 +26,7 @@ function HomepageHeader() {
   );
 }
 
-export default function Home(): JSX.Element {
+export default function Home() {
   const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
@@ -34,12 +34,7 @@ export default function Home(): JSX.Element {
       description="The Blockchain Transformation platform for developers to rapidly build blockchain applications."
     >
       <Head>
-        <script
-          data-jsd-embedded
-          data-key="5d7a0f9b-1691-4f56-9da7-95e3526950fb"
-          data-base-url="https://jsd-widget.atlassian.com"
-          src="https://jsd-widget.atlassian.com/assets/embed.js"
-        />
+        <title>{siteConfig.title}</title>
       </Head>
       <HomepageHeader />
       <main />
