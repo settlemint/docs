@@ -71,7 +71,7 @@ Enter the following snippet in the Message tab.
 ///////////////////////////////////////////////////////////
 
 const rpcEndpoint = "https://YOUR_NODE_RPC_ENDPOINT.settlemint.com";
-const accessToken = "bpaas-YOUR_NODE_API_KEY_HERE";
+const accessToken = "YOUR_APPLICATION_ACCESS_TOKEN_HERE";
 
 ///////////////////////////////////////////////////////////
 // Logic                                                 //
