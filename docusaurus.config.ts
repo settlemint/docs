@@ -14,19 +14,7 @@ const config: Config = {
   favicon: "img/favicon.ico",
   organizationName: "settlemint", // Usually your GitHub org/user name.
   projectName: "btp-docs", // Usually your repo name.
-  plugins: [
-    [
-      require.resolve("@cmfcmf/docusaurus-search-local"),
-      {
-        indexDocs: true,
-        indexDocSidebarParentCategories: 5,
-        indexBlog: true,
-        indexPages: true,
-        language: "en",
-      },
-    ],
-  ],
-
+  plugins: [require.resolve("docusaurus-lunr-search")],
   scripts: [
     {
       src: "https://jsd-widget.atlassian.com/assets/embed.js",
@@ -60,7 +48,8 @@ const config: Config = {
         blog: {
           showReadingTime: true,
           blogTitle: "Developer Blog",
-        },        theme: {
+        },
+        theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
       } satisfies Preset.Options,
@@ -88,7 +77,10 @@ const config: Config = {
           position: "left",
         },
         { to: "/blog/", label: "Developer Blog", position: "left" },
-        { to: "https://roadmap.settlemint.com/changelog", label: "Changelog",           position: "right",
+        {
+          to: "https://roadmap.settlemint.com/changelog",
+          label: "Changelog",
+          position: "right",
         },
         {
           href: "https://settlemint.com",
