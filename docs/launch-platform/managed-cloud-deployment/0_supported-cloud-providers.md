@@ -13,9 +13,9 @@ Available regions:
 - Frankfurt
 - Mumbai
 - Singapore
-- Ohio
-- Bahrain
-- Osaka
+- Ohio [Contact us](mailto:support@settlemint.com)
+- Bahrain [Contact us](mailto:support@settlemint.com)
+- Osaka [Contact us](mailto:support@settlemint.com)
 
 ## Google Cloud
 
@@ -24,18 +24,18 @@ Available regions:
 - Brussels
 - Mumbai
 - Singapore
-- Oregon
 - Tokyo
+- Oregon [Contact us](mailto:support@settlemint.com)
 
 ## Microsoft Azure
 
 Available regions:
 
-- Amsterdam
-- Singapore
-- California
 - Dubai
 - Tokyo
+- Amsterdam [Contact us](mailto:support@settlemint.com)
+- Singapore [Contact us](mailto:support@settlemint.com)
+- California [Contact us](mailto:support@settlemint.com)
 
 :::info Note
 

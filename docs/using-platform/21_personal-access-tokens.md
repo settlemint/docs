@@ -1,6 +1,6 @@
 # Personal access tokens
 
-Personal access tokens (or [Application access tokens](19_application-access-tokens.md)) let you connect your SettleMint services with other apps securely. They represent an individual user, and have the same rights as the user's role in the organization (admin or user). They can be used to connect to all services that the user has access to.
+Personal access tokens (or [Application access tokens](20_application-access-tokens.md)) let you connect your SettleMint services with other apps securely. They represent an individual user, and have the same rights as the user's role in the organization (admin or user). They can be used to connect to all services that the user has access to.
 
 ## Create a personal access token
 
