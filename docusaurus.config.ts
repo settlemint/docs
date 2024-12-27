@@ -8,8 +8,8 @@ const config: Config = {
     "The Blockchain Transformation Platform for developers to rapidly build blockchain applications",
   url: "https://console.settlemint.com",
   baseUrl: "/documentation/",
-  onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "throw",
   trailingSlash: true,
   favicon: "img/favicon.ico",
   organizationName: "settlemint", // Usually your GitHub org/user name.
