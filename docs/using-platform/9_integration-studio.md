@@ -61,7 +61,7 @@ Drag and drop a **function node**. This is the node that will query the blockcha
 `rpcEndpoint` is the RPC url of your Polygon Mumbai Node.
 Under the **Connect tab** of your Polygon Mumbai node, you will find its RPC url.
 
-`apiKey` - You will need an API key for your node. If you do not have one, you can easily [create an API key](19_api-keys.md) first.
+`accessToken` - You will need an access token for your application. If you do not have one, you can easily [create an access token](20_application-access-tokens.md) first.
 
 Enter the following snippet in the Message tab.
 
@@ -70,15 +70,17 @@ Enter the following snippet in the Message tab.
 // Configuration                                         //
 ///////////////////////////////////////////////////////////
 
-const rpcEndpoint = 'https://YOUR_NODE_RPC_ENDPOINT.settlemint.com';
-const apiKey = 'bpaas-YOUR_NODE_API_KEY_HERE';
+const rpcEndpoint = "https://YOUR_NODE_RPC_ENDPOINT.settlemint.com";
+const accessToken = "YOUR_APPLICATION_ACCESS_TOKEN_HERE";
 
 ///////////////////////////////////////////////////////////
 // Logic                                                 //
 ///////////////////////////////////////////////////////////
 
-const ethers = global.get('ethers');
-const provider = new ethers.providers.JsonRpcProvider(`${rpcEndpoint}/${apiKey}`);
+const ethers = global.get("ethers");
+const provider = new ethers.providers.JsonRpcProvider(
+  `${rpcEndpoint}/${accessToken}`
+);
 msg.payload = await provider.getBlockNumber();
 
 return msg;
@@ -93,15 +95,19 @@ return msg;
 ethers and some ipfs libraries are already available by default and can be used like this:
 
 ```javascript
-const ethers = global.get('ethers');
-const provider = new ethers.providers.JsonRpcProvider(`${rpcEndpoint}/${apiKey}`);
+const ethers = global.get("ethers");
+const provider = new ethers.providers.JsonRpcProvider(
+  `${rpcEndpoint}/${accessToken}`
+);
 
-const ipfsHttpClient = global.get('ipfsHttpClient');
-const client = ipfsHttpClient.create(`${ipfsEndpoint}/${apiKey}/api/v0`);
+const ipfsHttpClient = global.get("ipfsHttpClient");
+const client = ipfsHttpClient.create(`${ipfsEndpoint}/${accessToken}/api/v0`);
 
-const uint8arrays = global.get('uint8arrays');
-const itAll = global.get('itAll');
-const data = uint8arrays.toString(uint8arrays.concat(await itAll(client.cat(cid))));
+const uint8arrays = global.get("uint8arrays");
+const itAll = global.get("itAll");
+const data = uint8arrays.toString(
+  uint8arrays.concat(await itAll(client.cat(cid)))
+);
 ```
 
 if the library you need isn't available by default you will need to import it in the setup tab.  

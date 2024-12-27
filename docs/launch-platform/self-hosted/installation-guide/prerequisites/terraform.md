@@ -9,11 +9,12 @@ sidebar_position: 9
 This Terraform-based installation is designed for quick setup and testing environments only. For production deployments, we strongly recommend following the manual installation process to properly configure and secure each component according to your organization's requirements.
 
 **Key limitations of Terraform setup:**
+
 - Components run locally in the cluster without High Availability
 - Basic security configurations
 - Limited customization options
 - Not suitable for production workloads
-:::
+  :::
 
 For a quick deployment of the SettleMint Platform and all its prerequisites on Google Cloud Platform (GCP), we provide a Terraform-based installation method. This is optional - you can skip this if you prefer to set up the prerequisites manually.
 
@@ -32,19 +33,23 @@ brew install hashicorp/tap/terraform
 
 1. Create a [Google Cloud Platform account](https://console.cloud.google.com/freetrial/) if you don't have one
 2. Install the gcloud CLI:
+
 ```sh
 brew cask install google-cloud-sdk
 gcloud auth application-default login
 ```
 
 3. Enable required APIs for your project:
+
    - Container API: `https://console.developers.google.com/apis/api/container.googleapis.com/overview?project=<project_id>`
    - Cloud KMS API: `https://console.developers.google.com/apis/api/cloudkms.googleapis.com/overview?project=<project_id>`
 
 4. Configure IAM permissions. Your GCP user needs either:
+
    - `Owner` role (recommended for quick setup)
 
    OR all of these roles:
+
    - `Editor`
    - `Cloud KMS Admin`
    - `Project IAM Admin`
@@ -54,11 +59,13 @@ gcloud auth application-default login
 ## Installation Steps
 
 1. Clone the installation repository:
+
 ```sh
 git clone git@github.com:settlemint/tutorial-btp-on-gcp.git
 ```
 
 2. Set required environment variables:
+
 ```sh
 # DNS zone (subdomain) for platform access (e.g., btp.settlemint.com)
 export TF_VAR_gcp_dns_zone='YOUR_DNS_ZONE'
@@ -82,26 +89,31 @@ export TF_VAR_btp_version='BTP_VERSION'
 ### DNS Zone Setup
 
 1. Navigate to the DNS zone setup directory:
+
 ```sh
 cd tutorial-btp-on-gcp/00_dns_zone
 ```
 
 2. Create the DNS zone:
+
 ```sh
 terraform init
 terraform apply
 ```
 
 3. Configure your domain registrar with the nameservers from the Terraform output. For example, in Cloudflare:
+
    - Add NS records for your subdomain (e.g., btp.settlemint.com)
    - Point to the Google nameservers (ns-cloud-aX.googledomains.com)
 
 4. Verify DNS delegation:
+
 ```sh
 dig NS btp.settlemint.com
 ```
 
 Expected output should show Google nameservers:
+
 ```
 ;; ANSWER SECTION:
 btp.settlemint.com.	300	IN	NS	ns-cloud-a4.googledomains.com.
@@ -113,17 +125,20 @@ btp.settlemint.com.	300	IN	NS	ns-cloud-a3.googledomains.com.
 ### Platform Infrastructure Setup
 
 1. Navigate to the infrastructure directory:
+
 ```sh
 cd ../01_infrastructure
 ```
 
 2. Deploy the infrastructure:
+
 ```sh
 terraform init
 terraform apply
 ```
 
 This will create:
+
 - GKE cluster
 - All required prerequisites
 - The SettleMint Platform installation
@@ -144,7 +159,7 @@ After the Terraform deployment completes:
 
 1. Access the platform at `https://btp.<your-domain>`
 2. Follow the initial setup wizard
-3. Review the [platform documentation](/docs/introduction) for next steps
+3. Review the [platform documentation](../introduction.md) for next steps
 
 ## Troubleshooting
 

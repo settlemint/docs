@@ -12,7 +12,8 @@ This guide walks you through installing the SettleMint Platform using Helm, prov
 ## Prerequisites
 
 Before starting the installation, ensure you have:
-- Completed all [prerequisite services](/launch-platform/self-hosted/installation-guide/prerequisites/overview) setup
+
+- Completed all [prerequisite services](prerequisites/overview.md) setup
 - Collected all required information from the prerequisite guides
 - Met all infrastructure requirements
 - Helm 3.x installed
@@ -234,6 +235,7 @@ Once all pods are running, access the platform at `https://<your-domain>`.
 If you encounter issues during installation:
 
 1. Debug the installation:
+
 ```bash
 helm upgrade --install --debug --dry-run settlemint oci://registry.settlemint.com/settlemint-platform/settlemint \
   --namespace settlemint \
@@ -241,11 +243,13 @@ helm upgrade --install --debug --dry-run settlemint oci://registry.settlemint.co
 ```
 
 2. Check pod logs:
+
 ```bash
 kubectl logs -n settlemint <pod-name>
 ```
 
 3. Generate a support bundle:
+
 ```bash
 # Install support bundle plugin
 curl https://krew.sh/support-bundle | bash
