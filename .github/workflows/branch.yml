@@ -52,26 +52,22 @@ jobs:
           node-version: 21
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
+      - name: Install Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4
         with:
-          version: latest
-          run_install: false
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          node-version-file: package.json
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup caches
-        uses: namespacelabs/nscloud-cache-action@v1
+        uses: namespacelabs/nscloud-cache-action@f23fbf3b586540a96f4f5849a5e04c7e56e1e804 # v1
         with:
           path: |
-            .docusaurus
-            ${{ env.STORE_PATH }}
-            ~/.cache
-            node_modules
-            **/node_modules
+            .turbo
+            ~/.bun/install/cache
+
+      - uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5 # v2
+        with:
+          bun-version-file: package.json
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -88,7 +84,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm install --frozen-lockfile --prefer-offline
+          bun install
 
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v5
@@ -106,12 +102,12 @@ jobs:
 
       - name: Build
         run: |
-          pnpm run build
+          bun run build
 
       - name: Build Docker container
         run: |
-          pnpm run docker
+          bun run docker
 
       - name: Cosign Docker container
         run: |
-          pnpm run cosign
+          bun run cosign
