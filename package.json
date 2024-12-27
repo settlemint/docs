@@ -21,12 +21,11 @@
     "@docusaurus/preset-classic": "3.6.3",
     "@fontsource/figtree": "5.1.1",
     "@mdx-js/react": "3.1.0",
-    "@stackql/docusaurus-plugin-hubspot": "1.1.0",
     "clsx": "2.1.1",
     "docusaurus-lunr-search": "3.5.0",
     "prism-react-renderer": "2.4.1",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.6.3",

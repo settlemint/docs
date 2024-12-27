@@ -15,25 +15,6 @@ const config: Config = {
   organizationName: "settlemint", // Usually your GitHub org/user name.
   projectName: "btp-docs", // Usually your repo name.
   plugins: [require.resolve("docusaurus-lunr-search")],
-  scripts: [
-    {
-      src: "https://jsd-widget.atlassian.com/assets/embed.js",
-      "data-jsd-embedded": true,
-      "data-key": "5d7a0f9b-1691-4f56-9da7-95e3526950fb",
-      "data-base-url": "https://jsd-widget.atlassian.com",
-    },
-    {
-      src: "https://plausible.io/js/script.js",
-      async: true,
-      defer: true,
-      "data-domain": "console.settlemint.com/documentation",
-    },
-    {
-      async: true,
-      src: "//static.hotjar.com/c/hotjar-3663550.js?sv=6",
-      type: "text/javascript",
-    },
-  ],
   presets: [
     [
       "classic",
@@ -78,11 +59,6 @@ const config: Config = {
         },
         { to: "/blog/", label: "Developer Blog", position: "left" },
         {
-          to: "https://roadmap.settlemint.com/changelog",
-          label: "Changelog",
-          position: "right",
-        },
-        {
           href: "https://settlemint.com",
           label: "Website",
           position: "right",
@@ -122,10 +98,6 @@ const config: Config = {
               to: "/blog",
             },
             {
-              label: "Cangelog",
-              href: "https://roadmap.settlemint.com/changelog",
-            },
-            {
               label: "Website",
               href: "https://settlemint.com",
             },
@@ -138,12 +110,6 @@ const config: Config = {
       theme: themes.github,
       darkTheme: themes.dracula,
       additionalLanguages: ["solidity"],
-    },
-    hotjar: {
-      siteId: 3_663_550,
-    },
-    hubspot: {
-      accountId: 8_639_589,
     },
   } satisfies Preset.ThemeConfig,
 };
