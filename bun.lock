@@ -5,9 +5,8 @@
       "dependencies": {
         "@docusaurus/core": "3.6.3",
         "@docusaurus/preset-classic": "3.6.3",
-        "@fontsource/figtree": "5.1.1",
+        "@fontsource/figtree": "5.1.2",
         "@mdx-js/react": "3.1.0",
-        "@stackql/docusaurus-plugin-hubspot": "1.1.0",
         "clsx": "2.1.1",
         "docusaurus-lunr-search": "3.5.0",
         "prism-react-renderer": "2.4.1",
@@ -421,7 +420,7 @@
 
     "@docusaurus/utils-validation": ["@docusaurus/utils-validation@3.6.3", "", { "dependencies": { "@docusaurus/logger": "3.6.3", "@docusaurus/utils": "3.6.3", "@docusaurus/utils-common": "3.6.3", "fs-extra": "^11.2.0", "joi": "^17.9.2", "js-yaml": "^4.1.0", "lodash": "^4.17.21", "tslib": "^2.6.0" } }, "sha512-bhEGGiN5BE38h21vjqD70Gxg++j+PfYVddDUE5UFvLDup68QOcpD33CLr+2knPorlxRbEaNfz6HQDUMQ3HuqKw=="],
 
-    "@fontsource/figtree": ["@fontsource/figtree@5.1.1", "", {}, "sha512-jVxgbCrtag/f6FYauu+DbQJR7TvM43IyX2iNcx8QmmEluzyPZ+FVRul5t0OV9k52fDi6nBLF/8709AAGYv7ZmA=="],
+    "@fontsource/figtree": ["@fontsource/figtree@5.1.2", "", {}, "sha512-WlauXrKAtHOadYti0l/dA2ez4lK7Yw2iQccv3ulmkMXgfKOdMjngob2AkIVxFyNLcvorVhh/Eq77DiWSGoR2bw=="],
 
     "@hapi/hoek": ["@hapi/hoek@9.3.0", "", {}, "sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ=="],
 
@@ -474,8 +473,6 @@
     "@sindresorhus/is": ["@sindresorhus/is@4.6.0", "", {}, "sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw=="],
 
     "@slorber/remark-comment": ["@slorber/remark-comment@1.0.0", "", { "dependencies": { "micromark-factory-space": "^1.0.0", "micromark-util-character": "^1.1.0", "micromark-util-symbol": "^1.0.1" } }, "sha512-RCE24n7jsOj1M0UPvIQCHTe7fI0sFL4S2nwKVWwHyVr/wI/H8GosgsJGyhnsZoGFnD/P2hLf1mSbrrgSLN93NA=="],
-
-    "@stackql/docusaurus-plugin-hubspot": ["@stackql/docusaurus-plugin-hubspot@1.1.0", "", {}, "sha512-pQIF3WkzJ0Ng8gjc3cpG72GwNu5AHc9/jIpyvOO8kYNAzSTcKDMFJGOGGSz8dG3j6M0ZZp1TciLbZod2cFpSQQ=="],
 
     "@svgr/babel-plugin-add-jsx-attribute": ["@svgr/babel-plugin-add-jsx-attribute@8.0.0", "", { "peerDependencies": { "@babel/core": "^7.0.0-0" } }, "sha512-b9MIk7yhdS1pMCZM8VeNfUlSKVRhsHZNMl5O9SfaX0l0t5wjdgu4IDzGB8bpnGBBOjGST3rRFVsaaEtI4W6f7g=="],
 
