@@ -16,65 +16,91 @@
     "security:openssf-scorecard",
     "schedule:nonOfficeHours"
   ],
-  "labels": ["dependencies"],
+  "labels": [
+    "dependencies"
+  ],
   "rebaseWhen": "conflicted",
   "packageRules": [
     {
-      "matchPackagePatterns": ["bull-board"],
-      "groupName": "bull-board"
-    },
-    {
-      "matchPackagePatterns": ["taquito"],
-      "groupName": "taquito"
-    },
-    {
-      "matchPackagePatterns": ["nestjs"],
-      "groupName": "nestjs"
-    },
-    {
-      "matchPackagePatterns": ["pulumi"],
-      "groupName": "pulumi"
-    },
-    {
-      "matchPackagePatterns": ["hasura"],
-      "groupName": "hasura"
-    },
-    {
-      "matchPackagePatterns": ["hyperledger/fabric"],
-      "groupName": "fabric"
-    },
-    {
-      "matchPackagePatterns": ["graphiql"],
-      "groupName": "graphiql"
-    },
-    {
-      "matchPackagePatterns": ["graphiql"],
-      "groupName": "graphiql"
-    },
-    {
-      "matchPackagePatterns": ["kubo"],
-      "groupName": "kubo"
-    },
-    {
-      "matchPackagePatterns": ["settlemint/bpaas"],
-      "groupName": "bpaas"
-    },
-    {
-      "matchPackagePatterns": ["settlemint/bpaas/smartcontractsets"],
-      "groupName": "bpaas/smartcontractsets",
-      "excludePackagePatterns": [
-        "settlemint/bpaas/onprem",
-        "settlemint/bpaas/serivces",
-        "settlemint/bpaas/saas"
+      "groupName": "bull-board",
+      "matchPackageNames": [
+        "/bull-board/"
       ]
     },
     {
-      "matchPackagePatterns": ["hyperledger/fabric"],
-      "groupName": "hyperledger/fabric"
+      "groupName": "taquito",
+      "matchPackageNames": [
+        "/taquito/"
+      ]
     },
     {
-      "matchPackagePatterns": ["docusaurus"],
-      "enabled": false
+      "groupName": "nestjs",
+      "matchPackageNames": [
+        "/nestjs/"
+      ]
+    },
+    {
+      "groupName": "pulumi",
+      "matchPackageNames": [
+        "/pulumi/"
+      ]
+    },
+    {
+      "groupName": "hasura",
+      "matchPackageNames": [
+        "/hasura/"
+      ]
+    },
+    {
+      "groupName": "fabric",
+      "matchPackageNames": [
+        "/hyperledger/fabric/"
+      ]
+    },
+    {
+      "groupName": "graphiql",
+      "matchPackageNames": [
+        "/graphiql/"
+      ]
+    },
+    {
+      "groupName": "graphiql",
+      "matchPackageNames": [
+        "/graphiql/"
+      ]
+    },
+    {
+      "groupName": "kubo",
+      "matchPackageNames": [
+        "/kubo/"
+      ]
+    },
+    {
+      "groupName": "bpaas",
+      "matchPackageNames": [
+        "/settlemint/bpaas/"
+      ]
+    },
+    {
+      "groupName": "bpaas/smartcontractsets",
+      "matchPackageNames": [
+        "/settlemint/bpaas/smartcontractsets/",
+        "!/settlemint/bpaas/onprem/",
+        "!/settlemint/bpaas/serivces/",
+        "!/settlemint/bpaas/saas/"
+      ]
+    },
+    {
+      "groupName": "hyperledger/fabric",
+      "matchPackageNames": [
+        "/hyperledger/fabric/"
+      ]
+    },
+    {
+      "enabled": false,
+      "matchPackageNames": [
+        "/docusaurus/"
+      ]
     }
   ],
   "hostRules": [
@@ -83,13 +109,13 @@
     },
     {
       "hostType": "docker",
-      "domainName": "ghcr.io",
+      "matchHost": "ghcr.io",
       "username": "{{ secrets.GITHUB_USER }}",
       "password": "{{ secrets.GITHUB_PASS }}"
     },
     {
       "hostType": "docker",
-      "domainName": "docker.io",
+      "matchHost": "docker.io",
       "username": "{{ secrets.DOCKER_USER }}",
       "password": "{{ secrets.DOCKER_PASS }}"
     }

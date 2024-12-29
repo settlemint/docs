@@ -16,7 +16,7 @@ export function CardSection({
   children: ReactNode;
   description?: ReactNode;
   hasSubSections?: boolean;
-  HeadingTag?: keyof JSX.IntrinsicElements;
+  HeadingTag?: React.ElementType;
   className?: string;
 }) {
   return (
@@ -42,7 +42,7 @@ export function Card({
   tag,
 }: PropsWithChildren<{
   id?: string;
-  icon?: JSX.Element;
+  icon?: ReactNode;
   title: string;
   description?: string;
   to: string;

@@ -1,10 +1,11 @@
 import clsx from 'clsx';
+import type { JSX, ReactNode } from 'react';
 import styles from './HomepageFeatures.module.css';
 
 type FeatureItem = {
   title: string;
   image: string;
-  description: JSX.Element;
+  description: ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
