@@ -59,6 +59,11 @@ const config: Config = {
         },
         { to: "/blog/", label: "Developer Blog", position: "left" },
         {
+          href: "/docs/releases/attestation-service",
+          label: "Releases",
+          position: "right",
+        },
+        {
           href: "https://settlemint.com",
           label: "Website",
           position: "right",
