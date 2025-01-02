@@ -1,7 +1,5 @@
 # Simplified Subgraph Deployments
 
-**Jan 02 2025**
-
 We've significantly simplified the subgraph deployment process. Here's what's changed:
 
 **Previously:**

@@ -2,8 +2,6 @@
 
 ![Changelog Image](../static/img/releases/support-qbft-for-besu.png)
 
-**Aug 29 2024**
-
 QBFT (Quorum Byzantine Fault Tolerance) is the latest consensus algorithm now available in Hyperledger Besu on the SettleMint platform. This proof-of-authority consensus mechanism is designed to provide enhanced security, scalability, and performance for enterprise blockchain networks. QBFT ensures that all participating nodes in the network agree on the state of the blockchain, even in the presence of potentially malicious actors or network failures. By utilizing a leader-based system with rotating block proposers, QBFT maintains network integrity while allowing for efficient transaction processing.
 
 Compared to its predecessor, IBFTv2, QBFT offers several significant improvements. First and foremost, QBFT provides immediate transaction finality, meaning that once a block is added to the chain, it's considered final and cannot be reversed. This feature is particularly crucial for financial applications where transaction certainty is paramount. Additionally, QBFT boasts enhanced performance metrics, with faster block times and higher transaction throughput. The algorithm also incorporates improved security measures, including protection against certain types of attacks that could potentially compromise IBFTv2 networks. These enhancements make QBFT a more robust and efficient choice for enterprise-grade blockchain deployments.

@@ -2,8 +2,6 @@
 
 ![Changelog Image](../static/img/releases/customize-genesis-bootnode-lists-and-key-material.png)
 
-**Aug 01 2024**
-
 You can now create new consortium networks where you have the capability to customize literally everything.
 
 1. You can build your own genesis files,

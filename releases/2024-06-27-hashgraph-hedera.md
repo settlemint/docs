@@ -2,8 +2,6 @@
 
 ![Changelog Image](../static/img/releases/hashgraph-hedera.png)
 
-**Jun 27 2024**
-
 Hedera is a public distributed ledger technology (DLT) network that was launched in August 2018 by Hedera Hashgraph, LLC. It uses the Hashgraph consensus algorithm, which is a unique and novel approach to achieving consensus in a distributed network.
 
 Hedera’s native cryptocurrency is called HBAR, and it is used to power the network’s services, including smart contracts, file storage, and regular transactions.
