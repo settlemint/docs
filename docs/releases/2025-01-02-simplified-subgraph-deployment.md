@@ -4,14 +4,14 @@
 
 We've significantly simplified the subgraph deployment process. Here's what's changed:
 
-**Previous Process:**
+**Previously:**
 
 - Required deploying a smart contract set
 - Required IPFS deployment
 - Middleware needed explicit connections to both smart contract set and IPFS
 - Subgraphs could only be deployed to middlewares from their connected smart contract set
 
-**New Process:**
+**Now:**
 
 - Deploy middlewares independently without a smart contract set or IPFS required
 - Deploy subgraphs from any smart contract set to any middleware within an application
