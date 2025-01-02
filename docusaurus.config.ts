@@ -29,6 +29,7 @@ const config: Config = {
         blog: {
           showReadingTime: true,
           blogTitle: "Developer Blog",
+          sortPosts: "descending",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
