@@ -1,6 +1,6 @@
 # Run anything as a custom deployment
 
-![Changelog Image](../../static/img/releases/run-anything-as-a-custom-deployment.png)
+![Changelog Image](../static/img/releases/run-anything-as-a-custom-deployment.png)
 
 **Oct 11 2024**
 

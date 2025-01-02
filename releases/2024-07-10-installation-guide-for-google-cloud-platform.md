@@ -1,6 +1,6 @@
 # Installation guide for Google Cloud Platform
 
-![Changelog Image](../../static/img/releases/installation-guide-for-google-cloud-platform.png)
+![Changelog Image](../static/img/releases/installation-guide-for-google-cloud-platform.png)
 
 **Jul 10 2024**
 

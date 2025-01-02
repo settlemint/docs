@@ -1,6 +1,6 @@
 # Support QBFT for Besu
 
-![Changelog Image](../../static/img/releases/support-qbft-for-besu.png)
+![Changelog Image](../static/img/releases/support-qbft-for-besu.png)
 
 **Aug 29 2024**
 

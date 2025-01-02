@@ -1,6 +1,6 @@
 # Smart Contract Set Portal
 
-![Changelog Image](../../static/img/releases/smart-contract-set-portal.png)
+![Changelog Image](../static/img/releases/smart-contract-set-portal.png)
 
 **Jul 23 2024**
 

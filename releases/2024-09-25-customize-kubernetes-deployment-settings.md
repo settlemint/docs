@@ -1,6 +1,6 @@
 # Customize Kubernetes deployment settings
 
-![Changelog Image](../../static/img/releases/customize-kubernetes-deployment-settings.png)
+![Changelog Image](../static/img/releases/customize-kubernetes-deployment-settings.png)
 
 **Sep 25 2024**
 

@@ -1,6 +1,6 @@
 # Hashgraph Hedera
 
-![Changelog Image](../../static/img/releases/hashgraph-hedera.png)
+![Changelog Image](../static/img/releases/hashgraph-hedera.png)
 
 **Jun 27 2024**
 

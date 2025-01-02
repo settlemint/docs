@@ -14,7 +14,18 @@ const config: Config = {
   favicon: "img/favicon.ico",
   organizationName: "settlemint", // Usually your GitHub org/user name.
   projectName: "btp-docs", // Usually your repo name.
-  plugins: [require.resolve("docusaurus-lunr-search")],
+  plugins: [
+    require.resolve("docusaurus-lunr-search"),
+    [
+      "@docusaurus/plugin-content-blog",
+      {
+        id: "releases",
+        routeBasePath: "releases",
+        path: "./releases",
+        blogSidebarCount: "ALL",
+      },
+    ],
+  ],
   presets: [
     [
       "classic",
@@ -60,7 +71,7 @@ const config: Config = {
         },
         { to: "/blog/", label: "Developer Blog", position: "left" },
         {
-          href: "/docs/releases/attestation-service",
+          href: "/releases",
           label: "Releases",
           position: "right",
         },

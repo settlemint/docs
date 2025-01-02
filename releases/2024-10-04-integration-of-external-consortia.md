@@ -1,6 +1,6 @@
 # Integration of external consortia
 
-![Changelog Image](../../static/img/releases/integration-of-external-consortia.png)
+![Changelog Image](../static/img/releases/integration-of-external-consortia.png)
 
 **Oct 04 2024**
 

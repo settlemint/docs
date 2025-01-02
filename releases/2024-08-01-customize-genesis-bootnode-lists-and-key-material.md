@@ -1,6 +1,6 @@
 # Customize Genesis, Bootnode lists and key material
 
-![Changelog Image](../../static/img/releases/customize-genesis-bootnode-lists-and-key-material.png)
+![Changelog Image](../static/img/releases/customize-genesis-bootnode-lists-and-key-material.png)
 
 **Aug 01 2024**
 

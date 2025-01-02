@@ -1,6 +1,6 @@
 # Managed Platform v7
 
-![Changelog Image](../../static/img/releases/managed-platform-v7.png)
+![Changelog Image](../static/img/releases/managed-platform-v7.png)
 
 **Apr 02 2024**
 

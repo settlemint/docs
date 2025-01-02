@@ -1,6 +1,6 @@
 # User Wallet Manager
 
-![Changelog Image](../../static/img/releases/user-wallet-manager.png)
+![Changelog Image](../static/img/releases/user-wallet-manager.png)
 
 **Sep 27 2024**
 

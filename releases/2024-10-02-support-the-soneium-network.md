@@ -1,6 +1,6 @@
 # Support the Soneium Network
 
-![Changelog Image](../../static/img/releases/support-the-soneium-network.png)
+![Changelog Image](../static/img/releases/support-the-soneium-network.png)
 
 **Oct 02 2024**
 

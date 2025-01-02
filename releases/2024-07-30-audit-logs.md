@@ -1,6 +1,6 @@
 # Audit logs
 
-![Changelog Image](../../static/img/releases/audit-logs.png)
+![Changelog Image](../static/img/releases/audit-logs.png)
 
 **Jul 30 2024**
 

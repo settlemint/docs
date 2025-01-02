@@ -1,6 +1,6 @@
 # Attestation Service
 
-![Changelog Image](../../static/img/releases/attestation-service.png)
+![Changelog Image](../static/img/releases/attestation-service.png)
 
 **Aug 23 2024**
 

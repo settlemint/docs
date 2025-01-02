@@ -1,6 +1,6 @@
 # Self-Managed platform v7
 
-![Changelog Image](../../static/img/releases/self-managed-platform-v7.png)
+![Changelog Image](../static/img/releases/self-managed-platform-v7.png)
 
 **Mar 22 2024**
 

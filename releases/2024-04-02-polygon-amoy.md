@@ -1,6 +1,6 @@
 # Polygon Amoy
 
-![Changelog Image](../../static/img/releases/polygon-amoy.png)
+![Changelog Image](../static/img/releases/polygon-amoy.png)
 
 **Apr 02 2024**
 

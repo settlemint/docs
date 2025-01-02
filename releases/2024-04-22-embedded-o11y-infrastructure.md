@@ -1,6 +1,6 @@
 # Embedded o11y infrastructure
 
-![Changelog Image](../../static/img/releases/embedded-o11y-infrastructure.png)
+![Changelog Image](../static/img/releases/embedded-o11y-infrastructure.png)
 
 **Apr 22 2024**
 
