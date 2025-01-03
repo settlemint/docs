@@ -1,8 +1,6 @@
 # Customize Kubernetes deployment settings
 
-![Changelog Image](../../static/img/releases/customize-kubernetes-deployment-settings.png)
-
-**Sep 25 2024**
+![Changelog Image](../static/img/releases/customize-kubernetes-deployment-settings.png)
 
 The feature to customize Kubernetes deployment settings within SettleMint offers users an intuitive user interface (UI) that simplifies the management of deployed services in self-managed installations. This UI provides a comprehensive set of options for adjusting key deployment parameters, such as annotations, labels, tolerations, affinity, and node selectors. By making these customization options readily accessible, SettleMint enables users to tailor their Kubernetes configurations to better align with their specific operational needs and infrastructure requirements, fostering a more efficient and optimized deployment process.
 

@@ -1,8 +1,6 @@
 # Support the Soneium Network
 
-![Changelog Image](../../static/img/releases/support-the-soneium-network.png)
-
-**Oct 02 2024**
+![Changelog Image](../static/img/releases/support-the-soneium-network.png)
 
 SettleMint’s support for the Soneium testnet is a significant boost for developers wanting to build on this efficient blockchain platform. Soneium is designed for scalability and offers a great environment for testing decentralized applications (dApps) before going live. With this integration, developers can take advantage of SettleMint’s powerful tools while experimenting with Soneium’s features, like low transaction costs and high processing speed. This makes it easier for teams to test their applications effectively and make quick adjustments as needed.
 

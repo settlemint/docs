@@ -1,8 +1,6 @@
 # Integration of external consortia
 
-![Changelog Image](../../static/img/releases/integration-of-external-consortia.png)
-
-**Oct 04 2024**
+![Changelog Image](../static/img/releases/integration-of-external-consortia.png)
 
 We’re excited to introduce a new feature in SettleMint that lets you connect directly to existing Hyperledger Besu and Quorum blockchain networks run by other organizations. This is a big win for businesses already involved in blockchain consortia or those looking to join one. With this feature, you can create nodes on the SettleMint platform and easily integrate with these permissioned networks, making collaboration with external partners more streamlined and secure.
 

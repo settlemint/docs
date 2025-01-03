@@ -1,8 +1,6 @@
 # Self-Managed platform v7
 
-![Changelog Image](../../static/img/releases/self-managed-platform-v7.png)
-
-**Mar 22 2024**
+![Changelog Image](../static/img/releases/self-managed-platform-v7.png)
 
 Fully modular overhaul of the self managed platform to enable maximum flexibility in its deployment and feature parity with the Managed Platform
 

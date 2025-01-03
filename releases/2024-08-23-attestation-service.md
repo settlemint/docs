@@ -1,8 +1,6 @@
 # Attestation Service
 
-![Changelog Image](../../static/img/releases/attestation-service.png)
-
-**Aug 23 2024**
+![Changelog Image](../static/img/releases/attestation-service.png)
 
 The Attestation Service is a groundbreaking framework designed to facilitate the creation, management, and verification of attestations on EVM cpmpatible blockchains (public or cosortium). By leveraging the decentralized and immutable nature of blockchain technology, it allows individuals and organizations to issue verifiable statements of fact, which can include anything from identity verification to compliance with regulatory standards. This service empowers users to maintain control over their data while providing transparency and trustworthiness to various processes.
 

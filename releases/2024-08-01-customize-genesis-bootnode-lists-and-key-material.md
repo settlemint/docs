@@ -1,8 +1,6 @@
 # Customize Genesis, Bootnode lists and key material
 
-![Changelog Image](../../static/img/releases/customize-genesis-bootnode-lists-and-key-material.png)
-
-**Aug 01 2024**
+![Changelog Image](../static/img/releases/customize-genesis-bootnode-lists-and-key-material.png)
 
 You can now create new consortium networks where you have the capability to customize literally everything.
 

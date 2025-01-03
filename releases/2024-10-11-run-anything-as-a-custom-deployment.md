@@ -1,8 +1,6 @@
 # Run anything as a custom deployment
 
-![Changelog Image](../../static/img/releases/run-anything-as-a-custom-deployment.png)
-
-**Oct 11 2024**
+![Changelog Image](../static/img/releases/run-anything-as-a-custom-deployment.png)
 
 SettleMint is excited to announce a powerful new feature: **Run Anything with Custom Deployments**! This feature revolutionizes how users can deploy decentralized applications (dApps) on our platform, offering unprecedented flexibility and control. Whether you’re developing a fintech platform, an NFT marketplace, or a DeFi solution, Custom Deployments let you seamlessly integrate your custom-built front-end and web technologies while leveraging the robust blockchain backend that SettleMint provides.
 

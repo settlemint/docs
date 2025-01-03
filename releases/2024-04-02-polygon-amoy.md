@@ -1,8 +1,6 @@
 # Polygon Amoy
 
-![Changelog Image](../../static/img/releases/polygon-amoy.png)
-
-**Apr 02 2024**
+![Changelog Image](../static/img/releases/polygon-amoy.png)
 
 The beloved and widely used Mumbai testnet for Polygon PoS uses Ethereum’s Goerli testnet as its root chain. This means Mumbai counts on Goerli for block production. 
 But Goerli is currently scheduled for deprecation, by the end of Q1 2024. The Amoy testnet for Polygon PoS is the replacement and has been launched, a new testnet that provides a low-stakes environment to build, test, and break things. 

@@ -1,8 +1,6 @@
 # Smart Contract Set Portal
 
-![Changelog Image](../../static/img/releases/smart-contract-set-portal.png)
-
-**Jul 23 2024**
+![Changelog Image](../static/img/releases/smart-contract-set-portal.png)
 
 The Smart Contract Portal is a middleware which creates an easy to use api on top of your smart contracts. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Binance Smart Chain, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned) or on a Load Balancer.
 Benefits of using the smart contract portal:
