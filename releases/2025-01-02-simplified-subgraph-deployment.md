@@ -16,6 +16,6 @@ We've significantly simplified the subgraph deployment process. Here's what's ch
 
 **Key Benefits:**
 
-- Simplified Architecture: Reduced deployment complexity and dependencies
-- Cost Efficiency: Reuse graph middlewares across different smart contract sets
-- Enhanced Flexibility: Freedom to deploy subgraphs from any smart contract set to any middleware
+- Simplified architecture: Reduced deployment complexity and dependencies
+- Cost efficiency: Reuse graph middlewares across different smart contract sets
+- Enhanced flexibility: Freedom to deploy subgraphs from any smart contract set to any middleware
