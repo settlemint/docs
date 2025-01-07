@@ -57,6 +57,6 @@ Nodes do not autoscale. However, you can scale your deployment if you notice tha
 
 :::warning Warning
 
-You can only delete a blockchain node when it has no more resources (e.g. smart contract sets) related to it. Resources first have to be deleted one by one.
+You can only delete a blockchain node when it has no more resources (e.g. middleware) related to it. Resources first have to be deleted one by one.
 
 :::
