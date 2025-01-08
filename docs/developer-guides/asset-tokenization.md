@@ -99,12 +99,12 @@ option. Create a name and select the node that you deployed in the earlier step.
 Now that you have deployed the needed resources, you can create and deploy the Asset
 Tokenization smart contract.
 
-### 1. Create a Smart Contract
+### 1. Create a Smart Contract Set
 
 To create a Smart contract set, navigate to the `Dev tools` section in the left sidebar. From there, click on `Add a dev tool`, choose `Code Studio` and then `Smart Contract Set`.
 
 You will now be given the option to select a template. Choose the `Empty` option.
-Create a name and select the same deployment plan as you did earlier.
+Create a name and select the same deployment plan as you did earlier. For more information on how to add a smart contract set, [see our Smart Contract Sets section](using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/3_add-smart-contract-set.md).
 
 ![Create a Smart Contract](../../static/img/developer-guides/asset-tokenization/create-empty-smart-contract.png)
 
@@ -422,7 +422,7 @@ You can create an application access token by navigating to the application dash
 
 You can now create an application access token with an expiration and the scopes you want to use. For this guide, we recommend you create an access token scoped to your node and storage.
 
-You will now see your access token. Copy the token since you cannot see it again!
+You will now see your access token. Copy the token since you cannot see it again! For more information on how to use access tokens, [see our Access Tokens section](using-platform/16_application-access-tokens.md).
 
 ### 4. Setup Integration Studio Deployment
 
