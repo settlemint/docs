@@ -289,8 +289,8 @@ Firefly FabConnect is an open-source middleware that lets you interact with your
 
 Before you start, make sure you are running:
 
-- A Fabric peer node.
-- A Fabric orderer node.
+- A Fabric peer node
+- A Fabric orderer node
 
 :::
 
