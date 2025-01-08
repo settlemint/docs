@@ -11,10 +11,11 @@ import TabItem from '@theme/TabItem';
 ## Overview
 
 PostgreSQL serves as the primary database for:
-* User data and configurations
-* Platform state
-* Application data
-* Minimum version required: PostgreSQL 13+
+
+- User data and configurations
+- Platform state
+- Application data
+- Minimum version required: PostgreSQL 13+
 
 ## Deployment Options
 
@@ -24,29 +25,33 @@ PostgreSQL serves as the primary database for:
 ### Cloud Provider Options
 
 #### Digital Ocean Managed Database
+
 1. Create new database cluster
-   * Choose PostgreSQL 13+
-   * Select plan (minimum 2 vCPU, 4GB RAM)
-   * Enable connection pooling (recommended: 50 connections)
+   - Choose PostgreSQL 13+
+   - Select plan (minimum 2 vCPU, 4GB RAM)
+   - Enable connection pooling (recommended: 50 connections)
 
 #### Neon Serverless PostgreSQL
+
 1. Create new project
 2. Set up new database
 3. Enable connection pooling
 4. Note the connection string
 
 #### Other Providers
-* Amazon RDS
-* Google Cloud SQL
-* Azure Database for PostgreSQL
+
+- Amazon RDS
+- Google Cloud SQL
+- Azure Database for PostgreSQL
 
 :::tip
 Managed services handle:
-* Automatic backups
-* High availability
-* Security patches
-* Performance monitoring
-:::
+
+- Automatic backups
+- High availability
+- Security patches
+- Performance monitoring
+  :::
 
 </TabItem>
 <TabItem value="helm" label="Helm Chart">
@@ -54,6 +59,7 @@ Managed services handle:
 ### Bitnami PostgreSQL Chart
 
 1. Install PostgreSQL:
+
 ```bash
 helm upgrade --install postgresql oci://registry-1.docker.io/bitnamicharts/postgresql \
   --namespace postgresql \
@@ -65,16 +71,18 @@ helm upgrade --install postgresql oci://registry-1.docker.io/bitnamicharts/postg
 ```
 
 2. Wait for deployment:
+
 ```bash
 kubectl -n postgresql get pods -w
 ```
 
 :::caution
 For production use:
-* Configure proper resource limits
-* Set up regular backups
-* Consider high availability setup
-:::
+
+- Configure proper resource limits
+- Set up regular backups
+- Consider high availability setup
+  :::
 
 </TabItem>
 </Tabs>
@@ -85,19 +93,21 @@ For production use:
 <div className="col col--6">
 
 ### Minimum Specifications
-* PostgreSQL 13 or higher
-* 2 vCPU cores
-* 4GB RAM
-* 20GB storage
+
+- PostgreSQL 13 or higher
+- 2 vCPU cores
+- 4GB RAM
+- 20GB storage
 
 </div>
 <div className="col col--6">
 
 ### Recommended Features
-* Connection pooling
-* Automated backups
-* Point-in-time recovery
-* SSL/TLS encryption
+
+- Connection pooling
+- Automated backups
+- Point-in-time recovery
+- SSL/TLS encryption
 
 </div>
 </div>
@@ -108,23 +118,25 @@ For production use:
 
 ### Required Values for Platform Installation
 
-* [ ] Database hostname
-* [ ] Port number (default: 5432)
-* [ ] Database name
-* [ ] Username
-* [ ] Password
-* [ ] SSL mode (e.g., `require`)
+- [ ] Database hostname
+- [ ] Port number (default: 5432)
+- [ ] Database name
+- [ ] Username
+- [ ] Password
+- [ ] SSL mode (e.g., `require`)
 
 :::note Example Configuration
+
 ```yaml
 postgresql:
-  host: "your-db-host"
+  host: 'your-db-host'
   port: 5432
-  user: "platform"
-  password: "your-secure-password"
-  database: "platform"
-  sslMode: "require"  # or "disable" for local development
+  user: 'platform'
+  password: 'your-secure-password'
+  database: 'platform'
+  sslMode: 'require' # or "disable" for local development
 ```
+
 :::
 
 </div>
@@ -132,6 +144,7 @@ postgresql:
 ## Validation
 
 Test your PostgreSQL connection:
+
 ```bash
 # Using psql client
 psql "postgres://username:password@hostname:5432/dbname?sslmode=require"
@@ -145,16 +158,17 @@ psql "postgresql://username:password@hostname:5432/dbname?sslmode=require"
 Common issues and solutions:
 
 1. **Connection Failures**
-   * Verify credentials
-   * Check network/firewall rules
-   * Confirm SSL/TLS settings
-   * Validate connection string format
+
+   - Verify credentials
+   - Check network/firewall rules
+   - Confirm SSL/TLS settings
+   - Validate connection string format
 
 2. **Performance Issues**
-   * Check connection pool settings
-   * Monitor resource usage
-   * Review query performance
-   * Verify index usage
+   - Check connection pool settings
+   - Monitor resource usage
+   - Review query performance
+   - Verify index usage
 
 ## Next Steps
 

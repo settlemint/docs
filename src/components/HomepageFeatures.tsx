@@ -14,20 +14,30 @@ const FeatureList: FeatureItem[] = [
     image: '/img/undraw_docusaurus_mountain.svg',
     description: (
       <>
-        Get your blockchain network, nodes and smart contract sets up and running in no time.{' '}
-        <a href={'/documentation/docs/launch-platform/managed-cloud-deployment/quickstart/'}>Follow our quickstart</a>
+        Get your blockchain network, nodes and smart contract sets up and
+        running in no time.{' '}
+        <a
+          href={
+            '/documentation/docs/launch-platform/managed-cloud-deployment/quickstart/'
+          }
+        >
+          Follow our quickstart
+        </a>
       </>
-    ),
+    )
   },
   {
     title: 'Feature overview',
     image: '/img/undraw_docusaurus_tree.svg',
     description: (
       <>
-        View a summary of SettleMint features and ready-to-use tools, and how to use them.{' '}
-        <a href={'/documentation/docs/about-settlemint/intro/'}>Discover features</a>
+        View a summary of SettleMint features and ready-to-use tools, and how to
+        use them.{' '}
+        <a href={'/documentation/docs/about-settlemint/intro/'}>
+          Discover features
+        </a>
       </>
-    ),
+    )
   }
 ];
 

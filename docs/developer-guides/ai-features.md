@@ -8,18 +8,22 @@ keywords: [integration studio, OpenAI, Hasura, pgvector, AI, SettleMint]
 This guide will demonstrate how to use the **SettleMint Integration Studio** to create a flow that incorporates OpenAI nodes for vectorization and utilizes the `pgvector` plugin in Hasura for similarity searches. If you are new to SettleMint, check out the [Getting Started Guide](../about-settlemint/0_intro.mdx).
 
 In this guide, you will learn to create workflows that:
+
 - Use **OpenAI nodes** to vectorize data.
 - Store vectorized data in **Hasura** using `pgvector`.
 - Conduct similarity searches to find relevant matches for new queries.
 
 ### Prerequisites
+
 - A SettleMint Platform account with **Integration Studio** and **Hasura** deployed
 - Access to the Integration Studio and Hasura consoles in your SettleMint environment
 - An OpenAI API key for using the OpenAI nodes
 - A data source to vectorize (e.g., Graph Node, Attestation Indexer, or external API endpoint)
 
 ### Example Flow Available
+
 The Integration Studio includes a pre-built AI example flow that demonstrates these concepts. The flow uses the SettleMint Platform's attestation indexer as a data source, showing how to:
+
 - Fetch attestation data via HTTP endpoint
 - Process and vectorize the attestation content
 - Store vectors in Hasura
@@ -63,9 +67,10 @@ You can use this flow as a reference while building your own implementation. Eac
 2. Set up a **GraphQL Mutation** to store the vectors and associated IDs in a table enabled with `pgvector`.
 
 Example Mutation:
+
 ```graphql
 mutation insertVector($id: uuid!, $vector: [Float!]!) {
-  insert_vectors(objects: {id: $id, vector: $vector}) {
+  insert_vectors(objects: { id: $id, vector: $vector }) {
     affected_rows
   }
 }
@@ -87,6 +92,7 @@ mutation insertVector($id: uuid!, $vector: [Float!]!) {
 1. **Add an HTTP POST Node** to accept a JSON payload with a `query` string to be vectorized and compared to stored data.
 
 Payload Example:
+
 ```json
 {
   "query": "input string for similarity search"
@@ -100,6 +106,7 @@ Payload Example:
 1. **Add an OpenAI Node** to convert the incoming `query` string into a vector representation.
 
 Example Configuration:
+
 ```text
 Model: text-embedding-ada-002
 Input: {{msg.payload.query}}
@@ -111,9 +118,10 @@ Input: {{msg.payload.query}}
 2. Use a **GraphQL Query** to order results by similarity, returning the top 5 most similar records.
 
 Example Query:
+
 ```graphql
 query searchVectors($vector: [Float!]!) {
-  vectors(order_by: {vector: {_vector_distance: $vector}}, limit: 5) {
+  vectors(order_by: { vector: { _vector_distance: $vector } }, limit: 5) {
     id
     vector
   }
@@ -138,18 +146,21 @@ query searchVectors($vector: [Float!]!) {
 Now that you have built an AI-powered workflow, here are some blockchain-specific applications you can explore:
 
 ### Vectorize On-Chain Data
+
 - Index and vectorize smart contract events for similarity-based event monitoring
 - Create embeddings from transaction data to detect patterns or anomalies
 - Vectorize NFT metadata for content-based recommendations
 - Build semantic search for on-chain attestations
 
 ### Advanced Use Cases
+
 - Combine transaction data with natural language descriptions for enhanced search
 - Create AI-powered analytics dashboards using vectorized blockchain metrics
 - Implement fraud detection by vectorizing transaction patterns
 - Build a semantic search engine for smart contract code and documentation
 
 ### Integration Ideas
+
 - Connect to multiple blockchain indexers to vectorize data across networks
 - Combine off-chain and on-chain data vectors for comprehensive analysis
 - Set up automated alerts based on similarity to known patterns

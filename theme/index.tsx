@@ -1,13 +1,13 @@
-import "@fontsource/figtree";
-import "@fontsource/figtree/300.css";
-import "@fontsource/figtree/400.css";
-import "@fontsource/figtree/700.css";
-import "@fontsource/figtree/900.css";
-import aikidoIcon from "../static/img/about-settlemint/aikido-icon.png";
-import platformImage from "../static/img/about-settlemint/platformModelBlue.png";
-import platformScreenshot from "../static/img/about-settlemint/platformScreenshot.webp";
-import supportIcon from "../static/img/about-settlemint/support-icon.png";
-import styles from "./styles.module.css";
+import '@fontsource/figtree';
+import '@fontsource/figtree/300.css';
+import '@fontsource/figtree/400.css';
+import '@fontsource/figtree/700.css';
+import '@fontsource/figtree/900.css';
+import aikidoIcon from '../static/img/about-settlemint/aikido-icon.png';
+import platformImage from '../static/img/about-settlemint/platformModelBlue.png';
+import platformScreenshot from '../static/img/about-settlemint/platformScreenshot.webp';
+import supportIcon from '../static/img/about-settlemint/support-icon.png';
+import styles from './styles.module.css';
 
 function Navigation() {
   return (
@@ -26,13 +26,13 @@ function Navigation() {
               The SettleMint Platform
             </h2>
             <p>
-              The SettleMint platform solves the problem of the <br />{" "}
+              The SettleMint platform solves the problem of the <br />{' '}
               fragmented blockchain tooling ecosystem.
             </p>
             <p>
               It offers a unified developer experience for building blockchain
               applications <br />
-              through a combination of familiar and custom tools.{" "}
+              through a combination of familiar and custom tools.{' '}
             </p>
             <p>
               You can host the platform on a managed cloud, your own cloud, or
@@ -91,18 +91,25 @@ function Navigation() {
         </div>
       </div>
 
-      <div className={styles.container} style={{ marginBottom: "80px", display: "flex", justifyContent: "center" }}>
+      <div
+        className={styles.container}
+        style={{
+          marginBottom: '80px',
+          display: 'flex',
+          justifyContent: 'center'
+        }}
+      >
         <div className="row justify-content-center align-items-center">
           <div className="col-12">
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                marginBottom: "40px",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginBottom: '40px'
               }}
             >
-              <div style={{ textAlign: "center" }}>
+              <div style={{ textAlign: 'center' }}>
                 <h2>We're here to help</h2>
                 <p>
                   We are here to help you on your Blockchain Transformation
@@ -116,35 +123,38 @@ function Navigation() {
 
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "40px",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '40px'
               }}
             >
-              <div style={{ textAlign: "center" }}>
+              <div style={{ textAlign: 'center' }}>
                 <img
                   className={styles.icons}
                   src={supportIcon}
                   alt="SettleMint Platform"
-                  style={{ width: "30%" }}
+                  style={{ width: '30%' }}
                 />
                 <h3 className={styles.contactSupport}>Contact Support</h3>
                 <p>
                   Have a question or need assistance?
                   <br />
-                  Email us at <a href="mailto:support@settlemint.com">support@settlemint.com</a>
+                  Email us at{' '}
+                  <a href="mailto:support@settlemint.com">
+                    support@settlemint.com
+                  </a>
                 </p>
               </div>
 
-              <div style={{ textAlign: "center" }}>
+              <div style={{ textAlign: 'center' }}>
                 <img
                   className={styles.icons}
                   src={aikidoIcon}
                   alt="SettleMint Platform"
-                  style={{ width: "30%" }}
+                  style={{ width: '30%' }}
                 />
-                <h3 style={{ marginTop: "0px" }}>Aikido Security</h3>
+                <h3 style={{ marginTop: '0px' }}>Aikido Security</h3>
                 <p>Aikido Security Audit Report</p>
                 <a
                   className={styles.btnLink}

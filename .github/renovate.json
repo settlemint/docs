@@ -16,70 +16,48 @@
     "security:openssf-scorecard",
     "schedule:nonOfficeHours"
   ],
-  "labels": [
-    "dependencies"
-  ],
+  "labels": ["dependencies"],
   "rebaseWhen": "conflicted",
   "packageRules": [
     {
       "groupName": "bull-board",
-      "matchPackageNames": [
-        "/bull-board/"
-      ]
+      "matchPackageNames": ["/bull-board/"]
     },
     {
       "groupName": "taquito",
-      "matchPackageNames": [
-        "/taquito/"
-      ]
+      "matchPackageNames": ["/taquito/"]
     },
     {
       "groupName": "nestjs",
-      "matchPackageNames": [
-        "/nestjs/"
-      ]
+      "matchPackageNames": ["/nestjs/"]
     },
     {
       "groupName": "pulumi",
-      "matchPackageNames": [
-        "/pulumi/"
-      ]
+      "matchPackageNames": ["/pulumi/"]
     },
     {
       "groupName": "hasura",
-      "matchPackageNames": [
-        "/hasura/"
-      ]
+      "matchPackageNames": ["/hasura/"]
     },
     {
       "groupName": "fabric",
-      "matchPackageNames": [
-        "/hyperledger/fabric/"
-      ]
+      "matchPackageNames": ["/hyperledger/fabric/"]
     },
     {
       "groupName": "graphiql",
-      "matchPackageNames": [
-        "/graphiql/"
-      ]
+      "matchPackageNames": ["/graphiql/"]
     },
     {
       "groupName": "graphiql",
-      "matchPackageNames": [
-        "/graphiql/"
-      ]
+      "matchPackageNames": ["/graphiql/"]
     },
     {
       "groupName": "kubo",
-      "matchPackageNames": [
-        "/kubo/"
-      ]
+      "matchPackageNames": ["/kubo/"]
     },
     {
       "groupName": "bpaas",
-      "matchPackageNames": [
-        "/settlemint/bpaas/"
-      ]
+      "matchPackageNames": ["/settlemint/bpaas/"]
     },
     {
       "groupName": "bpaas/smartcontractsets",
@@ -92,15 +70,11 @@
     },
     {
       "groupName": "hyperledger/fabric",
-      "matchPackageNames": [
-        "/hyperledger/fabric/"
-      ]
+      "matchPackageNames": ["/hyperledger/fabric/"]
     },
     {
       "enabled": false,
-      "matchPackageNames": [
-        "/docusaurus/"
-      ]
+      "matchPackageNames": ["/docusaurus/"]
     }
   ],
   "hostRules": [

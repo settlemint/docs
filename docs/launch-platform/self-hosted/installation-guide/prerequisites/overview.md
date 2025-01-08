@@ -33,53 +33,61 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
 <TabItem value="infrastructure" label="Infrastructure" default>
 
 #### Ingress Controller
-* Traffic management and load balancing
-* SSL/TLS termination
-* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/ingress-controller)
+
+- Traffic management and load balancing
+- SSL/TLS termination
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/ingress-controller)
 
 #### Domain and TLS
-* Domain name configuration
-* SSL/TLS certificates
-* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/domain-and-tls)
+
+- Domain name configuration
+- SSL/TLS certificates
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/domain-and-tls)
 
 #### Metrics and Logs
-* Prometheus metrics collection
-* Grafana visualization
-* Loki log aggregation
-* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/metrics-and-logs)
+
+- Prometheus metrics collection
+- Grafana visualization
+- Loki log aggregation
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/metrics-and-logs)
 
 </TabItem>
 <TabItem value="databases" label="Databases & Cache">
 
 #### PostgreSQL Database
-* Primary platform database
-* Stores user data and configurations
-* Minimum version: PostgreSQL 13+
-* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/postgresql)
+
+- Primary platform database
+- Stores user data and configurations
+- Minimum version: PostgreSQL 13+
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/postgresql)
 
 #### Redis Cache
-* Session management
-* Real-time features
-* Performance optimization
-* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/redis)
+
+- Session management
+- Real-time features
+- Performance optimization
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/redis)
 
 </TabItem>
 <TabItem value="security" label="Security & Storage">
 
 #### S3-Compatible Storage
-* Platform assets storage
-* Blockchain data persistence
-* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/s3-storage)
+
+- Platform assets storage
+- Blockchain data persistence
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/s3-storage)
 
 #### HashiCorp Vault
-* Secrets management
-* Encryption keys
-* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/hashicorp-vault)
+
+- Secrets management
+- Encryption keys
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/hashicorp-vault)
 
 #### OAuth Provider
-* Authentication service
-* User identity management
-* [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/oauth)
+
+- Authentication service
+- User identity management
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/oauth)
 
 </TabItem>
 </Tabs>
@@ -92,30 +100,33 @@ Each prerequisite service can be deployed in multiple ways:
 <div className="col col--6">
 
 ### Self-Hosted
-* ✅ Full control
-* ✅ Data sovereignty
-* ⚠️ Higher maintenance
-* ⚠️ Requires expertise
+
+- ✅ Full control
+- ✅ Data sovereignty
+- ⚠️ Higher maintenance
+- ⚠️ Requires expertise
 
 </div>
 <div className="col col--6">
 
 ### Managed Services
-* ✅ Lower maintenance
-* ✅ Managed updates
-* ⚠️ Limited customization
-* ⚠️ Higher costs
+
+- ✅ Lower maintenance
+- ✅ Managed updates
+- ⚠️ Limited customization
+- ⚠️ Higher costs
 
 </div>
 </div>
 
 :::info
 Choose deployment options based on your:
-* Security requirements
-* Infrastructure capabilities
-* Operational expertise
-* Budget constraints
-:::
+
+- Security requirements
+- Infrastructure capabilities
+- Operational expertise
+- Budget constraints
+  :::
 
 ## Information Collection
 
@@ -125,13 +136,13 @@ As you complete each prerequisite, you'll need to collect specific information r
 
 ### Information Collection Checklist
 
-* ✅ Domain and TLS certificates
-* ✅ Database connection strings
-* ✅ Redis credentials
-* ✅ S3 bucket details
-* ✅ Vault access tokens
-* ✅ OAuth client credentials
-* ✅ Metrics endpoints
+- ✅ Domain and TLS certificates
+- ✅ Database connection strings
+- ✅ Redis credentials
+- ✅ S3 bucket details
+- ✅ Vault access tokens
+- ✅ OAuth client credentials
+- ✅ Metrics endpoints
 
 </div>
 
@@ -148,18 +159,20 @@ As you complete each prerequisite, you'll need to collect specific information r
 <div className="col col--6">
 
 ### Documentation
-* Review the prerequisites guides
-* Check troubleshooting sections
-* Follow best practices
-* Consult platform architecture
+
+- Review the prerequisites guides
+- Check troubleshooting sections
+- Follow best practices
+- Consult platform architecture
 
 </div>
 <div className="col col--6">
 
 ### Support
-* Email: support@settlemint.com
-* Schedule technical consultation
-* Contact your account manager
+
+- Email: support@settlemint.com
+- Schedule technical consultation
+- Contact your account manager
 
 </div>
 </div>

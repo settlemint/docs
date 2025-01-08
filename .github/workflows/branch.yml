@@ -8,7 +8,7 @@ on:
     branches:
       - main
     tags:
-      - "v*"
+      - 'v*'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -30,8 +30,8 @@ permissions:
   statuses: write
 
 env:
-  NODE_NO_WARNINGS: "1"
-  TURBO_TELEMETRY_DISABLED: "1"
+  NODE_NO_WARNINGS: '1'
+  TURBO_TELEMETRY_DISABLED: '1'
 
 jobs:
   build:

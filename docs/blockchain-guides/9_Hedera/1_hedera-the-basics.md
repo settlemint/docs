@@ -16,9 +16,9 @@ You can think of the Testnet as a sandbox for developers and the Mainnet as the 
 
 Hedera uses the Hashgraph consensus algorithm, which is based on a directed acyclic graph (DAG). This algorithm provides several advantages:
 
-	•	`High Throughput`: The network can process thousands of transactions per second.
-	•	`Fairness`: Transactions are timestamped, ensuring fair ordering.
-	•	`Security`: It achieves asynchronous Byzantine Fault Tolerance (aBFT), the highest level of security for a consensus algorithm.
+    •	`High Throughput`: The network can process thousands of transactions per second.
+    •	`Fairness`: Transactions are timestamped, ensuring fair ordering.
+    •	`Security`: It achieves asynchronous Byzantine Fault Tolerance (aBFT), the highest level of security for a consensus algorithm.
 
 In Hashgraph, each node in the network shares information (events) with other nodes, and through a process called gossip-about-gossip and virtual voting, consensus is reached efficiently and quickly. This method ensures that Hedera remains decentralized and resilient against attacks while maintaining high performance.
 

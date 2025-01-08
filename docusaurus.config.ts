@@ -1,134 +1,134 @@
-import type * as Preset from "@docusaurus/preset-classic";
-import type { Config } from "@docusaurus/types";
-import { themes } from "prism-react-renderer";
+import type * as Preset from '@docusaurus/preset-classic';
+import type { Config } from '@docusaurus/types';
+import { themes } from 'prism-react-renderer';
 
 const config: Config = {
-  title: "SettleMint Developer Hub",
+  title: 'SettleMint Developer Hub',
   tagline:
-    "The Blockchain Transformation Platform for developers to rapidly build blockchain applications",
-  url: "https://console.settlemint.com",
-  baseUrl: "/documentation/",
-  onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "throw",
+    'The Blockchain Transformation Platform for developers to rapidly build blockchain applications',
+  url: 'https://console.settlemint.com',
+  baseUrl: '/documentation/',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
   trailingSlash: true,
-  favicon: "img/favicon.ico",
-  organizationName: "settlemint", // Usually your GitHub org/user name.
-  projectName: "btp-docs", // Usually your repo name.
+  favicon: 'img/favicon.ico',
+  organizationName: 'settlemint', // Usually your GitHub org/user name.
+  projectName: 'btp-docs', // Usually your repo name.
   plugins: [
-    require.resolve("docusaurus-lunr-search"),
+    require.resolve('docusaurus-lunr-search'),
     [
-      "@docusaurus/plugin-content-blog",
+      '@docusaurus/plugin-content-blog',
       {
-        id: "releases",
-        routeBasePath: "releases",
-        path: "./releases",
-        blogSidebarCount: "ALL",
-      },
-    ],
+        id: 'releases',
+        routeBasePath: 'releases',
+        path: './releases',
+        blogSidebarCount: 'ALL'
+      }
+    ]
   ],
   presets: [
     [
-      "classic",
+      'classic',
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
+          sidebarPath: require.resolve('./sidebars.js')
         },
         gtag: {
-          trackingID: "G-N1MMHFDVZZ",
-          anonymizeIP: false,
+          trackingID: 'G-N1MMHFDVZZ',
+          anonymizeIP: false
         },
         blog: {
           showReadingTime: true,
-          blogTitle: "Developer Blog",
-          sortPosts: "descending",
+          blogTitle: 'Developer Blog',
+          sortPosts: 'descending'
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
-        },
-      } satisfies Preset.Options,
-    ],
+          customCss: require.resolve('./src/css/custom.css')
+        }
+      } satisfies Preset.Options
+    ]
   ],
 
   themeConfig: {
     navbar: {
-      title: "",
+      title: '',
       logo: {
-        alt: "SettleMint",
-        src: "img/settlemint-hub-black.png",
-        srcDark: "img/settlemint-hub-white.png",
+        alt: 'SettleMint',
+        src: 'img/settlemint-hub-black.png',
+        srcDark: 'img/settlemint-hub-white.png'
       },
       items: [
         {
-          type: "doc",
-          docId: "about-settlemint/intro",
-          position: "left",
-          label: "Docs",
+          type: 'doc',
+          docId: 'about-settlemint/intro',
+          position: 'left',
+          label: 'Docs'
         },
         {
-          to: "/docs/developer-guides/guide-library",
-          label: "Guides",
-          position: "left",
+          to: '/docs/developer-guides/guide-library',
+          label: 'Guides',
+          position: 'left'
         },
-        { to: "/blog/", label: "Developer Blog", position: "left" },
+        { to: '/blog/', label: 'Developer Blog', position: 'left' },
         {
-          href: "/releases",
-          label: "Releases",
-          position: "right",
+          href: '/releases',
+          label: 'Releases',
+          position: 'right'
         },
         {
-          href: "https://settlemint.com",
-          label: "Website",
-          position: "right",
-        },
-      ],
+          href: 'https://settlemint.com',
+          label: 'Website',
+          position: 'right'
+        }
+      ]
     },
     footer: {
-      style: "dark",
+      style: 'dark',
       links: [
         {
-          title: "Docs",
+          title: 'Docs',
           items: [
             {
-              label: "About SettleMint",
-              to: "/docs/about-settlemint/intro",
-            },
-          ],
+              label: 'About SettleMint',
+              to: '/docs/about-settlemint/intro'
+            }
+          ]
         },
         {
-          title: "Community",
+          title: 'Community',
           items: [
             {
-              label: "SettleMint Platform",
-              href: "https://console.settlemint.com",
+              label: 'SettleMint Platform',
+              href: 'https://console.settlemint.com'
             },
             {
-              label: "Twitter",
-              href: "https://twitter.com/settlemintcom",
-            },
-          ],
+              label: 'Twitter',
+              href: 'https://twitter.com/settlemintcom'
+            }
+          ]
         },
         {
-          title: "More",
+          title: 'More',
           items: [
             {
-              label: "Developer Blog",
-              to: "/blog",
+              label: 'Developer Blog',
+              to: '/blog'
             },
             {
-              label: "Website",
-              href: "https://settlemint.com",
-            },
-          ],
-        },
+              label: 'Website',
+              href: 'https://settlemint.com'
+            }
+          ]
+        }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} SettleMint.`,
+      copyright: `Copyright © ${new Date().getFullYear()} SettleMint.`
     },
     prism: {
       theme: themes.github,
       darkTheme: themes.dracula,
-      additionalLanguages: ["solidity"],
-    },
-  } satisfies Preset.ThemeConfig,
+      additionalLanguages: ['solidity']
+    }
+  } satisfies Preset.ThemeConfig
 };
 
 module.exports = config;

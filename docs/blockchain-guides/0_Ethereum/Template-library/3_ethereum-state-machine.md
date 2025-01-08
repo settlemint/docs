@@ -170,18 +170,22 @@ export const entityId = 3073193977; // crypto.randomBytes(32).readUInt32LE()
 // Let's define the metadata for our entity that we want to upload to IPFS
 const metadata = {
   param1: 'param1',
-  param2: 'param2',
+  param2: 'param2'
 };
 
 // using our hardhat task to upload the data to IPFS
 const jsonCid: string = await run('ipfs-upload-string', {
   data: JSON.stringify(metadata),
   ipfspath: `/generic-statemachine/metadata/metadata-${entityId}.json`,
-  ipfsnode,
+  ipfsnode
 });
 
 // Then we deploy
-const statemachine = await factory.deploy(BigNumber.from(entityId), jsonCid, 'ipfs://');
+const statemachine = await factory.deploy(
+  BigNumber.from(entityId),
+  jsonCid,
+  'ipfs://'
+);
 ```
 
 ### 3. Indexing on-chain data
@@ -265,7 +269,10 @@ if (metadataURI.includes('ipfs://')) {
   const metadataURIBytes = ipfs.cat(ipfsHash);
   if (metadataURIBytes) {
     const metadataURIContent = json.try_fromBytes(metadataURIBytes);
-    if (metadataURIContent.isOk && metadataURIContent.value.kind == JSONValueKind.OBJECT) {
+    if (
+      metadataURIContent.isOk &&
+      metadataURIContent.value.kind == JSONValueKind.OBJECT
+    ) {
       const entityMetadata = metadataURIContent.value.toObject();
 
       const param1 = entityMetadata.get('param1');

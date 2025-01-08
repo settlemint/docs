@@ -2,7 +2,7 @@ export function ArticleCard({
   icon,
   title,
   description,
-  articleLink,
+  articleLink
 }: {
   icon?: string;
   title: string;

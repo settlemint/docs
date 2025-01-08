@@ -23,9 +23,10 @@ This installation guide is organized into three main sections, designed to be fo
 <TabItem value="requirements" label="1. Requirements" default>
 
 Start here to ensure your infrastructure meets all necessary specifications before proceeding. This section covers:
-* Kubernetes cluster requirements
-* Network and storage specifications
-* Access and security requirements
+
+- Kubernetes cluster requirements
+- Network and storage specifications
+- Access and security requirements
 
 [View Requirements Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/infrastructure-requirements)
 
@@ -33,10 +34,11 @@ Start here to ensure your infrastructure meets all necessary specifications befo
 <TabItem value="prerequisites" label="2. Prerequisites">
 
 After confirming requirements, set up the required supporting services. This section provides:
-* Step-by-step setup guides
-* Multiple deployment options
-* Configuration requirements
-* Information collection checklists
+
+- Step-by-step setup guides
+- Multiple deployment options
+- Configuration requirements
+- Information collection checklists
 
 [View Prerequisites Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/overview)
 
@@ -44,9 +46,10 @@ After confirming requirements, set up the required supporting services. This sec
 <TabItem value="installation" label="3. Installation">
 
 Finally, deploy the SettleMint Platform using Helm:
-* Standard Kubernetes deployment
-* Flexible configuration options
-* Production-ready setup
+
+- Standard Kubernetes deployment
+- Flexible configuration options
+- Production-ready setup
 
 [View Installation Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/platform-installation)
 
@@ -55,11 +58,12 @@ Finally, deploy the SettleMint Platform using Helm:
 
 :::tip Using This Guide
 We recommend:
+
 1. Read through each section before starting
 2. Complete all requirements and prerequisites
 3. Collect required information as you progress
 4. Follow the guides in order
-:::
+   :::
 
 ## Before You Begin
 
@@ -67,19 +71,21 @@ We recommend:
 <div className="col col--6">
 
 ### Required Access
-* Administrative access to your infrastructure
-* Ability to create/modify DNS records
-* Permission to deploy Kubernetes resources
-* Access to cloud resources (if applicable)
+
+- Administrative access to your infrastructure
+- Ability to create/modify DNS records
+- Permission to deploy Kubernetes resources
+- Access to cloud resources (if applicable)
 
 </div>
 <div className="col col--6">
 
 ### Technical Prerequisites
-* Kubernetes cluster (1.20+)
-* `kubectl` CLI tool
-* `helm` (required for installation)
-* Basic understanding of container orchestration
+
+- Kubernetes cluster (1.20+)
+- `kubectl` CLI tool
+- `helm` (required for installation)
+- Basic understanding of container orchestration
 
 </div>
 </div>
@@ -87,12 +93,14 @@ We recommend:
 ## Partner Support
 
 A thorough understanding of Kubernetes concepts, architecture, and operation is essential for successfully deploying and managing the SettleMint Platform. This includes expertise in:
+
 - Kubernetes cluster management
 - Helm chart deployment and customization
 - Infrastructure maintenance and monitoring
 - Security best practices
 
 If your team lacks the in-house expertise required for managing these deployments, we strongly recommend collaborating with one of our certified partners. Our partners are specifically trained to:
+
 - Guide you through the installation process
 - Help with infrastructure setup and configuration
 - Provide ongoing maintenance and support
@@ -107,16 +115,19 @@ To connect with a certified partner or for direct assistance, please contact us 
 Throughout the installation process, you'll need to collect configuration details from each prerequisite service. We've made this easy by including "Information Collection Boxes" in each guide.
 
 ### How It Works
-* Each prerequisite guide contains an Information Collection Box
-* Required values are clearly marked
-* Values are needed during platform installation
-* Keep track of sensitive information securely
+
+- Each prerequisite guide contains an Information Collection Box
+- Required values are clearly marked
+- Values are needed during platform installation
+- Keep track of sensitive information securely
 
 ### Example Collection Box
+
 Here's what an Information Collection Box looks like in the prerequisite guides:
 
 :::info Required Values Example
 This is a sample of what you'll see in the guides. For Redis setup, you would collect values like:
+
 - Endpoint: redis-master.default.svc.cluster.local
 - Password: your-secure-password
 - Port: 6379
@@ -127,15 +138,17 @@ Note: This is just an example. Actual values will be collected during the prereq
 ## Need Help?
 
 ### Documentation Resources
-* Review installation guides
-* Check troubleshooting sections
-* Follow best practices
-* Consult platform architecture
+
+- Review installation guides
+- Check troubleshooting sections
+- Follow best practices
+- Consult platform architecture
 
 ### Support Channels
-* Email: support@settlemint.com
-* Schedule technical consultation
-* Contact your account manager
+
+- Email: support@settlemint.com
+- Schedule technical consultation
+- Contact your account manager
 
 :::tip Next Step
 Start by reviewing the [Infrastructure Requirements](/documentation/docs/launch-platform/self-hosted/installation-guide/infrastructure-requirements) to ensure your environment meets all necessary specifications.

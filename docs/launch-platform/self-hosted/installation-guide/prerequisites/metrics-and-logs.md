@@ -11,10 +11,11 @@ import TabItem from '@theme/TabItem';
 ## Overview
 
 The monitoring stack consists of:
-* Metrics collection (Prometheus/VictoriaMetrics)
-* Log aggregation (Loki)
-* Metrics server for resource metrics
-* Kube-state-metrics for cluster state
+
+- Metrics collection (Prometheus/VictoriaMetrics)
+- Log aggregation (Loki)
+- Metrics server for resource metrics
+- Kube-state-metrics for cluster state
 
 ## Deployment Options
 
@@ -24,6 +25,7 @@ The monitoring stack consists of:
 ### VictoriaMetrics + Loki Setup
 
 1. **Install VictoriaMetrics**
+
 ```bash
 helm upgrade --install victoria-metrics victoria-metrics-single \
   --repo https://victoriametrics.github.io/helm-charts/ \
@@ -33,6 +35,7 @@ helm upgrade --install victoria-metrics victoria-metrics-single \
 ```
 
 2. **Install Loki and Promtail**
+
 ```bash
 helm install loki loki \
   --repo https://grafana.github.io/helm-charts \
@@ -44,6 +47,7 @@ helm install loki loki \
 ```
 
 3. **Install kube-state-metrics**
+
 ```bash
 helm install kube-state-metrics kube-state-metrics \
   --repo https://prometheus-community.github.io/helm-charts \
@@ -53,11 +57,12 @@ helm install kube-state-metrics kube-state-metrics \
 
 :::tip
 This setup provides:
-* Efficient resource usage
-* Simple maintenance
-* Sufficient monitoring capabilities
-* Easy scalability
-:::
+
+- Efficient resource usage
+- Simple maintenance
+- Sufficient monitoring capabilities
+- Easy scalability
+  :::
 
 </TabItem>
 <TabItem value="prometheus" label="Full Prometheus Stack">
@@ -65,6 +70,7 @@ This setup provides:
 ### Prometheus + Grafana + Loki
 
 1. **Install Prometheus Stack**
+
 ```bash
 helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
   --namespace observability \
@@ -72,6 +78,7 @@ helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
 ```
 
 2. **Install Loki Stack**
+
 ```bash
 helm install loki grafana/loki-stack \
   --namespace observability \
@@ -80,10 +87,11 @@ helm install loki grafana/loki-stack \
 
 :::caution
 Full stack requires:
-* More resources
-* Additional configuration
-* Regular maintenance
-:::
+
+- More resources
+- Additional configuration
+- Regular maintenance
+  :::
 
 </TabItem>
 </Tabs>
@@ -94,19 +102,21 @@ Full stack requires:
 <div className="col col--6">
 
 ### Minimum Specifications
-* Storage for metrics retention
-* Storage for log retention
-* Network access from platform
-* Basic authentication
+
+- Storage for metrics retention
+- Storage for log retention
+- Network access from platform
+- Basic authentication
 
 </div>
 <div className="col col--6">
 
 ### Optional Features
-* Long-term storage
-* Alerting setup
-* Dashboard configuration
-* High availability
+
+- Long-term storage
+- Alerting setup
+- Dashboard configuration
+- High availability
 
 </div>
 </div>
@@ -117,21 +127,23 @@ Full stack requires:
 
 ### Required Values for Platform Installation
 
-* [ ] Metrics endpoint URL
-* [ ] Logs endpoint URL
-* [ ] Authentication details (if enabled)
+- [ ] Metrics endpoint URL
+- [ ] Logs endpoint URL
+- [ ] Authentication details (if enabled)
 
 :::note Example Configuration
+
 ```yaml
 features:
   observability:
     metrics:
       enabled: true
-      apiUrl: "http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/prometheus/api/v1"
+      apiUrl: 'http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/prometheus/api/v1'
     logs:
       enabled: true
-      apiUrl: "http://loki-gateway.observability.svc.cluster.local/loki/api/v1"
+      apiUrl: 'http://loki-gateway.observability.svc.cluster.local/loki/api/v1'
 ```
+
 :::
 
 </div>
@@ -139,6 +151,7 @@ features:
 ## Validation
 
 Test your monitoring setup:
+
 ```bash
 # Check VictoriaMetrics
 curl -f "http://victoria-metrics:8428/health"
@@ -155,16 +168,17 @@ kubectl get --raw /metrics
 Common issues and solutions:
 
 1. **Metrics Not Collecting**
-   * Verify service endpoints
-   * Check scrape configurations
-   * Review service monitors
-   * Validate permissions
+
+   - Verify service endpoints
+   - Check scrape configurations
+   - Review service monitors
+   - Validate permissions
 
 2. **Log Issues**
-   * Check Loki status
-   * Verify storage configuration
-   * Review retention settings
-   * Check network policies
+   - Check Loki status
+   - Verify storage configuration
+   - Review retention settings
+   - Check network policies
 
 ## Next Steps
 

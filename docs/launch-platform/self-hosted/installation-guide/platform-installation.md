@@ -46,67 +46,67 @@ Create a values file (values.yaml) with your configuration:
 ingress:
   enabled: true
   className: nginx
-  host: "<your-domain>"
+  host: '<your-domain>'
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: 'letsencrypt'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
   tls:
-    - secretName: "blockchaintransformationplatform"
+    - secretName: 'blockchaintransformationplatform'
       hosts:
-        - "<your-domain>"
-        - "*.<your-domain>"
+        - '<your-domain>'
+        - '*.<your-domain>'
 
 redis:
-  host: "<redis-host>"
-  password: "<redis-password>"
-  port: "<redis-port>"
+  host: '<redis-host>'
+  password: '<redis-password>'
+  port: '<redis-port>'
   tls: true
 
 postgresql:
-  host: "<postgresql-host>"
-  port: "<postgresql-port>"
-  user: "<postgresql-user>"
-  password: "<postgresql-password>"
-  database: "<postgresql-database>"
+  host: '<postgresql-host>'
+  port: '<postgresql-port>'
+  user: '<postgresql-user>'
+  password: '<postgresql-password>'
+  database: '<postgresql-database>'
   sslMode: require
 
 auth:
-  jwtSigningKey: "<jwt-signing-key>"
+  jwtSigningKey: '<jwt-signing-key>'
   providers:
     google:
       enabled: true
-      clientID: "<google-client-id>"
-      clientSecret: "<google-client-secret>"
+      clientID: '<google-client-id>'
+      clientSecret: '<google-client-secret>'
 
 vault:
-  address: "<vault-address>"
-  namespace: "admin"
-  roleId: "<vault-role-id>"
-  secretId: "<vault-secret-id>"
+  address: '<vault-address>'
+  namespace: 'admin'
+  roleId: '<vault-role-id>'
+  secretId: '<vault-secret-id>'
 
 features:
   observability:
     metrics:
       enabled: true
-      apiUrl: "<prometheus-url>"
+      apiUrl: '<prometheus-url>'
     logs:
       enabled: true
-      apiUrl: "<loki-url>"
+      apiUrl: '<loki-url>'
   deploymentEngine:
     platform:
       domain:
-        hostname: "<your-domain>"
+        hostname: '<your-domain>'
     clusterManager:
       domain:
-        hostname: "<your-domain>"
+        hostname: '<your-domain>'
     state:
-      s3ConnectionUrl: "<s3-connection-url>"
+      s3ConnectionUrl: '<s3-connection-url>'
       credentials:
-        encryptionKey: "<encryption-key>"
+        encryptionKey: '<encryption-key>'
         aws:
-          accessKeyId: "<aws-access-key>"
-          secretAccessKey: "<aws-secret-key>"
-          region: "<aws-region>"
+          accessKeyId: '<aws-access-key>'
+          secretAccessKey: '<aws-secret-key>'
+          region: '<aws-region>'
 ```
 
 <details>
@@ -116,15 +116,15 @@ features:
 ingress:
   enabled: true
   className: nginx
-  host: "sandbox-demo.blockchaintransformationplatform.com"
+  host: 'sandbox-demo.blockchaintransformationplatform.com'
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: 'letsencrypt'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
   tls:
-    - secretName: "blockchaintransformationplatform"
+    - secretName: 'blockchaintransformationplatform'
       hosts:
-        - "sandbox-demo.blockchaintransformationplatform.com"
-        - "*.sandbox-demo.blockchaintransformationplatform.com"
+        - 'sandbox-demo.blockchaintransformationplatform.com'
+        - '*.sandbox-demo.blockchaintransformationplatform.com'
 
 redis:
   host: redis-17220.c250.eu-central-1-1.ec2.cloud.redislabs.com
@@ -141,42 +141,42 @@ postgresql:
   sslMode: require
 
 auth:
-  jwtSigningKey: "HamMmiYGP+sBClp0tWbhlg8I5+k/OOoM+/7rNOLpHtI="
+  jwtSigningKey: 'HamMmiYGP+sBClp0tWbhlg8I5+k/OOoM+/7rNOLpHtI='
   providers:
     google:
       enabled: true
-      clientID: "123456789-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com"
-      clientSecret: "GOCSPX-abcdefghijklmnopqrstuvwxyz"
+      clientID: '123456789-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com'
+      clientSecret: 'GOCSPX-abcdefghijklmnopqrstuvwxyz'
 
 vault:
-  address: "https://sandbox-demo-public-vault-975715c8.ba526938.z1.hashicorp.cloud:8200"
-  namespace: "admin"
-  roleId: "12345678-90ab-cdef-ghij-klmnopqrstuv"
-  secretId: "12345678-90ab-cdef-ghij-klmnopqrstuv"
+  address: 'https://sandbox-demo-public-vault-975715c8.ba526938.z1.hashicorp.cloud:8200'
+  namespace: 'admin'
+  roleId: '12345678-90ab-cdef-ghij-klmnopqrstuv'
+  secretId: '12345678-90ab-cdef-ghij-klmnopqrstuv'
 
 features:
   observability:
     metrics:
       enabled: true
-      apiUrl: "http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/prometheus/api/v1"
+      apiUrl: 'http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/prometheus/api/v1'
     logs:
       enabled: true
-      apiUrl: "http://loki-gateway.observability.svc.cluster.local/loki/api/v1"
+      apiUrl: 'http://loki-gateway.observability.svc.cluster.local/loki/api/v1'
   deploymentEngine:
     platform:
       domain:
-        hostname: "sandbox-demo.blockchaintransformationplatform.com"
+        hostname: 'sandbox-demo.blockchaintransformationplatform.com'
     clusterManager:
       domain:
-        hostname: "sandbox-demo.blockchaintransformationplatform.com"
+        hostname: 'sandbox-demo.blockchaintransformationplatform.com'
     state:
-      s3ConnectionUrl: "s3://sandbox-demo-bucket?region=eu-central-1"
+      s3ConnectionUrl: 's3://sandbox-demo-bucket?region=eu-central-1'
       credentials:
-        encryptionKey: "r532kL19Jrp8Fnql43ScR4UhN46Sh1QmgbJXjkPC2YI="
+        encryptionKey: 'r532kL19Jrp8Fnql43ScR4UhN46Sh1QmgbJXjkPC2YI='
         aws:
-          accessKeyId: "AKIAIOSFODNN7EXAMPLE"
-          secretAccessKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
-          region: "eu-central-1"
+          accessKeyId: 'AKIAIOSFODNN7EXAMPLE'
+          secretAccessKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
+          region: 'eu-central-1'
 
 app:
   replicaCount: 2
