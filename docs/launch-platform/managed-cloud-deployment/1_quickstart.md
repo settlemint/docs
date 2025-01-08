@@ -352,12 +352,12 @@ SettleMint uses Hardhat scripts to deploy smart contracts. To deploy the Hello W
 4. Copy and paste the code below:
 
 ```typescript
-import {DeployFunction} from 'hardhat-deploy/types'
+import { DeployFunction } from 'hardhat-deploy/types'
 
-const deploy: DeployFunction = async ({deployments, getNamedAccounts}) => {
-  const {deploy} = deployments
+const deploy: DeployFunction = async ({ deployments, getNamedAccounts }) => {
+  const { deploy } = deployments
 
-  const {deployer} = await getNamedAccounts()
+  const { deployer } = await getNamedAccounts()
 
   await deploy('HelloWorld', {
     from: deployer,

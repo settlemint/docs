@@ -85,10 +85,10 @@ First, to send meta transactions using the `forwarder`, we have to define three 
 
 ```typescript
 const EIP712Domain = [
-  {name: 'name', type: 'string'},
-  {name: 'version', type: 'string'},
-  {name: 'chainId', type: 'uint256'},
-  {name: 'verifyingContract', type: 'address'}
+  { name: 'name', type: 'string' },
+  { name: 'version', type: 'string' },
+  { name: 'chainId', type: 'uint256' },
+  { name: 'verifyingContract', type: 'address' }
 ]
 
 const domain = {
@@ -100,12 +100,12 @@ const domain = {
 const types = {
   EIP712Domain,
   ForwardRequest: [
-    {name: 'from', type: 'address'},
-    {name: 'to', type: 'address'},
-    {name: 'value', type: 'uint256'},
-    {name: 'gas', type: 'uint256'},
-    {name: 'nonce', type: 'uint256'},
-    {name: 'data', type: 'bytes'}
+    { name: 'from', type: 'address' },
+    { name: 'to', type: 'address' },
+    { name: 'value', type: 'uint256' },
+    { name: 'gas', type: 'uint256' },
+    { name: 'nonce', type: 'uint256' },
+    { name: 'data', type: 'bytes' }
   ]
 }
 ```
@@ -157,7 +157,7 @@ const signedData = ethSigUtil.signTypedData({
 Finally, once the transaction is signed, we can send it to the `forwarder`:
 
 ```typescript
-await forwarder.execute(req, signedData, {gasLimit: '100000'})
+await forwarder.execute(req, signedData, { gasLimit: '100000' })
 ```
 
 ## ERC-20 Crowdsale
