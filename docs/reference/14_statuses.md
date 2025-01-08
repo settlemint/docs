@@ -15,4 +15,4 @@ The following service statuses are defined:
 - **Deleting** - The service is being deleted.
 - **Scaling** - The resource pack for the service is scaling.
 
-In relation to the resource usage of your services, specific [resource usage statuses](../using-platform/15_resource-usage.md) are defined.
+In relation to the resource usage of your services, specific [resource usage statuses](../using-platform/19_resource-usage.md) are defined.

@@ -11,4 +11,4 @@ Follow these steps if you received an invitation to join a blockchain network:
 5. Choose **Join by invitation code**, and then click **Continue**.
 6. Enter the **invitation code** included in the email you received, and click **Confirm**. The network now appears in the overview. Click to see more details of the network.
 
-You can now start [adding nodes to the network](2_add-a-node-to-a-network.md).
+You can now start [adding nodes to the network](4_add-a-node-to-a-network.md).

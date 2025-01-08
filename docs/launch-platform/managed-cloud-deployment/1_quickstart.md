@@ -8,7 +8,7 @@ sidebar_position: 3
 
 ##### This guide will help you explore some of the core building blocks of working with SettleMint even if this is your first time working with a Blockchain
 
-In this guide you will learn how to [create a blockchain network](../../using-platform/1_add-a-network-to-an-application.md), [deploy a node](../../using-platform/2_add-a-node-to-a-network.md), write a [smart contract](../../using-platform/6_add_smart_contract_sets/0_smart_contracts.md) and [create an integration](../../using-platform/9_integration-studio.md).
+In this guide you will learn how to [create a blockchain network](../../using-platform/1_add-a-network-to-an-application.md), [deploy a node](../../using-platform/4_add-a-node-to-a-network.md), write a [smart contract](../../using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/1_smart-contract-sets.md) and [create an integration](../../using-platform/8_integration-studio.md).
 
 Below is both a video and written guide for you to build along to:
 
@@ -364,7 +364,7 @@ const deploy: DeployFunction = async ({ deployments, getNamedAccounts }) => {
 
     args: [],
 
-    log: true,
+    log: true
   });
 };
 

@@ -35,7 +35,7 @@ To set the name and symbol for your token, go to the **“deploy”** folder and
 await deploy('GenericToken', {
   from: deployer,
   args: ['GenericToken', 'GT'],
-  log: true,
+  log: true
 });
 ```
 
@@ -86,14 +86,14 @@ const EIP712Domain = [
   { name: 'name', type: 'string' },
   { name: 'version', type: 'string' },
   { name: 'chainId', type: 'uint256' },
-  { name: 'verifyingContract', type: 'address' },
+  { name: 'verifyingContract', type: 'address' }
 ];
 
 const domain = {
   name: 'MinimalForwarder',
   version: '0.0.1',
   chainId: parseInt(await getChainId()),
-  verifyingContract: forwarderAddress,
+  verifyingContract: forwarderAddress
 };
 const types = {
   EIP712Domain,
@@ -103,8 +103,8 @@ const types = {
     { name: 'value', type: 'uint256' },
     { name: 'gas', type: 'uint256' },
     { name: 'nonce', type: 'uint256' },
-    { name: 'data', type: 'bytes' },
-  ],
+    { name: 'data', type: 'bytes' }
+  ]
 };
 ```
 
@@ -117,7 +117,10 @@ The name and version of domain have to match those of the forwarder (see the con
 Then, we need to generate the function data as follows:
 
 ```typescript
-const functionData = token.interface.encodeFunctionData('transfer', [walletTwoAddress, ethers.utils.parseUnits('10')]);
+const functionData = token.interface.encodeFunctionData('transfer', [
+  walletTwoAddress,
+  ethers.utils.parseUnits('10')
+]);
 ```
 
 In that expression, `transfer` is the ERC-20 function we want to execute, `walletTwoAddress` is the account that will receive the tokens and the last parameter is the amount of tokens to be transferred.
@@ -125,14 +128,16 @@ In that expression, `transfer` is the ERC-20 function we want to execute, `walle
 The last step before sending the meta transaction is to create and sign the message containing the underlying transaction as follows:
 
 ```typescript
-const walletOneNonce = Number(await read('Forwarder', 'getNonce', walletOneAddress));
+const walletOneNonce = Number(
+  await read('Forwarder', 'getNonce', walletOneAddress)
+);
 const req = {
   from: walletOneAddress,
   to: token.address,
   value: '0',
   gas: '100000',
   nonce: walletOneNonce,
-  data: functionData,
+  data: functionData
 };
 
 const signedData = ethSigUtil.signTypedData({
@@ -141,9 +146,9 @@ const signedData = ethSigUtil.signTypedData({
     types: types,
     domain: domain,
     primaryType: 'ForwardRequest',
-    message: req,
+    message: req
   },
-  version: ethSigUtil.SignTypedDataVersion.V4,
+  version: ethSigUtil.SignTypedDataVersion.V4
 });
 ```
 
@@ -261,4 +266,4 @@ Here we are going to deploy:
 
 ## Integration with the Middleware
 
-Working with complex or large data in your dApp can be a challenge. In the SettleMint platform we provide you with a [middleware solution](../../../using-platform/11_middleware.md) that allows you to index and query this data easily and efficiently.
+Working with complex or large data in your dApp can be a challenge. In the SettleMint platform we provide you with a [middleware solution](../../../using-platform/7_middleware.md) that allows you to index and query this data easily and efficiently.

@@ -35,7 +35,7 @@ Joining a permissioned network:
 
 Joining a network with an invitation code:
 
-- [How to join an existing network in SettleMint with an invitation code](./4_join-a-network-by-invitation.md). For more information on inviting network participants, see [how to invite network participants](./3_invite-network-participants.md).
+- [How to join an existing network in SettleMint with an invitation code](./3_join-a-network-by-invitation.md). For more information on inviting network participants, see [how to invite network participants](./2_invite-network-participants.md).
 
 ## How to add a blockchain network
 
@@ -54,7 +54,7 @@ Follow these steps to set up the blockchain network:
 
 :::info
 
-Note that your network requires at least 1 validating node to be operational. We will deploy 1 validating node to your network initially. You can [add more nodes](2_add-a-node-to-a-network.md) later.
+Note that your network requires at least 1 validating node to be operational. We will deploy 1 validating node to your network initially. You can [add more nodes](4_add-a-node-to-a-network.md) later.
 
 :::
 
@@ -66,7 +66,7 @@ The network is now added to the **blockchain network overview** with the status 
 
 Navigate to the **Blockchain nodes** section of the application to see the **first node** that was deployed with the network. Click this node in the overview list to see detailed information, such as stats, usage metrics, connection info, logs, etc. Available node information varies depending on the protocol.
 
-You can now start [adding more nodes](2_add-a-node-to-a-network.md).
+You can now start [adding more nodes](4_add-a-node-to-a-network.md).
 
 ## Manage a network
 
@@ -82,6 +82,6 @@ Click **Manage network** to see the available actions. You can only perform thes
 
 :::warning Warning
 
-You can only delete a blockchain network when it has no more associated resources (e.g., nodes, smart contract sets, etc.). Resources must be deleted one by one first.
+You can only delete a blockchain network when it has no more associated resources (e.g., nodes, middlewares, etc.). Resources must be deleted one by one first.
 
 :::

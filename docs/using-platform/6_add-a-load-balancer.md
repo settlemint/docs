@@ -1,7 +1,6 @@
 ---
 title: Add a Load Balancer
 description: Guide to adding a Load Balancer to a Blockchain Network
-sidebar_position: 4
 ---
 
 # Add a Load Balancer

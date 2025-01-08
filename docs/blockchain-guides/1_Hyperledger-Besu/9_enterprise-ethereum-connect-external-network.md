@@ -16,7 +16,7 @@ The SettleMint platform seamlessly integrates with existing external networks. Y
 4. Enter names for the network and the node.
 5. Upload the network's genesis file. Bootnodes specified in the genesis file will be automatically identified and added as external nodes.
 6. Add at least one enode URL of an existing running node on the network. Note: If a bootnode is specified in the genesis file, it will be added automatically as an external node, allowing you to skip this step.
-7. Choose the deployment plan for the node. For more information about deployment plans, [see here](../../using-platform/22_deployment-plans.md).
+7. Choose the deployment plan for the node. For more information about deployment plans, [see here](../../using-platform/21_deployment-plans.md).
 
 This process will create a new non-validator node in your existing network.
 
@@ -24,7 +24,7 @@ This process will create a new non-validator node in your existing network.
 
 To add more nodes to your network:
 
-1. Navigate to the create node form (see [Adding a Node to a Network](../../using-platform/2_add-a-node-to-a-network.md) for detailed instructions).
+1. Navigate to the create node form (see [Adding a Node to a Network](../../using-platform/4_add-a-node-to-a-network.md) for detailed instructions).
 2. Choose between creating the node as a validator or non-validator.
 3. Note: To deploy nodes as validators, a majority (66%) of validators must be running on the SettleMint platform.
 4. If you don't have a majority, create the node as a non-validator first, then follow the process in [Add a Validator](#add-a-validator) to make it a validator.

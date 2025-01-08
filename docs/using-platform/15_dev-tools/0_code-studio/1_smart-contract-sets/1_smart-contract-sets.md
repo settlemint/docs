@@ -1,27 +1,42 @@
 ---
-title: Overview
-description: Overview
+title: Smart contract sets
+description: Smart contract sets
 sidebar_position: 0
 ---
 
-# Deploying Smart Contracts
+# Smart contract sets
 
 ## Introduction
 
-To make developing smart contracts easier, we offer an open-source [template library](./1_smart_contract_templates.md) and an Integrated Development Environment (IDE). The template library includes pre-built smart contracts that you can customize to meet your specific needs.
+To make developing smart contracts easier, we offer an open-source [template library](2_smart-contract-templates.md) which includes pre-built smart contracts which you can customize to meet your specific needs.
 
-If you need a fundamental explanation of what smart contracts are and how they work, we recommend contacting our team to join our Learn World Blockchain course. Our experts will guide you through the basics, ensuring you have a solid foundation before diving into development. For a practical guide, please visit [deploying a contract](./3_deploying_a_contract.md).
+If you need a fundamental explanation of what smart contracts are and how they work, we recommend contacting our team to join our Learn World Blockchain course. Our experts will guide you through the basics, ensuring you have a solid foundation before diving into development. For a practical guide, please visit [deploying a contract](4_deploying-a-contract.md).
 
 SettleMint's smart contract sets include both Hardhat and Foundry, enabling you to compile, test, and deploy using your preferred framework or a combination of both. This flexibility allows you to optimize your development process to best suit your project needs and preferences.
+
+The programming languages for smart contracts differ depending on the protocol. For blockchain networks that are EVM (Ethereum Virtual Machine) compatible, and are listed below, the programming language used is Solidity.
+
+- [Hyperledger Besu Smart contract set](../../../../blockchain-guides/1_Hyperledger-Besu/6_enterprise-ethereum-integration-tools.md)
+- [Ethereum Smart contract set](../../../../blockchain-guides/0_Ethereum/5_ethereum-integration-tools.md)
+- [Avalanche Smart contract set](../../../../blockchain-guides/2_Avalanche/5_avalanche-integration-tools.md)
+- [Polygon Smart contract set](../../../../blockchain-guides/4_Polygon/5_polygon-integration-tools.md)
+
+For Hyperledger Fabric, the programming language used is TypeScript and Go.
+
+- [Hyperledger Fabric Smart contract set](../../../../blockchain-guides/5_Hyperledger-Fabric/6_hyperledger-fabric-integration-tools.md)
 
 ## Overview of the Smart Contract Deployment Process on SettleMint
 
 The following is a high-level overview of smart contract development processes at SettleMint.
 
-### 1. Deploying a Smart Contract Set
+### 1. Adding a Smart Contract Set
 
-- **Add Smart Contract Set**: Navigate to the smart contract sets page and press the button "Add Smart Contract Set."
+- **Add dev tool**: Navigate to the application you want to create the smart contract set in, then to the dev tools page and press the button "Add dev tool".
+- **Code studio**: Select the "Code studio" option as the type of dev tool.
+- **Smart contract set**: Select the "Smart contract set" option as the type of Code studio.
 - **Picking Your Template**: Pick the template of your choice.
+
+For detailed instructions, please see [add a smart contract set](3_add-smart-contract-set.md).
 
 ### 2. Compiling and Configuring The Smart Contract
 

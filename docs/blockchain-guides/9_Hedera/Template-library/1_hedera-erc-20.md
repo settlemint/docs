@@ -35,7 +35,7 @@ To set the name and symbol for your token, go to the **“deploy”** folder and
 await deploy('GenericToken', {
   from: deployer,
   args: ['GenericToken', 'GT'],
-  log: true,
+  log: true
 });
 ```
 
@@ -43,7 +43,7 @@ As soon as you are happy with the changes you made, just click on **“deploy”
 
 The **“GenericToken.ts”** script in the **“test”** folder showcases all the functionalities of the ERC-20 standard. It shows you how to use the smart contract in your dapp.
 
-*Note:* On the Hedera Mainnet time to time you can get timeouts errors(`Service Unavailable` in the IDE UI). JSON RPC relay in Hedera is a complex software which relies on multiple components (the consensus nodes, and the mirror node). One Ethereum TX can generate more than ten Hedera txs and if one of the tx fails due to the connection timeout, it can cause the problem. However, it's likely to have the problem with the smart contract deployment only. If you can keep trying a couple of times and then once your contract is deployed successfully. The subsequent contract calls should not have this kind of problem.
+_Note:_ On the Hedera Mainnet time to time you can get timeouts errors(`Service Unavailable` in the IDE UI). JSON RPC relay in Hedera is a complex software which relies on multiple components (the consensus nodes, and the mirror node). One Ethereum TX can generate more than ten Hedera txs and if one of the tx fails due to the connection timeout, it can cause the problem. However, it's likely to have the problem with the smart contract deployment only. If you can keep trying a couple of times and then once your contract is deployed successfully. The subsequent contract calls should not have this kind of problem.
 
 ## ERC-20 with meta transactions
 
@@ -88,14 +88,14 @@ const EIP712Domain = [
   { name: 'name', type: 'string' },
   { name: 'version', type: 'string' },
   { name: 'chainId', type: 'uint256' },
-  { name: 'verifyingContract', type: 'address' },
+  { name: 'verifyingContract', type: 'address' }
 ];
 
 const domain = {
   name: 'MinimalForwarder',
   version: '0.0.1',
   chainId: parseInt(await getChainId()),
-  verifyingContract: forwarderAddress,
+  verifyingContract: forwarderAddress
 };
 const types = {
   EIP712Domain,
@@ -105,8 +105,8 @@ const types = {
     { name: 'value', type: 'uint256' },
     { name: 'gas', type: 'uint256' },
     { name: 'nonce', type: 'uint256' },
-    { name: 'data', type: 'bytes' },
-  ],
+    { name: 'data', type: 'bytes' }
+  ]
 };
 ```
 
@@ -119,7 +119,10 @@ The name and version of domain have to match those of the forwarder (see the con
 Then, we need to generate the function data as follows:
 
 ```typescript
-const functionData = token.interface.encodeFunctionData('transfer', [walletTwoAddress, ethers.utils.parseUnits('10')]);
+const functionData = token.interface.encodeFunctionData('transfer', [
+  walletTwoAddress,
+  ethers.utils.parseUnits('10')
+]);
 ```
 
 In that expression, `transfer` is the ERC-20 function we want to execute, `walletTwoAddress` is the account that will receive the tokens and the last parameter is the amount of tokens to be transferred.
@@ -127,14 +130,16 @@ In that expression, `transfer` is the ERC-20 function we want to execute, `walle
 The last step before sending the meta transaction is to create and sign the message containing the underlying transaction as follows:
 
 ```typescript
-const walletOneNonce = Number(await read('Forwarder', 'getNonce', walletOneAddress));
+const walletOneNonce = Number(
+  await read('Forwarder', 'getNonce', walletOneAddress)
+);
 const req = {
   from: walletOneAddress,
   to: token.address,
   value: '0',
   gas: '100000',
   nonce: walletOneNonce,
-  data: functionData,
+  data: functionData
 };
 
 const signedData = ethSigUtil.signTypedData({
@@ -143,9 +148,9 @@ const signedData = ethSigUtil.signTypedData({
     types: types,
     domain: domain,
     primaryType: 'ForwardRequest',
-    message: req,
+    message: req
   },
-  version: ethSigUtil.SignTypedDataVersion.V4,
+  version: ethSigUtil.SignTypedDataVersion.V4
 });
 ```
 
@@ -263,4 +268,4 @@ Here we are going to deploy:
 
 ## Integration with the Middleware
 
-Working with complex or large data in your dApp can be a challenge. In the SettleMint platform we provide you with a [middleware solution](../../../using-platform/11_middleware.md) that allows you to index and query this data easily and efficiently.
+Working with complex or large data in your dApp can be a challenge. In the SettleMint platform we provide you with a [middleware solution](../../../using-platform/7_middleware.md) that allows you to index and query this data easily and efficiently.
