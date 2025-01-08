@@ -15,7 +15,7 @@ Follow these steps to add the middleware:
 1. Choose [Graph Middleware](#the-graph-middleware) or [Smart Contract Portal Middleware](#the-smart-contract-portal-middleware)
 2. Choose a **Middleware name**. Choose one that will be easily recognizable in your dashboards.
 3. Select the **blockchain node** you want to connect to. This is the blockchain node that will be used to index the blockchain data.
-4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans.](../launch-platform/managed-cloud-deployment/3_deployment-plans)
+4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans.](launch-platform/managed-cloud-deployment/3_deployment-plans.md)
 5. You see the **resource cost** for this middleware displayed at the bottom of the form. Click **Confirm** to add the smart contract set.
 
 When the middleware is deployed, click it from the list and start using it.
