@@ -40,6 +40,10 @@
   justify-content: center;
 }
 
+[data-theme='dark'] .mainButton {
+  background-color: #346eee;
+}
+
 .mainButton {
   background-color: #ffffff;
   color: #346eee;
