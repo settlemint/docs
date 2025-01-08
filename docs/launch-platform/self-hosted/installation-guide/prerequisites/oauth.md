@@ -11,10 +11,11 @@ import TabItem from '@theme/TabItem';
 ## Overview
 
 The SettleMint Platform requires OAuth authentication for:
-* User authentication
-* Access control
-* Single sign-on capabilities
-* Identity management
+
+- User authentication
+- Access control
+- Single sign-on capabilities
+- Identity management
 
 ## Provider Options
 
@@ -24,20 +25,22 @@ The SettleMint Platform requires OAuth authentication for:
 ### Google OAuth Setup
 
 1. **Access Google Cloud Console**
-   * Go to [Google Cloud Console](https://console.developers.google.com/apis/credentials)
-   * Select or create a project
+
+   - Go to [Google Cloud Console](https://console.developers.google.com/apis/credentials)
+   - Select or create a project
 
 2. **Create OAuth Client**
-   * Click `+ CREATE CREDENTIALS`
-   * Select `OAuth client ID`
-   * Choose `Web application` type
+
+   - Click `+ CREATE CREDENTIALS`
+   - Select `OAuth client ID`
+   - Choose `Web application` type
 
 3. **Configure OAuth Client**
-   * Add Authorized JavaScript origins:
+   - Add Authorized JavaScript origins:
      ```
      https://your-domain.com
      ```
-   * Add Authorized redirect URIs:
+   - Add Authorized redirect URIs:
      ```
      https://your-domain.com/api/auth/callback/google
      ```
@@ -52,18 +55,20 @@ Make sure to replace `your-domain.com` with your actual platform domain.
 ### Azure Active Directory Setup
 
 1. **Access Azure Portal**
-   * Go to Azure Active Directory
-   * Register a new application
+
+   - Go to Azure Active Directory
+   - Register a new application
 
 2. **Configure Application**
-   * Add redirect URIs
-   * Set up platform configurations
-   * Configure authentication settings
+
+   - Add redirect URIs
+   - Set up platform configurations
+   - Configure authentication settings
 
 3. **Set Required Permissions**
-   * OpenID Connect permissions
-   * User.Read permissions
-   * Additional scopes as needed
+   - OpenID Connect permissions
+   - User.Read permissions
+   - Additional scopes as needed
 
 </TabItem>
 <TabItem value="custom" label="Custom OIDC">
@@ -71,16 +76,18 @@ Make sure to replace `your-domain.com` with your actual platform domain.
 ### Custom OIDC Provider
 
 For enterprise setups, you can use any OpenID Connect compliant provider:
-* Okta
-* Auth0
-* Keycloak
-* Other OIDC-compliant providers
+
+- Okta
+- Auth0
+- Keycloak
+- Other OIDC-compliant providers
 
 Required provider capabilities:
-* OpenID Connect support
-* OAuth 2.0 compliance
-* User profile information
-* Email verification
+
+- OpenID Connect support
+- OAuth 2.0 compliance
+- User profile information
+- Email verification
 
 </TabItem>
 </Tabs>
@@ -88,6 +95,7 @@ Required provider capabilities:
 ## JWT Configuration
 
 Generate a secure signing key for JWT tokens:
+
 ```bash
 openssl rand -base64 32
 ```
@@ -102,21 +110,23 @@ Store this key securely - it's used to sign user sessions.
 
 ### Required Values for Platform Installation
 
-* [ ] OAuth Client ID
-* [ ] OAuth Client Secret
-* [ ] JWT signing key
-* [ ] Configured redirect URI
+- [ ] OAuth Client ID
+- [ ] OAuth Client Secret
+- [ ] JWT signing key
+- [ ] Configured redirect URI
 
 :::note Example Configuration
+
 ```yaml
 auth:
-  jwtSigningKey: "your-generated-key"  # From openssl command
+  jwtSigningKey: 'your-generated-key' # From openssl command
   providers:
     google:
       enabled: true
-      clientID: "your-client-id"       # From OAuth provider
-      clientSecret: "your-secret"      # From OAuth provider
+      clientID: 'your-client-id' # From OAuth provider
+      clientSecret: 'your-secret' # From OAuth provider
 ```
+
 :::
 
 </div>
@@ -124,6 +134,7 @@ auth:
 ## Validation
 
 Before proceeding, verify:
+
 1. OAuth client is properly configured
 2. Redirect URIs match your domain
 3. JWT signing key is generated and saved
@@ -134,14 +145,15 @@ Before proceeding, verify:
 Common issues and solutions:
 
 1. **Invalid Redirect URI**
-   * Verify exact URI match
-   * Check for protocol (https) mismatch
-   * Confirm domain spelling
+
+   - Verify exact URI match
+   - Check for protocol (https) mismatch
+   - Confirm domain spelling
 
 2. **Authentication Failures**
-   * Verify client credentials
-   * Check scope configurations
-   * Validate JWT signing key
+   - Verify client credentials
+   - Check scope configurations
+   - Validate JWT signing key
 
 ## Next Steps
 

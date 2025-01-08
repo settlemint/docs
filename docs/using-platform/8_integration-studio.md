@@ -70,14 +70,14 @@ Enter the following snippet in the Message tab.
 // Configuration                                         //
 ///////////////////////////////////////////////////////////
 
-const rpcEndpoint = "https://YOUR_NODE_RPC_ENDPOINT.settlemint.com";
-const accessToken = "YOUR_APPLICATION_ACCESS_TOKEN_HERE";
+const rpcEndpoint = 'https://YOUR_NODE_RPC_ENDPOINT.settlemint.com';
+const accessToken = 'YOUR_APPLICATION_ACCESS_TOKEN_HERE';
 
 ///////////////////////////////////////////////////////////
 // Logic                                                 //
 ///////////////////////////////////////////////////////////
 
-const ethers = global.get("ethers");
+const ethers = global.get('ethers');
 const provider = new ethers.providers.JsonRpcProvider(
   `${rpcEndpoint}/${accessToken}`
 );
@@ -95,16 +95,16 @@ return msg;
 ethers and some ipfs libraries are already available by default and can be used like this:
 
 ```javascript
-const ethers = global.get("ethers");
+const ethers = global.get('ethers');
 const provider = new ethers.providers.JsonRpcProvider(
   `${rpcEndpoint}/${accessToken}`
 );
 
-const ipfsHttpClient = global.get("ipfsHttpClient");
+const ipfsHttpClient = global.get('ipfsHttpClient');
 const client = ipfsHttpClient.create(`${ipfsEndpoint}/${accessToken}/api/v0`);
 
-const uint8arrays = global.get("uint8arrays");
-const itAll = global.get("itAll");
+const uint8arrays = global.get('uint8arrays');
+const itAll = global.get('itAll');
 const data = uint8arrays.toString(
   uint8arrays.concat(await itAll(client.cat(cid)))
 );

@@ -96,7 +96,7 @@ To change this to something less generic, we can go to the `ignition/modules` fo
 **Before:**
 
 ```typescript
-const counter = m.contract("GenericERC20", ["GenericERC20", "GT"]);
+const counter = m.contract('GenericERC20', ['GenericERC20', 'GT']);
 ```
 
 By editing this code block, you can create your token name and symbol:
@@ -104,7 +104,7 @@ By editing this code block, you can create your token name and symbol:
 **After:**
 
 ```typescript
-const counter = m.contract("GenericERC20", ["DocumentationToken", "DT"]);
+const counter = m.contract('GenericERC20', ['DocumentationToken', 'DT']);
 ```
 
 ### Compile and Deploy the Contract
@@ -221,14 +221,14 @@ This is done in this code block in `page.tsx`
 
 ```javascript
 const { data } = useSuspenseQuery({
-  queryKey: ["symbol"],
+  queryKey: ['symbol'],
   queryFn: async () => {
-    const response = await portal.GET("/api/generic-erc-20/{address}/symbol", {
+    const response = await portal.GET('/api/generic-erc-20/{address}/symbol', {
       params: { path: { address } },
-      parseAs: "text",
+      parseAs: 'text'
     });
     return response.data;
-  },
+  }
 });
 ```
 
@@ -259,7 +259,6 @@ After clicking `Confirm`, you will see a `Tokens Sent` confirmation on your fron
 ![Tokens Sent](../../static/img/developer-guides/tokens-sent.png)
 
 Congrats! You will now see the transaction confirmed in your Metamask activity.
-
 
 ## Next Steps
 

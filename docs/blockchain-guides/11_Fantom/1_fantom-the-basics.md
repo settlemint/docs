@@ -16,9 +16,9 @@ The Fantom consensus algorithm is known as Lachesis, a unique asynchronous Byzan
 
 Lachesis works as follows:
 
-	1.	**Asynchronous**: Transactions are processed asynchronously, meaning that validators do not need to wait for the previous transaction to be completed before starting a new one.
-	2.	**Byzantine Fault Tolerant**: The protocol can achieve consensus even if up to one-third of the nodes act maliciously.
-	3.	**Finality**: Transactions achieve finality within a few seconds, making them irreversible once confirmed.
+    1.	**Asynchronous**: Transactions are processed asynchronously, meaning that validators do not need to wait for the previous transaction to be completed before starting a new one.
+    2.	**Byzantine Fault Tolerant**: The protocol can achieve consensus even if up to one-third of the nodes act maliciously.
+    3.	**Finality**: Transactions achieve finality within a few seconds, making them irreversible once confirmed.
 
 The Lachesis consensus algorithm is scalable, secure, and decentralized, providing a robust foundation for decentralized applications.
 

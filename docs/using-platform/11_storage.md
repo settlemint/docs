@@ -44,7 +44,7 @@ var Minio = require('minio');
 var s3Client = new Minio.Client({
   endPoint: 'your-minio-instance.settlemint.com',
   accessKey: 'YOUR-ACCESSKEYID',
-  secretKey: 'YOUR-SECRETACCESSKEY',
+  secretKey: 'YOUR-SECRETACCESSKEY'
 });
 ```
 

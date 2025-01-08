@@ -11,10 +11,11 @@ import TabItem from '@theme/TabItem';
 ## Overview
 
 S3-compatible storage is used for:
-* Platform assets storage
-* Blockchain data persistence
-* File management
-* State storage
+
+- Platform assets storage
+- Blockchain data persistence
+- File management
+- State storage
 
 ## Deployment Options
 
@@ -22,28 +23,31 @@ S3-compatible storage is used for:
 <TabItem value="managed" label="Managed Service (Recommended)" default>
 
 ### AWS S3 (Native)
+
 1. Create new S3 bucket:
-   * Choose region
-   * Enable versioning
-   * Configure default encryption
+   - Choose region
+   - Enable versioning
+   - Configure default encryption
 2. Create IAM user:
-   * Generate access key and secret
-   * Attach minimal required permissions
+   - Generate access key and secret
+   - Attach minimal required permissions
 
 ### Digital Ocean Spaces
+
 1. Access Digital Ocean Console
 2. Create new Spaces bucket:
-   * Choose datacenter region
-   * Configure CDN (optional)
+   - Choose datacenter region
+   - Configure CDN (optional)
 3. Create Spaces access key
 
 :::tip
 Managed services provide:
-* Built-in redundancy
-* Automatic scaling
-* Global availability
-* Integrated monitoring
-:::
+
+- Built-in redundancy
+- Automatic scaling
+- Global availability
+- Integrated monitoring
+  :::
 
 </TabItem>
 <TabItem value="helm" label="Self-Hosted MinIO">
@@ -51,6 +55,7 @@ Managed services provide:
 ### MinIO Installation
 
 1. Install MinIO:
+
 ```bash
 helm upgrade --install minio oci://registry-1.docker.io/bitnamicharts/minio \
   --namespace minio \
@@ -65,6 +70,7 @@ helm upgrade --install minio oci://registry-1.docker.io/bitnamicharts/minio \
 ```
 
 2. Create service account:
+
 ```bash
 # Generate access credentials
 mc admin user svcacct add minio platform-user
@@ -72,11 +78,12 @@ mc admin user svcacct add minio platform-user
 
 :::caution
 For production use:
-* Configure proper storage class
-* Set up backup procedures
-* Enable encryption
-* Configure monitoring
-:::
+
+- Configure proper storage class
+- Set up backup procedures
+- Enable encryption
+- Configure monitoring
+  :::
 
 </TabItem>
 </Tabs>
@@ -84,6 +91,7 @@ For production use:
 ## State Encryption
 
 Generate an encryption key for state data:
+
 ```bash
 openssl rand -base64 32
 ```
@@ -98,25 +106,27 @@ Store this encryption key securely - it's used to protect platform state data.
 
 ### Required Values for Platform Installation
 
-* [ ] S3 endpoint URL
-* [ ] Bucket name
-* [ ] Access key ID
-* [ ] Secret access key
-* [ ] Region
-* [ ] State encryption key
+- [ ] S3 endpoint URL
+- [ ] Bucket name
+- [ ] Access key ID
+- [ ] Secret access key
+- [ ] Region
+- [ ] State encryption key
 
 :::note Example Configuration
+
 ```yaml
 deploymentEngine:
   state:
-    s3ConnectionUrl: "s3://bucket-name?region=us-east-1&endpoint=your-endpoint"
+    s3ConnectionUrl: 's3://bucket-name?region=us-east-1&endpoint=your-endpoint'
     credentials:
-      encryptionKey: "your-generated-key"  # From openssl command
+      encryptionKey: 'your-generated-key' # From openssl command
       aws:
-        accessKeyId: "your-access-key"
-        secretAccessKey: "your-secret-key"
-        region: "us-east-1"
+        accessKeyId: 'your-access-key'
+        secretAccessKey: 'your-secret-key'
+        region: 'us-east-1'
 ```
+
 :::
 
 </div>
@@ -124,6 +134,7 @@ deploymentEngine:
 ## Validation
 
 Test your S3 configuration:
+
 ```bash
 # Using AWS CLI
 aws s3 ls s3://your-bucket \
@@ -139,16 +150,17 @@ aws s3 ls s3://your-bucket \
 Common issues and solutions:
 
 1. **Access Denied**
-   * Verify credentials
-   * Check bucket permissions
-   * Confirm IAM/policy settings
-   * Validate endpoint URL format
+
+   - Verify credentials
+   - Check bucket permissions
+   - Confirm IAM/policy settings
+   - Validate endpoint URL format
 
 2. **Connection Issues**
-   * Check endpoint accessibility
-   * Verify region setting
-   * Confirm network access
-   * Check SSL/TLS requirements
+   - Check endpoint accessibility
+   - Verify region setting
+   - Confirm network access
+   - Check SSL/TLS requirements
 
 ## Next Steps
 

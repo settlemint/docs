@@ -11,10 +11,11 @@ import TabItem from '@theme/TabItem';
 ## Overview
 
 The ingress controller is responsible for:
-* Managing external access to services
-* Load balancing
-* SSL/TLS termination
-* Routing rules
+
+- Managing external access to services
+- Load balancing
+- SSL/TLS termination
+- Routing rules
 
 ## Deployment Options
 
@@ -31,6 +32,7 @@ helm upgrade --install ingress-nginx ingress-nginx \
 ```
 
 Wait for the load balancer IP to be assigned:
+
 ```bash
 kubectl get service -n ingress-nginx ingress-nginx-controller \
   --output jsonpath='{.status.loadBalancer.ingress[0].ip}'
@@ -43,17 +45,19 @@ kubectl get service -n ingress-nginx ingress-nginx-controller \
 
 Choose your cloud provider's marketplace offering:
 
-* **Digital Ocean**:
-  * Install "NGINX Ingress Controller" from marketplace
-  * Automatically configures load balancer
+- **Digital Ocean**:
 
-* **CIVO**:
-  * Enable "Nginx ingress controller" during cluster creation
-  * Or add from marketplace post-creation
+  - Install "NGINX Ingress Controller" from marketplace
+  - Automatically configures load balancer
 
-* **Other Providers**:
-  * Most cloud providers offer similar marketplace solutions
-  * Follow provider-specific installation steps
+- **CIVO**:
+
+  - Enable "Nginx ingress controller" during cluster creation
+  - Or add from marketplace post-creation
+
+- **Other Providers**:
+  - Most cloud providers offer similar marketplace solutions
+  - Follow provider-specific installation steps
 
 </TabItem>
 </Tabs>
@@ -76,17 +80,19 @@ kubectl get svc -n ingress-nginx
 
 ### Required Values for Platform Installation
 
-* [ ] Ingress class name (default: `nginx`)
-* [ ] Load balancer IP address
-* [ ] Ingress controller namespace
+- [ ] Ingress class name (default: `nginx`)
+- [ ] Load balancer IP address
+- [ ] Ingress controller namespace
 
 :::note Example Configuration
+
 ```yaml
 ingress:
   enabled: true
   className: nginx
   # Other ingress settings will be configured in Domain & TLS section
 ```
+
 :::
 
 </div>
@@ -96,14 +102,16 @@ ingress:
 Common issues and solutions:
 
 1. **No Load Balancer IP**
-* Verify cloud provider load balancer service is running
-* Check cloud provider quotas
-* Ensure correct service annotations
+
+- Verify cloud provider load balancer service is running
+- Check cloud provider quotas
+- Ensure correct service annotations
 
 2. **Controller Not Ready**
-* Check pod logs: `kubectl logs -n ingress-nginx <pod-name>`
-* Verify resource requirements are met
-* Check network policies
+
+- Check pod logs: `kubectl logs -n ingress-nginx <pod-name>`
+- Verify resource requirements are met
+- Check network policies
 
 ## Next Steps
 

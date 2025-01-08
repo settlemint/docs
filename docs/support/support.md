@@ -4,6 +4,6 @@ We are here to provide support for all your troubleshooting and technical questi
 
 ## Reach Us
 
-Email us at **[support@settlemint.com](mailto:support@settlemint.com)** for any assistance. 
+Email us at **[support@settlemint.com](mailto:support@settlemint.com)** for any assistance.
 
 Our team is ready to help you with your queries.

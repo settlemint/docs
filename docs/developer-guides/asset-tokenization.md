@@ -329,7 +329,7 @@ Replace the content of `main.ts` with the code below:
 // SettleMint.com
 import { buildModule } from '@nomicfoundation/hardhat-ignition/modules';
 
-const AssetTokenizationModule = buildModule('AssetTokenizationModule', (m) => {
+const AssetTokenizationModule = buildModule('AssetTokenizationModule', m => {
   const assetTokenization = m.contract('AssetTokenization');
 
   return { assetTokenization };
@@ -530,3 +530,4 @@ You have now created and deployed an Asset Tokenization smart contract using Set
 
 Find other guides in to help you build with SettleMint in our [Guide Library](guide-library.mdx)
 
+```

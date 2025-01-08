@@ -157,25 +157,25 @@ Standard Webhooks has built [SDKs and useful tools](https://www.standardwebhooks
 An example using Typescript, [Elysia](https://elysiajs.com/) and [standard webhooks](https://www.standardwebhooks.com/).
 
 ```ts
-import { Elysia, t } from "elysia";
-import { Webhook } from "standardwebhooks";
+import { Elysia, t } from 'elysia';
+import { Webhook } from 'standardwebhooks';
 
 async function webhookConsumerBootstrap(secret: string) {
   const webhookConsumer = new Elysia().post(
-    "/scp-listener",
+    '/scp-listener',
     ({ headers, body }) => {
       try {
         const wh = new Webhook(btoa(secret));
         const verifiedPayload = wh.verify(JSON.stringify(body.payload), {
-          "webhook-id": headers["btp-portal-event-id"]!,
-          "webhook-signature": headers["btp-portal-event-signature"]!,
-          "webhook-timestamp": headers["btp-portal-event-timestamp"]!,
+          'webhook-id': headers['btp-portal-event-id']!,
+          'webhook-signature': headers['btp-portal-event-signature']!,
+          'webhook-timestamp': headers['btp-portal-event-timestamp']!
         });
         console.log(
           `Received a webhook event: ${JSON.stringify(verifiedPayload)}`
         );
       } catch (err) {
-        console.error("Webhook payload invalid", err);
+        console.error('Webhook payload invalid', err);
         throw err;
       }
     },
@@ -186,9 +186,9 @@ async function webhookConsumerBootstrap(secret: string) {
           eventId: t.String(),
           eventName: t.String(),
           timestamp: t.Number(),
-          data: t.Any(),
-        }),
-      }),
+          data: t.Any()
+        })
+      })
     }
   );
   const app = new Elysia().use(webhookConsumer).onStart(({ server }) => {
@@ -200,9 +200,9 @@ async function webhookConsumerBootstrap(secret: string) {
 }
 
 webhookConsumerBootstrap(process.env.WEBHOOK_SECRET!)
-  .then((app) => app.listen(process.env.PORT || 5555))
+  .then(app => app.listen(process.env.PORT || 5555))
   .catch((error: Error) => {
-    console.error("Failed to start webhook consumer", error);
+    console.error('Failed to start webhook consumer', error);
     process.exit(1);
   });
 ```
@@ -214,7 +214,7 @@ The websocket endpoint exposes functionality to get real time updates on process
 The url can be copied from the Connect tab.
 
 ```ts
-import type { TransactionReceipt } from "viem";
+import type { TransactionReceipt } from 'viem';
 
 // Should include an api key (eg wss://smart-contract-portal-middleware.settlemint.com/sm_pat_.../ws)
 const webSocketHost = process.env.WS_URL!;
@@ -229,7 +229,7 @@ export async function waitForTransactionReceipt(transactionHash: string) {
 
   return new Promise<TransactionReceipt>((resolve, reject) => {
     let isResolved = false;
-    webSocket.onmessage = (event) => {
+    webSocket.onmessage = event => {
       isResolved = true;
       const receiptJson = JSON.parse(event.data) as TransactionReceipt;
       resolve(receiptJson);
@@ -238,7 +238,7 @@ export async function waitForTransactionReceipt(transactionHash: string) {
     webSocket.onerror = reject;
     webSocket.onclose = () => {
       if (!isResolved) {
-        reject(new Error("Nothing received from the WebSocket"));
+        reject(new Error('Nothing received from the WebSocket'));
       }
     };
     if (webSocket.readyState === WebSocket.OPEN) {

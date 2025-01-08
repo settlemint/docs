@@ -32,10 +32,10 @@ contract GenericToken is ERC20, ERC20Burnable, Pausable, AccessControl {
 To set the name and symbol for your token, go to the **“deploy”** folder and in **“00_Deploy_GenericToken.ts”**, change the values in **“args”** in the **“deploy”** function.
 
 ```typescript
-await deploy("GenericToken", {
+await deploy('GenericToken', {
   from: deployer,
-  args: ["GenericToken", "GT"],
-  log: true,
+  args: ['GenericToken', 'GT'],
+  log: true
 });
 ```
 
@@ -83,28 +83,28 @@ First, to send meta transactions using the `forwarder`, we have to define three 
 
 ```typescript
 const EIP712Domain = [
-  { name: "name", type: "string" },
-  { name: "version", type: "string" },
-  { name: "chainId", type: "uint256" },
-  { name: "verifyingContract", type: "address" },
+  { name: 'name', type: 'string' },
+  { name: 'version', type: 'string' },
+  { name: 'chainId', type: 'uint256' },
+  { name: 'verifyingContract', type: 'address' }
 ];
 
 const domain = {
-  name: "MinimalForwarder",
-  version: "0.0.1",
+  name: 'MinimalForwarder',
+  version: '0.0.1',
   chainId: parseInt(await getChainId()),
-  verifyingContract: forwarderAddress,
+  verifyingContract: forwarderAddress
 };
 const types = {
   EIP712Domain,
   ForwardRequest: [
-    { name: "from", type: "address" },
-    { name: "to", type: "address" },
-    { name: "value", type: "uint256" },
-    { name: "gas", type: "uint256" },
-    { name: "nonce", type: "uint256" },
-    { name: "data", type: "bytes" },
-  ],
+    { name: 'from', type: 'address' },
+    { name: 'to', type: 'address' },
+    { name: 'value', type: 'uint256' },
+    { name: 'gas', type: 'uint256' },
+    { name: 'nonce', type: 'uint256' },
+    { name: 'data', type: 'bytes' }
+  ]
 };
 ```
 
@@ -117,9 +117,9 @@ The name and version of domain have to match those of the forwarder (see the con
 Then, we need to generate the function data as follows:
 
 ```typescript
-const functionData = token.interface.encodeFunctionData("transfer", [
+const functionData = token.interface.encodeFunctionData('transfer', [
   walletTwoAddress,
-  ethers.utils.parseUnits("10"),
+  ethers.utils.parseUnits('10')
 ]);
 ```
 
@@ -129,15 +129,15 @@ The last step before sending the meta transaction is to create and sign the mess
 
 ```typescript
 const walletOneNonce = Number(
-  await read("Forwarder", "getNonce", walletOneAddress)
+  await read('Forwarder', 'getNonce', walletOneAddress)
 );
 const req = {
   from: walletOneAddress,
   to: token.address,
-  value: "0",
-  gas: "100000",
+  value: '0',
+  gas: '100000',
   nonce: walletOneNonce,
-  data: functionData,
+  data: functionData
 };
 
 const signedData = ethSigUtil.signTypedData({
@@ -145,17 +145,17 @@ const signedData = ethSigUtil.signTypedData({
   data: {
     types: types,
     domain: domain,
-    primaryType: "ForwardRequest",
-    message: req,
+    primaryType: 'ForwardRequest',
+    message: req
   },
-  version: ethSigUtil.SignTypedDataVersion.V4,
+  version: ethSigUtil.SignTypedDataVersion.V4
 });
 ```
 
 Finally, once the transaction is signed, we can send it to the `forwarder`:
 
 ```typescript
-await forwarder.execute(req, signedData, { gasLimit: "100000" });
+await forwarder.execute(req, signedData, { gasLimit: '100000' });
 ```
 
 ## ERC-20 Crowdsale

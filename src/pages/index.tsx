@@ -11,7 +11,11 @@ function HomepageHeader() {
       <div className="container">
         <div className={styles.title}>{siteConfig.title}</div>
         <p className={styles.subtitle}>{siteConfig.tagline}</p>
-        <a href="https://www.settlemint.com/request-a-demo" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://www.settlemint.com/request-a-demo"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <button className={styles.mainButton}>Request a Demo</button>
         </a>
         <a
