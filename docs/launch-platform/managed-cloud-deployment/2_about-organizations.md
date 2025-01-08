@@ -1,7 +1,6 @@
 ---
 title: Managing Organizations
-description: Guide to Managing Organizations
-sidebar_position: 4
+description: Guide to managing Organizations
 ---
 
 # About organizations
