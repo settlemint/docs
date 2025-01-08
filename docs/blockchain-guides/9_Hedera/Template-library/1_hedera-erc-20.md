@@ -36,7 +36,7 @@ await deploy('GenericToken', {
   from: deployer,
   args: ['GenericToken', 'GT'],
   log: true
-})
+});
 ```
 
 As soon as you are happy with the changes you made, just click on **“deploy”** in the **“task runner”** of the IDE and after a few seconds, your ERC-20 smart contract should be deployed on the network of your choice.
@@ -89,14 +89,14 @@ const EIP712Domain = [
   { name: 'version', type: 'string' },
   { name: 'chainId', type: 'uint256' },
   { name: 'verifyingContract', type: 'address' }
-]
+];
 
 const domain = {
   name: 'MinimalForwarder',
   version: '0.0.1',
   chainId: parseInt(await getChainId()),
   verifyingContract: forwarderAddress
-}
+};
 const types = {
   EIP712Domain,
   ForwardRequest: [
@@ -107,7 +107,7 @@ const types = {
     { name: 'nonce', type: 'uint256' },
     { name: 'data', type: 'bytes' }
   ]
-}
+};
 ```
 
 :::warning Note
@@ -122,7 +122,7 @@ Then, we need to generate the function data as follows:
 const functionData = token.interface.encodeFunctionData('transfer', [
   walletTwoAddress,
   ethers.utils.parseUnits('10')
-])
+]);
 ```
 
 In that expression, `transfer` is the ERC-20 function we want to execute, `walletTwoAddress` is the account that will receive the tokens and the last parameter is the amount of tokens to be transferred.
@@ -132,7 +132,7 @@ The last step before sending the meta transaction is to create and sign the mess
 ```typescript
 const walletOneNonce = Number(
   await read('Forwarder', 'getNonce', walletOneAddress)
-)
+);
 const req = {
   from: walletOneAddress,
   to: token.address,
@@ -140,7 +140,7 @@ const req = {
   gas: '100000',
   nonce: walletOneNonce,
   data: functionData
-}
+};
 
 const signedData = ethSigUtil.signTypedData({
   privateKey: walletOne.getPrivateKey(),
@@ -151,13 +151,13 @@ const signedData = ethSigUtil.signTypedData({
     message: req
   },
   version: ethSigUtil.SignTypedDataVersion.V4
-})
+});
 ```
 
 Finally, once the transaction is signed, we can send it to the `forwarder`:
 
 ```typescript
-await forwarder.execute(req, signedData, { gasLimit: '100000' })
+await forwarder.execute(req, signedData, { gasLimit: '100000' });
 ```
 
 ## ERC-20 Crowdsale
