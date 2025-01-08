@@ -1,7 +1,6 @@
 ---
-title: Monitoring Resource Usage
-description: Guide to adding a Blockchain Node to a Network
-sidebar_position: 15
+title: Resource Usage
+description: Guide to monitoring resource usage
 ---
 
 # Resource usage

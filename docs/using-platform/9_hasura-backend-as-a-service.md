@@ -37,7 +37,7 @@ If you need to execute tasks based on changes to your database you can leverage 
 **Access to your database** can be handled all the way to the row level by using the authentication and authorisation options available in Hasura.
 [Learn more here.](https://hasura.io/docs/latest/graphql/core/auth/index.html)
 
-This is of course on top of the [application access tokens](16_application-access-tokens.md) and [personal access tokens](18_personal-access-tokens.md) in the platform you can use to close off access to the entire API.
+This is of course on top of the [application access tokens](16_application-access-tokens.md) and [personal access tokens](17_personal-access-tokens.md) in the platform you can use to close off access to the entire API.
 
 ## Backups
 

@@ -1,7 +1,6 @@
 ---
 title: Add a Blockchain Node
 description: Guide to adding a Blockchain Node to a Network
-sidebar_position: 3
 ---
 
 # Add a node to a network

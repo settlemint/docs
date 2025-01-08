@@ -1,7 +1,6 @@
 ---
 title: Deployment Plans
 description: A list of the available Deployment Plans for SettleMint
-sidebar_position: 2
 ---
 
 # Deployment plans

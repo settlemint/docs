@@ -45,7 +45,7 @@ For example, to run the `smartcontract:deploy` task using the terminal, open a n
 
 ## Private key
 
-To be able to deploy your smart contract set on the blockchain you need to have a private key enabled on your node to sign the transaction, and you need to fund this key with Ether to cover the cost for the transaction. You can create a private key and fund it in the **Private keys section** of your application. [More about private keys.](../../using-platform/17_private-keys.md)
+To be able to deploy your smart contract set on the blockchain you need to have a private key enabled on your node to sign the transaction, and you need to fund this key with Ether to cover the cost for the transaction. You can create a private key and fund it in the **Private keys section** of your application. [More about private keys.](../../using-platform/12_private-keys.md)
 
 ## Template library
 
