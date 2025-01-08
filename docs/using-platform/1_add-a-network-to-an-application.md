@@ -82,6 +82,6 @@ Click **Manage network** to see the available actions. You can only perform thes
 
 :::warning Warning
 
-You can only delete a blockchain network when it has no more associated resources (e.g., nodes, smart contract sets, etc.). Resources must be deleted one by one first.
+You can only delete a blockchain network when it has no more associated resources (e.g., nodes, middlewares, etc.). Resources must be deleted one by one first.
 
 :::
