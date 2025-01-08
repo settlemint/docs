@@ -6,10 +6,6 @@ sidebar_position: 1
 
 SettleMint's smart contract templates serve as open-source, ready-to-use foundations for blockchain application development, significantly accelerating the deployment process. These templates enable users to quickly customize and extend their blockchain applications, leveraging tested and community-enhanced frameworks to reduce development time and accelerate market entry.
 
-<div class="centered-image"> 
-![Example banner](../../../../../static/img/smart-contract-sets/all-templates.png)
-</div>
-
 ### Open-Source Smart Contract Templates under the MIT License
 
 Benefit from the expertise of the blockchain community and trust in the reliability of your smart contracts. These templates are vetted and used by major enterprises and institutions, ensuring enhanced security and confidence in your deployments.
