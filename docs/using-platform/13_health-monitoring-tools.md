@@ -10,7 +10,7 @@ Go to the **service's overview page** or a **service detail page** to view the s
 
 ## Resource usage status & metrics
 
-You can view the resources (memory, vCPU, and disk space) allocated to your services at any time, and follow up on the current usage. When the current resource usage is about to reach its limit, you will see a warning with the recommendation to scale your resource pack to keep the service running. [More info on resource usage](15_resource-usage.md)
+You can view the resources (memory, vCPU, and disk space) allocated to your services at any time, and follow up on the current usage. When the current resource usage is about to reach its limit, you will see a warning with the recommendation to scale your resource pack to keep the service running. [More info on resource usage](12_resource-usage.md)
 
 Go to the **Resource tab** of a **service detail page** to view the resource usage status and metrics.
 

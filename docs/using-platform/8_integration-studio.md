@@ -45,7 +45,7 @@ Double-click any of the nodes to see the code they are running. This code is wri
 
 Before we show you how to set up your own flow, we recommend reading this [article by Node-RED on creating your first flow](https://nodered.org/docs/tutorials/first-flow).
 
-Now let's set up an example flow together and build an endpoint to get the latest block number of the Polygon Mumbai Testnet using the Integration Studio. If you do not have a Polygon Mumbai Node, you can easily [deploy a node](2_add-a-node-to-a-network.md) first.
+Now let's set up an example flow together and build an endpoint to get the latest block number of the Polygon Mumbai Testnet using the Integration Studio. If you do not have a Polygon Mumbai Node, you can easily [deploy a node](4_add-a-node-to-a-network.md) first.
 
 #### Step 1
 
@@ -61,7 +61,7 @@ Drag and drop a **function node**. This is the node that will query the blockcha
 `rpcEndpoint` is the RPC url of your Polygon Mumbai Node.
 Under the **Connect tab** of your Polygon Mumbai node, you will find its RPC url.
 
-`accessToken` - You will need an access token for your application. If you do not have one, you can easily [create an access token](20_application-access-tokens.md) first.
+`accessToken` - You will need an access token for your application. If you do not have one, you can easily [create an access token](16_application-access-tokens.md) first.
 
 Enter the following snippet in the Message tab.
 

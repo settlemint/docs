@@ -8,7 +8,7 @@ sidebar_position: 0
 
 ## Introduction
 
-To make development easier, we offer Development tools. These tools are designed to help you build your dApp faster, whether it is smart contract development, or your dApp's frontend and backend.
+To make development easier, we offer Development tools. These tools are designed to help you build your decentralized application (dApp) faster, whether it is smart contract development, or your dApp's frontend and backend.
 
 We offer the following tools:
 

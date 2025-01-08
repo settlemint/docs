@@ -14,6 +14,17 @@ If you need a fundamental explanation of what smart contracts are and how they w
 
 SettleMint's smart contract sets include both Hardhat and Foundry, enabling you to compile, test, and deploy using your preferred framework or a combination of both. This flexibility allows you to optimize your development process to best suit your project needs and preferences.
 
+The programming languages for smart contracts differ depending on the protocol. For blockchain networks that are EVM (Ethereum Virtual Machine) compatible, and are listed below, the programming language used is Solidity.
+
+- [Hyperledger Besu Smart contract set](../../../../blockchain-guides/1_Hyperledger-Besu/6_enterprise-ethereum-integration-tools.md)
+- [Ethereum Smart contract set](../../../../blockchain-guides/0_Ethereum/5_ethereum-integration-tools.md)
+- [Avalanche Smart contract set](../../../../blockchain-guides/2_Avalanche/5_avalanche-integration-tools.md)
+- [Polygon Smart contract set](../../../../blockchain-guides/4_Polygon/5_polygon-integration-tools.md)
+
+For Hyperledger Fabric, the programming language used is TypeScript and Go.
+
+- [Hyperledger Fabric Smart contract set](../../../../blockchain-guides/5_Hyperledger-Fabric/6_hyperledger-fabric-integration-tools.md)
+
 ## Overview of the Smart Contract Deployment Process on SettleMint
 
 The following is a high-level overview of smart contract development processes at SettleMint.

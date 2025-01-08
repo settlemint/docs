@@ -1,4 +1,4 @@
-# Backend-as-a-service
+# Hasura - Backend-as-a-service
 
 Many dApps need more than just decentralised tools to build an end-to-end solution. Maybe you need to save KYC information, or store metadata related to NFT's or other smart contracts you do not want to put on IPFS. This is where the backend-as-a-service solution comes in, based on [Hasura](https://hasura.io/docs/latest/graphql/core/index.html).
 
@@ -37,7 +37,7 @@ If you need to execute tasks based on changes to your database you can leverage 
 **Access to your database** can be handled all the way to the row level by using the authentication and authorisation options available in Hasura.
 [Learn more here.](https://hasura.io/docs/latest/graphql/core/auth/index.html)
 
-This is of course on top of the [application access tokens](20_application-access-tokens.md) and [personal access tokens](21_personal-access-tokens.md) in the platform you can use to close off access to the entire API.
+This is of course on top of the [application access tokens](16_application-access-tokens.md) and [personal access tokens](18_personal-access-tokens.md) in the platform you can use to close off access to the entire API.
 
 ## Backups
 

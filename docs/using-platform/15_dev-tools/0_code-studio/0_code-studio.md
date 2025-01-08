@@ -16,4 +16,4 @@ With the built-in SettleMint SDK Command Line Interface (CLI), you can easily us
 
 Currently, we offer the following types of Code studio:
 
-- [Smart contract sets](./1_smart-contract-sets/1_smart-contract-sets.md) - This is an IDE you can launch with a pre-built smart contract template. Choose from our open-source [template library](./1_smart-contract-sets/2_smart-contract-templates.md).
+- [Smart contract sets](./1_smart-contract-sets/1_smart-contract-sets.md) - Smart contract sets Code studio is a powerful tool that simplifies the development of your smart contracts. It includes pre-built smart contract set templates for your chosen use case, which are easily customizable to match your needs. The IDE also includes compilation and migration scripts that drastically simplify deployment to the relevant blockchain.
