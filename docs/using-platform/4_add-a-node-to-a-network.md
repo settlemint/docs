@@ -31,7 +31,7 @@ Follow these steps to add the blockchain node:
 1. Select to which **blockchain network** you want to add this node, and click **Continue**.
 2. Choose a **node name**. Choose a name that is easily recognizable in your dashboards.
 3. Only for nodes in permissioned networks: Select what **type of node** you want to add. For more information on the types of nodes, refer to the Nodes sections in the blockchain guides (see the links above). For nodes on a public network, we deploy a full node by default.
-4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans](../launch-platform/managed-cloud-deployment/13_deployment-plans.md)
+4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans](../launch-platform/managed-cloud-deployment/3_deployment-plans)
 5. You see the **resource cost** for this node displayed at the bottom of the form. Click **Confirm** to add the node.
 
 The node is now added to the **blockchain node overview** with the status "deploying". When your node is fully deployed, the status will change to "running". This will only take a few minutes.
@@ -50,7 +50,7 @@ Click **Manage node** to see available actions. You can only perform these actio
 
 :::info Info
 
-Nodes do not autoscale. However, you can scale your deployment if you notice that your node does not have enough resources. [More on deployment plans](../launch-platform/managed-cloud-deployment/13_deployment-plans.md)
+Nodes do not autoscale. However, you can scale your deployment if you notice that your node does not have enough resources. [More on deployment plans](../launch-platform/managed-cloud-deployment/3_deployment-plans)
 
 :::
 

@@ -40,7 +40,7 @@ Follow these steps to add the Smart contract set:
 
    ![Enter name and user](../../../../../static/img/smart-contract-sets/enter-name-user.png)
 
-7. Choose a **Deployment Plan**. Select the type, cloud provider, region, and resource pack. [More about deployment plans](/docs/launch-platform/managed-cloud-deployment/13_deployment-plans.md).
+7. Choose a **Deployment Plan**. Select the type, cloud provider, region, and resource pack. [More about deployment plans](/docs/launch-platform/managed-cloud-deployment/3_deployment-plans).
 8. Review the resource cost for this smart contract set displayed at the bottom of the form. Click **Confirm** to add the Smart contract set.
 
    ![Confirm](../../../../../static/img/smart-contract-sets/confirm.png)

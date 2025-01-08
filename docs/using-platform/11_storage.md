@@ -10,7 +10,7 @@ Follow these steps to add storage:
 
 1. Choose **'IPFS'** or **'MinIO'**
 2. Choose a **name** for your storage. Choose one that will be easily recognizable in your dashboards.
-3. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans](../launch-platform/managed-cloud-deployment/13_deployment-plans.md)
+3. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans](../launch-platform/managed-cloud-deployment/3_deployment-plans)
 4. You can see the resource cost for your storage displayed at the bottom of the form. Click **Confirm** to add the storage.
 
 When the storage is deployed, click on it from the list, and go to the **Interface tab** to start adding files. You can connect to your storage using the details provided in the **Connect tab**.

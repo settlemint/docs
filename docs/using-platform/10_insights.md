@@ -13,7 +13,7 @@ Follow these steps to add the blockchain explorer:
 1. Select **Blockchain Explorer**
 2. Select the target **blockchain node** for the blockchain explorer and click **Continue**. Make sure you have a **Hyperledger Besu node or Polygon Edge node** in place.
 3. Enter a **name** for this instance of the blockchain explorer.
-4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans](../launch-platform/managed-cloud-deployment/13_deployment-plans.md)
+4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans](../launch-platform/managed-cloud-deployment/3_deployment-plans)
 5. You see the **resource cost** for this blockchain explorer displayed at the bottom of the form. Click **Confirm** to add the blockchain explorer.
 
 ## Using the blockchain explorer
