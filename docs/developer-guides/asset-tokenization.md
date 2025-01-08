@@ -101,13 +101,12 @@ Tokenization smart contract.
 
 ### 1. Create a Smart Contract
 
-![Create a Smart Contract](../../static/img/developer-guides/asset-tokenization/create-smart-contract.gif)
-
-First, you need to deploy a `Smart Contract Set`. Select the `Smart Contract Sets` option
-on the left.
+To create a Smart contract set, navigate to the `Dev tools` section in the left sidebar. From there, click on `Add a dev tool`, choose `Code Studio` and then `Smart Contract Set`.
 
 You will now be given the option to select a template. Choose the `Empty` option.
 Create a name and select the same deployment plan as you did earlier.
+
+![Create a Smart Contract](../../static/img/developer-guides/asset-tokenization/create-empty-smart-contract.png)
 
 ### 2. Opening the Integrated Development Environment (IDE)
 

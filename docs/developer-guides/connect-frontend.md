@@ -69,7 +69,7 @@ You can confirm that you have received the test tokens by going to the `Balances
 
 ### Deploying the Smart Contract
 
-We are now ready to create and deploy a smart contract. Click on `Dev tools` in the left sidebar. From there, select `Add a dev tool`, choose `Code Studio` and then `Smart Contract Set`.
+We are now ready to create and deploy a smart contract. Navigate to the `Dev tools` section in the left sidebar. From there, click on `Add a dev tool`, choose `Code Studio` and then `Smart Contract Set`.
 
 You now have the option to select a smart contract set template. These are pre-built smart contract sets based on popular ERC standards and use cases.
 
