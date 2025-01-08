@@ -412,15 +412,17 @@ The URL can be found by:
 Save this URL as you will use it later in this guide when building the integration.
 :::
 
-### 3. Create a SettleMint API Key
+### 3. Creating an access token
 
-To ensure that your network is secure, you will also need to generate an API to have access to it.
-![Create an API Key](./../../static/img/developer-guides/asset-tokenization/create-api-key.png)
+To connect to your node and storage, you will need an access token. We recommend you use an application access token.
 
-To create an API key, click on your profile icon in the top right. Then select `API Keys` and `Generate a new API Key`.
-![Generate API Key](./../../static/img/developer-guides/asset-tokenization/generate-key.png)
+You can create an application access token by navigating to the application dashboard, and then clicking on the `Access Tokens` section in the left sidebar.
 
-You can now name your API key and check all of the resources below to give your key access to your entire application.
+![API Keys](../../static/img/developer-guides/asset-tokenization/access-token-node-storage.png)
+
+You can now create an application access token with an expiration and the scopes you want to use. For this guide, we recommend you create an access token scoped to your node and storage.
+
+You will now see your access token. Copy the token since you cannot see it again!
 
 ### 4. Setup Integration Studio Deployment
 
