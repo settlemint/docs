@@ -1,5 +1,5 @@
 ---
-title: Connect A Front End - NextJS
+title: Connect a Front End - NextJS
 description: A Guide to Connecting a Frontend to Your Blockchain Application
 sidebar_position: 2
 keywords: [frontend, nextjs, web3auth, polygon, erc20]
@@ -67,17 +67,15 @@ Insert your Wallet Address and click the `Submit` button. Depending on faucet tr
 
 You can confirm that you have received the test tokens by going to the `Balances` section of your `Private Keys`.
 
-**Image Here of the Dashboard**
-
 ### Deploying the Smart Contract
 
-We are now ready to create and deploy a smart contract. Go to the `Smart Contract Sets` on the dashboard on the right. From there, select `Add a Smart Contract Set` and the `TokenSender` node that you have created.
+We are now ready to create and deploy a smart contract. Click on `Dev tools` in the left sidebar. From there, select `Add a dev tool`, choose `Code Studio` and then `Smart Contract Set`.
 
-You now have the option to select a smart contract template. These are pre-populated smart contracts of popular ERC standards and use cases.
+You now have the option to select a smart contract set template. These are pre-built smart contract sets based on popular ERC standards and use cases.
 
 For this guide, we will use the ERC-20 Token template:
 
-![Choose a template](../../static/img/developer-guides/choose-tempalte.png)
+![Choose a template](../../static/img/developer-guides/connect-frontend-erc20-template.png)
 
 You can continue to use the naming and deployment plan that you used earlier for the other resources.
 
@@ -142,23 +140,23 @@ After that is completed, open the folder in your favorite code editor.
 
 ### Adding the ABI
 
-The first thing we will do is add the ABI and address of our deployed contract. This allows our front end to know where to read and write data to it. This information can be found in the SettleMint IDE where you deployed your contract.
+The first thing we will do is add the ABI and address of our deployed contract. This allows our front end to know where to read and write data to it. This information can be found in the smart contract set IDE where you deployed your contract.
 
 Go to the `ignition/deployments/chain-46622/artifacts` folder in the file explorer and copy the `GenericERC20Module#GenericERC20.json` file to the `contractData` directory.
 
 ![Copy ABI](../../static/img/developer-guides/copy-abi.png)
 
-### Adding the API Key
+### Adding the access token
 
-For security reasons, we don't want just anyone accessing your node. So you will also need to generate an API key to get access.
+To connect to your node and middleware, you will need an access token. We recommend you use an application access token.
 
-This is done by navigating to your profile in the top right next to the grid icon. From there, select `API Keys`:
+You can create an application access token by navigating to the application dashboard, and then clicking on the `Access Tokens` section in the left sidebar.
 
-![API Keys](../../static/img/developer-guides/api-keys.png)
+![API Keys](../../static/img/developer-guides/access-token.png)
 
-From there, select the `Generate new API Key`. You can now create an API key name, expiration, and access. For this guide, selecting `All blockchain nodes in all organizations` and `All middlewares in all organizations` will work.
+You can now create an application access token with an expiration and the scopes you want to use. For this guide, we recommend you create an access token scoped to your node and middleware.
 
-You will now see your API key that was generated only once. Copy this and add it as the `BTP_TOKEN` variable value in the `.env` file.
+You will now see your access token. Copy the token since you cannot see it again! Then, add it as the `BTP_TOKEN` variable value in the `.env` file.
 
 ### Configuring web3auth
 
