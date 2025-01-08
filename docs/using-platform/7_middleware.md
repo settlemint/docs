@@ -294,7 +294,7 @@ Before you start, make sure you are running:
 
 :::
 
-## Manage Identities
+### Manage Identities
 
 Identities on a Fabric network are managed in two steps. First, a CA admin must register users. This is a process in which the CA admin gives an ID and secret to an identity. Then, the user of the identity enrolls the ID and secret pair to get a public/private key pair to sign transactions.
 
@@ -338,7 +338,7 @@ curl --request POST \
 
 ```
 
-## Sending Transactions
+### Sending Transactions
 
 Assuming that you have a [chaincode deployed](../blockchain-guides/5_Hyperledger-Fabric/6_hyperledger-fabric-integration-tools.md) on your network, you can send a transaction through the middleware:
 
@@ -365,7 +365,7 @@ curl --request POST \
 
 This transaction creates an asset in the assetTransfer chaincode deployed on the Fabric network.
 
-## Create Event Streams
+### Create Event Streams
 
 Firefly FabConnect can also be used to stream events happening on your network. You can either use webhook or websocket to deliver the data.
 

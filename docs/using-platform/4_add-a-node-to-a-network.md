@@ -7,7 +7,7 @@ description: Guide to adding a Blockchain Node to a Network
 
 Once you have deployed a permissioned network or joined a public network, you can add more nodes to it.
 
-When you added a permissioned network or joined a public network, we already deployed 1 node for you as this is the minimum for your network to be operational. Now you can start adding more nodes. The number of nodes needed to keep your permissioned network up and running in case some nodes fail, as well as the type of nodes you need, depends on your network's protocol.
+When you added a permissioned network or joined a public network, we already deploy 1 node for you as this is the minimum for your network to be operational. Now you can start adding more nodes. The number of nodes needed to keep your permissioned network up and running in case some nodes fail, and the type of nodes you need, depends on your network's protocol.
 
 ## How to add a node
 

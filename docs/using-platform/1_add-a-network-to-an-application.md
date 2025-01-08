@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # Add a network to an application
 
-Before setting up a blockchain network, ensure you have an application in place. You must always [create an application](0_create-an-application.md) first, as this provides the context for organizing networks, nodes, smart contract sets, etc.
+Before setting up a blockchain network, ensure you have an application in place. You must always [create an application](0_create-an-application.md) first, as this provides the context for organizing networks, nodes, dev tools, etc.
 
 ## Permissioned and public blockchain networks
 
