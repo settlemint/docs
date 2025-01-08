@@ -1,10 +1,10 @@
 ---
-title: Dev tools
+title: Dev Tools
 description: Dev tools introduction
 sidebar_position: 0
 ---
 
-# Dev tools
+# Dev Tools
 
 ## Introduction
 
@@ -16,4 +16,4 @@ We offer the following tools:
 
 The Code studio is an Integrated Development Environment (IDE). Currently, we offer the following types of Code studio:
 
-- [Smart contract sets](./0_code-studio/1_smart-contract-sets/1_smart-contract-sets.md) - This is an IDE you can launch with a pre-built smart contract template. Choose from our open-source [template library](./0_code-studio/1_smart-contract-sets/2_smart-contract-templates.md).
+- [Smart contract sets](./0_code-studio/1_smart-contract-sets/1_smart-contract-sets.md) - This is an IDE you can launch with a pre-built smart contract template. You can choose a template from our open-source [template library](./0_code-studio/1_smart-contract-sets/2_smart-contract-templates.md).
