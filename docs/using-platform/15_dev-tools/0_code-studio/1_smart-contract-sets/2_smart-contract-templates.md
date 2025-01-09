@@ -11,7 +11,7 @@ Benefit from the expertise of the blockchain community and trust in the reliabil
 
 ## Template library
 
-The programming languages for smart contracts differ depending on the protocol. For blockchain networks that are EVM (Ethereum Virtual Machine) compatible, the programming language used is Solidity. For Hyperledger Fabric, the programming language used is TypeScript and Go.
+The programming languages for smart contracts differ depending on the protocol. For blockchain networks that are EVM (Ethereum Virtual Machine) compatible, the programming language used is Solidity. For Hyperledger Fabric, the programming languages used are TypeScript and Go.
 
 - [Empty](https://github.com/settlemint/solidity-empty)
 
