@@ -17,66 +17,8 @@
     "schedule:nonOfficeHours"
   ],
   "labels": ["dependencies"],
-  "rebaseWhen": "conflicted",
-  "packageRules": [
-    {
-      "groupName": "bull-board",
-      "matchPackageNames": ["/bull-board/"]
-    },
-    {
-      "groupName": "taquito",
-      "matchPackageNames": ["/taquito/"]
-    },
-    {
-      "groupName": "nestjs",
-      "matchPackageNames": ["/nestjs/"]
-    },
-    {
-      "groupName": "pulumi",
-      "matchPackageNames": ["/pulumi/"]
-    },
-    {
-      "groupName": "hasura",
-      "matchPackageNames": ["/hasura/"]
-    },
-    {
-      "groupName": "fabric",
-      "matchPackageNames": ["/hyperledger/fabric/"]
-    },
-    {
-      "groupName": "graphiql",
-      "matchPackageNames": ["/graphiql/"]
-    },
-    {
-      "groupName": "graphiql",
-      "matchPackageNames": ["/graphiql/"]
-    },
-    {
-      "groupName": "kubo",
-      "matchPackageNames": ["/kubo/"]
-    },
-    {
-      "groupName": "bpaas",
-      "matchPackageNames": ["/settlemint/bpaas/"]
-    },
-    {
-      "groupName": "bpaas/smartcontractsets",
-      "matchPackageNames": [
-        "/settlemint/bpaas/smartcontractsets/",
-        "!/settlemint/bpaas/onprem/",
-        "!/settlemint/bpaas/serivces/",
-        "!/settlemint/bpaas/saas/"
-      ]
-    },
-    {
-      "groupName": "hyperledger/fabric",
-      "matchPackageNames": ["/hyperledger/fabric/"]
-    },
-    {
-      "enabled": false,
-      "matchPackageNames": ["/docusaurus/"]
-    }
-  ],
+  "rebaseWhen": "auto",
+  "packageRules": [],
   "hostRules": [
     {
       "timeout": 3000000
