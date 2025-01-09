@@ -5,7 +5,7 @@ description: Guide to monitoring resource usage
 
 # Resource usage
 
-When you add a service (network, node, smart contract set, etc.), you select the amount of resources to allocate to that service by choosing a small, medium or large [resource pack](../launch-platform/managed-cloud-deployment/13_deployment-plans.md). Resources are the **memory**, **vCPU**, and **disk space** you need to keep your services running. You can see the resources allocated to your services at any time, and follow up on the current resource usage.
+When you add a service (network, node, smart contract set, etc.), you select the amount of resources to allocate to that service by choosing a small, medium or large [resource pack](launch-platform/managed-cloud-deployment/3_deployment-plans.md). Resources are the **memory**, **vCPU**, and **disk space** you need to keep your services running. You can see the resources allocated to your services at any time, and follow up on the current resource usage.
 
 ## Resource usage metrics
 

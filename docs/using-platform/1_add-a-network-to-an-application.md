@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # Add a network to an application
 
-Before setting up a blockchain network, ensure you have an application in place. You must always [create an application](0_create-an-application.md) first, as this provides the context for organizing networks, nodes, smart contract sets, etc.
+Before setting up a blockchain network, ensure you have an application in place. You must always [create an application](0_create-an-application.md) first, as this provides the context for organizing networks, nodes, dev tools, etc.
 
 ## Permissioned and public blockchain networks
 
@@ -58,7 +58,7 @@ Note that your network requires at least 1 validating node to be operational. We
 
 :::
 
-3. Choose a **deployment plan**. Select the type, cloud provider, region, and resource pack. [Learn more about deployment plans](../launch-platform/managed-cloud-deployment/13_deployment-plans.md)
+3. Choose a **deployment plan**. Select the type, cloud provider, region, and resource pack. [Learn more about deployment plans](launch-platform/managed-cloud-deployment/3_deployment-plans.md)
 4. For [Hyperledger Besu](../blockchain-guides/1_Hyperledger-Besu/2_enterprise-ethereum-network-settings.md) and [Hyperledger Fabric](../blockchain-guides/5_Hyperledger-Fabric/2_hyperledger-fabric-network-settings.md) only (optional): **Configure the network settings**. You can keep the default settings or configure them according to your preferences. Note that these settings cannot be changed once your network is deployed.
 5. Review the **resource costs** associated with this network displayed at the bottom of the form. Click **Confirm** to add the network to your application.
 

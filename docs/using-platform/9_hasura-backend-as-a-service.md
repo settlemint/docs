@@ -10,7 +10,7 @@ Follow these steps to add the Hasura:
 
 1. Select **Hasura**, and click **Continue**.
 2. Choose a **name** for your own backend-as-a-service. Choose one that will be easily recognizable in your dashboards.
-3. Choose a deployment plan. Select the type, cloud provider, region and resource pack. [More about deployment plans](../launch-platform/managed-cloud-deployment/13_deployment-plans.md).
+3. Choose a deployment plan. Select the type, cloud provider, region and resource pack. [More about deployment plans](launch-platform/managed-cloud-deployment/3_deployment-plans.md).
 4. You see the **resource cost** for your backend-as-a-service displayed at the bottom of the form. Click **Confirm** to add it.
 
 When Hasura is deployed, you can build and manage your database in the **Interface tab**.

@@ -4,7 +4,7 @@ In a permissioned blockchain network (often called a consortium network), partic
 
 Follow these steps if you received an invitation to join a blockchain network:
 
-1. [Log in](https://console.settlemint.com/) to SettleMint, or [create an account](../launch-platform/managed-cloud-deployment/2_create-an-account.md).
+1. [Log in](https://console.settlemint.com/) to SettleMint, or [create an account](../launch-platform/managed-cloud-deployment/1_create-an-account.md).
 2. Navigate to an existing blockchain application, or create a new one.
 3. Click **Blockchain network** in the left navigation.
 4. Click **Add a blockchain network**. This will open a form.
