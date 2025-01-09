@@ -44,9 +44,7 @@ async function generateMarkdownTemplates() {
       .filter(set => !set.featureflagged) // Optional: skip feature flagged items
       .map(
         set => `
-### ${set.name}
-
-[GitHub Repository](https://github.com/settlemint/${set.id})
+- [${set.name}](https://github.com/settlemint/${set.id})
 `
       )
       .join('\n');

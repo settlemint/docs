@@ -11,69 +11,37 @@ Benefit from the expertise of the blockchain community and trust in the reliabil
 
 ## Template library
 
-### Empty
+- [Empty](https://github.com/settlemint/solidity-empty)
 
-[GitHub Repository](https://github.com/settlemint/solidity-empty)
+- [ERC20 token](https://github.com/settlemint/solidity-token-erc20)
 
-### ERC20 token
+- [ERC1155 token](https://github.com/settlemint/solidity-token-erc1155)
 
-[GitHub Repository](https://github.com/settlemint/solidity-token-erc20)
+- [ERC20 token with MetaTx](https://github.com/settlemint/solidity-token-erc20-metatx)
 
-### ERC1155 token
+- [Supplychain](https://github.com/settlemint/solidity-supplychain)
 
-[GitHub Repository](https://github.com/settlemint/solidity-token-erc1155)
+- [Empty typescript](https://github.com/settlemint/chaincode-ts-empty)
 
-### ERC20 token with MetaTx
+- [Empty typescript with PDC](https://github.com/settlemint/chaincode-ts-empty-pdc)
 
-[GitHub Repository](https://github.com/settlemint/solidity-token-erc20-metatx)
+- [Empty go](https://github.com/settlemint/chaincode-go-empty)
 
-### Supplychain
+- [State Machine](https://github.com/settlemint/solidity-statemachine)
 
-[GitHub Repository](https://github.com/settlemint/solidity-supplychain)
+- [ERC20 token with crowdsale mechanism](https://github.com/settlemint/solidity-token-erc20-crowdsale)
 
-### Empty typescript
+- [ERC721](https://github.com/settlemint/solidity-token-erc721)
 
-[GitHub Repository](https://github.com/settlemint/chaincode-ts-empty)
+- [ERC721a](https://github.com/settlemint/solidity-token-erc721a)
 
-### Empty typescript with PDC
+- [ERC721 Generative Art](https://github.com/settlemint/solidity-token-erc721-generative-art)
 
-[GitHub Repository](https://github.com/settlemint/chaincode-ts-empty-pdc)
+- [Soulbound Token](https://github.com/settlemint/solidity-token-soulbound)
 
-### Empty go
+- [Diamond bond](https://github.com/settlemint/solidity-diamond-bond)
 
-[GitHub Repository](https://github.com/settlemint/chaincode-go-empty)
-
-### State Machine
-
-[GitHub Repository](https://github.com/settlemint/solidity-statemachine)
-
-### ERC20 token with crowdsale mechanism
-
-[GitHub Repository](https://github.com/settlemint/solidity-token-erc20-crowdsale)
-
-### ERC721
-
-[GitHub Repository](https://github.com/settlemint/solidity-token-erc721)
-
-### ERC721a
-
-[GitHub Repository](https://github.com/settlemint/solidity-token-erc721a)
-
-### ERC721 Generative Art
-
-[GitHub Repository](https://github.com/settlemint/solidity-token-erc721-generative-art)
-
-### Soulbound Token
-
-[GitHub Repository](https://github.com/**settlemint**/solidity-token-soulbound)
-
-### Diamond bond
-
-[GitHub Repository](https://github.com/settlemint/solidity-diamond-bond)
-
-### Attestation Service
-
-[GitHub Repository](https://github.com/settlemint/solidity-attestation-service)
+- [Attestation Service](https://github.com/settlemint/solidity-attestation-service)
 
 ## Create Your Own Smart Contract Templates for Your Consortium
 
