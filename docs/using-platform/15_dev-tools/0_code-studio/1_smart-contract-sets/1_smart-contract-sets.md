@@ -1,10 +1,9 @@
 ---
-title: Smart contract sets
-description: Smart contract sets
-sidebar_position: 0
+title: Smart Contract Sets
+description: Smart Contract Sets
 ---
 
-# Smart contract sets
+# Smart Contract Sets
 
 ## Introduction
 

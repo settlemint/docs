@@ -1,7 +1,6 @@
 ---
 title: Deploying a smart contract
 description: Deploying a smart contract
-sidebar_position: 3
 ---
 
 # Deploying a smart contract

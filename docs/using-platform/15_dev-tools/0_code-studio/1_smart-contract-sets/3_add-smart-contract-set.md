@@ -1,16 +1,15 @@
 ---
-title: Add a Smart contract set
-description: Add a Smart contract set
-sidebar_position: 1
+title: Add a Smart Contract Set
+description: Add a Smart Contract Set
 ---
 
-# Add a Smart contract set
+# Add a Smart Contract Set
 
 By using smart contracts, you can add **business logic** to your application.
 
 Smart contracts are programs that run on the blockchain and define the rules of your use case. They are self-executing with an 'if this, then that' pattern and activate when predefined conditions are met, such as a smart contract that transfers the ownership of a car once a certain amount of money is transferred to the seller's account.
 
-## How to Add a Smart contract set
+## How to Add a Smart Contract Set
 
 Navigate to the **application** where you want to add the Smart contract set.
 

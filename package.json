@@ -32,6 +32,7 @@
     "@docusaurus/module-type-aliases": "3.6.3",
     "@docusaurus/tsconfig": "3.6.3",
     "@docusaurus/types": "3.6.3",
+    "graphql-request": "7.1.2",
     "prettier-plugin-sh": "0.14.0",
     "typescript": "5.7.2"
   },
