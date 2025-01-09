@@ -498,7 +498,7 @@ To do this, click on the middle item in the diagram labeled `Set Global Variable
 1. **privateKey** - Enter your private key that you created in [Part 1 / Step 4](#4-deploy-a-private-key)
 2. **privateKeyAdress** - The address created after completing [Part 1 / Step 4](#4-deploy-a-private-key)
 3. **smartContract** - The address of your deployed smart contract after completing [Part 2 / Step 5](#5-deploy-the-contract)
-4. **bpassKey** - The API key created when completing [Part 3 / Step 3](#3-create-a-settlemint-api-key)
+4. **bpassKey** - The API key created when completing [Part 3 / Step 3](#3-creating-an-access-token)
 5. **rpcEndpoint** - The JSON RPC URL that was shown when completing [Part 3 / Step 2](#2-get-the-json-rpc-endpoint)
 
 With this information entered, click on the blue square next to the `Inject` item.
