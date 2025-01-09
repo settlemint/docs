@@ -89,12 +89,12 @@ Before deploying the EAS contracts, you must add the smart contract set to your 
 
 ### Adding the Smart Contract Set
 
-1. **Navigate to the Contract Sets Section**: In the SettleMint platform, go to the **Smart Contract Sets** section.
-2. **Select the Attestation Service Set**: Choose the **Attestation Service Set** template from the available options.
+1. **Navigate to the Dev tools Section**: Go to the application dashboard of the application where you want to deploy the EAS contracts, then navigate to the **Dev tools** section in the left sidebar.
+2. **Select the Attestation Service Set**: From there, click on **Add a dev tool**, choose **Code Studio** and then **Smart Contract Set**. Choose the **Attestation Service** template.
 3. **Customize**: Modify the set as needed for your specific project.
 4. **Save**: Save the configuration.
 
-For detailed instructions, visit the [Smart Contract Deployment Documentation](https://console.settlemint.com/documentation/docs/using-platform/add_smart_contract_sets/create_smart_contract_set/).
+For detailed instructions, visit the [Smart Contract Sets Documentation](../using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/1_smart-contract-sets.md).
 
 ---
 
