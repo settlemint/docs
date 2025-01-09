@@ -140,7 +140,7 @@ After that is completed, open the folder in your favorite code editor.
 
 ### Adding the ABI
 
-The first thing we will do is add the ABI and address of our deployed contract. This allows our front end to know where to read and write data to it. This information can be found in the smart contract set IDE where you deployed your contract.
+The first thing we will do is add the ABI and address of our deployed contract. This allows our front end to know where to read and write data to it. This information can be found in the smart contract set where you deployed your contract.
 
 Go to the `ignition/deployments/chain-46622/artifacts` folder in the file explorer and copy the `GenericERC20Module#GenericERC20.json` file to the `contractData` directory.
 

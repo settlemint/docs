@@ -26,7 +26,7 @@ When the middleware is deployed, click it from the list and start using it.
 
 Using the Graph protocol, you can create **subgraphs** that define which blockchain data will be indexed. The middleware will then use these subgraphs to correctly index your smart contracts and expose a developer-friendly and efficient **GraphQL API**, allowing you to query the data you need.
 
-We have some prebuilt subgraph indexing modules included in the smart contract set IDE, and you can build your own modules if you have a custom smart contract set.
+We have some prebuilt subgraph indexing modules included in the smart contract set, and you can build your own modules if you have a custom smart contract set.
 
 :::warning Warning
 
