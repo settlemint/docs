@@ -5,9 +5,7 @@ description: Deploying a smart contract
 
 # Deploying a smart contract
 
-Deploying a smart contract in SettleMint won't be much different from doing so in your own environment.
-
-There are two main ways to deploy smart contracts in SettleMint: you can either run the commands manually in your terminal or use the Task Manager.
+You can deploy your contracts to a network in the platform or a hardhat network running locally in the IDE.
 
 The typical folder structure of SettleMint's smart contract set will include:
 
@@ -22,35 +20,79 @@ The typical folder structure of SettleMint's smart contract set will include:
 - **`hardhat.config`**: Hardhat configuration file.
 - **`subgraphs`**: Contains the indexing logic for your subgraphs, specific to your smart contract.
 
-## Deploy with Task Manager
+The smart contract sets include all the commands you need to compile and deploy your contracts. They are available as tasks in the Task Manager. Follow these steps to access the Task Manager:
 
-Follow these steps to deploy a contract using the Task Manager:
+**Step 1**: Open the IDE
 
-1. Click `View in Fullscreen Mode` for a better user experience :)
-   ![Fresh IDE](../../../../../static/img/deploy-scs/full-screen-mode.png)
+![Open IDE](../../../../../static/img/deploy-scs/open-ide.png)
 
-2. Navigate to the `Task Manager`.
-   ![Task Manager](../../../../../static/img/deploy-scs/nav-task-mg.png)
+**Step 2**: Click on the `Task Manager` button
 
-3. Click `Foundry - Build` or `Hardhat - Build` to compile the Smart Contract.
-   ![Press Build](../../../../../static/img/deploy-scs/task-mg-build.png)
+![Task Manager](../../../../../static/img/deploy-scs/task-manager.png)
 
-4. Then run `Hardhat - Deploy to local network` to deploy locally or `Hardhat - Deploy to platform network` to deploy to your connected network.
-   ![Press Deploy](../../../../../static/img/deploy-scs/task-mg-deploy.png)
+## Compile
 
-Great job! Your contract has been successfully deployed.
+You need to compile your contracts before you can deploy them. SettleMint's smart contract sets include both Hardhat and Foundry. You can compile using your preferred framework.
 
-## Deploy with the Terminal
+### Hardhat
 
-Follow these steps to deploy a contract using the terminal:
+To compile your contracts using Hardhat, you can run the `Hardhat - Build` task
 
-1. Open the terminal.
-   ![Open Terminal](../../../../../static/img/deploy-scs/open-terminal.png)
+![Hardhat compile task manager](../../../../../static/img/deploy-scs/hardhat-build.png)
 
-2. Run the command `forge build` or `Hardhat compile` to compile the smart contracts.
-   ![Build Terminal](../../../../../static/img/deploy-scs/terminal-build.png)
+### Foundry
 
-3. Then run `npx hardhat ignition deploy IGNITION_MODULE_PATH` or forge create --rpc-url YOUR_RPC_URL --private-key YOUR_PRIVATE_KEY --constructor-args ARG1 ARG2` to deploy to your connected network.
-   ![Deploy Terminal](../../../../../static/img/deploy-scs/terminal-deploy.png)
+To compile your contracts using Foundry, you can run the `Foundry - Build` task
 
-Well done! You've successfully deployed your contract.
+![Foundry compile task manager](../../../../../static/img/deploy-scs/foundry-build.png)
+
+## Deploy to a network in the platform
+
+You can deploy your contracts to a network in the same application as the smart contract set by running the `Hardhat - Deploy to platform network` task
+
+:::note
+
+Ensure you have the following:
+
+- A running node in the network
+- A private key activated on the node
+
+:::
+
+### Hardhat
+
+**Step 1**: Log in to the platform by running the `SettleMint - Login` task
+
+![SettleMint login](../../../../../static/img/deploy-scs/settlemint-login.png)
+
+**Step 2**: Run the `Hardhat - Deploy to platform network` task
+
+![Hardhat deploy remote task manager](../../../../../static/img/deploy-scs/hardhat-deploy-remote.png)
+
+**Step 3**: Select the node you want to deploy to
+
+![Hardhat deploy remote select node](../../../../../static/img/deploy-scs/hardhat-deploy-remote-select-node.png)
+
+**Step 4**: Select the private key you want to use for the deployment
+
+![Hardhat deploy remote select private key](../../../../../static/img/deploy-scs/hardhat-deploy-remote-select-private-key.png)
+
+**Step 5**: Confirm the deployment
+
+![Hardhat deploy remote success](../../../../../static/img/deploy-scs/hardhat-deploy-remote-success.png)
+
+## Deploy to a local network
+
+### Hardhat
+
+**Step 1**: Start the local hardhat network by running the `Hardhat - Start local network` task
+
+![Hardhat start local network](../../../../../static/img/deploy-scs/hardhat-start-local-network.png)
+
+**Step 2**: Then, run the `Hardhat - Deploy to local network` task. Ensure you don't stop the previous task, because the hardhat network needs to be running for the contract to be deployed on it.
+
+![Hardhat deploy local network](../../../../../static/img/deploy-scs/hardhat-deploy-local-network.png)
+
+Success! The contract has been deployed to the local network.
+
+![Hardhat deploy local network success](../../../../../static/img/deploy-scs/hardhat-deploy-local-success.png)
