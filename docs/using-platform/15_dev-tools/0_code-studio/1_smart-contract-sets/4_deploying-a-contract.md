@@ -22,9 +22,19 @@ The typical folder structure of SettleMint's smart contract set will include:
 - **`hardhat.config`**: Hardhat configuration file.
 - **`subgraphs`**: Contains the indexing logic for your subgraphs, specific to your smart contract.
 
+The following sections will guide you through the process of deploying your contracts to a network in the platform or a hardhat network running locally in the IDE. All the tasks are available in the Task Manager. Follow these steps to access the Task Manager:
+
+**Step 1**: Open the IDE
+
+![Open IDE](../../../../../static/img/deploy-scs/open-ide.png)
+
+**Step 2**: Click on the `Task Manager` button
+
+![Task Manager](../../../../../static/img/deploy-scs/task-manager.png)
+
 ## Compile
 
-You need to compile your contracts before you can deploy them. SettleMint's smart contract sets include both Hardhat and Foundry, enabling you to compile using your preferred framework.
+You need to compile your contracts before you can deploy them. SettleMint's smart contract sets include both Hardhat and Foundry. You can compile using your preferred framework.
 
 ### Hardhat
 
@@ -40,15 +50,14 @@ To compile your contracts using Foundry, you can run the `Foundry - Build` task
 
 ## Deploy to a network in the platform
 
-You can deploy your contracts to a network you created in the platform by running the `Hardhat - Deploy to platform network` task
+You can deploy your contracts to a network in the same application as the smart contract set by running the `Hardhat - Deploy to platform network` task
 
 :::note
 
-To deploy your contracts to a network in the platform, set up the following:
+Ensure you have the following:
 
 - A running node in the network
 - A private key activated on the node
-- A personal access token
 
 :::
 
