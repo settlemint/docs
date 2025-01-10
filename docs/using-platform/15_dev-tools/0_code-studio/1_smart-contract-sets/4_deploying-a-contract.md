@@ -5,9 +5,7 @@ description: Deploying a smart contract
 
 # Deploying a smart contract
 
-There are two main ways to deploy smart contracts in the Smart Contract Set: you can either use the Task Manager or run the commands manually in the terminal.
-
-You can deploy your contracts to a local anvil node (for testing purposes) or to a network you have created in the platform.
+You can deploy your contracts to a network in the platform or a hardhat network running locally in the IDE.
 
 The typical folder structure of SettleMint's smart contract set will include:
 
@@ -22,7 +20,7 @@ The typical folder structure of SettleMint's smart contract set will include:
 - **`hardhat.config`**: Hardhat configuration file.
 - **`subgraphs`**: Contains the indexing logic for your subgraphs, specific to your smart contract.
 
-The following sections will guide you through the process of deploying your contracts to a network in the platform or a hardhat network running locally in the IDE. All the tasks are available in the Task Manager. Follow these steps to access the Task Manager:
+The smart contract sets include all the tasks you need to compile and deploy your contracts. Follow these steps to access the Task Manager:
 
 **Step 1**: Open the IDE
 
