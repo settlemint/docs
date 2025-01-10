@@ -31,11 +31,15 @@ You need to compile your contracts before you can deploy them.
 
 #### **Task Manager**
 
+![Hardhat compile task manager](../../../../../static/img/deploy-scs/hardhat-build.png)
+
 #### **Terminal**
 
 ### Foundry
 
 #### **Task Manager**
+
+![Foundry compile task manager](../../../../../static/img/deploy-scs/foundry-build.png)
 
 #### **Terminal**
 
