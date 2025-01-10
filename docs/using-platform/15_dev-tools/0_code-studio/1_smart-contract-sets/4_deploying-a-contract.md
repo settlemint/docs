@@ -89,7 +89,7 @@ Ensure you have the following:
 
 ![Hardhat start local network](../../../../../static/img/deploy-scs/hardhat-start-local-network.png)
 
-**Step 2**: Then, run the `Hardhat - Deploy to local network` task. Ensure you don't stop the previous task, because the hardhat network needs to be running for the contract to be deployed on it.
+**Step 2**: Then, run the `Hardhat - Deploy to local network` task. Ensure the 'Hardhat - Start local network' task continues to run, as the Hardhat network must be active for contract deployment.
 
 ![Hardhat deploy local network](../../../../../static/img/deploy-scs/hardhat-deploy-local-network.png)
 
