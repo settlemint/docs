@@ -96,3 +96,7 @@ Ensure you have the following:
 Success! The contract has been deployed to the local network.
 
 ![Hardhat deploy local network success](../../../../../static/img/deploy-scs/hardhat-deploy-local-success.png)
+
+## Customize smart contracts
+
+You can customize your smart contracts to your specific needs by editing the code in the IDE. The smart contract sets include a Generative AI plugin to supercharge your smart contract development. [Learn more about the Generative AI plugin here.](./5_AI_plugin.md)
