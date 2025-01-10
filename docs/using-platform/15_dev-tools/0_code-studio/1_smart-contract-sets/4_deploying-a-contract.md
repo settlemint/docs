@@ -89,10 +89,14 @@ Ensure you have the following:
 
 ![Hardhat start local network](../../../../../static/img/deploy-scs/hardhat-start-local-network.png)
 
-**Step 2**: Then, run the `Hardhat - Deploy to local network` task. Ensure you don't stop the previous task, because the hardhat network needs to be running for the contract to be deployed on it.
+**Step 2**: Then, run the `Hardhat - Deploy to local network` task. Ensure the 'Hardhat - Start local network' task continues to run, as the Hardhat network must be active for contract deployment.
 
 ![Hardhat deploy local network](../../../../../static/img/deploy-scs/hardhat-deploy-local-network.png)
 
 Success! The contract has been deployed to the local network.
 
 ![Hardhat deploy local network success](../../../../../static/img/deploy-scs/hardhat-deploy-local-success.png)
+
+## Customize smart contracts
+
+You can customize your smart contracts to your specific needs by editing the code in the IDE. The smart contract sets include a Generative AI plugin to supercharge your smart contract development. [Learn more about the Generative AI plugin here.](./5_AI_plugin.md)
