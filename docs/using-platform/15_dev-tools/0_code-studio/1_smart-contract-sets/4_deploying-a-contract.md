@@ -20,7 +20,7 @@ The typical folder structure of SettleMint's smart contract set will include:
 - **`hardhat.config`**: Hardhat configuration file.
 - **`subgraphs`**: Contains the indexing logic for your subgraphs, specific to your smart contract.
 
-The smart contract sets include all the tasks you need to compile and deploy your contracts. Follow these steps to access the Task Manager:
+The smart contract sets include all the commands you need to compile and deploy your contracts. They are available as tasks in the Task Manager. Follow these steps to access the Task Manager:
 
 **Step 1**: Open the IDE
 
