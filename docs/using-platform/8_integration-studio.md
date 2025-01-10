@@ -28,7 +28,7 @@ Follow these steps to add the Integration Studio:
 
 1. Select **Integration Studio** and click **Continue** to proceed.
 2. Choose a **name** for your Integration Studio. Choose one that will be easily recognizable in your dashboards (eg. Crowdsale Flow)
-3. Choose a deployment plan. Select the type, cloud provider, region and resource pack. [More about deployment plans](../launch-platform/managed-cloud-deployment/13_deployment-plans.md)
+3. Choose a deployment plan. Select the type, cloud provider, region and resource pack. [More about deployment plans](launch-platform/managed-cloud-deployment/3_deployment-plans.md)
 4. You can see the **resource cost** for the Integration Studio displayed at the bottom of the form. Click **Confirm** to add the Integration Studio.
 
 ## Using the Integration Studio

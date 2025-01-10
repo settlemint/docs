@@ -19,7 +19,7 @@ function HomepageHeader() {
           <button className={styles.mainButton}>Request a Demo</button>
         </a>
         <a
-          href="https://console.settlemint.com/documentation/docs/about-settlemint/intro/"
+          href="/documentation/docs/about-settlemint/intro/"
           target="_blank"
           rel="noopener noreferrer"
         >

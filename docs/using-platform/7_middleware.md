@@ -15,7 +15,7 @@ Follow these steps to add the middleware:
 1. Choose [Graph Middleware](#the-graph-middleware) or [Smart Contract Portal Middleware](#the-smart-contract-portal-middleware)
 2. Choose a **Middleware name**. Choose one that will be easily recognizable in your dashboards.
 3. Select the **blockchain node** you want to connect to. This is the blockchain node that will be used to index the blockchain data.
-4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans.](../launch-platform/managed-cloud-deployment/13_deployment-plans.md)
+4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans.](launch-platform/managed-cloud-deployment/3_deployment-plans.md)
 5. You see the **resource cost** for this middleware displayed at the bottom of the form. Click **Confirm** to add the smart contract set.
 
 When the middleware is deployed, click it from the list and start using it.
@@ -26,7 +26,7 @@ When the middleware is deployed, click it from the list and start using it.
 
 Using the Graph protocol, you can create **subgraphs** that define which blockchain data will be indexed. The middleware will then use these subgraphs to correctly index your smart contracts and expose a developer-friendly and efficient **GraphQL API**, allowing you to query the data you need.
 
-We have some prebuilt subgraph indexing modules included in the smart contract set IDE, and you can build your own modules if you have a custom smart contract set.
+We have some prebuilt subgraph indexing modules included in the smart contract set, and you can build your own modules if you have a custom smart contract set.
 
 :::warning Warning
 
@@ -114,7 +114,7 @@ Benefits of using the smart contract portal:
 Before you start, make sure you are running:
 
 - An EVM-compatible network (Ethereum, Polygon, Hyperledger Besu, Avalanche, etc.)
-- A private key
+- A Private Key
 
 :::
 
@@ -289,12 +289,14 @@ Firefly FabConnect is an open-source middleware that lets you interact with your
 
 Before you start, make sure you are running:
 
-- A Fabric Network.
-- A Fabric smart contract set.
+- A Fabric peer node
+- A Fabric orderer node
 
 :::
 
-## Manage Identities
+For the curl commands below, you will need to replace `your-token` with an access token. You can create an Application Access Token scoped to the middleware, peer and orderer node, or use a Personal Access Token. For more information on how to create an access token, please see our [access token documentation](./16_application-access-tokens.md).
+
+### Manage Identities
 
 Identities on a Fabric network are managed in two steps. First, a CA admin must register users. This is a process in which the CA admin gives an ID and secret to an identity. Then, the user of the identity enrolls the ID and secret pair to get a public/private key pair to sign transactions.
 
@@ -302,8 +304,8 @@ Registering an identity can be done as follows using Firefly FabConnect:
 
 ```shell
 curl --request POST \
-  --url https://fireflyfab-7853.gke-europe.settlemint.com/identities \
-  --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYW1icm9pc2UiLCJlbWFpbCI6ImFtYnJvaXNlQHNldHRsZW1pbnQuY29tIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20v…' \
+  --url https://example.settlemint.com/identities \
+  --header 'x-auth: <your-token>' \
   --header 'Content-Type: application/json' \
   --data '{
   "type": "client",
@@ -315,39 +317,34 @@ curl --request POST \
 This request returns the secret associated with name user3:
 
 ```shell
-
 {
-"name": "user3",
-"secret": "fkrTKPOZZYWO"
+  "name": "user3",
+  "secret": "fkrTKPOZZYWO"
 }
-
 ```
 
 The end user of that identity can enroll it as follows:
 
 ```shell
-
 curl --request POST \
- --url <https://fireflyfab-7853.gke-europe.settlemint.com/identities/user3/enroll> \
- --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYW1icm9pc2UiLCJlbWFpbCI6ImFtYnJvaXNlQHNldHRsZW1pbnQuY29tIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20v…' \
- --header 'Content-Type: application/json' \
- --data '{
+  --url https://example.settlemint.com/identities/user3/enroll \
+  --header 'x-auth: <your-token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
 "secret": "fkrTKPOZZYWO"
 "attributes": {}
 }'
-
 ```
 
-## Sending Transactions
+### Sending Transactions
 
 Assuming that you have a [chaincode deployed](../blockchain-guides/5_Hyperledger-Fabric/6_hyperledger-fabric-integration-tools.md) on your network, you can send a transaction through the middleware:
 
 ```shell
-
 curl --request POST \
- --url <https://fireflyfab-7853.gke-europe.settlemint.com//transactions> \
- --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYW1icm9pc2UiLCJlbWFpbCI6ImFtYnJvaXNlQHNldHRsZW1pbnQuY29tIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20v…' \
- --header 'Content-Type: application/json' --data '{
+  --url https://example.settlemint.com//transactions \
+  --header 'x-auth: <your-token>' \
+  --header 'Content-Type: application/json' --data '{
 "headers": {
 "type": "SendTransaction",
 "signer": "user3",
@@ -360,24 +357,22 @@ curl --request POST \
 ],
 "init": false, "fly-sync": true
 }'
-
 ```
 
 This transaction creates an asset in the assetTransfer chaincode deployed on the Fabric network.
 
-## Create Event Streams
+### Create Event Streams
 
 Firefly FabConnect can also be used to stream events happening on your network. You can either use webhook or websocket to deliver the data.
 
 This request create a stream using webhooks:
 
 ```shell
-
 curl --request POST \
- --url <https://fireflyfab-7853.gke-europe.settlemint.com/eventstreams> \
- --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYW1icm9pc2UiLCJlbWFpbCI6ImFtYnJvaXNlQHNldHRsZW1pbnQuY29tIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20v…' \
- --header 'Content-Type: application/json' \
- --data '{
+  --url https://example.settlemint.com/eventstreams \
+  --header 'x-auth: <your-token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
 "type": "webhook",
 "name": "AssetTransfer",
 "webhook": {
@@ -385,18 +380,16 @@ curl --request POST \
 "tlsSkipVerifyHost": "true"
 }
 }'
-
 ```
 
 The response contains an event stream ID that is required to create a subscription:
 
 ```shell
-
 curl --request POST \
- --url <https://fireflyfab-7853.gke-europe.settlemint.com//subscriptions> \
- --header 'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYW1icm9pc2UiLCJlbWFpbCI6ImFtYnJvaXNlQHNldHRsZW1pbnQuY29tIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20v…' \
- --header 'Content-Type: application/json' \
- --data '{
+  --url https://example.settlemint.com//subscriptions \
+  --header 'x-auth: <your-token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
 "payloadType": "string",
 "name": "mySubscription",
 "channel": "default-channel",
@@ -409,5 +402,4 @@ curl --request POST \
 "eventFilter": ""
 }
 }'
-
 ```
