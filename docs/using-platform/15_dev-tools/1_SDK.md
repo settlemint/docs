@@ -9,7 +9,7 @@ sidebar_position: 1
 The SettleMint SDK is a powerful toolkit designed to streamline blockchain integration into modern applications. It offers:
 
 - **Comprehensive Integration**: A complete suite of tools for interacting with SettleMint's blockchain platform services
-- **Modular Architecture**: Specialized packages for different functionalities including interacting with platform services (Smart Contracts, [Smart Contract Portal Middleware](../7_middleware.md/#the-smart-contract-portal-middleware), [The Graph Middleware](../7_middleware.md/#the-graph-middleware), [IPFS](../11_storage.md), [MinIO](../11_storage.md), [Blockchain Explorer](../10_insights.md), etc.)
+- **Modular Architecture**: Specialized packages for different functionalities including interacting with platform services (Smart Contracts, [Smart Contract Portal Middleware](../7_middleware.md), [The Graph Middleware](../7_middleware.md), [IPFS](../11_storage.md), [MinIO](../11_storage.md), [Blockchain Explorer](../10_insights.md), etc.)
 - **Developer Experience**: Rich development tools, CLI capabilities, and extensive documentation
 - **Enterprise Ready**: Production-grade components with support for Next.js, GraphQL, and other enterprise technologies
 - **Type Safety**: Full TypeScript support across all packages with strong typing and modern development patterns
