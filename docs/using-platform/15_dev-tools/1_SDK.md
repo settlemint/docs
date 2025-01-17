@@ -16,6 +16,6 @@ The SettleMint SDK is a powerful toolkit designed to streamline blockchain integ
 
 The SDK simplifies blockchain development by providing pre-built components, utilities, and integrations while maintaining high standards for type safety, performance, and developer experience.
 
-Visit the [SDK GitHub repository](https://github.com/settlemint/settlemint-sdk) for more information.
+Visit the [SDK GitHub repository](https://github.com/settlemint/sdk) for more information.
 
 The SettleMint SDK is open source and released under the [FSL Software License](https://github.com/settlemint/sdk/blob/main/LICENSE).
