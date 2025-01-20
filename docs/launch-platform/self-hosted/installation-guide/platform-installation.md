@@ -45,114 +45,53 @@ Create a values file (values.yaml) with your configuration:
 ```yaml
 ingress:
   enabled: true
-  className: nginx
+  className: "nginx"
   host: '<your-domain>'
   annotations:
-    cert-manager.io/cluster-issuer: 'letsencrypt'
-    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-ssl-server-name: "on"
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    cert-manager.io/cluster-issuer: "letsencrypt"  # If using cert-manager
   tls:
-    - secretName: 'blockchaintransformationplatform'
+    - secretName: 'platform-tls'
       hosts:
         - '<your-domain>'
         - '*.<your-domain>'
 
 redis:
   host: '<redis-host>'
+  port: 6380
   password: '<redis-password>'
-  port: '<redis-port>'
   tls: true
 
 postgresql:
   host: '<postgresql-host>'
-  port: '<postgresql-port>'
   user: '<postgresql-user>'
   password: '<postgresql-password>'
-  database: '<postgresql-database>'
+  database: '<database-name>'
   sslMode: require
 
 auth:
-  jwtSigningKey: '<jwt-signing-key>'
+  jwtSigningKey: '<your-jwt-signing-key>'
   providers:
     google:
       enabled: true
       clientID: '<google-client-id>'
       clientSecret: '<google-client-secret>'
+    microsoftEntraId:
+      enabled: true
+      clientID: '<microsoft-client-id>'
+      clientSecret: '<microsoft-client-secret>'
+      tenantId: '<microsoft-tenant-id>'
 
 vault:
   address: '<vault-address>'
-  namespace: 'admin'
   roleId: '<vault-role-id>'
   secretId: '<vault-secret-id>'
-
-features:
-  observability:
-    metrics:
-      enabled: true
-      apiUrl: '<prometheus-url>'
-    logs:
-      enabled: true
-      apiUrl: '<loki-url>'
-  deploymentEngine:
-    platform:
-      domain:
-        hostname: '<your-domain>'
-    clusterManager:
-      domain:
-        hostname: '<your-domain>'
-    state:
-      s3ConnectionUrl: '<s3-connection-url>'
-      credentials:
-        encryptionKey: '<encryption-key>'
-        aws:
-          accessKeyId: '<aws-access-key>'
-          secretAccessKey: '<aws-secret-key>'
-          region: '<aws-region>'
-```
-
-<details>
-<summary>Click to see a complete example values file</summary>
-
-```yaml
-ingress:
-  enabled: true
-  className: nginx
-  host: 'sandbox-demo.blockchaintransformationplatform.com'
-  annotations:
-    cert-manager.io/cluster-issuer: 'letsencrypt'
-    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
-  tls:
-    - secretName: 'blockchaintransformationplatform'
-      hosts:
-        - 'sandbox-demo.blockchaintransformationplatform.com'
-        - '*.sandbox-demo.blockchaintransformationplatform.com'
-
-redis:
-  host: redis-17220.c250.eu-central-1-1.ec2.cloud.redislabs.com
-  password: supersecretredispassword
-  port: 17220
-  tls: true
-
-postgresql:
-  host: ep-morning-moon-a20p0s24-pooler.eu-central-1.aws.neon.tech
-  port: 5432
-  user: sandbox-demo_owner
-  password: mysupersecretpsqlpassword
-  database: sandbox-demo
-  sslMode: require
-
-auth:
-  jwtSigningKey: 'HamMmiYGP+sBClp0tWbhlg8I5+k/OOoM+/7rNOLpHtI='
-  providers:
-    google:
-      enabled: true
-      clientID: '123456789-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com'
-      clientSecret: 'GOCSPX-abcdefghijklmnopqrstuvwxyz'
-
-vault:
-  address: 'https://sandbox-demo-public-vault-975715c8.ba526938.z1.hashicorp.cloud:8200'
-  namespace: 'admin'
-  roleId: '12345678-90ab-cdef-ghij-klmnopqrstuv'
-  secretId: '12345678-90ab-cdef-ghij-klmnopqrstuv'
+  namespace: 'vault'
 
 features:
   observability:
@@ -165,25 +104,58 @@ features:
   deploymentEngine:
     platform:
       domain:
-        hostname: 'sandbox-demo.blockchaintransformationplatform.com'
+        hostname: '<your-domain>'
     clusterManager:
       domain:
-        hostname: 'sandbox-demo.blockchaintransformationplatform.com'
+        hostname: '<your-domain>'
     state:
-      s3ConnectionUrl: 's3://sandbox-demo-bucket?region=eu-central-1'
+      s3ConnectionUrl: 's3://<bucket-name>?region=<region>'
+      secretsProvider: 'passphrase'
       credentials:
-        encryptionKey: 'r532kL19Jrp8Fnql43ScR4UhN46Sh1QmgbJXjkPC2YI='
+        encryptionKey: '<your-encryption-key>'
         aws:
-          accessKeyId: 'AKIAIOSFODNN7EXAMPLE'
-          secretAccessKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
-          region: 'eu-central-1'
+          accessKeyId: '<aws-access-key>'
+          secretAccessKey: '<aws-secret-key>'
+          region: '<aws-region>'
+        # azure:
+        #   # -- Azure storage account name
+        #   storageAccount: ''
+        #   # -- Azure storage account key
+        #   storageKey: ''
+    targets:
+      - id: cluster1
+        name: "primary"
+        icon: kubernetes
+        clusters:
+          - id: main
+            name: "main-cluster"
+            icon: kubernetes
+            location:
+              lat: 0.0000
+              lon: 0.0000
+            connection:
+              sameCluster:
+                enabled: true
+            namespace:
+              single:
+                name: deployments
+            domains:
+              service:
+                tls: true
+                hostname: '<your-domain>'
+            storage:
+              storageClass: "default"
+            ingress:
+              ingressClass: "nginx"
+            capabilities:
+              mixedLoadBalancers: false
 
 app:
   replicaCount: 2
 api:
   replicaCount: 2
+  existingSecret: "platform-password"
 job:
-  replicaCount: 2
   resources:
     requests:
       cpu: 100m
@@ -191,7 +163,6 @@ job:
   autoscaling:
     enabled: true
 deployWorker:
-  replicaCount: 2
   resources:
     requests:
       cpu: 100m
@@ -202,9 +173,142 @@ clusterManager:
   replicaCount: 2
 docs:
   replicaCount: 2
+
+imagePullCredentials:
+  registries:
+    harbor:
+      enabled: true
+      registry: "harbor.settlemint.com"
+      username: '<registry-username>'
+      password: '<registry-password>'
+      email: '<registry-email>'
+
+support:
+  kubernetes-replicator:
+    enabled: true
+
+features:
+  billing:
+    enabled: false
+    alerting:
+      slack:
+        enabled: false
+        webhookUrl: ''
+    stripe:
+      apiSecret: ''
+      webhookSecret: ''
+      webhookUrl: ''
+      apiLiveMode: false
+      taxRateId: ''
+      publishableKey: ''
+    autoDelete:
+      enabled: false
+    emailUsageExcel:
+      enabled: true
+
+  privateKeys:
+    hsm:
+      awsKms:
+        enabled: false
+    txsigner:
+      image:
+        registry: ghcr.io
+        repository: settlemint/btp-signer
+        tag: '7.6.10'
+
+  networks:
+    besu:
+      image:
+        registry: docker.io
+        repository: hyperledger/besu
+        tag: '24.12.2'
+    quorum:
+      image:
+        registry: docker.io
+        repository: quorumengineering/quorum
+        tag: '24.4.1'
+    geth:
+      image:
+        registry: docker.io
+        repository: ethereum/client-go
+        tag: 'alltools-v1.13.4'
+    fabric:
+      ca:
+        image:
+          registry: docker.io
+          repository: hyperledger/fabric-ca
+          tag: '1.5.13'
+      orderer:
+        image:
+          registry: docker.io
+          repository: hyperledger/fabric-orderer
+          tag: '2.5.10'
+      tools:
+        image:
+          registry: docker.io
+          repository: hyperledger/fabric-tools
+          tag: '2.5.10'
+      peer:
+        image:
+          registry: docker.io
+          repository: hyperledger/fabric-peer
+          tag: '2.5.10'
+      couchdb:
+        image:
+          registry: docker.io
+          repository: apache/couchdb
+          tag: '3.4.2'
+      dind:
+        image:
+          registry: docker.io
+          repository: library/docker
+          tag: '24.0.7-alpine3.18'
+    mainnets:
+      enabled: true
+      ethereumMetricsExporter:
+        image:
+          registry: docker.io
+          repository: ethpandaops/ethereum-metrics-exporter
+          tag: '0.26.0'
+
+  smartContractSets:
+    etherscan:
+      apiKeys:
+        etherscan: ""
+        polyscan: ""
+        zkevmpolyscan: ""
+        bscscan: ""
+        arbiscan: ""
+        optimistic: ""
+    ide:
+      image:
+        registry: ghcr.io
+        repository: settlemint/btp-ide
+        tag: 'v7.6.5'
+    sets:
+      - id: starterkit-asset-tokenization
+        name: Asset Tokenization
+        image:
+          registry: ghcr.io
+          repository: settlemint/starterkit-asset-tokenization
+          tag: '0.0.11'
+      # ... (other sets can be added as needed)
+
+  customDomains:
+    enabled: false
+    outerIngressClass: "nginx"
+    email: ""
+
+  crons:
+    cleanup: "0 */10 * * * *"
 ```
 
-</details>
+:::note
+Replace all placeholder values with your actual configuration
+- The license section should be configured with your provided license file
+- Image tags should be verified for the latest stable versions
+- Remove any unused features to keep the configuration clean
+:::
 
 Install the platform:
 

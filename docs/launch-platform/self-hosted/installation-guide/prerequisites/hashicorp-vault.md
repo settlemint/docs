@@ -67,9 +67,18 @@ HashiCorp Vault is used for:
    vault write auth/approle/role/platform-role \
        token_ttl=1h \
        token_max_ttl=4h \
-       secret_id_ttl=6h \
+       secret_id_ttl=0 \
        policies="btp"
    ```
+
+   :::note TTL Configuration
+   You can customize the TTL (Time To Live) settings:
+   - `token_ttl`: How long tokens are valid (e.g., `1h`, `24h`, `30m`)
+   - `token_max_ttl`: Maximum token lifetime including renewals
+   - `secret_id_ttl`: How long secret IDs remain valid
+     - Set to `0` for non-expiring secret IDs
+     - Or specify duration like `6h`, `24h`, `168h` (1 week)
+   :::
 
 5. **Generate Credentials**
 
