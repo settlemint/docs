@@ -311,6 +311,137 @@ Replace all placeholder values with your actual configuration
 - Remove any unused features to keep the configuration clean
 :::
 
+<details>
+<summary>Click to see a complete example values file</summary>
+
+```yaml
+ingress:
+  enabled: true
+  className: "nginx"
+  host: 'example.company.com'
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-ssl-server-name: "on"
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    cert-manager.io/cluster-issuer: "letsencrypt"
+  tls:
+    - secretName: 'example-tls'
+      hosts:
+        - 'example.company.com'
+        - '*.example.company.com'
+
+redis:
+  host: 'redis.example.local'
+  port: '6379'
+  password: 'abc123password'
+  tls: true
+
+postgresql:
+  host: 'postgresql.example.local'
+  port: '5432'
+  user: 'db_user'
+  password: 'xyz789password'
+  database: 'platform_db'
+  sslMode: require
+
+auth:
+  jwtSigningKey: 'abc123jwt456xyz789signing000key111example'
+  providers:
+    google:
+      enabled: true
+      clientID: 'example-123456789.apps.googleusercontent.com'
+      clientSecret: 'abcdef-example-google-secret'
+
+vault:
+  address: 'http://vault.example.local:8200'
+  roleId: 'abc123-role-id'
+  secretId: 'xyz789-secret-id'
+  namespace: 'vault'
+
+features:
+  observability:
+    metrics:
+      enabled: true
+      apiUrl: 'http://metrics.example.local/api/v1'
+    logs:
+      enabled: true
+      apiUrl: 'http://logs.example.local/api/v1'
+  deploymentEngine:
+    platform:
+      domain:
+        hostname: 'example.company.com'
+    state:
+      s3ConnectionUrl: 's3://example-bucket?region=us-east-1'
+      secretsProvider: 'passphrase'
+      credentials:
+        encryptionKey: 'abc123encryption456key789example000key'
+        aws:
+          accessKeyId: 'EXAMPLEKEYID123456'
+          secretAccessKey: 'abc123example456secret789key000aws'
+          region: 'us-east-1'
+    targets:
+      - id: 'example'
+        name: 'Example Cluster'
+        icon: 'kubernetes'
+        clusters:
+          - id: 'main'
+            name: 'Main'
+            icon: 'global'
+            location:
+              lat: 0.0000
+              lon: 0.0000
+            connection:
+              sameCluster:
+                enabled: true
+            namespace:
+              single:
+                name: 'example'
+            domains:
+              service:
+                tls: true
+                hostname: 'example.company.com'
+            storage:
+              storageClass: 'standard'
+            ingress:
+              ingressClass: 'nginx'
+
+app:
+  replicaCount: '2'
+api:
+  replicaCount: '2'
+  existingSecret: 'example-secret'
+job:
+  resources:
+    requests:
+      cpu: '100m'
+      memory: '512Mi'
+deployWorker:
+  resources:
+    requests:
+      cpu: '100m'
+      memory: '512Mi'
+clusterManager:
+  replicaCount: '2'
+
+imagePullCredentials:
+  registries:
+    harbor:
+      enabled: true
+      registry: "harbor.settlemint.com"
+      username: 'example_user'
+      password: 'abc123registry456password'
+      email: 'example@company.com'
+
+support:
+  kubernetes-replicator:
+    enabled: true
+```
+
+</details>
+
 Install the platform:
 
 ```bash
