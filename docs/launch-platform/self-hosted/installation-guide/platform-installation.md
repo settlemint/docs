@@ -466,6 +466,233 @@ Verify all pods are running and ready.
 
 Once all pods are running, access the platform at `https://<your-domain>`.
 
+### 6. Target Clusters Configuration
+
+The platform supports deploying blockchain nodes and applications to multiple target clusters across different cloud providers and regions. This section explains how to configure target clusters in your values file.
+
+#### Target Structure
+The targets configuration follows this hierarchy:
+- **Cloud Provider** (e.g., GKE, EKS, AKS)
+- **Clusters** (e.g., regions like Europe, Singapore, etc.)
+
+#### Basic Configuration Example
+```yaml
+features:
+  deploymentEngine:
+    targets:
+      - id: GKE
+        name: Google Cloud
+        icon: google
+        clusters:
+          - id: EUROPE
+            name: Brussels
+            icon: belgium
+            location:
+              lat: 50.8505
+              lon: 4.3488
+            namespace:
+              multiple:
+                enabled: true
+                prefix: "sm"
+            connection:
+              pulumi:
+                enabled: true
+                stackname: "organization/clusters/gke-europe"
+            domains:
+              service:
+                tls: true
+                hostname: "gke-europe.example.com"
+            storage:
+              storageClass: "standard"
+            ingress:
+              ingressClass: "nginx"
+            capabilities:
+              mixedLoadBalancers: false
+              nodePorts:
+                enabled: true
+                range:
+                  min: 30000
+                  max: 32767
+      - id: EKS
+        name: AWS
+        icon: aws
+        clusters:
+          - id: SINGAPORE
+            name: Singapore
+            icon: singapore
+            location:
+              lat: 1.3521
+              lon: 103.8198
+            namespace:
+              multiple:
+                enabled: true
+                prefix: "prod"
+            connection:
+              pulumi:
+                enabled: true
+                stackname: "organization/clusters/eks-singapore"
+            domains:
+              service:
+                tls: true
+                hostname: "eks-singapore.example.com"
+            storage:
+              storageClass: "gp3"
+            ingress:
+              ingressClass: "nginx"
+            capabilities:
+              mixedLoadBalancers: true
+              nodePorts:
+                enabled: true
+                range:
+                  min: 30000
+                  max: 32767
+      - id: AKS
+        name: Azure
+        icon: azure
+        clusters:
+          - id: MIDDLE_EAST
+            name: Dubai
+            icon: uae
+            location:
+              lat: 25.276987
+              lon: 55.296249
+            namespace:
+              multiple:
+                enabled: true
+                prefix: "prod"
+            connection:
+              pulumi:
+                enabled: true
+                stackname: "organization/clusters/aks-middleeast"
+            domains:
+              service:
+                tls: true
+                hostname: "aks-middleeast.example.com"
+            storage:
+              storageClass: "managed-premium"
+            ingress:
+              ingressClass: "nginx"
+            capabilities:
+              mixedLoadBalancers: true
+              nodePorts:
+                enabled: true
+                range:
+                  min: 30000
+                  max: 32767
+```
+
+#### Configuration Options
+
+##### Cloud Provider Level
+- `id`: Unique identifier for the cloud provider (GKE, EKS, AKS)
+- `name`: Display name
+- `icon`: Icon identifier for the UI
+
+##### Cluster Level
+- `id`: Unique identifier for the cluster
+- `name`: Display name for the region/location
+- `icon`: Icon identifier for the UI
+- `disabled`: (Optional) Set to true to disable this cluster
+- `location`: Geographic coordinates for visualization
+  - `lat`: Latitude
+  - `lon`: Longitude
+
+##### Namespace Configuration
+```yaml
+namespace:
+  single:
+    enabled: false  # Use for single namespace deployments
+    name: deployments
+    runAsUser: 2024
+    fsGroup: 2024
+  multiple:
+    enabled: true   # Use for multiple namespace deployments
+    prefix: "sm"    # Prefix for created namespaces
+```
+
+##### Connection Settings
+```yaml
+connection:
+  sameCluster:
+    enabled: false
+  kubeconfig:
+    enabled: false
+  pulumi:
+    enabled: true
+    stackname: "organization/clusters/cluster-name"
+```
+
+##### Domain Configuration
+```yaml
+domains:
+  service:
+    tls: true                           # Enable TLS for the domain
+    hostname: "cluster.example.com"     # Domain for accessing services
+```
+
+The domain configuration determines how services in the cluster will be accessed. Each cluster needs a unique domain that resolves to its ingress controller.
+
+##### Storage Configuration
+```yaml
+storage:
+  storageClass: "standard"              # Default storage class for the cluster
+```
+
+Storage class recommendations per cloud provider:
+- GKE: Use `"standard"` for general purpose or `"premium-rwo"` for better performance
+- EKS: Use `"gp3"` for general purpose or `"io1"` for high-performance workloads
+- AKS: Use `"managed-premium"` for production or `"default"` for development
+
+##### Ingress Configuration
+```yaml
+ingress:
+  ingressClass: "nginx"                 # Ingress controller class name
+```
+
+The ingress class should match your installed ingress controller. Common options:
+- `"nginx"` for NGINX Ingress Controller
+- `"azure/application-gateway"` for Azure Application Gateway
+- `"alb"` for AWS Application Load Balancer
+
+##### Capabilities Configuration
+```yaml
+capabilities:
+  mixedLoadBalancers: false            # Support for mixed LoadBalancer services
+  nodePorts:
+    enabled: true                      # Enable NodePort service type
+    range:                            # Port range for NodePort services
+      min: 30000
+      max: 32767
+```
+
+Capabilities determine what features are available in the cluster:
+- `mixedLoadBalancers`: Enable if your cluster supports both internal and external load balancers
+- `nodePorts`: Configure if you need to expose services using NodePort type
+  - The port range should be within Kubernetes defaults (30000-32767)
+  - Ensure the range doesn't conflict with other services
+
+#### Important Considerations
+
+1. **Domain Names**
+   - Each cluster must have a unique domain name
+   - Domains should be properly configured in your DNS provider
+   - TLS certificates will be automatically managed if cert-manager is configured
+
+2. **Storage Classes**
+   - Verify the storage class exists in your cluster before using it
+   - Consider performance requirements when selecting storage classes
+   - Some features may require specific storage capabilities (e.g., RWX support)
+
+3. **Network Capabilities**
+   - `mixedLoadBalancers` should match your cloud provider's capabilities
+   - NodePort ranges should not conflict with other services
+   - Ensure network policies allow required communication
+
+:::tip
+When setting up a new cluster, start with the basic configuration and gradually enable additional capabilities as needed. This approach helps in identifying potential issues early in the deployment process.
+:::
+
+
 ## Troubleshooting
 
 If you encounter issues during installation:
