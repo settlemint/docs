@@ -63,12 +63,13 @@ ingress:
 
 redis:
   host: '<redis-host>'
-  port: 6380
+  port: '<redis-port>'
   password: '<redis-password>'
   tls: true
 
 postgresql:
   host: '<postgresql-host>'
+  port: '<postgresql-port>'
   user: '<postgresql-user>'
   password: '<postgresql-password>'
   database: '<database-name>'
@@ -97,10 +98,10 @@ features:
   observability:
     metrics:
       enabled: true
-      apiUrl: 'http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/prometheus/api/v1'
+      apiUrl: '<victoria-metrics-url>'
     logs:
       enabled: true
-      apiUrl: 'http://loki-gateway.observability.svc.cluster.local/loki/api/v1'
+      apiUrl: '<loki-url>'
   deploymentEngine:
     platform:
       domain:
@@ -119,60 +120,60 @@ features:
           region: '<aws-region>'
         # azure:
         #   # -- Azure storage account name
-        #   storageAccount: ''
+        #   storageAccount: '<azure-storage-account>'
         #   # -- Azure storage account key
-        #   storageKey: ''
+        #   storageKey: '<azure-storage-key>'
     targets:
-      - id: cluster1
-        name: "primary"
-        icon: kubernetes
+      - id: '<cluster-id>'
+        name: '<cluster-name>'
+        icon: '<cluster-icon>'
         clusters:
-          - id: main
-            name: "main-cluster"
-            icon: kubernetes
+          - id: '<cluster-instance-id>'
+            name: '<cluster-instance-name>'
+            icon: '<cluster-instance-icon>'
             location:
-              lat: 0.0000
-              lon: 0.0000
+              lat: '<latitude>'
+              lon: '<longitude>'
             connection:
               sameCluster:
                 enabled: true
             namespace:
               single:
-                name: deployments
+                name: '<namespace>'
             domains:
               service:
                 tls: true
                 hostname: '<your-domain>'
             storage:
-              storageClass: "default"
+              storageClass: '<storage-class>'
             ingress:
-              ingressClass: "nginx"
+              ingressClass: '<ingress-class>'
             capabilities:
               mixedLoadBalancers: false
 
 app:
-  replicaCount: 2
+  replicaCount: '<replicas>'
 api:
-  replicaCount: 2
-  existingSecret: "platform-password"
+  replicaCount: '<replicas>'
+  existingSecret: '<platform-secret>'
 job:
   resources:
     requests:
-      cpu: 100m
-      memory: 512Mi
+      cpu: '<cpu-request>'
+      memory: '<memory-request>'
   autoscaling:
     enabled: true
 deployWorker:
   resources:
     requests:
-      cpu: 100m
-      memory: 512Mi
+      cpu: '<cpu-request>'
+      memory: '<memory-request>'
   autoscaling:
     enabled: true
 clusterManager:
-  replicaCount: 2
+  replicaCount: '<replicas>'
 docs:
-  replicaCount: 2
+  replicaCount: '<replicas>'
 
 imagePullCredentials:
   registries:
