@@ -471,22 +471,22 @@ Once all pods are running, access the platform at `https://<your-domain>`.
 The platform supports deploying blockchain nodes and applications to multiple target clusters across different cloud providers and regions. This section explains how to configure target clusters in your values file.
 
 #### Target Structure
-The targets configuration follows this hierarchy:
-- **Cloud Provider** (e.g., GKE, EKS, AKS)
-- **Clusters** (e.g., regions like Europe, Singapore, etc.)
+The targets configuration uses a simple 2-level hierarchy:
+- **Target** (top level grouping)
+- **Clusters** (individual Kubernetes clusters)
 
 #### Basic Configuration Example
 ```yaml
 features:
   deploymentEngine:
     targets:
-      - id: GKE
-        name: Google Cloud
-        icon: google
+      - id: GROUP1
+        name: First Group
+        icon: cloud
         clusters:
-          - id: EUROPE
-            name: Brussels
-            icon: belgium
+          - id: CLUSTER1
+            name: Primary Cluster
+            icon: kubernetes
             location:
               lat: 50.8505
               lon: 4.3488
@@ -495,13 +495,12 @@ features:
                 enabled: true
                 prefix: "sm"
             connection:
-              pulumi:
+              kubeconfig:
                 enabled: true
-                stackname: "organization/clusters/gke-europe"
             domains:
               service:
                 tls: true
-                hostname: "gke-europe.example.com"
+                hostname: "cluster1.example.com"
             storage:
               storageClass: "standard"
             ingress:
@@ -513,13 +512,13 @@ features:
                 range:
                   min: 30000
                   max: 32767
-      - id: EKS
-        name: AWS
-        icon: aws
+      - id: GROUP2
+        name: Second Group
+        icon: cloud
         clusters:
-          - id: SINGAPORE
-            name: Singapore
-            icon: singapore
+          - id: CLUSTER2
+            name: Secondary Cluster
+            icon: kubernetes
             location:
               lat: 1.3521
               lon: 103.8198
@@ -528,48 +527,14 @@ features:
                 enabled: true
                 prefix: "prod"
             connection:
-              pulumi:
+              kubeconfig:
                 enabled: true
-                stackname: "organization/clusters/eks-singapore"
             domains:
               service:
                 tls: true
-                hostname: "eks-singapore.example.com"
+                hostname: "cluster2.example.com"
             storage:
-              storageClass: "gp3"
-            ingress:
-              ingressClass: "nginx"
-            capabilities:
-              mixedLoadBalancers: true
-              nodePorts:
-                enabled: true
-                range:
-                  min: 30000
-                  max: 32767
-      - id: AKS
-        name: Azure
-        icon: azure
-        clusters:
-          - id: MIDDLE_EAST
-            name: Dubai
-            icon: uae
-            location:
-              lat: 25.276987
-              lon: 55.296249
-            namespace:
-              multiple:
-                enabled: true
-                prefix: "prod"
-            connection:
-              pulumi:
-                enabled: true
-                stackname: "organization/clusters/aks-middleeast"
-            domains:
-              service:
-                tls: true
-                hostname: "aks-middleeast.example.com"
-            storage:
-              storageClass: "managed-premium"
+              storageClass: "standard"
             ingress:
               ingressClass: "nginx"
             capabilities:
@@ -583,8 +548,8 @@ features:
 
 #### Configuration Options
 
-##### Cloud Provider Level
-- `id`: Unique identifier for the cloud provider (GKE, EKS, AKS)
+##### Target Level
+- `id`: Unique identifier for the target group
 - `name`: Display name
 - `icon`: Icon identifier for the UI
 
@@ -616,10 +581,7 @@ connection:
   sameCluster:
     enabled: false
   kubeconfig:
-    enabled: false
-  pulumi:
     enabled: true
-    stackname: "organization/clusters/cluster-name"
 ```
 
 ##### Domain Configuration
