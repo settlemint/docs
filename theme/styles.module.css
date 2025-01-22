@@ -540,3 +540,14 @@ h3 {
 .hero .hero-subtitle {
   text-align: center;
 }
+
+[data-theme='dark'] .mainButton {
+  background-color: #346eee;
+  color: #ffffff;
+}
+
+[data-theme='dark'] .secondaryButton {
+  background-color: transparent !important;
+  color: #ffffff;
+  border-color: #ffffff;
+}
