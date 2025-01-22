@@ -547,7 +547,7 @@ h3 {
 }
 
 [data-theme='dark'] .secondaryButton {
-  background-color: transparent !important;
+  background-color: transparent;
   color: #ffffff;
   border-color: #ffffff;
 }
