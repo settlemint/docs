@@ -1,20 +1,59 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Insights
 
-To view and inspect transactions in your blockchain application, SettleMint provides insightful dashboards via the integrated Blockscout blockchain explorer.
+To view and inspect transactions in your blockchain application, SettleMint provides insightful dashboards via the integrated Blockscout blockchain explorer.([1](https://github.com/settlemint/sdk/tree/main/sdk/blockscout))
 
 **Blockscout** can be hooked up to any of your permissioned EVM compatible blockchain networks running in SettleMint. This includes **Hyperledger Besu and Polygon Edge**.
 
 ## Adding the blockchain explorer
+
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
 
 Navigate to the **application** where you want to add a blockchain explorer. Click **Insights** in the left navigation, and then click **Add Insights**. This opens a form.
 
 Follow these steps to add the blockchain explorer:
 
 1. Select **Blockchain Explorer**
-2. Select the target **blockchain node** for the blockchain explorer and click **Continue**. Make sure you have a **Hyperledger Besu node or Polygon Edge node** in place.
-3. Enter a **name** for this instance of the blockchain explorer.
-4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans](launch-platform/managed-cloud-deployment/3_deployment-plans.md)
-5. You see the **resource cost** for this blockchain explorer displayed at the bottom of the form. Click **Confirm** to add the blockchain explorer.
+2. Select the target **blockchain node** for the blockchain explorer and click **Continue**
+3. Enter a **name** for this instance of the blockchain explorer
+4. Choose a **deployment plan**
+5. Click **Confirm** to add the blockchain explorer
+
+</TabItem>
+
+<TabItem value="sdk-cli" label="SDK CLI">
+
+```bash
+settlemint login
+
+# Create blockchain explorer
+settlemint platform create insights blockscout <name> \
+  --application <app-name> \
+  --blockchain-node <node-name> \
+  --provider <provider> \
+  --region <region>
+```
+
+</TabItem>
+
+<TabItem value="sdk-js" label="SDK JS">
+
+```typescript
+import { createSettleMintClient } from '@settlemint/sdk-js';
+import { createBlockscoutClient } from '@settlemint/sdk-blockscout';
+
+// Initialize Blockscout client
+const blockscoutClient = createBlockscoutClient({
+  endpoint: process.env.SETTLEMINT_BLOCKSCOUT_ENDPOINT!,
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!
+});
+```
+
+</TabItem>
+</Tabs>
 
 ## Using the blockchain explorer
 
@@ -33,3 +72,7 @@ Click a Transaction hash to see the Transaction Details
 Click an Account address to see the Address Details
 
 ![Blockscout 3.png](../../static/img/document360/Images/Blockscout%203.png)
+
+:::info Note
+The SDK enables you to easily query transaction data, blocks, addresses, smart contracts and more from your SettleMint-powered blockchain networks.
+:::

@@ -1,12 +1,31 @@
-# Middleware
+---
+title: Middleware
+description: Guide to using middleware in SettleMint
+---
 
-For any dApp to provide good UX, you need a solution that quickly loads the data stored on chain and on IPFS. Querying data directly from blockchain is complex. This is where the middleware comes in, which is essentially a layer in between blockchain and your dApp, allowing you to index and query your blockchain data easily and efficiently.
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-SettleMint offers two Middleware solutions: **The Graph Middleware (for all EVM-compatible chains)** and **Smart Contract Portal Middleware**.
+Middleware acts as a layer between blockchain and your dApp, allowing you to index and query blockchain data efficiently.
+
+## Available Options
+
+[Graph Middleware](#the-graph-middleware) - For EVM chains, providing subgraph-based indexing with GraphQL API.([1](https://github.com/settlemint/sdk/tree/main/sdk/thegraph))
+
+[Smart Contract Portal Middleware](#the-smart-contract-portal-middleware) - For EVM chains, offering REST & GraphQL APIs with webhooks.([2](https://github.com/settlemint/sdk/tree/main/sdk/portal))
+
+[FabConnect](#firefly-fabconnect) - For Hyperledger Fabric, providing RESTful API and identity management.
+
+[Attestation Indexer](#attestation-indexer) - Specialized indexer for attestations with GraphQL API.
+
+Choose the middleware that best fits your needs and continue reading the relevant section below for detailed setup and usage instructions.
 
 ## Adding a middleware
 
 Before adding a middleware make sure that you have a **blockchain node** running.
+
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
 
 Navigate to the **application** where you want to add a middleware. Click **Middleware** in the left navigation, and then click **Add a middleware**. This opens a form.
 
@@ -18,7 +37,105 @@ Follow these steps to add the middleware:
 4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans.](launch-platform/managed-cloud-deployment/3_deployment-plans.md)
 5. You see the **resource cost** for this middleware displayed at the bottom of the form. Click **Confirm** to add the smart contract set.
 
+</TabItem>
+<TabItem value="sdk-cli" label="SDK CLI">
+
+First ensure you're authenticated:
+```bash
+settlemint login
+```
+
+Create a middleware:
+```bash
+settlemint platform create middleware <type> <name> \
+  --application <app-name> \
+  --blockchain-node <node-name> \
+  --provider <provider> \
+  --region <region>
+```
+
+Where `<type>` can be:
+- `smart-contract-portal`
+- `graph`
+
+Optional parameters:
+- `--size <SMALL|MEDIUM|LARGE>`
+- `--accept-defaults`
+
+</TabItem>
+<TabItem value="sdk-js" label="SDK JS">
+
+```typescript
+// For Graph Middleware
+import { createTheGraphClient } from '@settlemint/sdk-thegraph';
+
+const { client: graphClient, graphql } = createTheGraphClient({
+  instances: JSON.parse(process.env.SETTLEMINT_THEGRAPH_SUBGRAPHS_ENDPOINTS || '[]'),
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
+  subgraphName: 'your-subgraph'
+});
+
+// For Smart Contract Portal
+import { createPortalClient } from '@settlemint/sdk-portal';
+
+const { client: portalClient, graphql: portalGraphql } = createPortalClient({
+  instance: process.env.SETTLEMINT_PORTAL_GRAPHQL_ENDPOINT,
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN
+});
+```
+
+:::tip
+Get your access token from the Platform UI under User Settings → API Tokens.
+:::
+
+</TabItem>
+</Tabs>
+
 When the middleware is deployed, click it from the list and start using it.
+
+## The Graph Middleware
+
+The Graph provides powerful indexing capabilities for EVM chains through subgraphs. Use this middleware when you need:
+- Custom indexing logic through subgraph manifests
+- Complex GraphQL queries
+- Real-time data updates
+
+## The Smart Contract Portal Middleware
+
+The Portal middleware provides instant API access to your smart contracts. Key features include:
+- Auto-generated REST & GraphQL APIs
+- Built-in webhooks for event notifications
+- Type-safe contract interactions
+- Automatic ABI parsing
+
+### REST API
+
+A fully typed REST API with documentation is created from your Smart Contract ABI. Discover all endpoints on the REST tab.
+
+### GraphQL API
+
+The GraphQL API exposes the same functionality as the REST API with the added benefits of GraphQL querying.
+
+### Webhooks
+
+Register webhooks to receive notifications when transactions are processed. Events include signatures for verification.
+
+Example webhook consumer:
+
+```typescript
+import { Webhook } from 'standardwebhooks';
+
+const wh = new Webhook(secret);
+const verifiedPayload = wh.verify(JSON.stringify(payload), {
+  'webhook-id': headers['btp-portal-event-id'],
+  'webhook-signature': headers['btp-portal-event-signature'],
+  'webhook-timestamp': headers['btp-portal-event-timestamp']
+});
+```
+
+:::info Note
+All operations require appropriate permissions in your workspace.
+:::
 
 ## The Graph Middleware
 
@@ -196,210 +313,7 @@ async function webhookConsumerBootstrap(secret: string) {
       `Started the test webhook consumer on ${server?.url.toString()}`
     );
   });
-  return app;
+  await app.listen(3000);
 }
 
-webhookConsumerBootstrap(process.env.WEBHOOK_SECRET!)
-  .then(app => app.listen(process.env.PORT || 5555))
-  .catch((error: Error) => {
-    console.error('Failed to start webhook consumer', error);
-    process.exit(1);
-  });
-```
-
-### Websocket
-
-The websocket endpoint exposes functionality to get real time updates on processed transactions.
-
-The url can be copied from the Connect tab.
-
-```ts
-import type { TransactionReceipt } from 'viem';
-
-// Should include an api key (eg wss://smart-contract-portal-middleware.settlemint.com/sm_pat_.../ws)
-const webSocketHost = process.env.WS_URL!;
-
-/**
- * Wait for the transaction receipt
- * @param transactionHash hash
- * @returns transaction receipt
- */
-export async function waitForTransactionReceipt(transactionHash: string) {
-  const webSocket = new WebSocket(webSocketHost);
-
-  return new Promise<TransactionReceipt>((resolve, reject) => {
-    let isResolved = false;
-    webSocket.onmessage = event => {
-      isResolved = true;
-      const receiptJson = JSON.parse(event.data) as TransactionReceipt;
-      resolve(receiptJson);
-      webSocket.close();
-    };
-    webSocket.onerror = reject;
-    webSocket.onclose = () => {
-      if (!isResolved) {
-        reject(new Error('Nothing received from the WebSocket'));
-      }
-    };
-    if (webSocket.readyState === WebSocket.OPEN) {
-      webSocket.send(JSON.stringify({ transactionHash }));
-    } else if (webSocket.readyState === WebSocket.CONNECTING) {
-      webSocket.onopen = () => {
-        webSocket.send(JSON.stringify({ transactionHash }));
-      };
-    } else {
-      reject(
-        new Error(`No connection to the WebSocket: ${webSocket.readyState}`)
-      );
-    }
-  });
-}
-```
-
-### Transactions api
-
-The portal exposes some general purpose APIs for transactions. This could be used for example to display transactions which are pending or processed in your UI. Both REST and GraphQL offer this functionality.
-
-![Transactions API](../../static/img/using-the-platform/scp-transactions-api.png)
-
-## Attestation Indexer
-
-The Attestation Indexer is a powerful tool that allows you to index and search attestations in a highly efficient manner. It provides a simple and intuitive GraphQL API for querying attestations based on various parameters such as the attestation type, the subject, the issuer, and more.
-
-When setting up a new middleware, you'll need to adjust the Attestation Indexer based on your requirements. For permissioned chains, this involves deploying your own attestation and schema registry contracts and inputting the appropriate addresses. For public chains, the addresses will be pre-filled with publicly available ones if they exist, but you can modify them to different addresses if necessary.
-
-![Attestations](../../static/img/using-the-platform/eas-indexer.png)
-
-### GraphQL
-
-The Attestation Indexer's GraphQL API provides the capability to execute intricate queries on attestations. It allows for filtering based on attributes such as type, issuer, and subject, enabling the retrieval of specific attestations or sets of attestations that satisfy particular conditions.
-
-![GraphQL](../../static/img/using-the-platform/eas-graphql.png)
-
-## Firefly FabConnect
-
-Firefly FabConnect is an open-source middleware that lets you interact with your Fabric network and the chaincode deployed on it. When you add the FabConnect middleware to your application on the SettleMint Platform, you automatically deploy a RESTful API to:
-
-- Manage identities on your network.
-- Send transactions to your chaincode.
-- Check any transaction receipt.
-- Create event streams and subscriptions.
-
-:::warning Warning
-
-Before you start, make sure you are running:
-
-- A Fabric peer node
-- A Fabric orderer node
-
-:::
-
-For the curl commands below, you will need to replace `your-token` with an access token. You can create an Application Access Token scoped to the middleware, peer and orderer node, or use a Personal Access Token. For more information on how to create an access token, please see our [access token documentation](./16_application-access-tokens.md).
-
-### Manage Identities
-
-Identities on a Fabric network are managed in two steps. First, a CA admin must register users. This is a process in which the CA admin gives an ID and secret to an identity. Then, the user of the identity enrolls the ID and secret pair to get a public/private key pair to sign transactions.
-
-Registering an identity can be done as follows using Firefly FabConnect:
-
-```shell
-curl --request POST \
-  --url https://example.settlemint.com/identities \
-  --header 'x-auth: <your-token>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-  "type": "client",
-  "name": "user3",
-  "attributes": {}
-}'
-```
-
-This request returns the secret associated with name user3:
-
-```shell
-{
-  "name": "user3",
-  "secret": "fkrTKPOZZYWO"
-}
-```
-
-The end user of that identity can enroll it as follows:
-
-```shell
-curl --request POST \
-  --url https://example.settlemint.com/identities/user3/enroll \
-  --header 'x-auth: <your-token>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-"secret": "fkrTKPOZZYWO"
-"attributes": {}
-}'
-```
-
-### Sending Transactions
-
-Assuming that you have a [chaincode deployed](../blockchain-guides/5_Hyperledger-Fabric/6_hyperledger-fabric-integration-tools.md) on your network, you can send a transaction through the middleware:
-
-```shell
-curl --request POST \
-  --url https://example.settlemint.com//transactions \
-  --header 'x-auth: <your-token>' \
-  --header 'Content-Type: application/json' --data '{
-"headers": {
-"type": "SendTransaction",
-"signer": "user3",
-"channel": "default-channel",
-"chaincode": "assetTransfer"
-},
-"func": "CreateAsset",
-"args": [
-"asset01", "blue", "5", "Alice", "500"
-],
-"init": false, "fly-sync": true
-}'
-```
-
-This transaction creates an asset in the assetTransfer chaincode deployed on the Fabric network.
-
-### Create Event Streams
-
-Firefly FabConnect can also be used to stream events happening on your network. You can either use webhook or websocket to deliver the data.
-
-This request create a stream using webhooks:
-
-```shell
-curl --request POST \
-  --url https://example.settlemint.com/eventstreams \
-  --header 'x-auth: <your-token>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-"type": "webhook",
-"name": "AssetTransfer",
-"webhook": {
-"url": "<https://myAssets.com/assetTransfer>",
-"tlsSkipVerifyHost": "true"
-}
-}'
-```
-
-The response contains an event stream ID that is required to create a subscription:
-
-```shell
-curl --request POST \
-  --url https://example.settlemint.com//subscriptions \
-  --header 'x-auth: <your-token>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-"payloadType": "string",
-"name": "mySubscription",
-"channel": "default-channel",
-"signer": "user3",
-"fromBlock": "0",
-"stream": "es-92183185-01e3-4bc9-5433-348a640f5fe1",
-"filter": {
-"blockType": "tx",
-"chaincodeId": "",
-"eventFilter": ""
-}
-}'
-```
+webhookConsumerBootstrap('your-secret');

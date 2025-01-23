@@ -1,8 +1,14 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Storage
 
-Managing complex or large data in decentralized systems can be a challenge. To securely store and share your files and data, SettleMint offers two storage solutions that can interact with the blockchain: **IPFS (decentralized)** and **MinIO (centralized)**.
+Managing complex or large data in decentralized systems can be a challenge. To securely store and share your files and data, SettleMint offers two storage solutions that can interact with the blockchain: **IPFS (decentralized)** and **MinIO (centralized)**.([1](https://github.com/settlemint/sdk/tree/main/sdk/ipfs))([2](https://github.com/settlemint/sdk/tree/main/sdk/minio))
 
 ## Adding storage
+
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
 
 Navigate to the **application** where you want to add storage. Click **Storage** in the left navigation. This opens a form.
 
@@ -14,6 +20,55 @@ Follow these steps to add storage:
 4. You can see the resource cost for your storage displayed at the bottom of the form. Click **Confirm** to add the storage.
 
 When the storage is deployed, click on it from the list, and go to the **Interface tab** to start adding files. You can connect to your storage using the details provided in the **Connect tab**.
+
+</TabItem>
+
+<TabItem value="sdk-cli" label="SDK CLI">
+
+```bash
+settlemint login
+
+# Create storage
+settlemint platform create storage <type> <name> \
+  --application <app-name> \
+  --provider <provider> \
+  --region <region>
+```
+
+Where `<type>` can be:
+- `ipfs`
+- `minio`
+
+</TabItem>
+
+<TabItem value="sdk-js" label="SDK JS">
+
+```typescript
+import { createSettleMintClient } from '@settlemint/sdk-js';
+import { createIPFSClient } from '@settlemint/sdk-ipfs';
+import { createMinioClient } from '@settlemint/sdk-minio';
+
+// Initialize IPFS client
+const ipfsClient = createIPFSClient({
+  endpoint: process.env.SETTLEMINT_IPFS_ENDPOINT!,
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!
+});
+
+// Initialize MinIO client
+const minioClient = createMinioClient({
+  endpoint: process.env.SETTLEMINT_MINIO_ENDPOINT!,
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
+  accessKeyId: process.env.SETTLEMINT_MINIO_ACCESS_KEY!,
+  secretAccessKey: process.env.SETTLEMINT_MINIO_SECRET_KEY!
+});
+```
+
+:::tip
+Storage instances have various status states including: COMPLETED, DEPLOYING, FAILED, PAUSED, etc.
+:::
+
+</TabItem>
+</Tabs>
 
 ## About IPFS (decentralized)
 
@@ -51,7 +106,5 @@ var s3Client = new Minio.Client({
 You can now use the s3Client object to call methods like `makeBucket`, `getObject`, and [many more methods which you can find here](https://docs.min.io/docs/javascript-client-api-reference.html).
 
 :::info Note
-
 MinIO client can also be configured in Python, .NET, Java, Golang, Haskell. You can follow the [quickstart guides provided by MinIO here](https://docs.min.io/docs/java-client-quickstart-guide.html) for more information.
-
 :::

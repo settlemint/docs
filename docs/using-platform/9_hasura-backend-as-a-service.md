@@ -1,19 +1,66 @@
 # Hasura - Backend-as-a-service
 
-Many dApps need more than just decentralised tools to build an end-to-end solution. Maybe you need to save KYC information, or store metadata related to NFT's or other smart contracts you do not want to put on IPFS. This is where the backend-as-a-service solution comes in, based on [Hasura](https://hasura.io/docs/latest/graphql/core/index.html).
+Many dApps need more than just decentralised tools to build an end-to-end solution. The SettleMint Hasura SDK provides a seamless way to interact with Hasura GraphQL APIs for managing application data.([1](https://github.com/settlemint/sdk/tree/main/sdk/hasura))
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 ## Add Hasura
 
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
+
 Navigate to the **application** where you want to add Hasura. Click **Integration tools** in the left navigation, and then click **Add an integration tool**. This opens a form.
 
-Follow these steps to add the Hasura:
+Follow these steps to add Hasura:
 
-1. Select **Hasura**, and click **Continue**.
-2. Choose a **name** for your own backend-as-a-service. Choose one that will be easily recognizable in your dashboards.
-3. Choose a deployment plan. Select the type, cloud provider, region and resource pack. [More about deployment plans](launch-platform/managed-cloud-deployment/3_deployment-plans.md).
-4. You see the **resource cost** for your backend-as-a-service displayed at the bottom of the form. Click **Confirm** to add it.
+1. Select **Hasura**, and click **Continue**
+2. Choose a **name** for your backend-as-a-service
+3. Choose a deployment plan (provider, region, resource pack)
+4. Click **Confirm** to add it
 
-When Hasura is deployed, you can build and manage your database in the **Interface tab**.
+</TabItem>
+
+<TabItem value="sdk-cli" label="SDK CLI">
+
+First ensure you're authenticated:
+```bash
+settlemint login
+```
+
+Create Hasura instance:
+```bash
+settlemint platform create integration-tool hasura <name> \
+  --application <app-name> \
+  --provider <provider> \
+  --region <region>
+```
+
+Optional parameters:
+- `--size <SMALL|MEDIUM|LARGE>`
+- `--accept-defaults`
+
+</TabItem>
+
+<TabItem value="sdk-js" label="SDK JS">
+
+```typescript
+import { createSettleMintClient } from '@settlemint/sdk-js';
+import { createHasuraClient } from '@settlemint/sdk-hasura';
+
+// Initialize Hasura client
+const hasuraClient = createHasuraClient({
+  endpoint: process.env.SETTLEMINT_HASURA_ENDPOINT!,
+  adminSecret: process.env.SETTLEMINT_HASURA_ADMIN_SECRET!
+});
+```
+
+:::tip
+The SDK enables you to easily query and mutate data stored in your SettleMint-powered PostgreSQL databases through a type-safe GraphQL interface.
+:::
+
+</TabItem>
+</Tabs>
 
 ## Some basic features
 
