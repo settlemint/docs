@@ -37,10 +37,10 @@ settlemint login
 Create a blockchain network:
 ```bash
 settlemint platform create blockchain-network besu <network-name> \
+  --application <application-name> \
   --node-name <node-name> \
   --provider <provider> \
-  --region <region> \
-  --application <application-name>
+  --region <region>
 ```
 
 Optional parameters:
@@ -62,18 +62,39 @@ const client = createSettleMintClient({
   instance: 'https://console.settlemint.com'
 });
 
+// Create network
 const createNetwork = async () => {
   const result = await client.blockchainNetwork.create({
-    applicationUniqueName: "your-application",
-    name: "My Network",
+    applicationUniqueName: "your-app",
+    name: "my-network",
     nodeName: "validator-1",
     consensusAlgorithm: "BESU_QBFT",
-    provider: "provider",
-    region: "region",
-    size: "SMALL",
-    type: "SHARED"
+    provider: "gcp",
+    region: "europe-west1"
   });
   console.log('Network created:', result);
+};
+
+// List networks
+const listNetworks = async () => {
+  const networks = await client.blockchainNetwork.list("your-app");
+  console.log('Networks:', networks);
+};
+
+// Get network details
+const getNetwork = async () => {
+  const network = await client.blockchainNetwork.read("network-unique-name");
+  console.log('Network details:', network);
+};
+
+// Delete network
+const deleteNetwork = async () => {
+  await client.blockchainNetwork.delete("network-unique-name");
+};
+
+// Restart network
+const restartNetwork = async () => {
+  await client.blockchainNetwork.restart("network-unique-name");
 };
 ```
 
@@ -101,7 +122,13 @@ Navigate to your network and click **Manage network** to see available actions:
 
 ```bash
 # List networks
-settlemint platform list services --application <application-name>
+settlemint platform list blockchain-networks --application <app-name>
+
+# Get network details
+settlemint platform read blockchain-network <network-name>
+
+# Delete network
+settlemint platform delete blockchain-network <network-name>
 
 # Restart network
 settlemint platform restart blockchain-network <network-name>
@@ -112,20 +139,16 @@ settlemint platform restart blockchain-network <network-name>
 
 ```typescript
 // List networks
-const listNetworks = async () => {
-  const networks = await client.blockchainNetwork.list("your-application-name");
-  console.log('Networks:', networks);
-};
+await client.blockchainNetwork.list("your-app");
+
+// Get network details
+await client.blockchainNetwork.read("network-unique-name");
 
 // Delete network
-const deleteNetwork = async () => {
-  await client.blockchainNetwork.delete("network-unique-name");
-};
+await client.blockchainNetwork.delete("network-unique-name");
 
 // Restart network
-const restartNetwork = async () => {
-  await client.blockchainNetwork.restart("network-unique-name");
-};
+await client.blockchainNetwork.restart("network-unique-name");
 ```
 
 </TabItem>

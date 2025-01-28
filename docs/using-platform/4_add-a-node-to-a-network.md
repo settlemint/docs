@@ -102,20 +102,15 @@ settlemint platform restart blockchain-node <node-name>
 
 ```typescript
 // List nodes
-const listNodes = async () => {
-  const nodes = await client.blockchainNode.list("your-application");
-  console.log('Nodes:', nodes);
-};
+
+// List nodes
+await client.blockchainNode.list("your-application");
 
 // Delete node
-const deleteNode = async () => {
-  await client.blockchainNode.delete("node-unique-name");
-};
+await client.blockchainNode.read("node-unique-name");
 
 // Restart node
-const restartNode = async () => {
-  await client.blockchainNode.restart("node-unique-name");
-};
+await client.blockchainNode.restart("node-unique-name");
 ```
 
 </TabItem>

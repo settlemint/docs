@@ -6,36 +6,30 @@ description: Guide to using middleware in SettleMint
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Middleware acts as a layer between blockchain and your dApp, allowing you to index and query blockchain data efficiently.
+# Middleware
+
+Middleware acts as a bridge between your blockchain network and applications, providing essential services like data indexing, API access, and event monitoring. Before adding middleware, ensure you have an application and blockchain node in place.
 
 ## Available Options
 
-[Graph Middleware](#the-graph-middleware) - For EVM chains, providing subgraph-based indexing with GraphQL API.([1](https://github.com/settlemint/sdk/tree/main/sdk/thegraph))
+- **Graph Middleware** - For EVM chains, providing subgraph-based indexing with GraphQL API
+- **Smart Contract Portal** - For EVM chains, offering REST & GraphQL APIs with webhooks
+- **FabConnect** - For Hyperledger Fabric, providing RESTful API
+- **Attestation Indexer** - Specialized indexer for attestations with GraphQL API
 
-[Smart Contract Portal Middleware](#the-smart-contract-portal-middleware) - For EVM chains, offering REST & GraphQL APIs with webhooks.([2](https://github.com/settlemint/sdk/tree/main/sdk/portal))
-
-[FabConnect](#firefly-fabconnect) - For Hyperledger Fabric, providing RESTful API and identity management.
-
-[Attestation Indexer](#attestation-indexer) - Specialized indexer for attestations with GraphQL API.
-
-Choose the middleware that best fits your needs and continue reading the relevant section below for detailed setup and usage instructions.
-
-## Adding a middleware
-
-Before adding a middleware make sure that you have a **blockchain node** running.
+## How to Add Middleware
 
 <Tabs>
 <TabItem value="platform-ui" label="Platform UI">
 
-Navigate to the **application** where you want to add a middleware. Click **Middleware** in the left navigation, and then click **Add a middleware**. This opens a form.
+Navigate to the **application** where you want to add middleware. Click **Middleware** in the left navigation, and then click **Add a middleware**. This opens a form.
 
-Follow these steps to add the middleware:
-
-1. Choose [Graph Middleware](#the-graph-middleware) or [Smart Contract Portal Middleware](#the-smart-contract-portal-middleware)
-2. Choose a **Middleware name**. Choose one that will be easily recognizable in your dashboards.
-3. Select the **blockchain node** you want to connect to. This is the blockchain node that will be used to index the blockchain data.
-4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans.](launch-platform/managed-cloud-deployment/3_deployment-plans.md)
-5. You see the **resource cost** for this middleware displayed at the bottom of the form. Click **Confirm** to add the smart contract set.
+Follow these steps:
+1. Choose middleware type (Graph or Portal)
+2. Choose a **Middleware name**
+3. Select the **blockchain node**
+4. Configure deployment settings
+5. Click **Confirm**
 
 </TabItem>
 <TabItem value="sdk-cli" label="SDK CLI">
@@ -66,22 +60,40 @@ Optional parameters:
 <TabItem value="sdk-js" label="SDK JS">
 
 ```typescript
-// For Graph Middleware
-import { createTheGraphClient } from '@settlemint/sdk-thegraph';
+import { createSettleMintClient } from '@settlemint/sdk-js';
 
-const { client: graphClient, graphql } = createTheGraphClient({
-  instances: JSON.parse(process.env.SETTLEMINT_THEGRAPH_SUBGRAPHS_ENDPOINTS || '[]'),
-  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
-  subgraphName: 'your-subgraph'
+const client = createSettleMintClient({
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN,
+  instance: 'https://console.settlemint.com'
 });
 
-// For Smart Contract Portal
-import { createPortalClient } from '@settlemint/sdk-portal';
+// Create middleware
+const createMiddleware = async () => {
+  const result = await client.middleware.create({
+    applicationUniqueName: "your-app",
+    name: "my-middleware",
+    type: "THEGRAPH", // or "PORTAL"
+    blockchainNodeUniqueName: "your-node"
+  });
+  console.log('Middleware created:', result);
+};
 
-const { client: portalClient, graphql: portalGraphql } = createPortalClient({
-  instance: process.env.SETTLEMINT_PORTAL_GRAPHQL_ENDPOINT,
-  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN
-});
+// List middlewares
+const listMiddlewares = async () => {
+  const middlewares = await client.middleware.list("your-app");
+  console.log('Middlewares:', middlewares);
+};
+
+// Get middleware details
+const getMiddleware = async () => {
+  const middleware = await client.middleware.read("middleware-unique-name");
+  console.log('Middleware details:', middleware);
+};
+
+// Delete middleware
+const deleteMiddleware = async () => {
+  await client.middleware.delete("middleware-unique-name");
+};
 ```
 
 :::tip
@@ -91,7 +103,47 @@ Get your access token from the Platform UI under User Settings → API Tokens.
 </TabItem>
 </Tabs>
 
-When the middleware is deployed, click it from the list and start using it.
+## Manage Middleware
+
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
+
+Navigate to your middleware and click **Manage middleware** to:
+- View middleware details and status
+- Update configurations
+- Monitor health
+- Access endpoints
+
+</TabItem>
+<TabItem value="sdk-cli" label="SDK CLI">
+
+```bash
+# List middlewares
+settlemint platform list middlewares --application <app-name>
+
+# Get middleware details
+settlemint platform read middleware <middleware-name>
+
+# Delete middleware
+settlemint platform delete middleware <middleware-name>
+```
+
+</TabItem>
+<TabItem value="sdk-js" label="SDK JS">
+
+```typescript
+// List middlewares
+await client.middleware.list("your-app");
+
+// Get middleware details
+await client.middleware.read("middleware-unique-name");
+
+// Delete middleware
+await client.middleware.delete("middleware-unique-name");
+```
+
+</TabItem>
+</Tabs>
 
 ## The Graph Middleware
 
@@ -99,6 +151,32 @@ The Graph provides powerful indexing capabilities for EVM chains through subgrap
 - Custom indexing logic through subgraph manifests
 - Complex GraphQL queries
 - Real-time data updates
+
+### Using The Graph SDK
+
+```typescript
+import { createTheGraphClient } from '@settlemint/sdk-thegraph';
+
+const { client: graphClient, graphql } = createTheGraphClient({
+  instances: JSON.parse(process.env.SETTLEMINT_THEGRAPH_SUBGRAPHS_ENDPOINTS || '[]'),
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
+  subgraphName: 'your-subgraph'
+});
+
+// Make queries
+const query = graphql(`
+  query GetTokens {
+    tokens {
+      id
+      tokenID
+    }
+  }
+`);
+
+const result = await graphClient.request(query);
+```
+
+[Additional information about The Graph Middleware...]
 
 ## The Smart Contract Portal Middleware
 
@@ -108,30 +186,37 @@ The Portal middleware provides instant API access to your smart contracts. Key f
 - Type-safe contract interactions
 - Automatic ABI parsing
 
-### REST API
-
-A fully typed REST API with documentation is created from your Smart Contract ABI. Discover all endpoints on the REST tab.
-
-### GraphQL API
-
-The GraphQL API exposes the same functionality as the REST API with the added benefits of GraphQL querying.
-
-### Webhooks
-
-Register webhooks to receive notifications when transactions are processed. Events include signatures for verification.
-
-Example webhook consumer:
+### Using The Portal SDK
 
 ```typescript
-import { Webhook } from 'standardwebhooks';
+import { createPortalClient } from '@settlemint/sdk-portal';
 
-const wh = new Webhook(secret);
-const verifiedPayload = wh.verify(JSON.stringify(payload), {
-  'webhook-id': headers['btp-portal-event-id'],
-  'webhook-signature': headers['btp-portal-event-signature'],
-  'webhook-timestamp': headers['btp-portal-event-timestamp']
+const { client: portalClient, graphql: portalGraphql } = createPortalClient({
+  instance: process.env.SETTLEMINT_PORTAL_GRAPHQL_ENDPOINT,
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN
 });
+
+// Make GraphQL queries
+const query = portalGraphql(`
+  query GetContracts {
+    contracts {
+      address
+      name
+    }
+  }
+`);
+
+const result = await portalClient.request(query);
 ```
+
+[Additional information about The Smart Contract Portal Middleware...]
+
+## Further Reading
+
+- [The Graph Middleware](#the-graph-middleware)
+- [The Smart Contract Portal Middleware](#the-smart-contract-portal-middleware)
+- [Attestation Indexer](#attestation-indexer)
+- [Firefly FabConnect](#firefly-fabconnect)
 
 :::info Note
 All operations require appropriate permissions in your workspace.
@@ -317,3 +402,4 @@ async function webhookConsumerBootstrap(secret: string) {
 }
 
 webhookConsumerBootstrap('your-secret');
+```

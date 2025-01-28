@@ -20,7 +20,7 @@ Follow these steps to add storage:
 4. You can see the resource cost for your storage displayed at the bottom of the form. Click **Confirm** to add the storage.
 
 When the storage is deployed, click on it from the list, and go to the **Interface tab** to start adding files. You can connect to your storage using the details provided in the **Connect tab**.
-
+gi
 </TabItem>
 
 <TabItem value="sdk-cli" label="SDK CLI">

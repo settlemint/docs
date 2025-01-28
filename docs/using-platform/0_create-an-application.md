@@ -55,9 +55,26 @@ const client = createSettleMintClient({
 const createApp = async () => {
   const result = await client.application.create({
     workspaceUniqueName: "your-workspace",
-    name: "My Application"
+    name: "myApp"
   });
   console.log('Application created:', result);
+};
+
+// List applications
+const listApps = async () => {
+  const apps = await client.application.list("your-workspace");
+  console.log('Applications:', apps);
+};
+
+// Read application details
+const readApp = async () => {
+  const app = await client.application.read("app-unique-name");
+  console.log('Application details:', app);
+};
+
+// Delete application
+const deleteApp = async () => {
+  await client.application.delete("application-unique-name");
 };
 ```
 
@@ -94,15 +111,13 @@ settlemint platform delete application <name>
 
 ```typescript
 // List applications
-const listApps = async () => {
-  const apps = await client.application.list("your-workspace");
-  console.log('Applications:', apps);
-};
+await client.application.list("your-workspace");
+
+// Read application
+await client.application.read("app-unique-name");
 
 // Delete application
-const deleteApp = async () => {
-  await client.application.delete("application-unique-name");
-};
+await client.application.delete("app-unique-name");
 ```
 
 </TabItem>
