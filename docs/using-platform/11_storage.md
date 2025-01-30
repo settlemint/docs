@@ -1,38 +1,43 @@
+---
+title: Storage
+description: Guide to using storage solutions in SettleMint
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Storage
 
-Managing complex or large data in decentralized systems can be a challenge. To securely store and share your files and data, SettleMint offers two storage solutions that can interact with the blockchain: **IPFS (decentralized)** and **MinIO (centralized)**.([1](https://github.com/settlemint/sdk/tree/main/sdk/ipfs))([2](https://github.com/settlemint/sdk/tree/main/sdk/minio))
+Managing complex or large data in decentralized systems can be a challenge. To securely store and share your files and data, SettleMint offers two storage solutions that can interact with the blockchain: **IPFS (decentralized)** and **MinIO (centralized)**.
 
-## Adding storage
+## Add Storage
 
 <Tabs>
 <TabItem value="platform-ui" label="Platform UI">
 
-Navigate to the **application** where you want to add storage. Click **Storage** in the left navigation. This opens a form.
+Navigate to the **application** where you want to add storage. Click **Storage** in the left navigation, and then click **Add storage**. This opens a form.
 
-Follow these steps to add storage:
+Follow these steps:
+1. Choose storage type (IPFS or MinIO)
+2. Choose a **Storage name**
+3. Configure deployment settings
+4. Click **Confirm**
 
-1. Choose **'IPFS'** or **'MinIO'**
-2. Choose a **name** for your storage. Choose one that will be easily recognizable in your dashboards.
-3. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans](launch-platform/managed-cloud-deployment/3_deployment-plans.md)
-4. You can see the resource cost for your storage displayed at the bottom of the form. Click **Confirm** to add the storage.
-
-When the storage is deployed, click on it from the list, and go to the **Interface tab** to start adding files. You can connect to your storage using the details provided in the **Connect tab**.
-gi
 </TabItem>
-
 <TabItem value="sdk-cli" label="SDK CLI">
 
+First ensure you're authenticated:
 ```bash
 settlemint login
+```
 
-# Create storage
+Create storage:
+```bash
 settlemint platform create storage <type> <name> \
   --application <app-name> \
   --provider <provider> \
-  --region <region>
+  --region <region> \
+  --size <size>  # Optional: SMALL|MEDIUM|LARGE
 ```
 
 Where `<type>` can be:
@@ -40,7 +45,6 @@ Where `<type>` can be:
 - `minio`
 
 </TabItem>
-
 <TabItem value="sdk-js" label="SDK JS">
 
 ```typescript
@@ -48,24 +52,111 @@ import { createSettleMintClient } from '@settlemint/sdk-js';
 import { createIPFSClient } from '@settlemint/sdk-ipfs';
 import { createMinioClient } from '@settlemint/sdk-minio';
 
-// Initialize IPFS client
+// 1. Platform Management - For creating and managing storage
+const client = createSettleMintClient({
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
+  instance: 'https://console.settlemint.com'
+});
+
+// Create storage instance
+const createStorage = async () => {
+  const result = await client.storage.create({
+    applicationId: "your-app-id",     // Required
+    name: "my-storage",               // Required
+    storageProtocol: "IPFS",         // Required: "IPFS" | "MINIO"
+    provider: "GKE",                  // Required
+    region: "EUROPE",                 // Required
+    size: "SMALL"                     // Optional: "SMALL" | "MEDIUM" | "LARGE"
+  });
+  console.log('Storage created:', result);
+};
+
+// 2. Storage Operations
+// For IPFS
 const ipfsClient = createIPFSClient({
   endpoint: process.env.SETTLEMINT_IPFS_ENDPOINT!,
   accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!
 });
 
-// Initialize MinIO client
+// Example IPFS operations
+const uploadToIPFS = async (data: Buffer) => {
+  const result = await ipfsClient.add(data);
+  return result.cid;
+};
+
+// For MinIO
 const minioClient = createMinioClient({
   endpoint: process.env.SETTLEMINT_MINIO_ENDPOINT!,
-  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
   accessKeyId: process.env.SETTLEMINT_MINIO_ACCESS_KEY!,
-  secretAccessKey: process.env.SETTLEMINT_MINIO_SECRET_KEY!
+  secretAccessKey: process.env.SETTLEMINT_MINIO_SECRET_KEY!,
+  region: process.env.SETTLEMINT_MINIO_REGION
 });
+
+// Example MinIO operations
+const uploadToMinio = async (bucket: string, objectName: string, data: Buffer) => {
+  await minioClient.putObject(bucket, objectName, data);
+};
 ```
 
 :::tip
-Storage instances have various status states including: COMPLETED, DEPLOYING, FAILED, PAUSED, etc.
+Get your access token from the Platform UI under User Settings → API Tokens.
 :::
+
+:::tip
+The SDK enables you to:
+- Use IPFS for decentralized storage - check out the [IPFS SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/ipfs)
+- Use MinIO for S3-compatible storage - check out the [MinIO SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/minio)
+:::
+
+</TabItem>
+</Tabs>
+
+## Manage Storage
+
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
+
+Navigate to your storage and click **Manage storage** to:
+- View storage details and status
+- Monitor health
+- Access storage interface
+- Update configurations
+
+</TabItem>
+<TabItem value="sdk-cli" label="SDK CLI">
+
+```bash
+# List storage instances
+settlemint platform list storage --application <app-name>
+
+# Get storage details
+settlemint platform read storage <name>
+
+# Delete storage
+settlemint platform delete storage <name>
+```
+
+</TabItem>
+<TabItem value="sdk-js" label="SDK JS">
+
+```typescript
+// List storage instances
+const listStorage = async () => {
+  const storages = await client.storage.list("your-app-id");
+  console.log('Storage instances:', storages);
+};
+
+// Get storage details
+const getStorage = async () => {
+  const storage = await client.storage.read("storage-unique-name");
+  console.log('Storage details:', storage);
+};
+
+// Delete storage
+const deleteStorage = async () => {
+  await client.storage.delete("storage-unique-name");
+};
+```
 
 </TabItem>
 </Tabs>
@@ -107,4 +198,8 @@ You can now use the s3Client object to call methods like `makeBucket`, `getObjec
 
 :::info Note
 MinIO client can also be configured in Python, .NET, Java, Golang, Haskell. You can follow the [quickstart guides provided by MinIO here](https://docs.min.io/docs/java-client-quickstart-guide.html) for more information.
+:::
+
+:::info Note
+All operations require appropriate permissions in your workspace.
 :::

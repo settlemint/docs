@@ -63,38 +63,25 @@ Optional parameters:
 import { createSettleMintClient } from '@settlemint/sdk-js';
 
 const client = createSettleMintClient({
-  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN,
+  accessToken: 'your_access_token',
   instance: 'https://console.settlemint.com'
 });
 
 // Create middleware
 const createMiddleware = async () => {
   const result = await client.middleware.create({
-    applicationUniqueName: "your-app",
+    applicationUniqueName: "your-app-unique-name",
     name: "my-middleware",
-    type: "SHARED", //DEDICATED
-    blockchainNodeUniqueName: "your-node",
-    size: "SMALL"
+    type: "SHARED",
+    interface: "GRAPH", 
+    blockchainNodeUniqueName: "your-node-unique-name",
+    region: "EUROPE",  // Required
+    provider: "GKE",   // Required 
+    size: "SMALL"      // Valid options: "SMALL" | "MEDIUM" | "LARGE"
   });
   console.log('Middleware created:', result);
 };
 
-// List middlewares
-const listMiddlewares = async () => {
-  const middlewares = await client.middleware.list("your-app");
-  console.log('Middlewares:', middlewares);
-};
-
-// Get middleware details
-const getMiddleware = async () => {
-  const middleware = await client.middleware.read("middleware-unique-name");
-  console.log('Middleware details:', middleware);
-};
-
-// Delete middleware
-const deleteMiddleware = async () => {
-  await client.middleware.delete("middleware-unique-name");
-};
 ```
 
 :::tip
@@ -163,20 +150,11 @@ const { client: graphClient, graphql } = createTheGraphClient({
   accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
   subgraphName: 'your-subgraph'
 });
-
-// Make queries
-const query = graphql(`
-  query GetTokens {
-    tokens {
-      id
-      tokenID
-    }
-  }
-`);
-
-const result = await graphClient.request(query);
 ```
 
+:::tip
+For detailed API reference and advanced usage examples, check out the [TheGraph SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/thegraph).
+:::
 
 ### Using The Graph Middleware
 
@@ -304,19 +282,11 @@ const { client: portalClient, graphql: portalGraphql } = createPortalClient({
   instance: process.env.SETTLEMINT_PORTAL_GRAPHQL_ENDPOINT,
   accessToken: process.env.SETTLEMINT_ACCESS_TOKEN
 });
-
-// Make GraphQL queries
-const query = portalGraphql(`
-  query GetContracts {
-    contracts {
-      address
-      name
-    }
-  }
-`);
-
-const result = await portalClient.request(query);
 ```
+
+:::tip
+For comprehensive API documentation and advanced features, check out the [Portal SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/portal).
+:::
 
 ### Upload an ABI
 
