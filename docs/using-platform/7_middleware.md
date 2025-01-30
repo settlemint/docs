@@ -72,8 +72,9 @@ const createMiddleware = async () => {
   const result = await client.middleware.create({
     applicationUniqueName: "your-app",
     name: "my-middleware",
-    type: "THEGRAPH", // or "PORTAL"
-    blockchainNodeUniqueName: "your-node"
+    type: "SHARED", //DEDICATED
+    blockchainNodeUniqueName: "your-node",
+    size: "SMALL"
   });
   console.log('Middleware created:', result);
 };
@@ -176,53 +177,8 @@ const query = graphql(`
 const result = await graphClient.request(query);
 ```
 
-[Additional information about The Graph Middleware...]
 
-## The Smart Contract Portal Middleware
-
-The Portal middleware provides instant API access to your smart contracts. Key features include:
-- Auto-generated REST & GraphQL APIs
-- Built-in webhooks for event notifications
-- Type-safe contract interactions
-- Automatic ABI parsing
-
-### Using The Portal SDK
-
-```typescript
-import { createPortalClient } from '@settlemint/sdk-portal';
-
-const { client: portalClient, graphql: portalGraphql } = createPortalClient({
-  instance: process.env.SETTLEMINT_PORTAL_GRAPHQL_ENDPOINT,
-  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN
-});
-
-// Make GraphQL queries
-const query = portalGraphql(`
-  query GetContracts {
-    contracts {
-      address
-      name
-    }
-  }
-`);
-
-const result = await portalClient.request(query);
-```
-
-[Additional information about The Smart Contract Portal Middleware...]
-
-## Further Reading
-
-- [The Graph Middleware](#the-graph-middleware)
-- [The Smart Contract Portal Middleware](#the-smart-contract-portal-middleware)
-- [Attestation Indexer](#attestation-indexer)
-- [Firefly FabConnect](#firefly-fabconnect)
-
-:::info Note
-All operations require appropriate permissions in your workspace.
-:::
-
-## The Graph Middleware
+### Using The Graph Middleware
 
 [The Graph](https://thegraph.com/en/) is a protocol for indexing and querying blockchain data from networks. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned).
 
@@ -300,6 +256,17 @@ The following tasks need to be run in this sequence:
 
 The indexing of your smart contracts has now started. This can take a while, but once done you can query the middleware for your data in seconds using the **GraphQL API**. You can find the **endpoint** in the **Connect-tab**.
 
+## Further Reading
+
+- [The Graph Middleware](#the-graph-middleware)
+- [The Smart Contract Portal Middleware](#the-smart-contract-portal-middleware)
+- [Attestation Indexer](#attestation-indexer)
+- [Firefly FabConnect](#firefly-fabconnect)
+
+:::info Note
+All operations require appropriate permissions in your workspace.
+:::
+
 ## The Smart Contract Portal Middleware
 
 The Smart Contract Portal is a middleware which creates an easy to use api on top of your smart contracts. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned) or on a Load Balancer.
@@ -319,6 +286,37 @@ Before you start, make sure you are running:
 - A Private Key
 
 :::
+
+### Using The Smart Contract Portal Middleware
+
+The Portal middleware provides instant API access to your smart contracts. Key features include:
+- Auto-generated REST & GraphQL APIs
+- Built-in webhooks for event notifications
+- Type-safe contract interactions
+- Automatic ABI parsing
+
+### Using The Portal SDK
+
+```typescript
+import { createPortalClient } from '@settlemint/sdk-portal';
+
+const { client: portalClient, graphql: portalGraphql } = createPortalClient({
+  instance: process.env.SETTLEMINT_PORTAL_GRAPHQL_ENDPOINT,
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN
+});
+
+// Make GraphQL queries
+const query = portalGraphql(`
+  query GetContracts {
+    contracts {
+      address
+      name
+    }
+  }
+`);
+
+const result = await portalClient.request(query);
+```
 
 ### Upload an ABI
 

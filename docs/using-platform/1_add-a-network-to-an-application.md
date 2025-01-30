@@ -69,8 +69,8 @@ const createNetwork = async () => {
     name: "my-network",
     nodeName: "validator-1",
     consensusAlgorithm: "BESU_QBFT",
-    provider: "gcp",
-    region: "europe-west1"
+    provider: "GKE", // GKE, EKS, AKS
+    region: "EUROPE" 
   });
   console.log('Network created:', result);
 };
