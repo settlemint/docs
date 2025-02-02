@@ -58,7 +58,7 @@ module.exports = function (
       const items: ContentItem[] = [];
 
       try {
-        // Access docs through the preset's routeBasePath
+        // Load docs
         const docsRouteBasePath = 'docs';
         const docsDir = path.join(context.siteDir, docsRouteBasePath);
 
@@ -72,14 +72,11 @@ module.exports = function (
             const fileNameMatch = file.match(/([^/]+)\.mdx?$/);
             const fileName = fileNameMatch ? fileNameMatch[1] : '';
 
-            // Basic frontmatter parsing
             const matter = require('gray-matter');
             const { data: frontmatter, content: markdownContent } = matter(content);
 
-            // Try to get title from frontmatter first, then h1 header, then filename
             let title = frontmatter.title;
             if (!title) {
-              // Look for first h1 header in markdown content
               const headerMatch = markdownContent.match(/^#\s+(.+)$/m);
               title = headerMatch ? headerMatch[1].trim() : fileName;
             }
@@ -93,7 +90,7 @@ module.exports = function (
           }
         }
 
-        // Do the same for blog posts
+        // Load blog posts
         const blogDir = path.join(context.siteDir, 'blog');
         if (fs.existsSync(blogDir)) {
           const blogFiles = getMarkdownFiles(blogDir);
@@ -108,10 +105,8 @@ module.exports = function (
             const matter = require('gray-matter');
             const { data: frontmatter, content: markdownContent } = matter(content);
 
-            // Try to get title from frontmatter first, then h1 header, then filename
             let title = frontmatter.title;
             if (!title) {
-              // Look for first h1 header in markdown content
               const headerMatch = markdownContent.match(/^#\s+(.+)$/m);
               title = headerMatch ? headerMatch[1].trim() : fileName;
             }
@@ -120,6 +115,36 @@ module.exports = function (
               title,
               description: frontmatter.description || '',
               permalink: `/blog/${relativePath.replace(/\.mdx?$/, '')}/`,
+              sectionNesting: 0
+            });
+          }
+        }
+
+        // Load releases
+        const releasesDir = path.join(context.siteDir, 'releases');
+        if (fs.existsSync(releasesDir)) {
+          const releaseFiles = getMarkdownFiles(releasesDir);
+          console.log('Found release files:', releaseFiles.length);
+
+          for (const file of releaseFiles) {
+            const content = fs.readFileSync(file, 'utf8');
+            const relativePath = path.relative(releasesDir, file);
+            const fileNameMatch = file.match(/([^/]+)\.mdx?$/);
+            const fileName = fileNameMatch ? fileNameMatch[1] : '';
+
+            const matter = require('gray-matter');
+            const { data: frontmatter, content: markdownContent } = matter(content);
+
+            let title = frontmatter.title;
+            if (!title) {
+              const headerMatch = markdownContent.match(/^#\s+(.+)$/m);
+              title = headerMatch ? headerMatch[1].trim() : fileName;
+            }
+
+            items.push({
+              title,
+              description: frontmatter.description || '',
+              permalink: `/releases/${relativePath.replace(/\.mdx?$/, '')}/`,
               sectionNesting: 0
             });
           }
@@ -162,12 +187,35 @@ This file contains links to all documentation pages, blog posts, and other conte
 
 `;
 
-      // Add docs with proper nesting
+      // Add docs without indentation
       this.content.forEach(doc => {
-        const indent = '  '.repeat(doc.sectionNesting);
-        markdownContent += `${indent}- [${doc.title}](${context.siteConfig.url}${context.siteConfig.baseUrl}${doc.permalink})\n`;
-        if (doc.description) {
-          markdownContent += `${indent}  ${doc.description}\n`;
+        if (doc.permalink.startsWith('/docs/')) {
+          markdownContent += `- [${doc.title}](${context.siteConfig.url}${context.siteConfig.baseUrl}${doc.permalink})\n`;
+          if (doc.description) {
+            markdownContent += `  ${doc.description}\n`;
+          }
+        }
+      });
+
+      // Add Developer Blog section
+      markdownContent += `\n## Developer Blog\n\n`;
+      this.content.forEach(doc => {
+        if (doc.permalink.startsWith('/blog/')) {
+          markdownContent += `- [${doc.title}](${context.siteConfig.url}${context.siteConfig.baseUrl}${doc.permalink})\n`;
+          if (doc.description) {
+            markdownContent += `  ${doc.description}\n`;
+          }
+        }
+      });
+
+      // Add Releases section
+      markdownContent += `\n## Releases\n\n`;
+      this.content.forEach(doc => {
+        if (doc.permalink.startsWith('/releases/')) {
+          markdownContent += `- [${doc.title}](${context.siteConfig.url}${context.siteConfig.baseUrl}${doc.permalink})\n`;
+          if (doc.description) {
+            markdownContent += `  ${doc.description}\n`;
+          }
         }
       });
 
