@@ -108,7 +108,7 @@ const config: Config = {
           position: 'right'
         },
         {
-          href: '/llms.txt',
+          href: 'https://console.settlemint.com/documentation/llms.txt',
           label: 'llms.txt',
           position: 'right'
         }
