@@ -1,5 +1,6 @@
 import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
+import path from 'path';
 import { themes } from 'prism-react-renderer';
 
 const config: Config = {
@@ -22,14 +23,38 @@ const config: Config = {
         id: 'releases',
         routeBasePath: 'releases',
         path: './releases',
-        blogSidebarCount: 'ALL'
+        blogSidebarCount: 'ALL',
+        onUntruncatedBlogPosts: 'ignore'
       }
-    ]
+    ],
+    [
+      '@docusaurus/plugin-ideal-image',
+      {
+        quality: 70,
+        max: 1030, // max resized image's size.
+        min: 640, // min resized image's size. if original is lower, use that size.
+        steps: 2, // the max number of images generated between min and max (inclusive)
+        disableInDev: false,
+      },
+    ],
+    path.resolve(__dirname, 'src/plugins/docusaurus-llms-plugin'),
   ],
   presets: [
     [
       'classic',
       {
+        sitemap: {
+          lastmod: 'date',
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
+          createSitemapItems: async (params) => {
+            const {defaultCreateSitemapItems, ...rest} = params;
+            const items = await defaultCreateSitemapItems(rest);
+            return items.filter((item) => !item.url.includes('/page/'));
+          },
+        },
         docs: {
           sidebarPath: require.resolve('./sidebars.js')
         },
@@ -40,11 +65,13 @@ const config: Config = {
         blog: {
           showReadingTime: true,
           blogTitle: 'Developer Blog',
-          sortPosts: 'descending'
+          sortPosts: 'descending',
+          onUntruncatedBlogPosts: 'ignore'
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')
         }
+
       } satisfies Preset.Options
     ]
   ],
@@ -78,6 +105,11 @@ const config: Config = {
         {
           href: 'https://settlemint.com',
           label: 'Website',
+          position: 'right'
+        },
+        {
+          href: '/llms.txt',
+          label: 'llms.txt',
           position: 'right'
         }
       ]
