@@ -32,7 +32,7 @@ interface DocusaurusPlugin {
 function getMarkdownFiles(dir: string): string[] {
   const files: string[] = [];
   const items = fs.readdirSync(dir, { withFileTypes: true });
-  
+
   for (const item of items) {
     const fullPath = path.join(dir, item.name);
     if (item.isDirectory()) {
@@ -41,7 +41,7 @@ function getMarkdownFiles(dir: string): string[] {
       files.push(fullPath);
     }
   }
-  
+
   return files;
 }
 
@@ -61,7 +61,7 @@ module.exports = function (
         // Access docs through the preset's routeBasePath
         const docsRouteBasePath = 'docs';
         const docsDir = path.join(context.siteDir, docsRouteBasePath);
-        
+
         if (fs.existsSync(docsDir)) {
           const docFiles = getMarkdownFiles(docsDir);
           console.log('Found doc files:', docFiles.length);
@@ -71,14 +71,22 @@ module.exports = function (
             const relativePath = path.relative(docsDir, file);
             const fileNameMatch = file.match(/([^/]+)\.mdx?$/);
             const fileName = fileNameMatch ? fileNameMatch[1] : '';
-            
+
             // Basic frontmatter parsing
-            const titleMatch = content.match(/title:\s*(.+)/);
-            const title = titleMatch ? titleMatch[1].replace(/['"]/g, '') : fileName;
-            
+            const matter = require('gray-matter');
+            const { data: frontmatter, content: markdownContent } = matter(content);
+
+            // Try to get title from frontmatter first, then h1 header, then filename
+            let title = frontmatter.title;
+            if (!title) {
+              // Look for first h1 header in markdown content
+              const headerMatch = markdownContent.match(/^#\s+(.+)$/m);
+              title = headerMatch ? headerMatch[1].trim() : fileName;
+            }
+
             items.push({
               title,
-              description: '', // You could parse description from frontmatter if needed
+              description: frontmatter.description || '',
               permalink: `/${docsRouteBasePath}/${relativePath.replace(/\.mdx?$/, '')}/`,
               sectionNesting: (relativePath.match(/\//g) || []).length
             });
@@ -96,13 +104,21 @@ module.exports = function (
             const relativePath = path.relative(blogDir, file);
             const fileNameMatch = file.match(/([^/]+)\.mdx?$/);
             const fileName = fileNameMatch ? fileNameMatch[1] : '';
-            
-            const titleMatch = content.match(/title:\s*(.+)/);
-            const title = titleMatch ? titleMatch[1].replace(/['"]/g, '') : fileName;
-            
+
+            const matter = require('gray-matter');
+            const { data: frontmatter, content: markdownContent } = matter(content);
+
+            // Try to get title from frontmatter first, then h1 header, then filename
+            let title = frontmatter.title;
+            if (!title) {
+              // Look for first h1 header in markdown content
+              const headerMatch = markdownContent.match(/^#\s+(.+)$/m);
+              title = headerMatch ? headerMatch[1].trim() : fileName;
+            }
+
             items.push({
               title,
-              description: '',
+              description: frontmatter.description || '',
               permalink: `/blog/${relativePath.replace(/\.mdx?$/, '')}/`,
               sectionNesting: 0
             });
@@ -128,7 +144,7 @@ module.exports = function (
       console.log('Post build starting...');
       console.log('Content array?', Array.isArray(this.content));
       console.log('Content length:', this.content?.length);
-      
+
       if (!Array.isArray(this.content)) {
         console.log('No content available');
         return;
