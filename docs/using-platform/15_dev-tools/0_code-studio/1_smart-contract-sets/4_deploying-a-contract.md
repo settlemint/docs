@@ -47,11 +47,9 @@ You can deploy your contracts to a network in the platform or a local developmen
   
   <TabItem value="sdk-cli" label="SDK CLI">
 
-  ## Smart Contract Set CLI Commands
+  ## Prerequisites
 
-  The SDK CLI provides commands for building, testing, and deploying smart contracts. Here's a detailed guide:
-
-  ### Prerequisites
+  First, authenticate yourself and connect to your application:
 
   ```bash
   # Login to the platform
@@ -61,52 +59,63 @@ You can deploy your contracts to a network in the platform or a local developmen
   settlemint connect
   ```
 
-  ### Building (Compiling)
+  ## Using Hardhat
+
+  Hardhat provides a complete development environment. Here's how to use it:
 
   ```bash
-  # Build smart contracts using Hardhat
+  # Step 1: Build your smart contracts
   settlemint scs hardhat build
+
+  # Step 2: Choose your deployment target
+  # For local development:
+  settlemint scs hardhat network     # Start a local network
+  settlemint scs hardhat deploy local  # Deploy to local network
+
+  # For production:
+  settlemint scs hardhat deploy remote  # Deploy to platform network
+
+  # Development tools:
+  settlemint scs hardhat test    # Run your test suite
+  settlemint scs hardhat script  # Execute deployment scripts
   ```
 
-  ### Deployment
+  ## Using Foundry
+
+  Foundry offers fast compilation and testing. Here's how to use it:
 
   ```bash
-  # Deploy smart contracts using Hardhat
-  settlemint scs hardhat deploy
+  # Step 1: Build your smart contracts
+  settlemint scs foundry build
 
-  # Deploy to local network
-  settlemint scs hardhat deploy local
+  # Step 2: Test and format
+  settlemint scs foundry test    # Run your test suite
+  settlemint scs foundry format  # Format your contract code
 
-  # Deploy to platform network
-  settlemint scs hardhat deploy remote
+  # Step 3: Local development
+  settlemint scs foundry network  # Start a local network for testing
   ```
 
-  ### Local Development Network
+  ## Working with Subgraphs
+
+  If you need to index your smart contract data:
 
   ```bash
-  # Start a development network using Hardhat
-  settlemint scs hardhat network
-  ```
+  # Step 1: Generate TypeScript types from your schema
+  settlemint scs subgraph codegen
 
-  ### Testing
+  # Step 2: Build the subgraph
+  settlemint scs subgraph build
 
-  ```bash
-  # Test the smart contracts using Hardhat
-  settlemint scs hardhat test
-  ```
-
-  ### Scripts
-
-  ```bash
-  # Run a script using Hardhat
-  settlemint scs hardhat script
+  # Step 3: Deploy to the Graph node
+  settlemint scs subgraph deploy [subgraph-name]
   ```
 
   :::note Important
   Before deployment, ensure:
   - You're authenticated (`settlemint login`)
   - You're connected to your application (`settlemint connect`)
-  - Your smart contracts are compiled (`settlemint scs hardhat build`)
+  - Your smart contracts are compiled
   - For remote deployment: you have a running node and sufficient funds
   :::
 
