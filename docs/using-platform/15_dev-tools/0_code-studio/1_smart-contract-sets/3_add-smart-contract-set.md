@@ -54,7 +54,12 @@ You must have an existing application before you add a smart contract set.
   settlemint login
   ```
   
-  Then create a smart contract set with the following command (refer to the [CLI docs](/using-platform/15_dev-tools/1_SDK/2_cli/2_commands) for more details):
+  You can create a smart contract set either on the platform or locally:
+
+  ### Create on Platform
+
+  Then create a smart contract set with the following command (refer to the 
+  [CLI docs](/docs/using-platform/15_dev-tools/1_SDK.md) for more details):
   
   ```bash
   settlemint platform create smart-contract-set <tool-name> \
@@ -71,8 +76,52 @@ You must have an existing application before you add a smart contract set.
     --template default \
     --deployment-plan starter
   ```
-  
-  Manage your smart contract set with:
+
+  ### Working with Smart Contract Sets Locally
+
+  You can also work with smart contract sets in your local development environment. This is useful for development and testing before deploying to the platform.
+
+  To create a smart contract set locally:
+
+  ```bash
+  # Create a new smart contract set
+  settlemint scs create
+
+  # You'll see the SettleMint ASCII art and then be prompted:
+  ✔ What is the name of your new SettleMint project? my awesome project
+
+  # Choose from available templates:
+  ❯ ERC20 token
+    Empty typescript
+    Empty typescript with PDC
+    ERC1155 token
+    ERC20 token with crowdsale mechanism
+    ERC20 token with MetaTx
+    ERC721
+    # ... and more
+  ```
+
+  Once created, you can use these commands to work with your local smart contract set:
+
+  ```bash
+  settlemint scs -h  # Show all available commands
+
+  # Main commands:
+  settlemint scs create        # Create a new smart contract set
+  settlemint scs foundry      # Foundry commands for building and testing
+  settlemint scs hardhat      # Hardhat commands for building, testing and deploying
+  settlemint scs subgraph    # Commands for managing TheGraph subgraphs
+  ```
+
+  The scaffolded project includes everything you need to start developing smart contracts:
+  - Contract templates
+  - Testing framework
+  - Deployment scripts
+  - Development tools configuration
+
+  ### Managing Platform Smart Contract Sets
+
+  Manage your platform smart contract sets with:
   
   ```bash
   # List smart contract sets
@@ -84,7 +133,7 @@ You must have an existing application before you add a smart contract set.
   # Delete a smart contract set
   settlemint platform delete smart-contract-set <smart-contract-set-name>
   ```
-  
+
   </TabItem>
   
   <TabItem value="sdk-js" label="SDK JS">
@@ -104,7 +153,7 @@ You must have an existing application before you add a smart contract set.
     const result = await client.smartContractSet.create({
       applicationUniqueName: "your-app",        // Your application unique name
       name: "my-smart-contract-set",            // The smart contract set name
-      template: "default"                         // Template to use (choose from available templates)
+      template: "default"                       // Template to use (choose from available templates)
     });
     console.log('Smart Contract Set created:', result);
   };
@@ -129,7 +178,7 @@ You must have an existing application before you add a smart contract set.
   ```
   
   :::tip
-  Get your access token from the Platform UI under User Settings → API Tokens.
+  Get your access token from the Platform UI under **User Settings → API Tokens**.
   :::
   
   </TabItem>
@@ -138,6 +187,7 @@ You must have an existing application before you add a smart contract set.
 :::info Note
 All operations require that you have the necessary permissions in your workspace.
 :::
+
 
 For protocol-specific information, please refer to the relevant section in our blockchain guides:
 
