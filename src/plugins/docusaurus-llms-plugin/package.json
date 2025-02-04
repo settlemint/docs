@@ -1,0 +1,8 @@
+{
+  "name": "docusaurus-llms-plugin",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@docusaurus/types": "3.7.0"
+  }
+} 
