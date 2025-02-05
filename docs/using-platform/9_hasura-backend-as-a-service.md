@@ -33,61 +33,16 @@ settlemint login
 
 Create Hasura instance:
 ```bash
-settlemint platform create integration-tool hasura <name> \
-  --application <app-name> \
-  --provider <provider> \
-  --region <region>
-```
+settlemint platform create integration-tool hasura <name>
 
-Optional parameters:
-- `--size <SMALL|MEDIUM|LARGE>`
-- `--accept-defaults`
+# Get information about the command and all available options
+settlemint platform create integration-tool hasura --help
+```
 
 </TabItem>
 <TabItem value="sdk-js" label="SDK JS">
 
-```typescript
-import { createSettleMintClient } from '@settlemint/sdk-js';
-import { createHasuraClient } from '@settlemint/sdk-hasura';
-
-// 1. Platform Management - For creating and managing Hasura instances
-const client = createSettleMintClient({
-  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
-  instance: 'https://console.settlemint.com'
-});
-
-// Create a new Hasura instance
-const createHasura = async () => {
-  const result = await client.integrationTool.create({
-    type: "HASURA",
-    name: "my-hasura",
-    applicationUniqueName: "your-app",
-    provider: "GKE",
-    region: "EUROPE",
-    size: "SMALL"
-  });
-  console.log('Hasura created:', result);
-};
-
-// 2. Database Operations - For interacting with your Hasura database
-const hasuraClient = createHasuraClient({
-  endpoint: process.env.SETTLEMINT_HASURA_ENDPOINT!,
-  adminSecret: process.env.SETTLEMINT_HASURA_ADMIN_SECRET!
-});
-
-// Example: Make a GraphQL query
-const queryData = async () => {
-  const { data } = await hasuraClient.request(gql`
-    query GetUsers {
-      users {
-        id
-        name
-      }
-    }
-  `);
-  console.log('Query result:', data);
-};
-```
+For a full example of how to create a blockchain explorer using the SDK, see the [Hasura SDK API Reference](https://www.npmjs.com/package/@settlemint/sdk-hasura#api-reference).
 
 :::tip
 The SDK enables you to easily query and mutate data stored in your SettleMint-powered PostgreSQL databases through a type-safe GraphQL interface. For detailed API reference, check out the [Hasura SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/hasura).

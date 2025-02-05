@@ -22,7 +22,7 @@ Navigate to the **application** where you will create the network. Click **Add b
 
 Follow these steps:
 1. **Select the protocol** of your choice and click **Continue**.
-2. Choose a **network name** and a **node name**. 
+2. Choose a **network name** and a **node name**.
 3. Configure your deployment settings and network parameters.
 4. Click **Confirm** to add the network.
 
@@ -37,19 +37,11 @@ settlemint login
 Create a blockchain network:
 ```bash
 settlemint platform create blockchain-network besu <network-name> \
-  --application <application-name> \
-  --node-name <node-name> \
-  --provider <provider> \
-  --region <region>
-```
+  --node-name <node-name>
 
-Optional parameters:
-- `--chain-id <chainId>`
-- `--gas-limit <limit>`
-- `--seconds-per-block <seconds>`
-- `--size <SMALL|MEDIUM|LARGE>`
-- `--type <SHARED|DEDICATED>`
-- `--accept-defaults`
+# Get information about the command and all available options
+settlemint platform create blockchain-network besu --help
+```
 
 </TabItem>
 <TabItem value="sdk-js" label="SDK JS">
@@ -70,7 +62,7 @@ const createNetwork = async () => {
     nodeName: "validator-1",
     consensusAlgorithm: "BESU_QBFT",
     provider: "GKE", // GKE, EKS, AKS
-    region: "EUROPE" 
+    region: "EUROPE"
   });
   console.log('Network created:', result);
 };

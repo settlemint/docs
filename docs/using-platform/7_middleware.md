@@ -41,20 +41,15 @@ settlemint login
 
 Create a middleware:
 ```bash
-settlemint platform create middleware <type> <name> \
-  --application <app-name> \
-  --blockchain-node <node-name> \
-  --provider <provider> \
-  --region <region>
+# Get the list of available middleware types
+settlemint platform create middleware --help
+
+# Create a middleware
+settlemint platform create middleware <type> <name>
+
+# Get information about the command and all available options
+settlemint platform create middleware <type> --help
 ```
-
-Where `<type>` can be:
-- `smart-contract-portal`
-- `graph`
-
-Optional parameters:
-- `--size <SMALL|MEDIUM|LARGE>`
-- `--accept-defaults`
 
 </TabItem>
 <TabItem value="sdk-js" label="SDK JS">
