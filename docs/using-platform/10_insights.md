@@ -44,10 +44,6 @@ settlemint platform create insights blockscout <name>
 settlemint platform create insights blockscout --help
 ```
 
-Optional parameters:
-- `--size <SMALL|MEDIUM|LARGE>`
-- `--accept-defaults`
-
 </TabItem>
 <TabItem value="sdk-js" label="SDK JS">
 
@@ -112,7 +108,8 @@ const restartExplorer = async () => {
   await client.insights.restart("explorer-unique-name");
 };
 ```
-
+</TabItem>
+</Tabs>
 ## Using the Explorer
 
 When the blockchain explorer is deployed and running successfully, you can:
