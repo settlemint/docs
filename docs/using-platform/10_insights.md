@@ -56,6 +56,63 @@ For a full example of how to create a blockchain explorer using the SDK, see the
 </TabItem>
 </Tabs>
 
+## Manage Explorer
+
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
+
+Navigate to your explorer and click **Manage insights** to:
+- View explorer details and status
+- Monitor health status
+- Access the explorer interface
+- Update configurations
+
+Current status values:
+- `DEPLOYING` - Initial deployment in progress
+- `COMPLETED` - Running normally
+- `FAILED` - Deployment or operation failed
+- `PAUSED` - Explorer is paused
+- `RESTARTING` - Explorer is restarting
+
+Health status indicators:
+- `HEALTHY` - Operating normally
+- `HAS_INDEXING_BACKLOG` - Processing backlog
+- `NOT_HA` - High availability issue
+- `NO_PEERS` - Network connectivity issue
+
+</TabItem>
+<TabItem value="sdk-cli" label="SDK CLI">
+
+```bash
+# List explorers
+settlemint platform list services --type insights
+
+# Restart explorer
+settlemint platform restart insights blockscout <name>
+```
+
+</TabItem>
+<TabItem value="sdk-js" label="SDK JS">
+
+```typescript
+// List explorers
+const listExplorers = async () => {
+  const explorers = await client.insights.list("your-app");
+  console.log('Explorers:', explorers);
+};
+
+// Get explorer details
+const getExplorer = async () => {
+  const explorer = await client.insights.read("explorer-unique-name");
+  console.log('Explorer details:', explorer);
+};
+
+// Restart explorer
+const restartExplorer = async () => {
+  await client.insights.restart("explorer-unique-name");
+};
+```
+
 ## Using the Explorer
 
 When the blockchain explorer is deployed and running successfully, you can:
