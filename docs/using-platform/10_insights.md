@@ -1,35 +1,152 @@
+---
+title: Insights
+description: Guide to using blockchain explorers in SettleMint
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Insights
 
-To view and inspect transactions in your blockchain application, SettleMint provides insightful dashboards via the integrated Blockscout blockchain explorer.
+To view and inspect transactions in your blockchain application, SettleMint provides insightful dashboards via integrated blockchain explorers:
+- **Blockscout** - For EVM compatible networks (Besu, Polygon Edge)
+- **Hyperledger Explorer** - For Fabric networks
+- **Otterscan** - Alternative EVM explorer with advanced features
 
-**Blockscout** can be hooked up to any of your permissioned EVM compatible blockchain networks running in SettleMint. This includes **Hyperledger Besu and Polygon Edge**.
+## Add Blockchain Explorer
 
-## Adding the blockchain explorer
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
 
 Navigate to the **application** where you want to add a blockchain explorer. Click **Insights** in the left navigation, and then click **Add Insights**. This opens a form.
 
-Follow these steps to add the blockchain explorer:
-
+Follow these steps:
 1. Select **Blockchain Explorer**
-2. Select the target **blockchain node** for the blockchain explorer and click **Continue**. Make sure you have a **Hyperledger Besu node or Polygon Edge node** in place.
-3. Enter a **name** for this instance of the blockchain explorer.
-4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans](launch-platform/managed-cloud-deployment/3_deployment-plans.md)
-5. You see the **resource cost** for this blockchain explorer displayed at the bottom of the form. Click **Confirm** to add the blockchain explorer.
+2. Select the target **blockchain node** and click **Continue**
+3. Enter a **name** for your explorer instance
+4. Configure deployment settings (provider, region, size)
+5. Click **Confirm** to add the explorer
 
-## Using the blockchain explorer
+</TabItem>
+<TabItem value="sdk-cli" label="SDK CLI">
 
-When the blockchain explorer is deployed and running successfully, click it from the list and start using it. Click the **Interface tab** to access the web UI. You can view this in full screen mode by clicking **View in fullscreen mode**.
+First ensure you're authenticated:
+```bash
+settlemint login
+```
 
-You can inspect all blocks, transactions, addresses and balances.
+Create blockchain explorer:
+```bash
+# Create blockchain explorer
+settlemint platform create insights blockscout <name>
 
-Click a block in the latest Blocks section to inspect its transactions, or click a transaction form the Transactions section to view its details. You can also click View all Blocks or View all Transactions button to view the full list of transactions or blocks.
+# Get information about the command and all available options
+settlemint platform create insights blockscout --help
+```
 
-![Blockscout 1.png](../../static/img/document360/Images/Blockscout%201.png)
+</TabItem>
+<TabItem value="sdk-js" label="SDK JS">
 
-Click a Transaction hash to see the Transaction Details
+For a full example of how to create a blockchain explorer using the SDK, see the [Blockscout SDK API Reference](https://www.npmjs.com/package/@settlemint/sdk-blockscout#api-reference).
 
-![Blockscout 2.png](../../static/img/document360/Images/Blockscout%202.png)
+</TabItem>
+</Tabs>
 
-Click an Account address to see the Address Details
+## Manage Explorer
 
-![Blockscout 3.png](../../static/img/document360/Images/Blockscout%203.png)
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
+
+Navigate to your explorer and click **Manage insights** to:
+- View explorer details and status
+- Monitor health status
+- Access the explorer interface
+- Update configurations
+
+Current status values:
+- `DEPLOYING` - Initial deployment in progress
+- `COMPLETED` - Running normally
+- `FAILED` - Deployment or operation failed
+- `PAUSED` - Explorer is paused
+- `RESTARTING` - Explorer is restarting
+
+Health status indicators:
+- `HEALTHY` - Operating normally
+- `HAS_INDEXING_BACKLOG` - Processing backlog
+- `NOT_HA` - High availability issue
+- `NO_PEERS` - Network connectivity issue
+
+</TabItem>
+<TabItem value="sdk-cli" label="SDK CLI">
+
+```bash
+# List explorers
+settlemint platform list services --type insights
+
+# Restart explorer
+settlemint platform restart insights blockscout <name>
+```
+
+</TabItem>
+<TabItem value="sdk-js" label="SDK JS">
+
+```typescript
+// List explorers
+const listExplorers = async () => {
+  const explorers = await client.insights.list("your-app");
+  console.log('Explorers:', explorers);
+};
+
+// Get explorer details
+const getExplorer = async () => {
+  const explorer = await client.insights.read("explorer-unique-name");
+  console.log('Explorer details:', explorer);
+};
+
+// Restart explorer
+const restartExplorer = async () => {
+  await client.insights.restart("explorer-unique-name");
+};
+```
+
+</TabItem>
+</Tabs>
+
+## Using the Explorer
+
+When the blockchain explorer is deployed and running successfully, you can:
+
+1. Access the web interface through the **Interface tab**
+2. View in fullscreen mode for better visibility
+3. Inspect blocks, transactions, addresses and balances
+
+Key features:
+- View latest blocks and transactions
+- Search by block number, transaction hash, or address
+- Inspect transaction details and status
+- View account balances and token transfers
+- Monitor smart contract interactions
+
+![Blockscout Interface](../../static/img/document360/Images/Blockscout%201.png)
+
+### Transaction Details
+Click a Transaction hash to see detailed information including:
+- Gas usage and fees
+- Input data and events
+- Status and confirmations
+- Related addresses
+
+![Transaction View](../../static/img/document360/Images/Blockscout%202.png)
+
+### Address Details
+Click an Account address to view:
+- Balance and token holdings
+- Transaction history
+- Contract interactions
+- Analytics and graphs
+
+![Address View](../../static/img/document360/Images/Blockscout%203.png)
+
+:::info Note
+All operations require appropriate permissions in your workspace.
+:::

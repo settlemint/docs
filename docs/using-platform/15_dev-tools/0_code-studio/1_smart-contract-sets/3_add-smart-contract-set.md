@@ -1,50 +1,193 @@
 ---
 title: Add a Smart Contract Set
-description: Add a Smart Contract Set
+description: Add a Smart Contract Set using Platform UI, SDK CLI, or SDK JS
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Add a Smart Contract Set
 
-By using smart contracts, you can add **business logic** to your application.
+Smart contract sets allow you to incorporate **business logic** into your application by deploying smart contracts that run on the blockchain. You can add a smart contract set via different methods as part of your development workflow.
 
-Smart contracts are programs that run on the blockchain and define the rules of your use case. They are self-executing with an 'if this, then that' pattern and activate when predefined conditions are met, such as a smart contract that transfers the ownership of a car once a certain amount of money is transferred to the seller's account.
+:::info Note
+You must have an existing application before you add a smart contract set.
+:::
 
-## How to Add a Smart Contract Set
+<Tabs>
+  <TabItem value="platform-ui" label="Platform UI">
 
-Navigate to the **application** where you want to add the Smart contract set.
+  Follow these steps to add a smart contract set through the Platform UI:
 
-Follow these steps to add the Smart contract set:
+  1. Navigate to the **application** where you want to add the smart contract set.
+  2. Open **Dev tools** and click on **Add a Dev tool**.
+  
+     ![Dev tools](../../../../../static/img/smart-contract-sets/empty-dev-tools.png)
+  
+  3. Select **Code Studio** as the Dev tool type.
+  
+     ![Select Code Studio](../../../../../static/img/smart-contract-sets/select-code-studio.png)
+  
+  4. Then choose **Smart Contract Set**.
+  
+     ![Select Smart Contract Set](../../../../../static/img/smart-contract-sets/select-smart-contract-set.png)
+  
+  5. Pick a **template**; the Code Studio will load with your chosen smart contract template.
+  
+     ![Select Template](../../../../../static/img/smart-contract-sets/select-template.png)
+  
+  6. Click **Continue** to enter details such as the Dev tool name, user, and deployment plan.
+  
+     ![Click Continue](../../../../../static/img/smart-contract-sets/click-continue.png)
+  
+  7. Confirm the resource cost and click **Confirm** to add the smart contract set.
+  
+  You can now further configure and eventually deploy your smart contracts.
+  
+  </TabItem>
+  
+  <TabItem value="sdk-cli" label="SDK CLI">
 
-1. Navigate to **Dev tools** and click on **Add a Dev tool**.
+  First, ensure you are authenticated:
+  
+  ```bash
+  settlemint login
+  ```
+  
+  You can create a smart contract set either on the platform or locally:
 
-   ![Dev tools](../../../../../static/img/smart-contract-sets/empty-dev-tools.png)
+  ### Create on Platform
 
-2. Select **Code Studio** as the Dev tool type.
+  Then create a smart contract set with the following command (refer to the 
+  [CLI docs](/docs/using-platform/15_dev-tools/1_SDK.md) for more details):
+  
+  ```bash
+  settlemint platform create smart-contract-set <tool-name> \
+    --application <application-name> \
+    --template <template-name> \
+    --deployment-plan <deployment-plan>
+  ```
+  
+  For example:
+  
+  ```bash
+  settlemint platform create smart-contract-set my-scset \
+    --application my-app \
+    --template default \
+    --deployment-plan starter
+  ```
 
-   ![Select Code Studio](../../../../../static/img/smart-contract-sets/select-code-studio.png)
+  ### Working with Smart Contract Sets Locally
 
-3. Choose **Smart Contract Set** as the Dev tool type.
+  You can also work with smart contract sets in your local development environment. This is useful for development and testing before deploying to the platform.
 
-   ![Select Smart contract set](../../../../../static/img/smart-contract-sets/select-smart-contract-set.png)
+  To create a smart contract set locally:
 
-4. Choose a **template**. The Code studio will contain the smart contracts for your selected template.
+  ```bash
+  # Create a new smart contract set
+  settlemint scs create
 
-   ![Select template](../../../../../static/img/smart-contract-sets/select-template.png)
+  # You'll see the SettleMint ASCII art and then be prompted:
+  ✔ What is the name of your new SettleMint project? my awesome project
 
-5. Click **Continue** to enter the name, user and deployment plan for your Smart contract set.
+  # Choose from available templates:
+  ❯ ERC20 token
+    Empty typescript
+    Empty typescript with PDC
+    ERC1155 token
+    ERC20 token with crowdsale mechanism
+    ERC20 token with MetaTx
+    ERC721
+    # ... and more
+  ```
 
-   ![Click Continue](../../../../../static/img/smart-contract-sets/click-continue.png)
+  Once created, you can use these commands to work with your local smart contract set:
 
-6. Enter a **Dev tool name** that will be easily recognizable in your dashboards, then choose the **Dev tool user**. The chosen user will be the only one with access to this Dev tool.
+  ```bash
+  settlemint scs -h  # Show all available commands
 
-   ![Enter name and user](../../../../../static/img/smart-contract-sets/enter-name-user.png)
+  # Main commands:
+  settlemint scs create        # Create a new smart contract set
+  settlemint scs foundry      # Foundry commands for building and testing
+  settlemint scs hardhat      # Hardhat commands for building, testing and deploying
+  settlemint scs subgraph    # Commands for managing TheGraph subgraphs
+  ```
 
-7. Choose a **Deployment Plan**. Select the type, cloud provider, region, and resource pack. [More about deployment plans](../../../../launch-platform/managed-cloud-deployment/3_deployment-plans.md).
-8. Review the resource cost for this smart contract set displayed at the bottom of the form. Click **Confirm** to add the Smart contract set.
+  The scaffolded project includes everything you need to start developing smart contracts:
+  - Contract templates
+  - Testing framework
+  - Deployment scripts
+  - Development tools configuration
 
-   ![Confirm](../../../../../static/img/smart-contract-sets/confirm.png)
+  ### Managing Platform Smart Contract Sets
 
-You are now ready to use the Smart contract set, configure it to your needs and deploy smart contracts!
+  Manage your platform smart contract sets with:
+  
+  ```bash
+  # List smart contract sets
+  settlemint platform list smart-contract-sets --application <application-name>
+  
+  # Read smart contract set details
+  settlemint platform read smart-contract-set <smart-contract-set-name>
+  
+  # Delete a smart contract set
+  settlemint platform delete smart-contract-set <smart-contract-set-name>
+  ```
+
+  </TabItem>
+  
+  <TabItem value="sdk-js" label="SDK JS">
+
+  You can also add a smart contract set programmatically using the JS SDK. The API follows the same pattern as for applications and blockchain networks:
+  
+  ```typescript
+  import { createSettleMintClient } from '@settlemint/sdk-js';
+
+  const client = createSettleMintClient({
+    accessToken: process.env.SETTLEMENT_ACCESS_TOKEN!,
+    instance: 'https://console.settlemint.com'
+  });
+
+  // Create a Smart Contract Set
+  const createSmartContractSet = async () => {
+    const result = await client.smartContractSet.create({
+      applicationUniqueName: "your-app",        // Your application unique name
+      name: "my-smart-contract-set",            // The smart contract set name
+      template: "default"                       // Template to use (choose from available templates)
+    });
+    console.log('Smart Contract Set created:', result);
+  };
+
+  // List Smart Contract Sets
+  const listSmartContractSets = async () => {
+    const sets = await client.smartContractSet.list("your-app");
+    console.log('Smart Contract Sets:', sets);
+  };
+
+  // Read Smart Contract Set details
+  const readSmartContractSet = async () => {
+    const details = await client.smartContractSet.read("smart-contract-set-unique-name");
+    console.log('Smart Contract Set details:', details);
+  };
+
+  // Delete a Smart Contract Set
+  const deleteSmartContractSet = async () => {
+    await client.smartContractSet.delete("smart-contract-set-unique-name");
+    console.log('Smart Contract Set deleted');
+  };
+  ```
+  
+  :::tip
+  Get your access token from the Platform UI under **User Settings → API Tokens**.
+  :::
+  
+  </TabItem>
+</Tabs>
+
+:::info Note
+All operations require that you have the necessary permissions in your workspace.
+:::
+
 
 For protocol-specific information, please refer to the relevant section in our blockchain guides:
 

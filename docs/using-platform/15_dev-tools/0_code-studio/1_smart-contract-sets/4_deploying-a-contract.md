@@ -1,102 +1,153 @@
 ---
 title: Deploying a smart contract
-description: Deploying a smart contract
+description: Deploying a smart contract using Platform UI or SDK CLI
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Deploying a smart contract
 
-You can deploy your contracts to a network in the platform or a hardhat network running locally in the IDE.
+You can deploy your contracts to a network in the platform or a local development network. This guide covers both Platform UI and SDK CLI approaches.
 
-The typical folder structure of SettleMint's smart contract set will include:
+<Tabs>
+  <TabItem value="platform-ui" label="Platform UI">
 
-- **`contracts/`**: Contains the Solidity smart contracts for the project.
-- **`test/`**: Houses the Solidity tests, written to verify the functionality of the smart contracts.
-  - The test folder can contain both Hardhat tests written in TypeScript, and Foundry tests written in Solidity.
-- **`script/`**: Includes scripts for deploying or interacting with the contracts post-deployment.
-- **`lib/`**: Optional directory for Solidity libraries or external dependencies.
-- **`ignitions/`**: A folder containing the ignitions for Hardhat deployment.
-- **`out/`**: Generated directory where compilation artifacts (like ABI and binary) are stored.
-- **`foundry.toml`**: Configuration file for Foundry, where you can set global settings and parameters.
-- **`hardhat.config`**: Hardhat configuration file.
-- **`subgraphs`**: Contains the indexing logic for your subgraphs, specific to your smart contract.
+  Follow these steps to deploy your smart contract through the Platform UI:
 
-The smart contract sets include all the commands you need to compile and deploy your contracts. They are available as tasks in the Task Manager. Follow these steps to access the Task Manager:
+  1. Open the IDE by clicking on your smart contract set.
+     
+     ![Open IDE](../../../../../static/img/deploy-scs/open-ide.png)
 
-**Step 1**: Open the IDE
+  2. Click on the **Task Manager** button.
+     
+     ![Task Manager](../../../../../static/img/deploy-scs/task-manager.png)
 
-![Open IDE](../../../../../static/img/deploy-scs/open-ide.png)
+  3. First compile your contract by running either:
+     - **Hardhat - Build** task
+       ![Hardhat compile task manager](../../../../../static/img/deploy-scs/hardhat-build.png)
+     - **Foundry - Build** task
+       ![Foundry compile task manager](../../../../../static/img/deploy-scs/foundry-build.png)
 
-**Step 2**: Click on the `Task Manager` button
+  4. To deploy to a platform network:
+     - Run the **SettleMint - Login** task
+       ![SettleMint login](../../../../../static/img/deploy-scs/settlemint-login.png)
+     - Run the **Hardhat - Deploy to platform network** task
+       ![Hardhat deploy remote task manager](../../../../../static/img/deploy-scs/hardhat-deploy-remote.png)
+     - Select your node and private key when prompted
+       ![Hardhat deploy remote select node](../../../../../static/img/deploy-scs/hardhat-deploy-remote-select-node.png)
 
-![Task Manager](../../../../../static/img/deploy-scs/task-manager.png)
+  5. To deploy locally:
+     - Run the **Hardhat - Start local network** task
+       ![Hardhat start local network](../../../../../static/img/deploy-scs/hardhat-start-local-network.png)
+     - Run the **Hardhat - Deploy to local network** task
+       ![Hardhat deploy local network](../../../../../static/img/deploy-scs/hardhat-deploy-local-network.png)
 
-## Compile
+  </TabItem>
+  
+  <TabItem value="sdk-cli" label="SDK CLI">
 
-You need to compile your contracts before you can deploy them. SettleMint's smart contract sets include both Hardhat and Foundry. You can compile using your preferred framework.
+  ## Prerequisites
 
-### Hardhat
+  First, authenticate yourself and connect to your application:
 
-To compile your contracts using Hardhat, you can run the `Hardhat - Build` task
+  ```bash
+  # Login to the platform
+  settlemint login
 
-![Hardhat compile task manager](../../../../../static/img/deploy-scs/hardhat-build.png)
+  # Connect to your application
+  settlemint connect
+  ```
 
-### Foundry
+  ## Using Hardhat
 
-To compile your contracts using Foundry, you can run the `Foundry - Build` task
+  Hardhat provides a complete development environment. Here's how to use it:
 
-![Foundry compile task manager](../../../../../static/img/deploy-scs/foundry-build.png)
+  ```bash
+  # Step 1: Build your smart contracts
+  settlemint scs hardhat build
 
-## Deploy to a network in the platform
+  # Step 2: Choose your deployment target
+  # For local development:
+  settlemint scs hardhat network     # Start a local network
+  settlemint scs hardhat deploy local  # Deploy to local network
 
-You can deploy your contracts to a network in the same application as the smart contract set by running the `Hardhat - Deploy to platform network` task
+  # For production:
+  settlemint scs hardhat deploy remote  # Deploy to platform network
 
-:::note
+  # Development tools:
+  settlemint scs hardhat test    # Run your test suite
+  settlemint scs hardhat script  # Execute deployment scripts
+  ```
 
-Ensure you have the following:
+  ## Using Foundry
 
-- A running node in the network
-- A private key activated on the node
+  Foundry offers fast compilation and testing. Here's how to use it:
 
-:::
+  ```bash
+  # Step 1: Build your smart contracts
+  settlemint scs foundry build
 
-### Hardhat
+  # Step 2: Test and format
+  settlemint scs foundry test    # Run your test suite
+  settlemint scs foundry format  # Format your contract code
 
-**Step 1**: Log in to the platform by running the `SettleMint - Login` task
+  # Step 3: Local development
+  settlemint scs foundry network  # Start a local network for testing
+  ```
 
-![SettleMint login](../../../../../static/img/deploy-scs/settlemint-login.png)
+  ## Working with Subgraphs
 
-**Step 2**: Run the `Hardhat - Deploy to platform network` task
+  If you need to index your smart contract data:
 
-![Hardhat deploy remote task manager](../../../../../static/img/deploy-scs/hardhat-deploy-remote.png)
+  ```bash
+  # Step 1: Generate TypeScript types from your schema
+  settlemint scs subgraph codegen
 
-**Step 3**: Select the node you want to deploy to
+  # Step 2: Build the subgraph
+  settlemint scs subgraph build
 
-![Hardhat deploy remote select node](../../../../../static/img/deploy-scs/hardhat-deploy-remote-select-node.png)
+  # Step 3: Deploy to the Graph node
+  settlemint scs subgraph deploy [subgraph-name]
+  ```
 
-**Step 4**: Select the private key you want to use for the deployment
+  :::note Important
+  Before deployment, ensure:
+  - You're authenticated (`settlemint login`)
+  - You're connected to your application (`settlemint connect`)
+  - Your smart contracts are compiled
+  - For remote deployment: you have a running node and sufficient funds
+  :::
 
-![Hardhat deploy remote select private key](../../../../../static/img/deploy-scs/hardhat-deploy-remote-select-private-key.png)
+  ### Environment Configuration
 
-**Step 5**: Confirm the deployment
+  When using `settlemint connect`, you'll be prompted to configure:
+  - Workspace selection
+  - Application selection
+  - Blockchain node selection
+  - The Graph instance selection
+  - HD Private Key selection
+  - Application access token creation
 
-![Hardhat deploy remote success](../../../../../static/img/deploy-scs/hardhat-deploy-remote-success.png)
+  This configuration is stored locally and used for subsequent commands.
 
-## Deploy to a local network
+  </TabItem>
+</Tabs>
 
-### Hardhat
+## Project Structure
 
-**Step 1**: Start the local hardhat network by running the `Hardhat - Start local network` task
+The typical folder structure of a SettleMint smart contract set includes:
 
-![Hardhat start local network](../../../../../static/img/deploy-scs/hardhat-start-local-network.png)
-
-**Step 2**: Then, run the `Hardhat - Deploy to local network` task. Ensure the 'Hardhat - Start local network' task continues to run, as the Hardhat network must be active for contract deployment.
-
-![Hardhat deploy local network](../../../../../static/img/deploy-scs/hardhat-deploy-local-network.png)
-
-Success! The contract has been deployed to the local network.
-
-![Hardhat deploy local network success](../../../../../static/img/deploy-scs/hardhat-deploy-local-success.png)
+- **`contracts/`**: Contains the Solidity smart contracts
+- **`test/`**: Contains both Hardhat (TypeScript) and Foundry (Solidity) tests
+- **`script/`**: Deployment and interaction scripts
+- **`lib/`**: Optional Solidity libraries
+- **`ignitions/`**: Hardhat deployment configurations
+- **`out/`**: Compilation artifacts
+- **`foundry.toml`**: Foundry configuration
+- **`hardhat.config`**: Hardhat configuration
+- **`subgraphs/`**: The Graph indexing configurations
 
 ## Customize smart contracts
 
-You can customize your smart contracts to your specific needs by editing the code in the IDE. The smart contract sets include a Generative AI plugin to supercharge your smart contract development. [Learn more about the Generative AI plugin here.](./5_AI_plugin.md)
+You can customize your smart contracts using the built-in IDE. The smart contract sets include a Generative AI plugin to assist with development. [Learn more about the AI plugin here.](./5_AI_plugin.md)

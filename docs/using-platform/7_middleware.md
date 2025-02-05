@@ -1,26 +1,157 @@
+---
+title: Middleware
+description: Guide to using middleware in SettleMint
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Middleware
 
-For any dApp to provide good UX, you need a solution that quickly loads the data stored on chain and on IPFS. Querying data directly from blockchain is complex. This is where the middleware comes in, which is essentially a layer in between blockchain and your dApp, allowing you to index and query your blockchain data easily and efficiently.
+Middleware acts as a bridge between your blockchain network and applications, providing essential services like data indexing, API access, and event monitoring. Before adding middleware, ensure you have an application and blockchain node in place.
 
-SettleMint offers two Middleware solutions: **The Graph Middleware (for all EVM-compatible chains)** and **Smart Contract Portal Middleware**.
+## Available Options
 
-## Adding a middleware
+- **Graph Middleware** - For EVM chains, providing subgraph-based indexing with GraphQL API
+- **Smart Contract Portal** - For EVM chains, offering REST & GraphQL APIs with webhooks
+- **FabConnect** - For Hyperledger Fabric, providing RESTful API
+- **Attestation Indexer** - Specialized indexer for attestations with GraphQL API
 
-Before adding a middleware make sure that you have a **blockchain node** running.
+## How to Add Middleware
 
-Navigate to the **application** where you want to add a middleware. Click **Middleware** in the left navigation, and then click **Add a middleware**. This opens a form.
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
 
-Follow these steps to add the middleware:
+Navigate to the **application** where you want to add middleware. Click **Middleware** in the left navigation, and then click **Add a middleware**. This opens a form.
 
-1. Choose [Graph Middleware](#the-graph-middleware) or [Smart Contract Portal Middleware](#the-smart-contract-portal-middleware)
-2. Choose a **Middleware name**. Choose one that will be easily recognizable in your dashboards.
-3. Select the **blockchain node** you want to connect to. This is the blockchain node that will be used to index the blockchain data.
-4. Choose a **deployment plan**. Select the type, cloud provider, region and resource pack. [More about deployment plans.](launch-platform/managed-cloud-deployment/3_deployment-plans.md)
-5. You see the **resource cost** for this middleware displayed at the bottom of the form. Click **Confirm** to add the smart contract set.
+Follow these steps:
+1. Choose middleware type (Graph or Portal)
+2. Choose a **Middleware name**
+3. Select the **blockchain node**
+4. Configure deployment settings
+5. Click **Confirm**
 
-When the middleware is deployed, click it from the list and start using it.
+</TabItem>
+<TabItem value="sdk-cli" label="SDK CLI">
+
+First ensure you're authenticated:
+```bash
+settlemint login
+```
+
+Create a middleware:
+```bash
+# Get the list of available middleware types
+settlemint platform create middleware --help
+
+# Create a middleware
+settlemint platform create middleware <type> <name>
+
+# Get information about the command and all available options
+settlemint platform create middleware <type> --help
+```
+
+</TabItem>
+<TabItem value="sdk-js" label="SDK JS">
+
+```typescript
+import { createSettleMintClient } from '@settlemint/sdk-js';
+
+const client = createSettleMintClient({
+  accessToken: 'your_access_token',
+  instance: 'https://console.settlemint.com'
+});
+
+// Create middleware
+const createMiddleware = async () => {
+  const result = await client.middleware.create({
+    applicationUniqueName: "your-app-unique-name",
+    name: "my-middleware",
+    type: "SHARED",
+    interface: "GRAPH", 
+    blockchainNodeUniqueName: "your-node-unique-name",
+    region: "EUROPE",  // Required
+    provider: "GKE",   // Required 
+    size: "SMALL"      // Valid options: "SMALL" | "MEDIUM" | "LARGE"
+  });
+  console.log('Middleware created:', result);
+};
+
+```
+
+:::tip
+Get your access token from the Platform UI under User Settings → API Tokens.
+:::
+
+</TabItem>
+</Tabs>
+
+## Manage Middleware
+
+<Tabs>
+<TabItem value="platform-ui" label="Platform UI">
+
+Navigate to your middleware and click **Manage middleware** to:
+- View middleware details and status
+- Update configurations
+- Monitor health
+- Access endpoints
+
+</TabItem>
+<TabItem value="sdk-cli" label="SDK CLI">
+
+```bash
+# List middlewares
+settlemint platform list middlewares --application <app-name>
+
+# Get middleware details
+settlemint platform read middleware <middleware-name>
+
+# Delete middleware
+settlemint platform delete middleware <middleware-name>
+```
+
+</TabItem>
+<TabItem value="sdk-js" label="SDK JS">
+
+```typescript
+// List middlewares
+await client.middleware.list("your-app");
+
+// Get middleware details
+await client.middleware.read("middleware-unique-name");
+
+// Delete middleware
+await client.middleware.delete("middleware-unique-name");
+```
+
+</TabItem>
+</Tabs>
 
 ## The Graph Middleware
+
+The Graph provides powerful indexing capabilities for EVM chains through subgraphs. Use this middleware when you need:
+- Custom indexing logic through subgraph manifests
+- Complex GraphQL queries
+- Real-time data updates
+
+### Using The Graph SDK
+
+```typescript
+import { createTheGraphClient } from '@settlemint/sdk-thegraph';
+
+const { client: graphClient, graphql } = createTheGraphClient({
+  instances: JSON.parse(process.env.SETTLEMINT_THEGRAPH_SUBGRAPHS_ENDPOINTS || '[]'),
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
+  subgraphName: 'your-subgraph'
+});
+```
+
+:::tip
+For detailed API reference and advanced usage examples, check out the [TheGraph SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/thegraph).
+:::
+
+### Using The Graph Middleware
 
 [The Graph](https://thegraph.com/en/) is a protocol for indexing and querying blockchain data from networks. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned).
 
@@ -98,6 +229,17 @@ The following tasks need to be run in this sequence:
 
 The indexing of your smart contracts has now started. This can take a while, but once done you can query the middleware for your data in seconds using the **GraphQL API**. You can find the **endpoint** in the **Connect-tab**.
 
+## Further Reading
+
+- [The Graph Middleware](#the-graph-middleware)
+- [The Smart Contract Portal Middleware](#the-smart-contract-portal-middleware)
+- [Attestation Indexer](#attestation-indexer)
+- [Firefly FabConnect](#firefly-fabconnect)
+
+:::info Note
+All operations require appropriate permissions in your workspace.
+:::
+
 ## The Smart Contract Portal Middleware
 
 The Smart Contract Portal is a middleware which creates an easy to use api on top of your smart contracts. It can be used with all EVM-compatible chains like Ethereum, Hyperledger Besu, Polygon, Avalanche, etc. You can run it on your own blockchain nodes (both public and permissioned) or on a Load Balancer.
@@ -116,6 +258,29 @@ Before you start, make sure you are running:
 - An EVM-compatible network (Ethereum, Polygon, Hyperledger Besu, Avalanche, etc.)
 - A Private Key
 
+:::
+
+### Using The Smart Contract Portal Middleware
+
+The Portal middleware provides instant API access to your smart contracts. Key features include:
+- Auto-generated REST & GraphQL APIs
+- Built-in webhooks for event notifications
+- Type-safe contract interactions
+- Automatic ABI parsing
+
+### Using The Portal SDK
+
+```typescript
+import { createPortalClient } from '@settlemint/sdk-portal';
+
+const { client: portalClient, graphql: portalGraphql } = createPortalClient({
+  instance: process.env.SETTLEMINT_PORTAL_GRAPHQL_ENDPOINT,
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN
+});
+```
+
+:::tip
+For comprehensive API documentation and advanced features, check out the [Portal SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/portal).
 :::
 
 ### Upload an ABI
@@ -196,210 +361,8 @@ async function webhookConsumerBootstrap(secret: string) {
       `Started the test webhook consumer on ${server?.url.toString()}`
     );
   });
-  return app;
+  await app.listen(3000);
 }
 
-webhookConsumerBootstrap(process.env.WEBHOOK_SECRET!)
-  .then(app => app.listen(process.env.PORT || 5555))
-  .catch((error: Error) => {
-    console.error('Failed to start webhook consumer', error);
-    process.exit(1);
-  });
-```
-
-### Websocket
-
-The websocket endpoint exposes functionality to get real time updates on processed transactions.
-
-The url can be copied from the Connect tab.
-
-```ts
-import type { TransactionReceipt } from 'viem';
-
-// Should include an api key (eg wss://smart-contract-portal-middleware.settlemint.com/sm_pat_.../ws)
-const webSocketHost = process.env.WS_URL!;
-
-/**
- * Wait for the transaction receipt
- * @param transactionHash hash
- * @returns transaction receipt
- */
-export async function waitForTransactionReceipt(transactionHash: string) {
-  const webSocket = new WebSocket(webSocketHost);
-
-  return new Promise<TransactionReceipt>((resolve, reject) => {
-    let isResolved = false;
-    webSocket.onmessage = event => {
-      isResolved = true;
-      const receiptJson = JSON.parse(event.data) as TransactionReceipt;
-      resolve(receiptJson);
-      webSocket.close();
-    };
-    webSocket.onerror = reject;
-    webSocket.onclose = () => {
-      if (!isResolved) {
-        reject(new Error('Nothing received from the WebSocket'));
-      }
-    };
-    if (webSocket.readyState === WebSocket.OPEN) {
-      webSocket.send(JSON.stringify({ transactionHash }));
-    } else if (webSocket.readyState === WebSocket.CONNECTING) {
-      webSocket.onopen = () => {
-        webSocket.send(JSON.stringify({ transactionHash }));
-      };
-    } else {
-      reject(
-        new Error(`No connection to the WebSocket: ${webSocket.readyState}`)
-      );
-    }
-  });
-}
-```
-
-### Transactions api
-
-The portal exposes some general purpose APIs for transactions. This could be used for example to display transactions which are pending or processed in your UI. Both REST and GraphQL offer this functionality.
-
-![Transactions API](../../static/img/using-the-platform/scp-transactions-api.png)
-
-## Attestation Indexer
-
-The Attestation Indexer is a powerful tool that allows you to index and search attestations in a highly efficient manner. It provides a simple and intuitive GraphQL API for querying attestations based on various parameters such as the attestation type, the subject, the issuer, and more.
-
-When setting up a new middleware, you'll need to adjust the Attestation Indexer based on your requirements. For permissioned chains, this involves deploying your own attestation and schema registry contracts and inputting the appropriate addresses. For public chains, the addresses will be pre-filled with publicly available ones if they exist, but you can modify them to different addresses if necessary.
-
-![Attestations](../../static/img/using-the-platform/eas-indexer.png)
-
-### GraphQL
-
-The Attestation Indexer's GraphQL API provides the capability to execute intricate queries on attestations. It allows for filtering based on attributes such as type, issuer, and subject, enabling the retrieval of specific attestations or sets of attestations that satisfy particular conditions.
-
-![GraphQL](../../static/img/using-the-platform/eas-graphql.png)
-
-## Firefly FabConnect
-
-Firefly FabConnect is an open-source middleware that lets you interact with your Fabric network and the chaincode deployed on it. When you add the FabConnect middleware to your application on the SettleMint Platform, you automatically deploy a RESTful API to:
-
-- Manage identities on your network.
-- Send transactions to your chaincode.
-- Check any transaction receipt.
-- Create event streams and subscriptions.
-
-:::warning Warning
-
-Before you start, make sure you are running:
-
-- A Fabric peer node
-- A Fabric orderer node
-
-:::
-
-For the curl commands below, you will need to replace `your-token` with an access token. You can create an Application Access Token scoped to the middleware, peer and orderer node, or use a Personal Access Token. For more information on how to create an access token, please see our [access token documentation](./16_application-access-tokens.md).
-
-### Manage Identities
-
-Identities on a Fabric network are managed in two steps. First, a CA admin must register users. This is a process in which the CA admin gives an ID and secret to an identity. Then, the user of the identity enrolls the ID and secret pair to get a public/private key pair to sign transactions.
-
-Registering an identity can be done as follows using Firefly FabConnect:
-
-```shell
-curl --request POST \
-  --url https://example.settlemint.com/identities \
-  --header 'x-auth: <your-token>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-  "type": "client",
-  "name": "user3",
-  "attributes": {}
-}'
-```
-
-This request returns the secret associated with name user3:
-
-```shell
-{
-  "name": "user3",
-  "secret": "fkrTKPOZZYWO"
-}
-```
-
-The end user of that identity can enroll it as follows:
-
-```shell
-curl --request POST \
-  --url https://example.settlemint.com/identities/user3/enroll \
-  --header 'x-auth: <your-token>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-"secret": "fkrTKPOZZYWO"
-"attributes": {}
-}'
-```
-
-### Sending Transactions
-
-Assuming that you have a [chaincode deployed](../blockchain-guides/5_Hyperledger-Fabric/6_hyperledger-fabric-integration-tools.md) on your network, you can send a transaction through the middleware:
-
-```shell
-curl --request POST \
-  --url https://example.settlemint.com//transactions \
-  --header 'x-auth: <your-token>' \
-  --header 'Content-Type: application/json' --data '{
-"headers": {
-"type": "SendTransaction",
-"signer": "user3",
-"channel": "default-channel",
-"chaincode": "assetTransfer"
-},
-"func": "CreateAsset",
-"args": [
-"asset01", "blue", "5", "Alice", "500"
-],
-"init": false, "fly-sync": true
-}'
-```
-
-This transaction creates an asset in the assetTransfer chaincode deployed on the Fabric network.
-
-### Create Event Streams
-
-Firefly FabConnect can also be used to stream events happening on your network. You can either use webhook or websocket to deliver the data.
-
-This request create a stream using webhooks:
-
-```shell
-curl --request POST \
-  --url https://example.settlemint.com/eventstreams \
-  --header 'x-auth: <your-token>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-"type": "webhook",
-"name": "AssetTransfer",
-"webhook": {
-"url": "<https://myAssets.com/assetTransfer>",
-"tlsSkipVerifyHost": "true"
-}
-}'
-```
-
-The response contains an event stream ID that is required to create a subscription:
-
-```shell
-curl --request POST \
-  --url https://example.settlemint.com//subscriptions \
-  --header 'x-auth: <your-token>' \
-  --header 'Content-Type: application/json' \
-  --data '{
-"payloadType": "string",
-"name": "mySubscription",
-"channel": "default-channel",
-"signer": "user3",
-"fromBlock": "0",
-"stream": "es-92183185-01e3-4bc9-5433-348a640f5fe1",
-"filter": {
-"blockType": "tx",
-"chaincodeId": "",
-"eventFilter": ""
-}
-}'
+webhookConsumerBootstrap('your-secret');
 ```
