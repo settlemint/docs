@@ -3,10 +3,6 @@ import '@fontsource/figtree/300.css';
 import '@fontsource/figtree/400.css';
 import '@fontsource/figtree/700.css';
 import '@fontsource/figtree/900.css';
-import aikidoIcon from '../static/img/about-settlemint/aikido-icon.png';
-import platformImage from '../static/img/about-settlemint/platformModelBlue.png';
-import platformScreenshot from '../static/img/about-settlemint/platformScreenshot.webp';
-import supportIcon from '../static/img/about-settlemint/support-icon.png';
 import styles from './styles.module.css';
 
 function Navigation() {
@@ -16,7 +12,8 @@ function Navigation() {
         <div className={styles.twoColumn}>
           <div className={styles.twoColumnImage}>
             <div>
-              <img src={platformImage} alt="SettleMint Platform" />
+              <img src="img/about-settlemint/platformModelBlue.png"
+                alt="SettleMint Platform" />
             </div>
           </div>
           <div className={styles.twoColumnText}>
@@ -54,7 +51,10 @@ function Navigation() {
       <div className={styles.container}>
         <div className={styles.twoColumn}>
           <div className={styles.twoColumnImage}>
-            <img src={platformScreenshot} alt="SettleMint Platform" />
+            <img
+              src="/documentation/img/about-settlemint/platformScreenshot.webp"
+              alt="SettleMint Platform"
+            />
           </div>
           <div className={styles.twoColumnText}>
             <div>
@@ -132,7 +132,7 @@ function Navigation() {
               <div style={{ textAlign: 'center' }}>
                 <img
                   className={styles.icons}
-                  src={supportIcon}
+                  src="img/about-settlemint/support-icon.png"
                   alt="SettleMint Platform"
                   style={{ width: '30%' }}
                 />
@@ -150,7 +150,7 @@ function Navigation() {
               <div style={{ textAlign: 'center' }}>
                 <img
                   className={styles.icons}
-                  src={aikidoIcon}
+                  src="img/about-settlemint/aikido-icon.png"
                   alt="SettleMint Platform"
                   style={{ width: '30%' }}
                 />
