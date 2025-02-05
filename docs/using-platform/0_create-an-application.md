@@ -22,7 +22,7 @@ You will always need to create an application before you can deploy or join netw
 
 ![Create an App](../../static/img/about-settlemint/create-app.png)
 
-1. In the upper right corner of any page, click the **grid icon**. 
+1. In the upper right corner of any page, click the **grid icon**.
 2. Navigate to your workspace and click **Create new application**.
 3. Choose a **name** for your application.
 4. Click **Confirm** to create the application.
@@ -30,7 +30,9 @@ You will always need to create an application before you can deploy or join netw
 </TabItem>
 <TabItem value="sdk-cli" label="SDK CLI">
 
-First ensure you're authenticated:
+First, install the [SDK CLI](https://github.com/settlemint/sdk/blob/main/sdk/cli/README.md#usage) as a global dependency.
+
+Then, ensure you're authenticated. For more information on authentication, see the [SDK CLI documentation](https://github.com/settlemint/sdk/blob/main/sdk/cli/README.md#login-to-the-platform).
 ```bash
 settlemint login
 ```

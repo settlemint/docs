@@ -33,70 +33,20 @@ settlemint login
 
 Create storage:
 ```bash
-settlemint platform create storage <type> <name> \
-  --application <app-name> \
-  --provider <provider> \
-  --region <region> \
-  --size <size>  # Optional: SMALL|MEDIUM|LARGE
-```
+# Get the list of available storage types
+settlemint platform create storage --help
 
-Where `<type>` can be:
-- `ipfs`
-- `minio`
+# Create storage
+settlemint platform create storage <type> <name>
+
+# Get information about the command and all available options
+settlemint platform create storage <type> --help
+```
 
 </TabItem>
 <TabItem value="sdk-js" label="SDK JS">
 
-```typescript
-import { createSettleMintClient } from '@settlemint/sdk-js';
-import { createIPFSClient } from '@settlemint/sdk-ipfs';
-import { createMinioClient } from '@settlemint/sdk-minio';
-
-// 1. Platform Management - For creating and managing storage
-const client = createSettleMintClient({
-  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
-  instance: 'https://console.settlemint.com'
-});
-
-// Create storage instance
-const createStorage = async () => {
-  const result = await client.storage.create({
-    applicationId: "your-app-id",     // Required
-    name: "my-storage",               // Required
-    storageProtocol: "IPFS",         // Required: "IPFS" | "MINIO"
-    provider: "GKE",                  // Required
-    region: "EUROPE",                 // Required
-    size: "SMALL"                     // Optional: "SMALL" | "MEDIUM" | "LARGE"
-  });
-  console.log('Storage created:', result);
-};
-
-// 2. Storage Operations
-// For IPFS
-const ipfsClient = createIPFSClient({
-  endpoint: process.env.SETTLEMINT_IPFS_ENDPOINT!,
-  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!
-});
-
-// Example IPFS operations
-const uploadToIPFS = async (data: Buffer) => {
-  const result = await ipfsClient.add(data);
-  return result.cid;
-};
-
-// For MinIO
-const minioClient = createMinioClient({
-  endpoint: process.env.SETTLEMINT_MINIO_ENDPOINT!,
-  accessKeyId: process.env.SETTLEMINT_MINIO_ACCESS_KEY!,
-  secretAccessKey: process.env.SETTLEMINT_MINIO_SECRET_KEY!,
-  region: process.env.SETTLEMINT_MINIO_REGION
-});
-
-// Example MinIO operations
-const uploadToMinio = async (bucket: string, objectName: string, data: Buffer) => {
-  await minioClient.putObject(bucket, objectName, data);
-};
-```
+For a full example of how to connect to a storage using the SDK, see the [MinIO SDK API Reference](https://www.npmjs.com/package/@settlemint/sdk-minio#api-reference) or [IPFS SDK API Reference](https://www.npmjs.com/package/@settlemint/sdk-ipfs#api-reference).
 
 :::tip
 Get your access token from the Platform UI under User Settings → API Tokens.
