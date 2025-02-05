@@ -108,8 +108,10 @@ const restartExplorer = async () => {
   await client.insights.restart("explorer-unique-name");
 };
 ```
+
 </TabItem>
 </Tabs>
+
 ## Using the Explorer
 
 When the blockchain explorer is deployed and running successfully, you can:
