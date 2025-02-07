@@ -75,7 +75,7 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
 
 - Platform assets storage
 - Blockchain data persistence
-- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/s3-storage)
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/s3-compatible-storage)
 
 #### HashiCorp Vault
 

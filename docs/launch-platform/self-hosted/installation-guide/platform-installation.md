@@ -110,7 +110,7 @@ features:
       domain:
         hostname: '<your-domain>'
     state:
-      s3ConnectionUrl: 's3://<bucket-name>?region=<region>'
+      connectionUrl: 's3://<bucket-name>?region=<region>'
       secretsProvider: 'passphrase'
       credentials:
         encryptionKey: '<your-encryption-key>'
@@ -374,7 +374,7 @@ features:
       domain:
         hostname: 'example.company.com'
     state:
-      s3ConnectionUrl: 's3://example-bucket?region=us-east-1'
+      connectionUrl: 's3-compatible-endpoint-url'
       secretsProvider: 'passphrase'
       credentials:
         encryptionKey: 'abc123encryption456key789example000key'
@@ -382,6 +382,24 @@ features:
           accessKeyId: 'EXAMPLEKEYID123456'
           secretAccessKey: 'abc123example456secret789key000aws'
           region: 'us-east-1'
+        azure:
+          storageAccount: 'example-storage-account'
+          storageKey: 'abc123example456key789key000azure'
+        google:
+          project: 'example-project-id'
+          credentials: |
+            {
+              "type": "service_account",
+              "project_id": "your-project",
+              "private_key_id": "key-id",
+              "private_key": "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+              "client_email": "service-account@project.iam.gserviceaccount.com",
+              "client_id": "client-id",
+              "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+              "token_uri": "https://oauth2.googleapis.com/token",
+              "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+              "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/service-account@project.iam.gserviceaccount.com"
+            }
     targets:
       - id: 'example'
         name: 'Example Cluster'
