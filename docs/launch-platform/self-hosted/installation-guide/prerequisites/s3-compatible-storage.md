@@ -96,7 +96,7 @@ Managed services provide:
 - Automatic scaling
 - Global availability
 - Integrated monitoring
-  :::
+:::
 
 </TabItem>
 <TabItem value="helm" label="Self-Hosted MinIO">
@@ -132,7 +132,10 @@ For production use:
 - Set up backup procedures
 - Enable encryption
 - Configure monitoring
-  :::
+:::
+
+</TabItem>
+</Tabs>
 
 ## State Encryption
 
