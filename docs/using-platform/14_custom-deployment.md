@@ -25,7 +25,7 @@ A Custom Deployment allows you to deploy your own Docker images, such as fronten
    - Environment variables (if required)
    - Custom domain information (if applicable)
 5. Configure any additional settings as needed.
-6. Click on 'Confirm' and wait for the Custom Deployment to be in the Running status.
+6. Click on 'Confirm' and wait for the Custom Deployment to be in the Running status. [View the list of statuses](../reference/14_statuses.md).
 
 </TabItem>
 <TabItem value="sdk-cli" label="SDK CLI">
@@ -92,9 +92,15 @@ When using custom domains with your Custom Deployment, you'll need to configure 
    - Enter your desired custom domain (e.g., example.com for top-level domain or app.example.com for subdomain).
    - Save the changes to update your Custom Deployment settings.
 
-2. **Configure DNS Records**:
+2. **Obtain Your Application's Hostname**: After adding your custom domain, the SettleMint platform will provide you with an ALIAS (for top-level domains) or CNAME (for subdomains) record. This can be found in the "Connect" tab of your Custom Deployment.
+
+3. **Access Your Domain's DNS Settings**: Log in to your domain registrar or DNS provider's control panel.
+
+4. **Configure DNS Records**:
 
    For Top-Level Domains (e.g., example.com):
+   - Remove any existing A and AAAA records for the domain you're configuring.
+   - Remove any existing A and AAAA records for the www domain (e.g., www.example.com) if you're using it.
    ```
    ALIAS example.com gke-europe.settlemint.com
    ALIAS www.example.com gke-europe.settlemint.com
@@ -104,6 +110,20 @@ When using custom domains with your Custom Deployment, you'll need to configure 
    ```
    CNAME app.example.com gke-europe.settlemint.com
    ```
+
+5. **Set TTL (Time to Live)**:
+   - Set a lower TTL (e.g., 300 seconds) initially to allow for quicker propagation.
+   - You can increase it later for better caching (e.g., 3600 seconds).
+
+6. **Verify DNS Propagation**:
+   - Use online DNS lookup tools to check if your DNS changes have propagated.
+   - Note that DNS propagation can take up to 48 hours, although it's often much quicker.
+
+7. **SSL/TLS Configuration**:
+   - The SettleMint platform typically handles SSL/TLS certificates automatically for both top-level domains and subdomains.
+   - If you need to use your own certificates, please contact us for assistance and further instructions.
+
+Note: The configuration process is similar for both top-level domains and subdomains. The main difference lies in the type of DNS record you create (ALIAS for top-level domains, CNAME for subdomains) and whether you need to remove existing records.
 
 ## Manage Custom Deployments
 
@@ -173,7 +193,7 @@ When using Custom Deployment, keep the following limitations in mind:
 1. **No Root User Privileges**: Your application will run without root user privileges for security reasons.
 
 2. **Read-Only Filesystem**: The filesystem is read-only. For data persistence, consider using:
-   - Hasura: A GraphQL engine that provides a scalable database solution
+   - Hasura: A GraphQL engine that provides a scalable database solution. See [Hasura](./9_hasura-backend-as-a-service.md).
    - Other External Services: Depending on your specific needs, you may use other cloud-based storage or database services
 
 3. **Stateless Applications**: Your applications should be designed to be stateless. This ensures better scalability and reliability in a cloud environment.
@@ -186,6 +206,8 @@ When using Custom Deployment, keep the following limitations in mind:
 - Use environment variables for configuration to make your deployments more flexible
 - Implement proper logging to facilitate debugging and monitoring
 - Regularly update your container images to include the latest security patches
+
+Custom Deployment offers a powerful way to extend the capabilities of your blockchain solutions on the SettleMint platform. By following these guidelines and best practices, you can seamlessly integrate your custom applications into your blockchain ecosystem.
 
 :::info Note
 Custom Deployments support automatic SSL/TLS certificate management for custom domains.
