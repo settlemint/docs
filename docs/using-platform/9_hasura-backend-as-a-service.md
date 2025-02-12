@@ -160,3 +160,200 @@ hasura metadata reload
 
 For more on Hasura Metadata, refer: https://hasura.io/docs/latest/migrations-metadata-seeds/manage-metadata/
 For more on Hasura Migrations, refer: https://hasura.io/docs/latest/migrations-metadata-seeds/manage-migrations/
+
+## Usage Examples
+
+You can interact with your Hasura database in two ways: through the GraphQL API (recommended) or directly via PostgreSQL connection.
+
+<Tabs>
+<TabItem value="graphql" label="GraphQL API (Recommended)">
+
+```javascript
+import fetch from 'node-fetch';
+
+// Configure your authentication details
+const HASURA_ENDPOINT = "YOUR_HASURA_ENDPOINT";
+const HASURA_ADMIN_SECRET = "YOUR_HASURA_ADMIN_SECRET"; // Found in the "Connect" tab of Hasura console
+const APP_ACCESS_TOKEN = "YOUR_APP_ACCESS_TOKEN"; // Generated following the Application Access Tokens guide
+
+// Reusable function to make GraphQL requests
+async function fetchGraphQL(operationsDoc, operationName, variables) {
+  try {
+    const result = await fetch(
+      HASURA_ENDPOINT,
+      {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'x-hasura-admin-secret': HASURA_ADMIN_SECRET,
+          'x-auth-token': APP_ACCESS_TOKEN
+        },
+        body: JSON.stringify({
+          query: operationsDoc,
+          variables: variables,
+          operationName: operationName
+        })
+      }
+    );
+
+    if (!result.ok) {
+      const text = await result.text();
+      throw new Error(`HTTP error! status: ${result.status}, body: ${text}`);
+    }
+
+    return await result.json();
+  } catch (error) {
+    console.error('Request failed:', error);
+    throw error;
+  }
+}
+
+// Query to fetch verification records
+const operationsDoc = `
+  query MyQuery {
+    verification {
+      id
+    }
+  }
+`;
+
+// Mutation to insert a new verification record
+const insertOperationDoc = `
+  mutation InsertVerification($name: String!, $status: String!) {
+    insert_verification_one(object: {name: $name, status: $status}) {
+      id
+      name
+      status
+    }
+  }
+`;
+
+// Function to fetch verification records
+async function main() {
+  try {
+    const { errors, data } = await fetchGraphQL(operationsDoc, "MyQuery", {});
+    
+    if (errors) {
+      console.error('GraphQL Errors:', errors);
+      return;
+    }
+
+    console.log('Data:', data);
+  } catch (error) {
+    console.error('Failed:', error);
+  }
+}
+
+// Function to insert a new verification record
+async function insertWithGraphQL() {
+  try {
+    const { errors, data } = await fetchGraphQL(
+      insertOperationDoc,
+      "InsertVerification",
+      {
+        name: "Test User",
+        status: "pending"
+      }
+    );
+    
+    if (errors) {
+      console.error('GraphQL Errors:', errors);
+      return;
+    }
+
+    console.log('Inserted Data:', data);
+  } catch (error) {
+    console.error('Failed:', error);
+  }
+}
+
+// Execute both query and mutation
+main();
+insertWithGraphQL();
+```
+
+</TabItem>
+<TabItem value="postgresql" label="Direct PostgreSQL Connection">
+
+```javascript 
+import pkg from 'pg';
+const { Pool } = pkg;
+
+// Initialize PostgreSQL connection (get connection string from Hasura console -> "Connect" tab)
+const pool = new Pool({
+  connectionString: 'YOUR_POSTGRES_CONNECTION_STRING'
+});
+
+// Simple query to read all records from verification table
+const readData = async () => {
+  const query = 'SELECT * FROM verification';
+  const result = await pool.query(query);
+  console.log('Current Data:', result.rows);
+};
+
+// Insert a new verification record with sample data
+const insertData = async () => {
+  const query = `
+    INSERT INTO verification (id, identifier, value, created_at, expires_at) 
+    VALUES ($1, $2, $3, $4, $5) 
+    RETURNING *`;
+  
+  // Sample values - modify according to your needs
+  const values = [
+    'test-id-123',
+    'test-identifier',
+    'test-value',
+    new Date(),
+    new Date(Date.now() + 24 * 60 * 60 * 1000) // Sets expiry to 24h from now
+  ];
+  
+  const result = await pool.query(query, values);
+  console.log('Inserted:', result.rows[0]);
+};
+
+// Update an existing record by ID
+const updateData = async () => {
+  const query = `
+    UPDATE verification 
+    SET value = $1, updated_at = $2 
+    WHERE id = $3 
+    RETURNING *`;
+  
+  const values = ['updated-value', new Date(), 'test-id-123'];
+  const result = await pool.query(query, values);
+  console.log('Updated:', result.rows[0]);
+};
+
+// Execute all operations in sequence
+async function main() {
+  try {
+    await readData();
+    await insertData();
+    await updateData();
+    await readData();
+  } finally {
+    await pool.end(); // Close database connection
+  }
+}
+
+main();
+```
+
+</TabItem>
+</Tabs>
+
+### Authentication Setup
+
+To run these examples, you'll need the following:
+
+For GraphQL API:
+1. **Hasura Admin Secret**: Found in the "Connect" tab of Hasura console
+2. **Application Access Token**: Generate this by following our [Application Access Tokens guide](16_application-access-tokens.md)
+
+For PostgreSQL:
+1. **PostgreSQL Connection String**: Found in the "Connect" tab of Hasura console under "Database URL"
+
+
+:::warning
+Always keep your credentials secure and never expose them in client-side code. Use environment variables or a secure configuration management system in production environments.
+:::
