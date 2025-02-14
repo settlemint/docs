@@ -24,6 +24,18 @@ Redis serves as a critical component for:
 
 ### Cloud Provider Options
 
+#### Google Cloud Memorystore
+
+1. **Enable and Configure**
+   - Go to [Google Cloud Console](https://console.cloud.google.com)
+   - Enable Memorystore for Redis API
+   - Create new Redis instance:
+     - Choose Basic tier for standard workloads
+     - Select region (same as your GKE cluster)
+     - Set memory capacity (minimum 1GB)
+     - Enable authentication (recommended)
+   - Configure VPC network and authorized networks
+
 #### Redis Cloud
 
 1. Create account at [Redis Cloud](https://app.redislabs.com)
@@ -124,19 +136,44 @@ For production use:
 
 - [ ] Redis hostname/endpoint
 - [ ] Port number (default: 6379)
-- [ ] Password
+- [ ] Password (if authentication enabled)
 - [ ] TLS enabled/disabled
 
-:::note Example Configuration
-
+:::note Example Helm Values
 ```yaml
+# values.yaml
 redis:
-  host: 'your-redis-host'
-  port: 6379
-  password: 'your-secure-password'
-  tls: true # Set to false for local development
-```
+  # -- Set to false if using external Redis
+  enabled: false
+  # -- Redis connection configuration
+  external:
+    # -- Redis host
+    host: "your-redis-host"
+    # -- Redis port
+    port: 6379
+    # -- Redis password
+    password: "your-secure-password"
+    # -- Enable TLS
+    tls: true
+    # -- Use SSL (legacy option)
+    ssl: false
 
+  # -- Google Memorystore specific configuration
+  memorystore:
+    # -- Set to true if using Google Memorystore
+    enabled: false
+    # -- The Google Cloud project ID
+    projectId: "your-project-id"
+    # -- The region where Memorystore instance is deployed
+    region: "europe-west1"
+```
+:::
+
+:::tip
+When using Google Memorystore:
+1. Enable only one Redis solution (`redis.enabled` or `redis.memorystore.enabled`)
+2. Ensure your GKE cluster has access to the Memorystore instance
+3. Configure the same region as your GKE cluster
 :::
 
 </div>
@@ -144,6 +181,23 @@ redis:
 ## Validation
 
 Test your Redis connection:
+
+<Tabs>
+<TabItem value="memorystore" label="Google Memorystore">
+
+```bash
+# Get the Memorystore instance connection details
+REDIS_HOST=$(gcloud redis instances describe [INSTANCE_ID] \
+    --region=[REGION] --format='get(host)')
+REDIS_PORT=$(gcloud redis instances describe [INSTANCE_ID] \
+    --region=[REGION] --format='get(port)')
+
+# Test connection using redis-cli
+redis-cli -h $REDIS_HOST -p $REDIS_PORT ping
+```
+
+</TabItem>
+<TabItem value="standard" label="Standard Redis">
 
 ```bash
 # Using redis-cli
@@ -153,22 +207,26 @@ redis-cli -h your-redis-host -p 6379 -a your-password ping
 PONG
 ```
 
+</TabItem>
+</Tabs>
+
 ## Troubleshooting
 
 Common issues and solutions:
 
 1. **Connection Failures**
-
    - Verify credentials
    - Check network/firewall rules
    - Confirm TLS settings
    - Validate endpoint format
+   - For Memorystore: verify VPC peering
 
 2. **Performance Issues**
    - Monitor memory usage
    - Check eviction policies
    - Review connection limits
    - Verify resource allocation
+   - For Memorystore: check instance tier
 
 ## Next Steps
 
