@@ -81,7 +81,7 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
 
 - Secrets management
 - Encryption keys
-- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/secret-managemen)
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/secret-management)
 
 #### OAuth Provider
 
