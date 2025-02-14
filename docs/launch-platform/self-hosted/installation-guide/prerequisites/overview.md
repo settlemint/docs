@@ -77,11 +77,11 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
 - Blockchain data persistence
 - [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/s3-compatible-storage)
 
-#### HashiCorp Vault
+#### Secrets management
 
 - Secrets management
 - Encryption keys
-- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/hashicorp-vault)
+- [Setup Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/secret-management)
 
 #### OAuth Provider
 

@@ -1,17 +1,20 @@
 ---
-title: HashiCorp Vault
+title: Secret Management
 sidebar_position: 7
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# HashiCorp Vault Setup
+# Secret Management Setup
 
 ## Overview
 
-HashiCorp Vault is used for:
+Our platform supports two options for secret management:
+- HashiCorp Vault
+- Google Secret Manager
 
+Both services are used for:
 - Secrets management
 - Encryption key storage
 - Secure credentials handling
@@ -20,7 +23,59 @@ HashiCorp Vault is used for:
 ## Deployment Options
 
 <Tabs>
-<TabItem value="cloud" label="HCP Vault (Recommended)" default>
+<TabItem value="gsm" label="Google Secret Manager" default>
+
+### Google Secret Manager Setup
+
+1. **Enable the Secret Manager API**
+   - Go to [Google Cloud Console](https://console.cloud.google.com)
+   - Navigate to Secret Manager
+   - Enable the Secret Manager API for your project
+
+2. **Create Service Account**
+   - Navigate to IAM & Admin > Service Accounts
+   - Create a new service account
+   - Grant the following roles:
+     - `Secret Manager Admin`
+
+3. **Download Credentials**
+   - Create and download a JSON key for the service account
+   - Keep this file secure - you'll need it during platform installation
+
+:::tip
+Google Secret Manager provides:
+- Fully managed service
+- Automatic replication
+- Fine-grained IAM controls
+- Audit logging
+:::
+
+**Helm Chart Values:**
+```yaml
+# values.yaml for Helm installation
+googleSecretManager:
+  # -- Enable Google Secret Manager integration
+  enabled: true
+  # -- The Google Cloud project ID
+  projectId: "your-project-id"
+  # -- The Google Cloud service account credentials JSON
+  credentials: |
+    {
+      // Your service account JSON key
+    }
+```
+:::
+
+:::tip
+Make sure to:
+1. Enable Google Secret Manager in your Helm values
+2. Use the same project ID and credentials as in your platform configuration
+3. Properly format the service account JSON credentials
+:::
+
+</TabItem>
+
+<TabItem value="hcp" label="HCP Vault" default>
 
 ### HashiCorp Cloud Platform Setup
 
@@ -100,7 +155,8 @@ HCP Vault provides:
   :::
 
 </TabItem>
-<TabItem value="helm" label="Self-Hosted">
+
+<TabItem value="self-hosted" label="Self-Hosted Vault">
 
 ### Helm Chart Installation
 
@@ -146,26 +202,84 @@ For production:
 
 ### Required Values for Platform Installation
 
+Choose one of the following configurations for your Helm values:
+
+**For Google Secret Manager:**
+- [ ] GCP Project ID
+- [ ] Service Account JSON key
+
+:::note Example Helm Values for GSM
+```yaml
+# values.yaml
+vault:
+  enabled: false
+
+googleSecretManager:
+  # -- Enable Google Secret Manager integration
+  enabled: true
+  # -- The Google Cloud project ID
+  projectId: 'your-project-id'
+  # -- The Google Cloud service account credentials JSON
+  credentials: |
+    {
+      // Your service account JSON key
+    }
+```
+:::
+
+**For HashiCorp Vault:**
 - [ ] Vault address/endpoint
 - [ ] Role ID
 - [ ] Secret ID
 - [ ] Namespace (if using HCP Vault: `admin`)
 
-:::note Example Configuration
-
+:::note Example Helm Values for Vault
 ```yaml
+# values.yaml
+googleSecretManager:
+  enabled: false
+
 vault:
+  # -- Enable Hashicorp Vault integration
+  enabled: true
+  # -- The vault address you collected in the prerequisites
   address: 'https://vault-cluster.hashicorp.cloud:8200'
-  namespace: 'admin' # Required for HCP Vault
+  # -- The vault namespace you collected in the prerequisites
+  namespace: 'admin'  # Required for HCP Vault
+  # -- The AppRole roleId you collected in the prerequisites
   roleId: 'your-role-id'
+  # -- The AppRole secretId you collected in the prerequisites
   secretId: 'your-secret-id'
 ```
+:::
 
+:::important
+Make sure to:
+1. Enable only one secret management solution (`vault` or `googleSecretManager`)
+2. Disable the other option by setting `enabled: false`
+3. Provide all required values for your chosen solution
 :::
 
 </div>
 
 ## Validation
+
+Test your secret management configuration:
+
+<Tabs>
+<TabItem value="gsm" label="Google Secret Manager">
+
+```bash
+# Set environment variables
+export GOOGLE_APPLICATION_CREDENTIALS="path/to/service-account.json"
+export PROJECT_ID="your-project-id"
+
+# Verify access
+gcloud secrets list --project=$PROJECT_ID
+```
+
+</TabItem>
+<TabItem value="vault" label="HashiCorp Vault">
 
 Test your Vault configuration:
 
@@ -182,18 +296,20 @@ vault write auth/approle/login \
   secret_id=$VAULT_SECRET_ID
 ```
 
+</TabItem>
+</Tabs>
+
 ## Troubleshooting
 
 Common issues and solutions:
 
-1. **Authentication Failures**
+1. **Google Secret Manager Issues**
+   - Verify service account permissions
+   - Check credentials file format
+   - Confirm API is enabled
+   - Validate project ID
 
-   - Verify role ID and secret ID
-   - Check policy attachments
-   - Confirm namespace setting
-   - Validate token TTLs
-
-2. **Connection Issues**
+2. **Vault Issues**
    - Verify Vault address
    - Check network access
    - Confirm TLS settings
@@ -201,7 +317,7 @@ Common issues and solutions:
 
 ## Next Steps
 
-1. ✅ Set up Vault instance
+1. ✅ Set up secret management service
 2. ✅ Configure authentication
 3. ➡️ Proceed to [Metrics and Logs Setup](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/metrics-and-logs)
 

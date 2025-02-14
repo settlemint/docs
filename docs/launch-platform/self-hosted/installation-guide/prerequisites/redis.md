@@ -24,6 +24,18 @@ Redis serves as a critical component for:
 
 ### Cloud Provider Options
 
+#### Google Cloud Memorystore
+
+1. **Enable and Configure**
+   - Go to [Google Cloud Console](https://console.cloud.google.com)
+   - Enable Memorystore for Redis API
+   - Create new Redis instance:
+     - Choose Basic tier for standard workloads
+     - Select region (same as your GKE cluster)
+     - Set memory capacity (minimum 1GB)
+     - Enable authentication (recommended)
+   - Configure VPC network and authorized networks
+
 #### Redis Cloud
 
 1. Create account at [Redis Cloud](https://app.redislabs.com)
@@ -124,19 +136,32 @@ For production use:
 
 - [ ] Redis hostname/endpoint
 - [ ] Port number (default: 6379)
-- [ ] Password
+- [ ] Password (if authentication enabled)
 - [ ] TLS enabled/disabled
 
-:::note Example Configuration
-
+:::note Example Helm Values
 ```yaml
+# values.yaml
 redis:
-  host: 'your-redis-host'
+  # -- The redis host you collected in the prerequisites
+  host: ''
+  # -- The redis port you collected in the prerequisites
   port: 6379
-  password: 'your-secure-password'
-  tls: true # Set to false for local development
-```
+  # -- The redis password you collected in the prerequisites
+  password: ''
+  # -- In shared redis servers, this prefix will separate out all queues
+  prefix: 'sm'
+  # -- Set to true if you want to use the TLS mode
+  tls: false
 
+```
+:::
+
+:::tip
+When using Google Memorystore:
+1. Enable only one Redis solution (`redis.enabled` or `redis.memorystore.enabled`)
+2. Ensure your GKE cluster has access to the Memorystore instance
+3. Configure the same region as your GKE cluster
 :::
 
 </div>
@@ -144,6 +169,23 @@ redis:
 ## Validation
 
 Test your Redis connection:
+
+<Tabs>
+<TabItem value="memorystore" label="Google Memorystore">
+
+```bash
+# Get the Memorystore instance connection details
+REDIS_HOST=$(gcloud redis instances describe [INSTANCE_ID] \
+    --region=[REGION] --format='get(host)')
+REDIS_PORT=$(gcloud redis instances describe [INSTANCE_ID] \
+    --region=[REGION] --format='get(port)')
+
+# Test connection using redis-cli
+redis-cli -h $REDIS_HOST -p $REDIS_PORT ping
+```
+
+</TabItem>
+<TabItem value="standard" label="Standard Redis">
 
 ```bash
 # Using redis-cli
@@ -153,22 +195,26 @@ redis-cli -h your-redis-host -p 6379 -a your-password ping
 PONG
 ```
 
+</TabItem>
+</Tabs>
+
 ## Troubleshooting
 
 Common issues and solutions:
 
 1. **Connection Failures**
-
    - Verify credentials
    - Check network/firewall rules
    - Confirm TLS settings
    - Validate endpoint format
+   - For Memorystore: verify VPC peering
 
 2. **Performance Issues**
    - Monitor memory usage
    - Check eviction policies
    - Review connection limits
    - Verify resource allocation
+   - For Memorystore: check instance tier
 
 ## Next Steps
 
