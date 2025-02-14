@@ -15,7 +15,9 @@ Our platform supports two options for secret management:
 - Google Secret Manager
 
 Both services are used for:
+- Secrets management
 - Encryption key storage
+- Secure credentials handling
 - Private key management
 
 ## Deployment Options

@@ -143,29 +143,17 @@ For production use:
 ```yaml
 # values.yaml
 redis:
-  # -- Set to false if using external Redis
-  enabled: false
-  # -- Redis connection configuration
-  external:
-    # -- Redis host
-    host: "your-redis-host"
-    # -- Redis port
-    port: 6379
-    # -- Redis password
-    password: "your-secure-password"
-    # -- Enable TLS
-    tls: true
-    # -- Use SSL (legacy option)
-    ssl: false
+  # -- The redis host you collected in the prerequisites
+  host: ''
+  # -- The redis port you collected in the prerequisites
+  port: 6379
+  # -- The redis password you collected in the prerequisites
+  password: ''
+  # -- In shared redis servers, this prefix will separate out all queues
+  prefix: 'sm'
+  # -- Set to true if you want to use the TLS mode
+  tls: false
 
-  # -- Google Memorystore specific configuration
-  memorystore:
-    # -- Set to true if using Google Memorystore
-    enabled: false
-    # -- The Google Cloud project ID
-    projectId: "your-project-id"
-    # -- The region where Memorystore instance is deployed
-    region: "europe-west1"
 ```
 :::
 
