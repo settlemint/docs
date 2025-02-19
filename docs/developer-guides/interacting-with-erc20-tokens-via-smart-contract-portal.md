@@ -27,14 +27,15 @@ Below are the Mint, Burn, and other core ERC-20 functions, along with explanatio
 
 Before you can interact with ERC-20 tokens, ensure you have:
 
+
 1. **Launched a New ERC-20 Smart Contract Set:**
-   - Follow the instructions [here](../using-platform/dev-tools/code-studio/smart-contract-sets/add-smart-contract-set/) to add a smart contract set.
+   - Follow the instructions [here](https://console.settlemint.com/documentation/docs/using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/3_add-smart-contract-set) to add a smart contract set.
 
 2. **Deployed the ERC-20 Contract:**
-   - Use the deployment guide [here](../using-platform/dev-tools/code-studio/smart-contract-sets/deploying-a-contract/) to deploy your contract.
+   - Use the deployment guide [here](https://console.settlemint.com/documentation/docs/using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/4_deploying-a-contract) to deploy your contract.
 
 3. **Set Up Your Smart Contract Portal and Import the ERC-20 ABI:**
-   - Follow the instructions in the [User Wallets and Smart Contract Portal Guide](../developer-guides/user-wallets-and-smart-contract-portal%20copy.md#smart-contract-portal) to set up your portal and import your ABI.
+   - Follow the instructions in the [Smart Contract Portal Guide](https://console.settlemint.com/documentation/docs/using-platform/7_middleware#the-smart-contract-portal-middleware) to set up your portal and import your ABI.
 
 
 ## Smart Contract Portal 
@@ -161,4 +162,5 @@ await burnTokens("YOUR_CONTRACT_ADDRESS", 100, signer); // Replace with your con
 ### Ethers.js:
 
 - Make sure your ABI matches the contract's interface.
+- The signer should have the necessary private key and be connected to the blockchain network.
 - The signer should have the necessary private key and be connected to the blockchain network.
