@@ -163,4 +163,3 @@ await burnTokens("YOUR_CONTRACT_ADDRESS", 100, signer); // Replace with your con
 
 - Make sure your ABI matches the contract's interface.
 - The signer should have the necessary private key and be connected to the blockchain network.
-- The signer should have the necessary private key and be connected to the blockchain network.
