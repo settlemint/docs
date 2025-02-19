@@ -76,6 +76,11 @@ const config: Config = {
     ]
   ],
 
+  themes: ['@docusaurus/theme-mermaid'],
+  markdown: {
+    mermaid: true,
+  },
+
   themeConfig: {
     navbar: {
       title: '',
@@ -159,8 +164,8 @@ const config: Config = {
       theme: themes.github,
       darkTheme: themes.dracula,
       additionalLanguages: ['solidity']
-    }
+    },
   } satisfies Preset.ThemeConfig
 };
 
-module.exports = config;
+export default config;
