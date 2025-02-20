@@ -1,0 +1,226 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/preset.css";
+@import "fumadocs-twoslash/twoslash.css";
+
+@plugin 'tailwindcss-animate';
+@custom-variant dark (&:is(.dark *));
+
+@source '../../node_modules/fumadocs-ui/dist/**/*.js';
+
+:root {
+  --button-hover-accent: 221 83% 95%;
+  --background: 222.86 87.5% 96.86%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 221 84.5% 56.9%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 220 77% 57%;
+  --accent-foreground: 240 4.8% 95.9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --warning: 27 87% 67%;
+  --warning-foreground: 0 0% 98%;
+  --success: 173 58% 39%;
+  --success-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 0 0% 80%;
+  --ring: 221.2 83.2% 53.3%;
+  --radius: 0.5rem;
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
+  --sidebar-background: 220.71 87.5% 93.73%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+  --theme-accent-background: 221 83% 95%;
+  --theme-accent-foreground: 221 85% 57%;
+}
+
+.dark {
+  --background: 0 0% 16%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 22%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 22%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 219 71% 41%;
+  --primary-foreground: 240 5.9% 10%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 221 84.5% 56.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --warning: 30 80% 55%;
+  --warning-foreground: 0 0% 98%;
+  --success: 160 60% 45%;
+  --success-foreground: 0 0% 98%;
+  --border: 240 3.7% 25.9%;
+  --input: 0 0% 30%;
+  --ring: 224.3 76.3% 48%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
+  --sidebar-background: 0 0% 11%;
+  --sidebar-foreground: 240 4.8% 95.9%;
+  --sidebar-primary: 224.3 76.3% 48%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 240 4.8% 95.9%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+  --theme-accent-background: 240 3.7% 15.9%;
+  --theme-accent-foreground: 221 85% 57%;
+  --theme-sidebar-accent: 0 0% 16%;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@theme {
+  --color-fd-muted: hsl(var(--muted));
+  --color-fd-popover: hsl(var(--popover));
+  --color-fd-popover-foreground: hsl(var(--popover-foreground));
+  --color-fd-card-foreground: hsl(var(--card-foreground));
+  --color-fd-border: hsl(var(--border));
+  --color-fd-primary-foreground: hsl(var(--primary-foreground));
+  --color-fd-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-fd-accent: hsl(var(--accent));
+  --color-fd-ring: hsl(var(--ring));
+  --color-fd-background: hsl(var(--background));
+  --color-fd-card: hsl(var(--card));
+  --color-fd-foreground: hsl(var(--foreground));
+  --color-fd-muted-foreground: hsl(var(--muted-foreground));
+  --color-fd-secondary: hsl(var(--secondary));
+  --color-fd-accent-foreground: hsl(var(--accent-foreground));
+  --color-fd-primary: hsl(var(--primary));
+  --bg-nd-sidebar: hsl(var(--sidebar-background));
+}
+
+.dark {
+  --color-fd-ring: hsl(var(--ring));
+  --color-fd-primary: hsl(var(--primary));
+  --color-fd-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-fd-card-foreground: hsl(var(--card-foreground));
+  --color-fd-background: hsl(var(--background));
+  --color-fd-foreground: hsl(var(--foreground));
+  --color-fd-popover: hsl(var(--popover));
+  --color-fd-popover-foreground: hsl(var(--popover-foreground));
+  --color-fd-primary-foreground: hsl(var(--primary-foreground));
+  --color-fd-card: hsl(var(--card));
+  --color-fd-muted: hsl(var(--muted));
+  --color-fd-border: hsl(var(--border));
+  --color-fd-accent: hsl(var(--accent));
+  --color-fd-secondary: hsl(var(--secondary));
+  --color-fd-accent-foreground: hsl(var(--accent-foreground));
+  --color-fd-muted-foreground: hsl(var(--muted-foreground));
+}
+
+.prose {
+  --tw-prose-body: color-mix(in oklab, var(--color-fd-foreground) 85%, transparent);
+  --tw-prose-headings: color-mix(in oklab, var(--color-fd-foreground) 85%, transparent);
+  --tw-prose-links: var(--color-fd-primary);
+  --tw-prose-code: var(--color-fd-primary);
+}
+
+.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  border: none;
+  background-color: color-mix(in oklab, var(--color-fd-primary) 10%, transparent);
+}
+
+#nd-sidebar {
+  background-color: hsl(var(--sidebar-background));
+}
+
+#nd-page {
+  background-color: hsl(var(--background));
+  @apply rounded-t-lg;
+}
+
+#nd-sidebar > div {
+  border-color: transparent;
+}
+
+#nd-subnav {
+  background-color: hsl(var(--sidebar-background));
+}
+
+#nd-toc {
+  background-color: hsl(var(--sidebar-background));
+}
+
+#nd-subnav > div {
+  border-color: transparent;
+}
+
+button[data-search-full] {
+  background-color: var(--color-fd-background);
+}
+
+.bg-fd-card {
+  background-color: hsl(var(--card));
+  border: 0;
+}
+
+.dark a.text-fd-primary {
+  color: hsl(var(--sidebar-primary-foreground));
+}
+
+.dark a.text-fd-primary:hover {
+  color: hsl(var(--sidebar-primary));
+}
