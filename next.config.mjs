@@ -7,6 +7,7 @@ const config = {
   reactStrictMode: true,
   output: 'standalone',
   basePath: '/documentation',
+  serverExternalPackages: ['oxc-transform'],
   eslint: {
     ignoreDuringBuilds: true,
   },

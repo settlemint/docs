@@ -1,5 +1,6 @@
 import fg from 'fast-glob';
 import { remarkAdmonition } from 'fumadocs-core/mdx-plugins';
+import { remarkInstall } from 'fumadocs-docgen';
 import { remarkInclude } from 'fumadocs-mdx/config';
 import matter from 'gray-matter';
 import * as fs from 'node:fs/promises';
@@ -38,7 +39,7 @@ async function processContent(content: string): Promise<string> {
     // gfm styles
     .use(remarkGfm)
     // your remark plugins
-    // .use(remarkInstall, { persist: { id: 'package-manager' } })
+    .use(remarkInstall, { persist: { id: 'package-manager' } })
     .use(remarkAdmonition)
     // to string
     .use(remarkStringify)
