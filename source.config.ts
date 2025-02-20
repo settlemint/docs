@@ -1,3 +1,4 @@
+import { remarkMermaid } from '@theguild/remark-mermaid';
 import { rehypeCodeDefaultOptions, remarkAdmonition } from 'fumadocs-core/mdx-plugins';
 import { remarkInstall } from 'fumadocs-docgen';
 import { defineConfig, defineDocs } from 'fumadocs-mdx/config';
@@ -9,7 +10,7 @@ export const docs = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
-    remarkPlugins: [remarkInstall, remarkAdmonition],
+    remarkPlugins: [remarkInstall, remarkAdmonition, remarkMermaid],
     rehypeCodeOptions: {
       themes: {
         light: 'github-light',
