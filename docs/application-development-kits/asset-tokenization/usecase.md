@@ -125,9 +125,6 @@ graph TD
     C --> D[Investors Purchase Tokens]
     D --> E[Smart Contract Processes Automated Payouts]
     E --> F[Transactions Recorded on Blockchain]
-
-    classDef default fill:#242526,stroke:#888,stroke-width:2px,color:#fff;
-    class A,B,C,D,E,F default;
 ```
 
 </center>
