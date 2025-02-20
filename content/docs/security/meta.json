@@ -1,0 +1,13 @@
+{
+  "title": "Security",
+  "icon": "ShieldCheck",
+  "pages": [
+    "security-policies",
+    "compliance-and-certifications",
+    "infrastructure-security",
+    "application-security",
+    "data-security",
+    "incident-response",
+    "security-scanners"
+  ]
+}
