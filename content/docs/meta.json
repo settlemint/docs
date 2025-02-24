@@ -1,0 +1,5 @@
+  {
+  "title": "Meta",
+  "icon": "Grid2x2Plus",
+  "pages": ["about-settlemint", "launch-platform" ,"using-the-platform","developer-guides","security" ,"releases" ]
+}

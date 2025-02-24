@@ -1,0 +1,21 @@
+{
+  "permalink": "/documentation/releases/2024/10/11/run-anything-as-a-custom-deployment",
+  "source": "@site/releases/2024-10-11-run-anything-as-a-custom-deployment.md",
+  "title": "Run anything as a custom deployment",
+  "description": "Changelog Image",
+  "date": "2024-10-11T00:00:00.000Z",
+  "tags": [],
+  "readingTime": 1.15,
+  "hasTruncateMarker": false,
+  "authors": [],
+  "frontMatter": {},
+  "unlisted": false,
+  "prevItem": {
+    "title": "Simplified Subgraph Deployments",
+    "permalink": "/documentation/releases/2025/01/02/simplified-subgraph-deployment"
+  },
+  "nextItem": {
+    "title": "Integration of external consortia",
+    "permalink": "/documentation/releases/2024/10/04/integration-of-external-consortia"
+  }
+}

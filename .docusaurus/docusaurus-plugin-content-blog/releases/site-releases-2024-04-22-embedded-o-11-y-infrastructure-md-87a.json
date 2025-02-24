@@ -1,0 +1,21 @@
+{
+  "permalink": "/documentation/releases/2024/04/22/embedded-o11y-infrastructure",
+  "source": "@site/releases/2024-04-22-embedded-o11y-infrastructure.md",
+  "title": "Embedded o11y infrastructure",
+  "description": "Changelog Image",
+  "date": "2024-04-22T00:00:00.000Z",
+  "tags": [],
+  "readingTime": 0.185,
+  "hasTruncateMarker": false,
+  "authors": [],
+  "frontMatter": {},
+  "unlisted": false,
+  "prevItem": {
+    "title": "Hashgraph Hedera",
+    "permalink": "/documentation/releases/2024/06/27/hashgraph-hedera"
+  },
+  "nextItem": {
+    "title": "Managed Platform v7",
+    "permalink": "/documentation/releases/2024/04/02/managed-platform-v7"
+  }
+}

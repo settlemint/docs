@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Avalanche/avalanche-node-types",
+  "title": "Node types",
+  "description": "All nodes running in SettleMint are configured to be archive nodes, meaning they all include all previous states of a given blockchain since its origin.",
+  "source": "@site/docs/blockchain-guides/2_Avalanche/2_avalanche-node-types.md",
+  "sourceDirName": "blockchain-guides/2_Avalanche",
+  "slug": "/blockchain-guides/Avalanche/avalanche-node-types",
+  "permalink": "/documentation/docs/blockchain-guides/Avalanche/avalanche-node-types",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "The basics",
+    "permalink": "/documentation/docs/blockchain-guides/Avalanche/avalanche-the-basics"
+  },
+  "next": {
+    "title": "Connect to a node",
+    "permalink": "/documentation/docs/blockchain-guides/Avalanche/avalanche-connect-to-a-node"
+  }
+}

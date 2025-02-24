@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Optimism/optimism-the-basics",
+  "title": "The basics",
+  "description": "Optimism was launched in March 2021 by Optimism PBC, and has its own cryptocurrency since May 2022 called OP. It is a layer 2 scaling solution for Ethereum that focusses on security, scalability and ease-of-use. Optimism uses optimistic rollup technology to process transactions off-chain, which allows it to offer significantly faster transaction speeds and lower fees than Ethereum mainnet. It uses Ethereum Virtual Machine (EVM), which means that developers can deploy their existing Ethereum dapps to Optimism without any changes. In addition to scalability and compatibility, Optimism is also focused on decentralization. The Optimism network is secured by a decentralized network of validators, and it is governed by a DAO (decentralized autonomous organization). This ensures that Optimism is not controlled by any single entity.",
+  "source": "@site/docs/blockchain-guides/8_Optimism/1_optimism-the-basics.md",
+  "sourceDirName": "blockchain-guides/8_Optimism",
+  "slug": "/blockchain-guides/Optimism/optimism-the-basics",
+  "permalink": "/documentation/docs/blockchain-guides/Optimism/optimism-the-basics",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "State Machine",
+    "permalink": "/documentation/docs/blockchain-guides/Arbitrum/Template-library/arbitrum-state-machine"
+  },
+  "next": {
+    "title": "Node types",
+    "permalink": "/documentation/docs/blockchain-guides/Optimism/optimism-node-types"
+  }
+}

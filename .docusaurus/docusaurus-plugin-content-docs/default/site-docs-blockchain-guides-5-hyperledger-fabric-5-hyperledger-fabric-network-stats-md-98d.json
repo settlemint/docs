@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-network-stats",
+  "title": "Network and node stats",
+  "description": "Network stats",
+  "source": "@site/docs/blockchain-guides/5_Hyperledger-Fabric/5_hyperledger-fabric-network-stats.md",
+  "sourceDirName": "blockchain-guides/5_Hyperledger-Fabric",
+  "slug": "/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-network-stats",
+  "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-network-stats",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 5,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Connect to a node",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-connect-to-a-node"
+  },
+  "next": {
+    "title": "Smart Contract Sets",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-integration-tools"
+  }
+}

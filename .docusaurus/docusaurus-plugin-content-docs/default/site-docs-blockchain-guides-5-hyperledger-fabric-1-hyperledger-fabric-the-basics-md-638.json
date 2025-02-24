@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-the-basics",
+  "title": "The basics",
+  "description": "Hyperledger Fabric is an open source enterprise-grade permissioned distributed ledger technology (DLT) platform, designed for use in enterprise contexts, that delivers some key differentiating capabilities over other popular distributed ledger or blockchain platforms.",
+  "source": "@site/docs/blockchain-guides/5_Hyperledger-Fabric/1_hyperledger-fabric-the-basics.md",
+  "sourceDirName": "blockchain-guides/5_Hyperledger-Fabric",
+  "slug": "/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-the-basics",
+  "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-the-basics",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "State Machine",
+    "permalink": "/documentation/docs/blockchain-guides/Polygon/Template-library/polygon-state-machine"
+  },
+  "next": {
+    "title": "Network settings",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-network-settings"
+  }
+}

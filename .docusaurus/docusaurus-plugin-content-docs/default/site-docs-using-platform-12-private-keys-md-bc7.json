@@ -1,0 +1,28 @@
+{
+  "id": "using-platform/private-keys",
+  "title": "Private Keys",
+  "description": "Guide to managing private keys on SettleMint",
+  "source": "@site/docs/using-platform/12_private-keys.md",
+  "sourceDirName": "using-platform",
+  "slug": "/using-platform/private-keys",
+  "permalink": "/documentation/docs/using-platform/private-keys",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 12,
+  "frontMatter": {
+    "title": "Private Keys",
+    "description": "Guide to managing private keys on SettleMint",
+    "sidebar_position": 12
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Storage",
+    "permalink": "/documentation/docs/using-platform/storage"
+  },
+  "next": {
+    "title": "User Wallets",
+    "permalink": "/documentation/docs/using-platform/user_wallet"
+  }
+}

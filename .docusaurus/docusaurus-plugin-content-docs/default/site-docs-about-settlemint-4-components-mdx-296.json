@@ -1,0 +1,30 @@
+{
+  "id": "about-settlemint/components",
+  "title": "SettleMint Components",
+  "description": "Overview of the SettleMint components and tools available to build blockchain applications",
+  "source": "@site/docs/about-settlemint/4_components.mdx",
+  "sourceDirName": "about-settlemint",
+  "slug": "/about-settlemint/components",
+  "permalink": "/documentation/docs/about-settlemint/components",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": null,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "custom_edit_url": null,
+    "title": "SettleMint Components",
+    "description": "Overview of the SettleMint components and tools available to build blockchain applications",
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Supported Blockchains",
+    "permalink": "/documentation/docs/about-settlemint/supported-blockchains"
+  },
+  "next": {
+    "title": "Supported cloud providers",
+    "permalink": "/documentation/docs/launch-platform/managed-cloud-deployment/supported-cloud-providers"
+  }
+}

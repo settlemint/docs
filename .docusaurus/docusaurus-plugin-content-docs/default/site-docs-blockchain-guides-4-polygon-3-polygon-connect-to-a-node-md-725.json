@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Polygon/polygon-connect-to-a-node",
+  "title": "Connect to a node",
+  "description": "For a software application to interact with a blockchain (e.g. by sending transactions/data to the network, or even just by reading data), it must connect to a node. This section describes how to connect to your Polygon node.",
+  "source": "@site/docs/blockchain-guides/4_Polygon/3_polygon-connect-to-a-node.md",
+  "sourceDirName": "blockchain-guides/4_Polygon",
+  "slug": "/blockchain-guides/Polygon/polygon-connect-to-a-node",
+  "permalink": "/documentation/docs/blockchain-guides/Polygon/polygon-connect-to-a-node",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Node types",
+    "permalink": "/documentation/docs/blockchain-guides/Polygon/polygon-node-types"
+  },
+  "next": {
+    "title": "Network stats",
+    "permalink": "/documentation/docs/blockchain-guides/Polygon/polygon-network-stats"
+  }
+}

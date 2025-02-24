@@ -1,0 +1,27 @@
+{
+  "id": "using-platform/dev-tools/code-studio/smart-contract-sets/deploying-a-contract",
+  "title": "Deploying a smart contract",
+  "description": "Deploying a smart contract using Platform UI or SDK CLI",
+  "source": "@site/docs/using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/4_deploying-a-contract.md",
+  "sourceDirName": "using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets",
+  "slug": "/using-platform/dev-tools/code-studio/smart-contract-sets/deploying-a-contract",
+  "permalink": "/documentation/docs/using-platform/dev-tools/code-studio/smart-contract-sets/deploying-a-contract",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "title": "Deploying a smart contract",
+    "description": "Deploying a smart contract using Platform UI or SDK CLI"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Add a Smart Contract Set",
+    "permalink": "/documentation/docs/using-platform/dev-tools/code-studio/smart-contract-sets/add-smart-contract-set"
+  },
+  "next": {
+    "title": "Generative AI plugin",
+    "permalink": "/documentation/docs/using-platform/dev-tools/code-studio/smart-contract-sets/AI_plugin"
+  }
+}

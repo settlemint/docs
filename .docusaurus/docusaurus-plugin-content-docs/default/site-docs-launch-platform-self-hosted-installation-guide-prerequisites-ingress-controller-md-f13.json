@@ -1,0 +1,27 @@
+{
+  "id": "launch-platform/self-hosted/installation-guide/prerequisites/ingress-controller",
+  "title": "Ingress Controller",
+  "description": "Overview",
+  "source": "@site/docs/launch-platform/self-hosted/installation-guide/prerequisites/ingress-controller.md",
+  "sourceDirName": "launch-platform/self-hosted/installation-guide/prerequisites",
+  "slug": "/launch-platform/self-hosted/installation-guide/prerequisites/ingress-controller",
+  "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/ingress-controller",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Ingress Controller",
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Overview",
+    "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/overview"
+  },
+  "next": {
+    "title": "Domain and TLS Configuration",
+    "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/domain-and-tls"
+  }
+}

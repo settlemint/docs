@@ -1,0 +1,24 @@
+{
+  "id": "about-settlemint/supported-blockchains",
+  "title": "Supported Blockchains",
+  "description": "When launching a blockchain development project, the selection of a blockchain protocol is one of the most important decisions that has to be made. Protocols matter because they determine the scope of functionality your application can provide.",
+  "source": "@site/docs/about-settlemint/1_supported-blockchains.mdx",
+  "sourceDirName": "about-settlemint",
+  "slug": "/about-settlemint/supported-blockchains",
+  "permalink": "/documentation/docs/about-settlemint/supported-blockchains",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Platform Overview",
+    "permalink": "/documentation/docs/about-settlemint/intro"
+  },
+  "next": {
+    "title": "SettleMint Components",
+    "permalink": "/documentation/docs/about-settlemint/components"
+  }
+}

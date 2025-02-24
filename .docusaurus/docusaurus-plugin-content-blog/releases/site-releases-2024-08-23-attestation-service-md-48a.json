@@ -1,0 +1,21 @@
+{
+  "permalink": "/documentation/releases/2024/08/23/attestation-service",
+  "source": "@site/releases/2024-08-23-attestation-service.md",
+  "title": "Attestation Service",
+  "description": "Changelog Image",
+  "date": "2024-08-23T00:00:00.000Z",
+  "tags": [],
+  "readingTime": 1.35,
+  "hasTruncateMarker": false,
+  "authors": [],
+  "frontMatter": {},
+  "unlisted": false,
+  "prevItem": {
+    "title": "Support QBFT for Besu",
+    "permalink": "/documentation/releases/2024/08/29/support-qbft-for-besu"
+  },
+  "nextItem": {
+    "title": "Customize Genesis, Bootnode lists and key material",
+    "permalink": "/documentation/releases/2024/08/01/customize-genesis-bootnode-lists-and-key-material"
+  }
+}

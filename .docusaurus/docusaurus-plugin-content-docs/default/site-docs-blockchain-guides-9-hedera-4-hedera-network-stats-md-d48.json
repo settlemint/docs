@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Hedera/hedera-network-stats",
+  "title": "Network stats",
+  "description": "The dashboard gives you an overview of the following stats for the network:",
+  "source": "@site/docs/blockchain-guides/9_Hedera/4_hedera-network-stats.md",
+  "sourceDirName": "blockchain-guides/9_Hedera",
+  "slug": "/blockchain-guides/Hedera/hedera-network-stats",
+  "permalink": "/documentation/docs/blockchain-guides/Hedera/hedera-network-stats",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Connect to a node",
+    "permalink": "/documentation/docs/blockchain-guides/Hedera/hedera-connect-to-a-relay"
+  },
+  "next": {
+    "title": "Smart Contract Sets",
+    "permalink": "/documentation/docs/blockchain-guides/Hedera/hedera-integration-tools"
+  }
+}

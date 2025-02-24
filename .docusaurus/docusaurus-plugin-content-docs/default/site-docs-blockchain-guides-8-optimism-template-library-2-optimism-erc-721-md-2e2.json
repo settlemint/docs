@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Optimism/Template-library/optimism-erc-721",
+  "title": "ERC-721 token",
+  "description": "ERC-721 tokens are blockchain-based assets, issued on issued on all EVM compatible blockchain networks such as Optimism, that have value and can be sent and received. Contrary to the ERC-20 tokens, these ERC-721 tokens are non- fungible, meaning that two tokens from the same smart contract are not equivalent.",
+  "source": "@site/docs/blockchain-guides/8_Optimism/Template-library/2_optimism-erc-721.md",
+  "sourceDirName": "blockchain-guides/8_Optimism/Template-library",
+  "slug": "/blockchain-guides/Optimism/Template-library/optimism-erc-721",
+  "permalink": "/documentation/docs/blockchain-guides/Optimism/Template-library/optimism-erc-721",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "ERC-20 token",
+    "permalink": "/documentation/docs/blockchain-guides/Optimism/Template-library/optimism-erc-20"
+  },
+  "next": {
+    "title": "State Machine",
+    "permalink": "/documentation/docs/blockchain-guides/Optimism/Template-library/optimism-state-machine"
+  }
+}

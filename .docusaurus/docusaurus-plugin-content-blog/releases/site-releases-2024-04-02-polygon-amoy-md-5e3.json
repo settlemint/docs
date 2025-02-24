@@ -1,0 +1,21 @@
+{
+  "permalink": "/documentation/releases/2024/04/02/polygon-amoy",
+  "source": "@site/releases/2024-04-02-polygon-amoy.md",
+  "title": "Polygon Amoy",
+  "description": "Changelog Image",
+  "date": "2024-04-02T00:00:00.000Z",
+  "tags": [],
+  "readingTime": 0.655,
+  "hasTruncateMarker": false,
+  "authors": [],
+  "frontMatter": {},
+  "unlisted": false,
+  "prevItem": {
+    "title": "Managed Platform v7",
+    "permalink": "/documentation/releases/2024/04/02/managed-platform-v7"
+  },
+  "nextItem": {
+    "title": "Self-Managed platform v7",
+    "permalink": "/documentation/releases/2024/03/22/self-managed-platform-v7"
+  }
+}

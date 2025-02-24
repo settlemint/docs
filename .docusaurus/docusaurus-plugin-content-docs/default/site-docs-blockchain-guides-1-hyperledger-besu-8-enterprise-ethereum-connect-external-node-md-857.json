@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Hyperledger-Besu/enterprise-ethereum-connect-external-node",
+  "title": "Connect to an external node",
+  "description": "There are many usecases where not all nodes are running on the SettleMint platform. For example, you might want to connect to a node running on a different server, you might want to connect to a node running on a different blockchain platform or just for development purposes. In this guide, we will show you how to connect to an external node.",
+  "source": "@site/docs/blockchain-guides/1_Hyperledger-Besu/8_enterprise-ethereum-connect-external-node.md",
+  "sourceDirName": "blockchain-guides/1_Hyperledger-Besu",
+  "slug": "/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-connect-external-node",
+  "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-connect-external-node",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 8,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Smart Contract Sets",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-integration-tools"
+  },
+  "next": {
+    "title": "Connect to an External Network",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-connect-external-network"
+  }
+}

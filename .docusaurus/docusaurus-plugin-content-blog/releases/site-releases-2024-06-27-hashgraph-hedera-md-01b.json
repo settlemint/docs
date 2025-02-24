@@ -1,0 +1,21 @@
+{
+  "permalink": "/documentation/releases/2024/06/27/hashgraph-hedera",
+  "source": "@site/releases/2024-06-27-hashgraph-hedera.md",
+  "title": "Hashgraph Hedera",
+  "description": "Changelog Image",
+  "date": "2024-06-27T00:00:00.000Z",
+  "tags": [],
+  "readingTime": 0.55,
+  "hasTruncateMarker": false,
+  "authors": [],
+  "frontMatter": {},
+  "unlisted": false,
+  "prevItem": {
+    "title": "Installation guide for Google Cloud Platform",
+    "permalink": "/documentation/releases/2024/07/10/installation-guide-for-google-cloud-platform"
+  },
+  "nextItem": {
+    "title": "Embedded o11y infrastructure",
+    "permalink": "/documentation/releases/2024/04/22/embedded-o11y-infrastructure"
+  }
+}

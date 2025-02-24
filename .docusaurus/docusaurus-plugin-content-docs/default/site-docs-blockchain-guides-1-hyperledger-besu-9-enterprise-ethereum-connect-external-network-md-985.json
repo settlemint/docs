@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Hyperledger-Besu/enterprise-ethereum-connect-external-network",
+  "title": "Connect to an External Network",
+  "description": "The SettleMint platform seamlessly integrates with existing external networks. You can deploy nodes on your external network within the SettleMint platform, enabling you to leverage the platform's robust features, including monitoring, resource scaling, an intuitive JSON-RPC UI, and reliable uptime management.",
+  "source": "@site/docs/blockchain-guides/1_Hyperledger-Besu/9_enterprise-ethereum-connect-external-network.md",
+  "sourceDirName": "blockchain-guides/1_Hyperledger-Besu",
+  "slug": "/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-connect-external-network",
+  "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-connect-external-network",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 9,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Connect to an external node",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-connect-external-node"
+  },
+  "next": {
+    "title": "Understanding Transactions Per Second (TPS) on a Besu Node",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Besu/performance"
+  }
+}

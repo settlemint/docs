@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-network-settings",
+  "title": "Network settings",
+  "description": "Depending on your requirements, you can configure some advanced settings for your Hyperledger Fabric network's default-channel. We provide default settings, but you can change these according to your own preferences.",
+  "source": "@site/docs/blockchain-guides/5_Hyperledger-Fabric/2_hyperledger-fabric-network-settings.md",
+  "sourceDirName": "blockchain-guides/5_Hyperledger-Fabric",
+  "slug": "/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-network-settings",
+  "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-network-settings",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "The basics",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-the-basics"
+  },
+  "next": {
+    "title": "Node types",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Fabric/hyperledger-fabric-node-types"
+  }
+}

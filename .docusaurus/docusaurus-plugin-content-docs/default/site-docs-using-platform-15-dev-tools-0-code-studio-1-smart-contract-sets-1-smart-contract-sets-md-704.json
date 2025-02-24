@@ -1,0 +1,27 @@
+{
+  "id": "using-platform/dev-tools/code-studio/smart-contract-sets/smart-contract-sets",
+  "title": "Smart Contract Sets",
+  "description": "Smart Contract Sets",
+  "source": "@site/docs/using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/1_smart-contract-sets.md",
+  "sourceDirName": "using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets",
+  "slug": "/using-platform/dev-tools/code-studio/smart-contract-sets/",
+  "permalink": "/documentation/docs/using-platform/dev-tools/code-studio/smart-contract-sets/",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "title": "Smart Contract Sets",
+    "description": "Smart Contract Sets"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Code Studio",
+    "permalink": "/documentation/docs/using-platform/dev-tools/code-studio/"
+  },
+  "next": {
+    "title": "Smart contract template library",
+    "permalink": "/documentation/docs/using-platform/dev-tools/code-studio/smart-contract-sets/smart-contract-templates"
+  }
+}

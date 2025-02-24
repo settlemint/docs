@@ -1,0 +1,21 @@
+{
+  "permalink": "/documentation/releases/2024/10/04/integration-of-external-consortia",
+  "source": "@site/releases/2024-10-04-integration-of-external-consortia.md",
+  "title": "Integration of external consortia",
+  "description": "Changelog Image",
+  "date": "2024-10-04T00:00:00.000Z",
+  "tags": [],
+  "readingTime": 1.045,
+  "hasTruncateMarker": false,
+  "authors": [],
+  "frontMatter": {},
+  "unlisted": false,
+  "prevItem": {
+    "title": "Run anything as a custom deployment",
+    "permalink": "/documentation/releases/2024/10/11/run-anything-as-a-custom-deployment"
+  },
+  "nextItem": {
+    "title": "Support the Soneium Network",
+    "permalink": "/documentation/releases/2024/10/02/support-the-soneium-network"
+  }
+}

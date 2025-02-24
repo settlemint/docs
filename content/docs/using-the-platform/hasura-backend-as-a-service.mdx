@@ -1,0 +1,94 @@
+---
+title: Hasura Backend-as-a-Service
+description: Guide to using Hasura in SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Key Features
+    - GraphQL APIs
+    - Database management
+    - Real-time subscriptions
+    - Role-based access control
+  </Card>
+
+  <Card>
+    ### Integration Benefits
+    - Type-safe queries
+    - Automated CRUD
+    - Built-in caching
+    - Performance optimization
+  </Card>
+</div>
+
+## Add Hasura
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Navigate to Application
+      Go to your application
+
+      ### Access Integration Tools
+      Click **Integration tools** in the left navigation
+
+      ### Configure Hasura
+      1. Click **Add an integration tool**
+      2. Select **Hasura**
+      3. Enter name and configure settings
+      4. Click **Confirm**
+    </Steps>
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Create Hasura instance
+    settlemint platform create integration-tool hasura <name>
+
+    # Get help
+    settlemint platform create integration-tool hasura --help
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    const createHasura = async () => {
+      const result = await client.hasura.create({
+        name: "my-hasura",
+        applicationUniqueName: "my-app"
+      });
+    };
+    ```
+  </Tab>
+</Tabs>
+
+## Basic Features
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Schema Management
+    - Create multiple schemas
+    - Define table structures
+    - Set up relationships
+    - Configure indexes
+  </Card>
+
+  <Card>
+    ### Data Access
+    - GraphQL queries
+    - Real-time subscriptions
+    - Remote schemas
+    - Actions & Events
+  </Card>
+</div>
+
+<Callout type="info">
+All operations require appropriate permissions in your workspace.
+</Callout> 

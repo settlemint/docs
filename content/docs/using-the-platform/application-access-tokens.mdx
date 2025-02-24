@@ -1,0 +1,107 @@
+---
+title: Application Access Tokens
+description: Guide to managing application access tokens in SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Key Features
+    - Service authentication
+    - Scoped permissions
+    - Expiration control
+    - Token management
+  </Card>
+
+  <Card>
+    ### Access Types
+    - All services access
+    - Specific service access
+    - Time-limited access
+    - Revocable tokens
+  </Card>
+</div>
+
+## Create Access Token
+
+<Steps>
+  ### Navigate to Tokens
+  Go to your application's dashboard and click "App access tokens"
+
+  ### Configure Token
+  1. Click **Add an application access token**
+  2. Choose token name
+  3. Set expiration date
+  4. Select scope type:
+     - **All** - Access to all services
+     - **Specific** - Select individual services
+
+  ### Generate Token
+  Click **Confirm** to create token
+</Steps>
+
+<Callout type="warning">
+Copy and save your token securely - you won't see it again. Treat it like a password and keep it secret.
+</Callout>
+
+## Update Access Token
+
+<Steps>
+  ### Access Token Settings
+  1. Navigate to **App Access Tokens**
+  2. Click **View scopes** for your token
+
+  ### Modify Permissions
+  1. Click **Update**
+  2. Choose new scopes
+  3. Click **Confirm**
+</Steps>
+
+## Delete Access Token
+
+<Steps>
+  ### Navigate to Tokens
+  Go to application dashboard's token section
+
+  ### Remove Token
+  1. Click **Delete** next to token
+  2. Type **DELETE** to confirm
+  3. Token becomes invalid immediately
+</Steps>
+
+## Using Access Tokens
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <Card>
+    ### Header Method
+    ```http
+    x-auth-token: TOKEN
+    ```
+  </Card>
+
+  <Card>
+    ### Query Parameter
+    ```url
+    https://myservice.settlemint.com/?token=TOKEN
+    ```
+  </Card>
+
+  <Card>
+    ### URL Path
+    ```url
+    https://myservice.settlemint.com/TOKEN
+    ```
+  </Card>
+</div>
+
+### Special Cases
+
+For specific services:
+- IPFS: `https://myservice.settlemint.com/TOKEN/api/v0/...`
+- Avalanche/Fuji: `https://myservice.settlemint.com/ext/bc/C/rpc/TOKEN` 

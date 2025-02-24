@@ -1,0 +1,21 @@
+{
+  "permalink": "/documentation/releases/2025/01/03/zeto-smart-contract-set",
+  "source": "@site/releases/2025-01-03-zeto-smart-contract-set.md",
+  "title": "Zeto Smart Contract Set",
+  "description": "We're excited to introduce the Zeto Smart Contract Set, bringing comprehensive zero-knowledge token capabilities to the SettleMint platform.",
+  "date": "2025-01-03T00:00:00.000Z",
+  "tags": [],
+  "readingTime": 1.07,
+  "hasTruncateMarker": false,
+  "authors": [],
+  "frontMatter": {},
+  "unlisted": false,
+  "prevItem": {
+    "title": "Introducing Dev Tools",
+    "permalink": "/documentation/releases/2025/01/08/dev-tools"
+  },
+  "nextItem": {
+    "title": "Simplified Subgraph Deployments",
+    "permalink": "/documentation/releases/2025/01/02/simplified-subgraph-deployment"
+  }
+}

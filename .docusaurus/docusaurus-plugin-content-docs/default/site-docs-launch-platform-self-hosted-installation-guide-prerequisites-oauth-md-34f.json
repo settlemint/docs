@@ -1,0 +1,27 @@
+{
+  "id": "launch-platform/self-hosted/installation-guide/prerequisites/oauth",
+  "title": "OAuth Provider",
+  "description": "Overview",
+  "source": "@site/docs/launch-platform/self-hosted/installation-guide/prerequisites/oauth.md",
+  "sourceDirName": "launch-platform/self-hosted/installation-guide/prerequisites",
+  "slug": "/launch-platform/self-hosted/installation-guide/prerequisites/oauth",
+  "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/oauth",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "OAuth Provider",
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Domain and TLS Configuration",
+    "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/domain-and-tls"
+  },
+  "next": {
+    "title": "PostgreSQL Database",
+    "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/postgresql"
+  }
+}

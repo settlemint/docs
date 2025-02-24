@@ -1,0 +1,138 @@
+---
+title: Custom Deployment
+description: Guide to deploying custom Docker images on SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Key Features
+    - Deploy custom Docker images
+    - Frontend applications
+    - Custom components
+    - Flexible deployment
+  </Card>
+
+  <Card>
+    ### Supported Features
+    - SSL/TLS certificates
+    - Custom domains
+    - Health monitoring
+    - Resource management
+  </Card>
+</div>
+
+## Create Custom Deployment
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Prepare Container
+      1. Prepare your container image
+      2. Push to container registry
+
+      ### Configure Deployment
+      1. Navigate to Custom Deployments
+      2. Click "Add Custom Deployment"
+      3. Provide container details:
+         - Image path
+         - Registry credentials
+         - Environment variables
+         - Domain settings
+      4. Click **Confirm**
+    </Steps>
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Create deployment
+    settlemint platform create custom-deployment my-deployment \
+      --application my-app \
+      --image-repository registry.example.com \
+      --image-name my-app \
+      --image-tag latest \
+      --port 3000
+
+    # With environment variables
+    settlemint platform create custom-deployment my-deployment \
+      --application my-app \
+      --image-repository registry.example.com \
+      --image-name my-app \
+      --image-tag latest \
+      --env-vars NODE_ENV=production,DEBUG=false
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    const createDeployment = async () => {
+      const result = await client.customDeployment.create({
+        applicationId: "app-123",
+        name: "my-deployment",
+        imageRepository: "registry.example.com",
+        imageName: "my-app",
+        imageTag: "latest",
+        port: 3000,
+        environmentVariables: {
+          NODE_ENV: "production"
+        }
+      });
+    };
+    ```
+  </Tab>
+</Tabs>
+
+## DNS Configuration
+
+<Steps>
+  ### Add Custom Domain
+  1. Navigate to Custom Deployment settings
+  2. Add your domain (e.g., example.com or app.example.com)
+  3. Save changes
+
+  ### Configure DNS Records
+  For top-level domains:
+  ```text
+  ALIAS example.com gke-europe.settlemint.com
+  ALIAS www.example.com gke-europe.settlemint.com
+  ```
+
+  For subdomains:
+  ```text
+  CNAME app.example.com gke-europe.settlemint.com
+  ```
+
+  ### Set TTL
+  - Initial: 300 seconds for quick propagation
+  - Later: 3600 seconds for better caching
+</Steps>
+
+## Limitations
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Runtime Constraints
+    - No root privileges
+    - Read-only filesystem
+    - Stateless applications
+    - AMD-based images only
+  </Card>
+
+  <Card>
+    ### Best Practices
+    - Design for horizontal scaling
+    - Use environment variables
+    - Implement proper logging
+    - Regular security updates
+  </Card>
+</div>
+
+<Callout type="info">
+Custom Deployments support automatic SSL/TLS certificate management for custom domains.
+</Callout> 

@@ -1,0 +1,114 @@
+---
+title: Add a Load Balancer
+description: Guide to adding load balancers in SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Key Features
+    - High availability
+    - Request distribution
+    - Health monitoring
+    - Failover support
+  </Card>
+
+  <Card>
+    ### Benefits
+    - Improved performance
+    - Better reliability
+    - Scalable access
+    - Traffic management
+  </Card>
+</div>
+
+## Add Load Balancer
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Navigate to Application
+      Go to your application
+
+      ### Access Load Balancers
+      Click **Load Balancers** in the left navigation
+
+      ### Configure Load Balancer
+      1. Click **Add a load balancer**
+      2. Select nodes to balance
+      3. Configure settings
+      4. Click **Confirm**
+    </Steps>
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Create load balancer
+    settlemint platform create load-balancer <name> \
+      --nodes node1,node2,node3
+
+    # Get help
+    settlemint platform create load-balancer --help
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    const createLoadBalancer = async () => {
+      const result = await client.loadBalancer.create({
+        name: "my-balancer",
+        applicationUniqueName: "my-app",
+        nodes: ["node1", "node2", "node3"]
+      });
+    };
+    ```
+  </Tab>
+</Tabs>
+
+## Manage Load Balancer
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    Navigate to your load balancer to:
+    - View status and health
+    - Monitor traffic
+    - Update node pool
+    - Configure settings
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # List load balancers
+    settlemint platform list load-balancers
+
+    # Get details
+    settlemint platform read load-balancer <name>
+
+    # Update nodes
+    settlemint platform update load-balancer <name> --nodes node1,node2
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // List load balancers
+    await client.loadBalancer.list("your-app");
+
+    // Get details
+    await client.loadBalancer.read("balancer-name");
+
+    // Update nodes
+    await client.loadBalancer.update("balancer-name", {
+      nodes: ["node1", "node2"]
+    });
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+All operations require appropriate permissions in your workspace.
+</Callout> 

@@ -1,0 +1,24 @@
+{
+  "id": "using-platform/integration-studio",
+  "title": "Integration studio",
+  "description": "The SettleMint Integration Studio is a low-code development environment which enables you to implement business logic for your application simply by dragging and dropping.",
+  "source": "@site/docs/using-platform/8_integration-studio.md",
+  "sourceDirName": "using-platform",
+  "slug": "/using-platform/integration-studio",
+  "permalink": "/documentation/docs/using-platform/integration-studio",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 8,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Middleware",
+    "permalink": "/documentation/docs/using-platform/middleware"
+  },
+  "next": {
+    "title": "Hasura - Backend-as-a-service",
+    "permalink": "/documentation/docs/using-platform/hasura-backend-as-a-service"
+  }
+}

@@ -1,0 +1,55 @@
+---
+title: Invite Network Participants 
+description: Guide to inviting participants to your blockchain network
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+
+<Callout type="info">
+You must have an existing network before you can invite participants.
+</Callout>
+
+## Send Invitations
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Access Network
+      Navigate to your network in the application
+      
+      ### Send Invite
+      1. Click **Participants** tab
+      2. Click **Invite participant**
+      3. Enter email address
+      4. Configure permissions
+      5. Click **Send invitation**
+    </Steps>
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Send invitation
+    settlemint platform invite participant <email> --network <network-name>
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // Send invitation
+    const inviteParticipant = async () => {
+      await client.network.invite({
+        email: "participant@example.com",
+        networkUniqueName: "network-name"
+      });
+    };
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+All operations require appropriate permissions in your workspace.
+</Callout> 

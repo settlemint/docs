@@ -1,0 +1,27 @@
+{
+  "id": "using-platform/add-a-load-balancer",
+  "title": "Add a Load Balancer",
+  "description": "Guide to adding a Load Balancer to a Blockchain Network",
+  "source": "@site/docs/using-platform/6_add-a-load-balancer.md",
+  "sourceDirName": "using-platform",
+  "slug": "/using-platform/add-a-load-balancer",
+  "permalink": "/documentation/docs/using-platform/add-a-load-balancer",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 6,
+  "frontMatter": {
+    "title": "Add a Load Balancer",
+    "description": "Guide to adding a Load Balancer to a Blockchain Network"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Connect to a node",
+    "permalink": "/documentation/docs/using-platform/connect-to-a-node"
+  },
+  "next": {
+    "title": "Middleware",
+    "permalink": "/documentation/docs/using-platform/middleware"
+  }
+}

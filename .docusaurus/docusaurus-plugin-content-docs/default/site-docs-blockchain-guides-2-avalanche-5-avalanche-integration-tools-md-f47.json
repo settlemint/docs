@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Avalanche/avalanche-integration-tools",
+  "title": "Smart Contract Sets",
+  "description": "You can launch a Smart Contract Set to significantly accelerate the development of your smart contracts.",
+  "source": "@site/docs/blockchain-guides/2_Avalanche/5_avalanche-integration-tools.md",
+  "sourceDirName": "blockchain-guides/2_Avalanche",
+  "slug": "/blockchain-guides/Avalanche/avalanche-integration-tools",
+  "permalink": "/documentation/docs/blockchain-guides/Avalanche/avalanche-integration-tools",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 5,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Network stats",
+    "permalink": "/documentation/docs/blockchain-guides/Avalanche/avalanche-network-stats"
+  },
+  "next": {
+    "title": "ERC-20 token",
+    "permalink": "/documentation/docs/blockchain-guides/Avalanche/Template-library/avalanche-erc-20"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "security/security-policies",
+  "title": "Security Policies",
+  "description": "SettleMint has established comprehensive security policies to safeguard our systems and data. These policies are designed to ensure the confidentiality, integrity, and availability of information.",
+  "source": "@site/docs/security/1_security-policies.md",
+  "sourceDirName": "security",
+  "slug": "/security/security-policies",
+  "permalink": "/documentation/docs/security/security-policies",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "id": "security-policies",
+    "title": "Security Policies"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Introduction",
+    "permalink": "/documentation/docs/security/introduction"
+  },
+  "next": {
+    "title": "Compliance and Certifications",
+    "permalink": "/documentation/docs/security/compliance-and-certifications"
+  }
+}

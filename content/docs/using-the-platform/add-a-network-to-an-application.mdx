@@ -1,0 +1,75 @@
+---
+title: Add a Network to an Application
+description: Guide to adding blockchain networks in SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Available Networks
+    - Ethereum (Besu)
+    - Polygon Edge
+    - Fabric
+  </Card>
+
+  <Card>
+    ### Key Features
+    - Custom configurations
+    - Network management
+    - Node deployment
+    - Monitoring tools
+  </Card>
+</div>
+
+## Add Network
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Navigate to Application
+      Navigate to the **application** where you want to add a network
+      
+      ### Access Networks
+      Click **Networks** in the left navigation, then click **Add network**
+
+      ### Configure Network
+      1. Choose network type
+      2. Enter network name
+      3. Configure settings
+      4. Click **Confirm**
+    </Steps>
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Create network
+    settlemint platform create network besu <name>
+
+    # Get help
+    settlemint platform create network --help
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // Create network
+    const createNetwork = async () => {
+      const result = await client.network.create({
+        type: "besu",
+        name: "my-network",
+        applicationUniqueName: "my-app"
+      });
+      console.log('Network created:', result);
+    };
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+All operations require appropriate permissions in your workspace.
+</Callout> 

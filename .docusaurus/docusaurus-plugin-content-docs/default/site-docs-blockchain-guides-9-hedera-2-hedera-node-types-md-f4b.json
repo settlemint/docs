@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Hedera/hedera-node-types",
+  "title": "Node types",
+  "description": "We don't run our own Hedera nodes. We are running Hedera Json-RPC relay which points to public mirror node(https//testnet.mirrornode.hedera.com)",
+  "source": "@site/docs/blockchain-guides/9_Hedera/2_hedera-node-types.md",
+  "sourceDirName": "blockchain-guides/9_Hedera",
+  "slug": "/blockchain-guides/Hedera/hedera-node-types",
+  "permalink": "/documentation/docs/blockchain-guides/Hedera/hedera-node-types",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "The basics",
+    "permalink": "/documentation/docs/blockchain-guides/Hedera/hedera-the-basics"
+  },
+  "next": {
+    "title": "Connect to a node",
+    "permalink": "/documentation/docs/blockchain-guides/Hedera/hedera-connect-to-a-relay"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "title": "Launch Platform",
+  "icon": "Rocket",
+  "pages": ["managed-cloud-deployment","self-hosted"]
+}

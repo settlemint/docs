@@ -1,0 +1,77 @@
+---
+title: Resource Usage
+description: Guide to monitoring resource usage in SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+# Resource Usage
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Monitored Resources
+    - Memory allocation
+    - vCPU usage
+    - Disk space
+    - Network bandwidth
+  </Card>
+
+  <Card>
+    ### Monitoring Features
+    - Real-time metrics
+    - Historical data
+    - Usage trends
+    - Alert thresholds
+  </Card>
+</div>
+
+## Resource Metrics
+
+![Resource Usage](../../img/using-the-platform/resource-usage.png)
+
+<Steps>
+  ### Access Metrics
+  Navigate to your service's **Metrics tab**
+
+  ### View Resources
+  Monitor:
+  - Memory usage vs allocation
+  - vCPU utilization
+  - Disk space consumption
+  - Performance graphs
+</Steps>
+
+
+![Resource Usage CPU](../../img/using-the-platform/resource-usage-cpu.png)
+
+### Status Levels
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <Card>
+    ### Healthy
+    - Under 75% usage
+    - Optimal performance
+    - No action needed
+  </Card>
+
+  <Card>
+    ### Suboptimal
+    - 75-90% usage
+    - Performance impact
+    - Consider scaling
+  </Card>
+
+  <Card>
+    ### Critical
+    - Over 90% usage
+    - Immediate action
+    - Scale resources
+  </Card>
+</div>
+
+<Callout type="warning">
+When status is **Suboptimal**, consider scaling your resource pack to maintain performance.
+</Callout> 

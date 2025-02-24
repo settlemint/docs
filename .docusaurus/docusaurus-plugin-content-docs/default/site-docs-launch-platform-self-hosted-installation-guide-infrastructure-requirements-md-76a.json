@@ -1,0 +1,28 @@
+{
+  "id": "launch-platform/self-hosted/installation-guide/infrastructure-requirements",
+  "title": "Infrastructure Requirements",
+  "description": "Infrastructure requirements for self-hosting the platform",
+  "source": "@site/docs/launch-platform/self-hosted/installation-guide/infrastructure-requirements.md",
+  "sourceDirName": "launch-platform/self-hosted/installation-guide",
+  "slug": "/launch-platform/self-hosted/installation-guide/infrastructure-requirements",
+  "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/infrastructure-requirements",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Infrastructure Requirements",
+    "sidebar_position": 2,
+    "description": "Infrastructure requirements for self-hosting the platform"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Introduction",
+    "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/introduction"
+  },
+  "next": {
+    "title": "Overview",
+    "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/overview"
+  }
+}

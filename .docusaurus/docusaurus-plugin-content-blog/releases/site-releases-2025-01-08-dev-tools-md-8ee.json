@@ -1,0 +1,21 @@
+{
+  "permalink": "/documentation/releases/2025/01/08/dev-tools",
+  "source": "@site/releases/2025-01-08-dev-tools.md",
+  "title": "Introducing Dev Tools",
+  "description": "Changelog Image",
+  "date": "2025-01-08T00:00:00.000Z",
+  "tags": [],
+  "readingTime": 0.79,
+  "hasTruncateMarker": false,
+  "authors": [],
+  "frontMatter": {},
+  "unlisted": false,
+  "prevItem": {
+    "title": "Introducing the SettleMint SDK",
+    "permalink": "/documentation/releases/2025/01/28/sdk"
+  },
+  "nextItem": {
+    "title": "Zeto Smart Contract Set",
+    "permalink": "/documentation/releases/2025/01/03/zeto-smart-contract-set"
+  }
+}

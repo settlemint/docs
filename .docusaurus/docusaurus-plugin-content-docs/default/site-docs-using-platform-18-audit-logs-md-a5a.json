@@ -1,0 +1,24 @@
+{
+  "id": "using-platform/audit_logs",
+  "title": "Audit Logs",
+  "description": "Audit logs provide a detailed record of activities in any application deployed on the SettleMint Blockchain Transformation Platform. These logs provide the following key benefits:",
+  "source": "@site/docs/using-platform/18_audit_logs.md",
+  "sourceDirName": "using-platform",
+  "slug": "/using-platform/audit_logs",
+  "permalink": "/documentation/docs/using-platform/audit_logs",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 18,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Personal Access Tokens",
+    "permalink": "/documentation/docs/using-platform/personal-access-tokens"
+  },
+  "next": {
+    "title": "Resource Usage",
+    "permalink": "/documentation/docs/using-platform/resource-usage"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "using-platform/custom-deployment",
+  "title": "Custom Deployment",
+  "description": "Guide to deploying custom Docker images on SettleMint",
+  "source": "@site/docs/using-platform/14_custom-deployment.md",
+  "sourceDirName": "using-platform",
+  "slug": "/using-platform/custom-deployment",
+  "permalink": "/documentation/docs/using-platform/custom-deployment",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 14,
+  "frontMatter": {
+    "title": "Custom Deployment",
+    "description": "Guide to deploying custom Docker images on SettleMint",
+    "sidebar_position": 14
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "User Wallets",
+    "permalink": "/documentation/docs/using-platform/user_wallet"
+  },
+  "next": {
+    "title": "Dev Tools",
+    "permalink": "/documentation/docs/using-platform/dev-tools/"
+  }
+}

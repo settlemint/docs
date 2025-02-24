@@ -1,0 +1,26 @@
+{
+  "id": "about-settlemint/intro",
+  "title": "Platform Overview",
+  "description": "Overview of the SettleMint Platform",
+  "source": "@site/docs/about-settlemint/0_intro.mdx",
+  "sourceDirName": "about-settlemint",
+  "slug": "/about-settlemint/intro",
+  "permalink": "/documentation/docs/about-settlemint/intro",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": null,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "custom_edit_url": null,
+    "title": "Platform Overview",
+    "description": "Overview of the SettleMint Platform",
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "next": {
+    "title": "Supported Blockchains",
+    "permalink": "/documentation/docs/about-settlemint/supported-blockchains"
+  }
+}

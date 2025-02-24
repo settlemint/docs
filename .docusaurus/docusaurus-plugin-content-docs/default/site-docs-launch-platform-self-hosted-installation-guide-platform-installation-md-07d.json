@@ -1,0 +1,27 @@
+{
+  "id": "launch-platform/self-hosted/installation-guide/platform-installation",
+  "title": "Platform Installation",
+  "description": "Overview",
+  "source": "@site/docs/launch-platform/self-hosted/installation-guide/platform-installation.md",
+  "sourceDirName": "launch-platform/self-hosted/installation-guide",
+  "slug": "/launch-platform/self-hosted/installation-guide/platform-installation",
+  "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/platform-installation",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Platform Installation",
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Terraform Installation (Optional)",
+    "permalink": "/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/terraform"
+  },
+  "next": {
+    "title": "Velero Backups on AWS",
+    "permalink": "/documentation/docs/launch-platform/self-hosted/backups/velero-aws"
+  }
+}

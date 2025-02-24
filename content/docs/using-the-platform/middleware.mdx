@@ -1,0 +1,113 @@
+---
+title: Middleware
+description: Guide to using middleware in SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Available Options
+    - **Graph Middleware** - For EVM chains
+    - **Smart Contract Portal** - For EVM chains
+    - **FabConnect** - For Hyperledger Fabric
+    - **Attestation Indexer** - For attestations
+  </Card>
+
+  <Card>
+    ### Key Features
+    - Data indexing
+    - API access
+    - Event monitoring
+    - Webhook support
+  </Card>
+</div>
+
+## Add Middleware
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Navigate to Application
+      Go to your application
+
+      ### Access Middleware
+      Click **Middleware** in the left navigation
+
+      ### Configure Middleware
+      1. Click **Add a middleware**
+      2. Choose middleware type
+      3. Enter name and select node
+      4. Configure settings
+      5. Click **Confirm**
+    </Steps>
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Create middleware
+    settlemint platform create middleware <type> <name>
+
+    # Get help
+    settlemint platform create middleware --help
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    const createMiddleware = async () => {
+      const result = await client.middleware.create({
+        type: "graph",
+        name: "my-indexer",
+        applicationUniqueName: "my-app",
+        nodeUniqueName: "my-node"
+      });
+    };
+    ```
+  </Tab>
+</Tabs>
+
+## Manage Middleware
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    Navigate to your middleware and click **Manage middleware** to:
+    - View details and status
+    - Monitor health
+    - Access endpoints
+    - Update configurations
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # List middleware
+    settlemint platform list middleware --application <app-name>
+
+    # Get details
+    settlemint platform read middleware <name>
+
+    # Delete middleware
+    settlemint platform delete middleware <name>
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // List middleware
+    await client.middleware.list("your-app");
+
+    // Get details
+    await client.middleware.read("middleware-name");
+
+    // Delete middleware
+    await client.middleware.delete("middleware-name");
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+All operations require appropriate permissions in your workspace.
+</Callout> 

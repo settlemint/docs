@@ -1,0 +1,24 @@
+{
+  "id": "account-billing/billing",
+  "title": "Billing",
+  "description": "SettleMint follows a metered pay-as-you-go model, and charges you based on the resources you use.",
+  "source": "@site/docs/account-billing/20_billing.md",
+  "sourceDirName": "account-billing",
+  "slug": "/account-billing/billing",
+  "permalink": "/documentation/docs/account-billing/billing",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 20,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Join a Partner",
+    "permalink": "/documentation/docs/account-billing/join-a-partner"
+  },
+  "next": {
+    "title": "Service Requirements",
+    "permalink": "/documentation/docs/reference/service-requirements"
+  }
+}

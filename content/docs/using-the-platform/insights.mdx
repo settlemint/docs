@@ -1,0 +1,172 @@
+---
+title: Insights
+description: Guide to using blockchain explorers in SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Available Explorers
+    - **Blockscout** - For EVM compatible networks
+    - **Hyperledger Explorer** - For Fabric networks  
+    - **Otterscan** - Alternative EVM explorer
+  </Card>
+
+  <Card>
+    ### Key Features
+    - View and inspect transactions
+    - Monitor blockchain activity
+    - Analyze smart contracts
+    - Track network metrics
+  </Card>
+</div>
+
+## Add Blockchain Explorer
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Navigate to Application
+      Navigate to the **application** where you want to add a blockchain explorer
+      
+      ### Access Insights
+      Click **Insights** in the left navigation, then click **Add Insights**
+
+      ### Configure Explorer
+      1. Select **Blockchain Explorer**
+      2. Select the target **blockchain node**
+      3. Enter a **name** for your explorer instance
+      4. Configure deployment settings
+      5. Click **Confirm**
+    </Steps>
+  </Tab>
+
+  <Tab value="SDK CLI">
+    First ensure you're authenticated:
+    ```bash
+    settlemint login
+    ```
+
+    Create blockchain explorer:
+    ```bash
+    # Create blockchain explorer
+    settlemint platform create insights blockscout <name>
+
+    # Get information about options
+    settlemint platform create insights blockscout --help
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    For a full example of how to create a blockchain explorer using the SDK, see the [Blockscout SDK API Reference](https://www.npmjs.com/package/@settlemint/sdk-blockscout#api-reference).
+  </Tab>
+</Tabs>
+
+## Manage Explorer
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    Navigate to your explorer and click **Manage insights** to:
+    - View explorer details and status
+    - Monitor health status
+    - Access the explorer interface
+    - Update configurations
+
+    <Callout type="info">
+    **Status Values:**
+    - `DEPLOYING` - Initial deployment in progress
+    - `COMPLETED` - Running normally
+    - `FAILED` - Deployment or operation failed
+    - `PAUSED` - Explorer is paused
+    - `RESTARTING` - Explorer is restarting
+
+    **Health Indicators:**
+    - `HEALTHY` - Operating normally
+    - `HAS_INDEXING_BACKLOG` - Processing backlog
+    - `NOT_HA` - High availability issue
+    - `NO_PEERS` - Network connectivity issue
+    </Callout>
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # List explorers
+    settlemint platform list services --type insights
+
+    # Restart explorer
+    settlemint platform restart insights blockscout <name>
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // List explorers
+    const listExplorers = async () => {
+      const explorers = await client.insights.list("your-app");
+      console.log('Explorers:', explorers);
+    };
+
+    // Get explorer details
+    const getExplorer = async () => {
+      const explorer = await client.insights.read("explorer-unique-name");
+      console.log('Explorer details:', explorer);
+    };
+
+    // Restart explorer
+    const restartExplorer = async () => {
+      await client.insights.restart("explorer-unique-name");
+    };
+    ```
+  </Tab>
+</Tabs>
+
+## Using the Explorer
+
+When the blockchain explorer is deployed and running successfully, you can:
+
+<Steps>
+  ### Access Interface
+  Access the web interface through the **Interface tab**
+
+  ### View in Fullscreen
+  Use fullscreen mode for better visibility
+
+  ### Inspect Data
+  Inspect blocks, transactions, addresses and balances
+</Steps>
+
+### Key Features
+- View latest blocks and transactions
+- Search by block number, transaction hash, or address
+- Inspect transaction details and status
+- View account balances and token transfers
+- Monitor smart contract interactions
+
+![Blockscout Interface](../../img/document360/Images/Blockscout%201.png)
+
+### Transaction Details
+Click a Transaction hash to see detailed information including:
+- Gas usage and fees
+- Input data and events
+- Status and confirmations
+- Related addresses
+
+![Transaction View](../../img/document360/Images/Blockscout%202.png)
+
+### Address Details
+Click an Account address to view:
+- Balance and token holdings
+- Transaction history
+- Contract interactions
+- Analytics and graphs
+
+![Address View](../../img/document360/Images/Blockscout%203.png)
+
+<Callout type="info">
+All operations require appropriate permissions in your workspace.
+</Callout> 

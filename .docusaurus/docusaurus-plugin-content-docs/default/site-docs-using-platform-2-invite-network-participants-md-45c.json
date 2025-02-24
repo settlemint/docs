@@ -1,0 +1,24 @@
+{
+  "id": "using-platform/invite-network-participants",
+  "title": "Invite network participants",
+  "description": "Permissioned networks, although started by a single organization, allow multiple organizations with a shared business goal to come together and form the consortium. The different organizations transacting with each other in a permissioned network are called network participants. The organization who created the network, i.e. the owner, can invite network participants and set specific permissions for the organizations joining the network.",
+  "source": "@site/docs/using-platform/2_invite-network-participants.md",
+  "sourceDirName": "using-platform",
+  "slug": "/using-platform/invite-network-participants",
+  "permalink": "/documentation/docs/using-platform/invite-network-participants",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Add a Blockchain Network",
+    "permalink": "/documentation/docs/using-platform/add-a-network-to-an-application"
+  },
+  "next": {
+    "title": "Join a network by invitation",
+    "permalink": "/documentation/docs/using-platform/join-a-network-by-invitation"
+  }
+}

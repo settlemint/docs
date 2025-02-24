@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Hyperledger-Besu/enterprise-ethereum-integration-tools",
+  "title": "Smart Contract Sets",
+  "description": "You can launch a Smart Contract Set to significantly accelerate the development of your smart contracts.",
+  "source": "@site/docs/blockchain-guides/1_Hyperledger-Besu/6_enterprise-ethereum-integration-tools.md",
+  "sourceDirName": "blockchain-guides/1_Hyperledger-Besu",
+  "slug": "/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-integration-tools",
+  "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-integration-tools",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 6,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Network and node stats",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-network-stats"
+  },
+  "next": {
+    "title": "Connect to an external node",
+    "permalink": "/documentation/docs/blockchain-guides/Hyperledger-Besu/enterprise-ethereum-connect-external-node"
+  }
+}

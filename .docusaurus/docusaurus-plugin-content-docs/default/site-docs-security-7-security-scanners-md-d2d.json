@@ -1,0 +1,23 @@
+{
+  "id": "security/security-scanners",
+  "title": "Security Scanners",
+  "description": "SettleMint uses advanced security scanners to maintain the integrity and security of our codebase and dependencies. This page provides detailed information about the scanners we use, including Aikido, TruffleHog, and Renovate.",
+  "source": "@site/docs/security/7_security_scanners.md",
+  "sourceDirName": "security",
+  "slug": "/security/security-scanners",
+  "permalink": "/documentation/docs/security/security-scanners",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 7,
+  "frontMatter": {
+    "id": "security-scanners",
+    "title": "Security Scanners"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Incident Response",
+    "permalink": "/documentation/docs/security/incident-response"
+  }
+}

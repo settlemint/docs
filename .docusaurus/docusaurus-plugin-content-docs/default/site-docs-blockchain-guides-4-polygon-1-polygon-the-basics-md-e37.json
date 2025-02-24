@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Polygon/polygon-the-basics",
+  "title": "The basics",
+  "description": "Polygon, previously MATIC, was launched in 2017, mainly to tackle Ethereum’s scaling problem. Polygon is a layer 2 commit chain to the Ethereum network, and acts as an add-on layer to Ethereum. It does not seek to change the original Ethereum blockchain layer, but solves pain points associated with it, like high gas fees and slow speeds, without sacrificing on security. Polygon supports all the existing Ethereum tooling, along with faster and cheaper transactions.",
+  "source": "@site/docs/blockchain-guides/4_Polygon/1_polygon-the-basics.md",
+  "sourceDirName": "blockchain-guides/4_Polygon",
+  "slug": "/blockchain-guides/Polygon/polygon-the-basics",
+  "permalink": "/documentation/docs/blockchain-guides/Polygon/polygon-the-basics",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "State Machine",
+    "permalink": "/documentation/docs/blockchain-guides/Avalanche/Template-library/avalanche-state-machine"
+  },
+  "next": {
+    "title": "Node types",
+    "permalink": "/documentation/docs/blockchain-guides/Polygon/polygon-node-types"
+  }
+}

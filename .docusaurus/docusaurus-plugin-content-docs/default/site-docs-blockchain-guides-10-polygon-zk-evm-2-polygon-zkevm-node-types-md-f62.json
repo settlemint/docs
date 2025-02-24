@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Polygon-zkEVM/polygon-zkevm-node-types",
+  "title": "Node types",
+  "description": "All nodes running in SettleMint are configured to be archive nodes, meaning they all include all previous states of a given blockchain since its origin.",
+  "source": "@site/docs/blockchain-guides/10_Polygon-zkEVM/2_polygon-zkevm-node-types.md",
+  "sourceDirName": "blockchain-guides/10_Polygon-zkEVM",
+  "slug": "/blockchain-guides/Polygon-zkEVM/polygon-zkevm-node-types",
+  "permalink": "/documentation/docs/blockchain-guides/Polygon-zkEVM/polygon-zkevm-node-types",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "The basics",
+    "permalink": "/documentation/docs/blockchain-guides/Polygon-zkEVM/polygon-zkevm-the-basics"
+  },
+  "next": {
+    "title": "Connect to a node",
+    "permalink": "/documentation/docs/blockchain-guides/Polygon-zkEVM/polygon-zkevm-connect-to-a-node"
+  }
+}

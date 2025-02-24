@@ -1,0 +1,27 @@
+{
+  "id": "launch-platform/managed-cloud-deployment/create-an-account",
+  "title": "Creating an account",
+  "description": "Guide to create an account on SettleMint",
+  "source": "@site/docs/launch-platform/managed-cloud-deployment/1_create-an-account.md",
+  "sourceDirName": "launch-platform/managed-cloud-deployment",
+  "slug": "/launch-platform/managed-cloud-deployment/create-an-account",
+  "permalink": "/documentation/docs/launch-platform/managed-cloud-deployment/create-an-account",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "title": "Creating an account",
+    "description": "Guide to create an account on SettleMint"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Supported cloud providers",
+    "permalink": "/documentation/docs/launch-platform/managed-cloud-deployment/supported-cloud-providers"
+  },
+  "next": {
+    "title": "Managing Organizations",
+    "permalink": "/documentation/docs/launch-platform/managed-cloud-deployment/about-organizations"
+  }
+}

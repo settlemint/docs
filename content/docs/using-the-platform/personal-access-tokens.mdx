@@ -1,0 +1,87 @@
+---
+title: Personal Access Tokens
+description: Guide to managing personal access tokens in SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Key Features
+    - User authentication
+    - Role-based access
+    - Time-limited tokens
+    - Service integration
+  </Card>
+
+  <Card>
+    ### Use Cases
+    - API access
+    - CLI authentication
+    - SDK integration
+    - Service automation
+  </Card>
+</div>
+
+## Create Token
+
+<Steps>
+  ### Access Token Settings
+  1. Click your profile picture
+  2. Select **Personal access tokens**
+
+  ### Configure Token
+  1. Click **Add a personal access token**
+  2. Enter token name
+  3. Set expiration date
+  4. Click **Confirm**
+</Steps>
+
+<Callout type="warning">
+Copy and save your token securely - you won't see it again. Treat it like a password.
+</Callout>
+
+## Delete Token
+
+<Steps>
+  ### Navigate to Tokens
+  Go to your personal access tokens list
+
+  ### Remove Token
+  1. Click **Delete** next to token
+  2. Type **DELETE** to confirm
+  3. Token becomes invalid immediately
+</Steps>
+
+## Using Tokens
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <Card>
+    ### Header Method
+    ```http
+    x-auth-token: TOKEN
+    ```
+  </Card>
+
+  <Card>
+    ### Query Parameter
+    ```url
+    https://myservice.settlemint.com/?token=TOKEN
+    ```
+  </Card>
+
+  <Card>
+    ### URL Path
+    ```url
+    https://myservice.settlemint.com/TOKEN
+    ```
+  </Card>
+</div>
+
+<Callout type="info">
+For most use cases, prefer application access tokens over personal access tokens. Personal tokens stop working if the user leaves the organization.
+</Callout> 

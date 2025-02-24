@@ -1,0 +1,21 @@
+{
+  "permalink": "/documentation/releases/2025/01/02/simplified-subgraph-deployment",
+  "source": "@site/releases/2025-01-02-simplified-subgraph-deployment.md",
+  "title": "Simplified Subgraph Deployments",
+  "description": "We've significantly simplified the subgraph deployment process. Here's what's changed:",
+  "date": "2025-01-02T00:00:00.000Z",
+  "tags": [],
+  "readingTime": 0.555,
+  "hasTruncateMarker": false,
+  "authors": [],
+  "frontMatter": {},
+  "unlisted": false,
+  "prevItem": {
+    "title": "Zeto Smart Contract Set",
+    "permalink": "/documentation/releases/2025/01/03/zeto-smart-contract-set"
+  },
+  "nextItem": {
+    "title": "Run anything as a custom deployment",
+    "permalink": "/documentation/releases/2024/10/11/run-anything-as-a-custom-deployment"
+  }
+}

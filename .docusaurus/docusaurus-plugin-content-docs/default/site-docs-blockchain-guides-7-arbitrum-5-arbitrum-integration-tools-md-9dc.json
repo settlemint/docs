@@ -1,0 +1,24 @@
+{
+  "id": "blockchain-guides/Arbitrum/arbitrum-integration-tools",
+  "title": "Smart Contract Sets",
+  "description": "You can launch a Smart Contract Set to significantly accelerate the development of your smart contracts.",
+  "source": "@site/docs/blockchain-guides/7_Arbitrum/5_arbitrum-integration-tools.md",
+  "sourceDirName": "blockchain-guides/7_Arbitrum",
+  "slug": "/blockchain-guides/Arbitrum/arbitrum-integration-tools",
+  "permalink": "/documentation/docs/blockchain-guides/Arbitrum/arbitrum-integration-tools",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 5,
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Network stats",
+    "permalink": "/documentation/docs/blockchain-guides/Arbitrum/arbitrum-network-stats"
+  },
+  "next": {
+    "title": "ERC-20 token",
+    "permalink": "/documentation/docs/blockchain-guides/Arbitrum/Template-library/arbitrum-erc-20"
+  }
+}

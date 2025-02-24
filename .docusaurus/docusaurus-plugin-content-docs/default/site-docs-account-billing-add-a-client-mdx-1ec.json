@@ -1,0 +1,30 @@
+{
+  "id": "account-billing/add-a-client",
+  "title": "Add a Client",
+  "description": "Guide to adding a client on SettleMint",
+  "source": "@site/docs/account-billing/add-a-client.mdx",
+  "sourceDirName": "account-billing",
+  "slug": "/account-billing/add-a-client",
+  "permalink": "/documentation/docs/account-billing/add-a-client",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": null,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "custom_edit_url": null,
+    "title": "Add a Client",
+    "description": "Guide to adding a client on SettleMint",
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Get Support",
+    "permalink": "/documentation/docs/support/"
+  },
+  "next": {
+    "title": "Join a Partner",
+    "permalink": "/documentation/docs/account-billing/join-a-partner"
+  }
+}

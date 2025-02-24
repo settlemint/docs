@@ -1,0 +1,27 @@
+{
+  "id": "security/compliance-and-certifications",
+  "title": "Compliance and Certifications",
+  "description": "SettleMint is committed to maintaining compliance with industry standards and regulations. We have obtained several certifications that demonstrate our dedication to security and quality.",
+  "source": "@site/docs/security/2_compliance-and-certifications.md",
+  "sourceDirName": "security",
+  "slug": "/security/compliance-and-certifications",
+  "permalink": "/documentation/docs/security/compliance-and-certifications",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "id": "compliance-and-certifications",
+    "title": "Compliance and Certifications"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Security Policies",
+    "permalink": "/documentation/docs/security/security-policies"
+  },
+  "next": {
+    "title": "Infrastructure Security",
+    "permalink": "/documentation/docs/security/infrastructure-security"
+  }
+}

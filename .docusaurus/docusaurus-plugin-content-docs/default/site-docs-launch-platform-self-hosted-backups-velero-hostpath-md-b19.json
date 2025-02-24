@@ -1,0 +1,23 @@
+{
+  "id": "launch-platform/self-hosted/backups/velero-hostpath",
+  "title": "Velero Backups with HostPaths",
+  "description": "Velero CLI Install",
+  "source": "@site/docs/launch-platform/self-hosted/backups/velero-hostpath.md",
+  "sourceDirName": "launch-platform/self-hosted/backups",
+  "slug": "/launch-platform/self-hosted/backups/velero-hostpath",
+  "permalink": "/documentation/docs/launch-platform/self-hosted/backups/velero-hostpath",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Velero Backups on Google Cloud",
+    "permalink": "/documentation/docs/launch-platform/self-hosted/backups/velero-gcp"
+  },
+  "next": {
+    "title": "Velero Backups on Internal Storage",
+    "permalink": "/documentation/docs/launch-platform/self-hosted/backups/velero-internal"
+  }
+}

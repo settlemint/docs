@@ -1,0 +1,28 @@
+{
+  "id": "reference/service-requirements",
+  "title": "Service Requirements",
+  "description": "Resource requirements for blockchain services that can be deployed on the platform",
+  "source": "@site/docs/reference/service-requirements.md",
+  "sourceDirName": "reference",
+  "slug": "/reference/service-requirements",
+  "permalink": "/documentation/docs/reference/service-requirements",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Service Requirements",
+    "sidebar_position": 3,
+    "description": "Resource requirements for blockchain services that can be deployed on the platform"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Billing",
+    "permalink": "/documentation/docs/account-billing/billing"
+  },
+  "next": {
+    "title": "Statuses",
+    "permalink": "/documentation/docs/reference/statuses"
+  }
+}

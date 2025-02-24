@@ -89,7 +89,7 @@ You can use this flow as a reference while building your own implementation. Eac
    - Use this node to generate vector embeddings for the text data using OpenAI's Embedding API.
    - Configure the OpenAI node to use the appropriate model and input data, such as `text-embedding-ada-002`.
 
-![Create an OpenAI node](./assets/openai-node.png)
+![Create an OpenAI node](../../img/developer-guides/openai-node.png)
 
 ### Step 5: Store Vectors in Hasura with pgvector
 

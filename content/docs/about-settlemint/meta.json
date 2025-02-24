@@ -1,0 +1,5 @@
+{
+  "title": "About SettleMint",
+  "icon": "House",
+  "pages": ["intro", "supported-blockchains", "components"]
+}
