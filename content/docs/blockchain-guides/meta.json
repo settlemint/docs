@@ -1,0 +1,18 @@
+{
+  "label": "Blockchain Guides",
+  "pages": [
+    "Ethereum",
+    "Hyperledger-Besu",
+    "Avalanche",
+    "Polygon",
+    "Hyperledger-Fabric",
+    "Hedera",
+    "Arbitrum",
+    "Optimism",
+    "Hedera",
+    "Polygon-zkEVM",
+    "Fantom",
+    "Soneium"
+  ],
+  "icon": "Network"
+}

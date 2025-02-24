@@ -1,0 +1,10 @@
+{
+  "label": "Soneium",
+  "pages": [
+    "soneium-the-basics",
+    "soneium-node-types",
+    "soneium-connect-to-a-node",
+    "soneium-network-stats",
+    "soneium-integration-tools"
+  ]
+}
