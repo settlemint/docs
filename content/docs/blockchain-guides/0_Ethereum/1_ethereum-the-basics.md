@@ -7,7 +7,7 @@ title: "Ethereum The Basics"
 Ethereum is one of the most popular public blockchains. It has its own cryptocurrency, called Ether (ETH) or Ethereum, and its own native programming language called Solidity to build and publish dApps (distributed applications) on the Ethereum blockchain.
 
 ## Mainnet and Testnet
-
+cle
 SettleMint supports, the Ethereum **Mainnet**, the **Sepolia Testnet** and the **Holesky Testnet**.
 
 The Mainnet is the primary public Ethereum production blockchain, where actual-value transactions take place. Each transaction requires payment of a transaction fee, payable in the native coin ETH. The Testnet is an instance of the blockchain to be used for testing and experimentation. There are also coins used in the Testnet but they have no value, so there is no risk of real fund.
