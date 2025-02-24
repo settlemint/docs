@@ -3,8 +3,6 @@ title: Platform Installation
 sidebar_position: 3
 ---
 
-# Platform Installation Guide
-
 ## Overview
 
 This guide walks you through installing the SettleMint Platform using Helm, providing a command-line based installation method with full control over the deployment process.

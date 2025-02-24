@@ -1,93 +1,93 @@
 ---
 title: Introduction
-sidebar_position: 1
 description: Getting started with the SettleMint Platform self-hosted installation
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
 
 # Self-Hosted Installation Guide
 
 Welcome to the SettleMint Platform self-hosted installation guide. This comprehensive guide will walk you through deploying the SettleMint Platform in your own infrastructure.
 
-:::tip Installation Time
+<Callout>
+**Installation Time**
 Complete installation typically takes 2-4 hours, depending on your infrastructure setup and familiarity with the components.
-:::
+</Callout>
 
 ## Guide Structure
 
-This installation guide is organized into three main sections, designed to be followed in order:
+This installation guide is organized into three main sections. Select each tab below to learn more:
 
-<Tabs>
-<TabItem value="requirements" label="1. Requirements" default>
+<Tabs items={["1. Requirements", "2. Prerequisites", "3. Installation"]}>
+  <Tab value="1. Requirements">
+    ### Requirements Section
+    
+    Start here to ensure your infrastructure meets all necessary specifications before proceeding. This section covers:
 
-Start here to ensure your infrastructure meets all necessary specifications before proceeding. This section covers:
+    - Kubernetes cluster requirements
+    - Network and storage specifications
+    - Access and security requirements
 
-- Kubernetes cluster requirements
-- Network and storage specifications
-- Access and security requirements
+    👉 [View Requirements Guide](/docs/launching-the-platform/self-hosted/installation-guide/infrastructure-requirements)
+  </Tab>
 
-[View Requirements Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/infrastructure-requirements)
+  <Tab value="2. Prerequisites">
+    ### Prerequisites Section
+    
+    After confirming requirements, set up the required supporting services. This section provides:
 
-</TabItem>
-<TabItem value="prerequisites" label="2. Prerequisites">
+    - Step-by-step setup guides
+    - Multiple deployment options
+    - Configuration requirements
+    - Information collection checklists
 
-After confirming requirements, set up the required supporting services. This section provides:
+    👉 [View Prerequisites Guide](/docs/launching-the-platform/self-hosted/installation-guide/prerequisites/overview)
+  </Tab>
 
-- Step-by-step setup guides
-- Multiple deployment options
-- Configuration requirements
-- Information collection checklists
+  <Tab value="3. Installation">
+    ### Installation Section
+    
+    Finally, deploy the SettleMint Platform using Helm:
 
-[View Prerequisites Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/prerequisites/overview)
+    - Standard Kubernetes deployment
+    - Flexible configuration options
+    - Production-ready setup
 
-</TabItem>
-<TabItem value="installation" label="3. Installation">
-
-Finally, deploy the SettleMint Platform using Helm:
-
-- Standard Kubernetes deployment
-- Flexible configuration options
-- Production-ready setup
-
-[View Installation Guide](/documentation/docs/launch-platform/self-hosted/installation-guide/platform-installation)
-
-</TabItem>
+    👉 [View Installation Guide](/docs/launching-the-platform/self-hosted/installation-guide/platform-installation)
+  </Tab>
 </Tabs>
 
-:::tip Using This Guide
+<Callout>
+**Using This Guide**
 We recommend:
 
 1. Read through each section before starting
 2. Complete all requirements and prerequisites
 3. Collect required information as you progress
 4. Follow the guides in order
-   :::
+</Callout>
 
 ## Before You Begin
 
-<div className="row margin-bottom--lg">
-<div className="col col--6">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <div>
+    ### Required Access
 
-### Required Access
+    - Administrative access to your infrastructure
+    - Ability to create/modify DNS records
+    - Permission to deploy Kubernetes resources
+    - Access to cloud resources (if applicable)
+  </div>
 
-- Administrative access to your infrastructure
-- Ability to create/modify DNS records
-- Permission to deploy Kubernetes resources
-- Access to cloud resources (if applicable)
+  <div>
+    ### Technical Prerequisites
 
-</div>
-<div className="col col--6">
-
-### Technical Prerequisites
-
-- Kubernetes cluster (1.20+)
-- `kubectl` CLI tool
-- `helm` (required for installation)
-- Basic understanding of container orchestration
-
-</div>
+    - Kubernetes cluster (1.20+)
+    - `kubectl` CLI tool
+    - `helm` (required for installation)
+    - Basic understanding of container orchestration
+  </div>
 </div>
 
 ## Partner Support
@@ -125,7 +125,8 @@ Throughout the installation process, you'll need to collect configuration detail
 
 Here's what an Information Collection Box looks like in the prerequisite guides:
 
-:::info Required Values Example
+<Callout type="info">
+**Required Values Example**
 This is a sample of what you'll see in the guides. For Redis setup, you would collect values like:
 
 - Endpoint: redis-master.default.svc.cluster.local
@@ -133,7 +134,7 @@ This is a sample of what you'll see in the guides. For Redis setup, you would co
 - Port: 6379
 
 Note: This is just an example. Actual values will be collected during the prerequisite setup.
-:::
+</Callout>
 
 ## Need Help?
 
@@ -150,6 +151,7 @@ Note: This is just an example. Actual values will be collected during the prereq
 - Schedule technical consultation
 - Contact your account manager
 
-:::tip Next Step
-Start by reviewing the [Infrastructure Requirements](/documentation/docs/launch-platform/self-hosted/installation-guide/infrastructure-requirements) to ensure your environment meets all necessary specifications.
-:::
+<Callout type="info">
+**Next Step**
+Start by reviewing the [Infrastructure Requirements](/docs/launching-the-platform/self-hosted/installation-guide/infrastructure-requirements) to ensure your environment meets all necessary specifications.
+</Callout>
