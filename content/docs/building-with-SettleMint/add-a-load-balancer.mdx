@@ -8,6 +8,17 @@ import { Callout } from 'fumadocs-ui/components/callout'
 import { Steps } from 'fumadocs-ui/components/steps'
 import { Card } from 'fumadocs-ui/components/card'
 
+<Callout type="info">
+Load balancers are a new feature to SettleMint. We plan to add more management capabilities and interface additions.
+</Callout>
+
+After deploying nodes to your blockchain network, you can add a load balancer to the network.
+Like traditional network load balancers, these distribute traffic among your deployed nodes.
+
+<div style={{width: '70%', margin: '0 auto', display: 'block'}}>
+  ![LoadBalancer](../../img/using-the-platform/loadbalancer.png)
+</div>
+
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
   <Card>
     ### Key Features
@@ -26,89 +37,42 @@ import { Card } from 'fumadocs-ui/components/card'
   </Card>
 </div>
 
-## Add Load Balancer
+## Why Use A Load Balancer
 
-<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
-  <Tab value="Platform UI">
-    <Steps>
-      ### Navigate to Application
-      Go to your application
+The benefits of adding a load balancer to your network include:
 
-      ### Access Load Balancers
-      Click **Load Balancers** in the left navigation
+- **Performance** - Load balancers enable you to spread JSON-RPC traffic over multiple nodes which ensures maximum throughput and high availability.
+- **Monitoring** - Load balancers are application-aware which gives you the ability to monitor the status of underlying nodes and prevents wrong or stale data.
+- **Stability** - Load balancers give you the option to change and move nodes around without changing your application by using a stable URL form.
 
-      ### Configure Load Balancer
-      1. Click **Add a load balancer**
-      2. Select nodes to balance
-      3. Configure settings
-      4. Click **Confirm**
-    </Steps>
-  </Tab>
+## How to Add a Load Balancer
 
-  <Tab value="SDK CLI">
-    ```bash
-    # Create load balancer
-    settlemint platform create load-balancer <name> \
-      --nodes node1,node2,node3
+<div style={{width: '70%', margin: '0 auto', display: 'block'}}>
+  ![Add Load Balancer](../../img/about-settlemint/add-load.png)
+</div>
 
-    # Get help
-    settlemint platform create load-balancer --help
-    ```
-  </Tab>
+<Steps>
+  ### Navigate to Nodes
+  Click on **Blockchain Node** in the left navigation
+  
+  ### Add Load Balancer
+  Click the **Add Load Balancer** button
+  
+  ### Configure Load Balancer
+  1. Choose the **Blockchain Network**
+  2. Select the **Blockchain Nodes** to include under the load balancer
+  3. Configure any additional settings
+  4. Confirm the deployment configuration
+</Steps>
 
-  <Tab value="SDK JS">
-    ```typescript
-    const createLoadBalancer = async () => {
-      const result = await client.loadBalancer.create({
-        name: "my-balancer",
-        applicationUniqueName: "my-app",
-        nodes: ["node1", "node2", "node3"]
-      });
-    };
-    ```
-  </Tab>
-</Tabs>
+<Callout type="warning">
+Adding Validator nodes to your load balancer is not advised. This could disrupt your network operations if a Validator node becomes overloaded from an increase of traffic.
+</Callout>
 
-## Manage Load Balancer
+Once you confirm the deployment configuration, your load balancers will appear under the list of deployed nodes.
 
-<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
-  <Tab value="Platform UI">
-    Navigate to your load balancer to:
-    - View status and health
-    - Monitor traffic
-    - Update node pool
-    - Configure settings
-  </Tab>
+## Managing a Load Balancer
 
-  <Tab value="SDK CLI">
-    ```bash
-    # List load balancers
-    settlemint platform list load-balancers
+You can select the load balancer to view the number of deployed nodes under it and access logs. More information including the ability to add or remove nodes are in development.
 
-    # Get details
-    settlemint platform read load-balancer <name>
-
-    # Update nodes
-    settlemint platform update load-balancer <name> --nodes node1,node2
-    ```
-  </Tab>
-
-  <Tab value="SDK JS">
-    ```typescript
-    // List load balancers
-    await client.loadBalancer.list("your-app");
-
-    // Get details
-    await client.loadBalancer.read("balancer-name");
-
-    // Update nodes
-    await client.loadBalancer.update("balancer-name", {
-      nodes: ["node1", "node2"]
-    });
-    ```
-  </Tab>
-</Tabs>
-
-<Callout type="info">
-All operations require appropriate permissions in your workspace.
-</Callout> 
+When deploying services including **The Graph Middleware** or **Blockscout Explorer**, you will now have the option to deploy to the load balancer. 

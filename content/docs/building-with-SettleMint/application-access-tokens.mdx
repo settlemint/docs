@@ -9,99 +9,51 @@ import { Steps } from 'fumadocs-ui/components/steps'
 import { Card } from 'fumadocs-ui/components/card'
 
 
+Application access tokens let you connect your SettleMint services with other apps securely. They represent your application, not individual users, and can be created by both admins and users. They can be used to connect to all or selected services of an application.
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card>
-    ### Key Features
-    - Service authentication
-    - Scoped permissions
-    - Expiration control
-    - Token management
-  </Card>
+## Create an application access token
 
-  <Card>
-    ### Access Types
-    - All services access
-    - Specific service access
-    - Time-limited access
-    - Revocable tokens
-  </Card>
-</div>
+Go to your application's dashboard and click on "App access tokens" in the left navigation.
 
-## Create Access Token
+Click on the "Add an application access token" button. This opens a form where you can create your application access token.
 
-<Steps>
-  ### Navigate to Tokens
-  Go to your application's dashboard and click "App access tokens"
-
-  ### Configure Token
-  1. Click **Add an application access token**
-  2. Choose token name
-  3. Set expiration date
-  4. Select scope type:
-     - **All** - Access to all services
-     - **Specific** - Select individual services
-
-  ### Generate Token
-  Click **Confirm** to create token
-</Steps>
+1. Choose a **name** for your application access token.
+2. Select an **expiration date**. You cannot update this later.
+3. Select a scope type. There are two types of scope: **All** or **Specific**.
+   1. If you selected **All**, you grant access to all services of the application. If you add more services to the application later, this access token will grant access to these new services as well.
+   2. If you selected **Specific**, you can choose which specific services this access token will grant access to.
+   3. You can also update the scopes of your application access token later.
+4. Click **Confirm** to create your application access token.
 
 <Callout type="warning">
 Copy and save your token securely - you won't see it again. Treat it like a password and keep it secret.
 </Callout>
 
-## Update Access Token
+## Update an application access token
 
-<Steps>
-  ### Access Token Settings
-  1. Navigate to **App Access Tokens**
-  2. Click **View scopes** for your token
+Navigate to the **application** whose token you want to update.
 
-  ### Modify Permissions
-  1. Click **Update**
-  2. Choose new scopes
-  3. Click **Confirm**
-</Steps>
+1. Click **App Access Tokens** in the left navigation, you will see a list of all application access tokens for this application.
+2. Click on **View scopes** of the token you wish to update. This will first open a list where you can view the current scopes of the token.
+3. Click on **Update** in the bottom right corner to open a form where you can update your application access token.
+4. Choose the new scopes for your application access token.
+5. Click **Confirm** to update your application access token.
 
-## Delete Access Token
+## Delete an application access token
 
-<Steps>
-  ### Navigate to Tokens
-  Go to application dashboard's token section
+If you are worried that an application access token has been compromised, or you no longer use the integration for which you had generated a particular application access token, you can delete that application access token.
 
-  ### Remove Token
-  1. Click **Delete** next to token
-  2. Type **DELETE** to confirm
-  3. Token becomes invalid immediately
-</Steps>
+1. Navigate to the application dashboard whose application access tokens you wish to delete.
+2. Click **App Access Tokens** in the left navigation.
+3. Click **Delete** next to the application access token you want to delete.
+4. Type **DELETE** to confirm. The application access token will no longer be usable.
 
-## Using Access Tokens
+## Use an application access token
 
-<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-  <Card>
-    ### Header Method
-    ```http
-    x-auth-token: TOKEN
-    ```
-  </Card>
+You can use these application access tokens in three ways depending on what works for your use case.
 
-  <Card>
-    ### Query Parameter
-    ```url
-    https://myservice.settlemint.com/?token=TOKEN
-    ```
-  </Card>
-
-  <Card>
-    ### URL Path
-    ```url
-    https://myservice.settlemint.com/TOKEN
-    ```
-  </Card>
-</div>
-
-### Special Cases
-
-For specific services:
-- IPFS: `https://myservice.settlemint.com/TOKEN/api/v0/...`
-- Avalanche/Fuji: `https://myservice.settlemint.com/ext/bc/C/rpc/TOKEN` 
+- As a header, you can use the header `x-auth-token: TOKEN`.
+- As a query parameter using `https://myservice.settlemint.com/?token=TOKEN` appended to any URL.
+- As the last part of the URL `https://myservice.settlemint.com/TOKEN`.
+  - For IPFS nodes build your uri so it becomes `https://myservice.settlemint.com/TOKEN/api/v0/...`
+  - For Avalanche and Fuji build your uri so they look like `https://myservice.settlemint.com/ext/bc/C/rpc/TOKEN` 

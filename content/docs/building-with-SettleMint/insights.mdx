@@ -9,41 +9,23 @@ import { Steps } from 'fumadocs-ui/components/steps'
 import { Card } from 'fumadocs-ui/components/card'
 
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card>
-    ### Available Explorers
-    - **Blockscout** - For EVM compatible networks
-    - **Hyperledger Explorer** - For Fabric networks  
-    - **Otterscan** - Alternative EVM explorer
-  </Card>
-
-  <Card>
-    ### Key Features
-    - View and inspect transactions
-    - Monitor blockchain activity
-    - Analyze smart contracts
-    - Track network metrics
-  </Card>
-</div>
+To view and inspect transactions in your blockchain application, SettleMint provides insightful dashboards via integrated blockchain explorers:
+- **Blockscout** - For EVM compatible networks (Besu, Polygon Edge)
+- **Hyperledger Explorer** - For Fabric networks
+- **Otterscan** - Alternative EVM explorer with advanced features
 
 ## Add Blockchain Explorer
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
-    <Steps>
-      ### Navigate to Application
-      Navigate to the **application** where you want to add a blockchain explorer
-      
-      ### Access Insights
-      Click **Insights** in the left navigation, then click **Add Insights**
+    Navigate to the **application** where you want to add a blockchain explorer. Click **Insights** in the left navigation, and then click **Add Insights**. This opens a form.
 
-      ### Configure Explorer
-      1. Select **Blockchain Explorer**
-      2. Select the target **blockchain node**
-      3. Enter a **name** for your explorer instance
-      4. Configure deployment settings
-      5. Click **Confirm**
-    </Steps>
+    Follow these steps:
+    1. Select **Blockchain Explorer**
+    2. Select the target **blockchain node** and click **Continue**
+    3. Enter a **name** for your explorer instance
+    4. Configure deployment settings (provider, region, size)
+    5. Click **Confirm** to add the explorer
   </Tab>
 
   <Tab value="SDK CLI">
@@ -57,7 +39,7 @@ import { Card } from 'fumadocs-ui/components/card'
     # Create blockchain explorer
     settlemint platform create insights blockscout <name>
 
-    # Get information about options
+    # Get information about the command and all available options
     settlemint platform create insights blockscout --help
     ```
   </Tab>
@@ -77,20 +59,18 @@ import { Card } from 'fumadocs-ui/components/card'
     - Access the explorer interface
     - Update configurations
 
-    <Callout type="info">
-    **Status Values:**
+    Current status values:
     - `DEPLOYING` - Initial deployment in progress
     - `COMPLETED` - Running normally
     - `FAILED` - Deployment or operation failed
     - `PAUSED` - Explorer is paused
     - `RESTARTING` - Explorer is restarting
 
-    **Health Indicators:**
+    Health status indicators:
     - `HEALTHY` - Operating normally
     - `HAS_INDEXING_BACKLOG` - Processing backlog
     - `NOT_HA` - High availability issue
     - `NO_PEERS` - Network connectivity issue
-    </Callout>
   </Tab>
 
   <Tab value="SDK CLI">
@@ -129,18 +109,11 @@ import { Card } from 'fumadocs-ui/components/card'
 
 When the blockchain explorer is deployed and running successfully, you can:
 
-<Steps>
-  ### Access Interface
-  Access the web interface through the **Interface tab**
+1. Access the web interface through the **Interface tab**
+2. View in fullscreen mode for better visibility
+3. Inspect blocks, transactions, addresses and balances
 
-  ### View in Fullscreen
-  Use fullscreen mode for better visibility
-
-  ### Inspect Data
-  Inspect blocks, transactions, addresses and balances
-</Steps>
-
-### Key Features
+Key features:
 - View latest blocks and transactions
 - Search by block number, transaction hash, or address
 - Inspect transaction details and status

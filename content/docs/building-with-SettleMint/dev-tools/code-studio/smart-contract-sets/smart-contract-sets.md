@@ -1,10 +1,6 @@
 ---
-title: Smart Contract Sets
-description: Smart Contract Sets
+title: Introduction to Smart Contract Sets
 ---
-
-
-## Introduction
 
 A Smart Contract Set is a [code studio](../../0_code-studio/0_code-studio.md) that comes with a [smart contract set template](2_smart-contract-templates.md) for your chosen use case. It is a powerful tool that accelerates the development of your smart contracts.
 

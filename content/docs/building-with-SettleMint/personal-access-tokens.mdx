@@ -8,80 +8,44 @@ import { Callout } from 'fumadocs-ui/components/callout'
 import { Steps } from 'fumadocs-ui/components/steps'
 import { Card } from 'fumadocs-ui/components/card'
 
+# Personal Access Tokens
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card>
-    ### Key Features
-    - User authentication
-    - Role-based access
-    - Time-limited tokens
-    - Service integration
-  </Card>
+Personal access tokens (or [Application access tokens](/building-with-settlemint/application-access-tokens)) let you connect your SettleMint services with other apps securely. They represent an individual user, and have the same rights as the user's role in the organization (admin or user). They can be used to connect to all services that the user has access to.
 
-  <Card>
-    ### Use Cases
-    - API access
-    - CLI authentication
-    - SDK integration
-    - Service automation
-  </Card>
-</div>
+## Create a personal access token
 
-## Create Token
+In the upper right corner of any page, click your **profile picture or avatar**, and then click **Personal access tokens**.
 
-<Steps>
-  ### Access Token Settings
-  1. Click your profile picture
-  2. Select **Personal access tokens**
+Click on the **Add a personal access token** button, this opens a form where you can create your personal access token.
 
-  ### Configure Token
-  1. Click **Add a personal access token**
-  2. Enter token name
-  3. Set expiration date
-  4. Click **Confirm**
-</Steps>
+1. Choose a **name** for your personal access token.
+2. Select an **expiration date**. You cannot update this later.
+3. Click **Confirm** to create your personal access token.
 
 <Callout type="warning">
-Copy and save your token securely - you won't see it again. Treat it like a password.
+Copy and save your token securely - you won't see it again. Treat it like a password and keep it secret.
 </Callout>
 
-## Delete Token
+## Delete a personal access token
 
-<Steps>
-  ### Navigate to Tokens
-  Go to your personal access tokens list
+If you are worried that your personal access token has been compromised, or you no longer use the integration for which you had generated a particular personal access token, you can delete that personal access token.
 
-  ### Remove Token
-  1. Click **Delete** next to token
-  2. Type **DELETE** to confirm
-  3. Token becomes invalid immediately
-</Steps>
+1. Navigate to the list of your personal access tokens, and find the personal access token you want to delete.
+2. Click **Delete** next to the personal access token.
+3. Type **DELETE** to confirm. The personal access token will no longer be usable.
 
-## Using Tokens
+## Use a personal access token
 
-<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-  <Card>
-    ### Header Method
-    ```http
-    x-auth-token: TOKEN
-    ```
-  </Card>
+You can use these personal access tokens in three ways depending on what works for your use case.
 
-  <Card>
-    ### Query Parameter
-    ```url
-    https://myservice.settlemint.com/?token=TOKEN
-    ```
-  </Card>
+- As a header, you can use the header `x-auth-token: TOKEN`.
+- As a query parameter using `https://myservice.settlemint.com/?token=TOKEN` appended to any URL.
+- As the last part of the URL `https://myservice.settlemint.com/TOKEN`.
+  - For IPFS nodes build your uri so it becomes `https://myservice.settlemint.com/TOKEN/api/v0/...`
+  - For Avalanche and Fuji build your uri so they look like `https://myservice.settlemint.com/ext/bc/C/rpc/TOKEN`
 
-  <Card>
-    ### URL Path
-    ```url
-    https://myservice.settlemint.com/TOKEN
-    ```
-  </Card>
-</div>
+## Using application access tokens vs personal access tokens
 
-<Callout type="info">
-For most use cases, prefer application access tokens over personal access tokens. Personal tokens stop working if the user leaves the organization.
-</Callout> 
+For most use cases, you should use application access tokens. Since they are directly linked to the application, the token continues to work even if the user leaves the organization. They also provide more granular access control.
+
+Personal access tokens are a simpler way to authenticate, but they are linked to the user's account. If the user leaves the organization, the token will no longer work for the services of that organization. 

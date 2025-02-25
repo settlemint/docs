@@ -1,93 +1,29 @@
 ---
-title: Monitoring Tools
-description: Guide to health monitoring tools in SettleMint
+title: Monitoring tools
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+For all your running services in a blockchain application, a set of monitoring tools is available to gain insights into the health and performance of those services.
 
+## Service statuses
 
+The service status indicates whether your service is running well, facing issues, or needs your attention. [View the list of statuses](../reference/statuses.md).
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card>
-    ### Available Tools
-    - Service status monitoring
-    - Resource usage tracking
-    - Network statistics
-    - Performance metrics
-  </Card>
+Go to the **service's overview page** or a **service detail page** to view the status of a particular service (e.g. network, node, smart contract set, etc.).
 
-  <Card>
-    ### Key Features
-    - Real-time monitoring
-    - Historical data
-    - Alert systems
-    - Detailed logs
-  </Card>
-</div>
+## Resource usage status & metrics
 
-## Service Statuses
+You can view the resources (memory, vCPU, and disk space) allocated to your services at any time, and follow up on the current usage. When the current resource usage is about to reach its limit, you will see a warning with the recommendation to scale your resource pack to keep the service running. [More info on resource usage](resource-usage.md)
 
-<Steps>
-  ### Access Status
-  Go to service's overview or detail page
+Go to the **Resource tab** of a **service detail page** to view the resource usage status and metrics.
 
-  ### Check Status
-  View current operational status:
-  - Running
-  - Warning
-  - Critical
-  - Maintenance
-</Steps>
+## Network and node stats
 
-## Resource Monitoring
+Live dashboards allow you to follow up on important stats for network and node monitoring and identify possible bottlenecks.
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card>
-    ### Resource Metrics
-    - Memory usage
-    - CPU utilization
-    - Disk space
-    - Network traffic
-  </Card>
+Go to the **Details tab** of a **network or node detail page** to view the stats.
 
-  <Card>
-    ### Usage Tracking
-    - Current allocation
-    - Usage trends
-    - Scaling recommendations
-    - Performance alerts
-  </Card>
-</div>
+## Network and node logs
 
-## Network & Node Stats
+You can view real-time logs of your networks and nodes for granular insights into activity related to them. The logs can be used as a troubleshooting tool if something goes wrong.
 
-<Steps>
-  ### View Statistics
-  Access the **Details tab** of network/node
-
-  ### Monitor Metrics
-  - Block height
-  - Peer connections
-  - Transaction rate
-  - Network latency
-</Steps>
-
-## System Logs
-
-<Steps>
-  ### Access Logs
-  Go to **Logs tab** of network/node
-
-  ### Analyze Data
-  - Real-time logs
-  - Error tracking
-  - Performance issues
-  - System events
-</Steps>
-
-<Callout type="info">
-Regular monitoring helps identify and prevent potential issues before they impact your services.
-</Callout> 
+Go to the **Logs tab** of a **network or node detail page** to view the logs.

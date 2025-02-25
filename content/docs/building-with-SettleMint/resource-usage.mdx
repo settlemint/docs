@@ -1,6 +1,6 @@
 ---
 title: Resource Usage
-description: Guide to monitoring resource usage in SettleMint
+description: Guide to monitoring resource usage
 ---
 
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
@@ -8,70 +8,31 @@ import { Callout } from 'fumadocs-ui/components/callout'
 import { Steps } from 'fumadocs-ui/components/steps'
 import { Card } from 'fumadocs-ui/components/card'
 
-# Resource Usage
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card>
-    ### Monitored Resources
-    - Memory allocation
-    - vCPU usage
-    - Disk space
-    - Network bandwidth
-  </Card>
+When you add a service (network, node, smart contract set, etc.), you select the amount of resources to allocate to that service by choosing a small, medium or large [resource pack](/docs/launch-platform/managed-cloud-deployment/deployment-plans). Resources are the **memory**, **vCPU**, and **disk space** you need to keep your services running. You can see the resources allocated to your services at any time, and follow up on the current resource usage.
 
-  <Card>
-    ### Monitoring Features
-    - Real-time metrics
-    - Historical data
-    - Usage trends
-    - Alert thresholds
-  </Card>
-</div>
-
-## Resource Metrics
+## Resource usage metrics
 
 ![Resource Usage](../../img/using-the-platform/resource-usage.png)
 
-<Steps>
-  ### Access Metrics
-  Navigate to your service's **Metrics tab**
+Navigate to your **application**. Click **Blockchain networks**, **Blockchain nodes** or **Smart contracts** in the left navigation, depending on which resource usage you want to see, and choose the relevant one from the list.
 
-  ### View Resources
-  Monitor:
-  - Memory usage vs allocation
-  - vCPU utilization
-  - Disk space consumption
-  - Performance graphs
-</Steps>
+Open the **Metrics tab**.
 
+Here you have clear visual representation of **used versus allocated** memory, vCPU, and disk space.
+
+Moreover, detailed graphs are available to check memory, vCPU, and disk space usage for the last hour, day, week and month.
+
+## Resource usage status
 
 ![Resource Usage CPU](../../img/using-the-platform/resource-usage-cpu.png)
 
-### Status Levels
+The **status** indicates whether or not your resources are still sufficient for optimal functioning of the service.
 
-<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-  <Card>
-    ### Healthy
-    - Under 75% usage
-    - Optimal performance
-    - No action needed
-  </Card>
+The following statuses are defined:
 
-  <Card>
-    ### Suboptimal
-    - 75-90% usage
-    - Performance impact
-    - Consider scaling
-  </Card>
+- **Healthy** - the used resources are less than 75% of the allocated resources
+- **Suboptimal** - the used resources are between 75% and 90% of the allocated resources
+- **Critical** - the used resources are over 90% of the allocated resources
 
-  <Card>
-    ### Critical
-    - Over 90% usage
-    - Immediate action
-    - Scale resources
-  </Card>
-</div>
-
-<Callout type="warning">
-When status is **Suboptimal**, consider scaling your resource pack to maintain performance.
-</Callout> 
+When the status is **Suboptimal**, and the current resource usage is about to reach its limit, you will see a **warning** with the recommendation to scale your resource pack to keep the service running. 

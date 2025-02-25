@@ -6,6 +6,7 @@ description: Low-code development environment for implementing business logic
 import { Callout } from 'fumadocs-ui/components/callout'
 import { Steps } from 'fumadocs-ui/components/steps'
 
+
 The SettleMint Integration Studio is a low-code development environment which enables you to implement business logic for your application simply by dragging and dropping.
 
 Under the hood, the Integration Studio is powered by a **Node-RED** instance dedicated to your application. It is a low-code programming platform built on Node.js and designed for event-driven application development. [Learn more about Node-RED here](https://nodered.org/docs/).
@@ -38,7 +39,7 @@ Select **Integration Studio** and click **Continue** to proceed.
 Choose a **name** for your Integration Studio. Choose one that will be easily recognizable in your dashboards (eg. Crowdsale Flow)
 
 ### Select Deployment Plan
-Choose a deployment plan. Select the type, cloud provider, region and resource pack. [More about deployment plans](/docs/launch-platform/managed-cloud-deployment/deployment-plans)
+Choose a deployment plan. Select the type, cloud provider, region and resource pack. [More about deployment plans](/launching-the-platform/managed-cloud-deployment/deployment-plans)
 
 ### Confirm Setup
 You can see the **resource cost** for the Integration Studio displayed at the bottom of the form. Click **Confirm** to add the Integration Studio.
@@ -58,7 +59,7 @@ Double-click any of the nodes to see the code they are running. This code is wri
 
 Before we show you how to set up your own flow, we recommend reading this [article by Node-RED on creating your first flow](https://nodered.org/docs/tutorials/first-flow).
 
-Now let's set up an example flow together and build an endpoint to get the latest block number of the Polygon Mumbai Testnet using the Integration Studio. If you do not have a Polygon Mumbai Node, you can easily [deploy a node](/docs/building-with-settlemint/add-node-to-network) first.
+Now let's set up an example flow together and build an endpoint to get the latest block number of the Polygon Mumbai Testnet using the Integration Studio. If you do not have a Polygon Mumbai Node, you can easily [deploy a node](/building-with-settlemint/add-a-node-to-a-network) first.
 
 <Steps>
 ### Add HTTP Input Node
@@ -74,7 +75,7 @@ Drag and drop a **function node**. This is the node that will query the blockcha
 `rpcEndpoint` is the RPC url of your Polygon Mumbai Node.
 Under the **Connect tab** of your Polygon Mumbai node, you will find its RPC url.
 
-`accessToken` - You will need an access token for your application. If you do not have one, you can easily [create an access token](/docs/building-with-settlemint/application-access-tokens) first.
+`accessToken` - You will need an access token for your application. If you do not have one, you can easily [create an access token](/building-with-settlemint/application-access-tokens) first.
 </Callout>
 
 Enter the following snippet in the Message tab:

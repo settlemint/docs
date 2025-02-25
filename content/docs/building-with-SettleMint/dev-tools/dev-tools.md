@@ -1,10 +1,8 @@
 ---
 title: Dev Tools
 description: Dev tools introduction
-sidebar_position: 0
 ---
 
-# Dev Tools
 
 ## Introduction
 
@@ -16,8 +14,8 @@ We offer the following tools:
 
 The Code studio is an Integrated Development Environment (IDE). Currently, we offer the following types of Code studio:
 
-- [Smart contract sets](./0_code-studio/1_smart-contract-sets/1_smart-contract-sets.md) - This is an IDE you can launch with a pre-built smart contract template. You can choose a template from our open-source [template library](./0_code-studio/1_smart-contract-sets/2_smart-contract-templates.md).
+- [Smart contract sets](/building-with-settlemint/dev-tools/code-studio/smart-contract-sets/add-smart-contract-set) - This is an IDE you can launch with a pre-built smart contract template. You can choose a template from our open-source [template library](/building-with-settlemint/dev-tools/code-studio/smart-contract-sets/smart-contract-templates).
 
 ## SDK
 
-The [SDK](./1_SDK.md) is a powerful toolkit designed to streamline blockchain integration into modern applications.
+The [SDK](../dev-tools/SDK) is a powerful toolkit designed to streamline blockchain integration into modern applications.
