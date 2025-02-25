@@ -7,6 +7,9 @@ import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 import { Card } from 'fumadocs-ui/components/card'
 
+Before installing the SettleMint Platform, you'll need to set up several core services. This guide will walk you through each prerequisite and help you collect the necessary information for installation.
+
+
 <Callout type="info">
 Use the sidebar to navigate between different prerequisites. We recommend following them in order, but you can skip to specific sections if needed.
 </Callout>
@@ -30,18 +33,18 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
     ### Ingress Controller
     - Traffic management and load balancing
     - SSL/TLS termination
-    - [Setup Guide](/launch-platform/self-hosted/prerequisites/ingress-controller)
+    - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/ingress-controller)
 
     ### Domain and TLS
     - Domain name configuration
     - SSL/TLS certificates
-    - [Setup Guide](/launch-platform/self-hosted/prerequisites/domain-and-tls)
+    - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/domain-and-tls)
 
     ### Metrics and Logs
     - Prometheus metrics collection
     - Grafana visualization
     - Loki log aggregation
-    - [Setup Guide](/launch-platform/self-hosted/prerequisites/metrics-and-logs)
+    - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/metrics-and-logs)
   </Tab>
 
   <Tab value="Databases & Cache">
@@ -49,30 +52,30 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
     - Primary platform database
     - Stores user data and configurations
     - Minimum version: PostgreSQL 13+
-    - [Setup Guide](/launch-platform/self-hosted/prerequisites/postgresql)
+    - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/postgresql)
 
     ### Redis Cache
     - Session management
     - Real-time features
     - Performance optimization
-    - [Setup Guide](/launch-platform/self-hosted/prerequisites/redis)
+    - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/redis)
   </Tab>
 
   <Tab value="Security & Storage">
     ### S3-Compatible Storage
     - Platform assets storage
     - Blockchain data persistence
-    - [Setup Guide](/launch-platform/self-hosted/prerequisites/s3-compatible-storage)
+    - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/s3-compatible-storage)
 
     ### Secrets management
     - Secrets management
     - Encryption keys
-    - [Setup Guide](/launch-platform/self-hosted/prerequisites/secret-management)
+    - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/secret-management)
 
     ### OAuth Provider
     - Authentication service
     - User identity management
-    - [Setup Guide](/launch-platform/self-hosted/prerequisites/oauth)
+    - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/oauth)
   </Tab>
 </Tabs>
 
@@ -123,10 +126,10 @@ As you complete each prerequisite, you'll need to collect specific information r
 
 ## Next Steps
 
-1. Start with the [Ingress Controller](/launch-platform/self-hosted/prerequisites/ingress-controller) setup
+1. Start with the [Ingress Controller](/launching-the-platform/self-hosted/prerequisites/ingress-controller) setup
 2. Follow each prerequisite guide in order
 3. Validate your configurations
-4. Proceed to [Platform Installation](/launch-platform/self-hosted/installation-guide/platform-installation)
+4. Proceed to [Platform Installation](/launching-the-platform/self-hosted/platform-installation)
 
 ## Need Help?
 
