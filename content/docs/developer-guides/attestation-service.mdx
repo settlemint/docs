@@ -1,7 +1,6 @@
 ---
 title: Complete Guide to Ethereum Attestation Service (EAS)
 description: A comprehensive guide to implementing and using the Ethereum Attestation Service (EAS) for creating, managing, and verifying on-chain attestations
-sidebar_position: 2
 keywords:
   [
     ethereum,
@@ -16,9 +15,10 @@ keywords:
   ]
 ---
 
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
 
 ## 1. Introduction to EAS
 
@@ -105,7 +105,7 @@ Before deploying the EAS contracts, you must add the smart contract set to your 
 3. **Customize**: Modify the set as needed for your specific project.
 4. **Save**: Save the configuration.
 
-For detailed instructions, visit the [Smart Contract Sets Documentation](../using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/1_smart-contract-sets.md).
+For detailed instructions, visit the [Smart Contract Sets Documentation](/docs/using-platform/dev-tools/code-studio/smart-contract-sets/smart-contract-sets).
 
 ---
 
@@ -114,7 +114,7 @@ For detailed instructions, visit the [Smart Contract Sets Documentation](../usin
 Once the contract set is ready, you can deploy it using either the **Task Menu** in the SettleMint IDE or via the **Terminal**.
 
 <Tabs>
-<TabItem value="task-menu" label="Task Menu">
+<Tab value="task-menu" label="Task Menu">
 
 #### Deploy Using the Task Menu
 
@@ -129,8 +129,8 @@ Once the contract set is ready, you can deploy it using either the **Task Menu**
 3. **Monitor Deployment Logs**:
    - The terminal output will display the deployment progress and contract addresses.
 
-</TabItem>
-<TabItem value="terminal" label="Terminal">
+</Tab>
+<Tab value="terminal" label="Terminal">
 
 #### Deploy Using the Terminal
 
@@ -160,7 +160,7 @@ Once the contract set is ready, you can deploy it using either the **Task Menu**
 3. **Monitor Deployment Logs**:
    - The terminal output will display the deployment progress and contract addresses.
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ---
@@ -234,7 +234,7 @@ registerSchema();
 
 ### Example Use Case
 
-Let’s create an attestation that proves:
+Let's create an attestation that proves:
 
 - **Username**: `awesome_developer`
 - **Platform**: `GitHub`
@@ -312,7 +312,7 @@ Verification is essential to ensure the integrity and authenticity of attestatio
 ### Choose Your Verification Method
 
 <Tabs>
-<TabItem value="eas-sdk" label="Using the EAS SDK">
+<Tab value="eas-sdk" label="Using the EAS SDK">
 
 #### Verification Using the EAS SDK
 
@@ -363,8 +363,8 @@ verifyAttestation('YOUR_ATTESTATION_UID_HERE');
 - **Lightweight**: Suitable for most off-chain verifications.
 - **No Custom Logic**: Fetches and verifies data stored in EAS.
 
-</TabItem>
-<TabItem value="custom-resolver" label="Using a Custom Smart Contract Resolver">
+</Tab>
+<Tab value="custom-resolver" label="Using a Custom Smart Contract Resolver">
 
 #### Verification Using a Custom Smart Contract Resolver
 
@@ -432,7 +432,7 @@ npx hardhat deploy --module ignition/modules/main.ts
 
 ###### Linking the Resolver to a Schema
 
-When registering a schema, include the resolver’s address for on-chain validation.
+When registering a schema, include the resolver's address for on-chain validation.
 
 ```javascript
 const resolverAddress = 'YOUR_DEPLOYED_RESOLVER_ADDRESS';
@@ -467,7 +467,7 @@ console.log('✅ Is the attestation valid?', isValid);
 - **Customizable Rules**: Add your own validation logic to the resolver.
 - **On-Chain Validation**: Ensures attestations meet specific conditions before they are considered valid.
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ---

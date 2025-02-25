@@ -1,5 +1,5 @@
 {
   "title": "Developer Guides",
   "icon": "Code",
-  "pages": ["guide-library","ai-features","asset-tokenization","attestation-service","connect-frontend"]
+  "pages": ["guide-library","utilizing-ai-features","asset-tokenization","attestation-service","user-wallets-and-scp","connect-frontend"]
 }
