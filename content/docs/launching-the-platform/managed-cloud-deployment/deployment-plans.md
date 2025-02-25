@@ -19,7 +19,7 @@ Not all applications are equal. Some are for experimentation, some are pilots, w
 
 We offer you the flexibility to deploy your services in the cloud of your choice, and easily build cross-cloud provider and cross-geographical region networks. All leading cloud providers are supported and we are continously working on adding support for more regions.
 
-[Discover all supported cloud providers and available regions](0_supported-cloud-providers.md)
+[Discover all supported cloud providers and available regions](/launching-the-platform/managed-cloud-deployment/supported-cloud-providers)
 
 ## Resource pack
 

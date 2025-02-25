@@ -1,4 +1,5 @@
 {
   "title": "Developer Guides",
-  "icon": "Code"
+  "icon": "Code",
+  "pages": ["guide-library","ai-features","asset-tokenization","attestation-service","connect-frontend"]
 }

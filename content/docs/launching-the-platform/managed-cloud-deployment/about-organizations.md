@@ -8,9 +8,9 @@ An organization is the highest level of hierarchy in SettleMint.
 
 It's at this level that you:
 
-- Create and manage [blockchain applications](../../using-platform/0_create-an-application.md)
+- Create and manage [blockchain applications](/building-with-settlemint/create-an-application)
 - [Invite team members](#invite-new-organization-members) to collaborate
-- Manage [billing](../../account-billing/20_billing.md)
+- Manage [billing](/account-billing/billing)
 
 You created your first organization when you signed up to use the SettleMint platform, but you can create as many organizations as you want, e.g. for your company, departments, teams, clients, etc. Organizations help you structure your work, manage collaboration, and keep your invoices clearly organized.
 
@@ -28,7 +28,7 @@ Click **Create new organization**. This opens a form. Follow these steps to crea
 2. Enter **billing information**.
    SettleMint creates a billing account for this organization. You will be billed monthly for the resources you use within this organization.
 3. Click **Confirm** to go to the organization dashboard.
-   From here, you can [create your first application](../../using-platform/0_create-an-application.md) in this organization. The dashboard will show you a summary of your organization's applications, the members in this organization, and a status of the resource costs for the current month.
+   From here, you can [create your first application](/building-with-settlemint/create-an-application) in this organization. The dashboard will show you a summary of your organization's applications, the members in this organization, and a status of the resource costs for the current month.
 
 When you create an organization, you are the owner, and therefore an administrator of the organization. This means you can perform all actions within this organization, with no limitations.
 
