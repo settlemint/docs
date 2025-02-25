@@ -77,7 +77,8 @@ For this guide, we will use the ERC-20 Token template:
 
 ![Choose a template](../../img/developer-guides/connect-frontend-erc20-template.png)
 
-You can continue to use the naming and deployment plan that you used earlier for the other resources. For more information on how to add a smart contract set, [see our Smart Contract Sets section](using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/3_add-smart-contract-set.md).
+You can continue to use the naming and deployment plan that you used earlier for the other resources. For more information on how to add a smart contract set, 
+[see our Smart Contract Sets section](/building-with-settlemint/dev-tools/code-studio/smart-contract-sets/smart-contract-sets).
 
 ### Editing the Contract
 
@@ -260,10 +261,11 @@ Congrats! You will now see the transaction confirmed in your Metamask activity.
 
 ## Next Steps
 
-Now that you have built your custom frontend, you can now explore more [smart contract use cases](../guide-library) you can build on SettleMint!
+Now that you have built your custom frontend, you can now explore more [smart contract use cases](/developer-guides/guide-library) you can build on SettleMint!
 
 ## Deploy Your Frontend as a Custom Deployment
 
 After building your custom frontend, you can deploy it on the SettleMint platform using the Custom Deployment feature. This allows you to host your frontend application alongside your blockchain components, providing a seamless integration within the SettleMint ecosystem.
 
-For more detailed information on Custom Deployments, refer to the [Custom Deployment documentation](../../using-platform/custom-deployment).
+For more detailed information on Custom Deployments, refer to the
+ [Custom Deployment documentation](/building-with-settlemint/custom-deployment).
