@@ -22,12 +22,12 @@ const config = {
     inlineCss: true,
     reactCompiler: true,
   },
-  async rewrites() {
+  async redirects() {
     return [
       {
         source: '/documentation',
         destination: '/documentation/',
-        basePath: false
+        permanent: true,
       }
     ];
   },
