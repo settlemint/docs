@@ -1,0 +1,98 @@
+---
+title: Connect to a Node
+description: Guide to connecting to blockchain nodes in SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+For an application to interact with a blockchain (e.g. by sending transactions/data to the network, or even just by reading data), it must connect to a node.
+
+To connect to a node, you use an endpoint, which is a URL that enables an API to gain access to the node. You interact with the node by sending requests to, and receiving responses from it via an API.
+
+You can find the endpoints on the node detail page, in the Connect tab, together with node interaction tools with playgrounds for real-time tryouts (e.g. JSON-RPC, GraphQL, etc.).
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Connection Methods
+    - JSON-RPC endpoints
+    - WebSocket connections
+    - IPC connections
+    - GraphQL endpoints
+  </Card>
+
+  <Card>
+    ### Key Features
+    - Secure connections
+    - Multiple protocols
+    - Authentication support
+    - Load balanced access
+  </Card>
+</div>
+
+## Connection Details
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Access Node
+      Navigate to your node in the application
+
+      ### View Connection Info
+      Open the **Connect** tab to find:
+      - Endpoint URLs
+      - Authentication tokens
+      - Connection examples
+    </Steps>
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Get node connection details
+    settlemint platform read node <node-name> --show-connection
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    const getConnectionDetails = async () => {
+      const node = await client.node.read("node-name");
+      console.log('Connection details:', node.connection);
+    };
+    ```
+  </Tab>
+</Tabs>
+
+## Connection Examples
+
+<Tabs items={['Web3.js', 'Ethers.js', 'Curl']}>
+  <Tab value="Web3.js">
+    ```javascript
+    const Web3 = require('web3');
+    const web3 = new Web3('https://your-node-url/token');
+    ```
+  </Tab>
+
+  <Tab value="Ethers.js">
+    ```javascript
+    const { ethers } = require('ethers');
+    const provider = new ethers.JsonRpcProvider('https://your-node-url/token');
+    ```
+  </Tab>
+
+  <Tab value="Curl">
+    ```bash
+    curl -X POST https://your-node-url \
+      -H "Content-Type: application/json" \
+      -H "x-auth-token: <token>" \
+      --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+Replace `your-node-url` and `token` with the actual values from your node's connection details.
+</Callout> 

@@ -1,0 +1,6 @@
+
+{
+  "label": "Self-hosted",
+  "position": 1,
+  "pages": ["introduction","infrastructure-requirements","platform-installation","prerequisites"]
+}

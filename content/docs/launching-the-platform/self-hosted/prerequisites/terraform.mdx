@@ -1,0 +1,188 @@
+---
+title: Terraform Installation (Optional)
+description: Optional quick setup using Terraform for testing environments
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+<Callout type="warning">
+### Quick Setup Only
+This Terraform-based installation is designed for quick setup and testing environments only. For production deployments, we strongly recommend following the manual installation process to properly configure and secure each component according to your organization's requirements.
+
+**Key limitations:**
+- Components run locally in the cluster without High Availability
+- Basic security configurations
+- Limited customization options
+- Not suitable for production workloads
+</Callout>
+
+## Prerequisites
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Hashicorp Terraform
+    ```bash
+    brew tap hashicorp/tap
+    brew install hashicorp/tap/terraform
+    ```
+  </Card>
+
+  <Card>
+    ### Google Cloud Platform
+    ```bash
+    brew cask install google-cloud-sdk
+    gcloud auth application-default login
+    ```
+  </Card>
+</div>
+
+## Required APIs
+
+<Steps>
+  ### Enable Container API
+  Visit: `https://console.developers.google.com/apis/api/container.googleapis.com/overview?project=<project_id>`
+
+  ### Enable Cloud KMS API
+  Visit: `https://console.developers.google.com/apis/api/cloudkms.googleapis.com/overview?project=<project_id>`
+</Steps>
+
+## IAM Permissions
+
+<Tabs items={['Quick Setup', 'Granular Permissions']}>
+  <Tab value="Quick Setup">
+    ### Recommended for Quick Setup
+    - `Owner` role
+  </Tab>
+
+  <Tab value="Granular Permissions">
+    ### Required Roles
+    - `Editor`
+    - `Cloud KMS Admin`
+    - `Project IAM Admin`
+    - `Kubernetes Engine Admin`
+    - `Service Account Admin`
+  </Tab>
+</Tabs>
+
+## Installation Steps
+
+<Steps>
+  ### Clone Repository
+  ```bash
+  git clone git@github.com:settlemint/tutorial-btp-on-gcp.git
+  ```
+
+  ### Set Environment Variables
+  ```bash
+  # DNS zone (subdomain) for platform access
+  export TF_VAR_gcp_dns_zone='YOUR_DNS_ZONE'
+
+  # Your GCP project ID
+  export TF_VAR_gcp_project_id='YOUR_GCP_PROJECT_ID'
+
+  # Target GCP region
+  export TF_VAR_gcp_region='YOUR_GCP_REGION'
+
+  # OAuth credentials
+  export TF_VAR_gcp_client_id='YOUR_GCP_CLIENT_ID'
+  export TF_VAR_gcp_client_secret='YOUR_GCP_CLIENT_SECRET'
+
+  # Registry credentials (provided by SettleMint)
+  export TF_VAR_oci_registry_username='YOUR_REGISTRY_USERNAME'
+  export TF_VAR_oci_registry_password='YOUR_REGISTRY_PASSWORD'
+  export TF_VAR_btp_version='BTP_VERSION'
+  ```
+</Steps>
+
+## DNS Zone Setup
+
+<Steps>
+  ### Navigate to DNS Zone Directory
+  ```bash
+  cd tutorial-btp-on-gcp/00_dns_zone
+  ```
+
+  ### Create DNS Zone
+  ```bash
+  terraform init
+  terraform apply
+  ```
+
+  ### Configure Domain Registrar
+  Add NS records for your subdomain (e.g., btp.settlemint.com) pointing to Google nameservers:
+  - ns-cloud-a1.googledomains.com
+  - ns-cloud-a2.googledomains.com
+  - ns-cloud-a3.googledomains.com
+  - ns-cloud-a4.googledomains.com
+
+  ### Verify DNS Delegation
+  ```bash
+  dig NS btp.settlemint.com
+  ```
+</Steps>
+
+## Platform Infrastructure Setup
+
+<Steps>
+  ### Navigate to Infrastructure Directory
+  ```bash
+  cd ../01_infrastructure
+  ```
+
+  ### Deploy Infrastructure
+  ```bash
+  terraform init
+  terraform apply
+  ```
+</Steps>
+
+## Cleanup
+
+<Steps>
+  ### Remove Resources
+  ```bash
+  terraform destroy
+  ```
+
+  <Callout type="info">
+  You may need to run the destroy command twice if the first attempt fails.
+  </Callout>
+</Steps>
+
+## Next Steps
+
+<Steps>
+  ### Access Platform
+  Visit `https://btp.<your-domain>`
+
+  ### Complete Setup
+  Follow the initial setup wizard
+
+  ### Review Documentation
+  Check the [platform documentation](/launching-the-platform/self-hosted/introduction)
+</Steps>
+
+## Troubleshooting
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Common Issues
+    - Verify all environment variables are set correctly
+    - Ensure DNS delegation is complete (can take up to 48 hours)
+    - Check Terraform logs for specific error messages
+  </Card>
+
+  <Card>
+    ### Get Help
+    - Review error messages in detail
+    - Check GCP quotas and limits
+    - Contact [support@settlemint.com](mailto:support@settlemint.com)
+  </Card>
+</div>
+
+<Callout type="warning">
+The Terraform installation is designed for demonstration and testing. For production deployments, we recommend following the manual installation process to configure each component according to your specific requirements.
+</Callout> 

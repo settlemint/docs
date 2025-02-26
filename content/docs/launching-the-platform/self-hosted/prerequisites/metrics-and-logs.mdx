@@ -1,0 +1,194 @@
+---
+title: Metrics and Logs
+description: Configure monitoring and logging for your self-hosted platform
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+## Overview
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Monitoring Stack
+    - Metrics collection (Prometheus/VictoriaMetrics)
+    - Log aggregation (Loki)
+    - Metrics server for resource metrics
+    - Kube-state-metrics for cluster state
+  </Card>
+
+  <Card>
+    ### Key Benefits
+    - Complete observability
+    - Performance monitoring
+    - Resource tracking
+    - Centralized logging
+  </Card>
+</div>
+
+## Deployment Options
+
+<Tabs items={['Lightweight Stack (Recommended)', 'Full Prometheus Stack']}>
+  <Tab value="Lightweight Stack (Recommended)">
+    ### VictoriaMetrics + Loki Setup
+
+    <Steps>
+      ### Install VictoriaMetrics
+      ```bash
+      helm upgrade --install victoria-metrics victoria-metrics-single \
+        --repo https://victoriametrics.github.io/helm-charts/ \
+        --namespace observability \
+        --create-namespace \
+        --set server.scrape.enabled=true
+      ```
+
+      ### Install Loki and Promtail
+      ```bash
+      helm install loki loki \
+        --repo https://grafana.github.io/helm-charts \
+        --namespace observability \
+        --create-namespace \
+        --set loki.auth_enabled=false \
+        --set loki.commonConfig.replication_factor=1 \
+        --set loki.storage.type=filesystem
+      ```
+
+      ### Install kube-state-metrics
+      ```bash
+      helm install kube-state-metrics kube-state-metrics \
+        --repo https://prometheus-community.github.io/helm-charts \
+        --namespace observability \
+        --create-namespace
+      ```
+    </Steps>
+
+    <Callout type="info">
+      **Benefits**
+      - Efficient resource usage
+      - Simple maintenance
+      - Sufficient monitoring capabilities
+      - Easy scalability
+    </Callout>
+  </Tab>
+
+  <Tab value="Full Prometheus Stack">
+    ### Prometheus + Grafana + Loki
+
+    <Steps>
+      ### Install Prometheus Stack
+      ```bash
+      helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
+        --namespace observability \
+        --create-namespace
+      ```
+
+      ### Install Loki Stack
+      ```bash
+      helm install loki grafana/loki-stack \
+        --namespace observability \
+        --set grafana.enabled=false
+      ```
+    </Steps>
+
+    <Callout type="warning">
+      **Requirements**
+      - More resources
+      - Additional configuration
+      - Regular maintenance
+    </Callout>
+  </Tab>
+</Tabs>
+
+## Requirements
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Minimum Specifications
+    - Storage for metrics retention
+    - Storage for log retention
+    - Network access from platform
+    - Basic authentication
+  </Card>
+
+  <Card>
+    ### Optional Features
+    - Long-term storage
+    - Alerting setup
+    - Dashboard configuration
+    - High availability
+  </Card>
+</div>
+
+## Information Collection
+
+<Callout type="success">
+### Required Values for Platform Installation
+
+- [ ] Metrics endpoint URL
+- [ ] Logs endpoint URL
+- [ ] Authentication details (if enabled)
+
+```yaml
+features:
+  observability:
+    metrics:
+      enabled: true
+      apiUrl: 'http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/prometheus/api/v1'
+    logs:
+      enabled: true
+      apiUrl: 'http://loki-gateway.observability.svc.cluster.local/loki/api/v1'
+```
+</Callout>
+
+## Validation
+
+<Steps>
+  ### Check VictoriaMetrics
+  ```bash
+  curl -f "http://victoria-metrics:8428/health"
+  ```
+
+  ### Check Loki
+  ```bash
+  curl -f "http://loki:3100/ready"
+  ```
+
+  ### Verify kube-state-metrics
+  ```bash
+  kubectl get --raw /metrics
+  ```
+</Steps>
+
+## Troubleshooting
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Metrics Not Collecting
+    - Verify service endpoints
+    - Check scrape configurations
+    - Review service monitors
+    - Validate permissions
+  </Card>
+
+  <Card>
+    ### Log Issues
+    - Check Loki status
+    - Verify storage configuration
+    - Review retention settings
+    - Check network policies
+  </Card>
+</div>
+
+## Next Steps
+
+<Steps>
+  ### Set up metrics collection
+  ### Configure log aggregation
+  ### Ready for [Platform Installation](../launching-the-platform/self-hosted/platform-installation)
+</Steps>
+
+<Callout type="info">
+Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
+</Callout> 

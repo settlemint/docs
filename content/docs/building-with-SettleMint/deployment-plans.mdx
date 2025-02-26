@@ -1,0 +1,116 @@
+---
+title: Deployment Plans
+description: Guide to deployment plans and resource allocation in SettleMint
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card } from 'fumadocs-ui/components/card'
+
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Infrastructure Types
+    - **Shared** - Cost-effective, shared resources
+    - **Dedicated** - Exclusive infrastructure
+    - **On-premise** - Custom deployment
+    - **BYOC** - Bring Your Own Cloud
+  </Card>
+
+  <Card>
+    ### Resource Packs
+    - **Small** - Basic resources
+    - **Medium** - Standard resources
+    - **Large** - Enhanced resources
+  </Card>
+</div>
+
+## Infrastructure Types
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Shared Infrastructure
+    - Most cost-effective
+    - Shared cluster resources
+    - Variable performance
+    - Suitable for testing
+  </Card>
+
+  <Card>
+    ### Dedicated Infrastructure
+    - Exclusive resources
+    - Highest specifications
+    - Predictable performance
+    - Production ready
+  </Card>
+</div>
+
+<Callout type="info">
+For On-premise and BYOC options, please [contact us](mailto:support@settlemint.com).
+</Callout>
+
+## Cloud Providers & Regions
+
+<Steps>
+  ### Choose Provider
+  Select from supported cloud providers:
+  - Google Cloud Platform
+  - Amazon Web Services
+  - Microsoft Azure
+
+  ### Select Region
+  Pick available regions based on:
+  - Geographic location
+  - Compliance requirements
+  - Performance needs
+</Steps>
+
+## Resource Packs
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <Card>
+    ### Small
+    - Basic memory allocation
+    - Standard vCPU
+    - Minimal storage
+    - Development use
+  </Card>
+
+  <Card>
+    ### Medium
+    - Enhanced memory
+    - Multiple vCPUs
+    - Extended storage
+    - Production ready
+  </Card>
+
+  <Card>
+    ### Large
+    - Maximum memory
+    - Dedicated vCPUs
+    - Extensive storage
+    - High performance
+  </Card>
+</div>
+
+## Recommended Setups
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Development/PoC
+    - Shared infrastructure
+    - Small resource pack
+    - Basic monitoring
+    - Cost optimized
+  </Card>
+
+  <Card>
+    ### Production
+    - Dedicated infrastructure
+    - Medium/Large resource pack
+    - Full monitoring
+    - High availability
+  </Card>
+</div> 

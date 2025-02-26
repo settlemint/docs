@@ -1,0 +1,10 @@
+{
+  "label": "Smart Contract Sets",
+  "pages": [
+    "smart-contract-sets",
+    "smart-contract-templates",
+    "add-smart-contract-set",
+    "deploying-a-contract",
+    "AI_plugin"
+  ]
+}
