@@ -7,6 +7,7 @@ const config = {
   reactStrictMode: true,
   output: 'standalone',
   basePath: '/documentation',
+  trailingSlash: true,
   serverExternalPackages: ['oxc-transform'],
   eslint: {
     ignoreDuringBuilds: true,
@@ -21,6 +22,14 @@ const config = {
   experimental: {
     inlineCss: true,
     reactCompiler: true,
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/documentation',
+        destination: '/documentation/',
+      },
+    ];
   },
 };
 
