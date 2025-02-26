@@ -22,15 +22,6 @@ const config = {
     inlineCss: true,
     reactCompiler: true,
   },
-  async redirects() {
-    return [
-      {
-        source: '/documentation',
-        destination: '/documentation/',
-        permanent: true,
-      }
-    ];
-  },
 };
 
 export default withMDX(config);
