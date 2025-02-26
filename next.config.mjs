@@ -7,7 +7,6 @@ const config = {
   reactStrictMode: true,
   output: 'standalone',
   basePath: '/documentation',
-  trailingSlash: true,
   serverExternalPackages: ['oxc-transform'],
   eslint: {
     ignoreDuringBuilds: true,
@@ -28,7 +27,8 @@ const config = {
       {
         source: '/documentation',
         destination: '/documentation/',
-      },
+        basePath: false
+      }
     ];
   },
 };
