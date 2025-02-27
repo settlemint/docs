@@ -4,9 +4,9 @@ description: Guide for creating user wallets and sending transactions using the 
 ---
 
 
-In this document, we will guide you through the creation of user wallets using the smart contract portal on the SettleMint platform. We will also show how you can send transactions to your contracts and sign them with one of the wallets in the portal. 
+In this document, we will guide you through the creation of user wallets using the smart contract portal on the SettleMint platform. We will also show how you can send transactions to your contracts and sign them with one of the wallets in the portal.
 
-## Required platform deployments: 
+## Required platform deployments:
 - Blockchain network (e.g. besu)
 - An HD ECDSA private key
 - An empty smart contract set
@@ -17,8 +17,8 @@ For the purpose of this guide, you can set up a Besu network with one validator 
 
 ### HD ECDSA
 Create the user wallet deployment along with one user wallet. For detailed instructions, see:
-- [User Wallet Guide](https://console.settlemint.com/documentation/docs/using-platform/user_wallet/)
-- [Private Keys Guide](https://console.settlemint.com/documentation/docs/using-platform/private-keys/)
+- [User Wallet Guide](https://console.settlemint.com/docs/using-platform/user_wallet/)
+- [Private Keys Guide](https://console.settlemint.com/docs/using-platform/private-keys/)
 
 Make sure to enable the address on your node.
 
@@ -35,7 +35,7 @@ Keep the address of the smart contract, you will need it to send a transaction i
 You will also need the contract ABI. You can find it in **out/counter.sol/counter.json**
 
 ### Smart contract portal
-Deploy the portal on your blockchain network and use the contract that you copied from the IDE. This will create a custom API automatically. 
+Deploy the portal on your blockchain network and use the contract that you copied from the IDE. This will create a custom API automatically.
 
 ![Smart contract portal](../../img/user-wallet-scp-images/image8.png)
 
@@ -44,19 +44,19 @@ To create a new wallet go to the REST tab of your portal and enter full screen m
 
 ![REST tab](../../img/user-wallet-scp-images/image7.png)
 
-Next, expand the Wallet section on the left and select `/wallets`. 
+Next, expand the Wallet section on the left and select `/wallets`.
 
 ![Wallet section](../../img/user-wallet-scp-images/image1.png)
 
-You can test the request directly from the portal by clicking on **Test Request**. This opens a form in which you can enter the **keyVaultId** of your wallet and the user name of your choice: 
+You can test the request directly from the portal by clicking on **Test Request**. This opens a form in which you can enter the **keyVaultId** of your wallet and the user name of your choice:
 
 ![Test request form](../../img/user-wallet-scp-images/image2.png)
 
-After you've sent the request, you can check your HD ECDSA wallet in the private key section. You should see a new account in the account section: 
+After you've sent the request, you can check your HD ECDSA wallet in the private key section. You should see a new account in the account section:
 
 ![Account section](../../img/user-wallet-scp-images/image6.png)
 
-Alternatively, you can also send the request using cURL: 
+Alternatively, you can also send the request using cURL:
 
 ```bash
 curl https://scs-portal-url/wallets \
