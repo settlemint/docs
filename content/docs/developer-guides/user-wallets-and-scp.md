@@ -17,8 +17,8 @@ For the purpose of this guide, you can set up a Besu network with one validator 
 
 ### HD ECDSA
 Create the user wallet deployment along with one user wallet. For detailed instructions, see:
-- [User Wallet Guide](https://console.settlemint.com/docs/using-platform/user_wallet/)
-- [Private Keys Guide](https://console.settlemint.com/docs/using-platform/private-keys/)
+- [User Wallet Guide](https://console.settlemint.com/documentation/docs/using-platform/user_wallet/)
+- [Private Keys Guide](https://console.settlemint.com/documentation/docs/using-platform/private-keys/)
 
 Make sure to enable the address on your node.
 
