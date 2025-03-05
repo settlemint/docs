@@ -1,10 +1,8 @@
 ---
-title: "Polygon Zkevm Erc 20"
+title: "ERC-20 token"
 ---
 
-# ERC-20 token
-
-ERC-20 tokens are blockchain-based assets, issued on all EVM compatible blockchain networks such as Polygon zkEVM, that have value and can be sent and received. These tokens are fungible, meaning they can be exchanged with another token of the same type because they have identical properties and there is an equal value. For example, the ERC-20 token of Alice is exactly the same as the ERC-20 token of Bob. They can exchange their token without consequences.
+ERC-20 tokens are blockchain-based assets, issued on all EVM compatible blockchain networks such as Polygon, that have value and can be sent and received. These tokens are fungible, meaning they can be exchanged with another token of the same type because they have identical properties and there is an equal value. For example, the ERC-20 token of Alice is exactly the same as the ERC-20 token of Bob. They can exchange their token without consequences.
 
 Examples of fungible assets are currencies, stocks of a company, bonds, gold and other precious metals.
 

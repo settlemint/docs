@@ -1,4 +1,4 @@
 {
   "label": "Template Library",
-  "pages": ["polygon-zkevm-erc-20", "polygon-zkevm-erc-721", "polygon-zkevm-state-machine"]
+  "pages": ["erc-20", "erc-721", "state-machine"]
 }

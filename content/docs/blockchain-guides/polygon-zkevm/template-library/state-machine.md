@@ -1,8 +1,6 @@
 ---
-title: "Arbitrum State Machine"
+title: "State machine"
 ---
-
-# State Machine
 
 This smart contract set implements a state machine. State machines are usually used to represent a system where an entity goes through several sequential states.
 

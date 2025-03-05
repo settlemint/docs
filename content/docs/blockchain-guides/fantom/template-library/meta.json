@@ -1,4 +1,4 @@
 {
   "label": "Template Library",
-  "pages": ["fantom-erc-20", "fantom-erc-721", "fantom-state-machine"]
+  "pages": ["erc-20", "erc-721", "state-machine"]
 }

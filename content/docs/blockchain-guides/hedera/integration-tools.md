@@ -1,8 +1,6 @@
 ---
-title: "Hedera Integration Tools"
+title: "Integration tools"
 ---
-
-# Smart Contract Sets
 
 You can launch a Smart Contract Set to significantly accelerate the development of your smart contracts.
 

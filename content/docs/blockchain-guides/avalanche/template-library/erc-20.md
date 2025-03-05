@@ -1,10 +1,8 @@
 ---
-title: "Arbitrum Erc 20"
+title: "ERC-20 token"
 ---
 
-# ERC-20 token
-
-ERC-20 tokens are blockchain-based assets, issued on all EVM compatible blockchain networks such as Arbitrum, that have value and can be sent and received. These tokens are fungible, meaning they can be exchanged with another token of the same type because they have identical properties and there is an equal value. For example, the ERC-20 token of Alice is exactly the same as the ERC-20 token of Bob. They can exchange their token without consequences.
+ERC-20 tokens are blockchain-based assets, issued on all EVM compatible blockchain networks such as Avalanche, that have value and can be sent and received. These tokens are fungible, meaning they can be exchanged with another token of the same type because they have identical properties and there is an equal value. For example, the ERC-20 token of Alice is exactly the same as the ERC-20 token of Bob. They can exchange their token without consequences.
 
 Examples of fungible assets are currencies, stocks of a company, bonds, gold and other precious metals.
 
@@ -21,7 +19,7 @@ The ERC-20 smart contract on the SettleMint platform has the following features:
 - Pausable capabilities that let the admin pause the contract in case of emergency.
 - Burnable capabilities that let users burn (i.e destroy) their token.
 
-By default, the account that deploys the ERC-20 smart contract gets 1,000,000 tokens. You can change this behaviour by modifying the **“constructor”** in **“GenericToken.sol”**. If you do not mint tokens in the constructor, make sure to mint some after the deployment.
+By default, the account that deploys the ERC-20 smart contract gets 1,000,000 tokens. You can change this behaviour by modifying the **"constructor"** in **"GenericToken.sol"**. If you do not mint tokens in the constructor, make sure to mint some after the deployment.
 
 ```solidity
 contract GenericToken is ERC20, ERC20Burnable, Pausable, AccessControl {
@@ -29,11 +27,12 @@ contract GenericToken is ERC20, ERC20Burnable, Pausable, AccessControl {
    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
    _mint(msg.sender, 1000000 * 10**decimals());
  }
+}
 ```
 
 ## Deploying an ERC-20 smart contract
 
-To set the name and symbol for your token, go to the **“deploy”** folder and in **“00_Deploy_GenericToken.ts”**, change the values in **“args”** in the **“deploy”** function.
+To set the name and symbol for your token, go to the **"deploy"** folder and in **"00_Deploy_GenericToken.ts"**, change the values in **"args"** in the **"deploy"** function.
 
 ```typescript
 await deploy('GenericToken', {
@@ -43,13 +42,13 @@ await deploy('GenericToken', {
 });
 ```
 
-As soon as you are happy with the changes you made, just click on **“deploy”** in the **“task runner”** of the IDE and after a few seconds, your ERC-20 smart contract should be deployed on the network of your choice.
+As soon as you are happy with the changes you made, just click on **"deploy"** in the **"task runner"** of the IDE and after a few seconds, your ERC-20 smart contract should be deployed on the network of your choice.
 
-The **“GenericToken.ts”** script in the **“test”** folder showcases all the functionalities of the ERC-20 standard. It shows you how to use the smart contract in your dapp.
+The **"GenericToken.ts"** script in the **"test"** folder showcases all the functionalities of the ERC-20 standard. It shows you how to use the smart contract in your dapp.
 
 ## ERC-20 with meta transactions
 
-The SettleMint platform also provides an ERC-20 template set with meta transaction capabilities. Meta transactions are used to fill the need for EVM-based contracts to accept transactions from externally owned accounts that do not have Matic to pay for gas. In short, implementing such an interface omits the need for the end user to pay for gas. With meta transactions, gas is paid by a `gas relayer` and a smart contract, known as a `trusted forwarder`, forwards the transactions to the recipient contract, i.e the one that the end user wants to interact with in the first place.
+The SettleMint platform also provides an ERC-20 template set with meta transaction capabilities. Meta transactions are used to fill the need for EVM-based contracts to accept transactions from externally owned accounts that do not have Avax to pay for gas. In short, implementing such an interface omits the need for the end user to pay for gas. With meta transactions, gas is paid by a `gas relayer` and a smart contract, known as a `trusted forwarder`, forwards the transactions to the recipient contract, i.e the one that the end user wants to interact with in the first place.
 
 ### Setting up meta transactions
 
@@ -73,7 +72,7 @@ function _msgData() internal view override(Context, ERC2771Context) returns (byt
 
 ```
 
-Let’s unpack this:
+Let's unpack this:
 
 1. We pass in the constructor an Ethereum address, the `trustedForwarder`, to the `ERC2771Context` constructor. This enables the smart contract to accept transactions coming from the `Trusted Forwarder`.
 2. `_msgSender()` function is kind of an alias for `msg.sender`. When called it returns `msg.sender` for regular transactions, but for meta transactions it returns the end user (rather than the `relayer` or the `trusted forwarder`).
@@ -81,7 +80,7 @@ Let’s unpack this:
 
 ### Sending a meta transaction to the ERC-20 contract
 
-Sending a meta transaction is slightly different than sending a regular transaction, but the template set comes with an example in which 10 tokens are transferred between two wallets without Matic.
+Sending a meta transaction is slightly different than sending a regular transaction, but the template set comes with an example in which 10 tokens are transferred between two wallets without Avax.
 
 First, to send meta transactions using the `forwarder`, we have to define three objects called `EIP712Domain`, `domain` and `types` as follows:
 
@@ -164,7 +163,7 @@ await forwarder.execute(req, signedData, { gasLimit: '100000' });
 
 ## ERC-20 Crowdsale
 
-Crowdsales allow the participants of a network to purchase tokens, usually in exchange for ether. A crowdsale can take many different forms, and our powerful templateset allows you the flexibility to shape and deploy the crowdsale according to your needs.
+Crowdsales allow the participants of a network to purchase tokens, usually in exchange for Avax. A crowdsale can take many different forms, and our powerful templateset allows you the flexibility to shape and deploy the crowdsale according to your needs.
 
 ### Stage 1: Creating a supply of the tokens being sold
 
@@ -194,18 +193,18 @@ Validation refers to ensuring that the buyers meet certain conditions before the
 
 Our templateset provides KYC / AML whitelisting capabilities out of the box. The buyers must be whitelisted before they can purchase tokens.
 
-This is implemented using openzepellin’s `AccessControl`. The address with the `DEFAULT_ADMIN_ROLE` grants `WHITELISTED_ROLE` to buyers before they can purchase tokens.
+This is implemented using openzepellin's `AccessControl`. The address with the `DEFAULT_ADMIN_ROLE` grants `WHITELISTED_ROLE` to buyers before they can purchase tokens.
 
 #### Purchase of tokens
 
 The buyers can be allocated the tokens in two ways.
 
-The first method is where the whitelisted buyers can send Matic to the contract directly. The equivalent amount of tokens will be calculated automatically. The calculation is done by first converting the Matic to USD leveraging Chainlink Oracle. Then, the USD is converted to the equivalent amount of tokens using the `_usdRate` set in the crowdsale.
+The first method is where the whitelisted buyers can send Avax to the contract directly. The equivalent amount of tokens will be calculated automatically. The calculation is done by first converting the Avax to USD leveraging Chainlink Oracle. Then, the USD is converted to the equivalent amount of tokens using the `_usdRate` set in the crowdsale.
 
 Alternatively, the admin of the crowdsale can directly allocate tokens to certain buyers by calling the `externalBuyTokens` function. This function can only be called by addresses which have been granted `DEFAULT_ADMIN_ROLE`. Here the tokens get transferred from the sender of the transaction to the beneficiary address listed as a parameter. The reason for providing such a function is to support allocation of tokens to buyers:
 
-- Who do not know how to send Matic to a contract
-- Support payments in other forms other than Matic. For example, fiat payments can be supported. The buyer would send fiat to the crowdsale admin. The crowdsale admin would then call this function to allocate the equivalent amount of tokens to the buyer.
+- Who do not know how to send Avax to a contract
+- Support payments in other forms other than Avax. For example, fiat payments can be supported. The buyer would send fiat to the crowdsale admin. The crowdsale admin would then call this function to allocate the equivalent amount of tokens to the buyer.
 
 #### Distribution
 
@@ -215,11 +214,11 @@ This can be done immediately after the tokens have been purchased or a certain a
 
 To transfer the tokens immediately, set the `_vestingEndDate` field on the `CrowdSale` contract to `0` while deploying the contract.
 
-When the vesting end date is not set, the tokens purchased get transferred immediately to the beneficiary’s address.
+When the vesting end date is not set, the tokens purchased get transferred immediately to the beneficiary's address.
 
 Transfering the tokens a certain amount of time after the purchase is achieved using two pieces:
 Setting the `_vestingEndDate` on the contract to the timestamp at the end of the vesting period
-Deploying a `VestingVault` contract and initializing `_vestingVault` field on the `CrowdSale` contract to it’s address
+Deploying a `VestingVault` contract and initializing `_vestingVault` field on the `CrowdSale` contract to it's address
 
 The beneficiary in this case is the `VestingVault` contract. All the tokens purchased by buyers get stored in the `VestingVault` contract.
 

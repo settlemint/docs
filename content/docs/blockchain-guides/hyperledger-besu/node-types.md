@@ -1,5 +1,5 @@
 ---
-title: "Enterprise Ethereum Node Types"
+title: "Node types"
 ---
 
 # Node types

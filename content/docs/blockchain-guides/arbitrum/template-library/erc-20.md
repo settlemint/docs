@@ -1,10 +1,8 @@
 ---
-title: "Polygon Erc 20"
+title: "ERC-20 token"
 ---
 
-# ERC-20 token
-
-ERC-20 tokens are blockchain-based assets, issued on all EVM compatible blockchain networks such as Polygon, that have value and can be sent and received. These tokens are fungible, meaning they can be exchanged with another token of the same type because they have identical properties and there is an equal value. For example, the ERC-20 token of Alice is exactly the same as the ERC-20 token of Bob. They can exchange their token without consequences.
+ERC-20 tokens are blockchain-based assets, issued on all EVM compatible blockchain networks such as Arbitrum, that have value and can be sent and received. These tokens are fungible, meaning they can be exchanged with another token of the same type because they have identical properties and there is an equal value. For example, the ERC-20 token of Alice is exactly the same as the ERC-20 token of Bob. They can exchange their token without consequences.
 
 Examples of fungible assets are currencies, stocks of a company, bonds, gold and other precious metals.
 
@@ -21,7 +19,7 @@ The ERC-20 smart contract on the SettleMint platform has the following features:
 - Pausable capabilities that let the admin pause the contract in case of emergency.
 - Burnable capabilities that let users burn (i.e destroy) their token.
 
-By default, the account that deploys the ERC-20 smart contract gets 1,000,000 tokens. You can change this behaviour by modifying the **“constructor”** in **“GenericToken.sol”**. If you do not mint tokens in the constructor, make sure to mint some after the deployment.
+By default, the account that deploys the ERC-20 smart contract gets 1,000,000 tokens. You can change this behaviour by modifying the **"constructor"** in **"GenericToken.sol"**. If you do not mint tokens in the constructor, make sure to mint some after the deployment.
 
 ```solidity
 contract GenericToken is ERC20, ERC20Burnable, Pausable, AccessControl {
@@ -29,11 +27,12 @@ contract GenericToken is ERC20, ERC20Burnable, Pausable, AccessControl {
    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
    _mint(msg.sender, 1000000 * 10**decimals());
  }
+}
 ```
 
 ## Deploying an ERC-20 smart contract
 
-To set the name and symbol for your token, go to the **“deploy”** folder and in **“00_Deploy_GenericToken.ts”**, change the values in **“args”** in the **“deploy”** function.
+To set the name and symbol for your token, go to the **"deploy"** folder and in **"00_Deploy_GenericToken.ts"**, change the values in **"args"** in the **"deploy"** function.
 
 ```typescript
 await deploy('GenericToken', {
@@ -43,9 +42,9 @@ await deploy('GenericToken', {
 });
 ```
 
-As soon as you are happy with the changes you made, just click on **“deploy”** in the **“task runner”** of the IDE and after a few seconds, your ERC-20 smart contract should be deployed on the network of your choice.
+As soon as you are happy with the changes you made, just click on **"deploy"** in the **"task runner"** of the IDE and after a few seconds, your ERC-20 smart contract should be deployed on the network of your choice.
 
-The **“GenericToken.ts”** script in the **“test”** folder showcases all the functionalities of the ERC-20 standard. It shows you how to use the smart contract in your dapp.
+The **"GenericToken.ts"** script in the **"test"** folder showcases all the functionalities of the ERC-20 standard. It shows you how to use the smart contract in your dapp.
 
 ## ERC-20 with meta transactions
 
@@ -73,7 +72,7 @@ function _msgData() internal view override(Context, ERC2771Context) returns (byt
 
 ```
 
-Let’s unpack this:
+Let's unpack this:
 
 1. We pass in the constructor an Ethereum address, the `trustedForwarder`, to the `ERC2771Context` constructor. This enables the smart contract to accept transactions coming from the `Trusted Forwarder`.
 2. `_msgSender()` function is kind of an alias for `msg.sender`. When called it returns `msg.sender` for regular transactions, but for meta transactions it returns the end user (rather than the `relayer` or the `trusted forwarder`).
@@ -194,7 +193,7 @@ Validation refers to ensuring that the buyers meet certain conditions before the
 
 Our templateset provides KYC / AML whitelisting capabilities out of the box. The buyers must be whitelisted before they can purchase tokens.
 
-This is implemented using openzepellin’s `AccessControl`. The address with the `DEFAULT_ADMIN_ROLE` grants `WHITELISTED_ROLE` to buyers before they can purchase tokens.
+This is implemented using openzepellin's `AccessControl`. The address with the `DEFAULT_ADMIN_ROLE` grants `WHITELISTED_ROLE` to buyers before they can purchase tokens.
 
 #### Purchase of tokens
 
@@ -215,11 +214,11 @@ This can be done immediately after the tokens have been purchased or a certain a
 
 To transfer the tokens immediately, set the `_vestingEndDate` field on the `CrowdSale` contract to `0` while deploying the contract.
 
-When the vesting end date is not set, the tokens purchased get transferred immediately to the beneficiary’s address.
+When the vesting end date is not set, the tokens purchased get transferred immediately to the beneficiary's address.
 
 Transfering the tokens a certain amount of time after the purchase is achieved using two pieces:
 Setting the `_vestingEndDate` on the contract to the timestamp at the end of the vesting period
-Deploying a `VestingVault` contract and initializing `_vestingVault` field on the `CrowdSale` contract to it’s address
+Deploying a `VestingVault` contract and initializing `_vestingVault` field on the `CrowdSale` contract to it's address
 
 The beneficiary in this case is the `VestingVault` contract. All the tokens purchased by buyers get stored in the `VestingVault` contract.
 

@@ -1,5 +1,5 @@
 ---
-title: "Fantom Node Types"
+title: "Node types"
 ---
 
 # Node types

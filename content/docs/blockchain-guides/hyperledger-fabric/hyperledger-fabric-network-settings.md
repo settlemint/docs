@@ -1,8 +1,6 @@
 ---
-title: "Hyperledger Fabric Network Settings"
+title: "Network Settings"
 ---
-
-# Network settings
 
 Depending on your requirements, you can configure some advanced settings for your Hyperledger Fabric network's default-channel. We provide default settings, but you can change these according to your own preferences.
 

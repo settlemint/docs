@@ -9,6 +9,7 @@
     "network-settings",
     "connect-external-network",
     "connect-external-node",
-    "performance"
+    "performance",
+    "template-library"
   ]
 }

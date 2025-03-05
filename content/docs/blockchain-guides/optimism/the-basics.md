@@ -1,5 +1,5 @@
 ---
-title: "Optimism The Basics"
+title: "The basics"
 ---
 
 # The basics

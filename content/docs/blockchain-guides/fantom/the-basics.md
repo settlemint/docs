@@ -1,10 +1,8 @@
 ---
-title: "Fantom The Basics"
+title: "The basics"
 ---
 
-# The basics
-
-Fantom is a high-performance, scalable, and secure smart-contract platform launched in December 2019. It is designed to overcome the limitations of older blockchain platforms like Ethereum. Fantom’s native cryptocurrency is called FTM. The platform leverages a unique consensus mechanism known as Lachesis, which allows it to process transactions much faster and at a lower cost compared to traditional blockchains. Fantom is fully compatible with the Ethereum Virtual Machine (EVM), enabling developers to deploy their existing Ethereum dApps on Fantom without any changes. Beyond scalability and compatibility, Fantom emphasizes decentralization. The network is secured by a decentralized network of validators and governed through on-chain governance, ensuring it is not controlled by any single entity.
+Fantom is a high-performance, scalable, and secure smart-contract platform launched in December 2019. It is designed to overcome the limitations of older blockchain platforms like Ethereum. Fantom's native cryptocurrency is called FTM. The platform leverages a unique consensus mechanism known as Lachesis, which allows it to process transactions much faster and at a lower cost compared to traditional blockchains. Fantom is fully compatible with the Ethereum Virtual Machine (EVM), enabling developers to deploy their existing Ethereum dApps on Fantom without any changes. Beyond scalability and compatibility, Fantom emphasizes decentralization. The network is secured by a decentralized network of validators and governed through on-chain governance, ensuring it is not controlled by any single entity.
 
 ## Mainnet and Testnet
 

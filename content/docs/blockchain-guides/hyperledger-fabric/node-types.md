@@ -1,8 +1,6 @@
 ---
-title: "Hyperledger Fabric Node Types"
+title: "Node types"
 ---
-
-# Node types
 
 Before describing the different node types, we have to talk about Certificate Authorities (CA) and identities.
 

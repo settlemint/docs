@@ -1,5 +1,5 @@
 ---
-title: "Enterprise Ethereum Network Stats"
+title: "Network stats"
 ---
 
 # Network and node stats

@@ -1,12 +1,10 @@
 ---
-title: "Hedera The Basics"
+title: "The basics"
 ---
 
-# The basics
+Hedera is a public distributed ledger technology (DLT) network that was launched in August 2018 by Hedera Hashgraph, LLC. It uses the Hashgraph consensus algorithm, which is a unique and novel approach to achieving consensus in a distributed network. Hedera's native cryptocurrency is called HBAR, and it is used to power the network's services, including smart contracts, file storage, and regular transactions.
 
-Hedera is a public distributed ledger technology (DLT) network that was launched in August 2018 by Hedera Hashgraph, LLC. It uses the Hashgraph consensus algorithm, which is a unique and novel approach to achieving consensus in a distributed network. Hedera’s native cryptocurrency is called HBAR, and it is used to power the network’s services, including smart contracts, file storage, and regular transactions.
-
-Hedera focuses on providing high throughput, low latency, and fair transaction ordering, making it suitable for enterprise-grade applications. Unlike blockchain-based systems, Hedera’s Hashgraph algorithm ensures fast, fair, and secure transactions without compromising decentralization.
+Hedera focuses on providing high throughput, low latency, and fair transaction ordering, making it suitable for enterprise-grade applications. Unlike blockchain-based systems, Hedera's Hashgraph algorithm ensures fast, fair, and secure transactions without compromising decentralization.
 
 ## Mainnet and Testnet
 
@@ -30,6 +28,6 @@ In Hashgraph, each node in the network shares information (events) with other no
 
 The Hedera JSON-RPC Relay is an open-source project implementing the Ethereum JSON-RPC standard. The JSON-RPC relay allows developers to interact with Hedera nodes using familiar Ethereum tools. This allows Ethereum developers and users to deploy, query, and execute contracts as they usually would.
 
-Hedera’s JSON RPC relay is a complex software component that relies on multiple elements, including consensus nodes and the mirror node. This complexity can lead to issues such as connection `timeouts`, especially during smart contract deployments. One Ethereum transaction can generate more than ten Hedera transactions, which increases the likelihood of encountering these problems. However, these issues are typically limited to the initial contract deployment phase. Once a contract is successfully deployed, subsequent contract calls should not experience such problems.
+Hedera's JSON RPC relay is a complex software component that relies on multiple elements, including consensus nodes and the mirror node. This complexity can lead to issues such as connection `timeouts`, especially during smart contract deployments. One Ethereum transaction can generate more than ten Hedera transactions, which increases the likelihood of encountering these problems. However, these issues are typically limited to the initial contract deployment phase. Once a contract is successfully deployed, subsequent contract calls should not experience such problems.
 
 More information can be found on the [official Hedera website](https://hedera.com/).

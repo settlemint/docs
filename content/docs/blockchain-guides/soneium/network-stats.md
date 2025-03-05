@@ -1,5 +1,5 @@
 ---
-title: "Soneium Network Stats"
+title: "Network stats"
 ---
 
 # Network stats

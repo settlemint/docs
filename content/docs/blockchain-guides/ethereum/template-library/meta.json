@@ -1,4 +1,4 @@
 {
   "label": "Template Library",
-  "pages": ["ethereum-erc-20", "ethereum-erc-721", "ethereum-state-machine"]
+  "pages": ["erc-20", "erc-721", "state-machine"]
 }

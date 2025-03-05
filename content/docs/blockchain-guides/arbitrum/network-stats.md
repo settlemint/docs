@@ -1,8 +1,6 @@
 ---
-title: "Arbitrum Network Stats"
+title: "Network stats"
 ---
-
-# Network stats
 
 The dashboard gives you an overview of the following stats for the network:
 

@@ -1,14 +1,12 @@
 ---
-title: "Hyperledger Fabric Network Stats"
+title: "Network stats"
 ---
-
-# Network and node stats
 
 ## Network stats
 
 ### Consensus nodes (Active/Cluster size)
 
-Shows the default-channel’s number of orderer nodes that are currently active and the size of the cluster (the ordering service).
+Shows the default-channel's number of orderer nodes that are currently active and the size of the cluster (the ordering service).
 
 ### Latest block committed
 

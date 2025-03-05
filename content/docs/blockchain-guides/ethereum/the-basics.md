@@ -2,8 +2,6 @@
 title: "Ethereum The Basics"
 ---
 
-# The basics
-
 Ethereum is one of the most popular public blockchains. It has its own cryptocurrency, called Ether (ETH) or Ethereum, and its own native programming language called Solidity to build and publish dApps (distributed applications) on the Ethereum blockchain.
 
 ## Mainnet and Testnet

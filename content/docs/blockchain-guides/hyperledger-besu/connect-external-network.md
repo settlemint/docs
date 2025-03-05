@@ -1,8 +1,6 @@
 ---
-title: "Enterprise Ethereum Connect External Network"
+title: "Connect to an External Network"
 ---
-
-# Connect to an External Network
 
 The SettleMint platform seamlessly integrates with existing external networks. You can deploy nodes on your external network within the SettleMint platform, enabling you to leverage the platform's robust features, including monitoring, resource scaling, an intuitive JSON-RPC UI, and reliable uptime management.
 

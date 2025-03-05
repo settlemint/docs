@@ -1,8 +1,6 @@
 ---
-title: "Polygon Zkevm The Basics"
+title: "The basics"
 ---
-
-# The basics
 
 Polygon zkEVM, introduced by the Polygon (formerly Matic) team in March 2023, represents the latest advancement in Polygon's efforts to provide a Layer 2 scalability solution. Using cryptographic zero-knowledge proofs to offer validity and quick finality to off-chain transaction computation, also known as a ZK-Rollup. It is the first zkEVM to be fully equivalent to an EVM, meaning that all existing smart contracts, developer toolings, and wallets work seamlessly. Polygon zkEVM provides a complete EVM-like experience for developers and users alike, with significantly lower transaction costs and higher throughput than Ethereum.
 

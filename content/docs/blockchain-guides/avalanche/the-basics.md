@@ -1,8 +1,6 @@
 ---
-title: "Avalanche The Basics"
+title: "The basics"
 ---
-
-# The basics
 
 Avalanche was launched in 2020 by Ava Labs, and has its own cryptocurrency called AVAX. It focuses on scalability, speed and low transactions costs. Avalanche is fully compatible with Ethereum components, dApps (distributed applications), and tooling.
 

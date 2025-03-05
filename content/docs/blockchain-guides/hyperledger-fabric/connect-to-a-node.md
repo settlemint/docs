@@ -1,5 +1,5 @@
 ---
-title: "Hyperledger Fabric Connect To A Node"
+title: "Connect to a node"
 ---
 
 # Connect to a node
@@ -12,7 +12,7 @@ Once a peer node has been deployed, it can be accessed using the peer Command Li
 
 1. Install Docker.
 2. Download the certificates zip file and extract its content.
-3. Open a terminal and navigate to the folder where you extracted the zip file’s content. You should have a folder with the unique name of your node (find the unique name at the details' page in the SettleMint’s platform).
+3. Open a terminal and navigate to the folder where you extracted the zip file's content. You should have a folder with the unique name of your node (find the unique name at the details' page in the SettleMint's platform).
 4. Run the following command to start a Docker container using the **official hyperledger/fabric-tools** image and mount your credentials' folder as a volume.
 
 `docker run --rm -v [absolute-path-to-downloads-folder]/[unique-name-of-your-node]:/fabric-data -it hyperledger/fabric-tools:2.4.3 sh`
@@ -27,7 +27,7 @@ Then navigate to the folder.
 
 6. Having done that, you could use **peer user** to connect to your node.
 
-Run the following command to export peer user’s credentials as environment variables.
+Run the following command to export peer user's credentials as environment variables.
 
 `source ./node/exports.env`
 
@@ -38,7 +38,7 @@ And, run one of the following commands to get data from your node.
 `peer channel fetch newest default-channel_newest.block -c default-channel`
 `peer channel fetch 0 default-channel_genesis.block -c default-channel`
 
-In the last step, you could also use the **admin user** to connect to your node, just run the following command to export admin user’s credentials as environment variables.
+In the last step, you could also use the **admin user** to connect to your node, just run the following command to export admin user's credentials as environment variables.
 
 `source ./admin/exports.env`
 

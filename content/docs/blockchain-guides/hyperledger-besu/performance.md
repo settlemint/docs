@@ -2,8 +2,6 @@
 title: "Performance"
 ---
 
-# Understanding Transactions Per Second (TPS) on a Besu Node
-
 This document aims to provide a comprehensive overview of transaction throughput on a Hyperledger Besu node, explaining key concepts for readers who may not be familiar with blockchain technology.
 
 ## Factors Affecting Transaction Performance

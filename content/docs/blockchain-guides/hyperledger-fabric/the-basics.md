@@ -1,8 +1,6 @@
 ---
-title: "Hyperledger Fabric The Basics"
+title: "The basics"
 ---
-
-# The basics
 
 Hyperledger Fabric is an open source enterprise-grade permissioned distributed ledger technology (DLT) platform, designed for use in enterprise contexts, that delivers some key differentiating capabilities over other popular distributed ledger or blockchain platforms.
 

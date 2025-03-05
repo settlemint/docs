@@ -1,5 +1,5 @@
 ---
-title: "Soneium The Basics"
+title: "The basics"
 ---
 
 # The basics

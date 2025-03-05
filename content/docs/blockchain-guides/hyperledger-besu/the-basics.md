@@ -1,8 +1,6 @@
 ---
-title: "Enterprise Ethereum The Basics"
+title: "The basics"
 ---
-
-# The basics
 
 Enterprise Ethereum is the permissioned blockchain version of public Ethereum. The two major Enterprise Ethereum clients are **Hyperledger Besu and Quorum**. Both clients have implemented a permission layer, which only allows known nodes, designed specifically for use in a consortium environment, to join the network.
 
@@ -10,7 +8,7 @@ Enterprise Ethereum is the permissioned blockchain version of public Ethereum. T
 
 ## What is Hyperledger Besu?
 
-Hyperledger Besu is an open-source Ethereum client developed under the Apache 2.0 license and written in Java. It was started by the Linux Foundation under the Hyperledger umbrella project. This project is largely known for its Hyperledger Fabric component, which is one of the most prominent permissioned protocols in the blockchain space. While they both exist under the Hyperledger umbrella, Fabric and Besu have little in common in terms of the underlying technology. More specifically, whereas Fabric is a private protocol designed from the ground up to support enterprise-grade solutions, Besu seeks to utilize the public Ethereum network. Besu can run on the public network or on private networks, as well as on a number of testnets. The project, formerly known as Pantheon, joined the Hyperledger family in 2019, adding for the first time a public blockchain implementation to Hyperledger’s suite of private blockchain frameworks.
+Hyperledger Besu is an open-source Ethereum client developed under the Apache 2.0 license and written in Java. It was started by the Linux Foundation under the Hyperledger umbrella project. This project is largely known for its Hyperledger Fabric component, which is one of the most prominent permissioned protocols in the blockchain space. While they both exist under the Hyperledger umbrella, Fabric and Besu have little in common in terms of the underlying technology. More specifically, whereas Fabric is a private protocol designed from the ground up to support enterprise-grade solutions, Besu seeks to utilize the public Ethereum network. Besu can run on the public network or on private networks, as well as on a number of testnets. The project, formerly known as Pantheon, joined the Hyperledger family in 2019, adding for the first time a public blockchain implementation to Hyperledger's suite of private blockchain frameworks.
 
 ## Features
 
@@ -21,7 +19,7 @@ Hyperledger Besu's main features include:
 - **Privacy**: The Private Transaction Manager makes it possible to keep transactions between predefined parties private from other users of the network.
 - **User-facing API**: The client provides mainnet Ethereum and EEA JSON-RPC APIs over HTTP and WebSocket protocols. It also supports a GraphQL API.
 
-Hyperledger Besu’s enterprise features are designed to adhere to the requirements of the [Enteprise Ethereum Alliance (EEA)](https://entethalliance.org/) client specification.
+Hyperledger Besu's enterprise features are designed to adhere to the requirements of the [Enteprise Ethereum Alliance (EEA)](https://entethalliance.org/) client specification.
 
 ## Consensus mechanisms
 

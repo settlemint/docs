@@ -1,5 +1,5 @@
 ---
-title: "Fantom Network Stats"
+title: "Network stats"
 ---
 
 # Network stats

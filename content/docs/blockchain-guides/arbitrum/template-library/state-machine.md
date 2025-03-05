@@ -1,8 +1,6 @@
 ---
-title: "Ethereum State Machine"
+title: "State machine"
 ---
-
-# State Machine
 
 This smart contract set implements a state machine. State machines are usually used to represent a system where an entity goes through several sequential states.
 
@@ -298,7 +296,7 @@ It's really important that this entityId matches with the one defined in the dep
 
 ## Note
 
-\*\* Before using this file, it is recommended to run the tasks `graph:config`, `graph:compile` and `graph:codegen`.
+\*\*Before using this file, it is recommended to run the tasks `graph:config`, `graph:compile` and `graph:codegen`.
 
 The `graph:codegen` task is where the types/classes are generated based on the entities defined in the schema (at `subgraphs > x.gql.json`). These types/classes are imported and used in the mapping functions.
 

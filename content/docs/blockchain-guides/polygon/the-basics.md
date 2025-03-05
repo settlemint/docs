@@ -1,12 +1,10 @@
 ---
-title: "Polygon The Basics"
+title: "The basics"
 ---
 
-# The basics
+Polygon, previously MATIC, was launched in 2017, mainly to tackle Ethereum's scaling problem. Polygon is a layer 2 commit chain to the Ethereum network, and acts as an add-on layer to Ethereum. It does not seek to change the original Ethereum blockchain layer, but solves pain points associated with it, like high gas fees and slow speeds, without sacrificing on security. Polygon supports all the existing Ethereum tooling, along with faster and cheaper transactions.
 
-Polygon, previously MATIC, was launched in 2017, mainly to tackle Ethereum’s scaling problem. Polygon is a layer 2 commit chain to the Ethereum network, and acts as an add-on layer to Ethereum. It does not seek to change the original Ethereum blockchain layer, but solves pain points associated with it, like high gas fees and slow speeds, without sacrificing on security. Polygon supports all the existing Ethereum tooling, along with faster and cheaper transactions.
-
-Polygon allows developers to easily launch Ethereum-compatible scaling solutions and stand-alone blockchains as part of a network of interconnecting blockchains. Polygon is often referred to as “Ethereum’s internet of blockchains”, and has gained wide adoption within the Web3 community. It has gained popularity because of the great throughput and low gas expenses, and as a consequence the Polygon ecosystem is growing fast.
+Polygon allows developers to easily launch Ethereum-compatible scaling solutions and stand-alone blockchains as part of a network of interconnecting blockchains. Polygon is often referred to as "Ethereum's internet of blockchains", and has gained wide adoption within the Web3 community. It has gained popularity because of the great throughput and low gas expenses, and as a consequence the Polygon ecosystem is growing fast.
 
 Polygon has its own cryptocurrency, called MATIC.
 

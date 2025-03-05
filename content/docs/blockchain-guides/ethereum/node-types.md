@@ -1,8 +1,6 @@
 ---
-title: "Ethereum Node Types"
+title: "Node types"
 ---
-
-# Node types
 
 For Ethereum, SettleMint provides support for the Geth client. This means that when you add an Ethereum node, you get a **Geth node** by default.
 

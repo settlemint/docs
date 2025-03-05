@@ -1,4 +1,4 @@
 {
   "label": "Soneium",
-  "pages": ["the-basics", "node-types", "connect-to-a-node", "network-stats", "integration-tools"]
+  "pages": ["the-basics", "node-types", "connect-to-a-node", "network-stats", "integration-tools", "template-library"]
 }
