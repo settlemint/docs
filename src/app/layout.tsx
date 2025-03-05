@@ -1,3 +1,4 @@
+import { PlainChat } from '@/components/PlainChat';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { Viewport } from 'next';
@@ -23,8 +24,9 @@ export default function Layout({ children }: { children: ReactNode }) {
     <html lang="en" className={figtree.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
         <RootProvider>{children}</RootProvider>
+        <GoogleAnalytics gaId="G-N1MMHFDVZZ" />
+        <PlainChat />
       </body>
-      <GoogleAnalytics gaId="G-N1MMHFDVZZ" />
     </html>
   );
 }
