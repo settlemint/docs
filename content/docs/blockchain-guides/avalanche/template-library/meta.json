@@ -1,0 +1,4 @@
+{
+  "label": "Template Library",
+  "pages": ["avalanche-erc-20", "avalanche-erc-721", "avalanche-state-machine"]
+}

@@ -1,0 +1,4 @@
+{
+  "label": "Template Library",
+  "pages": ["optimism-erc-20", "optimism-erc-721", "optimism-state-machine"]
+}

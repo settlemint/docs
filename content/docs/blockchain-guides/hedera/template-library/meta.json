@@ -1,0 +1,4 @@
+{
+  "label": "Template Library",
+  "pages": ["hedera-erc-20", "hedera-erc-721", "hedera-state-machine"]
+}

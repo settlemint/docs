@@ -1,0 +1,4 @@
+{
+  "label": "Hedera",
+  "pages": ["the-basics", "node-types", "connect-to-a-relay", "network-stats", "integration-tools"]
+}

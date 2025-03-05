@@ -1,0 +1,4 @@
+{
+  "label": "Template Library",
+  "pages": ["soneium-erc-20", "soneium-erc-721", "soneium-state-machine"]
+}

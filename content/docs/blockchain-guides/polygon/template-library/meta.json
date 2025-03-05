@@ -1,0 +1,4 @@
+{
+  "label": "Template Library",
+  "pages": ["polygon-erc-20", "polygon-erc-721", "polygon-state-machine"]
+}

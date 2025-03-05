@@ -1,0 +1,4 @@
+{
+  "label": "Template Library",
+  "pages": ["arbitrum-erc-20", "arbitrum-erc-721", "arbitrum-state-machine"]
+}

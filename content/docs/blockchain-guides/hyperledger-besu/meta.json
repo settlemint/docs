@@ -1,0 +1,14 @@
+{
+  "label": "Hyperledger Besu",
+  "pages": [
+    "the-basics",
+    "node-types",
+    "connect-to-a-node",
+    "network-stats",
+    "integration-tools",
+    "network-settings",
+    "connect-external-network",
+    "connect-external-node",
+    "performance"
+  ]
+}
