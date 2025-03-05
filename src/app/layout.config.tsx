@@ -15,7 +15,7 @@ export const baseOptions: BaseLayoutProps = {
   links: [
     {
       text: 'Home',
-      url: 'https://settlemint.com',
+      url: 'https://settlemint.com/',
       active: 'nested-url',
     },
     {
@@ -25,7 +25,7 @@ export const baseOptions: BaseLayoutProps = {
     },
     {
       text: 'SDK',
-      url: 'https://gitbub.com/settlemint/sdk',
+      url: 'https://github.com/settlemint/sdk',
       active: 'nested-url',
     },
     {

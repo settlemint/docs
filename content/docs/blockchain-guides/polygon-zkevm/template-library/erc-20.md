@@ -269,4 +269,4 @@ Here we are going to deploy:
 
 ## Integration with the Middleware
 
-Working with complex or large data in your dApp can be a challenge. In the SettleMint platform we provide you with a [middleware solution](../../../using-platform/7_middleware.md) that allows you to index and query this data easily and efficiently.
+Working with complex or large data in your dApp can be a challenge. In the SettleMint platform we provide you with a [middleware solution](/building-with-settlemint/middleware) that allows you to index and query this data easily and efficiently.

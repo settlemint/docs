@@ -3,10 +3,10 @@ title: Hasura Backend-as-a-Service
 description: Guide to using Hasura in SettleMint
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 # Hasura - Backend-as-a-service
 
@@ -44,6 +44,7 @@ Many dApps need more than just decentralized tools to build an end-to-end soluti
     # Get information about the command and all available options
     settlemint platform create integration-tool hasura --help
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -52,6 +53,7 @@ Many dApps need more than just decentralized tools to build an end-to-end soluti
     <Callout type="tip">
     The SDK enables you to easily query and mutate data stored in your SettleMint-powered PostgreSQL databases through a type-safe GraphQL interface. For detailed API reference, check out the [Hasura SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/hasura).
     </Callout>
+
   </Tab>
 </Tabs>
 
@@ -60,12 +62,12 @@ Many dApps need more than just decentralized tools to build an end-to-end soluti
 - Under the data subtab you can create an arbitrary number of **schema's**. A schema is a collection of tables.
 - In a schema you can create **tables**, choose which columns you want and define relations and indexes.
 - You can add, edit and delete **data** in these columns as well.
-  [Learn more here](https://hasura.io/docs/latest/graphql/core/databases/postgres/schema/tables.html)
+  [Learn more here](https://hasura.io/docs/2.0/schema/postgres/tables/)
 
 Any table you make is instantly visible in the **API subtab**. Note that by using the **REST and Derive Action buttons** you can convert queries into REST endpoints if that fits your application better. Using the **Code Exporter button** you can get the actual code snippets you can use in your application or the integration studio.
 
 A bit more advanced are **actions**. Actions are custom queries or mutations that are resolved via HTTP handlers. Actions can be used to carry out complex data validations, data enrichment from external sources or execute just about any custom business logic. Actions can be kickstarted by using the **Derive Action button** in the **API subtab**.
-[Learn more here.](https://hasura.io/docs/latest/graphql/core/actions/index.html)
+[Learn more here.](https://hasura.io/docs/2.0/actions/overview/)
 
 If you need to execute tasks based on changes to your database you can leverage **Events**. An **Event Trigger** atomically captures events (insert, update, delete) on a specified table and then reliably calls a HTTP webhook to run some custom business logic.
 [Learn more here.](https://hasura.io/docs/latest/graphql/core/event-triggers/index.html)
@@ -75,9 +77,9 @@ If you need to execute tasks based on changes to your database you can leverage 
 **One-off Scheduled Events** are individual events that can be scheduled to reliably trigger a HTTP webhook to run some custom business logic at a particular timestamp.
 
 **Access to your database** can be handled all the way to the row level by using the authentication and authorisation options available in Hasura.
-[Learn more here.](https://hasura.io/docs/latest/graphql/core/auth/index.html)
+[Learn more here.](https://hasura.io/docs/2.0/auth/overview/)
 
-This is of course on top of the [application access tokens](/docs/building-with-settlemint/application-access-tokens) and [personal access tokens](/docs/building-with-settlemint/personal-access-tokens) in the platform you can use to close off access to the entire API.
+This is of course on top of the [application access tokens](/building-with-settlemint/application-access-tokens) and [personal access tokens](/building-with-settlemint/personal-access-tokens) in the platform you can use to close off access to the entire API.
 
 ## Backups
 
@@ -235,7 +237,7 @@ You can interact with your Hasura database in two ways: through the GraphQL API 
     async function main() {
       try {
         const { errors, data } = await fetchGraphQL(operationsDoc, "MyQuery", {});
-        
+
         if (errors) {
           console.error('GraphQL Errors:', errors);
           return;
@@ -258,7 +260,7 @@ You can interact with your Hasura database in two ways: through the GraphQL API 
             status: "pending"
           }
         );
-        
+
         if (errors) {
           console.error('GraphQL Errors:', errors);
           return;
@@ -274,6 +276,7 @@ You can interact with your Hasura database in two ways: through the GraphQL API 
     main();
     insertWithGraphQL();
     ```
+
   </Tab>
   <Tab value="PostgreSQL">
     ```javascript 
@@ -295,10 +298,10 @@ You can interact with your Hasura database in two ways: through the GraphQL API 
     // Insert a new verification record with sample data
     const insertData = async () => {
       const query = `
-        INSERT INTO verification (id, identifier, value, created_at, expires_at) 
-        VALUES ($1, $2, $3, $4, $5) 
+        INSERT INTO verification (id, identifier, value, created_at, expires_at)
+        VALUES ($1, $2, $3, $4, $5)
         RETURNING *`;
-      
+
       // Sample values - modify according to your needs
       const values = [
         'test-id-123',
@@ -307,7 +310,7 @@ You can interact with your Hasura database in two ways: through the GraphQL API 
         new Date(),
         new Date(Date.now() + 24 * 60 * 60 * 1000) // Sets expiry to 24h from now
       ];
-      
+
       const result = await pool.query(query, values);
       console.log('Inserted:', result.rows[0]);
     };
@@ -315,11 +318,11 @@ You can interact with your Hasura database in two ways: through the GraphQL API 
     // Update an existing record by ID
     const updateData = async () => {
       const query = `
-        UPDATE verification 
-        SET value = $1, updated_at = $2 
-        WHERE id = $3 
+        UPDATE verification
+        SET value = $1, updated_at = $2
+        WHERE id = $3
         RETURNING *`;
-      
+
       const values = ['updated-value', new Date(), 'test-id-123'];
       const result = await pool.query(query, values);
       console.log('Updated:', result.rows[0]);
@@ -339,6 +342,7 @@ You can interact with your Hasura database in two ways: through the GraphQL API 
 
     main();
     ```
+
   </Tab>
 </Tabs>
 
@@ -347,13 +351,16 @@ You can interact with your Hasura database in two ways: through the GraphQL API 
 To run these examples, you'll need the following:
 
 For GraphQL API:
+
 1. **Hasura Admin Secret**: Found in the "Connect" tab of Hasura console
 2. **Application Access Token**: Generate this by following our [Application Access Tokens guide](/building-with-settlemint/application-access-tokens)
 
 For PostgreSQL:
+
 1. **PostgreSQL Connection String**: Found in the "Connect" tab of Hasura console under "Database URL"
 
-
 <Callout type="warning">
-Always keep your credentials secure and never expose them in client-side code. Use environment variables or a secure configuration management system in production environments.
-</Callout> 
+  Always keep your credentials secure and never expose them in client-side code.
+  Use environment variables or a secure configuration management system in
+  production environments.
+</Callout>{" "}

@@ -50,4 +50,4 @@ SettleMint's platform creates by default an application channel called "default-
 
 Users can create additional application channels using the binaries provided by Hyperledger Fabric (install them locally and download the node's certificates) or by creating a Smart contract set which is a configured web IDE with all the necessary files and binaries to interact with your peer node and orderers.
 
-[Learn how to interact with your Hyperledger Fabric nodes](../5_Hyperledger-Fabric/4_hyperledger-fabric-connect-to-a-node.md)
+[Learn how to interact with your Hyperledger Fabric nodes](./connect-to-a-node)

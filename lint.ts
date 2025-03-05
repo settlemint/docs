@@ -9,7 +9,7 @@ async function checkLinks() {
 
   const scanned = await scanURLs({
     populate: {
-      'docs/[[...slug]]': docsFiles.map((file) => {
+      'documentation/[[...slug]]': docsFiles.map((file) => {
         const info = parseFilePath(path.relative('content/docs', file.path));
 
         return {

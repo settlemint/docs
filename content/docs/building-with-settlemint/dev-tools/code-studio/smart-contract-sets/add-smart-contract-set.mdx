@@ -3,16 +3,15 @@ title: Add a Smart Contract Set
 description: Add a Smart Contract Set using Platform UI, SDK CLI, or SDK JS
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
-
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 Smart contract sets allow you to incorporate **business logic** into your application by deploying smart contracts that run on the blockchain. You can add a smart contract set via different methods as part of your development workflow.
 
 <Callout type="info">
-You must have an existing application before you add a smart contract set.
+  You must have an existing application before you add a smart contract set.
 </Callout>
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
@@ -20,62 +19,63 @@ You must have an existing application before you add a smart contract set.
     <Steps>
       ### Navigate to Application
       Navigate to the **application** where you want to add the smart contract set.
-      
+
       ### Open Dev Tools
       Open **Dev tools** and click on **Add a Dev tool**.
-      
+
       ![Dev tools](../../../../../img/smart-contract-sets/empty-dev-tools.png)
-      
+
       ### Select Code Studio
       Select **Code Studio** as the Dev tool type.
-      
+
       ![Select Code Studio](../../../../../img/smart-contract-sets/select-code-studio.png)
-      
+
       ### Choose Smart Contract Set
       Then choose **Smart Contract Set**.
-      
+
       ![Select Smart Contract Set](../../../../../img/smart-contract-sets/select-smart-contract-set.png)
-      
+
       ### Pick a Template
       Pick a **template**; the Code Studio will load with your chosen smart contract template.
-      
+
       ![Select Template](../../../../../img/smart-contract-sets/select-template.png)
-      
+
       ### Enter Details
       Click **Continue** to enter details such as the Dev tool name, user, and deployment plan.
-      
+
       ![Click Continue](../../../../../img/smart-contract-sets/click-continue.png)
-      
+
       ### Confirm
       Confirm the resource cost and click **Confirm** to add the smart contract set.
     </Steps>
-    
+
     You can now further configure and eventually deploy your smart contracts.
+
   </Tab>
-  
+
   <Tab value="SDK CLI">
     First, ensure you are authenticated:
-    
+
     ```bash
     settlemint login
     ```
-    
+
     You can create a smart contract set either on the platform or locally:
 
     ### Create on Platform
 
-    Then create a smart contract set with the following command (refer to the 
-    [CLI docs](/docs/using-platform/15_dev-tools/1_SDK.md) for more details):
-    
+    Then create a smart contract set with the following command (refer to the
+    [CLI docs](/building-with-settlemint/15_dev-tools/1_SDK.md) for more details):
+
     ```bash
     settlemint platform create smart-contract-set <tool-name> \
       --application <application-name> \
       --template <template-name> \
       --deployment-plan <deployment-plan>
     ```
-    
+
     For example:
-    
+
     ```bash
     settlemint platform create smart-contract-set my-scset \
       --application my-app \
@@ -128,22 +128,23 @@ You must have an existing application before you add a smart contract set.
     ### Managing Platform Smart Contract Sets
 
     Manage your platform smart contract sets with:
-    
+
     ```bash
     # List smart contract sets
     settlemint platform list smart-contract-sets --application <application-name>
-    
+
     # Read smart contract set details
     settlemint platform read smart-contract-set <smart-contract-set-name>
-    
+
     # Delete a smart contract set
     settlemint platform delete smart-contract-set <smart-contract-set-name>
     ```
+
   </Tab>
-  
+
   <Tab value="SDK JS">
     You can also add a smart contract set programmatically using the JS SDK. The API follows the same pattern as for applications and blockchain networks:
-    
+
     ```typescript
     import { createSettleMintClient } from '@settlemint/sdk-js';
 
@@ -180,21 +181,23 @@ You must have an existing application before you add a smart contract set.
       console.log('Smart Contract Set deleted');
     };
     ```
-    
+
     <Callout type="tip">
     Get your access token from the Platform UI under **User Settings → API Tokens**.
     </Callout>
+
   </Tab>
 </Tabs>
 
 <Callout type="info">
-All operations require that you have the necessary permissions in your workspace.
+  All operations require that you have the necessary permissions in your
+  workspace.
 </Callout>
 
 For protocol-specific information, please refer to the relevant section in our blockchain guides:
 
-  - [Hyperledger Besu Smart Contracts IDE](/blockchain-guides/Hyperledger-Besu/6_enterprise-ethereum-integration-tools)
-  - [Ethereum Smart Contracts IDE](/blockchain-guides/0_Ethereum/5_ethereum-integration-tools)
-  - [Avalanche Smart Contracts IDE](/blockchain-guides/Avalanche/5_avalanche-integration-tools)
-  - [Polygon Smart Contracts IDE](/blockchain-guides/Polygon/5_polygon-integration-tools)
-  - [Hyperledger Fabric Smart Contracts IDE](/blockchain-guides/Hyperledger-Fabric/6_hyperledger-fabric-integration-tools)
+- [Hyperledger Besu Smart Contracts IDE](/blockchain-guides/hyperledger-besu/integration-tools)
+- [Ethereum Smart Contracts IDE](/blockchain-guides/ethereum/integration-tools)
+- [Avalanche Smart Contracts IDE](/blockchain-guides/avalanche/integration-tools)
+- [Polygon Smart Contracts IDE](/blockchain-guides/polygon/integration-tools)
+- [Hyperledger Fabric Smart Contracts IDE](/blockchain-guides/hyperledger-fabric/integration-tools)

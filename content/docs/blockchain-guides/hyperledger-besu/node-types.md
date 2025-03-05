@@ -22,4 +22,4 @@ You need at least 4 validator nodes for your blockchain network to be Byzantine 
 
 :::
 
-[Learn here how to interact with your Hyperledger Besu node.](4_enterprise-ethereum-connect-to-a-node.md)
+[Learn here how to interact with your Hyperledger Besu node.](./connect-to-a-node)

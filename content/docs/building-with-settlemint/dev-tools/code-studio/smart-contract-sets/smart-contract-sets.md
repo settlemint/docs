@@ -6,7 +6,7 @@ A Smart Contract Set is a [code studio](../../0_code-studio/0_code-studio.md) th
 
 You can choose from a wide variety of templates in our open-source [template library](2_smart-contract-templates.md#template-library). Each template includes pre-built smart contracts which you can then customize to meet your specific needs.
 
-If you need a fundamental explanation of what smart contracts are and how they work, we recommend contacting our team to join our Learn World Blockchain course. Our experts will guide you through the basics, ensuring you have a solid foundation before diving into development. For a practical guide, please visit [deploying a contract](4_deploying-a-contract.md).
+If you need a fundamental explanation of what smart contracts are and how they work, we recommend contacting our team to join our Learn World Blockchain course. Our experts will guide you through the basics, ensuring you have a solid foundation before diving into development. For a practical guide, please visit [deploying a contract](./deploying-a-contract).
 
 ## Overview of the Smart Contract Deployment Process on SettleMint
 
@@ -21,7 +21,7 @@ The following is a high-level overview of smart contract development processes a
 - **Smart contract set**: Select the "Smart contract set" option as the type of Code studio.
 - **Picking Your Template**: Pick the template of your choice.
 
-For detailed instructions, please see [add a smart contract set](3_add-smart-contract-set.md).
+For detailed instructions, please see [add a smart contract set](add-smart-contract-set).
 
 ### 2. Compiling and Configuring The Smart Contract
 

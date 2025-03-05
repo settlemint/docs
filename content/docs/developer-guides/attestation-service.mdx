@@ -11,14 +11,14 @@ keywords:
     smart contracts,
     verification,
     schema registry,
-    resolver
+    resolver,
   ]
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## 1. Introduction to EAS
 
@@ -33,15 +33,15 @@ Ethereum Attestation Service (EAS) is a decentralized protocol that allows users
 - **Security**: Attestations are secured by the Ethereum blockchain.
 - **Transparency**: All attestations are publicly verifiable.
 
-<iframe 
-  width="100%" 
-  height="400" 
-  src="https://www.youtube.com/embed/DMGj5GNll0k" 
-  title="Understanding Ethereum Attestation Service (EAS)" 
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/embed/DMGj5GNll0k"
+  title="Understanding Ethereum Attestation Service (EAS)"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
 
 ---
 
@@ -105,7 +105,7 @@ Before deploying the EAS contracts, you must add the smart contract set to your 
 3. **Customize**: Modify the set as needed for your specific project.
 4. **Save**: Save the configuration.
 
-For detailed instructions, visit the [Smart Contract Sets Documentation](/docs/using-platform/dev-tools/code-studio/smart-contract-sets/smart-contract-sets).
+For detailed instructions, visit the [Smart Contract Sets Documentation](/building-with-settlemint/dev-tools/code-studio/smart-contract-sets/smart-contract-sets).
 
 ---
 
@@ -138,11 +138,11 @@ Once the contract set is ready, you can deploy it using either the **Task Menu**
    Ensure the module is defined in `ignition/modules/main.ts`:
 
    ```typescript
-   import { buildModule } from '@nomicfoundation/hardhat-ignition/modules';
+   import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
-   const CustomEASModule = buildModule('EASDeployment', m => {
-     const schemaRegistry = m.contract('SchemaRegistry', [], {});
-     const EAS = m.contract('EAS', [schemaRegistry], {});
+   const CustomEASModule = buildModule("EASDeployment", (m) => {
+     const schemaRegistry = m.contract("SchemaRegistry", [], {});
+     const EAS = m.contract("EAS", [schemaRegistry], {});
 
      return { schemaRegistry, EAS };
    });
@@ -178,13 +178,13 @@ Imagine building a service where users prove ownership of their social media pro
 ### Example
 
 ```javascript
-const { ethers } = require('ethers');
+const { ethers } = require("ethers");
 
 // Configuration object for network and contract details
 const config = {
-  rpcUrl: 'YOUR_RPC_URL_HERE', // The network endpoint (e.g., Ethereum mainnet/testnet)
-  registryAddress: 'YOUR_SCHEMA_REGISTRY_ADDRESS_HERE', // Where the SchemaRegistry contract lives
-  privateKey: 'YOUR_PRIVATE_KEY_HERE' // Your wallet's private key (keep this secret!)
+  rpcUrl: "YOUR_RPC_URL_HERE", // The network endpoint (e.g., Ethereum mainnet/testnet)
+  registryAddress: "YOUR_SCHEMA_REGISTRY_ADDRESS_HERE", // Where the SchemaRegistry contract lives
+  privateKey: "YOUR_PRIVATE_KEY_HERE", // Your wallet's private key (keep this secret!)
 };
 
 // Create connection to blockchain and setup contract interaction
@@ -194,9 +194,9 @@ const schemaRegistry = new ethers.Contract(
   config.registryAddress,
   [
     // This event helps us track when new schemas are registered
-    'event Registered(bytes32 indexed uid, address indexed owner, string schema, address resolver, bool revocable)',
+    "event Registered(bytes32 indexed uid, address indexed owner, string schema, address resolver, bool revocable)",
     // This function lets us register new schemas
-    'function register(string calldata schema, address resolver, bool revocable) external returns (bytes32)'
+    "function register(string calldata schema, address resolver, bool revocable) external returns (bytes32)",
   ],
   signer
 );
@@ -204,11 +204,11 @@ const schemaRegistry = new ethers.Contract(
 async function registerSchema() {
   try {
     // Define what data fields our attestations will contain
-    const schema = 'string username, string platform, string handle';
+    const schema = "string username, string platform, string handle";
     const resolverAddress = ethers.ZeroAddress; // No special validation needed
     const revocable = true; // Attestations can be revoked if needed
 
-    console.log('🚀 Registering schema for social media ownership...');
+    console.log("🚀 Registering schema for social media ownership...");
     // Send the transaction to create our schema
     const tx = await schemaRegistry.register(
       schema,
@@ -219,9 +219,9 @@ async function registerSchema() {
 
     // Get our schema's unique ID from the transaction
     const schemaUID = receipt.logs[0].topics[1];
-    console.log('✅ Schema registered successfully! UID:', schemaUID);
+    console.log("✅ Schema registered successfully! UID:", schemaUID);
   } catch (error) {
-    console.error('❌ Error registering schema:', error.message);
+    console.error("❌ Error registering schema:", error.message);
   }
 }
 
@@ -243,15 +243,15 @@ Let's create an attestation that proves:
 ### Example
 
 ```javascript
-const { EAS, SchemaEncoder } = require('@ethereum-attestation-service/eas-sdk');
-const { ethers } = require('ethers');
+const { EAS, SchemaEncoder } = require("@ethereum-attestation-service/eas-sdk");
+const { ethers } = require("ethers");
 
 // Setup our connection details
 const config = {
-  rpcUrl: 'YOUR_RPC_URL_HERE', // Network endpoint
-  easAddress: 'YOUR_EAS_CONTRACT_ADDRESS_HERE', // Main EAS contract address
-  privateKey: 'YOUR_PRIVATE_KEY_HERE', // Your wallet's private key
-  schemaUID: 'YOUR_SCHEMA_UID_HERE' // The UID from when we registered our schema
+  rpcUrl: "YOUR_RPC_URL_HERE", // Network endpoint
+  easAddress: "YOUR_EAS_CONTRACT_ADDRESS_HERE", // Main EAS contract address
+  privateKey: "YOUR_PRIVATE_KEY_HERE", // Your wallet's private key
+  schemaUID: "YOUR_SCHEMA_UID_HERE", // The UID from when we registered our schema
 };
 
 // Connect to the blockchain
@@ -262,14 +262,14 @@ eas.connect(signer);
 
 // Create an encoder that matches our schema structure
 const schemaEncoder = new SchemaEncoder(
-  'string username, string platform, string handle'
+  "string username, string platform, string handle"
 );
 
 // The actual data we want to attest to
 const attestationData = [
-  { name: 'username', value: 'awesome_developer', type: 'string' },
-  { name: 'platform', value: 'GitHub', type: 'string' },
-  { name: 'handle', value: '@devmaster', type: 'string' }
+  { name: "username", value: "awesome_developer", type: "string" },
+  { name: "platform", value: "GitHub", type: "string" },
+  { name: "handle", value: "@devmaster", type: "string" },
 ];
 
 async function createAttestation() {
@@ -284,18 +284,18 @@ async function createAttestation() {
         recipient: ethers.ZeroAddress, // Public attestation (no specific recipient)
         expirationTime: 0, // Never expires
         revocable: true, // Can be revoked later if needed
-        data: encodedData // Our encoded attestation data
-      }
+        data: encodedData, // Our encoded attestation data
+      },
     });
 
     // Wait for confirmation and get the result
     const receipt = await tx.wait();
     console.log(
-      '✅ Attestation created successfully! UID:',
+      "✅ Attestation created successfully! UID:",
       receipt.attestationUID
     );
   } catch (error) {
-    console.error('❌ Error creating attestation:', error.message);
+    console.error("❌ Error creating attestation:", error.message);
   }
 }
 
@@ -321,13 +321,13 @@ The EAS SDK provides an easy way to verify attestations programmatically, making
 ##### Example
 
 ```javascript
-const { ethers } = require('ethers');
-const { EAS } = require('@ethereum-attestation-service/eas-sdk');
+const { ethers } = require("ethers");
+const { EAS } = require("@ethereum-attestation-service/eas-sdk");
 
 // Basic configuration for connecting to the network
 const config = {
-  rpcUrl: 'YOUR_RPC_URL_HERE', // Network endpoint
-  easAddress: 'YOUR_EAS_CONTRACT_ADDRESS_HERE' // Main EAS contract
+  rpcUrl: "YOUR_RPC_URL_HERE", // Network endpoint
+  easAddress: "YOUR_EAS_CONTRACT_ADDRESS_HERE", // Main EAS contract
 };
 
 async function verifyAttestation(attestationUID) {
@@ -336,26 +336,26 @@ async function verifyAttestation(attestationUID) {
   const eas = new EAS(config.easAddress);
   eas.connect(provider);
 
-  console.log('🔍 Verifying attestation:', attestationUID);
+  console.log("🔍 Verifying attestation:", attestationUID);
 
   // Try to find the attestation on the blockchain
   const attestation = await eas.getAttestation(attestationUID);
 
   // Check if we found anything
   if (!attestation) {
-    console.error('❌ Attestation not found');
+    console.error("❌ Attestation not found");
     return;
   }
 
   // Show the attestation details
-  console.log('✅ Attestation Details:');
-  console.log('Attester:', attestation.attester); // Who created this attestation
-  console.log('Data:', attestation.data); // The actual attested data
-  console.log('Revoked:', attestation.revoked ? 'Yes' : 'No'); // Is it still valid?
+  console.log("✅ Attestation Details:");
+  console.log("Attester:", attestation.attester); // Who created this attestation
+  console.log("Data:", attestation.data); // The actual attested data
+  console.log("Revoked:", attestation.revoked ? "Yes" : "No"); // Is it still valid?
 }
 
 // Replace with your attestation UID
-verifyAttestation('YOUR_ATTESTATION_UID_HERE');
+verifyAttestation("YOUR_ATTESTATION_UID_HERE");
 ```
 
 ##### Key Points
@@ -412,11 +412,11 @@ contract CustomResolver {
 Deploy this custom resolver using the Hardhat Ignition framework.
 
 ```typescript
-import { buildModule } from '@nomicfoundation/hardhat-ignition/modules';
+import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
-const CustomResolverDeployment = buildModule('CustomResolver', m => {
-  const initialAttesters = ['0xTrustedAddress1', '0xTrustedAddress2'];
-  const resolver = m.contract('CustomResolver', [initialAttesters], {});
+const CustomResolverDeployment = buildModule("CustomResolver", (m) => {
+  const initialAttesters = ["0xTrustedAddress1", "0xTrustedAddress2"];
+  const resolver = m.contract("CustomResolver", [initialAttesters], {});
 
   return { resolver };
 });
@@ -435,11 +435,11 @@ npx hardhat deploy --module ignition/modules/main.ts
 When registering a schema, include the resolver's address for on-chain validation.
 
 ```javascript
-const resolverAddress = 'YOUR_DEPLOYED_RESOLVER_ADDRESS';
-const schema = 'string username, string platform, string handle';
+const resolverAddress = "YOUR_DEPLOYED_RESOLVER_ADDRESS";
+const schema = "string username, string platform, string handle";
 const schemaUID = await schemaRegistry.register(schema, resolverAddress, true);
 
-console.log('✅ Schema with resolver registered! UID:', schemaUID);
+console.log("✅ Schema with resolver registered! UID:", schemaUID);
 ```
 
 ###### Validating Attestations with the Resolver
@@ -448,18 +448,18 @@ To validate an attestation, call the `validate` function of your deployed resolv
 
 ```javascript
 const resolver = new ethers.Contract(
-  'YOUR_RESOLVER_ADDRESS',
-  ['function validate(bytes32, address, bytes) external view returns (bool)'],
+  "YOUR_RESOLVER_ADDRESS",
+  ["function validate(bytes32, address, bytes) external view returns (bool)"],
   provider
 );
 
 const isValid = await resolver.validate(
-  'YOUR_ATTESTATION_UID',
-  'ATTESTER_ADDRESS',
-  'ATTESTATION_DATA'
+  "YOUR_ATTESTATION_UID",
+  "ATTESTER_ADDRESS",
+  "ATTESTATION_DATA"
 );
 
-console.log('✅ Is the attestation valid?', isValid);
+console.log("✅ Is the attestation valid?", isValid);
 ```
 
 ##### Key Points
@@ -508,11 +508,11 @@ The indexer provides a built-in GraphQL UI where you can test queries. Click "Gr
 ```javascript
 // Example fetch request to query attestations
 async function queryAttestations(schemaId) {
-  const response = await fetch('YOUR_INDEXER_URL', {
-    method: 'POST',
+  const response = await fetch("YOUR_INDEXER_URL", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer YOUR_APP_TOKEN'
+      "Content-Type": "application/json",
+      Authorization: "Bearer YOUR_APP_TOKEN",
     },
     body: JSON.stringify({
       query: `{
@@ -529,8 +529,8 @@ async function queryAttestations(schemaId) {
           revoked
           data
         }
-      }`
-    })
+      }`,
+    }),
   });
 
   const data = await response.json();
@@ -538,9 +538,9 @@ async function queryAttestations(schemaId) {
 }
 
 // Usage example:
-const schemaId = 'YOUR_SCHEMA_ID'; // From the registration step
+const schemaId = "YOUR_SCHEMA_ID"; // From the registration step
 const attestations = await queryAttestations(schemaId);
-console.log('Attestations:', attestations);
+console.log("Attestations:", attestations);
 ```
 
 ## 9. Integration Studio Implementation

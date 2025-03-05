@@ -18,4 +18,4 @@ The Code studio is an Integrated Development Environment (IDE). Currently, we of
 
 ## SDK
 
-The [SDK](../dev-tools/SDK) is a powerful toolkit designed to streamline blockchain integration into modern applications.
+The [SDK](../dev-tools/sdk) is a powerful toolkit designed to streamline blockchain integration into modern applications.

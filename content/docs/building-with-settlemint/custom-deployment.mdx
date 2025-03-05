@@ -3,11 +3,10 @@ title: Custom Deployment
 description: Guide to deploying custom Docker images on SettleMint
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
-
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 A Custom Deployment allows you to deploy your own Docker images, such as frontend applications, on the SettleMint platform. This feature provides flexibility for integrating custom solutions within your blockchain-based applications.
 
@@ -24,7 +23,7 @@ A Custom Deployment allows you to deploy your own Docker images, such as fronten
        - Environment variables (if required)
        - Custom domain information (if applicable)
     5. Configure any additional settings as needed.
-    6. Click on 'Confirm' and wait for the Custom Deployment to be in the Running status. [View the list of statuses](/docs/reference/statuses).
+    6. Click on 'Confirm' and wait for the Custom Deployment to be in the Running status. [View the list of statuses](/reference/statuses).
   </Tab>
 
   <Tab value="SDK CLI">
@@ -47,6 +46,7 @@ A Custom Deployment allows you to deploy your own Docker images, such as fronten
       --image-tag latest \
       --env-vars NODE_ENV=production,DEBUG=false
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -74,6 +74,7 @@ A Custom Deployment allows you to deploy your own Docker images, such as fronten
       });
     };
     ```
+
   </Tab>
 </Tabs>
 
@@ -82,6 +83,7 @@ A Custom Deployment allows you to deploy your own Docker images, such as fronten
 When using custom domains with your Custom Deployment, you'll need to configure your DNS settings correctly. Here's how to set it up:
 
 1. **Add Custom Domain to the SettleMint Platform**:
+
    - Navigate to your Custom Deployment in the SettleMint platform.
    - In the manage custom deployment menu, click on the edit custom deployment action.
    - Locate the custom domains configuration section.
@@ -95,23 +97,28 @@ When using custom domains with your Custom Deployment, you'll need to configure 
 4. **Configure DNS Records**:
 
    For Top-Level Domains (e.g., example.com):
+
    - Remove any existing A and AAAA records for the domain you're configuring.
    - Remove any existing A and AAAA records for the www domain (e.g., www.example.com) if you're using it.
+
    ```
    ALIAS example.com gke-europe.settlemint.com
    ALIAS www.example.com gke-europe.settlemint.com
    ```
 
    For Subdomains (e.g., app.example.com):
+
    ```
    CNAME app.example.com gke-europe.settlemint.com
    ```
 
 5. **Set TTL (Time to Live)**:
+
    - Set a lower TTL (e.g., 300 seconds) initially to allow for quicker propagation.
    - You can increase it later for better caching (e.g., 3600 seconds).
 
 6. **Verify DNS Propagation**:
+
    - Use online DNS lookup tools to check if your DNS changes have propagated.
    - Note that DNS propagation can take up to 48 hours, although it's often much quicker.
 
@@ -149,6 +156,7 @@ Note: The configuration process is similar for both top-level domains and subdom
     settlemint platform edit custom-deployment my-deployment \
       --container-image registry.example.com/my-app:v2
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -175,6 +183,7 @@ Note: The configuration process is similar for both top-level domains and subdom
       });
     };
     ```
+
   </Tab>
 </Tabs>
 
@@ -185,7 +194,8 @@ When using Custom Deployment, keep the following limitations in mind:
 1. **No Root User Privileges**: Your application will run without root user privileges for security reasons.
 
 2. **Read-Only Filesystem**: The filesystem is read-only. For data persistence, consider using:
-   - Hasura: A GraphQL engine that provides a scalable database solution. See [Hasura](/docs/building-with-settlemint/hasura-backend-as-a-service).
+
+   - Hasura: A GraphQL engine that provides a scalable database solution. See [Hasura](/building-with-settlemint/hasura-backend-as-a-service).
    - Other External Services: Depending on your specific needs, you may use other cloud-based storage or database services
 
 3. **Stateless Applications**: Your applications should be designed to be stateless. This ensures better scalability and reliability in a cloud environment.
@@ -202,5 +212,6 @@ When using Custom Deployment, keep the following limitations in mind:
 Custom Deployment offers a powerful way to extend the capabilities of your blockchain solutions on the SettleMint platform. By following these guidelines and best practices, you can seamlessly integrate your custom applications into your blockchain ecosystem.
 
 <Callout type="info">
-Custom Deployments support automatic SSL/TLS certificate management for custom domains.
-</Callout> 
+  Custom Deployments support automatic SSL/TLS certificate management for custom
+  domains.
+</Callout>

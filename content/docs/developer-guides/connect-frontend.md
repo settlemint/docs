@@ -77,7 +77,7 @@ For this guide, we will use the ERC-20 Token template:
 
 ![Choose a template](../../img/developer-guides/connect-frontend-erc20-template.png)
 
-You can continue to use the naming and deployment plan that you used earlier for the other resources. For more information on how to add a smart contract set, 
+You can continue to use the naming and deployment plan that you used earlier for the other resources. For more information on how to add a smart contract set,
 [see our Smart Contract Sets section](/building-with-settlemint/dev-tools/code-studio/smart-contract-sets/smart-contract-sets).
 
 ### Editing the Contract
@@ -157,7 +157,7 @@ You can create an application access token by navigating to the application dash
 
 You can now create an application access token with an expiration and the scopes you want to use. For this guide, we recommend you create an access token scoped to your node and middleware.
 
-You will now see your access token. Copy the token since you cannot see it again! Then, add it as the `BTP_TOKEN` variable value in the `.env` file. For more information on how to use access tokens, [see our Access Tokens section](using-platform/16_application-access-tokens.md).
+You will now see your access token. Copy the token since you cannot see it again! Then, add it as the `BTP_TOKEN` variable value in the `.env` file. For more information on how to use access tokens, [see our Access Tokens section](/building-with-settlemint/application-access-tokens).
 
 ### Configuring web3auth
 

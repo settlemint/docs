@@ -104,7 +104,7 @@ Tokenization smart contract.
 To create a Smart contract set, navigate to the `Dev tools` section in the left sidebar. From there, click on `Add a dev tool`, choose `Code Studio` and then `Smart Contract Set`.
 
 You will now be given the option to select a template. Choose the `Empty` option.
-Create a name and select the same deployment plan as you did earlier. For more information on how to add a smart contract set, [see our Smart Contract Sets section](using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/3_add-smart-contract-set.md).
+Create a name and select the same deployment plan as you did earlier. For more information on how to add a smart contract set, [see our Smart Contract Sets section](/building-with-settlemint/dev-tools/code-studio/smart-contract-sets/add-smart-contract-set)
 
 ![Create a Smart Contract](../../img/developer-guides/asset-tokenization/create-empty-smart-contract.png)
 
@@ -326,10 +326,10 @@ Replace the content of `main.ts` with the code below:
 ```javascript
 // SPDX-License-Identifier: MIT
 // SettleMint.com
-import { buildModule } from '@nomicfoundation/hardhat-ignition/modules';
+import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
-const AssetTokenizationModule = buildModule('AssetTokenizationModule', m => {
-  const assetTokenization = m.contract('AssetTokenization');
+const AssetTokenizationModule = buildModule("AssetTokenizationModule", (m) => {
+  const assetTokenization = m.contract("AssetTokenization");
 
   return { assetTokenization };
 });
@@ -360,7 +360,9 @@ To deploy your smart contract:
 ![Contract Address](../../img/developer-guides/asset-tokenization/contract-address.png)
 
 <Callout type="info">
-The contract address can also be found in `deployed_addresses.json` in the `deployments`folder created when deploying the smart contract code. You will need it later for the integration.
+  The contract address can also be found in `deployed_addresses.json` in the
+  `deployments`folder created when deploying the smart contract code. You will
+  need it later for the integration.
 </Callout>
 
 ## Part 3: Connect the Resources
@@ -409,7 +411,8 @@ The URL can be found by:
 3. Copy the `JSON-RPC` URL
 
 <Callout type="info">
-Save this URL as you will use it later in this guide when building the integration.
+  Save this URL as you will use it later in this guide when building the
+  integration.
 </Callout>
 
 ### 3. Creating an access token
@@ -422,7 +425,7 @@ You can create an application access token by navigating to the application dash
 
 You can now create an application access token with an expiration and the scopes you want to use. For this guide, we recommend you create an access token scoped to your node and storage.
 
-You will now see your access token. Copy the token since you cannot see it again! For more information on how to use access tokens, [see our Access Tokens section](using-platform/16_application-access-tokens.md).
+You will now see your access token. Copy the token since you cannot see it again! For more information on how to use access tokens, [see our Access Tokens section](/building-with-settlemint/application-access-tokens).
 
 ### 4. Setup Integration Studio Deployment
 

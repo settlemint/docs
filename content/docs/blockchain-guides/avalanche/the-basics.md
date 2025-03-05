@@ -40,4 +40,4 @@ The core concept of both is **random subsampling**. Validators randomly poll oth
 
 Avalanche and Snowman are quite similar, but support a different structure to store data, in line with the different needs of the three specific blockchains. The X-Chain uses the Avalanche consensus mechanism, while the C-Chain and the P-Chain use the Snowman mechanism.
 
-More information can be found on the [official Avalanche website](https://docs.avax.network).
+More information can be found on the [official Avalanche website](https://build.avax.network/docs).

@@ -3,10 +3,10 @@ title: Ingress Controller
 description: Setup and configure the ingress controller for your self-hosted platform
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## Overview
 
@@ -46,6 +46,7 @@ import { Card } from 'fumadocs-ui/components/card'
     kubectl get service -n ingress-nginx ingress-nginx-controller \
       --output jsonpath='{.status.loadBalancer.ingress[0].ip}'
     ```
+
   </Tab>
 
   <Tab value="Cloud Marketplace">
@@ -64,6 +65,7 @@ import { Card } from 'fumadocs-ui/components/card'
     #### Other Providers
     - Most cloud providers offer similar marketplace solutions
     - Follow provider-specific installation steps
+
   </Tab>
 </Tabs>
 
@@ -75,10 +77,12 @@ import { Card } from 'fumadocs-ui/components/card'
   kubectl get pods -n ingress-nginx
   ```
 
-  ### Verify service and IP allocation
-  ```bash
-  kubectl get svc -n ingress-nginx
-  ```
+### Verify service and IP allocation
+
+```bash
+kubectl get svc -n ingress-nginx
+```
+
 </Steps>
 
 ## Information Collection
@@ -96,6 +100,7 @@ ingress:
   className: nginx
   # Other ingress settings will be configured in Domain & TLS section
 ```
+
 </Callout>
 
 ## Troubleshooting
@@ -119,11 +124,12 @@ ingress:
 ## Next Steps
 
 <Steps>
-  ### Verify ingress controller is running
-  ### Note down the load balancer IP
-  ### Proceed to [Domain and TLS Setup](/launching-the-platform/self-hosted/prerequisites/domain-and-tls)
+  ### Verify ingress controller is running ### Note down the load balancer IP
+  ### Proceed to [Domain and TLS
+  Setup](/documentation/launching-the-platform/self-hosted/prerequisites/domain-and-tls)
 </Steps>
 
 <Callout type="info">
-Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
-</Callout> 
+  Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if
+  you encounter any issues.
+</Callout>

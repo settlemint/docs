@@ -3,13 +3,12 @@ title: Resource Usage
 description: Guide to monitoring resource usage
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
-
-When you add a service (network, node, smart contract set, etc.), you select the amount of resources to allocate to that service by choosing a small, medium or large [resource pack](/docs/launch-platform/managed-cloud-deployment/deployment-plans). Resources are the **memory**, **vCPU**, and **disk space** you need to keep your services running. You can see the resources allocated to your services at any time, and follow up on the current resource usage.
+When you add a service (network, node, smart contract set, etc.), you select the amount of resources to allocate to that service by choosing a small, medium or large [resource pack](/launch-platform/managed-cloud-deployment/deployment-plans). Resources are the **memory**, **vCPU**, and **disk space** you need to keep your services running. You can see the resources allocated to your services at any time, and follow up on the current resource usage.
 
 ## Resource usage metrics
 
@@ -35,4 +34,4 @@ The following statuses are defined:
 - **Suboptimal** - the used resources are between 75% and 90% of the allocated resources
 - **Critical** - the used resources are over 90% of the allocated resources
 
-When the status is **Suboptimal**, and the current resource usage is about to reach its limit, you will see a **warning** with the recommendation to scale your resource pack to keep the service running. 
+When the status is **Suboptimal**, and the current resource usage is about to reach its limit, you will see a **warning** with the recommendation to scale your resource pack to keep the service running.

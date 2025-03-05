@@ -10,7 +10,7 @@ Once a node has been deployed on an EVM (Ethereum Virtual Machine) compatible ne
 
 JSON-RPC, is a stateless, light-weight remote procedure call (RPC) protocol. Primarily, the specification defines several data structures and the rules around their processing. By default, the version of the JSON-RPC protocol needs to be 2.0, and you need to provide the node ID as well as a method and parameters.
 
-There are different kinds of methods that can be used: ADMIN methods, DEBUG methods, ETH methods etc. The entire list of methods that can be used can be found in the [Avalanche official documentation](https://docs.avax.network/build/avalanchego-apis).
+There are different kinds of methods that can be used: ADMIN methods, DEBUG methods, ETH methods etc. The entire list of methods that can be used can be found in the [Avalanche official documentation](https://build.avax.network/docs/build/avalanchego-apis).
 
 If you want to correctly connect to your node, you need to respect the right structure for the request, which is always the same:
 
