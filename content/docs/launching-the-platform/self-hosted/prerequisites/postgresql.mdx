@@ -1,12 +1,13 @@
 ---
 title: PostgreSQL Database
-description: Setup and configure PostgreSQL database for your self-hosted platform
+description:
+  Setup and configure PostgreSQL database for your self-hosted platform
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## Overview
 
@@ -60,6 +61,7 @@ import { Card } from 'fumadocs-ui/components/card'
       - Security patches
       - Performance monitoring
     </Callout>
+
   </Tab>
 
   <Tab value="Helm Chart">
@@ -89,6 +91,7 @@ import { Card } from 'fumadocs-ui/components/card'
       - Set up regular backups
       - Consider high availability setup
     </Callout>
+
   </Tab>
 </Tabs>
 
@@ -126,13 +129,14 @@ import { Card } from 'fumadocs-ui/components/card'
 
 ```yaml
 postgresql:
-  host: 'your-db-host'
+  host: "your-db-host"
   port: 5432
-  user: 'platform'
-  password: 'your-secure-password'
-  database: 'platform'
-  sslMode: 'require' # or "disable" for local development
+  user: "platform"
+  password: "your-secure-password"
+  database: "platform"
+  sslMode: "require" # or "disable" for local development
 ```
+
 </Callout>
 
 ## Validation
@@ -143,39 +147,34 @@ postgresql:
   # Using psql client
   psql "postgres://username:password@hostname:5432/dbname?sslmode=require"
 
-  # Or using connection string
-  psql "postgresql://username:password@hostname:5432/dbname?sslmode=require"
-  ```
+# Or using connection string
+
+psql "postgresql://username:password@hostname:5432/dbname?sslmode=require"
+
+```
 </Steps>
 
 ## Troubleshooting
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card>
-    ### Connection Failures
-    - Verify credentials
-    - Check network/firewall rules
-    - Confirm SSL/TLS settings
-    - Validate connection string format
-  </Card>
+<Card>
+  ### Connection Failures
+  - Verify credentials
+  - Check network/firewall rules
+  - Confirm SSL/TLS settings
+  - Validate connection string format
+</Card>
 
-  <Card>
-    ### Performance Issues
-    - Check connection pool settings
-    - Monitor resource usage
-    - Review query performance
-    - Verify index usage
-  </Card>
+<Card>
+  ### Performance Issues
+  - Check connection pool settings
+  - Monitor resource usage
+  - Review query performance
+  - Verify index usage
+</Card>
 </div>
-
-## Next Steps
-
-<Steps>
-  ### Set up PostgreSQL database
-  ### Configure connection pooling
-  ### Proceed to [Redis Setup](/launching-the-platform/self-hosted/prerequisites/redis)
-</Steps>
 
 <Callout type="info">
 Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
-</Callout> 
+</Callout>
+```

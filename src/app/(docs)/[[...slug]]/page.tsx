@@ -1,10 +1,15 @@
-import { metadataImage } from '@/lib/metadata';
-import { source } from '@/lib/source';
-import { Popup, PopupContent, PopupTrigger } from 'fumadocs-twoslash/ui';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
+import { metadataImage } from "@/lib/metadata";
+import { source } from "@/lib/source";
+import { Popup, PopupContent, PopupTrigger } from "fumadocs-twoslash/ui";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import {
+  DocsBody,
+  DocsDescription,
+  DocsPage,
+  DocsTitle,
+} from "fumadocs-ui/page";
+import { notFound } from "next/navigation";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -37,8 +42,7 @@ export default async function Page(props: {
   );
 }
 
-// biome-ignore lint/suspicious/useAwait: <explanation>
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return source.generateParams();
 }
 
@@ -54,6 +58,6 @@ export async function generateMetadata(props: {
   return metadataImage.withImage(page.slugs, {
     title: page.data.title,
     description: page.data.description,
-    metadataBase: new URL('https://console.settlemint.com/documentation'),
+    metadataBase: new URL("https://console.settlemint.com/documentation"),
   });
 }

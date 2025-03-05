@@ -3,10 +3,10 @@ title: OAuth Provider
 description: Setup and configure OAuth provider for your self-hosted platform
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## Overview
 
@@ -58,6 +58,7 @@ import { Card } from 'fumadocs-ui/components/card'
     <Callout type="info">
       Make sure to replace `your-domain.com` with your actual platform domain.
     </Callout>
+
   </Tab>
 
   <Tab value="Azure AD">
@@ -78,6 +79,7 @@ import { Card } from 'fumadocs-ui/components/card'
       - User.Read permissions
       - Additional scopes as needed
     </Steps>
+
   </Tab>
 
   <Tab value="Custom OIDC">
@@ -95,20 +97,18 @@ import { Card } from 'fumadocs-ui/components/card'
     - OAuth 2.0 compliance
     - User profile information
     - Email verification
+
   </Tab>
 </Tabs>
 
 ## JWT Configuration
 
 <Steps>
-  ### Generate a secure signing key
-  ```bash
-  openssl rand -base64 32
-  ```
+  ### Generate a secure signing key ```bash openssl rand -base64 32 ```
 </Steps>
 
 <Callout type="warning">
-Store this key securely - it's used to sign user sessions.
+  Store this key securely - it's used to sign user sessions.
 </Callout>
 
 ## Information Collection
@@ -123,22 +123,22 @@ Store this key securely - it's used to sign user sessions.
 
 ```yaml
 auth:
-  jwtSigningKey: 'your-generated-key' # From openssl command
+  jwtSigningKey: "your-generated-key" # From openssl command
   providers:
     google:
       enabled: true
-      clientID: 'your-client-id' # From OAuth provider
-      clientSecret: 'your-secret' # From OAuth provider
+      clientID: "your-client-id" # From OAuth provider
+      clientSecret: "your-secret" # From OAuth provider
 ```
+
 </Callout>
 
 ## Validation
 
 <Steps>
-  ### Verify OAuth client is properly configured
-  ### Confirm redirect URIs match your domain
-  ### Check JWT signing key is generated and saved
-  ### Validate required scopes are enabled
+  ### Verify OAuth client is properly configured ### Confirm redirect URIs match
+  your domain ### Check JWT signing key is generated and saved ### Validate
+  required scopes are enabled
 </Steps>
 
 ## Troubleshooting
@@ -159,14 +159,7 @@ auth:
   </Card>
 </div>
 
-## Next Steps
-
-<Steps>
-  ### Configure OAuth provider
-  ### Generate JWT signing key
-  ### Proceed to [PostgreSQL Setup](/launching-the-platform/self-hosted/prerequisites/postgresql)
-</Steps>
-
 <Callout type="info">
-Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
+  Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if
+  you encounter any issues.
 </Callout>

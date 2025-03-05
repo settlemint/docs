@@ -1,16 +1,19 @@
-import { source } from '@/lib/source';
-import type { MetadataRoute } from 'next';
-import { join } from 'node:path';
+import { source } from "@/lib/source";
+import type { MetadataRoute } from "next";
+import { join } from "node:path";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default function sitemap(): MetadataRoute.Sitemap {
   const url = (path: string): string =>
-    new URL(join('documentation', path), 'https://console.settlemint.com').toString();
+    new URL(
+      join("documentation", path),
+      "https://console.settlemint.com"
+    ).toString();
 
   return [
     ...source.getPages().map((page) => {
       return {
         url: url(page.url),
-        changeFrequency: 'weekly',
+        changeFrequency: "weekly",
         priority: 1,
       } as MetadataRoute.Sitemap[number];
     }),

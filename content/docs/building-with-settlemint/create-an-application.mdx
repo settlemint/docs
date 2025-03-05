@@ -3,16 +3,17 @@ title: Create an Application
 description: Guide to creating a blockchain application on SettleMint
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
 
-
-An application is the context in which you organize your networks, nodes, smart contract sets and any other related blockchain resource.
+An application is the context in which you organize your networks, nodes, smart
+contract sets and any other related blockchain resource.
 
 <Callout type="info">
-You will always need to create an application before you can deploy or join networks, and add nodes.
+  You will always need to create an application before you can deploy or join
+  networks, and add nodes.
 </Callout>
 
 ## How to create a new application
@@ -33,6 +34,7 @@ You will always need to create an application before you can deploy or join netw
       - Choose a **name** for your application
       - Click **Confirm** to create the application
     </Steps>
+
   </Tab>
 
   <Tab value="SDK CLI">
@@ -47,6 +49,7 @@ You will always need to create an application before you can deploy or join netw
     ```bash
     settlemint platform create application <name>
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -88,6 +91,7 @@ You will always need to create an application before you can deploy or join netw
     <Callout type="info">
     Get your access token from the Platform UI under User Settings → API Tokens.
     </Callout>
+
   </Tab>
 </Tabs>
 
@@ -109,6 +113,7 @@ You will always need to create an application before you can deploy or join netw
     # Delete application
     settlemint platform delete application <name>
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -122,9 +127,10 @@ You will always need to create an application before you can deploy or join netw
     // Delete application
     await client.application.delete("app-unique-name");
     ```
+
   </Tab>
 </Tabs>
 
 <Callout type="info">
-All operations require appropriate permissions in your workspace.
-</Callout> 
+  All operations require appropriate permissions in your workspace.
+</Callout>

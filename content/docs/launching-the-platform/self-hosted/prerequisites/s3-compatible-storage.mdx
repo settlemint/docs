@@ -1,12 +1,13 @@
 ---
 title: S3-Compatible Storage
-description: Setup and configure S3-compatible storage for your self-hosted platform
+description:
+  Setup and configure S3-compatible storage for your self-hosted platform
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## Overview
 
@@ -108,6 +109,7 @@ import { Card } from 'fumadocs-ui/components/card'
       - Strong consistency
       - Integrated security controls
     </Callout>
+
   </Tab>
 
   <Tab value="Self-Hosted MinIO">
@@ -141,20 +143,16 @@ import { Card } from 'fumadocs-ui/components/card'
       - Enable encryption
       - Configure monitoring
     </Callout>
+
   </Tab>
 </Tabs>
 
 ## State Encryption
 
-<Steps>
-  ### Generate encryption key
-  ```bash
-  openssl rand -base64 32
-  ```
-</Steps>
+<Steps>### Generate encryption key ```bash openssl rand -base64 32 ```</Steps>
 
 <Callout type="warning">
-Store this encryption key securely - it's used to protect platform state data.
+  Store this encryption key securely - it's used to protect platform state data.
 </Callout>
 
 ## Information Collection
@@ -172,19 +170,19 @@ Store this encryption key securely - it's used to protect platform state data.
     - [ ] State encryption key
   </Tab>
 
-  <Tab value="Azure Blob Storage">
-    - [ ] Storage account name
-    - [ ] Container name
-    - [ ] Storage account key
-    - [ ] State encryption key
-  </Tab>
+{" "}
 
-  <Tab value="Google Cloud Storage">
-    - [ ] Project ID
-    - [ ] Bucket name
-    - [ ] Service account credentials (JSON)
-    - [ ] State encryption key
-  </Tab>
+<Tab value="Azure Blob Storage">
+  - [ ] Storage account name - [ ] Container name - [ ] Storage account key - [
+  ] State encryption key
+</Tab>
+
+{" "}
+
+<Tab value="Google Cloud Storage">
+  - [ ] Project ID - [ ] Bucket name - [ ] Service account credentials (JSON) -
+  [ ] State encryption key
+</Tab>
 
   <Tab value="MinIO">
     - [ ] MinIO endpoint URL
@@ -239,6 +237,7 @@ deploymentEngine:
             "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/service-account@project.iam.gserviceaccount.com"
           }
 ```
+
 </Callout>
 
 ## Validation
@@ -252,25 +251,27 @@ deploymentEngine:
     --secret-key your-secret-key
   ```
 
-  ### Test Azure Storage
-  ```bash
-  az storage blob list \
-    --container-name your-container \
-    --account-name your-storage-account \
-    --account-key your-storage-key
-  ```
+### Test Azure Storage
 
-  ### Test Google Cloud Storage
-  ```bash
-  gsutil ls gs://your-bucket
-  ```
+```bash
+az storage blob list \
+  --container-name your-container \
+  --account-name your-storage-account \
+  --account-key your-storage-key
+```
+
+### Test Google Cloud Storage
+
+```bash
+gsutil ls gs://your-bucket
+```
+
 </Steps>
 
 <Callout type="info">
-Make sure you have installed and configured the respective CLI tools:
-- AWS CLI: `aws configure`
-- Azure CLI: `az login`
-- Google Cloud CLI: `gcloud auth login`
+  Make sure you have installed and configured the respective CLI tools: - AWS
+  CLI: `aws configure` - Azure CLI: `az login` - Google Cloud CLI: `gcloud auth
+  login`
 </Callout>
 
 ## Troubleshooting
@@ -295,6 +296,7 @@ Make sure you have installed and configured the respective CLI tools:
     - Check IAM roles
     - Validate JSON credentials
     - Confirm project access
+
   </Card>
 
   <Card>
@@ -316,6 +318,7 @@ Make sure you have installed and configured the respective CLI tools:
     - Verify network connectivity
     - Confirm regional availability
     - Check firewall rules
+
   </Card>
 </div>
 
@@ -331,6 +334,7 @@ Make sure you have installed and configured the respective CLI tools:
     - Verify account tier
     - Check geo-replication
     - Monitor bandwidth metrics
+
   </Card>
 
   <Card>
@@ -342,14 +346,7 @@ Make sure you have installed and configured the respective CLI tools:
   </Card>
 </div>
 
-## Next Steps
-
-<Steps>
-  ### Set up S3-compatible storage
-  ### Generate encryption key
-  ### Proceed to [Secret Management Setup](/launching-the-platform/self-hosted/prerequisites/secret-management)
-</Steps>
-
 <Callout type="info">
-Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
-</Callout> 
+  Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if
+  you encounter any issues.
+</Callout>

@@ -2,6 +2,7 @@
 title: "Integration tools"
 ---
 
-You can launch a Smart Contract Set to significantly accelerate the development of your smart contracts.
+You can launch a Smart Contract Set to significantly accelerate the development
+of your smart contracts.
 
-[Learn here how to use Smart Contract Sets to deploy your smart contracts](../../using-platform/15_dev-tools/0_code-studio/1_smart-contract-sets/1_smart-contract-sets.md).
+[Learn here how to use Smart Contract Sets to deploy your smart contracts](/building-with-settlemint/dev-tools/code-studio/smart-contract-sets/smart-contract-sets).

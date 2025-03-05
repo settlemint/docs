@@ -1,5 +1,17 @@
-  {
+{
   "title": "Meta",
   "icon": "Grid2x2Plus",
-  "pages": ["about-settlemint", "launching-the-platform" ,"building-with-settlemint","developer-guides","blockchain-guides","support","account-billing","releases","reference","terms-and-policies","security" ]
+  "pages": [
+    "about-settlemint",
+    "launching-the-platform",
+    "building-with-settlemint",
+    "developer-guides",
+    "blockchain-guides",
+    "support",
+    "account-billing",
+    "releases",
+    "reference",
+    "terms-and-policies",
+    "security"
+  ]
 }

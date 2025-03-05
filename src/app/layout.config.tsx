@@ -1,5 +1,5 @@
-import { Logo } from '@/components/logo/logo';
-import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import { Logo } from "@/components/logo/logo";
+import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 
 /**
  * Shared layout configurations
@@ -14,29 +14,29 @@ export const baseOptions: BaseLayoutProps = {
   },
   links: [
     {
-      text: 'Home',
-      url: 'https://settlemint.com/',
-      active: 'nested-url',
+      text: "Home",
+      url: "https://settlemint.com/",
+      active: "nested-url",
     },
     {
-      text: 'Platform',
-      url: 'https://console.settlemint.com',
-      active: 'nested-url',
+      text: "Platform",
+      url: "https://console.settlemint.com",
+      active: "nested-url",
     },
     {
-      text: 'SDK',
-      url: 'https://github.com/settlemint/sdk',
-      active: 'nested-url',
+      text: "SDK",
+      url: "https://github.com/settlemint/sdk",
+      active: "nested-url",
     },
     {
-      text: 'Documentation',
-      url: '/',
-      active: 'nested-url',
+      text: "Documentation",
+      url: "/",
+      active: "nested-url",
     },
     {
-      text: 'llms.txt',
-      url: '/llms.txt',
-      active: 'nested-url',
+      text: "llms.txt",
+      url: "/llms.txt",
+      active: "nested-url",
     },
   ],
 };

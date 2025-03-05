@@ -5,26 +5,35 @@ sidebar_position: 2
 keywords: [frontend, nextjs, web3auth, polygon, erc20]
 ---
 
-This guide will show you how to build a full stack application using SettleMint, Polygon, wagmi and NextJS. If this is your first time using SettleMint, we recommend the Hello World Guide.
+This guide will show you how to build a full stack application using SettleMint,
+Polygon, wagmi and NextJS. If this is your first time using SettleMint, we
+recommend the Hello World Guide.
 
-In this guide, you will learn how to connect a custom front end to your blockchain application using:
+In this guide, you will learn how to connect a custom front end to your
+blockchain application using:
 
-- SettleMint to deploy an ERC-20 smart contract to [Polygon](https://polygon.technology/developers)
-- [wagmi](https://wagmi.sh/) and [NextJS](https://nextjs.org/) to build a frontend to transfer tokens
+- SettleMint to deploy an ERC-20 smart contract to
+  [Polygon](https://polygon.technology/developers)
+- [wagmi](https://wagmi.sh/) and [NextJS](https://nextjs.org/) to build a
+  frontend to transfer tokens
 - [Web3Auth](https://web3auth.io/) to make the transfer and receive the tokens
-  polygon
-  To complete this guide, please have the following installed:
+  polygon To complete this guide, please have the following installed:
 - [Bun](https://bun.sh/docs/installation)
 - [The Metamask Wallet Extension](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
 - A code editor (ex:[VSCode](https://code.visualstudio.com)).
 
-At the end of this guide, you will have deployed an ERC-20 token smart contract to the Polygon Amoy Testnet and connected a front end to interact with this smart contract. The front end will allow us to send tokens that we created to any wallet address.
+At the end of this guide, you will have deployed an ERC-20 token smart contract
+to the Polygon Amoy Testnet and connected a front end to interact with this
+smart contract. The front end will allow us to send tokens that we created to
+any wallet address.
 
 ## Part 1: The Blockchain Application
 
 ### Create a New Blockchain Application
 
-The first step is to create a new blockchain application on SettleMint. This is done by clicking on the grid icon in the top right and selecting `Create new application`.
+The first step is to create a new blockchain application on SettleMint. This is
+done by clicking on the grid icon in the top right and selecting
+`Create new application`.
 
 ![Create an Application](../../img/developer-guides/create-application.png)
 
@@ -32,15 +41,19 @@ For this guide, we will name this application `TokenSender`.
 
 ### Add a Blockchain Network and Node
 
-After creating an application, we need to create a Blockchain Network and Node to deploy to. This is done by clicking on the `Add a blockchain network` from the Application Dashboard.
+After creating an application, we need to create a Blockchain Network and Node
+to deploy to. This is done by clicking on the `Add a blockchain network` from
+the Application Dashboard.
 
-We will deploy our smart contract to the Polygon Amoy Testnet like the image below:
+We will deploy our smart contract to the Polygon Amoy Testnet like the image
+below:
 
 ![Choose A Network](../../img/developer-guides/choose-network.png)
 
 We can continue to use the `TokenSender` name for the naming of the network.
 
-It is now time to choose a deployment plan. Here is the configuration most suitable for this application:
+It is now time to choose a deployment plan. Here is the configuration most
+suitable for this application:
 
 - **Type:** Shared
 - **Cloud Provider:** Any
@@ -49,9 +62,13 @@ It is now time to choose a deployment plan. Here is the configuration most suita
 
 ### Creating a Private Key
 
-To deploy our smart contract and send tokens, we need funds to cover the transfer cost. To do this we will create a Private Key and then receive MATIC tokens, the native token of the Amoy testnet, from the faucet. Faucets allow us to get free test tokens to spend on a testnet.
+To deploy our smart contract and send tokens, we need funds to cover the
+transfer cost. To do this we will create a Private Key and then receive MATIC
+tokens, the native token of the Amoy testnet, from the faucet. Faucets allow us
+to get free test tokens to spend on a testnet.
 
-To make a Private Key, click on the `Private Key` link on the right side of the dashboard. Once there, select `Create a Private Key`.
+To make a Private Key, click on the `Private Key` link on the right side of the
+dashboard. Once there, select `Create a Private Key`.
 
 Below is the configuration you should use for your private key:
 
@@ -59,25 +76,32 @@ Below is the configuration you should use for your private key:
 - **Name** TokenSender
 - **Node** TokenSender
 
-Now that we have our private key address, we can copy the address and go to the [Polygon Faucet](https://faucet.polygon.technology/):
+Now that we have our private key address, we can copy the address and go to the
+[Polygon Faucet](https://faucet.polygon.technology/):
 
 ![Polygon Faucet](../../img/developer-guides/polygon-faucet.png)
 
-Insert your Wallet Address and click the `Submit` button. Depending on faucet traffic, you may have to perform some validation that you are a human.
+Insert your Wallet Address and click the `Submit` button. Depending on faucet
+traffic, you may have to perform some validation that you are a human.
 
-You can confirm that you have received the test tokens by going to the `Balances` section of your `Private Keys`.
+You can confirm that you have received the test tokens by going to the
+`Balances` section of your `Private Keys`.
 
 ### Deploying the Smart Contract
 
-We are now ready to create and deploy a smart contract. Navigate to the `Dev tools` section in the left sidebar. From there, click on `Add a dev tool`, choose `Code Studio` and then `Smart Contract Set`.
+We are now ready to create and deploy a smart contract. Navigate to the
+`Dev tools` section in the left sidebar. From there, click on `Add a dev tool`,
+choose `Code Studio` and then `Smart Contract Set`.
 
-You now have the option to select a smart contract set template. These are pre-built smart contract sets based on popular ERC standards and use cases.
+You now have the option to select a smart contract set template. These are
+pre-built smart contract sets based on popular ERC standards and use cases.
 
 For this guide, we will use the ERC-20 Token template:
 
 ![Choose a template](../../img/developer-guides/connect-frontend-erc20-template.png)
 
-You can continue to use the naming and deployment plan that you used earlier for the other resources. For more information on how to add a smart contract set,
+You can continue to use the naming and deployment plan that you used earlier for
+the other resources. For more information on how to add a smart contract set,
 [see our Smart Contract Sets section](/building-with-settlemint/dev-tools/code-studio/smart-contract-sets/smart-contract-sets).
 
 ### Editing the Contract
@@ -86,16 +110,20 @@ Once that is deployed, we can go to the IDE and start editing our contract.
 
 ![Open IDE](../../img/developer-guides/open-ide.png)
 
-You can find the ERC20 contract on the left in the Explorer under `contracts/GenericERC20.sol`
+You can find the ERC20 contract on the left in the Explorer under
+`contracts/GenericERC20.sol`
 
-We don't need to change anything in this contract's code. The current default is to deploy a token called `GenericToken` with a symbol `GT`.
+We don't need to change anything in this contract's code. The current default is
+to deploy a token called `GenericToken` with a symbol `GT`.
 
-To change this to something less generic, we can go to the `ignition/modules` folder and open the `main.ts` file. From there we can edit the below code block that starts on line 4:
+To change this to something less generic, we can go to the `ignition/modules`
+folder and open the `main.ts` file. From there we can edit the below code block
+that starts on line 4:
 
 **Before:**
 
 ```typescript
-const counter = m.contract('GenericERC20', ['GenericERC20', 'GT']);
+const counter = m.contract("GenericERC20", ["GenericERC20", "GT"]);
 ```
 
 By editing this code block, you can create your token name and symbol:
@@ -103,12 +131,13 @@ By editing this code block, you can create your token name and symbol:
 **After:**
 
 ```typescript
-const counter = m.contract('GenericERC20', ['DocumentationToken', 'DT']);
+const counter = m.contract("GenericERC20", ["DocumentationToken", "DT"]);
 ```
 
 ### Compile and Deploy the Contract
 
-After making the changes, we can compile our contract code. This is done by selecting the `Task Manager` option on the left side.
+After making the changes, we can compile our contract code. This is done by
+selecting the `Task Manager` option on the left side.
 
 ![Deploy Contract](../../img/developer-guides/deploy-contract.png)
 
@@ -116,15 +145,19 @@ After making the changes, we can compile our contract code. This is done by sele
 2. Compile the contract by selecting `Hardhat - Build`
 3. Deploy the contract by selecting `Hardhat - Deploy to platform network`
 
-If the deployment was successful, you will see a `deployed at 0x4251501F80cE773b594C0B6CEf1289b97b0`
+If the deployment was successful, you will see a
+`deployed at 0x4251501F80cE773b594C0B6CEf1289b97b0`
 
 ## Part 2: Building the Frontend
 
-Now that we have a deployed contract, let's build a front end to start interacting with it.
+Now that we have a deployed contract, let's build a front end to start
+interacting with it.
 
 ### Cloning the Template
 
-To save some time for you, we have created a template that can be [found here](https://github.com/settlemint/settlemint-nextjs-wagmi). Clone this repository to get started.
+To save some time for you, we have created a template that can be
+[found here](https://github.com/settlemint/settlemint-nextjs-wagmi). Clone this
+repository to get started.
 
 ### Installing the Dependencies
 
@@ -135,45 +168,63 @@ In addition to using NextJS, this template uses the:
 - `tailwind` - for styling and design
 - `connectkit` - connecting a wallet to your dApp
 
-You can get all of these packages by running `bun install` in your terminal after cloning the repo.
+You can get all of these packages by running `bun install` in your terminal
+after cloning the repo.
 
 After that is completed, open the folder in your favorite code editor.
 
 ### Adding the ABI
 
-The first thing we will do is add the ABI and address of our deployed contract. This allows our front end to know where to read and write data to it. This information can be found in the smart contract set where you deployed your contract.
+The first thing we will do is add the ABI and address of our deployed contract.
+This allows our front end to know where to read and write data to it. This
+information can be found in the smart contract set where you deployed your
+contract.
 
-Go to the `ignition/deployments/chain-46622/artifacts` folder in the file explorer and copy the `GenericERC20Module#GenericERC20.json` file to the `contractData` directory.
+Go to the `ignition/deployments/chain-46622/artifacts` folder in the file
+explorer and copy the `GenericERC20Module#GenericERC20.json` file to the
+`contractData` directory.
 
 ![Copy ABI](../../img/developer-guides/copy-abi.png)
 
 ### Adding the access token
 
-To connect to your node and middleware, you will need an access token. We recommend you use an application access token.
+To connect to your node and middleware, you will need an access token. We
+recommend you use an application access token.
 
-You can create an application access token by navigating to the application dashboard, and then clicking on the `Access Tokens` section in the left sidebar.
+You can create an application access token by navigating to the application
+dashboard, and then clicking on the `Access Tokens` section in the left sidebar.
 
 ![API Keys](../../img/developer-guides/access-token.png)
 
-You can now create an application access token with an expiration and the scopes you want to use. For this guide, we recommend you create an access token scoped to your node and middleware.
+You can now create an application access token with an expiration and the scopes
+you want to use. For this guide, we recommend you create an access token scoped
+to your node and middleware.
 
-You will now see your access token. Copy the token since you cannot see it again! Then, add it as the `BTP_TOKEN` variable value in the `.env` file. For more information on how to use access tokens, [see our Access Tokens section](/building-with-settlemint/application-access-tokens).
+You will now see your access token. Copy the token since you cannot see it
+again! Then, add it as the `BTP_TOKEN` variable value in the `.env` file. For
+more information on how to use access tokens,
+[see our Access Tokens section](/building-with-settlemint/application-access-tokens).
 
 ### Configuring web3auth
 
-To use web3auth, you will need to make an account a project. To set up an account and a project, follow [this guide](https://web3auth.io/docs/dashboard-setup).
+To use web3auth, you will need to make an account a project. To set up an
+account and a project, follow
+[this guide](https://web3auth.io/docs/dashboard-setup).
 
-After creating an account, you can create a new project. From there you will see that the project has been created and you can access the Project Details page.
+After creating an account, you can create a new project. From there you will see
+that the project has been created and you can access the Project Details page.
 
 On that page, you will find the `Project ID` like below:
 
 ![Project ID](../../img/developer-guides/project-id.png)
 
-Copy your Project ID and add it as the `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` variable value in the `.env` file.
+Copy your Project ID and add it as the `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`
+variable value in the `.env` file.
 
 ### Adding environment variables
 
-Open the `.env` file and add the remaining environment variables `BLOCKCHAIN_NODE`, `NEXT_PUBLIC_CONTRACT_ADDRESS` and `PORTAL_URL`.
+Open the `.env` file and add the remaining environment variables
+`BLOCKCHAIN_NODE`, `NEXT_PUBLIC_CONTRACT_ADDRESS` and `PORTAL_URL`.
 
 ```.env
 # Base url of the application, used for SSR
@@ -205,55 +256,71 @@ PORTAL_URL=https://smart-contract-portal-middleware.settlemint.com
 
 ## Part 3: Running the Application
 
-Now it's time to see what we have made. To get your application running, run the following command in your terminal:
+Now it's time to see what we have made. To get your application running, run the
+following command in your terminal:
 
 ```bash
 bun dev
 ```
 
-This will start your application locally on `localhost:3000`. Go to that address and you will now see the frontend using NextJS:
+This will start your application locally on `localhost:3000`. Go to that address
+and you will now see the frontend using NextJS:
 ![Front-End](../../img/developer-guides/front-end.png)
 
-Using the `Smart Contract Portal Middleware` enables us to read different functions and values from our smart contract. In this template, we are reading the `symbol` function to display which token is connected to this smart contract.
+Using the `Smart Contract Portal Middleware` enables us to read different
+functions and values from our smart contract. In this template, we are reading
+the `symbol` function to display which token is connected to this smart
+contract.
 
 This is done in this code block in `page.tsx`
 
 ```javascript
 const { data } = useSuspenseQuery({
-  queryKey: ['symbol'],
+  queryKey: ["symbol"],
   queryFn: async () => {
-    const response = await portal.GET('/api/generic-erc-20/{address}/symbol', {
+    const response = await portal.GET("/api/generic-erc-20/{address}/symbol", {
       params: { path: { address } },
-      parseAs: 'text'
+      parseAs: "text",
     });
     return response.data;
-  }
+  },
 });
 ```
 
 ### Setting Up Metamask
 
-To send some tokens that we just created, we need to add our private key to our Metamask wallet. You can retrieve your private key from the `Private Keys` section on SettleMint. This is the same location where we got the address earlier.
+To send some tokens that we just created, we need to add our private key to our
+Metamask wallet. You can retrieve your private key from the `Private Keys`
+section on SettleMint. This is the same location where we got the address
+earlier.
 
-Copy your private key and open up your Metamask Extension. From there, select whatever account name is at the top of the window. Then scroll down until you see the `Import Account` option.
+Copy your private key and open up your Metamask Extension. From there, select
+whatever account name is at the top of the window. Then scroll down until you
+see the `Import Account` option.
 
 ![Metamask](../../img/developer-guides/metamask.png)
 
-Select that option and paste into your private key. You now have access via Metamask to perform transactions from this account.
+Select that option and paste into your private key. You now have access via
+Metamask to perform transactions from this account.
 
 ### Sending the Tokens
 
 We are now ready to perform our first transaction from the front end.
 
-In the first input box, insert any wallet address. It is good if you have access to that wallet to confirm that the transaction was sent.
+In the first input box, insert any wallet address. It is good if you have access
+to that wallet to confirm that the transaction was sent.
 
-In the second input box, insert the number of tokens you would like to send to the address.
+In the second input box, insert the number of tokens you would like to send to
+the address.
 
 Then click the `Send Tokens` button.
 
-Your Metamask should now open up for you to sign the transaction. If not, make sure you have the correct wallet selected in Metamask before trying the transaction.
+Your Metamask should now open up for you to sign the transaction. If not, make
+sure you have the correct wallet selected in Metamask before trying the
+transaction.
 
-After clicking `Confirm`, you will see a `Tokens Sent` confirmation on your front end:
+After clicking `Confirm`, you will see a `Tokens Sent` confirmation on your
+front end:
 
 ![Tokens Sent](../../img/developer-guides/tokens-sent.png)
 
@@ -261,11 +328,16 @@ Congrats! You will now see the transaction confirmed in your Metamask activity.
 
 ## Next Steps
 
-Now that you have built your custom frontend, you can now explore more [smart contract use cases](/developer-guides/guide-library) you can build on SettleMint!
+Now that you have built your custom frontend, you can now explore more
+[smart contract use cases](/developer-guides/guide-library) you can build on
+SettleMint!
 
 ## Deploy Your Frontend as a Custom Deployment
 
-After building your custom frontend, you can deploy it on the SettleMint platform using the Custom Deployment feature. This allows you to host your frontend application alongside your blockchain components, providing a seamless integration within the SettleMint ecosystem.
+After building your custom frontend, you can deploy it on the SettleMint
+platform using the Custom Deployment feature. This allows you to host your
+frontend application alongside your blockchain components, providing a seamless
+integration within the SettleMint ecosystem.
 
 For more detailed information on Custom Deployments, refer to the
- [Custom Deployment documentation](/building-with-settlemint/custom-deployment).
+[Custom Deployment documentation](/building-with-settlemint/custom-deployment).

@@ -3,25 +3,24 @@ title: Deploying a smart contract
 description: Deploying a smart contract using Platform UI or SDK CLI
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
-
-
-You can deploy your contracts to a network in the platform or a local development network. This guide covers both Platform UI and SDK CLI approaches.
+You can deploy your contracts to a network in the platform or a local
+development network. This guide covers both Platform UI and SDK CLI approaches.
 
 <Tabs items={['Platform UI', 'SDK CLI']}>
   <Tab value="Platform UI">
     Follow these steps to deploy your smart contract through the Platform UI:
 
     1. Open the IDE by clicking on your smart contract set.
-       
+
        ![Open IDE](../../../../../img/deploy-scs/open-ide.png)
 
     2. Click on the **Task Manager** button.
-       
+
        ![Task Manager](../../../../../img/deploy-scs/task-manager.png)
 
     3. First compile your contract by running either:
@@ -43,8 +42,9 @@ You can deploy your contracts to a network in the platform or a local developmen
          ![Hardhat start local network](../../../../../img/deploy-scs/hardhat-start-local-network.png)
        - Run the **Hardhat - Deploy to local network** task
          ![Hardhat deploy local network](../../../../../img/deploy-scs/hardhat-deploy-local-network.png)
+
   </Tab>
-  
+
   <Tab value="SDK CLI">
     ## Prerequisites
 
@@ -129,6 +129,7 @@ You can deploy your contracts to a network in the platform or a local developmen
     - Application access token creation
 
     This configuration is stored locally and used for subsequent commands.
+
   </Tab>
 </Tabs>
 
@@ -148,4 +149,6 @@ The typical folder structure of a SettleMint smart contract set includes:
 
 ## Customize smart contracts
 
-You can customize your smart contracts using the built-in IDE. The smart contract sets include a Generative AI plugin to assist with development. [Learn more about the AI plugin here.](./AI_plugin.md)
+You can customize your smart contracts using the built-in IDE. The smart
+contract sets include a Generative AI plugin to assist with development.
+[Learn more about the AI plugin here.](./ai-plugin)

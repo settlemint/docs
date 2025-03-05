@@ -1,5 +1,5 @@
 {
   "title": "Launching the Platform",
   "icon": "Rocket",
-  "pages": ["managed-cloud-deployment","self-hosted"]
+  "pages": ["managed-cloud-deployment", "self-hosted"]
 }

@@ -3,10 +3,10 @@ title: Redis Cache
 description: Setup and configure Redis cache for your self-hosted platform
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## Overview
 
@@ -69,6 +69,7 @@ import { Card } from 'fumadocs-ui/components/card'
       - Security patches
       - Performance monitoring
     </Callout>
+
   </Tab>
 
   <Tab value="Helm Chart">
@@ -103,6 +104,7 @@ import { Card } from 'fumadocs-ui/components/card'
       - Set up persistence
       - Consider high availability setup
     </Callout>
+
   </Tab>
 </Tabs>
 
@@ -138,11 +140,11 @@ import { Card } from 'fumadocs-ui/components/card'
 
 ```yaml
 redis:
-  host: ''  # Redis host collected in prerequisites
-  port: 6379  # Redis port collected in prerequisites
-  password: ''  # Redis password collected in prerequisites
-  prefix: 'sm'  # In shared redis servers, this separates queues
-  tls: false  # Set to true to use TLS mode
+  host: "" # Redis host collected in prerequisites
+  port: 6379 # Redis port collected in prerequisites
+  password: "" # Redis password collected in prerequisites
+  prefix: "sm" # In shared redis servers, this separates queues
+  tls: false # Set to true to use TLS mode
 ```
 
 <Callout type="info">
@@ -167,6 +169,7 @@ When using Google Memorystore:
     # Test connection using redis-cli
     redis-cli -h $REDIS_HOST -p $REDIS_PORT ping
     ```
+
   </Tab>
 
   <Tab value="Standard Redis">
@@ -177,6 +180,7 @@ When using Google Memorystore:
     # Expected response
     PONG
     ```
+
   </Tab>
 </Tabs>
 
@@ -202,14 +206,7 @@ When using Google Memorystore:
   </Card>
 </div>
 
-## Next Steps
-
-<Steps>
-  ### Set up Redis instance
-  ### Configure security settings
-  ### Proceed to [S3 Compatible Storage Setup](/launching-the-platform/self-hosted/prerequisites/s3-compatible-storage)
-</Steps>
-
 <Callout type="info">
-Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
-</Callout> 
+  Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if
+  you encounter any issues.
+</Callout>

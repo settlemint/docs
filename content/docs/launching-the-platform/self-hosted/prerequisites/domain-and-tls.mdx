@@ -1,12 +1,13 @@
 ---
 title: Domain and TLS Configuration
-description: Configure domain names and TLS certificates for your self-hosted platform
+description:
+  Configure domain names and TLS certificates for your self-hosted platform
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## Overview
 
@@ -39,6 +40,7 @@ import { Card } from 'fumadocs-ui/components/card'
     ### 2. Add Wildcard Subdomain
     - Create a CNAME record for all subdomains
     - Pattern: `*.platform.company.com → platform.company.com`
+
   </Tab>
 
   <Tab value="Validation">
@@ -54,6 +56,7 @@ import { Card } from 'fumadocs-ui/components/card'
     kubectl -n ingress-nginx get svc ingress-nginx-controller \
       -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
     ```
+
   </Tab>
 </Tabs>
 
@@ -81,6 +84,7 @@ import { Card } from 'fumadocs-ui/components/card'
       - Easy wildcard certificate support
       - Global CDN
     </Callout>
+
   </Tab>
 
   <Tab value="cert-manager">
@@ -143,6 +147,7 @@ import { Card } from 'fumadocs-ui/components/card'
       - Ensure DNS provider API token has sufficient permissions
       - Allow time for initial certificate issuance
     </Callout>
+
   </Tab>
 </Tabs>
 
@@ -152,7 +157,8 @@ import { Card } from 'fumadocs-ui/components/card'
 ### Required Values for Platform Installation
 
 - [ ] Domain name (e.g., `platform.company.com`)
-- [ ] Ingress annotations (if using cert-manager: `cert-manager.io/cluster-issuer: "letsencrypt"`)
+- [ ] Ingress annotations (if using cert-manager:
+      `cert-manager.io/cluster-issuer: "letsencrypt"`)
 - [ ] TLS secret name for the certificate
 - [ ] SSL redirect setting (`true` or `false`)
 
@@ -160,32 +166,33 @@ import { Card } from 'fumadocs-ui/components/card'
 ingress:
   enabled: true
   className: nginx
-  host: 'platform.company.com'
+  host: "platform.company.com"
   annotations:
-    cert-manager.io/cluster-issuer: 'letsencrypt'
-    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
   tls:
-    - secretName: 'tls-secret'
+    - secretName: "tls-secret"
       hosts:
-        - 'platform.company.com'
-        - '*.platform.company.com'
+        - "platform.company.com"
+        - "*.platform.company.com"
 
 deploymentEngine:
   platform:
     domain:
-      hostname: 'platform.company.com'
+      hostname: "platform.company.com"
   clusterManager:
     domain:
-      hostname: 'platform.company.com'
+      hostname: "platform.company.com"
   targets:
     - clusters:
         - domains:
             service:
               tls: true
-              hostname: 'platform.company.com'
+              hostname: "platform.company.com"
           ingress:
-            ingressClass: 'nginx'
+            ingressClass: "nginx"
 ```
+
 </Callout>
 
 ## Troubleshooting
@@ -202,6 +209,7 @@ deploymentEngine:
     - Confirm ingress controller IP
     - Update DNS records
     - Clear local DNS cache
+
   </Card>
 
   <Card>
@@ -215,17 +223,11 @@ deploymentEngine:
     - Verify SSL/TLS mode
     - Check certificate status
     - Confirm proxy status
+
   </Card>
 </div>
 
-## Next Steps
-
-<Steps>
-  ### Verify DNS resolution
-  ### Confirm TLS certificate issuance
-  ### Proceed to [OAuth Provider Setup](/launching-the-platform/self-hosted/prerequisites/oauth)
-</Steps>
-
 <Callout type="info">
-Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
-</Callout> 
+  Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if
+  you encounter any issues.
+</Callout>

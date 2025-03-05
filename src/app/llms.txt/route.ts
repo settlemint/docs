@@ -1,19 +1,19 @@
-import fg from 'fast-glob';
-import { remarkAdmonition } from 'fumadocs-core/mdx-plugins';
-import { remarkInstall } from 'fumadocs-docgen';
-import { remarkInclude } from 'fumadocs-mdx/config';
-import matter from 'gray-matter';
-import * as fs from 'node:fs/promises';
-import { remark } from 'remark';
-import remarkGfm from 'remark-gfm';
-import remarkMdx from 'remark-mdx';
-import remarkStringify from 'remark-stringify';
+import fg from "fast-glob";
+import { remarkAdmonition } from "fumadocs-core/mdx-plugins";
+import { remarkInstall } from "fumadocs-docgen";
+import { remarkInclude } from "fumadocs-mdx/config";
+import matter from "gray-matter";
+import * as fs from "node:fs/promises";
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import remarkMdx from "remark-mdx";
+import remarkStringify from "remark-stringify";
 
 export const revalidate = false;
 
 export async function GET() {
   // all scanned content
-  const files = await fg(['./content/docs/**/*.mdx']);
+  const files = await fg(["./content/docs/**/*.mdx"]);
 
   const scan = files.map(async (file) => {
     const fileContent = await fs.readFile(file);
@@ -28,7 +28,7 @@ ${processed}`;
 
   const scanned = await Promise.all(scan);
 
-  return new Response(scanned.join('\n\n'));
+  return new Response(scanned.join("\n\n"));
 }
 
 async function processContent(content: string): Promise<string> {
@@ -39,7 +39,7 @@ async function processContent(content: string): Promise<string> {
     // gfm styles
     .use(remarkGfm)
     // your remark plugins
-    .use(remarkInstall, { persist: { id: 'package-manager' } })
+    .use(remarkInstall, { persist: { id: "package-manager" } })
     .use(remarkAdmonition)
     // to string
     .use(remarkStringify)

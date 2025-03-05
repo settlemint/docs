@@ -2,20 +2,32 @@
 title: "Connect to an external node"
 ---
 
-There are many usecases where not all nodes are running on the SettleMint platform. For example, you might want to connect to a node running on a different server, you might want to connect to a node running on a different blockchain platform or just for development purposes. In this guide, we will show you how to connect to an external node.
+There are many usecases where not all nodes are running on the SettleMint
+platform. For example, you might want to connect to a node running on a
+different server, you might want to connect to a node running on a different
+blockchain platform or just for development purposes. In this guide, we will
+show you how to connect to an external node.
 
 ## Prerequisites
 
-- A running Hyperledger Besu network on the SettleMint platform with at least one node hosted on either Amazon Web Services (AWS) or Microsoft Azure.
-- For this guide we will use Docker and Docker Compose, but you can also use your own setup.
-  - If you don't have Docker installed, you can find the installation instructions [here](https://docs.docker.com/get-docker/).
-  - If you don't have Docker Composer installed, you can find the installation instructions [here](https://docs.docker.com/compose/install/).
+- A running Hyperledger Besu network on the SettleMint platform with at least
+  one node hosted on either Amazon Web Services (AWS) or Microsoft Azure.
+- For this guide we will use Docker and Docker Compose, but you can also use
+  your own setup.
+  - If you don't have Docker installed, you can find the installation
+    instructions [here](https://docs.docker.com/get-docker/).
+  - If you don't have Docker Composer installed, you can find the installation
+    instructions [here](https://docs.docker.com/compose/install/).
 
 ## Step 1: Getting the genesis file
 
-The genesis file of a network contains all the information about your network, including a list of bootnodes. This list is automatically updated upon each change you make in the platform. If you add or remove nodes it makes sense to redownload the file.
+The genesis file of a network contains all the information about your network,
+including a list of bootnodes. This list is automatically updated upon each
+change you make in the platform. If you add or remove nodes it makes sense to
+redownload the file.
 
-You can download the genesis file by going to the network details page and clicking on the genesis.json link in the Info box.
+You can download the genesis file by going to the network details page and
+clicking on the genesis.json link in the Info box.
 
 Create a folder (e.g. MyNetwork) on your computer and add the file into it:
 
@@ -97,7 +109,8 @@ services:
 docker compose up -d
 ```
 
-Your node will now search for peers and connect to them. You can check the logs to see if it is working correctly:
+Your node will now search for peers and connect to them. You can check the logs
+to see if it is working correctly:
 
 ```
 mynetwork-my-besu-node-1  | 2023-09-12 12:07:13.576+00:00 | nioEventLoopGroup-3-2 | INFO  | FullSyncTargetManager | Unable to find sync target. Currently checking 3 peers for usefulness
@@ -133,8 +146,17 @@ mynetwork-my-besu-node-1  | 2023-09-12 12:08:32.009+00:00 | EthScheduler-Workers
 
 ## Step 4: Validators
 
-This is a dangerous step that can break your network without a way to recover. You can assign this new node as a validator in the platform. This will make it sign blocks and transactions. Note that more than 66% of your validators need to be online for the network to keep functioning.
+This is a dangerous step that can break your network without a way to recover.
+You can assign this new node as a validator in the platform. This will make it
+sign blocks and transactions. Note that more than 66% of your validators need to
+be online for the network to keep functioning.
 
-Execute [qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposevalidatorvote) on all your validator nodes. You can find the enode address of your new node in the logs of the container or by executing [admin_nodeInfo](https://besu.hyperledger.org/stable/public-networks/reference/api#admin_nodeinfo).
+Execute
+[qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposevalidatorvote)
+on all your validator nodes. You can find the enode address of your new node in
+the logs of the container or by executing
+[admin_nodeInfo](https://besu.hyperledger.org/stable/public-networks/reference/api#admin_nodeinfo).
 
-Similarly you can make a platform validator a regular node by executing [qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposevalidatorvote) with proposal "false" on every validator node.
+Similarly you can make a platform validator a regular node by executing
+[qbft_proposeValidatorVote](https://besu.hyperledger.org/stable/private-networks/reference/api#qbft_proposevalidatorvote)
+with proposal "false" on every validator node.

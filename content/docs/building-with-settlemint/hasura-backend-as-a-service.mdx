@@ -10,7 +10,9 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 # Hasura - Backend-as-a-service
 
-Many dApps need more than just decentralized tools to build an end-to-end solution. The SettleMint Hasura SDK provides a seamless way to interact with Hasura GraphQL APIs for managing application data.
+Many dApps need more than just decentralized tools to build an end-to-end
+solution. The SettleMint Hasura SDK provides a seamless way to interact with
+Hasura GraphQL APIs for managing application data.
 
 ## Add Hasura
 
@@ -59,27 +61,47 @@ Many dApps need more than just decentralized tools to build an end-to-end soluti
 
 ## Some Basic Features
 
-- Under the data subtab you can create an arbitrary number of **schema's**. A schema is a collection of tables.
-- In a schema you can create **tables**, choose which columns you want and define relations and indexes.
+- Under the data subtab you can create an arbitrary number of **schema's**. A
+  schema is a collection of tables.
+- In a schema you can create **tables**, choose which columns you want and
+  define relations and indexes.
 - You can add, edit and delete **data** in these columns as well.
   [Learn more here](https://hasura.io/docs/2.0/schema/postgres/tables/)
 
-Any table you make is instantly visible in the **API subtab**. Note that by using the **REST and Derive Action buttons** you can convert queries into REST endpoints if that fits your application better. Using the **Code Exporter button** you can get the actual code snippets you can use in your application or the integration studio.
+Any table you make is instantly visible in the **API subtab**. Note that by
+using the **REST and Derive Action buttons** you can convert queries into REST
+endpoints if that fits your application better. Using the **Code Exporter
+button** you can get the actual code snippets you can use in your application or
+the integration studio.
 
-A bit more advanced are **actions**. Actions are custom queries or mutations that are resolved via HTTP handlers. Actions can be used to carry out complex data validations, data enrichment from external sources or execute just about any custom business logic. Actions can be kickstarted by using the **Derive Action button** in the **API subtab**.
+A bit more advanced are **actions**. Actions are custom queries or mutations
+that are resolved via HTTP handlers. Actions can be used to carry out complex
+data validations, data enrichment from external sources or execute just about
+any custom business logic. Actions can be kickstarted by using the **Derive
+Action button** in the **API subtab**.
 [Learn more here.](https://hasura.io/docs/2.0/actions/overview/)
 
-If you need to execute tasks based on changes to your database you can leverage **Events**. An **Event Trigger** atomically captures events (insert, update, delete) on a specified table and then reliably calls a HTTP webhook to run some custom business logic.
+If you need to execute tasks based on changes to your database you can leverage
+**Events**. An **Event Trigger** atomically captures events (insert, update,
+delete) on a specified table and then reliably calls a HTTP webhook to run some
+custom business logic.
 [Learn more here.](https://hasura.io/docs/latest/graphql/core/event-triggers/index.html)
 
-**Cron Triggers** can be used to reliably trigger HTTP endpoints to run some custom business logic periodically based on a cron schedule.
+**Cron Triggers** can be used to reliably trigger HTTP endpoints to run some
+custom business logic periodically based on a cron schedule.
 
-**One-off Scheduled Events** are individual events that can be scheduled to reliably trigger a HTTP webhook to run some custom business logic at a particular timestamp.
+**One-off Scheduled Events** are individual events that can be scheduled to
+reliably trigger a HTTP webhook to run some custom business logic at a
+particular timestamp.
 
-**Access to your database** can be handled all the way to the row level by using the authentication and authorisation options available in Hasura.
+**Access to your database** can be handled all the way to the row level by using
+the authentication and authorisation options available in Hasura.
 [Learn more here.](https://hasura.io/docs/2.0/auth/overview/)
 
-This is of course on top of the [application access tokens](/building-with-settlemint/application-access-tokens) and [personal access tokens](/building-with-settlemint/personal-access-tokens) in the platform you can use to close off access to the entire API.
+This is of course on top of the
+[application access tokens](/building-with-settlemint/application-access-tokens)
+and [personal access tokens](/building-with-settlemint/personal-access-tokens)
+in the platform you can use to close off access to the entire API.
 
 ## Backups
 
@@ -90,9 +112,12 @@ You should take a backup of the following components:
 
 ### Steps for taking a backup of Hasura Database
 
-1. Install Hasura CLI (https://hasura.io/docs/latest/hasura-cli/install-hasura-cli/)
-2. Run hasura init command to initiate a new Hasura project in the working directory.
-3. Edit config.yaml file to configure remote Hasura instance. We need to generate an API Key in BPaaS and pass it with the endpoint.
+1. Install Hasura CLI
+   (https://hasura.io/docs/latest/hasura-cli/install-hasura-cli/)
+2. Run hasura init command to initiate a new Hasura project in the working
+   directory.
+3. Edit config.yaml file to configure remote Hasura instance. We need to
+   generate an API Key in BPaaS and pass it with the endpoint.
 
 config.yaml example:
 
@@ -108,7 +133,8 @@ actions:
  handler_webhook_baseurl: http://localhost:3000
 ```
 
-4. Run hasura console command. (this command will sync everything to your local hasura instance.)
+4. Run hasura console command. (this command will sync everything to your local
+   hasura instance.)
 5. Run this curl command to generate DB export:
 
 Curl Format
@@ -125,19 +151,28 @@ curl -d '{"opts": [ "-O", "-x", "--schema=public", "--inserts"], "clean_output":
 
 ### Importing data into a new instance
 
-Please copy the content of the exported db.sql file, paste it and execute as a SQL statement.
+Please copy the content of the exported db.sql file, paste it and execute as a
+SQL statement.
 
 ![Import](../../img/blockchain-guide/Hasura_Import.png)
 
-> More info on this and other commands can be found in the [Hasura docs](https://hasura.io/docs/latest/api-reference/pgdump/), please note to always add the x-auth-token header with an api key for your Hasura instance.
+> More info on this and other commands can be found in the
+> [Hasura docs](https://hasura.io/docs/latest/api-reference/pgdump/), please
+> note to always add the x-auth-token header with an api key for your Hasura
+> instance.
 
 ### Steps for taking a backup of Hasura Metadata
 
-Hasura Metadata Export is a collection of yaml files which captures all the Metadata required by the GraphQL Engine. This includes info about tables that are tracked, permission rules, relationships, and event triggers that are defined on those tables.
+Hasura Metadata Export is a collection of yaml files which captures all the
+Metadata required by the GraphQL Engine. This includes info about tables that
+are tracked, permission rules, relationships, and event triggers that are
+defined on those tables.
 
-If you have already initialized your project via the Hasura CLI you should see the Metadata directory structure in your project directory.
+If you have already initialized your project via the Hasura CLI you should see
+the Metadata directory structure in your project directory.
 
-To export your entire Metadata using the Hasura CLI execute the following command in your terminal:
+To export your entire Metadata using the Hasura CLI execute the following
+command in your terminal:
 
 ```
 #in hasura CLI
@@ -148,7 +183,11 @@ This will export the Metadata as YAML files in the /metadata directory
 
 ### Steps for importing or applying Hasura Metadata
 
-You can apply Metadata from one Hasura Server instance to another. You can also apply an older or modified version of an instance's Metadata onto itself to replace the existing Metadata. Applying or importing completely replaces the Metadata on that instance, i.e. you lose any Metadata that existed before applying.
+You can apply Metadata from one Hasura Server instance to another. You can also
+apply an older or modified version of an instance's Metadata onto itself to
+replace the existing Metadata. Applying or importing completely replaces the
+Metadata on that instance, i.e. you lose any Metadata that existed before
+applying.
 
 ```
 #in hasura CLI
@@ -157,19 +196,23 @@ hasura metadata apply
 
 ### Reload Hasura Metadata
 
-In some cases, the Metadata can be out of sync with the database schema. For example, when a new column has been added to a table via an external tool.
+In some cases, the Metadata can be out of sync with the database schema. For
+example, when a new column has been added to a table via an external tool.
 
 ```
 #in hasura CLI
 hasura metadata reload
 ```
 
-For more on Hasura Metadata, refer: https://hasura.io/docs/latest/migrations-metadata-seeds/manage-metadata/
-For more on Hasura Migrations, refer: https://hasura.io/docs/latest/migrations-metadata-seeds/manage-migrations/
+For more on Hasura Metadata, refer:
+https://hasura.io/docs/latest/migrations-metadata-seeds/manage-metadata/ For
+more on Hasura Migrations, refer:
+https://hasura.io/docs/latest/migrations-metadata-seeds/manage-migrations/
 
 ## Usage Examples
 
-You can interact with your Hasura database in two ways: through the GraphQL API (recommended) or directly via PostgreSQL connection.
+You can interact with your Hasura database in two ways: through the GraphQL API
+(recommended) or directly via PostgreSQL connection.
 
 <Tabs items={['GraphQL API (Recommended)', 'PostgreSQL']}>
   <Tab value="GraphQL API (Recommended)">
@@ -353,14 +396,16 @@ To run these examples, you'll need the following:
 For GraphQL API:
 
 1. **Hasura Admin Secret**: Found in the "Connect" tab of Hasura console
-2. **Application Access Token**: Generate this by following our [Application Access Tokens guide](/building-with-settlemint/application-access-tokens)
+2. **Application Access Token**: Generate this by following our
+   [Application Access Tokens guide](/building-with-settlemint/application-access-tokens)
 
 For PostgreSQL:
 
-1. **PostgreSQL Connection String**: Found in the "Connect" tab of Hasura console under "Database URL"
+1. **PostgreSQL Connection String**: Found in the "Connect" tab of Hasura
+   console under "Database URL"
 
 <Callout type="warning">
   Always keep your credentials secure and never expose them in client-side code.
   Use environment variables or a secure configuration management system in
   production environments.
-</Callout>{" "}
+</Callout>

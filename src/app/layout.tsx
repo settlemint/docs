@@ -1,21 +1,21 @@
-import { PlainChat } from '@/components/PlainChat';
-import { GoogleAnalytics } from '@next/third-parties/google';
-import { RootProvider } from 'fumadocs-ui/provider';
-import type { Viewport } from 'next';
-import { Figtree } from 'next/font/google';
-import type { ReactNode } from 'react';
-import './global.css';
+import { PlainChat } from "@/components/PlainChat";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { RootProvider } from "fumadocs-ui/provider";
+import type { Viewport } from "next";
+import { Figtree } from "next/font/google";
+import type { ReactNode } from "react";
+import "./global.css";
 
 const figtree = Figtree({
-  subsets: ['latin'],
+  subsets: ["latin"],
 });
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
 };
 

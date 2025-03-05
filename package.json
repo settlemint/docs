@@ -6,11 +6,12 @@
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write .",
     "postinstall": "fumadocs-mdx",
     "docker": "bash -c \"docker buildx build . --provenance true --sbom true --platform=linux/amd64,linux/arm64 -t ghcr.io/settlemint/btp-docs:${VERSION:-7.0.0-dev.$(date +%s)} --push --progress=plain\""
   },
   "dependencies": {
-    "@biomejs/biome": "1.9.4",
     "@next/third-parties": "15.2.1",
     "@theguild/remark-mermaid": "0.2.0",
     "class-variance-authority": "0.7.1",
@@ -22,6 +23,7 @@
     "fumadocs-ui": "15.0.15",
     "lucide-react": "0.477.0",
     "next": "15.2.1",
+    "prettier": "^3.5.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "tailwind-merge": "3.0.2",
@@ -36,12 +38,12 @@
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "babel-plugin-react-compiler": "19.0.0-beta-e552027-20250112",
-    "eslint": "9.21.0",
-    "eslint-config-next": "15.2.1",
-    "next-validate-link": "^1.5.0",
     "postcss": "8.5.3",
     "tailwindcss": "4.0.9",
-    "typescript": "5.8.2"
-  },
-  "trustedDependencies": ["@biomejs/biome"]
+    "typescript": "5.8.2",
+    "eslint": "9.21.0",
+    "eslint-config-next": "15.2.1",
+    "@eslint/eslintrc": "3.3.0",
+    "@eslint/js": "9.21.0"
+  }
 }

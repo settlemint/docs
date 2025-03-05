@@ -5,7 +5,9 @@ sidebar_position: 3
 
 ## Overview
 
-This guide walks you through installing the SettleMint Platform using Helm, providing a command-line based installation method with full control over the deployment process.
+This guide walks you through installing the SettleMint Platform using Helm,
+providing a command-line based installation method with full control over the
+deployment process.
 
 ## Prerequisites
 
@@ -303,10 +305,10 @@ features:
 ```
 
 <Callout>
-Replace all placeholder values with your actual configuration
-- The license section should be configured with your provided license file
-- Image tags should be verified for the latest stable versions
-- Remove any unused features to keep the configuration clean
+  Replace all placeholder values with your actual configuration - The license
+  section should be configured with your provided license file - Image tags
+  should be verified for the latest stable versions - Remove any unused features
+  to keep the configuration clean
 </Callout>
 
 <details>
@@ -316,7 +318,7 @@ Replace all placeholder values with your actual configuration
 ingress:
   enabled: true
   className: "nginx"
-  host: 'example.company.com'
+  host: "example.company.com"
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-ssl-server-name: "on"
@@ -326,65 +328,65 @@ ingress:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     cert-manager.io/cluster-issuer: "letsencrypt"
   tls:
-    - secretName: 'example-tls'
+    - secretName: "example-tls"
       hosts:
-        - 'example.company.com'
-        - '*.example.company.com'
+        - "example.company.com"
+        - "*.example.company.com"
 
 redis:
-  host: 'redis.example.local'
-  port: '6379'
-  password: 'abc123password'
+  host: "redis.example.local"
+  port: "6379"
+  password: "abc123password"
   tls: true
 
 postgresql:
-  host: 'postgresql.example.local'
-  port: '5432'
-  user: 'db_user'
-  password: 'xyz789password'
-  database: 'platform_db'
+  host: "postgresql.example.local"
+  port: "5432"
+  user: "db_user"
+  password: "xyz789password"
+  database: "platform_db"
   sslMode: require
 
 auth:
-  jwtSigningKey: 'abc123jwt456xyz789signing000key111example'
+  jwtSigningKey: "abc123jwt456xyz789signing000key111example"
   providers:
     google:
       enabled: true
-      clientID: 'example-123456789.apps.googleusercontent.com'
-      clientSecret: 'abcdef-example-google-secret'
+      clientID: "example-123456789.apps.googleusercontent.com"
+      clientSecret: "abcdef-example-google-secret"
 
 vault:
-  address: 'http://vault.example.local:8200'
-  roleId: 'abc123-role-id'
-  secretId: 'xyz789-secret-id'
-  namespace: 'vault'
+  address: "http://vault.example.local:8200"
+  roleId: "abc123-role-id"
+  secretId: "xyz789-secret-id"
+  namespace: "vault"
 
 features:
   observability:
     metrics:
       enabled: true
-      apiUrl: 'http://metrics.example.local/api/v1'
+      apiUrl: "http://metrics.example.local/api/v1"
     logs:
       enabled: true
-      apiUrl: 'http://logs.example.local/api/v1'
+      apiUrl: "http://logs.example.local/api/v1"
   deploymentEngine:
     platform:
       domain:
-        hostname: 'example.company.com'
+        hostname: "example.company.com"
     state:
-      connectionUrl: 's3-compatible-endpoint-url'
-      secretsProvider: 'passphrase'
+      connectionUrl: "s3-compatible-endpoint-url"
+      secretsProvider: "passphrase"
       credentials:
-        encryptionKey: 'abc123encryption456key789example000key'
+        encryptionKey: "abc123encryption456key789example000key"
         aws:
-          accessKeyId: 'EXAMPLEKEYID123456'
-          secretAccessKey: 'abc123example456secret789key000aws'
-          region: 'us-east-1'
+          accessKeyId: "EXAMPLEKEYID123456"
+          secretAccessKey: "abc123example456secret789key000aws"
+          region: "us-east-1"
         azure:
-          storageAccount: 'example-storage-account'
-          storageKey: 'abc123example456key789key000azure'
+          storageAccount: "example-storage-account"
+          storageKey: "abc123example456key789key000azure"
         google:
-          project: 'example-project-id'
+          project: "example-project-id"
           credentials: |
             {
               "type": "service_account",
@@ -399,13 +401,13 @@ features:
               "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/service-account@project.iam.gserviceaccount.com"
             }
     targets:
-      - id: 'example'
-        name: 'Example Cluster'
-        icon: 'kubernetes'
+      - id: "example"
+        name: "Example Cluster"
+        icon: "kubernetes"
         clusters:
-          - id: 'main'
-            name: 'Main'
-            icon: 'global'
+          - id: "main"
+            name: "Main"
+            icon: "global"
             location:
               lat: 0.0000
               lon: 0.0000
@@ -414,42 +416,42 @@ features:
                 enabled: true
             namespace:
               single:
-                name: 'example'
+                name: "example"
             domains:
               service:
                 tls: true
-                hostname: 'example.company.com'
+                hostname: "example.company.com"
             storage:
-              storageClass: 'standard'
+              storageClass: "standard"
             ingress:
-              ingressClass: 'nginx'
+              ingressClass: "nginx"
 
 app:
-  replicaCount: '2'
+  replicaCount: "2"
 api:
-  replicaCount: '2'
-  existingSecret: 'example-secret'
+  replicaCount: "2"
+  existingSecret: "example-secret"
 job:
   resources:
     requests:
-      cpu: '100m'
-      memory: '512Mi'
+      cpu: "100m"
+      memory: "512Mi"
 deployWorker:
   resources:
     requests:
-      cpu: '100m'
-      memory: '512Mi'
+      cpu: "100m"
+      memory: "512Mi"
 clusterManager:
-  replicaCount: '2'
+  replicaCount: "2"
 
 imagePullCredentials:
   registries:
     harbor:
       enabled: true
       registry: "harbor.settlemint.com"
-      username: 'example_user'
-      password: 'abc123registry456password'
-      email: 'example@company.com'
+      username: "example_user"
+      password: "abc123registry456password"
+      email: "example@company.com"
 
 support:
   kubernetes-replicator:
@@ -484,14 +486,19 @@ Once all pods are running, access the platform at `https://<your-domain>`.
 
 ### 6. Target Clusters Configuration
 
-The platform supports deploying blockchain nodes and applications to multiple target clusters across different cloud providers and regions. This section explains how to configure target clusters in your values file.
+The platform supports deploying blockchain nodes and applications to multiple
+target clusters across different cloud providers and regions. This section
+explains how to configure target clusters in your values file.
 
 #### Target Structure
+
 The targets configuration uses a simple 2-level hierarchy:
+
 - **Target** (top level grouping)
 - **Clusters** (individual Kubernetes clusters)
 
 #### Basic Configuration Example
+
 ```yaml
 features:
   deploymentEngine:
@@ -565,11 +572,13 @@ features:
 #### Configuration Options
 
 ##### Target Level
+
 - `id`: Unique identifier for the target group
 - `name`: Display name
 - `icon`: Icon identifier for the UI
 
 ##### Cluster Level
+
 - `id`: Unique identifier for the cluster
 - `name`: Display name for the region/location
 - `icon`: Icon identifier for the UI
@@ -579,19 +588,21 @@ features:
   - `lon`: Longitude
 
 ##### Namespace Configuration
+
 ```yaml
 namespace:
   single:
-    enabled: false  # Use for single namespace deployments
+    enabled: false # Use for single namespace deployments
     name: deployments
     runAsUser: 2024
     fsGroup: 2024
   multiple:
-    enabled: true   # Use for multiple namespace deployments
-    prefix: "sm"    # Prefix for created namespaces
+    enabled: true # Use for multiple namespace deployments
+    prefix: "sm" # Prefix for created namespaces
 ```
 
 ##### Connection Settings
+
 ```yaml
 connection:
   sameCluster:
@@ -601,50 +612,62 @@ connection:
 ```
 
 ##### Domain Configuration
+
 ```yaml
 domains:
   service:
-    tls: true                           # Enable TLS for the domain
-    hostname: "cluster.example.com"     # Domain for accessing services
+    tls: true # Enable TLS for the domain
+    hostname: "cluster.example.com" # Domain for accessing services
 ```
 
-The domain configuration determines how services in the cluster will be accessed. Each cluster needs a unique domain that resolves to its ingress controller.
+The domain configuration determines how services in the cluster will be
+accessed. Each cluster needs a unique domain that resolves to its ingress
+controller.
 
 ##### Storage Configuration
+
 ```yaml
 storage:
-  storageClass: "standard"              # Default storage class for the cluster
+  storageClass: "standard" # Default storage class for the cluster
 ```
 
 Storage class recommendations per cloud provider:
-- GKE: Use `"standard"` for general purpose or `"premium-rwo"` for better performance
+
+- GKE: Use `"standard"` for general purpose or `"premium-rwo"` for better
+  performance
 - EKS: Use `"gp3"` for general purpose or `"io1"` for high-performance workloads
 - AKS: Use `"managed-premium"` for production or `"default"` for development
 
 ##### Ingress Configuration
+
 ```yaml
 ingress:
-  ingressClass: "nginx"                 # Ingress controller class name
+  ingressClass: "nginx" # Ingress controller class name
 ```
 
-The ingress class should match your installed ingress controller. Common options:
+The ingress class should match your installed ingress controller. Common
+options:
+
 - `"nginx"` for NGINX Ingress Controller
 - `"azure/application-gateway"` for Azure Application Gateway
 - `"alb"` for AWS Application Load Balancer
 
 ##### Capabilities Configuration
+
 ```yaml
 capabilities:
-  mixedLoadBalancers: false            # Support for mixed LoadBalancer services
+  mixedLoadBalancers: false # Support for mixed LoadBalancer services
   nodePorts:
-    enabled: true                      # Enable NodePort service type
-    range:                            # Port range for NodePort services
+    enabled: true # Enable NodePort service type
+    range: # Port range for NodePort services
       min: 30000
       max: 32767
 ```
 
 Capabilities determine what features are available in the cluster:
-- `mixedLoadBalancers`: Enable if your cluster supports both internal and external load balancers
+
+- `mixedLoadBalancers`: Enable if your cluster supports both internal and
+  external load balancers
 - `nodePorts`: Configure if you need to expose services using NodePort type
   - The port range should be within Kubernetes defaults (30000-32767)
   - Ensure the range doesn't conflict with other services
@@ -652,11 +675,14 @@ Capabilities determine what features are available in the cluster:
 #### Important Considerations
 
 1. **Domain Names**
+
    - Each cluster must have a unique domain name
    - Domains should be properly configured in your DNS provider
-   - TLS certificates will be automatically managed if cert-manager is configured
+   - TLS certificates will be automatically managed if cert-manager is
+     configured
 
 2. **Storage Classes**
+
    - Verify the storage class exists in your cluster before using it
    - Consider performance requirements when selecting storage classes
    - Some features may require specific storage capabilities (e.g., RWX support)
@@ -667,9 +693,10 @@ Capabilities determine what features are available in the cluster:
    - Ensure network policies allow required communication
 
 <Callout>
-When setting up a new cluster, start with the basic configuration and gradually enable additional capabilities as needed. This approach helps in identifying potential issues early in the deployment process.
+  When setting up a new cluster, start with the basic configuration and
+  gradually enable additional capabilities as needed. This approach helps in
+  identifying potential issues early in the deployment process.
 </Callout>
-
 
 ## Troubleshooting
 
@@ -699,7 +726,8 @@ curl https://krew.sh/support-bundle | bash
 kubectl support-bundle --load-cluster-specs
 ```
 
-Send the generated support bundle to [support@settlemint.com](mailto:support@settlemint.com) for assistance.
+Send the generated support bundle to
+[support@settlemint.com](mailto:support@settlemint.com) for assistance.
 
 ## Uninstalling
 
@@ -709,4 +737,5 @@ To remove the platform:
 helm delete settlemint --namespace settlemint
 ```
 
-**Note:** This will not delete persistent volumes or other resources outside of Helm's control. You may need to clean these up manually.
+**Note:** This will not delete persistent volumes or other resources outside of
+Helm's control. You may need to clean these up manually.

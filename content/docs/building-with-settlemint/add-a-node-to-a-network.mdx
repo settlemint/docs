@@ -3,14 +3,14 @@ title: Add a Node to a Network
 description: Guide to adding blockchain nodes to your network
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
 
-
-
-Once you have deployed a permissioned network or joined a public network, you can add more nodes to it. The number of nodes needed depends on your network's protocol.
+Once you have deployed a permissioned network or joined a public network, you
+can add more nodes to it. The number of nodes needed depends on your network's
+protocol.
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
   <Card>
@@ -52,6 +52,7 @@ Once you have deployed a permissioned network or joined a public network, you ca
       4. Configure deployment settings
       5. Click **Confirm**
     </Steps>
+
   </Tab>
 
   <Tab value="SDK CLI">
@@ -71,6 +72,7 @@ Once you have deployed a permissioned network or joined a public network, you ca
     # Get help
     settlemint platform create blockchain-node --help
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -98,6 +100,7 @@ Once you have deployed a permissioned network or joined a public network, you ca
     <Callout type="tip">
     Get your access token from the Platform UI under User Settings → API Tokens.
     </Callout>
+
   </Tab>
 </Tabs>
 
@@ -119,6 +122,7 @@ Once you have deployed a permissioned network or joined a public network, you ca
     # Restart node
     settlemint platform restart blockchain-node <node-name>
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -132,9 +136,10 @@ Once you have deployed a permissioned network or joined a public network, you ca
     // Restart node
     await client.blockchainNode.restart("node-unique-name");
     ```
+
   </Tab>
 </Tabs>
 
 <Callout type="info">
-All operations require appropriate permissions in your workspace.
-</Callout> 
+  All operations require appropriate permissions in your workspace.
+</Callout>

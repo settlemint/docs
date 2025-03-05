@@ -3,10 +3,10 @@ title: Metrics and Logs
 description: Configure monitoring and logging for your self-hosted platform
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## Overview
 
@@ -71,6 +71,7 @@ import { Card } from 'fumadocs-ui/components/card'
       - Sufficient monitoring capabilities
       - Easy scalability
     </Callout>
+
   </Tab>
 
   <Tab value="Full Prometheus Stack">
@@ -98,6 +99,7 @@ import { Card } from 'fumadocs-ui/components/card'
       - Additional configuration
       - Regular maintenance
     </Callout>
+
   </Tab>
 </Tabs>
 
@@ -135,11 +137,12 @@ features:
   observability:
     metrics:
       enabled: true
-      apiUrl: 'http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/prometheus/api/v1'
+      apiUrl: "http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/prometheus/api/v1"
     logs:
       enabled: true
-      apiUrl: 'http://loki-gateway.observability.svc.cluster.local/loki/api/v1'
+      apiUrl: "http://loki-gateway.observability.svc.cluster.local/loki/api/v1"
 ```
+
 </Callout>
 
 ## Validation
@@ -150,15 +153,18 @@ features:
   curl -f "http://victoria-metrics:8428/health"
   ```
 
-  ### Check Loki
-  ```bash
-  curl -f "http://loki:3100/ready"
-  ```
+### Check Loki
 
-  ### Verify kube-state-metrics
-  ```bash
-  kubectl get --raw /metrics
-  ```
+```bash
+curl -f "http://loki:3100/ready"
+```
+
+### Verify kube-state-metrics
+
+```bash
+kubectl get --raw /metrics
+```
+
 </Steps>
 
 ## Troubleshooting
@@ -181,14 +187,7 @@ features:
   </Card>
 </div>
 
-## Next Steps
-
-<Steps>
-  ### Set up metrics collection
-  ### Configure log aggregation
-  ### Ready for [Platform Installation](../launching-the-platform/self-hosted/platform-installation)
-</Steps>
-
 <Callout type="info">
-Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
-</Callout> 
+  Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if
+  you encounter any issues.
+</Callout>

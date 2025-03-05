@@ -3,13 +3,14 @@ title: Insights
 description: Guide to using blockchain explorers in SettleMint
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
 
+To view and inspect transactions in your blockchain application, SettleMint
+provides insightful dashboards via integrated blockchain explorers:
 
-To view and inspect transactions in your blockchain application, SettleMint provides insightful dashboards via integrated blockchain explorers:
 - **Blockscout** - For EVM compatible networks (Besu, Polygon Edge)
 - **Hyperledger Explorer** - For Fabric networks
 - **Otterscan** - Alternative EVM explorer with advanced features
@@ -26,6 +27,7 @@ To view and inspect transactions in your blockchain application, SettleMint prov
     3. Enter a **name** for your explorer instance
     4. Configure deployment settings (provider, region, size)
     5. Click **Confirm** to add the explorer
+
   </Tab>
 
   <Tab value="SDK CLI">
@@ -42,6 +44,7 @@ To view and inspect transactions in your blockchain application, SettleMint prov
     # Get information about the command and all available options
     settlemint platform create insights blockscout --help
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -71,6 +74,7 @@ To view and inspect transactions in your blockchain application, SettleMint prov
     - `HAS_INDEXING_BACKLOG` - Processing backlog
     - `NOT_HA` - High availability issue
     - `NO_PEERS` - Network connectivity issue
+
   </Tab>
 
   <Tab value="SDK CLI">
@@ -81,6 +85,7 @@ To view and inspect transactions in your blockchain application, SettleMint prov
     # Restart explorer
     settlemint platform restart insights blockscout <name>
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -102,6 +107,7 @@ To view and inspect transactions in your blockchain application, SettleMint prov
       await client.insights.restart("explorer-unique-name");
     };
     ```
+
   </Tab>
 </Tabs>
 
@@ -114,6 +120,7 @@ When the blockchain explorer is deployed and running successfully, you can:
 3. Inspect blocks, transactions, addresses and balances
 
 Key features:
+
 - View latest blocks and transactions
 - Search by block number, transaction hash, or address
 - Inspect transaction details and status
@@ -123,7 +130,9 @@ Key features:
 ![Blockscout Interface](../../img/document360/Images/Blockscout%201.png)
 
 ### Transaction Details
+
 Click a Transaction hash to see detailed information including:
+
 - Gas usage and fees
 - Input data and events
 - Status and confirmations
@@ -132,7 +141,9 @@ Click a Transaction hash to see detailed information including:
 ![Transaction View](../../img/document360/Images/Blockscout%202.png)
 
 ### Address Details
+
 Click an Account address to view:
+
 - Balance and token holdings
 - Transaction history
 - Contract interactions
@@ -141,5 +152,5 @@ Click an Account address to view:
 ![Address View](../../img/document360/Images/Blockscout%203.png)
 
 <Callout type="info">
-All operations require appropriate permissions in your workspace.
-</Callout> 
+  All operations require appropriate permissions in your workspace.
+</Callout>

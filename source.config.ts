@@ -1,11 +1,14 @@
-import { remarkMermaid } from '@theguild/remark-mermaid';
-import { rehypeCodeDefaultOptions, remarkAdmonition } from 'fumadocs-core/mdx-plugins';
-import { remarkInstall } from 'fumadocs-docgen';
-import { defineConfig, defineDocs } from 'fumadocs-mdx/config';
-import { transformerTwoslash } from 'fumadocs-twoslash';
+import { remarkMermaid } from "@theguild/remark-mermaid";
+import {
+  rehypeCodeDefaultOptions,
+  remarkAdmonition,
+} from "fumadocs-core/mdx-plugins";
+import { remarkInstall } from "fumadocs-docgen";
+import { defineConfig, defineDocs } from "fumadocs-mdx/config";
+import { transformerTwoslash } from "fumadocs-twoslash";
 
 export const docs = defineDocs({
-  dir: 'content/docs',
+  dir: "content/docs",
 });
 
 export default defineConfig({
@@ -13,10 +16,13 @@ export default defineConfig({
     remarkPlugins: [remarkInstall, remarkAdmonition, remarkMermaid],
     rehypeCodeOptions: {
       themes: {
-        light: 'github-light',
-        dark: 'github-dark',
+        light: "github-light",
+        dark: "github-dark",
       },
-      transformers: [...(rehypeCodeDefaultOptions.transformers ?? []), transformerTwoslash()],
+      transformers: [
+        ...(rehypeCodeDefaultOptions.transformers ?? []),
+        transformerTwoslash(),
+      ],
     },
   },
 });

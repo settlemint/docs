@@ -6,7 +6,7 @@
   "pages": [
     "create-an-application",
     "add-a-network-to-an-application",
-    "invite-network-participants", 
+    "invite-network-participants",
     "join-a-network-by-invitation",
     "add-a-node-to-a-network",
     "connect-to-a-node",
@@ -22,7 +22,7 @@
     "dev-tools",
     "code-studio",
     "smart-contract-sets",
-    "smart-contract-templates", 
+    "smart-contract-templates",
     "add-smart-contract-set",
     "deploying-a-contract",
     "AI-plugin",

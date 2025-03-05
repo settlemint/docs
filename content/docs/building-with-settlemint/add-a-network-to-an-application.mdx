@@ -3,17 +3,20 @@ title: Add a Network to an Application
 description: Guide to adding a Blockchain Network to your application
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Steps } from 'fumadocs-ui/components/steps'
-import { Card } from 'fumadocs-ui/components/card'
-
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
 
 ## Prerequisites
 
-Before setting up a blockchain network, you need to have an application created in your workspace. Applications provide the organizational context for all your blockchain resources including networks, nodes, and development tools.
+Before setting up a blockchain network, you need to have an application created
+in your workspace. Applications provide the organizational context for all your
+blockchain resources including networks, nodes, and development tools.
 
-If you haven't created an application yet, follow our [Create an Application](../building-with-settlemint/create-an-application) guide first.
+If you haven't created an application yet, follow our
+[Create an Application](../building-with-settlemint/create-an-application) guide
+first.
 
 ## How to Add a Blockchain Network
 
@@ -26,7 +29,7 @@ If you haven't created an application yet, follow our [Create an Application](..
     <Steps>
       ### Navigate to Application
       Navigate to the **application** where you will create the network.
-      
+
       ### Add Network
       Click **Add blockchain network** to open a form.
 
@@ -36,6 +39,7 @@ If you haven't created an application yet, follow our [Create an Application](..
       3. Configure your deployment settings and network parameters.
       4. Click **Confirm** to add the network.
     </Steps>
+
   </Tab>
 
   <Tab value="SDK CLI">
@@ -52,6 +56,7 @@ If you haven't created an application yet, follow our [Create an Application](..
     # Get information about the command and all available options
     settlemint platform create blockchain-network besu --help
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -102,6 +107,7 @@ If you haven't created an application yet, follow our [Create an Application](..
     <Callout type="tip">
     Get your access token from the Platform UI under User Settings → API Tokens.
     </Callout>
+
   </Tab>
 </Tabs>
 
@@ -117,6 +123,7 @@ If you haven't created an application yet, follow our [Create an Application](..
     - View network details and status
     - Monitor network health
     - Restart network operations
+
   </Tab>
 
   <Tab value="SDK CLI">
@@ -133,6 +140,7 @@ If you haven't created an application yet, follow our [Create an Application](..
     # Restart network
     settlemint platform restart blockchain-network <network-name>
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -149,9 +157,10 @@ If you haven't created an application yet, follow our [Create an Application](..
     // Restart network
     await client.blockchainNetwork.restart("network-unique-name");
     ```
+
   </Tab>
 </Tabs>
 
 <Callout type="info">
-All operations require appropriate permissions in your workspace.
-</Callout> 
+  All operations require appropriate permissions in your workspace.
+</Callout>

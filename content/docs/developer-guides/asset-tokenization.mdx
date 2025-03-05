@@ -5,7 +5,8 @@ sidebar_position: 3
 keywords: [asset tokenization, solidity, smart contract]
 ---
 
-This guide will show you how to build an asset tokenization application using SettleMint.
+This guide will show you how to build an asset tokenization application using
+SettleMint.
 
 In this guide, you will learn:
 
@@ -16,21 +17,39 @@ In this guide, you will learn:
 
 ## What Is Asset Tokenization?
 
-Asset tokenization is the process of representing ownership rights to an asset through digital tokens on a blockchain. These tokens serve as a digital representation of the asset and are recorded and managed on the blockchain network, enabling secure ownership transfer and efficient trading.
+Asset tokenization is the process of representing ownership rights to an asset
+through digital tokens on a blockchain. These tokens serve as a digital
+representation of the asset and are recorded and managed on the blockchain
+network, enabling secure ownership transfer and efficient trading.
 
 ## Benefits of Asset Tokenization
 
-- **Increased Liquidity:** Tokenizing assets enables fractional ownership, allowing investors to buy and sell smaller units, thereby increasing liquidity for traditionally illiquid assets.
-- **Accessibility:** Tokenization removes barriers to entry by enabling participation in asset ownership, allowing investors of all sizes to access previously exclusive investment opportunities.
-- **Efficiency:** Digital tokens can be traded 24/7, reducing settlement times, and eliminating intermediaries, thereby streamlining the process and reducing costs.
-- **Transparency:** Blockchain provides a transparent and immutable ledger, offering a clear audit trail for asset ownership, transfers, and transactions.
+- **Increased Liquidity:** Tokenizing assets enables fractional ownership,
+  allowing investors to buy and sell smaller units, thereby increasing liquidity
+  for traditionally illiquid assets.
+- **Accessibility:** Tokenization removes barriers to entry by enabling
+  participation in asset ownership, allowing investors of all sizes to access
+  previously exclusive investment opportunities.
+- **Efficiency:** Digital tokens can be traded 24/7, reducing settlement times,
+  and eliminating intermediaries, thereby streamlining the process and reducing
+  costs.
+- **Transparency:** Blockchain provides a transparent and immutable ledger,
+  offering a clear audit trail for asset ownership, transfers, and transactions.
 
 ## Asset Tokenization Use-Cases
 
-- **Real Estate:** Tokenizing real estate assets enables fractional ownership, making it more accessible to a broader investor base and facilitating efficient trading.
-- **Supply Chain:** Tokenizing supply chain assets such as goods, inventory, or documents can enhance traceability, provenance, and efficient transfer of ownership.
-- **Art and Collectibles:** Tokenizing artwork and collectibles allows for easy ownership transfer, provenance verification, and fractional ownership, making it more inclusive and liquid.
-- **Investment Funds:** Tokenizing investment funds allows for fractional ownership, streamlined distribution, and automated compliance with regulatory requirements.
+- **Real Estate:** Tokenizing real estate assets enables fractional ownership,
+  making it more accessible to a broader investor base and facilitating
+  efficient trading.
+- **Supply Chain:** Tokenizing supply chain assets such as goods, inventory, or
+  documents can enhance traceability, provenance, and efficient transfer of
+  ownership.
+- **Art and Collectibles:** Tokenizing artwork and collectibles allows for easy
+  ownership transfer, provenance verification, and fractional ownership, making
+  it more inclusive and liquid.
+- **Investment Funds:** Tokenizing investment funds allows for fractional
+  ownership, streamlined distribution, and automated compliance with regulatory
+  requirements.
 
 ## Building an Asset Tokenization Application
 
@@ -38,29 +57,34 @@ Asset tokenization is the process of representing ownership rights to an asset t
 
 ### 1. Create an Application
 
-To start, you need to create an application on SettleMint. An application is a collection
-of the different components on SettleMint that will help run your solution.
+To start, you need to create an application on SettleMint. An application is a
+collection of the different components on SettleMint that will help run your
+solution.
 
 ![Create an Application](../../img/developer-guides/asset-tokenization/create-an-application.png)
 
-To create an application on SettleMint, select the application launcher in the top right of the dashboard (four boxes). Click `Add an application`.
+To create an application on SettleMint, select the application launcher in the
+top right of the dashboard (four boxes). Click `Add an application`.
 
 You will now be able to create a blockchain application and give it a name.
 
 ### 2. Deploy a Network and Node
 
-After creating an application, you can now deploy a network and node. We will use both of these
-resources to deploy our Asset Tokenization Smart Contract.
+After creating an application, you can now deploy a network and node. We will
+use both of these resources to deploy our Asset Tokenization Smart Contract.
 
 ![Deploy a Network or Node](../../img/developer-guides/asset-tokenization/create-a-network.gif)
 
-To create a network and node, click on the `Start Here` button. Then Select `Add a Blockchain Network`. This will show all the supported blockchains on SettleMint.
+To create a network and node, click on the `Start Here` button. Then Select
+`Add a Blockchain Network`. This will show all the supported blockchains on
+SettleMint.
 
 For this guide, select `Hyperledger Besu`.
 
 ![Configure Besu](../../img/developer-guides/asset-tokenization/configure-besu.png)
 
-After selecting `Hyperledger Besu`, you now have the option to select our deployment plan.
+After selecting `Hyperledger Besu`, you now have the option to select our
+deployment plan.
 
 For this guide, you can use the following settings:
 
@@ -74,16 +98,20 @@ For this guide, you can use the following settings:
 
 ![Network Success](../../img/developer-guides/asset-tokenization/network-success.png)
 
-After clicking confirm, the node and network will start deploying at the same time. You will
-see the status as `Running` once both have been successfully deployed.
+After clicking confirm, the node and network will start deploying at the same
+time. You will see the status as `Running` once both have been successfully
+deployed.
 
 ### 3. Create IPFS Storage
 
-This guide uses a simple image as the tokenized asset. This image will be pinned on IPFS, so the next step is to deploy a storage service.
+This guide uses a simple image as the tokenized asset. This image will be pinned
+on IPFS, so the next step is to deploy a storage service.
 
 ![IPFS Storage](../../img/developer-guides/asset-tokenization/add-ipfs.png)
 
-Click on `Storage` and then select `Add storage`. Then select `IPFS` and create an instance called `Token Storage`. You can choose the same deployment plan that you did earlier with the network and node.
+Click on `Storage` and then select `Add storage`. Then select `IPFS` and create
+an instance called `Token Storage`. You can choose the same deployment plan that
+you did earlier with the network and node.
 
 ### 4. Deploy a Private Key
 
@@ -91,20 +119,25 @@ To get access to the node you deployed, you will need to generate a private key.
 
 ![Create a Key](../../img/developer-guides/asset-tokenization/create-key.png)
 
-To create a key, click on the `Private Keys` option, then select the `Accessible EC DSA P256`
-option. Create a name and select the node that you deployed in the earlier step.
+To create a key, click on the `Private Keys` option, then select the
+`Accessible EC DSA P256` option. Create a name and select the node that you
+deployed in the earlier step.
 
 ## Part 2: The Smart Contract
 
-Now that you have deployed the needed resources, you can create and deploy the Asset
-Tokenization smart contract.
+Now that you have deployed the needed resources, you can create and deploy the
+Asset Tokenization smart contract.
 
 ### 1. Create a Smart Contract Set
 
-To create a Smart contract set, navigate to the `Dev tools` section in the left sidebar. From there, click on `Add a dev tool`, choose `Code Studio` and then `Smart Contract Set`.
+To create a Smart contract set, navigate to the `Dev tools` section in the left
+sidebar. From there, click on `Add a dev tool`, choose `Code Studio` and then
+`Smart Contract Set`.
 
-You will now be given the option to select a template. Choose the `Empty` option.
-Create a name and select the same deployment plan as you did earlier. For more information on how to add a smart contract set, [see our Smart Contract Sets section](/building-with-settlemint/dev-tools/code-studio/smart-contract-sets/add-smart-contract-set)
+You will now be given the option to select a template. Choose the `Empty`
+option. Create a name and select the same deployment plan as you did earlier.
+For more information on how to add a smart contract set,
+[see our Smart Contract Sets section](/building-with-settlemint/dev-tools/code-studio/smart-contract-sets/add-smart-contract-set)
 
 ![Create a Smart Contract](../../img/developer-guides/asset-tokenization/create-empty-smart-contract.png)
 
@@ -114,11 +147,13 @@ To add and edit the smart contract code, you will use the IDE.
 
 ![Open Fullscreen](../../img/developer-guides/asset-tokenization/open-fullscreen.png)
 
-Once the resource has been deployed, select the `IDE` tab and then `View in fullscreen mode`.
+Once the resource has been deployed, select the `IDE` tab and then
+`View in fullscreen mode`.
 
 ### 3. Adding the Smart Contract Code
 
-With the IDE open in fullscreen, create a new file for your Asset Tokenization smart contract.
+With the IDE open in fullscreen, create a new file for your Asset Tokenization
+smart contract.
 
 ![Create Asset Contract](../../img/developer-guides/asset-tokenization/create-asset-contract.png)
 
@@ -126,7 +161,9 @@ With the IDE open in fullscreen, create a new file for your Asset Tokenization s
 2. Right Click and select `New File...`
 3. Create a new file called `AssetTokenization.sol`
 
-Before adding the contract code, you'll need to install the OpenZeppelin contracts dependency. This provides the base contracts we'll inherit from for features like upgradability and access control.
+Before adding the contract code, you'll need to install the OpenZeppelin
+contracts dependency. This provides the base contracts we'll inherit from for
+features like upgradability and access control.
 
 Open the terminal in the IDE and run:
 
@@ -134,7 +171,8 @@ Open the terminal in the IDE and run:
 npm install @openzeppelin/contracts-upgradeable
 ```
 
-This package provides the base contracts we'll use like `UUPSUpgradeable`, `OwnableUpgradeable`, and `ERC1155SupplyUpgradeable`.
+This package provides the base contracts we'll use like `UUPSUpgradeable`,
+`OwnableUpgradeable`, and `ERC1155SupplyUpgradeable`.
 
 After installing the dependency, copy and paste the Solidity code below:
 
@@ -312,11 +350,13 @@ contract AssetTokenization is Initializable, UUPSUpgradeable, ERC1155SupplyUpgra
 
 ### 4. Change the Deployment Configuration
 
-With the code pasted in the IDE, you now need to change the deployment settings to include the smart contract you have just created.
+With the code pasted in the IDE, you now need to change the deployment settings
+to include the smart contract you have just created.
 
 ![Edit Deployment Contract](../../img/developer-guides/asset-tokenization/edit-deploy.png)
 
-In the file explorer on the left, select the `ignition` folder. Then open the `main.ts` file under `modules`.
+In the file explorer on the left, select the `ignition` folder. Then open the
+`main.ts` file under `modules`.
 
 Replace the content of `main.ts` with the code below:
 
@@ -341,7 +381,8 @@ export default AssetTokenizationModule;
 
 ### 5. Deploy the Contract
 
-With those settings changed, you are now ready to compile and deploy your smart contract.
+With those settings changed, you are now ready to compile and deploy your smart
+contract.
 
 ![Compile Contract](../../img/developer-guides/asset-tokenization/compile-contract.png)
 
@@ -373,7 +414,8 @@ You will now upload the image to the IPFS storage service you deployed earlier.
 
 ![Asset Image](../../img/developer-guides/asset-tokenization/asset.png)
 
-Save the image above to your computer. It is what you will use to represent your asset.
+Save the image above to your computer. It is what you will use to represent your
+asset.
 
 ![Add to IPFS](../../img/developer-guides/asset-tokenization/add-to-ipfs.png)
 
@@ -385,12 +427,11 @@ To upload this image to IPFS:
 
 ![Set Pinning](../../img/developer-guides/asset-tokenization/set-pinning.png)
 
-After the image has been imported, select the `Share Link` option by clicking on the 3 dots
-next to the file size.
+After the image has been imported, select the `Share Link` option by clicking on
+the 3 dots next to the file size.
 
-:::info
-Save this URL as you will use it later in this guide when building the integration.
-:::
+:::info Save this URL as you will use it later in this guide when building the
+integration. :::
 
 Select the `Set pinning` option. This will make sure your file remains on IPFS.
 
@@ -400,7 +441,8 @@ Choose the local node option and click `Apply`.
 
 ### 2. Get the JSON-RPC Endpoint
 
-To connect to the network that you have created, you need to get your JSON-RPC connection URL.
+To connect to the network that you have created, you need to get your JSON-RPC
+connection URL.
 
 ![JSON RPC Node](../../img/developer-guides/asset-tokenization/json-rpc.png)
 
@@ -417,15 +459,21 @@ The URL can be found by:
 
 ### 3. Creating an access token
 
-To connect to your node and storage, you will need an access token. We recommend you use an application access token.
+To connect to your node and storage, you will need an access token. We recommend
+you use an application access token.
 
-You can create an application access token by navigating to the application dashboard, and then clicking on the `Access Tokens` section in the left sidebar.
+You can create an application access token by navigating to the application
+dashboard, and then clicking on the `Access Tokens` section in the left sidebar.
 
 ![API Keys](../../img/developer-guides/asset-tokenization/access-token-node-storage.png)
 
-You can now create an application access token with an expiration and the scopes you want to use. For this guide, we recommend you create an access token scoped to your node and storage.
+You can now create an application access token with an expiration and the scopes
+you want to use. For this guide, we recommend you create an access token scoped
+to your node and storage.
 
-You will now see your access token. Copy the token since you cannot see it again! For more information on how to use access tokens, [see our Access Tokens section](/building-with-settlemint/application-access-tokens).
+You will now see your access token. Copy the token since you cannot see it
+again! For more information on how to use access tokens,
+[see our Access Tokens section](/building-with-settlemint/application-access-tokens).
 
 ### 4. Setup Integration Studio Deployment
 
@@ -441,7 +489,8 @@ To create an integration studio deployment:
 
 ![Open an Integration](../../img/developer-guides/asset-tokenization/open-integration.png)
 
-Open your Integration Studio by selecting the `Interface` tab and then opening it in fullscreen mode.
+Open your Integration Studio by selecting the `Interface` tab and then opening
+it in fullscreen mode.
 
 For this guide, import the template below into the Integration Studio.
 
@@ -457,28 +506,222 @@ To import the below JSON file:
     <summary>JSON Code</summary>
 ```json
 
-[
-{
-"id": "8154b1dd0912e484",
-"type": "function",
-"z": "a781da6f697711d2",
-"name": "Set Global Variables",
-"func": "const glbVar = {\n privateKey: \"PRIVATE_KEY\",\n privateKeyAddress: \"ADDRESS\",\n smartContract: \"ADDRESS\",\n accessToken: \"ACCESS_TOKEN\",\n rpcEndpoint: \"RCP_ENDPOINT\",\n abi: [\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"target\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"AddressEmptyCode\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"sender\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"balance\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"needed\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"tokenId\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"ERC1155InsufficientBalance\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"approver\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155InvalidApprover\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"idsLength\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"valuesLength\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"ERC1155InvalidArrayLength\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155InvalidOperator\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"receiver\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155InvalidReceiver\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"sender\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155InvalidSender\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"owner\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155MissingApprovalForAll\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"implementation\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"ERC1967InvalidImplementation\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\": \"ERC1967NonPayable\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\": \"FailedInnerCall\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\": \"InvalidInitialization\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\": \"NotInitializing\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"owner\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"OwnableInvalidOwner\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"account\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"OwnableUnauthorizedAccount\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\": \"UUPSUnauthorizedCallContext\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"bytes32\",\n \"name\": \"slot\",\n \"type\": \"bytes32\"\n }\n ],\n \"name\": \"UUPSUnsupportedProxiableUUID\",\n \"type\": \"error\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"account\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"bool\",\n \"name\": \"approved\",\n \"type\": \"bool\"\n }\n ],\n \"name\": \"ApprovalForAll\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256[]\",\n \"name\": \"assetIds\",\n \"type\": \"uint256[]\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256[]\",\n \"name\": \"amounts\",\n \"type\": \"uint256[]\"\n }\n ],\n \"name\": \"AssetTransferEvent\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": false,\n \"internalType\": \"uint64\",\n \"name\": \"version\",\n \"type\": \"uint64\"\n }\n ],\n \"name\": \"Initialized\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"previousOwner\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"newOwner\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"OwnershipTransferred\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256[]\",\n \"name\": \"ids\",\n \"type\": \"uint256[]\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256[]\",\n \"name\": \"values\",\n \"type\": \"uint256[]\"\n }\n ],\n \"name\": \"TransferBatch\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256\",\n \"name\": \"value\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"TransferSingle\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": false,\n \"internalType\": \"string\",\n \"name\": \"value\",\n \"type\": \"string\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"URI\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"implementation\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"Upgraded\",\n \"type\": \"event\"\n },\n {\n \"inputs\": [],\n \"name\": \"UPGRADE_INTERFACE_VERSION\",\n \"outputs\": [\n {\n \"internalType\": \"string\",\n \"name\": \"\",\n \"type\": \"string\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"assetToDetails\",\n \"outputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"assetId\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"name\",\n \"type\": \"string\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"symbol\",\n \"type\": \"string\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"maxSupply\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"faceValue\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"maturityTimestamp\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"assetUri\",\n \"type\": \"string\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"account\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"balanceOf\",\n \"outputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\": \"uint256\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address[]\",\n \"name\": \"accounts\",\n \"type\": \"address[]\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"ids\",\n \"type\": \"uint256[]\"\n }\n ],\n \"name\": \"balanceOfBatch\",\n \"outputs\": [\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"\",\n \"type\": \"uint256[]\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"assetId\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"amounts\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"burn\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"assetIds\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"amounts\",\n \"type\": \"uint256[]\"\n }\n ],\n \"name\": \"burnBatch\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"assetId\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"name\",\n \"type\": \"string\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"symbol\",\n \"type\": \"string\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"maxSupply\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"faceValue\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"maturityTimestamp\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"assetUri\",\n \"type\": \"string\"\n }\n ],\n \"name\": \"createAsset\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"exists\",\n \"outputs\": [\n {\n \"internalType\": \"bool\",\n \"name\": \"\",\n \"type\": \"bool\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [],\n \"name\": \"initialize\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"account\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"isApprovedForAll\",\n \"outputs\": [\n {\n \"internalType\": \"bool\",\n \"name\": \"\",\n \"type\": \"bool\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"assetId\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"amounts\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"recipient\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"mint\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"assetIds\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"amounts\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"recipient\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"mintBatch\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [],\n \"name\": \"owner\",\n \"outputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"\",\n \"type\": \"address\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [],\n \"name\": \"proxiableUUID\",\n \"outputs\": [\n {\n \"internalType\": \"bytes32\",\n \"name\": \"\",\n \"type\": \"bytes32\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [],\n \"name\": \"renounceOwnership\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"ids\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"values\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"bytes\",\n \"name\": \"data\",\n \"type\": \"bytes\"\n }\n ],\n \"name\": \"safeBatchTransferFrom\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"value\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"bytes\",\n \"name\": \"data\",\n \"type\": \"bytes\"\n }\n ],\n \"name\": \"safeTransferFrom\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"bool\",\n \"name\": \"approved\",\n \"type\": \"bool\"\n }\n ],\n \"name\": \"setApprovalForAll\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"bytes4\",\n \"name\": \"interfaceId\",\n \"type\": \"bytes4\"\n }\n ],\n \"name\": \"supportsInterface\",\n \"outputs\": [\n {\n \"internalType\": \"bool\",\n \"name\": \"\",\n \"type\": \"bool\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [],\n \"name\": \"totalSupply\",\n \"outputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\": \"uint256\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"totalSupply\",\n \"outputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\": \"uint256\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"newOwner\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"transferOwnership\",\n \"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"newImplementation\",\n \"type\": \"address\"\n },\n {\n \"internalType\": \"bytes\",\n \"name\": \"data\",\n \"type\": \"bytes\"\n }\n ],\n \"name\": \"upgradeToAndCall\",\n \"outputs\": [],\n \"stateMutability\": \"payable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"uri\",\n \"outputs\": [\n {\n \"internalType\": \"string\",\n \"name\": \"\",\n \"type\": \"string\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n }\n ]\n\n}\n\nglobal.set('privateKey', glbVar.privateKey);\nglobal.set('privateKeyAddress',glbVar.privateKeyAddress)\nglobal.set('contract', glbVar.smartContract);\nglobal.set('accessToken', glbVar.accessToken);\nglobal.set('rpcEndpoint', glbVar.rpcEndpoint);\nglobal.set('abi',glbVar.abi)\n\nreturn msg;",
-"outputs": 1,
-"timeout": "",
-"noerr": 0,
-"initialize": "",
-"finalize": "",
-"libs": [],
-"x": 460,
-"y": 80,
-"wires": [
-[
-"a7c63a0fd0d1a779"
-]
-]
-}
-]
+[ { "id": "8154b1dd0912e484", "type": "function", "z": "a781da6f697711d2",
+"name": "Set Global Variables", "func": "const glbVar = {\n privateKey:
+\"PRIVATE_KEY\",\n privateKeyAddress: \"ADDRESS\",\n smartContract:
+\"ADDRESS\",\n accessToken: \"ACCESS_TOKEN\",\n rpcEndpoint: \"RCP_ENDPOINT\",\n
+abi: [\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\":
+\"target\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"AddressEmptyCode\",\n
+\"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\":
+\"address\",\n \"name\": \"sender\",\n \"type\": \"address\"\n },\n {\n
+\"internalType\": \"uint256\",\n \"name\": \"balance\",\n \"type\":
+\"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"needed\",\n
+\"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\":
+\"tokenId\",\n \"type\": \"uint256\"\n }\n ],\n \"name\":
+\"ERC1155InsufficientBalance\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [\n
+{\n \"internalType\": \"address\",\n \"name\": \"approver\",\n \"type\":
+\"address\"\n }\n ],\n \"name\": \"ERC1155InvalidApprover\",\n \"type\":
+\"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256\",\n
+\"name\": \"idsLength\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\":
+\"uint256\",\n \"name\": \"valuesLength\",\n \"type\": \"uint256\"\n }\n ],\n
+\"name\": \"ERC1155InvalidArrayLength\",\n \"type\": \"error\"\n },\n {\n
+\"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"operator\",\n
+\"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155InvalidOperator\",\n
+\"type\": \"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\":
+\"address\",\n \"name\": \"receiver\",\n \"type\": \"address\"\n }\n ],\n
+\"name\": \"ERC1155InvalidReceiver\",\n \"type\": \"error\"\n },\n {\n
+\"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"sender\",\n
+\"type\": \"address\"\n }\n ],\n \"name\": \"ERC1155InvalidSender\",\n \"type\":
+\"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n
+\"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n \"internalType\":
+\"address\",\n \"name\": \"owner\",\n \"type\": \"address\"\n }\n ],\n \"name\":
+\"ERC1155MissingApprovalForAll\",\n \"type\": \"error\"\n },\n {\n \"inputs\":
+[\n {\n \"internalType\": \"address\",\n \"name\": \"implementation\",\n
+\"type\": \"address\"\n }\n ],\n \"name\": \"ERC1967InvalidImplementation\",\n
+\"type\": \"error\"\n },\n {\n \"inputs\": [],\n \"name\":
+\"ERC1967NonPayable\",\n \"type\": \"error\"\n },\n {\n \"inputs\": [],\n
+\"name\": \"FailedInnerCall\",\n \"type\": \"error\"\n },\n {\n \"inputs\":
+[],\n \"name\": \"InvalidInitialization\",\n \"type\": \"error\"\n },\n {\n
+\"inputs\": [],\n \"name\": \"NotInitializing\",\n \"type\": \"error\"\n },\n
+{\n \"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"owner\",\n
+\"type\": \"address\"\n }\n ],\n \"name\": \"OwnableInvalidOwner\",\n \"type\":
+\"error\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n
+\"name\": \"account\",\n \"type\": \"address\"\n }\n ],\n \"name\":
+\"OwnableUnauthorizedAccount\",\n \"type\": \"error\"\n },\n {\n \"inputs\":
+[],\n \"name\": \"UUPSUnauthorizedCallContext\",\n \"type\": \"error\"\n },\n
+{\n \"inputs\": [\n {\n \"internalType\": \"bytes32\",\n \"name\": \"slot\",\n
+\"type\": \"bytes32\"\n }\n ],\n \"name\": \"UUPSUnsupportedProxiableUUID\",\n
+\"type\": \"error\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n
+\"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"account\",\n
+\"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\":
+\"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n
+\"indexed\": false,\n \"internalType\": \"bool\",\n \"name\": \"approved\",\n
+\"type\": \"bool\"\n }\n ],\n \"name\": \"ApprovalForAll\",\n \"type\":
+\"event\"\n },\n {\n \"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\":
+true,\n \"internalType\": \"address\",\n \"name\": \"from\",\n \"type\":
+\"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n
+\"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"indexed\": false,\n
+\"internalType\": \"uint256[]\",\n \"name\": \"assetIds\",\n \"type\":
+\"uint256[]\"\n },\n {\n \"indexed\": false,\n \"internalType\":
+\"uint256[]\",\n \"name\": \"amounts\",\n \"type\": \"uint256[]\"\n }\n ],\n
+\"name\": \"AssetTransferEvent\",\n \"type\": \"event\"\n },\n {\n
+\"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": false,\n
+\"internalType\": \"uint64\",\n \"name\": \"version\",\n \"type\": \"uint64\"\n
+}\n ],\n \"name\": \"Initialized\",\n \"type\": \"event\"\n },\n {\n
+\"anonymous\": false,\n \"inputs\": [\n {\n \"indexed\": true,\n
+\"internalType\": \"address\",\n \"name\": \"previousOwner\",\n \"type\":
+\"address\"\n },\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n
+\"name\": \"newOwner\",\n \"type\": \"address\"\n }\n ],\n \"name\":
+\"OwnershipTransferred\",\n \"type\": \"event\"\n },\n {\n \"anonymous\":
+false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\":
+\"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n
+\"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"from\",\n
+\"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\":
+\"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"indexed\":
+false,\n \"internalType\": \"uint256[]\",\n \"name\": \"ids\",\n \"type\":
+\"uint256[]\"\n },\n {\n \"indexed\": false,\n \"internalType\":
+\"uint256[]\",\n \"name\": \"values\",\n \"type\": \"uint256[]\"\n }\n ],\n
+\"name\": \"TransferBatch\",\n \"type\": \"event\"\n },\n {\n \"anonymous\":
+false,\n \"inputs\": [\n {\n \"indexed\": true,\n \"internalType\":
+\"address\",\n \"name\": \"operator\",\n \"type\": \"address\"\n },\n {\n
+\"indexed\": true,\n \"internalType\": \"address\",\n \"name\": \"from\",\n
+\"type\": \"address\"\n },\n {\n \"indexed\": true,\n \"internalType\":
+\"address\",\n \"name\": \"to\",\n \"type\": \"address\"\n },\n {\n \"indexed\":
+false,\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\":
+\"uint256\"\n },\n {\n \"indexed\": false,\n \"internalType\": \"uint256\",\n
+\"name\": \"value\",\n \"type\": \"uint256\"\n }\n ],\n \"name\":
+\"TransferSingle\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n
+\"inputs\": [\n {\n \"indexed\": false,\n \"internalType\": \"string\",\n
+\"name\": \"value\",\n \"type\": \"string\"\n },\n {\n \"indexed\": true,\n
+\"internalType\": \"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n
+],\n \"name\": \"URI\",\n \"type\": \"event\"\n },\n {\n \"anonymous\": false,\n
+\"inputs\": [\n {\n \"indexed\": true,\n \"internalType\": \"address\",\n
+\"name\": \"implementation\",\n \"type\": \"address\"\n }\n ],\n \"name\":
+\"Upgraded\",\n \"type\": \"event\"\n },\n {\n \"inputs\": [],\n \"name\":
+\"UPGRADE_INTERFACE_VERSION\",\n \"outputs\": [\n {\n \"internalType\":
+\"string\",\n \"name\": \"\",\n \"type\": \"string\"\n }\n ],\n
+\"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\":
+[\n {\n \"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\":
+\"uint256\"\n }\n ],\n \"name\": \"assetToDetails\",\n \"outputs\": [\n {\n
+\"internalType\": \"uint256\",\n \"name\": \"assetId\",\n \"type\":
+\"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"name\",\n
+\"type\": \"string\"\n },\n {\n \"internalType\": \"string\",\n \"name\":
+\"symbol\",\n \"type\": \"string\"\n },\n {\n \"internalType\": \"uint256\",\n
+\"name\": \"maxSupply\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\":
+\"uint256\",\n \"name\": \"faceValue\",\n \"type\": \"uint256\"\n },\n {\n
+\"internalType\": \"uint256\",\n \"name\": \"maturityTimestamp\",\n \"type\":
+\"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"assetUri\",\n
+\"type\": \"string\"\n }\n ],\n \"stateMutability\": \"view\",\n \"type\":
+\"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"address\",\n
+\"name\": \"account\",\n \"type\": \"address\"\n },\n {\n \"internalType\":
+\"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\":
+\"balanceOf\",\n \"outputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\":
+\"\",\n \"type\": \"uint256\"\n }\n ],\n \"stateMutability\": \"view\",\n
+\"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\":
+\"address[]\",\n \"name\": \"accounts\",\n \"type\": \"address[]\"\n },\n {\n
+\"internalType\": \"uint256[]\",\n \"name\": \"ids\",\n \"type\":
+\"uint256[]\"\n }\n ],\n \"name\": \"balanceOfBatch\",\n \"outputs\": [\n {\n
+\"internalType\": \"uint256[]\",\n \"name\": \"\",\n \"type\": \"uint256[]\"\n
+}\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n
+\"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"assetId\",\n
+\"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\":
+\"amounts\",\n \"type\": \"uint256\"\n }\n ],\n \"name\": \"burn\",\n
+\"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\":
+\"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256[]\",\n
+\"name\": \"assetIds\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\":
+\"uint256[]\",\n \"name\": \"amounts\",\n \"type\": \"uint256[]\"\n }\n ],\n
+\"name\": \"burnBatch\",\n \"outputs\": [],\n \"stateMutability\":
+\"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n
+\"internalType\": \"uint256\",\n \"name\": \"assetId\",\n \"type\":
+\"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"name\",\n
+\"type\": \"string\"\n },\n {\n \"internalType\": \"string\",\n \"name\":
+\"symbol\",\n \"type\": \"string\"\n },\n {\n \"internalType\": \"uint256\",\n
+\"name\": \"maxSupply\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\":
+\"uint256\",\n \"name\": \"faceValue\",\n \"type\": \"uint256\"\n },\n {\n
+\"internalType\": \"uint256\",\n \"name\": \"maturityTimestamp\",\n \"type\":
+\"uint256\"\n },\n {\n \"internalType\": \"string\",\n \"name\": \"assetUri\",\n
+\"type\": \"string\"\n }\n ],\n \"name\": \"createAsset\",\n \"outputs\": [],\n
+\"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n
+\"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n
+\"type\": \"uint256\"\n }\n ],\n \"name\": \"exists\",\n \"outputs\": [\n {\n
+\"internalType\": \"bool\",\n \"name\": \"\",\n \"type\": \"bool\"\n }\n ],\n
+\"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\":
+[],\n \"name\": \"initialize\",\n \"outputs\": [],\n \"stateMutability\":
+\"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n
+\"internalType\": \"address\",\n \"name\": \"account\",\n \"type\":
+\"address\"\n },\n {\n \"internalType\": \"address\",\n \"name\":
+\"operator\",\n \"type\": \"address\"\n }\n ],\n \"name\":
+\"isApprovedForAll\",\n \"outputs\": [\n {\n \"internalType\": \"bool\",\n
+\"name\": \"\",\n \"type\": \"bool\"\n }\n ],\n \"stateMutability\": \"view\",\n
+\"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\":
+\"uint256\",\n \"name\": \"assetId\",\n \"type\": \"uint256\"\n },\n {\n
+\"internalType\": \"uint256\",\n \"name\": \"amounts\",\n \"type\":
+\"uint256\"\n },\n {\n \"internalType\": \"address\",\n \"name\":
+\"recipient\",\n \"type\": \"address\"\n }\n ],\n \"name\": \"mint\",\n
+\"outputs\": [],\n \"stateMutability\": \"nonpayable\",\n \"type\":
+\"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\": \"uint256[]\",\n
+\"name\": \"assetIds\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\":
+\"uint256[]\",\n \"name\": \"amounts\",\n \"type\": \"uint256[]\"\n },\n {\n
+\"internalType\": \"address\",\n \"name\": \"recipient\",\n \"type\":
+\"address\"\n }\n ],\n \"name\": \"mintBatch\",\n \"outputs\": [],\n
+\"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n
+\"inputs\": [],\n \"name\": \"owner\",\n \"outputs\": [\n {\n \"internalType\":
+\"address\",\n \"name\": \"\",\n \"type\": \"address\"\n }\n ],\n
+\"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\":
+[],\n \"name\": \"proxiableUUID\",\n \"outputs\": [\n {\n \"internalType\":
+\"bytes32\",\n \"name\": \"\",\n \"type\": \"bytes32\"\n }\n ],\n
+\"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n \"inputs\":
+[],\n \"name\": \"renounceOwnership\",\n \"outputs\": [],\n \"stateMutability\":
+\"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n
+\"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n
+},\n {\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\":
+\"address\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\": \"ids\",\n
+\"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"uint256[]\",\n \"name\":
+\"values\",\n \"type\": \"uint256[]\"\n },\n {\n \"internalType\": \"bytes\",\n
+\"name\": \"data\",\n \"type\": \"bytes\"\n }\n ],\n \"name\":
+\"safeBatchTransferFrom\",\n \"outputs\": [],\n \"stateMutability\":
+\"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n
+\"internalType\": \"address\",\n \"name\": \"from\",\n \"type\": \"address\"\n
+},\n {\n \"internalType\": \"address\",\n \"name\": \"to\",\n \"type\":
+\"address\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n
+\"type\": \"uint256\"\n },\n {\n \"internalType\": \"uint256\",\n \"name\":
+\"value\",\n \"type\": \"uint256\"\n },\n {\n \"internalType\": \"bytes\",\n
+\"name\": \"data\",\n \"type\": \"bytes\"\n }\n ],\n \"name\":
+\"safeTransferFrom\",\n \"outputs\": [],\n \"stateMutability\":
+\"nonpayable\",\n \"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n
+\"internalType\": \"address\",\n \"name\": \"operator\",\n \"type\":
+\"address\"\n },\n {\n \"internalType\": \"bool\",\n \"name\": \"approved\",\n
+\"type\": \"bool\"\n }\n ],\n \"name\": \"setApprovalForAll\",\n \"outputs\":
+[],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n
+\"inputs\": [\n {\n \"internalType\": \"bytes4\",\n \"name\": \"interfaceId\",\n
+\"type\": \"bytes4\"\n }\n ],\n \"name\": \"supportsInterface\",\n \"outputs\":
+[\n {\n \"internalType\": \"bool\",\n \"name\": \"\",\n \"type\": \"bool\"\n }\n
+],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n
+\"inputs\": [],\n \"name\": \"totalSupply\",\n \"outputs\": [\n {\n
+\"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\": \"uint256\"\n }\n
+],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n
+\"inputs\": [\n {\n \"internalType\": \"uint256\",\n \"name\": \"id\",\n
+\"type\": \"uint256\"\n }\n ],\n \"name\": \"totalSupply\",\n \"outputs\": [\n
+{\n \"internalType\": \"uint256\",\n \"name\": \"\",\n \"type\": \"uint256\"\n
+}\n ],\n \"stateMutability\": \"view\",\n \"type\": \"function\"\n },\n {\n
+\"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\": \"newOwner\",\n
+\"type\": \"address\"\n }\n ],\n \"name\": \"transferOwnership\",\n \"outputs\":
+[],\n \"stateMutability\": \"nonpayable\",\n \"type\": \"function\"\n },\n {\n
+\"inputs\": [\n {\n \"internalType\": \"address\",\n \"name\":
+\"newImplementation\",\n \"type\": \"address\"\n },\n {\n \"internalType\":
+\"bytes\",\n \"name\": \"data\",\n \"type\": \"bytes\"\n }\n ],\n \"name\":
+\"upgradeToAndCall\",\n \"outputs\": [],\n \"stateMutability\": \"payable\",\n
+\"type\": \"function\"\n },\n {\n \"inputs\": [\n {\n \"internalType\":
+\"uint256\",\n \"name\": \"id\",\n \"type\": \"uint256\"\n }\n ],\n \"name\":
+\"uri\",\n \"outputs\": [\n {\n \"internalType\": \"string\",\n \"name\":
+\"\",\n \"type\": \"string\"\n }\n ],\n \"stateMutability\": \"view\",\n
+\"type\": \"function\"\n }\n ]\n\n}\n\nglobal.set('privateKey',
+glbVar.privateKey);\nglobal.set('privateKeyAddress',glbVar.privateKeyAddress)\nglobal.set('contract',
+glbVar.smartContract);\nglobal.set('accessToken',
+glbVar.accessToken);\nglobal.set('rpcEndpoint',
+glbVar.rpcEndpoint);\nglobal.set('abi',glbVar.abi)\n\nreturn msg;", "outputs":
+1, "timeout": "", "noerr": 0, "initialize": "", "finalize": "", "libs": [], "x":
+460, "y": 80, "wires": [ [ "a7c63a0fd0d1a779" ] ] } ]
 
 ```
 </details>

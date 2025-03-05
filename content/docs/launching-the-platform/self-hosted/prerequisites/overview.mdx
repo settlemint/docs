@@ -1,17 +1,21 @@
 ---
 title: Prerequisites Overview
-description: Complete guide to setting up prerequisites for the SettleMint Platform installation
+description:
+  Complete guide to setting up prerequisites for the SettleMint Platform
+  installation
 ---
 
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Callout } from 'fumadocs-ui/components/callout'
-import { Card } from 'fumadocs-ui/components/card'
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
 
-Before installing the SettleMint Platform, you'll need to set up several core services. This guide will walk you through each prerequisite and help you collect the necessary information for installation.
-
+Before installing the SettleMint Platform, you'll need to set up several core
+services. This guide will walk you through each prerequisite and help you
+collect the necessary information for installation.
 
 <Callout type="info">
-Use the sidebar to navigate between different prerequisites. We recommend following them in order, but you can skip to specific sections if needed.
+  Use the sidebar to navigate between different prerequisites. We recommend
+  following them in order, but you can skip to specific sections if needed.
 </Callout>
 
 ## How to Use This Section
@@ -23,7 +27,9 @@ Use the sidebar to navigate between different prerequisites. We recommend follow
 5. Proceed to the next prerequisite
 
 <Callout type="warning">
-Make sure to complete **all** prerequisites before proceeding with the platform installation. Missing or incorrectly configured services can cause installation failures.
+  Make sure to complete **all** prerequisites before proceeding with the
+  platform installation. Missing or incorrectly configured services can cause
+  installation failures.
 </Callout>
 
 ## Required Services
@@ -45,6 +51,7 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
     - Grafana visualization
     - Loki log aggregation
     - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/metrics-and-logs)
+
   </Tab>
 
   <Tab value="Databases & Cache">
@@ -59,6 +66,7 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
     - Real-time features
     - Performance optimization
     - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/redis)
+
   </Tab>
 
   <Tab value="Security & Storage">
@@ -76,6 +84,7 @@ Make sure to complete **all** prerequisites before proceeding with the platform 
     - Authentication service
     - User identity management
     - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/oauth)
+
   </Tab>
 </Tabs>
 
@@ -106,11 +115,12 @@ Choose deployment options based on your:
 - Infrastructure capabilities
 - Operational expertise
 - Budget constraints
-</Callout>
+  </Callout>
 
 ## Information Collection
 
-As you complete each prerequisite, you'll need to collect specific information required for the platform installation.
+As you complete each prerequisite, you'll need to collect specific information
+required for the platform installation.
 
 <Callout type="success">
 ### Information Collection Checklist
@@ -122,14 +132,17 @@ As you complete each prerequisite, you'll need to collect specific information r
 - [ ] Vault access tokens
 - [ ] OAuth client credentials
 - [ ] Metrics endpoints
-</Callout>
+  </Callout>
 
 ## Next Steps
 
-1. Start with the [Ingress Controller](/launching-the-platform/self-hosted/prerequisites/ingress-controller) setup
+1. Start with the
+   [Ingress Controller](/launching-the-platform/self-hosted/prerequisites/ingress-controller)
+   setup
 2. Follow each prerequisite guide in order
 3. Validate your configurations
-4. Proceed to [Platform Installation](/launching-the-platform/self-hosted/platform-installation)
+4. Proceed to
+   [Platform Installation](/launching-the-platform/self-hosted/platform-installation)
 
 ## Need Help?
 
