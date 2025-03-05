@@ -3,9 +3,9 @@ title: Infrastructure Requirements
 description: Infrastructure requirements for self-hosting the platform
 ---
 
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Card } from "fumadocs-ui/components/card";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 <Callout type="warning">
   The requirements listed below are for the core platform components only.
@@ -106,7 +106,8 @@ Consider the following requirements:
 - Implement regular backup procedures
 - Monitor storage performance metrics
 - Set up alerts for capacity thresholds
-  </Callout>
+
+</Callout>
 
 ## Prerequisites Resource Requirements
 
@@ -216,7 +217,8 @@ These are baseline requirements. For production environments, consider:
 - Monitoring and logging overhead
 - Backup storage requirements
 - Scaling headroom for growth
-  </Callout>
+
+</Callout>
 
 ### Total Resource Summary
 
@@ -293,7 +295,8 @@ We recommend:
 3. For same cluster: Add service requirements to platform requirements
 4. For target clusters: Plan separate infrastructure
 5. Include 30% buffer for growth and peak loads
-   </Callout>
+
+</Callout>
 
 <Callout type="info">
 ### Example Calculation
@@ -346,10 +349,5 @@ Let's calculate requirements for a setup with:
 
 - Platform Cluster: 16+ cores, 52GB+ RAM, 440GB+ storage
 - Service Cluster: 11+ cores, 15GB+ RAM, 180GB+ storage
-  </Callout>
 
-<Callout>
-  For detailed specifications of all available services and their resource
-  requirements, please refer to our [Service Requirements
-  Documentation](/reference/service-requirements).
 </Callout>

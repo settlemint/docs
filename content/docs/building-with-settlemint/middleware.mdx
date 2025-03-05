@@ -3,10 +3,10 @@ title: Middleware
 description: Guide to using middleware in SettleMint
 ---
 
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
-import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 Middleware acts as a bridge between your blockchain network and applications,
 providing essential services like data indexing, API access, and event
@@ -38,10 +38,10 @@ blockchain node in place.
     <Steps>
       ### Navigate to Application
       Navigate to the **application** where you want to add middleware.
-      
+
       ### Access Middleware Section
       Click **Middleware** in the left navigation, and then click **Add a middleware**. This opens a form.
-      
+
       ### Configure Middleware
       1. Choose middleware type (Graph or Portal)
       2. Choose a **Middleware name**
@@ -49,6 +49,7 @@ blockchain node in place.
       4. Configure deployment settings
       5. Click **Confirm**
     </Steps>
+
   </Tab>
 
   <Tab value="SDK CLI">
@@ -188,11 +189,9 @@ We have some prebuilt subgraph indexing modules included in the smart contract
 set, and you can build your own modules if you have a custom smart contract set.
 
 <Callout type="warning">
-Before you start, make sure you are running:
-
-- An EVM-compatible network (Ethereum, Polygon, Hyperledger Besu, Avalanche,
-  etc.)
-  </Callout>
+  Before you start, make sure you are running an EVM-compatible network
+  (Ethereum, Polygon, Hyperledger Besu, Avalanche, etc.)
+</Callout>
 
 When the middleware is deployed, follow these steps to start using it:
 
@@ -306,12 +305,10 @@ Benefits of using the smart contract portal:
 4. Stack agnostic: Teams are free to choose their own technology stack.
 
 <Callout type="warning">
-Before you start, make sure you are running:
-
-- An EVM-compatible network (Ethereum, Polygon, Hyperledger Besu, Avalanche,
-  etc.)
-- A Private Key
-  </Callout>
+  Before you start, make sure you are running an EVM-compatible network
+  (Ethereum, Polygon, Hyperledger Besu, Avalanche, etc.) and have a private key
+  to deploy your smart contracts.
+</Callout>
 
 ### Using The Smart Contract Portal Middleware
 
