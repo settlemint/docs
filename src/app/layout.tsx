@@ -23,7 +23,15 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={figtree.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <RootProvider>{children}</RootProvider>
+        <RootProvider
+          search={{
+            options: {
+              api: "/documentation/api/search",
+            },
+          }}
+        >
+          {children}
+        </RootProvider>
         <GoogleAnalytics gaId="G-N1MMHFDVZZ" />
         <PlainChat />
       </body>
