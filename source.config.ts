@@ -4,9 +4,14 @@ import {
   remarkAdmonition,
 } from "fumadocs-core/mdx-plugins";
 import { remarkInstall } from "fumadocs-docgen";
-import { defineConfig, defineDocs } from "fumadocs-mdx/config";
+import {
+  defineCollections,
+  defineConfig,
+  defineDocs,
+  frontmatterSchema,
+} from "fumadocs-mdx/config";
 import { transformerTwoslash } from "fumadocs-twoslash";
-
+import { z } from "zod";
 export const docs = defineDocs({
   dir: "content/docs",
 });
@@ -25,4 +30,13 @@ export default defineConfig({
       ],
     },
   },
+});
+
+export const blogPosts = defineCollections({
+  type: "doc",
+  dir: "content/release-notes",
+  schema: frontmatterSchema.extend({
+    author: z.string(),
+    date: z.string().date().or(z.date()),
+  }),
 });
