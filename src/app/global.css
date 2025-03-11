@@ -212,7 +212,7 @@
   --color-fd-card: var(--card);
   --color-fd-foreground: var(--foreground);
   --color-fd-muted-foreground: var(--muted-foreground);
-  --color-fd-secondary: var(--secondary);
+  --color-fd-secondary: var(--sidebar);
   --color-fd-accent-foreground: var(--accent-foreground);
   --color-fd-primary: var(--primary);
   --color-fd-sidebar: var(--sidebar);
@@ -330,7 +330,7 @@
 }
 
 button[data-search-full] {
-  @apply min-w-[450px];
+  @apply min-w-[250px];
 }
 
 #nd-subnav > div {
