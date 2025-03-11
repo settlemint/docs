@@ -1,6 +1,6 @@
 FROM  node:22.14.0  AS build
 
-COPY --from=oven/bun:1.2.4-debian --chmod=0777 /usr/local/bin/bun /bin/bun
+COPY --from=oven/bun:1.2.5-debian --chmod=0777 /usr/local/bin/bun /bin/bun
 
 RUN mkdir -p /app
 WORKDIR /app
