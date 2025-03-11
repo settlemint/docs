@@ -422,7 +422,7 @@ program, and set your personal access token.
 Open Cursor and navigate to Settings/MCP. You should see a green active status
 after the server is successfully connected.
 
-#### #### Using the SettleMint MPC in Claude Desktop
+#### Using the SettleMint MPC in Claude Desktop
 
 Open Claude desktop and navigate to Settings. Under the Developer tab, tap Edit
 Config to open the configuration file and add the following configuration:
@@ -447,7 +447,7 @@ Save the configuration file and restart Claude desktop. From the new chat
 screen, you should see a hammer (MCP) icon appear with the new MCP server
 available.
 
-#### #### Using the SettleMint MPC in Cline
+#### Using the SettleMint MPC in Cline
 
 Open the Cline extension in VS Code and tap the MCP Servers icon. Tap Configure
 MCP Servers to open the configuration file and add the following configuration:
@@ -472,7 +472,7 @@ Save the configuration file. Cline should automatically reload the
 configuration. You should see a green active status after the server is
 successfully connected.
 
-#### #### Using the SettleMint MPC in Windsurf
+#### Using the SettleMint MPC in Windsurf
 
 Open Windsurf and navigate to the Cascade assistant. Tap on the hammer (MCP)
 icon, then Configure to open the configuration file and add the following
