@@ -32,6 +32,7 @@
     "audit-logs",
     "resource-usage",
     "health-monitoring-tools",
-    "deployment-plans"
+    "deployment-plans",
+    "kits"
   ]
 }
