@@ -45,6 +45,55 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
         - Enable authentication (recommended)
       - Configure VPC network and authorized networks
 
+      ### AWS ElastiCache
+      <Tabs items={['Redis', 'Valkey']}>
+        <Tab value="Redis">
+          - Go to [AWS Console](https://console.aws.amazon.com/elasticache/)
+          - Click "Create" to start creating a new cache
+          - Select "Redis" as the engine
+          - Choose a name for your cache
+          - Select the appropriate node type (minimum: cache.t3.small)
+          - Configure number of replicas (minimum 1 for production)
+          - Choose your VPC and subnet groups (same as your EKS cluster)
+          - Set up security groups to allow access from your EKS cluster
+          - Enable encryption in transit (TLS)
+          - Configure authentication as needed
+
+          <Callout type="warning">
+            **Important Helm Chart Configuration**
+            ```yaml
+            redis:
+              tls: true
+              cluster: true
+            ```
+            Leave `redis.password` empty if you disabled authentication
+          </Callout>
+        </Tab>
+
+        <Tab value="Valkey">
+          - Go to [AWS Console](https://console.aws.amazon.com/elasticache/)
+          - Click "Create" to start creating a new cache
+          - Select "Valkey" as the engine
+          - Choose a name for your cache
+          - Select the appropriate node type (minimum: cache.t3.small)
+          - Configure number of replicas (minimum 1 for production)
+          - Choose your VPC and subnet groups (same as your EKS cluster)
+          - Set up security groups to allow access from your EKS cluster
+          - Enable encryption in transit (TLS)
+          - Configure authentication as needed
+
+          <Callout type="warning">
+            **Important Helm Chart Configuration**
+            ```yaml
+            redis:
+              tls: true
+              cluster: false
+            ```
+            Leave `redis.password` empty if you disabled authentication
+          </Callout>
+        </Tab>
+      </Tabs>
+
       ### Redis Cloud
       - Create account at [Redis Cloud](https://app.redislabs.com)
       - Create new subscription:
@@ -145,6 +194,7 @@ redis:
   password: "" # Redis password collected in prerequisites
   prefix: "sm" # In shared redis servers, this separates queues
   tls: false # Set to true to use TLS mode
+  cluster: false # Set to true for Redis cluster mode
 ```
 
 <Callout type="info">
@@ -153,11 +203,29 @@ When using Google Memorystore:
 2. Ensure your GKE cluster has access to the Memorystore instance
 3. Configure the same region as your GKE cluster
 </Callout>
+
+<Callout type="info">
+When using AWS ElastiCache:
+1. For Redis:
+   ```yaml
+   redis:
+     tls: true
+     cluster: true
+   ```
+2. For Valkey:
+   ```yaml
+   redis:
+     tls: true
+     cluster: false
+   ```
+3. Leave `redis.password` empty if you disabled authentication on ElastiCache
+4. Ensure your EKS cluster has network access to the ElastiCache instance
+</Callout>
 </Callout>
 
 ## Validation
 
-<Tabs items={['Google Memorystore', 'Standard Redis']}>
+<Tabs items={['Google Memorystore', 'AWS ElastiCache', 'Standard Redis']}>
   <Tab value="Google Memorystore">
     ```bash
     # Get the Memorystore instance connection details
@@ -170,6 +238,30 @@ When using Google Memorystore:
     redis-cli -h $REDIS_HOST -p $REDIS_PORT ping
     ```
 
+  </Tab>
+
+  <Tab value="AWS ElastiCache">
+    ```bash
+    # Get the ElastiCache endpoint
+    REDIS_ENDPOINT=$(aws elasticache describe-replication-groups \
+      --replication-group-id [CACHE_NAME] \
+      --query "ReplicationGroups[0].ConfigurationEndpoint.Address" \
+      --output text)
+
+    # If using non-cluster mode, get the primary endpoint instead
+    REDIS_ENDPOINT=$(aws elasticache describe-replication-groups \
+      --replication-group-id [CACHE_NAME] \
+      --query "ReplicationGroups[0].NodeGroups[0].PrimaryEndpoint.Address" \
+      --output text)
+
+    REDIS_PORT=6379  # Default port for ElastiCache
+
+    # Test connection using redis-cli with TLS
+    redis-cli -h $REDIS_ENDPOINT -p $REDIS_PORT --tls -a your-password ping
+
+    # Expected response
+    PONG
+    ```
   </Tab>
 
   <Tab value="Standard Redis">
