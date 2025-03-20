@@ -66,6 +66,7 @@ redis:
   port: '<redis-port>'
   password: '<redis-password>'
   tls: true
+  cluster: false
 
 postgresql:
   host: '<postgresql-host>'
