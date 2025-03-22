@@ -20,7 +20,7 @@
         "react-dom": "19.0.0",
         "tailwind-merge": "3.0.2",
         "tailwindcss-animate": "1.0.7",
-        "ultracite": "4.1.21",
+        "ultracite": "4.2.0",
       },
       "devDependencies": {
         "@eslint/eslintrc": "3.3.1",
@@ -1497,7 +1497,7 @@
 
     "ufo": ["ufo@1.5.4", "", {}, "sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ=="],
 
-    "ultracite": ["ultracite@4.1.21", "", { "dependencies": { "commander": "^12.1.0" }, "bin": { "ultracite": "scripts/run.mjs" } }, "sha512-t1AMqC4V4FHKVObPNcQZYdeIStaDaEA3/GEh8k9aEaKn5f+7JJArS2ZkPKmMfv8rdqBQnstq+TMk3I+/hA07sA=="],
+    "ultracite": ["ultracite@4.2.0", "", { "dependencies": { "commander": "^12.1.0" }, "bin": { "ultracite": "scripts/run.mjs" } }, "sha512-nMytk8r18BHqiZesOZogGuSGHPrsfPbI7qewSfeRD5bKtJsTl2F/c921HjIN5Zvlv5+QZvixfF3DuHRwONv0/w=="],
 
     "unbox-primitive": ["unbox-primitive@1.1.0", "", { "dependencies": { "call-bound": "^1.0.3", "has-bigints": "^1.0.2", "has-symbols": "^1.1.0", "which-boxed-primitive": "^1.1.1" } }, "sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw=="],
 
