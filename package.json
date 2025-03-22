@@ -43,7 +43,7 @@
     "typescript": "5.8.2",
     "eslint": "9.22.0",
     "eslint-config-next": "15.2.3",
-    "@eslint/eslintrc": "3.3.0",
+    "@eslint/eslintrc": "3.3.1",
     "@eslint/js": "9.22.0"
   }
 }
