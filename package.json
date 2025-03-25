@@ -12,7 +12,7 @@
     "docker": "bash -c \"docker buildx build . --provenance true --sbom true --platform=linux/amd64,linux/arm64 -t ghcr.io/settlemint/btp-docs:${VERSION:-7.0.0-dev.$(date +%s)} --push --progress=plain\""
   },
   "dependencies": {
-    "@next/third-parties": "15.2.3",
+    "@next/third-parties": "15.2.4",
     "@theguild/remark-mermaid": "0.3.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
@@ -22,7 +22,7 @@
     "fumadocs-twoslash": "3.1.0",
     "fumadocs-ui": "15.1.2",
     "lucide-react": "0.483.0",
-    "next": "15.2.3",
+    "next": "15.2.4",
     "prettier": "3.5.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -42,7 +42,7 @@
     "tailwindcss": "4.0.15",
     "typescript": "5.8.2",
     "eslint": "9.23.0",
-    "eslint-config-next": "15.2.3",
+    "eslint-config-next": "15.2.4",
     "@eslint/eslintrc": "3.3.1",
     "@eslint/js": "9.23.0"
   }
