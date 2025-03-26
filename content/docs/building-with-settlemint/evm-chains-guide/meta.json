@@ -1,7 +1,6 @@
 {
   "label": "EVM Chains Guide",
   "title": "EVM Chains Guide",
-  "icon": "Grid2x2Plus",
   "pages": [
     "create-an-application",
     "add-network-and-nodes",
