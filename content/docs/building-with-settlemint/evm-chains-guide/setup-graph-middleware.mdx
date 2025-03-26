@@ -1,0 +1,594 @@
+---
+title: Setup Graph Middleware
+description: Setup read middleware
+---
+
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
+
+<div style={{
+  backgroundColor: "#e1eafd", 
+  color: "#356fee", 
+  padding: "0.5px 10px 10px 10px",
+  borderRadius: "10px", 
+  fontSize: "18px", 
+  fontWeight: "bold",
+  lineHeight: "1.5",
+  textAlign: "left"
+}}>
+  Summary  
+  <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
+
+To set up a Graph middleware in SettleMint, you’ll begin by ensuring that your
+application and blockchain node are ready. The Graph middleware will serve as
+your read layer, enabling powerful querying of on-chain events using a GraphQL
+interface. This is particularly useful when you want to retrieve and analyze
+historical smart contract data in a structured, filterable format.
+
+First, you’ll need to add the middleware itself. Head to the Middleware section
+inside your application on the SettleMint platform. Click Add a middleware, and
+select Graph as the type. Assign a name, pick the blockchain node (where your
+smart contract is deployed), configure the deployment settings, and confirm.
+This action will provision the underlying infrastructure required to run your
+subgraph.
+
+Next, you will create the subgraph package in Code Studio. The subgraph folder
+contains all the code and configuration required for indexing and querying your
+smart contract’s events. You will define a subgraph.config.json file that lists
+the network (via chain ID), your contract address, and the data sources (i.e.,
+smart contracts and associated modules) that the subgraph will index.
+
+Inside the datasources folder, you will create a userdata.yaml manifest file
+that outlines the smart contract address, ABI path, start block, and
+event-handler mappings. This YAML file connects emitted events like
+ProfileCreated, ProfileUpdated, and ProfileDeleted with specific AssemblyScript
+functions that define how the data is processed and stored.
+
+You will then define the schema in userdata.gql.json. This is your GraphQL
+schema, which defines the structure of your indexed data. Entities like
+UserProfile, ProfileCreated, and ProfileUpdated are defined here, each with the
+fields to be stored and queried later via GraphQL.
+
+Once the schema is ready, you will implement the mapping logic in userdata.ts,
+which listens for emitted events and updates the subgraph’s entities
+accordingly. A helper file inside the fetch directory will provide utility logic
+to create or retrieve entities without code repetition.
+
+After writing all files, you will run the codegen, build, and deploy scripts
+using the provided task buttons in Code Studio. These scripts will compile your
+schema and mapping into WebAssembly (WASM), bundle it for deployment, and push
+it to the Graph middleware node.
+
+Once deployed, you will be able to open the Graph middleware’s GraphQL explorer
+and run queries against your indexed data. You can query by ID or use the plural
+form to get a list of entries. This enables your application or analytics layer
+to fetch historical state data in a fast and reliable way.
+
+</div>
+</div>
+
+## How to setup Graph Middleware and API Portal in SettleMint platform
+
+Middleware acts as a bridge between your blockchain network and applications,
+providing essential services like data indexing, API access, and event
+monitoring. Before adding middleware, ensure you have an application and
+blockchain node in place.
+
+## How to Add Middleware
+
+![Add Graph Middleware](../../../img/building-with-settlemint/add-graph-middleware.png)
+
+<Tabs items={['SDK CLI', 'Platform UI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Navigate to Application
+      Navigate to the **application** where you want to add middleware.
+
+      ### Access Middleware Section
+      Click **Middleware** in the left navigation, and then click **Add a middleware**. This opens a form.
+
+      ### Configure Middleware
+      1. Choose middleware type (Graph or Portal)
+      2. Choose a **Middleware name**
+      3. Select the **blockchain node**
+      4. Configure deployment settings
+      5. Click **Confirm**
+    </Steps>
+
+  </Tab>
+
+  <Tab value="SDK CLI">
+    First ensure you're authenticated:
+    ```bash
+    settlemint login
+    ```
+
+    Create a middleware:
+    ```bash
+    # Get the list of available middleware types
+    settlemint platform create middleware --help
+
+    # Create a middleware
+    settlemint platform create middleware <type> <name>
+
+    # Get information about the command and all available options
+    settlemint platform create middleware <type> --help
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    import { createSettleMintClient } from '@settlemint/sdk-js';
+
+    const client = createSettleMintClient({
+      accessToken: 'your_access_token',
+      instance: 'https://console.settlemint.com'
+    });
+
+    // Create middleware
+    const createMiddleware = async () => {
+      const result = await client.middleware.create({
+        applicationUniqueName: "your-app-unique-name",
+        name: "my-middleware",
+        type: "SHARED",
+        interface: "GRAPH",
+        blockchainNodeUniqueName: "your-node-unique-name",
+        region: "EUROPE",  // Required
+        provider: "GKE",   // Required
+        size: "SMALL"      // Valid options: "SMALL" | "MEDIUM" | "LARGE"
+      });
+      console.log('Middleware created:', result);
+    };
+    ```
+
+    <Callout type="tip">
+    Get your access token from the Platform UI under User Settings → API Tokens.
+    </Callout>
+
+  </Tab>
+</Tabs>
+
+## Manage Middleware
+
+<Tabs items={['SDK CLI', 'Platform UI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    Navigate to your middleware and click **Manage middleware** to:
+    - View middleware details and status
+    - Update configurations
+    - Monitor health
+    - Access endpoints
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # List middlewares
+    settlemint platform list middlewares --application <app-name>
+
+    # Get middleware details
+    settlemint platform read middleware <middleware-name>
+
+    # Delete middleware
+    settlemint platform delete middleware <middleware-name>
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // List middlewares
+    await client.middleware.list("your-app");
+
+    // Get middleware details
+    await client.middleware.read("middleware-unique-name");
+
+    // Delete middleware
+    await client.middleware.delete("middleware-unique-name");
+    ```
+
+  </Tab>
+</Tabs>
+
+## Subgraph folder structure in Code Studio IDE
+
+```
+subgraph/
+│
+├── subgraph.config.json
+│
+├── datasources/
+│   ├── mycontract.gql.json
+│   ├── mycontract.ts
+│   └── mycontract.yaml
+│
+└── fetch/
+└── mycontract.ts
+```
+
+
+## Subgraph deployment process
+
+### 1. Collect constants needed
+
+Find the chain ID of the network from igntition>deployments folder name
+(chain-ID) or from the Platform UI at Blockchain Networks > Selcted Network >
+Details page, it will be something like **47440**.
+
+Locate the contract address, deployed contract address is stored in
+deployed_addresses.json file located in igntition>deployments folder.
+
+### 2. Building subgraph.config.json file
+
+  This file is the foundational configuration for your subgraph. It defines how and where the subgraph will be generated and which contracts it will be tracking. Think of it as the control panel that the subgraph compiler reads to understand what contracts to index, where to start indexing from (which block), and which folder contains the relevant configurations (e.g., YAML manifest, mappings, schema, etc.). 
+  
+  Each object in the datasources array represents a separate contract. You specify the contract’s name, address, the block number at which the indexer should begin listening, and the path to the module folder (which holds the YAML manifest and mapping logic). This file is essential when working with Graph CLI or SDKs for compiling and deploying subgraphs. 
+  
+  When writing this file from scratch, you will need to gather the deployed contract address, decide the indexing start block (can be 0 or a specific block to save resources), and organize contract-related files in a logical module folder.
+
+```json
+{
+  "output": "generated/scs.",
+  "chain": "44819",
+  "datasources": [
+    {
+      "name": "UserData",
+      "address": "0x8b1544B8e0d21aef575Ce51e0c243c2D73C3C7B9",
+      "startBlock": 0,
+      "module": ["userdata"]
+    }
+  ]
+}
+```
+
+### 3 Create userdata.yaml file
+
+This is the YAML manifest file that tells the subgraph how to interact with a specific smart contract on-chain. 
+It defines the contract’s ABI, address, the events to listen to, and the mapping logic that should be triggered for each event. 
+
+The structure must follow a strict YAML format—wrong indentation or a missing property can break the subgraph. 
+Under the source section, you provide the contract’s address, the ABI name, and the block from which indexing should begin. 
+
+The mapping section details how the subgraph handles events. It specifies the API version, programming language (AssemblyScript), the entities it will touch, and the path to the mapping file. 
+Each eventHandler entry pairs an event signature (from the contract) with a function that will process it. When writing this from scratch, ensure that all event signatures exactly match those in your contract (parameter order and types must be accurate), and align them with the corresponding handler function names.
+
+```yaml
+- kind: ethereum/contract
+  name: { id }
+  network: { chain }
+  source:
+    address: "{address}"
+    abi: UserData
+    startBlock: { startBlock }
+  mapping:
+    kind: ethereum/events
+    apiVersion: 0.0.5
+    language: wasm/assemblyscript
+    entities:
+      - UserProfile
+      - ProfileCreated
+      - ProfileUpdated
+      - ProfileDeleted
+    abis:
+      - name: UserData
+        file: "{root}/out/UserData.sol/UserData.json"
+    eventHandlers:
+      - event: ProfileCreated(indexed uint256,string,string,uint8,string,bool)
+        handler: handleProfileCreated
+      - event: ProfileUpdated(indexed uint256,string,string,uint8,string,bool)
+        handler: handleProfileUpdated
+      - event: ProfileDeleted(indexed uint256)
+        handler: handleProfileDeleted
+    file: { file }
+```
+
+### 4. Create userdata.gql.json file
+
+
+This JSON file defines the GraphQL schema that powers your subgraph’s data structure. 
+It outlines the shape of your data, which entities will be stored in the Graph Node’s underlying database, and the fields each entity will expose to users via GraphQL queries. 
+
+Every event-based entity (like ProfileCreated, ProfileUpdated, ProfileDeleted) is linked to the main entity (here, UserProfile) to maintain a historical audit trail. 
+Each entity must have an id field of type ID!, which serves as the primary key. 
+
+You then define all other fields with their data types and nullability. 
+When writing this schema, think in terms of how data will be queried: What information will consumers of the subgraph want to retrieve? 
+The names and types must exactly reflect the logic in your mapping files. For reuse across projects, just align this schema with the domain model of your contract.
+
+```
+[
+  {
+    "name": "UserProfile",
+    "description": "Represents the current state of a user's profile.",
+    "fields": [
+      { "name": "id", "type": "ID!" },
+      { "name": "name", "type": "String!" },
+      { "name": "email", "type": "String!" },
+      { "name": "age", "type": "Int!" },
+      { "name": "country", "type": "String!" },
+      { "name": "isKYCApproved", "type": "Boolean!" },
+      { "name": "isDeleted", "type": "Boolean!" }
+    ]
+  },
+  {
+    "name": "ProfileCreated",
+    "description": "Captures the event when a new user profile is created.",
+    "fields": [
+      { "name": "id", "type": "ID!" },
+      { "name": "userId", "type": "BigInt!" },
+      { "name": "userProfile", "type": "UserProfile!" }
+    ]
+  },
+  {
+    "name": "ProfileUpdated",
+    "description": "Captures the event when an existing user profile is updated.",
+    "fields": [
+      { "name": "id", "type": "ID!" },
+      { "name": "userId", "type": "BigInt!" },
+      { "name": "userProfile", "type": "UserProfile!" }
+    ]
+  },
+  {
+    "name": "ProfileDeleted",
+    "description": "Captures the event when a user profile is soft-deleted.",
+    "fields": [
+      { "name": "id", "type": "ID!" },
+      { "name": "userId", "type": "BigInt!" },
+      { "name": "userProfile", "type": "UserProfile!" }
+    ]
+  }
+]
+```
+
+### 5. Create userdata.ts file
+
+This file contains the event handler functions written in AssemblyScript. 
+It directly responds to the events emitted by your smart contract and updates the subgraph’s store accordingly. 
+Each exported function matches an event in the YAML manifest. Inside each function, the handler builds a unique ID for the event (usually combining the transaction hash and log index), processes the event payload, and updates or creates the relevant entity (here, UserProfile). 
+
+The logic can include custom processing like formatting values, filtering, or even transforming data types. 
+This file is where your business logic resides, similar to an event-driven backend microservice. 
+You should keep this file modular and focused, avoiding code repetition by calling reusable helper functions like fetchUserProfile. When writing this from scratch, always import the generated event types and schema entities, and handle edge cases like entity non-existence or inconsistent values.
+
+
+```ts
+import { BigInt } from "@graphprotocol/graph-ts";
+import {
+  ProfileCreated as ProfileCreatedEvent,
+  ProfileUpdated as ProfileUpdatedEvent,
+  ProfileDeleted as ProfileDeletedEvent,
+} from "../../generated/userdata/UserData";
+import {
+  UserProfile,
+  ProfileCreated,
+  ProfileUpdated,
+  ProfileDeleted,
+} from "../../generated/schema";
+import { fetchUserProfile } from "../fetch/userdata";
+
+export function handleProfileCreated(event: ProfileCreatedEvent): void {
+  // Generate a unique event ID using transaction hash and log index
+  let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+  let entity = new ProfileCreated(id);
+  entity.userId = event.params.userId;
+
+  // Fetch or create the UserProfile entity
+  let profile = fetchUserProfile(event.params.userId);
+  profile.name = event.params.name;
+  profile.email = event.params.email;
+  profile.age = event.params.age;
+  profile.country = event.params.country;
+  profile.isKYCApproved = event.params.isKYCApproved;
+  profile.isDeleted = false;
+  profile.save();
+
+  // Link the event entity to the user profile and save
+  entity.userProfile = profile.id;
+  entity.save();
+}
+
+export function handleProfileUpdated(event: ProfileUpdatedEvent): void {
+  let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+  let entity = new ProfileUpdated(id);
+  entity.userId = event.params.userId;
+
+  // Retrieve and update the existing UserProfile entity
+  let profile = fetchUserProfile(event.params.userId);
+  profile.name = event.params.name;
+  profile.email = event.params.email;
+  profile.age = event.params.age;
+  profile.country = event.params.country;
+  profile.isKYCApproved = event.params.isKYCApproved;
+  profile.isDeleted = false;
+  profile.save();
+
+  entity.userProfile = profile.id;
+  entity.save();
+}
+
+export function handleProfileDeleted(event: ProfileDeletedEvent): void {
+  let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+  let entity = new ProfileDeleted(id);
+  entity.userId = event.params.userId;
+
+  // Retrieve the UserProfile entity and mark it as deleted
+  let profile = fetchUserProfile(event.params.userId);
+  profile.isDeleted = true;
+  profile.save();
+
+  entity.userProfile = profile.id;
+  entity.save();
+}
+```
+
+### 6. Create another userdata.ts in the fetch folder
+
+This is a helper utility designed to avoid redundancy in your mapping file. 
+It abstracts the logic of either loading an existing entity or creating a new one if it doesn’t exist. 
+
+It enhances reusability and reduces boilerplate in each handler function. 
+The naming convention of this file usually mirrors the module or entity it’s associated with (e.g., fetch/userdata.ts). 
+
+The logic inside the function uses the userId (or other unique identifier) as a string key and ensures that all required fields have a default value. 
+When writing this from scratch, ensure every field in your GraphQL schema has an initialized value to prevent errors during Graph Node processing.
+
+```ts
+import { BigInt } from "@graphprotocol/graph-ts";
+import { UserProfile } from "../../generated/schema";
+
+/**
+ * Fetches a UserProfile entity using the given userId.
+ * If it does not exist, a new UserProfile entity is created with default values.
+ *
+ * @param userId - The user ID as a BigInt.
+ * @returns The UserProfile entity.
+ */
+export function fetchUserProfile(userId: BigInt): UserProfile {
+  let id = userId.toString();
+  let user = UserProfile.load(id);
+
+  if (!user) {
+    user = new UserProfile(id);
+    user.name = "";
+    user.email = "";
+    user.age = 0;
+    user.country = "";
+    user.isKYCApproved = false;
+    user.isDeleted = false;
+  }
+
+  return user;
+}
+```
+
+```mermaid
+flowchart TD
+
+%% --- Inputs ---
+F1["out/UserData.json (ABI from compiler)                               "]:::tooling
+F2["deployed_addresses.json (Deployed contract address)              "]:::tooling
+F3["deployments/[chain-id] (Defines network chain ID)                 "]:::tooling
+
+%% --- Configuration Files ---
+A1["1 - subgraph.config.json - Declares network, output, and datasources   "]:::config
+A2["2 - userdata.yaml - Sets ABI, contract address, event handlers         "]:::config
+
+%% --- Contract & Events ---
+B1["UserData.sol - Smart contract with profile lifecycle logic            "]:::contract
+B2["Events: ProfileCreated, ProfileUpdated, ProfileDeleted                "]:::event
+
+%% --- Mappings & Helpers ---
+C1["3 - userdata.ts - Mapping logic to handle events and update entities   "]:::mapping
+C2["4 - fetch/userdata.ts - Loads or creates UserProfile entity            "]:::helper
+
+%% --- Schema & Storage ---
+D1["5 - userdata.gql.json - GraphQL schema defining types and relationships"]:::schema
+D2["Graph Node DB - Stores UserProfile and events, queryable via GraphQL "]:::db
+
+%% --- API Layer ---
+E1["GraphQL API - Exposes indexed data to dApps and dashboards            "]:::api
+
+%% --- Connections ---
+F1 --> A2
+F2 --> A1
+F3 --> A1
+A1 --> A2
+A2 --> B1
+B1 --> B2
+B2 --> C1
+A2 --> C1
+C1 --> C2
+C1 --> D2
+D1 --> D2
+D2 --> E1
+
+%% --- Styling ---
+classDef config fill:#D0EBFF,stroke:#1E40AF,stroke-width:1px
+classDef mapping fill:#FEF3C7,stroke:#B45309,stroke-width:1px
+classDef schema fill:#E0F2FE,stroke:#0369A1,stroke-width:1px
+classDef contract fill:#FECACA,stroke:#B91C1C,stroke-width:1px
+classDef event fill:#FCD34D,stroke:#92400E,stroke-width:1px
+classDef db fill:#DCFCE7,stroke:#15803D,stroke-width:1px
+classDef api fill:#E9D5FF,stroke:#7C3AED,stroke-width:1px
+classDef abi fill:#F3E8FF,stroke:#9333EA,stroke-width:1px
+classDef helper fill:#F5F5F4,stroke:#3F3F46,stroke-width:1px
+classDef tooling fill:#F0F9FF,stroke:#0284C7,stroke-width:1px
+```
+
+## Codegen, build and deploy subgraph
+
+### Run Codegen script using the task manager of the IDE
+
+![Graph Codegen](../../../img/building-with-settlemint/graph-codegen.png)
+
+### Run Graph Build script using the task manager of the IDE
+
+![Graph Build](../../../img/building-with-settlemint/graph-build.png)
+
+### Run Graph deploy script using the task manager of the IDE
+
+![Graph Deploy](../../../img/building-with-settlemint/graph-deploy.png)
+
+### Why we see a duplicay in the GraphQL schema -
+
+In The Graph’s autogenerated schema, each entity is provided with two types of
+queries by default:
+
+- **Single-Entity Query:**  
+  `userProfile(id: ID!): UserProfile`  
+  _Fetches a single `UserProfile` by its unique ID._
+
+- **Multi-Entity Query:**  
+  `userProfiles(...): [UserProfile]`  
+  _Fetches a list of `UserProfile` entities, with optional filters to refine the
+  results._
+
+Why This Duplication Exists - **Flexibility in Data Access:** By offering both
+single-entity and multi-entity queries, The Graph allows you to choose the most
+efficient way to access your data. If you know the exact ID, you can use the
+single query for a quick lookup. If you need to display or analyze a collection
+of records, the multi-entity query is available. - **Optimized Performance:**
+Retrieving a specific record via the single-entity query avoids unnecessary
+overhead that comes with filtering through a list, ensuring more efficient data
+access when the unique identifier is known. - **Catering to Different Use
+Cases:** Different parts of your application may require different query types.
+Detailed views might need a single record (using userProfile), while list views
+benefit from the filtering and pagination offered by userProfiles. -
+**Consistency Across the Schema:** Generating both queries for every entity
+ensures a consistent API design, which simplifies development by providing a
+predictable pattern for data access regardless of the entity.
+
+### Graph Middleware - Querying data
+
+We can query based on the ID
+![Graph Query Profile](../../../img/building-with-settlemint/graph-query-profile.png)
+
+Or we can query to return all entries
+![Graph Query multiple Profiles](../../../img/building-with-settlemint/graph-query-profiles.png)
+
+<div style={{
+  backgroundColor: "#D1E5E8", 
+  color: "#000000", 
+  padding: "0.5px 10px 10px 10px",
+  borderRadius: "10px", 
+  fontSize: "18px", 
+  fontWeight: "light",
+  lineHeight: "1.5",
+  textAlign: "left"
+}}>
+Congratulations.!!
+
+You have succesfully configured Graph Middleware and deployed subgraphs to
+enable smart contractindexing. With this you have both read and write middelware
+for your smart contracts. 
+
+This marks the end of the core Web3 development, from
+here we will proceed to adding off-chain database and storage options to enable
+us to have a holistic backend and storage layer for our application.
+
+</div>
+
+```
+Keywords: graph middleware, subgraph, graphql api, smart contract indexing, blockchain data indexing, settlemint, event handlers, graphql schema, graphql explorer, wasm mappings, on-chain data querying, user profile entity, subgraph config, subgraph deployment, sdk cli, sdk js, read layer, graphql query, graphql interface, code studio, datasource yaml, mapping file, assemblyscript, graphql entities, ethereum events, fetch logic, graphql duplication, multi-entity query, graphql performance, graphql filtering, decentralized querying, content indexing, chain id, blockchain events, profilecreated, profileupdated, profiledeleted, subgraph schema, event-driven indexing, sdk integration, graphql api explorer, web3 middleware, node middleware, smart contract analytics, graphql developer tools, middleware provisioning, graphql endpoint, graphql introspection, decentralized data access, smart contract monitoring, subgraph architecture, blockchain application backend, settlemint platform, graphql setup
+```

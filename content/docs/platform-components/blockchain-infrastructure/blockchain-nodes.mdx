@@ -1,0 +1,447 @@
+---
+title: Blockchain Nodes
+description: Blockchain node management in SettleMint Platform
+---
+
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
+
+A **blockchain node** is a **computer program** that maintains and verifies the
+integrity of a distributed ledger. A **set of nodes** forms a **network**,
+ensuring decentralized operations by synchronizing blockchain data and executing
+transactions. Nodes collectively validate and store information, making
+blockchains secure, transparent, and immutable.
+
+**EVM-based blockchains** support both **public** and **permissioned** networks.
+**Public EVM blockchains**, such as **Ethereum and Polygon**, are open to
+anyone, allowing decentralized participation in transaction validation and smart
+contract execution. These networks rely on economic incentives and
+permissionless consensus mechanisms like **Proof of Stake (PoS)** to maintain
+security and decentralization. On the other hand, **permissioned EVM
+blockchains**, such as **Quorum and Hyperledger Besu**, restrict participation
+to authorized entities. These networks prioritize privacy, regulatory
+compliance, and efficiency, often using **Proof of Authority (PoA)** or
+**Quorum Byzantine Fault Tolerance (QBFT)** to validate transactions. Whether
+public or permissioned, all EVM-based blockchains rely on a distributed set of
+nodes to maintain state synchronization and network security.
+
+**Hyperledger Fabric** is a **permissioned blockchain framework** built for
+enterprises requiring secure, controlled, and scalable blockchain solutions.
+Unlike EVM-based blockchains, which may be **public or permissioned**, Fabric
+networks are exclusively **permissioned**, ensuring that only pre-approved
+entities can operate nodes, validate transactions, and access network data.
+Fabric’s modular architecture allows organizations to define governance models,
+identity management policies, and consensus mechanisms tailored to their
+specific needs. Transactions in Fabric are endorsed by selected peers and then
+ordered into blocks using mechanisms like **Raft** or **Byzantine Fault Tolerant
+(BFT) ordering**, prioritizing efficiency and compliance over decentralization.
+
+---
+
+### **Types of Nodes in EVM-Based Blockchains**
+
+- **Validator Nodes:** Actively participate in consensus by proposing and
+  finalizing new blocks. These nodes maintain ledger integrity by operating
+  under consensus mechanisms like **Proof of Authority (PoA)** or **Istanbul
+  Byzantine Fault Tolerance (IBFT)**.
+- **Non-Validator Nodes (Observer Nodes):** Do not take part in consensus but
+  instead **synchronize blockchain data, respond to queries, and facilitate
+  smart contract execution**. They maintain updated copies of the blockchain
+  without finalizing blocks.
+
+### **Among non-validator nodes:**
+
+- **Full Nodes:** Store the entire blockchain history and verify transactions
+  without participating in block finalization.
+- **Archive Nodes:** Extend full node functionality by retaining complete
+  historical blockchain states, making them essential for querying past
+  transactions.
+
+### **Core Components of an EVM-Based Node**
+
+- **Execution Layer (EVM):** Processes smart contracts and updates the
+  blockchain state.
+- **Networking Layer (devp2p Protocol):** Facilitates peer-to-peer communication
+  for efficient data propagation.
+- **Storage Layer:** Manages blockchain data, including account states, logs,
+  receipts, and the **Merkle Patricia Trie** for world-state management.
+- **JSON-RPC Interface:** Provides an API for dApps, wallets, and external
+  applications to interact with the blockchain.
+
+---
+
+### **Types of Nodes in Hyperledger Fabric**
+
+- **Peer Nodes:** Maintain the ledger and execute smart contracts
+  (**Chaincode**).
+  - **Endorsing Peers:** Simulate transactions and provide endorsement
+    signatures, ensuring compliance with business rules.
+  - **Committing Peers:** Validate endorsed transactions and update the ledger.
+- **Ordering Nodes (Orderers):** Handle transaction sequencing, package
+  transactions into blocks, and distribute them to peers. These nodes ensure
+  consensus across the network using mechanisms like **Raft** or **Byzantine
+  Fault Tolerant (BFT) ordering**.
+- **Certificate Authority (CA) Nodes:** Issue and authenticate identities using
+  **Public Key Infrastructure (PKI)**, enforcing security policies and access
+  controls.
+
+Unlike EVM-based blockchains, Fabric nodes **do not store a global state in
+shared memory**. Instead, they use separate **key-value stores and dedicated
+ledgers**, enhancing **privacy and scalability**.
+
+### **Core Components of a Hyperledger Fabric Node**
+
+- **Chaincode Layer:** Executes smart contract logic and enforces business
+  rules.
+- **Ledger Layer:** Stores transactional data using **LevelDB** or **CouchDB**
+  as key-value state databases.
+- **Communication Layer:** Manages gRPC-based interactions between nodes.
+- **Membership Service Provider (MSP):** Governs identity verification, access
+  policies, and network governance.
+
+## **SettleMint Platform’s Node Manager**
+
+![Nodes List](../../../img/platfrom-components/node-list.png)
+
+The **SettleMint Node Manager** simplifies blockchain node deployment and
+management, offering a **user-friendly interface** to configure, monitor, and
+maintain nodes on different blockchain networks. It enables businesses and
+developers to:
+
+- **Deploy nodes in a few clicks** without complex configurations.
+- **Monitor network health and performance** with real-time statistics.
+- **Pause and resume nodes** to optimize resource usage and costs.
+- **Interact with blockchain APIs** through JSON-RPC, WebSockets, and GraphQL.
+- **Manage security and identity credentials** via cryptographic key management.
+
+## **1. Hyperledger Besu Node Overview**
+
+The **Besu Node Dashboard** serves as a comprehensive interface for managing and
+monitoring a **Hyperledger Besu node**. It provides insights into node status,
+network connectivity, blockchain interactions, and system performance.
+
+### **1.1 Details Tab**
+
+![EVM Node Info](../../../img/platfrom-components/evm-node-info.png)
+
+The **Details** tab provides key deployment information, including:
+
+- **Node Name & Status** – Identifies the instance and operational state.
+- **Deployment Location** – Specifies where the node is hosted.
+- **Blockchain Network & Protocol** – Indicates network participation and
+  protocol in use.
+- **Node Type** – Determines whether the node is a **validator** or other roles.
+
+![EVM Node Stats](../../../img/platfrom-components/evm-node-stats.png)
+
+### Node Identity (EVM Chains)
+
+![EVM Node Identity](../../../img/platfrom-components/evm-node-identity.png)
+
+The **Node Identity section** holds cryptographic keys and credentials that
+establish the node’s uniqueness within the network.
+
+- **Mnemonic** – A set of words that generate the private key.
+- **Derivation Path** – Defines how keys are generated from the mnemonic.
+- **Private Key** – The secret key used for signing transactions.
+- **Public Key** – The public identifier associated with the node.
+- **Blockchain Address** – The node’s address on the Ethereum network.
+- **Enode URL** – A unique identifier for node-to-node communication.
+
+The **node identity** plays a vital role in **establishing trust, securing
+transactions, and enabling peer-to-peer connectivity**.
+
+---
+
+### **1.2 Connect with node**
+
+![EVM Node Connection](../../../img/platfrom-components/evm-node-connection.png)
+
+This tab provides the **API endpoints** to interact with the node via different
+protocols:
+
+- **JSON-RPC Endpoint** – Used for blockchain interactions and queries.
+- **WebSocket (JSON-WS) Endpoint** – Enables real-time event streaming.
+- **GraphQL Endpoint** – Allows structured data querying.
+
+---
+
+### **1.3 JSON-RPC**
+
+The **JSON-RPC** interface enables blockchain queries, transactions, and
+debugging.
+
+![Node JSON RPC](../../../img/platfrom-components/node-jsonrpc.png)
+
+#### **Key Features:**
+
+- Querying blockchain information (blocks, transactions, accounts).
+- Sending transactions and interacting with smart contracts.
+- Debugging and tracing blockchain activities.
+
+#### **JSON-RPC Methods (Grouped by Category):**
+
+##### **Transaction & Gas Management**
+
+| Method                     | Description                                |
+| -------------------------- | ------------------------------------------ |
+| `eth_gasPrice`             | Retrieves the current gas price.           |
+| `eth_maxPriorityFeePerGas` | Returns the max priority fee per gas unit. |
+| `eth_feeHistory`           | Fetches historical gas fees.               |
+| `eth_estimateGas`          | Estimates gas required for a transaction.  |
+| `eth_sendRawTransaction`   | Sends a signed transaction.                |
+| `eth_sendTransaction`      | Sends a new transaction.                   |
+
+##### **Transaction Pool**
+
+| Method                           | Description                                  |
+| -------------------------------- | -------------------------------------------- |
+| `txpool_content`                 | Retrieves pending and queued transactions.   |
+| `txpool_status`                  | Returns transaction pool status.             |
+| `txpool_besuPendingTransactions` | Fetches Besu pending transactions.           |
+| `txpool_besuStatistics`          | Provides statistics on the transaction pool. |
+
+##### **Blockchain Data**
+
+| Method                      | Description                          |
+| --------------------------- | ------------------------------------ |
+| `eth_blockNumber`           | Returns the latest block number.     |
+| `eth_getBlockByHash`        | Retrieves block details by hash.     |
+| `eth_getBlockByNumber`      | Retrieves block details by number.   |
+| `eth_getTransactionByHash`  | Fetches transaction details by hash. |
+| `eth_getTransactionReceipt` | Retrieves transaction receipt.       |
+| `eth_getLogs`               | Fetches logs for a given filter.     |
+
+##### **Mining & Network**
+
+| Method                | Description                             |
+| --------------------- | --------------------------------------- |
+| `eth_mining`          | Checks if the node is currently mining. |
+| `eth_hashrate`        | Returns the mining hashrate.            |
+| `eth_protocolVersion` | Retrieves the protocol version.         |
+| `eth_syncing`         | Checks if the node is syncing.          |
+| `net_peerCount`       | Returns the number of peers connected.  |
+
+##### **Debug & Trace**
+
+| Method                    | Description                                        |
+| ------------------------- | -------------------------------------------------- |
+| `debug_traceTransaction`  | Returns a full trace of a transaction.             |
+| `debug_traceBlock`        | Provides traces for an entire block.               |
+| `debug_getRawTransaction` | Fetches raw transaction data.                      |
+| `debug_storageRangeAt`    | Retrieves a storage range from a specific account. |
+
+---
+
+### **1.4 GraphQL**
+
+GraphQL provides an efficient querying method for blockchain data.
+
+![Node GraphQL](../../../img/platfrom-components/node-graphql.png)
+
+#### **Benefits:**
+
+- Fetch specific blockchain details, such as transaction history.
+- Optimize data retrieval for dApps and front-end applications.
+
+---
+
+### **1.5 Resources**
+
+Monitors **CPU, memory, disk usage, and network connections** to optimize
+performance.
+
+![Node Resources](../../../img/platfrom-components/node-resources.png)
+
+#### **Capabilities:**
+
+- Prevent system overload by tracking hardware usage.
+- Ensure proper network connectivity and peer synchronization.
+
+---
+
+### **1.6 Logs**
+
+![EVM Node Logs](../../../img/platfrom-components/evm-node-logs.png)
+
+Real-time logs provide visibility into **node operations**, including:
+
+- **Peer connections and network status.**
+- **Transaction processing and block synchronization.**
+- **Debugging and security auditing.**
+
+---
+
+## **2. Hyperledger Fabric Node Overview**
+
+The **Hyperledger Fabric Node Dashboard** is designed to monitor and manage
+Fabric nodes, focusing on consensus, network identity, and operational metrics.
+
+### **2.1 Details Tab**
+
+![Fabric Node Info](../../../img/platfrom-components/fabric-node-info.png)
+
+The **Details** tab provides:
+
+- **Node Name & Deployment Location** – Identifies the instance.
+- **Blockchain Network & Protocol** – Hyperledger Fabric-specific details.
+- **Node Type** – Defines the node as an **Orderer** or **Peer**.
+- **Version** – Displays the running Hyperledger Fabric version.
+
+![Fabric Node Connection](../../../img/platfrom-components/fabric-node-connection.png)
+
+---
+
+### **2.2 Node Stats**
+
+Provides critical **consensus and participation metrics**, including:
+
+![Fabric Node Stats](../../../img/platfrom-components/fabric-node-stats.png)
+
+- **Consensus Leader Status** – Indicates if the node is leading consensus.
+- **Consensus Relation** – Defines the node’s role (e.g., **Consenter**).
+- **Participation Status** – Specifies whether the node is actively
+  participating.
+- **Ledger Height** – Displays the blockchain height.
+- **Proposal Metrics** – Tracks transaction proposals received per time
+  interval.
+
+---
+
+### **2.3 Node Identity & Security**
+
+![Fabric Node Identity](../../../img/platfrom-components/fabric-node-identity.png)
+
+This section contains **cryptographic details** for network security:
+
+- **Administrator’s TLS Certificates & Keys** – Ensures secure communication.
+- **Node’s TLS Certificates & Public Keys** – Verifies node identity.
+- **Private Keys & Certificates** – Used for authentication and encryption.
+
+#### **Capabilities:**
+
+- **Secure Network Communication** – TLS encryption for data integrity.
+- **Node Authentication** – Ensures trusted interactions within Fabric.
+- **Certificate Management** – Maintains cryptographic security.
+
+---
+
+### **2.4 Resources Tab**
+
+Similar to Besu, this tab provides:
+
+- **CPU & Memory Monitoring** – Optimizes resource allocation.
+- **Storage Usage** – Ensures sufficient disk space for operations.
+- **Peer & Orderer Connectivity** – Maintains network stability.
+
+---
+
+### **2.5 Logs Tab**
+
+![Fabric Node Logs](../../../img/platfrom-components/fabric-node-logs.png)
+
+Displays **Fabric-specific logs** related to:
+
+- **Orderer operations & consensus messages.**
+- **Transaction validation & endorsement events.**
+- **Network health & debugging information.**
+
+---
+
+## Node Connections
+
+For an application to interact with a blockchain (e.g. by sending
+transactions/data to the network, or even just by reading data), it must connect
+to a node.
+
+To connect to a node, you use an endpoint, which is a URL that enables an API to
+gain access to the node. You interact with the node by sending requests to, and
+receiving responses from it via an API.
+
+You can find the endpoints on the node detail page, in the Connect tab, together
+with node interaction tools with playgrounds for real-time tryouts (e.g.
+JSON-RPC, GraphQL, etc.).
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Connection Methods
+    - JSON-RPC endpoints
+    - WebSocket connections
+    - IPC connections
+    - GraphQL endpoints
+  </Card>
+
+  <Card>
+    ### Key Features
+    - Secure connections
+    - Multiple protocols
+    - Authentication support
+    - Load balanced access
+  </Card>
+</div>
+
+## Connection Details
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Access Node
+      Navigate to your node in the application
+
+      ### View Connection Info
+      Open the **Connect** tab to find:
+      - Endpoint URLs
+      - Authentication tokens
+      - Connection examples
+    </Steps>
+
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Get node connection details
+    settlemint platform read node <node-name> --show-connection
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    const getConnectionDetails = async () => {
+      const node = await client.node.read("node-name");
+      console.log('Connection details:', node.connection);
+    };
+    ```
+  </Tab>
+</Tabs>
+
+## Connection Examples
+
+<Tabs items={['Web3.js', 'Ethers.js', 'Curl']}>
+  <Tab value="Web3.js">
+    ```javascript
+    const Web3 = require('web3');
+    const web3 = new Web3('https://your-node-url/token');
+    ```
+  </Tab>
+
+<Tab value="Ethers.js">
+  ```javascript const {ethers} = require('ethers'); const provider = new
+  ethers.JsonRpcProvider('https://your-node-url/token'); ```
+</Tab>
+
+  <Tab value="Curl">
+    ```bash
+    curl -X POST https://your-node-url \
+      -H "Content-Type: application/json" \
+      -H "x-auth-token: <token>" \
+      --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+  Replace `your-node-url` and `token` with the actual values from your node's
+  connection details.
+</Callout>

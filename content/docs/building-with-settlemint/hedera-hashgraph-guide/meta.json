@@ -1,0 +1,22 @@
+{
+  "label": "Hedera Hashgraph Guide",
+  "title": "Hedera Hashgraph Guide",
+  "icon": "Grid2x2Plus",
+  "pages": [
+    "introduction-to-hedera",
+    "setup-account-and-billing",
+    "create-an-application",
+    "add-network-and-nodes",
+    "add-private-keys",
+    "setup-code-studio",
+    "deploy-smart-contracts",
+    "setup-api-portal",
+    "setup-graph-middleware",
+    "setup-offchain-database",
+    "setup-storage",
+    "deploy-custom-services",
+    "integration-studio",
+    "attestation-indexer",
+    "audit-logs"
+  ]
+}

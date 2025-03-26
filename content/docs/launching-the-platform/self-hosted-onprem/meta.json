@@ -1,0 +1,11 @@
+{
+  "label": "Self-hosted: On-prem",
+  "title": "Self-hosted: On-prem",
+  "icon": "Server",
+  "pages": [
+    "introduction",
+    "infrastructure-requirements",
+    "platform-installation",
+    "prerequisites"
+  ]
+}

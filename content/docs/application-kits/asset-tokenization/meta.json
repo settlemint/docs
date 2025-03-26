@@ -1,0 +1,6 @@
+{
+  "label": "Asset Tokenization",
+  "title": "Asset Tokenization",
+  "icon": "Bolt",
+  "pages": ["asset-tokenization-kit", "contracts", "usecases"]
+}

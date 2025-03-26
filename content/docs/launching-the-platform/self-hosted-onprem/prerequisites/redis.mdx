@@ -1,0 +1,212 @@
+---
+title: Redis Cache
+description: Setup and configure Redis cache for your self-hosted platform
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
+## Overview
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Purpose
+    - Session management
+    - Real-time features
+    - Caching layer
+    - Performance optimization
+  </Card>
+
+  <Card>
+    ### Key Features
+    - Fast in-memory storage
+    - Data persistence
+    - High availability
+    - Monitoring capabilities
+  </Card>
+</div>
+
+## Deployment Options
+
+<Tabs items={['Managed Service (Recommended)', 'Helm Chart']}>
+  <Tab value="Managed Service (Recommended)">
+    ### Cloud Provider Options
+
+    <Steps>
+      ### Google Cloud Memorystore
+      - Go to [Google Cloud Console](https://console.cloud.google.com)
+      - Enable Memorystore for Redis API
+      - Create new Redis instance:
+        - Choose Basic tier for standard workloads
+        - Select region (same as your GKE cluster)
+        - Set memory capacity (minimum 1GB)
+        - Enable authentication (recommended)
+      - Configure VPC network and authorized networks
+
+      ### Redis Cloud
+      - Create account at [Redis Cloud](https://app.redislabs.com)
+      - Create new subscription:
+        - Fixed plan (minimum 1GB)
+        - Choose region
+        - Enable password protection
+      - Create database with default settings
+
+      ### Digital Ocean Redis
+      - Access Digital Ocean Console
+      - Create Database > Redis
+      - Configure:
+        - Choose smallest plan
+        - Select datacenter
+        - Enable eviction policy
+    </Steps>
+
+    <Callout type="info">
+      **Benefits**
+      - Automatic backups
+      - High availability
+      - Security patches
+      - Performance monitoring
+    </Callout>
+
+  </Tab>
+
+  <Tab value="Helm Chart">
+    ### Bitnami Redis Chart
+
+    <Steps>
+      ### Add repository
+      ```bash
+      helm repo add bitnami https://charts.bitnami.com/bitnami
+      helm repo update
+      ```
+
+      ### Install Redis
+      ```bash
+      helm upgrade --install redis oci://registry-1.docker.io/bitnamicharts/redis \
+        --namespace redis \
+        --version 18.19.2 \
+        --create-namespace \
+        --set architecture=standalone \
+        --set global.redis.password=your-secure-password
+      ```
+
+      ### Wait for deployment
+      ```bash
+      kubectl -n redis get pods -w
+      ```
+    </Steps>
+
+    <Callout type="warning">
+      **For Production Use**
+      - Configure proper resource limits
+      - Set up persistence
+      - Consider high availability setup
+    </Callout>
+
+  </Tab>
+</Tabs>
+
+## Requirements
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Minimum Specifications
+    - Redis 6.0 or higher
+    - 1GB memory
+    - Network access from platform
+    - Password protection enabled
+  </Card>
+
+  <Card>
+    ### Recommended Features
+    - Persistence enabled
+    - Automatic backups
+    - Monitoring setup
+    - Eviction policies configured
+  </Card>
+</div>
+
+## Information Collection
+
+<Callout type="success">
+### Required Values for Platform Installation
+
+- [ ] Redis hostname/endpoint
+- [ ] Port number (default: 6379)
+- [ ] Password (if authentication enabled)
+- [ ] TLS enabled/disabled
+
+```yaml
+redis:
+  host: "" # Redis host collected in prerequisites
+  port: 6379 # Redis port collected in prerequisites
+  password: "" # Redis password collected in prerequisites
+  prefix: "sm" # In shared redis servers, this separates queues
+  tls: false # Set to true to use TLS mode
+```
+
+<Callout type="info">
+When using Google Memorystore:
+1. Enable only one Redis solution (`redis.enabled` or `redis.memorystore.enabled`)
+2. Ensure your GKE cluster has access to the Memorystore instance
+3. Configure the same region as your GKE cluster
+</Callout>
+</Callout>
+
+## Validation
+
+<Tabs items={['Google Memorystore', 'Standard Redis']}>
+  <Tab value="Google Memorystore">
+    ```bash
+    # Get the Memorystore instance connection details
+    REDIS_HOST=$(gcloud redis instances describe [INSTANCE_ID] \
+        --region=[REGION] --format='get(host)')
+    REDIS_PORT=$(gcloud redis instances describe [INSTANCE_ID] \
+        --region=[REGION] --format='get(port)')
+
+    # Test connection using redis-cli
+    redis-cli -h $REDIS_HOST -p $REDIS_PORT ping
+    ```
+
+  </Tab>
+
+  <Tab value="Standard Redis">
+    ```bash
+    # Using redis-cli
+    redis-cli -h your-redis-host -p 6379 -a your-password ping
+
+    # Expected response
+    PONG
+    ```
+
+  </Tab>
+</Tabs>
+
+## Troubleshooting
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Connection Failures
+    - Verify credentials
+    - Check network/firewall rules
+    - Confirm TLS settings
+    - Validate endpoint format
+    - For Memorystore: verify VPC peering
+  </Card>
+
+  <Card>
+    ### Performance Issues
+    - Monitor memory usage
+    - Check eviction policies
+    - Review connection limits
+    - Verify resource allocation
+    - For Memorystore: check instance tier
+  </Card>
+</div>
+
+<Callout type="info">
+  Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if
+  you encounter any issues.
+</Callout>

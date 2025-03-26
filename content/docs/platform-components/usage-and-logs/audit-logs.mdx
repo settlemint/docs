@@ -1,0 +1,79 @@
+---
+title: Audit Logs
+description: Guide to using audit logs in SettleMint
+---
+
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
+
+# Audit Logs
+
+Audit logs provide a detailed record of activities in any application deployed
+on the SettleMint Blockchain Transformation Platform. These logs provide the
+following key benefits:
+
+- Compliance: Ensure adherence to regulatory requirements and industry
+  standards.
+- Accountability: Maintain a clear record of actions and changes made by users
+  for transparency.
+- Troubleshooting: Facilitate the identification and resolution of issues by
+  tracking system activity.
+- Data integrity: Provide a reliable trail of data access and modifications,
+  protecting against data tampering
+
+Audit logs can be accessed from the application menu, on the left.
+
+Four filters are available to find specific entries in the logs:
+
+- Timestamp: select a time range or a day for which you want to get the logs.
+- Service: choose the service you want to analyze.
+- User: select a user from your application to see their actions.
+- Action: filter based on a specific action (e.g. create, delete, pause,...).
+
+## Access Audit Logs
+
+<Steps>
+  ### Navigate to Logs
+  Access from application menu on the left
+
+### Apply Filters
+
+Use available filters:
+
+- Timestamp: Select time range
+- Service: Choose specific service
+- User: Filter by user
+- Action: Filter by action type
+
+### View Details
+
+Examine detailed log entries
+
+</Steps>
+
+## Log Categories
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### System Events
+    - Service deployments
+    - Configuration changes
+    - Resource scaling
+    - System updates
+  </Card>
+
+  <Card>
+    ### User Actions
+    - Resource creation
+    - Permission changes
+    - Token management
+    - Access attempts
+  </Card>
+</div>
+
+<Callout type="info">
+  Audit logs provide essential tracking for regulatory compliance and security
+  monitoring.
+</Callout>

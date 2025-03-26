@@ -1,0 +1,133 @@
+---
+title: Load Balancer
+description: Guide to adding load balancers in SettleMint
+---
+
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
+
+A **blockchain load balancer** is a **networking component** designed to
+**distribute traffic efficiently across multiple blockchain nodes** to optimize
+performance, reliability, and scalability. It ensures that transaction requests,
+queries, and smart contract interactions are handled efficiently, preventing
+overloading on any single node. Load balancing is particularly important in
+blockchain environments where **multiple nodes serve API requests** for wallets,
+dApps, and enterprise applications. By intelligently routing requests, a
+blockchain load balancer enhances **availability, fault tolerance, and
+transaction throughput**. A blockchain load balancer operates as an
+**intermediary layer** between blockchain clients (wallets, dApps, APIs) and
+backend blockchain nodes. It ensures that requests are distributed efficiently
+based on predefined rules, improving performance and resilience.
+
+### **Key Steps in Load Balancing:**
+
+1. **Incoming Request Handling** – The load balancer receives API requests from
+   users, smart contracts, or external applications.
+2. **Node Health Check** – It continuously monitors node health, availability,
+   and performance to route traffic efficiently.
+3. **Request Distribution** – Transactions and queries are forwarded to the most
+   appropriate blockchain node using load-balancing strategies.
+4. **Response Management** – The selected node processes the request and returns
+   the response to the client.
+5. **Failover Handling** – If a node becomes unresponsive, the load balancer
+   automatically reroutes requests to healthy nodes.
+
+---
+
+### SettleMint Blockchain Platform: Load Balancer
+
+---
+
+![Network Load Balancer](../../../img/platfrom-components/evm-load-balancer.png)
+
+SettleMint provides an **integrated blockchain load balancer** to optimize the
+performance of blockchain networks deployed on its platform. The load balancer
+ensures **high availability, fault tolerance, and scalable performance** by
+**distributing traffic** across multiple blockchain nodes.  
+SettleMint employs a multi-layered application aware load balancing strategy to
+ensure optimal performance and network resilience. Our approach dynamically
+adapts to varying workloads and network conditions, ensuring seamless
+transaction processing and high availability. By leveraging a combination of
+intelligent request distribution and fault-tolerant mechanisms, we optimize
+efficiency while maintaining a robust and scalable blockchain environment. This
+feature is particularly beneficial for applications that require **high
+throughput, low latency, and continuous uptime** in blockchain transactions and
+queries.
+
+The **SettleMint blockchain load balancer** intelligently routes transaction and
+API requests across active nodes based on **network health, workload
+distribution, and failover mechanisms**.
+
+### **Load Balancer Process in SettleMint:**
+
+1. **Traffic Reception** – The load balancer receives requests from users, smart
+   contracts, and external systems.
+2. **Node Monitoring & Health Check** – It continuously checks node
+   availability, latency, and processing load.
+3. **Intelligent Routing** – Requests are distributed based on real-time node
+   performance using strategies like **round-robin, least connections, or
+   weighted routing**.
+4. **Failover Protection** – If a node goes offline, the load balancer
+   automatically redirects traffic to healthy nodes, ensuring uninterrupted
+   blockchain operations.
+5. **Response Handling** – The processed response is returned to the client from
+   the assigned node.
+
+---
+
+## Features of SettleMint’s Blockchain Load Balancer
+
+- **Auto-Scaling Support** – Dynamically adds or removes nodes to optimize
+  resource usage.
+- **High Availability** – Ensures continuous uptime by redirecting requests to
+  healthy nodes.
+- **Performance Optimization** – Reduces network congestion by balancing
+  workloads effectively.
+- **Multi-Protocol Support** – Compatible with **Ethereum JSON-RPC, Hyperledger
+  Fabric APIs, and custom blockchain endpoints**.
+- **Security & Rate Limiting** – Protects against **DDoS attacks and excessive
+  API calls**.
+
+---
+
+## Deployment Options
+
+SettleMint allows **flexible deployment** of its blockchain load balancer based
+on the specific needs of an organization:
+
+### **1. Cloud-Based Load Balancer**
+
+- Deployed on cloud infrastructure (AWS, Azure, GCP) with **auto-scaling
+  capabilities**.
+- Ideal for **enterprise-grade blockchain solutions**.
+
+### **2. On-Premises Load Balancer**
+
+- Runs within a **private network** for **enhanced security and regulatory
+  compliance**.
+- Suitable for **financial, government, and enterprise applications**.
+
+### **3. Hybrid Load Balancer**
+
+- A combination of **cloud and on-prem** nodes to balance traffic dynamically.
+- Enables **cost efficiency and scalability** while ensuring **data privacy**.
+
+---
+
+## Security Considerations
+
+When implementing a **blockchain load balancer**, security must be a top
+priority. SettleMint incorporates the following best practices:
+
+- **API Rate Limiting:** Prevents misuse by limiting excessive transaction
+  requests.
+- **Node Authentication & Access Control:** Ensures only authorized users can
+  interact with nodes.
+- **DDoS Protection:** Detects and mitigates distributed denial-of-service
+  (DDoS) attacks.
+- **Encrypted Communications:** Uses **TLS encryption** for secure node-to-node
+  communication.
+
+---
