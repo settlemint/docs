@@ -12,8 +12,8 @@ by combining essential infrastructure services—such as network setup, node
 configuration, smart contract development, middleware, off-chain integrations,
 and front-end deployments—into a unified environment. SettleMint supports both
 **permissioned networks** (Hyperledger Besu, Quorum, and Hyperledger Fabric) and
-**public networks** (Ethereum, Polygon, Optimism, Arbitrum, and Hedera
-Hashgraph), significantly reducing complexity and accelerating your
+**public networks** (Ethereum, Polygon, Optimism, Arbitrum, Fantom, Soneium and
+Hedera Hashgraph), significantly reducing complexity and accelerating your
 time-to-market.
 
 Acting as a Swiss Army knife for blockchain developers, SettleMint provides
@@ -73,6 +73,7 @@ off-chain integrations, and more).
 ---
 
 # Platform components: detailed description
+
 Below is an **in-depth** look at each major component. We have seamlessly
 **incorporated** the details on private permissioned networks (Hyperledger Besu,
 Quorum, Hyperledger Fabric), Layer 1 and Layer 2 public blockchains, participant
@@ -81,6 +82,7 @@ All content is retained to ensure you have the **full context** needed for
 enterprise blockchain projects.
 
 ## **Private Permissioned Networks**
+
 - **Hyperledger Besu** A highly popular permissioned blockchain framework
   offering enterprise-grade security, private transactions, and governance
   control with QBFT consensus.
@@ -91,20 +93,20 @@ enterprise blockchain projects.
   Widely used in business settings that require robust security, customizable
   endorsement policies, and efficient performance.
 
-**Consortium Manager & Participant Permissions**  
-In SettleMint, the **Consortium Manager** helps you manage participants for
-private networks. Each participant can have **granular permissions** (e.g.,
-ability to add validating nodes, invite members, or manage governance), ensuring
-enterprise-class security and **decentralized decision-making**.
+**Consortium Manager & Participant Permissions** In SettleMint, the **Consortium
+Manager** helps you manage participants for private networks. Each participant
+can have **granular permissions** (e.g., ability to add validating nodes, invite
+members, or manage governance), ensuring enterprise-class security and
+**decentralized decision-making**.
 
-**Network Manager: Genesis Files & External Nodes**  
-The **Network Manager** allows you to create or join external blockchain
-networks by configuring genesis files (defining chain parameters) and specifying
-bootnodes. This fosters **interoperability** and **consortium formation**,
-letting you align all nodes under a shared initial state while securely
-integrating additional participants.
+**Network Manager: Genesis Files & External Nodes** The **Network Manager**
+allows you to create or join external blockchain networks by configuring genesis
+files (defining chain parameters) and specifying bootnodes. This fosters
+**interoperability** and **consortium formation**, letting you align all nodes
+under a shared initial state while securely integrating additional participants.
 
 ## **Layer 1 (L1) Public Networks**
+
 - **Ethereum** A decentralized blockchain transitioning to Proof of Stake (PoS),
   known for its extensive developer community and smart contract capabilities.
 - **Avalanche** High-speed chain with subnet support and a PoS approach,
@@ -118,6 +120,7 @@ signing, making it easier to develop or migrate dApps onto top-tier public
 blockchains.
 
 ## **Layer 2 (L2) Public Networks**
+
 - **Polygon PoS** A sidechain for Ethereum that offers faster transactions and
   lower fees, connected to mainnet for added security.
 - **Polygon zkEVM** A zero-knowledge rollup solution providing even greater
@@ -134,6 +137,7 @@ deploy or connect to these networks, benefiting from the platform’s end-to-end
 infrastructure and dev tooling.
 
 ## **Blockchain Nodes**
+
 The **Nodes** panel in SettleMint’s Network Manager provides a holistic view of
 the network, whether it’s private or public. You can:
 
@@ -147,6 +151,7 @@ the network, whether it’s private or public. You can:
   **network remains stable** and **scalable**, even under heavy workloads.
 
 ## **Transaction Signer**
+
 The **Transaction Signer** is a critical piece in SettleMint that securely signs
 and broadcasts transactions. By integrating with nodes via JSON-RPC or
 WebSockets, it provides:
@@ -159,6 +164,7 @@ WebSockets, it provides:
   consistent, programmatic on-chain updates.
 
 ## **Blockchain Load Balancer**
+
 To maintain **high availability** and resource efficiency, SettleMint includes a
 dedicated load balancer. It distributes JSON-RPC calls, GraphQL queries, and
 transaction submissions across multiple nodes, minimizing downtime if one node
@@ -167,6 +173,7 @@ especially vital for enterprise-scale applications with large user bases or
 transaction volumes.
 
 ## **Blockchain Explorer**
+
 The **Blockchain Explorer** offers real-time insights into:
 
 - **Transactions:** See if they’ve been mined or validated.
@@ -177,6 +184,7 @@ The **Blockchain Explorer** offers real-time insights into:
   cornerstone for auditing, diagnostic checks, and compliance reporting.
 
 ## **Code Studio (IDE)**
+
 A **browser-based IDE** that streamlines contract development for various
 networks:
 
@@ -192,6 +200,7 @@ networks:
   don’t need a local environment—resulting in a frictionless dev experience.
 
 ## **Smart Contract API Portal**
+
 After deployment, the **Smart Contract API Portal** translates your contract
 ABIs into **REST** and **GraphQL** endpoints—often termed “write middleware”
 because they allow writing data on-chain through these automatically generated
@@ -204,6 +213,7 @@ APIs. It includes:
   front ends or third-party services.
 
 ## **Graph Middleware**
+
 **Graph Middleware** accelerates read operations by indexing specified on-chain
 data in real time. Developers define subgraphs that specify which events,
 transactions, and states to monitor, enabling quick data retrieval via GraphQL.
@@ -215,6 +225,7 @@ Popular for:
   manually, Graph Middleware makes complex queries simple and efficient.
 
 ## **Ethereum Attestation Indexer**
+
 Enterprise solutions often require **verifiable credentials** (e.g., identity
 attestations or compliance confirmations). The **Ethereum Attestation Indexer**
 monitors and indexes data produced by the **Ethereum Attestation Service
@@ -226,6 +237,7 @@ monitors and indexes data produced by the **Ethereum Attestation Service
   interactions, reducing custom code for indexing or auditing attestations.
 
 ## **Integration Studio**
+
 The **Integration Studio** is a **low-code, Node-RED-based** environment for
 orchestrating cross-system workflows:
 
@@ -238,6 +250,7 @@ orchestrating cross-system workflows:
   heavy custom coding when bridging decentralized and centralized systems.
 
 ## **Hasura GraphQL Engine**
+
 **Hasura** seamlessly manages **off-chain** data—often user details,
 authentication, or large volumes of records that don’t need to reside on-chain.
 Paired with a PostgreSQL database, Hasura automatically generates a **real-time
@@ -251,6 +264,7 @@ GraphQL schema**, offering:
   as needed.
 
 ## **S3 Storage (MinIO)**
+
 For storing large files—such as logs, digital certificates, transaction
 receipts—SettleMint offers an **S3-compatible MinIO** service. You can:
 
@@ -262,6 +276,7 @@ receipts—SettleMint offers an **S3-compatible MinIO** service. You can:
   archives that must remain accessible and secure.
 
 ## **IPFS Storage**
+
 SettleMint integrates **IPFS** for **decentralized**, **tamper-proof** file
 storage. A unique hash (CID) identifies each file, enabling:
 
@@ -275,6 +290,7 @@ storage. A unique hash (CID) identifies each file, enabling:
   integrity.
 
 ## **Private Key Management**
+
 Depending on risk, compliance requirements, and scale, SettleMint supports
 multiple approaches:
 
@@ -287,6 +303,7 @@ multiple approaches:
   execution of on-chain operations.
 
 ## **Access Tokens (PAT/AAT)**
+
 Two forms of token-based authentication and authorization:
 
 - **Personal Access Tokens (PATs):** Tied to individual users for tasks like
@@ -297,6 +314,7 @@ Two forms of token-based authentication and authorization:
   controls to ensure only authorized entities interact with the network.
 
 ## **Custom Deployments**
+
 SettleMint enables developers to containerize custom applications—front-end
 dashboards, specialized microservices, or custom oracles—and host them within
 the platform. You can:
@@ -308,6 +326,7 @@ the platform. You can:
   unifying observability.
 
 ## **Asset Tokenization Kit**
+
 The Asset Tokenization Kit is a **full-stack accelerator** designed to simplify
 and speed up the development of tokenized asset platforms. It provides
 **pre-built smart contracts and a ready-to-use dApp UI**, enabling businesses to
