@@ -141,3 +141,32 @@ The subsequent guides will walk you through each step in detail.
 <Callout type="warning">
 When deploying your first contract to Hedera, you might experience slightly longer deployment times than on other EVM chains. This is normal due to the conversion between EVM and Hedera's native transaction format.
 </Callout>
+
+## Hedera Asset Tokenization Studio
+
+Hedera's Asset Tokenization Studio is a comprehensive, enterprise-ready solution to tokenize assets on the Hedera network. This platform provides:
+
+- **Simplified token creation**: Build and deploy tokens using a no-code interface
+- **Full HTS integration**: Direct access to Hedera Token Service (HTS) functionality
+- **Compliance focus**: Built-in tools for KYC, AML, and regulatory requirements
+- **Management dashboard**: Complete lifecycle management for tokenized assets
+
+The Asset Tokenization Studio offers a streamlined approach to tokenization, making it accessible to organizations without requiring extensive blockchain development expertise. It provides complementary functionality to SettleMint's development tools when working with the Hedera ecosystem.
+
+<Callout type="info">
+Learn more about Hedera's Asset Tokenization Studio on the [official Hedera website](https://hedera.com/asset-tokenization-studio).
+</Callout>
+
+## Hedera block explorers
+
+Block explorers provide a window into on-chain activity, allowing you to verify transactions, check account balances, and inspect smart contracts. For Hedera, several block explorers are available:
+
+- **[HashScan](https://hashscan.io/)**: The official Hedera explorer with support for both mainnet and testnet
+- **[DragonGlass](https://app.dragonglass.me/)**: A feature-rich explorer with comprehensive analytics
+- **[Ledger Works Arkhia](https://explorer.arkhia.io/)**: Advanced explorer with additional developer features
+
+When developing on Hedera's testnet through SettleMint, HashScan's testnet explorer is particularly useful for troubleshooting transaction issues and verifying deployments. Simply copy your contract or account address and search for it in the explorer to see all associated activity.
+
+<Callout type="tip">
+When viewing EVM contract addresses in Hedera explorers, you may need to convert between EVM (0x) format and Hedera native (0.0.x) format. SettleMint's platform displays both formats for your convenience.
+</Callout>
