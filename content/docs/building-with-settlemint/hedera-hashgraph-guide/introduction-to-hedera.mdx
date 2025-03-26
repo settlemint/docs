@@ -1,22 +1,22 @@
 ---
-title: "Introduction to hedera"
+title: "Introduction to Hedera"
 description: "Understanding Hedera Network and SettleMint's EVM Implementation"
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 
 <Callout type="info">
-For a comprehensive overview of Hedera as a supported blockchain, visit our [Hedera Network Overview](/documentation/supported-blockchains/L1-public-networks/hedera).
+For a comprehensive overview of Hedera as a supported blockchain, visit our [Hedera network overview](/documentation/supported-blockchains/L1-public-networks/hedera).
 </Callout>
 
-## Using hedera with evm compatibility
+## Using Hedera with EVM compatibility
 
 When working with Hedera through SettleMint, you'll be using Hedera's EVM compatibility layer. This means:
 
 - Your smart contracts are written in **standard Solidity**
 - Addresses follow the Ethereum **0x format** rather than Hedera's native 0.0.x format
-- You can use **SettleMint's Code Studio IDE** and existing smart contract templates directly with Hedera
-- Deploy using **SettleMint's built-in tools** (Task Manager, SDK, CLI) with the same workflow as other EVM chains
+- You can use **SettleMint's code studio IDE** and existing smart contract templates directly with Hedera
+- Deploy using **SettleMint's built-in tools** (task manager, SDK, CLI) with the same workflow as other EVM chains
 
 This EVM compatibility layer acts as a bridge between Ethereum's developer experience and Hedera's performance advantages, allowing you to deploy the same contracts you'd use on Ethereum while benefiting from Hedera's speed and lower costs.
 
@@ -25,7 +25,7 @@ While working through the SettleMint platform, you don't need to worry about the
 </Callout>
 
 
-## What is hedera?
+## What is Hedera?
 
 Hedera is an enterprise-grade public network that offers the security of blockchain with significantly faster transaction speeds and lower costs. Built on the hashgraph consensus algorithm, Hedera provides a foundation for developers to create decentralized applications with predictable performance.
 
@@ -37,8 +37,8 @@ Hedera is an enterprise-grade public network that offers the security of blockch
 - **Enterprise Governance**: Governed by a council of global organizations
 - **Energy Efficient**: Uses proof-of-stake with minimal environmental impact
 
-For more information, please refer the [Hedera Documentation](https://docs.hedera.com/hedera)
-## Hedera's evm compatibility
+For more information, please refer the [Hedera documentation](https://docs.hedera.com/hedera)
+## Hedera's EVM compatibility
 
 Hedera offers full Ethereum Virtual Machine (EVM) compatibility, enabling developers to deploy and interact with smart contracts using familiar Solidity code and Ethereum tools. This compatibility layer provides the best of both worlds:
 
@@ -60,7 +60,7 @@ flowchart TD
     style E fill:#f0f0f0,stroke:#333,stroke-width:1px
 ```
 
-## High-level differences: hedera vs. ethereum
+## High-level differences: Hedera vs. Ethereum
 
 The following table highlights foundational differences that may affect your smart contract development workflow:
 
@@ -77,7 +77,7 @@ The following table highlights foundational differences that may affect your sma
 | **Network Upgrades**        | Upgrades are proposed through Hedera Improvement Proposals (HIPs) and governed by the Hedera Governing Council. Upgrades are backward compatible, not forks. | Upgrades are proposed and implemented through Ethereum Improvement Proposals (EIPs)                           |
 
 
-## Settlemint's hedera integration
+## SettleMint's Hedera integration
 
 SettleMint has built a complete, managed infrastructure layer that makes developing on Hedera's EVM as simple as developing on any other EVM chain:
 
@@ -116,7 +116,7 @@ sequenceDiagram
 
 This seamless flow enables you to use standard Web3 libraries, frameworks, and tools while benefiting from Hedera's performance and security.
 
-## Networks available in settlemint
+## Networks available in SettleMint
 
 SettleMint provides access to both Hedera networks:
 
@@ -127,7 +127,7 @@ SettleMint provides access to both Hedera networks:
 For development and testing, always start with Testnet. You can get free test HBAR from the Hedera Portal at [portal.hedera.com](https://portal.hedera.com).
 </Callout>
 
-## Getting started with hedera on settlemint
+## Getting started with Hedera on SettleMint
 
 To begin building on Hedera through SettleMint:
 
