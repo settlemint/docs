@@ -1,0 +1,5 @@
+{
+  "title": "Use Case Guides",
+  "icon": "Code",
+  "pages": ["asset-tokenization", "attestation-service"]
+}

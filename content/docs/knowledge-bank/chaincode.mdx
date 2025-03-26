@@ -1,0 +1,127 @@
+---
+title: Chaincode Development
+description: Guide to Hyperledger Fabric chaincode development
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+
+# Chaincode Development
+
+<Callout type="info">
+  Chaincode is Hyperledger Fabric's implementation of smart contracts, enabling
+  business logic execution in private networks.
+</Callout>
+
+## Core Concepts
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Chaincode Features
+    - Smart contract logic
+    - State management
+    - Access control
+    - Private data collections
+  </Card>
+
+  <Card>
+    ### Development Languages
+    - Go (recommended)
+    - Node.js
+    - Java
+    - JavaScript
+  </Card>
+</div>
+
+## Implementation
+
+### Basic Structure
+
+```go
+package main
+
+import (
+    "github.com/hyperledger/fabric-contract-api-go/contractapi"
+)
+
+type SmartContract struct {
+    contractapi.Contract
+}
+
+func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
+    // Initialization logic
+    return nil
+}
+```
+
+### State Management
+
+```go
+func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id string, value string) error {
+    exists, err := s.AssetExists(ctx, id)
+    if err != nil {
+        return err
+    }
+    if exists {
+        return fmt.Errorf("asset already exists")
+    }
+
+    asset := Asset{
+        ID:    id,
+        Value: value,
+    }
+    assetJSON, err := json.Marshal(asset)
+    if err != nil {
+        return err
+    }
+
+    return ctx.GetStub().PutState(id, assetJSON)
+}
+```
+
+## Key Features
+
+### 1. Private Data Collections
+
+- Confidential data storage
+- Hash-based verification
+- Collection-level policies
+
+### 2. Channel Capabilities
+
+- Isolated execution
+- Separate ledgers
+- Targeted distribution
+
+### 3. Endorsement Policies
+
+- Multi-party validation
+- Flexible policies
+- Custom requirements
+
+## Best Practices
+
+1. **Performance**
+
+   - Efficient queries
+   - Batch operations
+   - State optimization
+   - Composite keys
+
+2. **Security**
+
+   - Access control
+   - Input validation
+   - Error handling
+   - Logging
+
+3. **Testing**
+   - Unit tests
+   - Integration tests
+   - Network simulation
+   - Performance testing
+
+<Callout type="warning">
+  Always consider network topology and endorsement policies when designing
+  chaincode.
+</Callout>

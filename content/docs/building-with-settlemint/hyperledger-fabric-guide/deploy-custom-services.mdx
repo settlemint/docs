@@ -1,0 +1,306 @@
+---
+title: Host dApp UI or custom services
+description:
+  How to deploy containerised application frontend or other custom services
+---
+
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
+
+<div style={{
+  backgroundColor: "#e1eafd", 
+  color: "#356fee", 
+  padding: "0.5px 10px 10px 10px",
+  borderRadius: "10px", 
+  fontSize: "18px", 
+  fontWeight: "bold",
+  lineHeight: "1.5",
+  textAlign: "left"
+}}>
+  Summary  
+  <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
+
+Deploying frontend applications or custom backend services on SettleMint can be done through Custom Deployments, which allow you to run containerized applications using your own Docker images. This enables seamless integration of user interfaces, REST APIs, microservices, or other utilities directly within the blockchain-powered environment of your application.
+
+The typical use cases include hosting React/Vue/Next.js-based UIs, creating custom indexers or oracles, exposing specialized API services, or deploying off-chain business logic in containerized environments. These deployments are sandboxed, stateless, and run in secure, managed infrastructure, making them suitable for both development and production.
+
+To get started, you’ll first need to containerize your application (if not already done) and push the image to a container registry—this can be Docker Hub, GitHub Container Registry, or a private registry. The image must be built for AMD architecture, as the SettleMint infrastructure currently supports AMD-based workloads.
+
+Once your image is ready, you can initiate a Custom Deployment through the platform UI, CLI, or SDK. You’ll provide the container image path, optional environment variables, deployment region, and resource configurations. After the container spins up successfully, your service will be publicly accessible via the auto-assigned endpoint. For frontend apps, this can act as your live production URL.
+
+For applications requiring a custom domain, SettleMint allows you to bind domain names to the deployed container. You can configure the domain in the platform and then update your DNS records accordingly. The platform supports both ALIAS records for top-level domains and CNAME records for subdomains. SSL/TLS certificates are automatically handled unless you opt for a custom cert setup.
+
+Once the deployment is live, you can manage it using the Custom Deployment dashboard in the platform. This includes editing environment variables, restarting the container, updating the image version, checking logs, and monitoring availability. You can also script or automate these tasks using the SDK or CLI as needed.
+
+A few considerations: custom deployments are stateless by design, so any data you want to persist should be stored using services like Hasura for off-chain database functionality or MinIO/IPFS for file storage. The container’s filesystem is read-only to enhance security and portability. Additionally, apps won’t run with root privileges, so ensure your container adheres to standard non-root user practices.
+
+This feature is especially useful when you need to tightly couple your UI or service logic with the on-chain components—enabling a clean, integrated workflow for dApps, admin consoles, analytics dashboards, API bridges, or token utility services. It offers flexibility without leaving the SettleMint ecosystem, all while adhering to scalable and cloud-native design principles.
+
+</div>
+</div>
+
+
+## How to use custom deployments to host application frontend or other custom services in SettleMint platform
+
+A Custom Deployment allows you to deploy your own Docker images, such as
+frontend applications, on the SettleMint platform. This feature provides
+flexibility for integrating custom solutions within your blockchain-based
+applications.
+
+![Add Custom Deployment](../../../img/building-with-settlemint/add-custom-deployment.png)
+
+## Create a Custom Deployment
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    1. Prepare your container image and push it to a container registry (public or private).
+    2. In the SettleMint platform, navigate to the Custom Deployments section.
+    3. Click on the "Add Custom Deployment" button to create a new deployment.
+    4. Provide the necessary details:
+       - Container image path (e.g., registry.example.com/my-app:latest)
+       - Container registry credentials (if using a private registry)
+       - Environment variables (if required)
+       - Custom domain information (if applicable)
+    5. Configure any additional settings as needed.
+    6. Click on 'Confirm' and wait for the Custom Deployment to be in the Running status.
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Create a custom deployment
+    settlemint platform create custom-deployment my-deployment \
+      --application my-app \
+      --image-repository registry.example.com \
+      --image-name my-app \
+      --image-tag latest \
+      --port 3000 \
+      --provider gcp \
+      --region europe-west1
+
+    # With environment variables
+    settlemint platform create custom-deployment my-deployment \
+      --application my-app \
+      --image-repository registry.example.com \
+      --image-name my-app \
+      --image-tag latest \
+      --env-vars NODE_ENV=production,DEBUG=false
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    import { createSettleMintClient } from '@settlemint/sdk-js';
+
+    const client = createSettleMintClient({
+      accessToken: 'your_access_token',
+      instance: 'https://console.settlemint.com'
+    });
+
+    const createDeployment = async () => {
+      const result = await client.customDeployment.create({
+        applicationId: "app-123",
+        name: "my-deployment",
+        imageRepository: "registry.example.com",
+        imageName: "my-app",
+        imageTag: "latest",
+        port: 3000,
+        provider: "gcp",
+        region: "europe-west1",
+        environmentVariables: {
+          NODE_ENV: "production"
+        }
+      });
+    };
+    ```
+
+  </Tab>
+</Tabs>
+
+## DNS Configuration for Custom Domains
+
+When using custom domains with your Custom Deployment, you'll need to configure
+your DNS settings correctly. Here's how to set it up:
+
+1. **Add Custom Domain to the SettleMint Platform**:
+
+   - Navigate to your Custom Deployment in the SettleMint platform.
+   - In the manage custom deployment menu, click on the edit custom deployment
+     action.
+   - Locate the custom domains configuration section.
+   - Enter your desired custom domain (e.g., example.com for top-level domain or
+     app.example.com for subdomain).
+   - Save the changes to update your Custom Deployment settings.
+
+2. **Obtain Your Application's Hostname**: After adding your custom domain, the
+   SettleMint platform will provide you with an ALIAS (for top-level domains) or
+   CNAME (for subdomains) record. This can be found in the "Connect" tab of your
+   Custom Deployment.
+
+3. **Access Your Domain's DNS Settings**: Log in to your domain registrar or DNS
+   provider's control panel.
+
+4. **Configure DNS Records**:
+
+   For Top-Level Domains (e.g., example.com):
+
+   - Remove any existing A and AAAA records for the domain you're configuring.
+   - Remove any existing A and AAAA records for the www domain (e.g.,
+     www.example.com) if you're using it.
+
+   ```
+   ALIAS example.com gke-europe.settlemint.com
+   ALIAS www.example.com gke-europe.settlemint.com
+   ```
+
+   For Subdomains (e.g., app.example.com):
+
+   ```
+   CNAME app.example.com gke-europe.settlemint.com
+   ```
+
+5. **Set TTL (Time to Live)**:
+
+   - Set a lower TTL (e.g., 300 seconds) initially to allow for quicker
+     propagation.
+   - You can increase it later for better caching (e.g., 3600 seconds).
+
+6. **Verify DNS Propagation**:
+
+   - Use online DNS lookup tools to check if your DNS changes have propagated.
+   - Note that DNS propagation can take up to 48 hours, although it's often much
+     quicker.
+
+7. **SSL/TLS Configuration**:
+   - The SettleMint platform typically handles SSL/TLS certificates
+     automatically for both top-level domains and subdomains.
+   - If you need to use your own certificates, please contact us for assistance
+     and further instructions.
+
+Note: The configuration process is similar for both top-level domains and
+subdomains. The main difference lies in the type of DNS record you create (ALIAS
+for top-level domains, CNAME for subdomains) and whether you need to remove
+existing records.
+
+## Manage Custom Deployments
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    1. Navigate to your application's **Custom Deployments** section
+    2. Click on a deployment to:
+       - View deployment status and details
+       - Manage environment variables
+       - Configure custom domains
+       - View logs
+       - Check endpoints
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # List custom deployments
+    settlemint platform list custom-deployments --application my-app
+
+    # Get deployment details
+    settlemint platform read custom-deployment my-deployment
+
+    # Restart deployment
+    settlemint platform restart custom-deployment my-deployment
+
+    # Edit deployment
+    settlemint platform edit custom-deployment my-deployment \
+      --container-image registry.example.com/my-app:v2
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // List deployments
+    const listDeployments = async () => {
+      const deployments = await client.customDeployment.list("my-app");
+    };
+
+    // Get deployment details
+    const getDeployment = async () => {
+      const deployment = await client.customDeployment.read("deployment-unique-name");
+    };
+
+    // Restart deployment
+    const restartDeployment = async () => {
+      await client.customDeployment.restart("deployment-unique-name");
+    };
+
+    // Edit deployment
+    const editDeployment = async () => {
+      await client.customDeployment.edit("deployment-unique-name", {
+        imageTag: "v2"
+      });
+    };
+    ```
+
+  </Tab>
+</Tabs>
+
+## Limitations and Considerations
+
+When using Custom Deployment, keep the following limitations in mind:
+
+1. **No Root User Privileges**: Your application will run without root user
+   privileges for security reasons.
+
+2. **Read-Only Filesystem**: The filesystem is read-only. For data persistence,
+   consider using:
+
+   - Hasura: A GraphQL engine that provides a scalable database solution. See
+     [Hasura](/building-with-settlemint/hasura-backend-as-a-service).
+   - Other External Services: Depending on your specific needs, you may use
+     other cloud-based storage or database services
+
+3. **Stateless Applications**: Your applications should be designed to be
+   stateless. This ensures better scalability and reliability in a cloud
+   environment.
+
+4. **Use AMD-based Images**: Currently, our platform supports AMD-based
+   container images. Ensure your Docker images are built for AMD architecture to
+   guarantee smooth compatibility with our infrastructure.
+
+## Best Practices
+
+- Design your applications to be stateless and horizontally scalable
+- Use environment variables for configuration to make your deployments more
+  flexible
+- Implement proper logging to facilitate debugging and monitoring
+- Regularly update your container images to include the latest security patches
+
+Custom Deployment offers a powerful way to extend the capabilities of your
+blockchain solutions on the SettleMint platform. By following these guidelines
+and best practices, you can seamlessly integrate your custom applications into
+your blockchain ecosystem.
+
+<Callout type="info">
+  Custom Deployments support automatic SSL/TLS certificate management for custom
+  domains.
+</Callout>
+
+<div style={{
+  backgroundColor: "#D1E5E8", 
+  color: "#000000", 
+  padding: "0.5px 10px 10px 10px",
+  borderRadius: "10px", 
+  fontSize: "18px", 
+  fontWeight: "light",
+  lineHeight: "1.5",
+  textAlign: "left"
+}}>
+Congratulations.!!
+
+You have successfully deployed your application front end and have a working full-stack application built on SettleMint tools and services.
+
+We hope your journey was smooth, please write to us at support@settlemint.com for any help or feedback. 
+</div>
+
+```
+Keywords: custom deployment, settlemint, containerized frontend hosting, docker on blockchain, deploy react dapp, custom backend services, docker deployment blockchain, host nextjs on chain infra, host vue dapp, microservices deployment blockchain, docker with blockchain, frontend hosting blockchain, stateless containers, non-root containers, read-only filesystem, amd docker image, deploy on settlemint, container hosting blockchain apps, api service docker deploy, oracle deploy blockchain, graphql service hosting, off-chain logic deployment, custom domain ssl settlemint, cname record blockchain app, alias dns settlemint, auto ssl for dapps, decentralized hosting, docker custom deployment settlemint, secure container hosting, backend api on blockchain infra, integrated full stack dapp, deploy dashboard blockchain, private docker registry blockchain, frontend app auto domain, hasura storage, ipfs with docker app, frontend + middleware blockchain, docker build amd architecture, scalable dapp deployment, gcp container deploy blockchain, custom services blockchain integration, secure docker hosting settlemint, observability container logs, automated dapp hosting, node hosting with docker, non-root docker containers, stateless dapp architecture, react container registry deploy, container endpoint ssl settlemint
+```

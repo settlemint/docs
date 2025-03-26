@@ -1,0 +1,93 @@
+---
+title: Smart Contracts
+description: Understanding smart contract development and best practices
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+
+# Smart Contracts
+
+<Callout type="info">
+  Smart contracts are self-executing contracts with terms directly written into
+  code.
+</Callout>
+
+## Core Concepts
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Contract Structure
+    - State variables
+    - Functions
+    - Events
+    - Modifiers
+  </Card>
+
+  <Card>
+    ### Contract Types
+    - Standard contracts
+    - Library contracts
+    - Interface contracts
+    - Proxy contracts
+  </Card>
+</div>
+
+## Development Lifecycle
+
+### 1. Design
+
+- Requirements analysis
+- Architecture planning
+- Security considerations
+- Gas optimization
+
+### 2. Implementation
+
+- Code writing
+- Testing
+- Documentation
+- Optimization
+
+### 3. Deployment
+
+- Network selection
+- Gas estimation
+- Contract verification
+- Initial setup
+
+## Security Considerations
+
+1. **Common Vulnerabilities**
+
+   - Reentrancy
+   - Integer overflow
+   - Access control
+   - Front-running
+
+2. **Best Practices**
+   - Checks-Effects-Interactions
+   - Pull over Push
+   - Emergency stops
+   - Access controls
+
+## Testing & Verification
+
+### Unit Testing
+
+- Function testing
+- State changes
+- Event emissions
+- Error conditions
+
+### Integration Testing
+
+- Contract interactions
+- System workflows
+- Edge cases
+- Gas optimization
+
+<Callout type="warning">
+  Always audit smart contracts thoroughly before deployment to production
+  networks.
+</Callout>

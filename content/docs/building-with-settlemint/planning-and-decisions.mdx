@@ -1,0 +1,449 @@
+---
+title: Planning and Decisions
+description: Overview of blockchain development process
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
+# Blockchain Solution Planning
+
+This comprehensive guide outlines the critical decision points and architectural considerations needed to build an effective blockchain solution with SettleMint.
+
+## Strategic Decision Framework
+
+
+
+<div className="my-8">
+  <Callout type="info" className="border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/30">
+    <span className="font-medium text-slate-800 dark:text-slate-300 block mb-1">Strategic Considerations</span>
+    Each decision in your blockchain journey directly impacts performance, security, and functionality of your final solution. This framework guides you through making informed architectural choices aligned with your business requirements.
+  </Callout>
+</div>
+
+## Implementation Approaches
+
+### Development Path Options
+
+<div className="text-slate-700 dark:text-slate-300 mb-6">
+  Your blockchain journey starts with a fundamental choice: use pre-built industry solutions for faster time-to-market, or build a custom solution tailored to your specific requirements.
+</div>
+
+<Tabs items={['Pre-built Solutions', 'Custom Development']}>
+  <Tab>
+    <Card className="border border-slate-200 dark:border-slate-800 shadow-sm mb-6">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="bg-slate-100 text-slate-600 dark:bg-slate-800/50 dark:text-slate-400 p-2 rounded-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </div>
+        <h3 className="text-xl font-bold text-slate-700 dark:text-slate-300">Pre-built Solutions</h3>
+      </div>
+      <p className="mb-4 text-slate-700 dark:text-slate-300">Leverage SettleMint's pre-packaged industry solutions for accelerated time-to-market</p>
+      <ul className="space-y-2 mb-4">
+        <li className="flex items-center">
+          <svg className="w-5 h-5 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Asset Tokenization Kit</span>
+        </li>
+        <li className="flex items-center">
+          <svg className="w-5 h-5 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Supply Chain Solution</span>
+        </li>
+        <li className="flex items-center">
+          <svg className="w-5 h-5 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Industry-specific Kits</span>
+        </li>
+      </ul>
+      <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+        <div className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+          Best for organizations seeking rapid deployment with industry-proven templates
+        </div>
+        <button className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-md transition-colors">Explore Pre-built Solutions</button>
+      </div>
+    </Card>
+    
+    <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-4">Pre-built Solution Components</h3>
+    <Card className="border border-slate-200 dark:border-slate-800 mb-6">
+      <h4 className="text-lg font-medium text-slate-700 dark:text-slate-300 mb-3">Asset Tokenization Kit</h4>
+      <ul className="space-y-2 mb-4 text-slate-700 dark:text-slate-300">
+        <li>• Complete token lifecycle management</li>
+        <li>• ERC-20, ERC-721, and ERC-1155 implementations</li>
+        <li>• Configurable token economics</li>
+        <li>• Ready-to-use admin portal</li>
+      </ul>
+    </Card>
+    
+    <Card className="border border-slate-200 dark:border-slate-800 mb-6">
+      <h4 className="text-lg font-medium text-slate-700 dark:text-slate-300 mb-3">Supply Chain Solution</h4>
+      <ul className="space-y-2 mb-4 text-slate-700 dark:text-slate-300">
+        <li>• End-to-end traceability</li>
+        <li>• Provenance verification</li>
+        <li>• IoT device integration</li>
+        <li>• Automated compliance reporting</li>
+      </ul>
+    </Card>
+    
+    <Card className="border border-slate-200 dark:border-slate-800">
+      <h4 className="text-lg font-medium text-slate-700 dark:text-slate-300 mb-3">Deployment Process</h4>
+      <ol className="space-y-2 mb-4 text-slate-700 dark:text-slate-300 list-decimal pl-5">
+        <li>Select industry solution template</li>
+        <li>Configure business parameters</li>
+        <li>Customize branding and UX</li>
+        <li>Deploy to selected environment</li>
+        <li>Connect to existing systems via APIs</li>
+      </ol>
+    </Card>
+  </Tab>
+  
+  <Tab>
+    <Card className="border border-slate-200 dark:border-slate-800 shadow-sm mb-6">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="bg-slate-100 text-slate-600 dark:bg-slate-800/50 dark:text-slate-400 p-2 rounded-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+        </div>
+        <h3 className="text-xl font-bold text-slate-700 dark:text-slate-300">Custom Development</h3>
+      </div>
+      <p className="mb-4 text-slate-700 dark:text-slate-300">Design a tailored blockchain solution customized to your specific business requirements</p>
+      <ul className="space-y-2 mb-4">
+        <li className="flex items-center">
+          <svg className="w-5 h-5 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Blockchain Infrastructure Selection</span>
+        </li>
+        <li className="flex items-center">
+          <svg className="w-5 h-5 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Custom Smart Contract Design</span>
+        </li>
+        <li className="flex items-center">
+          <svg className="w-5 h-5 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Integration Architecture Planning</span>
+        </li>
+      </ul>
+      <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+        <div className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+          Ideal for businesses with unique requirements needing maximum flexibility
+        </div>
+        <button className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-md transition-colors">Begin Custom Development</button>
+      </div>
+    </Card>
+    
+    <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-4">Custom Development Process</h3>
+    <div className="text-slate-700 dark:text-slate-300 mb-6">
+      Implement your blockchain solution through this strategic four-tier architecture approach:
+    </div>
+
+    <div className="grid grid-cols-1 gap-6 mb-12">
+      <Card className="border border-slate-200 dark:border-slate-800">
+        <h3 className="text-lg font-bold text-slate-700 dark:text-slate-300 mb-3">Step 1 - Blockchain Network Infrastructure</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300">Public Blockchain Infrastructure</h4>
+            <p className="text-sm mt-2">L1/L2 solutions including Ethereum, Polygon zkEVM, Optimism, Arbitrum, Hedera Hashgraph, Avalanche C-Chain</p>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+              Decentralized consensus, high security, global transaction finality
+            </div>
+          </div>
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300">Enterprise Permissioned Networks</h4>
+            <p className="text-sm mt-2">Hyperledger Fabric (RAFT/Practical BFT), Besu (QBFT), Quorum (Istanbul BFT)</p>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+              Deterministic finality, configurable privacy, horizontal scalability
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 border-t border-slate-200 dark:border-slate-700 pt-4 text-slate-700 dark:text-slate-300 text-sm">
+          <p>SettleMint's platform automates the deployment of your blockchain infrastructure including validator/peer nodes, block explorer, load balancers, and RPC endpoints. Our managed infrastructure handles network topology, high-availability configurations, and comprehensive monitoring.</p>
+        </div>
+      </Card>
+      
+      <Card className="border border-slate-200 dark:border-slate-800">
+        <h3 className="text-lg font-bold text-slate-700 dark:text-slate-300 mb-3">Step 2 - Smart Contract (logic)</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300">Smart Contract Templates</h4>
+            <p className="text-sm mt-2">Open-source, ready-to-use foundations (ERC20, ERC721, ERC1155, Supplychain, State Machine, and more)</p>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+              MIT-licensed templates to accelerate deployment with proven enterprise-grade code
+            </div>
+          </div>
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300">Protocol-Specific Development</h4>
+            <p className="text-sm mt-2">Solidity (EVM chains), TypeScript/Go (Hyperledger Fabric)</p>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+              Tailored development environments for each blockchain protocol
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 border-t border-slate-200 dark:border-slate-700 pt-4 text-slate-700 dark:text-slate-300 text-sm">
+          <div className="flex items-start">
+            <div className="bg-slate-100 text-slate-600 dark:bg-slate-800/50 dark:text-slate-400 p-2 rounded-md mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"></path><path d="m19 9-5 5-4-4-3 3"></path></svg>
+            </div>
+            <div>
+              <h4 className="font-medium text-slate-700 dark:text-slate-300 mb-1">Code Studio Integration</h4>
+              <p>SettleMint's Code Studio provides an integrated development environment for smart contract sets, with multiple deployment options:</p>
+              <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li>Platform UI workflow with template selection</li>
+                <li>SDK CLI for developer-focused automation</li>
+                <li>SDK JS for programmatic contract management</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-3">
+              <h5 className="font-medium text-sm">Token Standards</h5>
+              <ul className="text-xs mt-1 space-y-1">
+                <li>• ERC20 with/without MetaTx</li>
+                <li>• ERC721/ERC721a</li>
+                <li>• ERC1155</li>
+                <li>• Soulbound Token</li>
+              </ul>
+            </div>
+            <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-3">
+              <h5 className="font-medium text-sm">Business Logic</h5>
+              <ul className="text-xs mt-1 space-y-1">
+                <li>• State Machine</li>
+                <li>• Supplychain</li>
+                <li>• Attestation Service</li>
+                <li>• Custom logic templates</li>
+              </ul>
+            </div>
+            <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-3">
+              <h5 className="font-medium text-sm">Advanced Features</h5>
+              <ul className="text-xs mt-1 space-y-1">
+                <li>• Crowdsale mechanisms</li>
+                <li>• Generative Art</li>
+                <li>• Diamond patterns</li>
+                <li>• Private Data Collections</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </Card>
+      
+      <Card className="border border-slate-200 dark:border-slate-800">
+        <h3 className="text-lg font-bold text-slate-700 dark:text-slate-300 mb-3">Step 3 - Middleware and Integration Studio (get APIs)</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300">Smart Contract Portal</h4>
+            <p className="text-sm mt-2">SettleMint's API layer with auto-generated endpoints, authentication, and transaction management</p>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+              Instantly access blockchain functionality through standardized RESTful APIs
+            </div>
+          </div>
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300">Integration Studio</h4>
+            <p className="text-sm mt-2">SettleMint's no-code workflow automation for connecting blockchain events to external systems</p>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+              Visual process automation with pre-built connectors for enterprise systems
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 border-t border-slate-200 dark:border-slate-700 pt-4 text-slate-700 dark:text-slate-300 text-sm">
+          <p>SettleMint's middleware tier eliminates the complexity of blockchain integration through our Smart Contract Portal and Integration Studio. These tools automatically generate APIs from your smart contracts and provide visual workflow design for connecting blockchain events to your existing enterprise systems.</p>
+        </div>
+      </Card>
+      
+      <Card className="border border-slate-200 dark:border-slate-800">
+        <h3 className="text-lg font-bold text-slate-700 dark:text-slate-300 mb-3">Step 4 - DB, Storage, UI Deployment (complete your app)</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300">Hasura Backend-as-a-Service</h4>
+            <p className="text-sm mt-2">GraphQL API, PostgreSQL database, real-time subscriptions</p>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+              Complete data management with row-level security and API generation
+            </div>
+          </div>
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300">Storage Solutions</h4>
+            <p className="text-sm mt-2">IPFS (decentralized) and MinIO (S3-compatible)</p>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+              Flexible options for public and private data storage with blockchain integration
+            </div>
+          </div>
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300">Custom Deployment</h4>
+            <p className="text-sm mt-2">Docker image deployment with custom domain support</p>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+              Deploy your UI and custom services with integrated SSL/TLS
+            </div>
+          </div>
+        </div>
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300 mb-3">Hasura Data Management</h4>
+            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+              <li className="flex items-start">
+                <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span><strong>GraphQL APIs</strong> with instant code generation for frontend integration</span>
+              </li>
+              <li className="flex items-start">
+                <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span><strong>Actions & Triggers</strong> for custom business logic and event handling</span>
+              </li>
+              <li className="flex items-start">
+                <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span><strong>Scheduled Tasks</strong> with cron triggers and one-off events</span>
+              </li>
+              <li className="flex items-start">
+                <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span><strong>Row-level Security</strong> with granular access control</span>
+              </li>
+            </ul>
+          </div>
+          <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
+            <h4 className="font-medium text-slate-700 dark:text-slate-300 mb-3">Storage & Deployment</h4>
+            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+              <li className="flex items-start">
+                <svg className="w-5 h-5 mr-2 mt-0.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span><strong>IPFS</strong> for decentralized content-addressed storage with integrity verification</span>
+              </li>
+              <li className="flex items-start">
+                <svg className="w-5 h-5 mr-2 mt-0.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span><strong>MinIO</strong> S3-compatible storage for private data with client SDKs</span>
+              </li>
+              <li className="flex items-start">
+                <svg className="w-5 h-5 mr-2 mt-0.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span><strong>Custom Domain Support</strong> with automated SSL/TLS certificate management</span>
+              </li>
+              <li className="flex items-start">
+                <svg className="w-5 h-5 mr-2 mt-0.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span><strong>Docker Deployment</strong> for custom frontends and services</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="mt-4 border-t border-slate-200 dark:border-slate-700 pt-4 text-slate-700 dark:text-slate-300 text-sm">
+          <p>SettleMint's application tier provides all the essential components to transform your blockchain logic into a complete application. The platform integrates indexed blockchain data through Hasura GraphQL, decentralized storage via IPFS/MinIO, and simplified deployment for your UI and services—all with built-in security and seamless connectivity.</p>
+        </div>
+        <div className="mt-4 border border-blue-100 dark:border-blue-900/30 bg-blue-50 dark:bg-blue-900/20 rounded-md p-3 text-sm text-blue-800 dark:text-blue-300">
+          <div className="flex items-start">
+            <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>
+              <strong>Best Practice:</strong> Design your application components as stateless services, use environment variables for configuration, and implement proper logging for easier debugging. For data persistence, leverage Hasura's PostgreSQL database or MinIO's object storage.
+            </span>
+          </div>
+        </div>
+      </Card>
+    </div>
+    
+    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800 shadow-sm mb-12">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="bg-blue-100 text-blue-600 dark:bg-blue-800/50 dark:text-blue-400 p-2 rounded-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+        </div>
+        <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">Interactive Deployment Wizard</h3>
+      </div>
+      <p className="mb-4 text-slate-700 dark:text-slate-300">
+        Try our new step-by-step interactive wizard that guides you through each decision and generates a ready-to-use deployment script for your blockchain solution.
+      </p>
+      <ul className="space-y-2 mb-4 text-slate-700 dark:text-slate-300">
+        <li className="flex items-start">
+          <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>One decision at a time</span>
+        </li>
+        <li className="flex items-start">
+          <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Save your choices automatically</span>
+        </li>
+        <li className="flex items-start">
+          <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Generate deployment script with your selections</span>
+        </li>
+      </ul>
+      <div className="mt-4 pt-4 border-t border-blue-200 dark:border-blue-800/50">
+        <a href="/docs/building-with-settlemint/deployment-wizard" className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-md transition-colors">
+          Try Interactive Wizard
+        </a>
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Taking the Next Step in Your Blockchain Journey
+
+After evaluating your implementation approach, SettleMint provides comprehensive guides to help you through each phase of development, regardless of your chosen path. Below are the next steps based on your decision:
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 mb-10">
+  <Card className="border border-slate-200 dark:border-slate-800 shadow-sm">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 p-2 rounded-md">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+      </div>
+      <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">EVM Chain Development</h3>
+    </div>
+    <p className="mb-4 text-slate-700 dark:text-slate-300">For Ethereum, Polygon, Optimism, and other EVM-compatible blockchains</p>
+    <ul className="space-y-2 mb-4 text-slate-700 dark:text-slate-300">
+      <li className="flex items-start">
+        <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Step-by-step development workflow</span>
+      </li>
+      <li className="flex items-start">
+        <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Solidity smart contract development</span>
+      </li>
+      <li className="flex items-start">
+        <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Graph protocol and standard EVM tooling</span>
+      </li>
+    </ul>
+    <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+      <a href="/docs/building-with-settlemint/evm-chains-guide/create-an-organization-and-application" className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors">
+        Explore EVM Guide
+      </a>
+    </div>
+  </Card>
+  
+  <Card className="border border-slate-200 dark:border-slate-800 shadow-sm">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400 p-2 rounded-md">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+      </div>
+      <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">Hyperledger Fabric Development</h3>
+    </div>
+    <p className="mb-4 text-slate-700 dark:text-slate-300">For permissioned enterprise blockchain networks with privacy requirements</p>
+    <ul className="space-y-2 mb-4 text-slate-700 dark:text-slate-300">
+      <li className="flex items-start">
+        <svg className="w-5 h-5 mr-2 mt-0.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Multi-organization network configuration</span>
+      </li>
+      <li className="flex items-start">
+        <svg className="w-5 h-5 mr-2 mt-0.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Go/JavaScript chaincode development</span>
+      </li>
+      <li className="flex items-start">
+        <svg className="w-5 h-5 mr-2 mt-0.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Private data & permissions management</span>
+      </li>
+    </ul>
+    <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+      <a href="/docs/building-with-settlemint/hyperledger-fabric-guide/create-an-organization-and-application" className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md transition-colors">
+        Explore Fabric Guide
+      </a>
+    </div>
+  </Card>
+</div>
+
+<Callout type="tip" className="border border-slate-200 dark:border-slate-800 mb-10">
+  <span className="font-medium text-slate-800 dark:text-slate-300 block mb-1">AI-Assisted Development</span>
+  <p className="text-slate-700 dark:text-slate-300">
+    Accelerate your blockchain journey with SettleMint's AI-assisted development tools. Our platform provides intelligent code generation, error diagnosis, and optimization suggestions to help you build more efficiently.
+  </p>
+  <div className="mt-3">
+    <a href="/docs/building-with-settlemint/ai-assisted-programming" className="text-blue-600 dark:text-blue-400 hover:underline font-medium inline-flex items-center">
+      Learn more about AI capabilities
+      <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+    </a>
+  </div>
+</Callout>
+
+<div className="bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm mb-10">
+  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Ready to Start Building?</h3>
+  <p className="text-slate-700 dark:text-slate-300 mb-4">
+    Begin your blockchain journey with our comprehensive getting-started guide, which provides an overview of the entire development process from infrastructure setup to production deployment.
+  </p>
+  <a href="/docs/building-with-settlemint/getting-started" className="inline-block bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white px-5 py-2.5 rounded-md transition-colors font-medium text-center">
+    Go to Getting Started
+  </a>
+</div>

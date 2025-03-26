@@ -1,0 +1,90 @@
+---
+title: Solidity Programming
+description: Guide to Solidity smart contract development
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+
+# Solidity Programming
+
+<Callout type="info">
+  Solidity is the primary programming language for Ethereum and EVM-compatible
+  blockchains.
+</Callout>
+
+## Language Fundamentals
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Basic Types
+    - Integers
+    - Address
+    - Boolean
+    - Strings
+    - Arrays
+  </Card>
+
+  <Card>
+    ### Advanced Types
+    - Structs
+    - Mappings
+    - Enums
+    - Custom types
+  </Card>
+</div>
+
+## Contract Structure
+
+### 1. State Variables
+
+```solidity
+contract Example {
+    uint public value;
+    address public owner;
+    mapping(address => uint) balances;
+}
+```
+
+### 2. Functions
+
+```solidity
+function transfer(address to, uint amount) public {
+    require(balances[msg.sender] >= amount);
+    balances[msg.sender] -= amount;
+    balances[to] += amount;
+}
+```
+
+### 3. Events
+
+```solidity
+event Transfer(address indexed from, address indexed to, uint amount);
+```
+
+## Best Practices
+
+1. **Gas Optimization**
+
+   - Efficient data types
+   - Batch operations
+   - Storage vs Memory
+   - Loop optimization
+
+2. **Security**
+
+   - Access control
+   - Input validation
+   - Overflow protection
+   - Reentrancy guards
+
+3. **Code Organization**
+   - Modular design
+   - Interface separation
+   - Library usage
+   - Clear documentation
+
+<Callout type="warning">
+  Follow established patterns and security best practices when writing Solidity
+  code.
+</Callout>

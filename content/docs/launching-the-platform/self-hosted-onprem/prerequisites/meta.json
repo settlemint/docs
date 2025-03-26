@@ -1,0 +1,16 @@
+{
+  "label": "Prerequisites",
+  "position": 2,
+  "pages": [
+    "overview",
+    "ingress-controller",
+    "domain-and-tls",
+    "oauth",
+    "postgresql",
+    "redis",
+    "storage",
+    "secret-management",
+    "metrics-and-logs",
+    "terraform"
+  ]
+}

@@ -1,0 +1,619 @@
+---
+title: Setup off-chain Database
+description: Add Hasura backend-as-a-service with off-chain database
+---
+
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
+
+<div style={{
+  backgroundColor: "#e1eafd", 
+  color: "#356fee", 
+  padding: "0.5px 10px 10px 10px",
+  borderRadius: "10px", 
+  fontSize: "18px", 
+  fontWeight: "bold",
+  lineHeight: "1.5",
+  textAlign: "left"
+}}>
+  Summary  
+  <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
+To integrate off-chain storage into your blockchain application, you should begin by adding Hasura as a backend-as-a-service via SettleMint. This will provision a fully managed PostgreSQL database, paired with a real-time GraphQL API layer. It enables you to manage non-critical or frequently updated data that doesn’t need to live on-chain, without compromising performance or flexibility.
+
+Start by navigating to your application and opening the Integration Tools
+section. Click on Add an integration tool, select Hasura, and follow the steps
+to choose a name, provider, region, and resource plan. Once deployed, a
+dedicated Hasura instance will be available, complete with its own admin
+console, GraphQL API, and Postgres connection string. You can manage and monitor
+the instance from the same interface.
+
+Once Hasura is set up, you can define your database schema by creating tables
+and relationships under the Data tab. You can add, modify, and delete rows
+directly from the console, or connect to the database using a PostgreSQL client
+or code. Every schema and table you define becomes instantly queryable using the
+GraphQL API. The API tab will auto-generate queries and mutations, and also
+allow you to derive REST endpoints or export code snippets for frontend/backend
+use.
+
+For custom business logic, you can implement Actions, which are HTTP handlers
+triggered by GraphQL mutations. These are useful for data validation,
+enrichment, or chaining smart contract calls. If you want to respond to database
+changes in real-time, use Event Triggers to invoke webhooks when specific
+inserts, updates, or deletions happen. For recurring jobs, Cron Triggers can
+invoke workflows on a schedule, and One-off Scheduled Events allow precision
+control over future events.
+
+Authentication and authorization can be finely controlled through role-based
+access rules. Hasura allows you to enforce row-level permissions and restrict
+query types based on user roles. To ensure secure API access, use the Hasura
+admin secret and your application access token, both available from the Connect
+tab of your Hasura console.
+
+You’ll also have the option to connect to the Hasura PostgreSQL instance
+directly using the connection string. This is useful for running SQL scripts,
+performing migrations, or executing batch jobs. Whether you’re using a Node.js
+backend or a command-line tool like psql, your Hasura database acts like any
+standard PostgreSQL instance, with enterprise-grade reliability.
+
+Backups are easy to configure using the pg_dump utility or via the Hasura CLI.
+You can export both your database data and metadata, and restore them in new
+environments as needed. Use hasura metadata export to get a full snapshot of
+your permissions, tracked tables, actions, and relationships. Then use hasura
+metadata apply or hasura metadata reload to rehydrate or sync a new instance.
+
+By combining Hasura’s flexibility with the immutability of your on-chain smart
+contracts, you will be able to design a clean hybrid architecture—critical
+operations are stored securely on-chain, while scalable, queryable, and
+user-driven data remains off-chain. This setup dramatically improves user
+experience, simplifies front-end development, and keeps infrastructure costs
+under control.
+
+</div>
+</div>
+
+Many dApps need more than just decentralized tools to build an end-to-end
+solution. The SettleMint Hasura SDK provides a seamless way to interact with
+Hasura GraphQL APIs for managing application data.
+
+![Add Hasura](../../../img/building-with-settlemint/add-hasura.png)
+
+## Need for a On-chain and Off-chain Data Architecture
+
+In blockchain-based applications, not all data needs to—or should—reside
+on-chain. While critical state changes, token ownerships, or verifiable proofs
+are best kept immutable and transparent on a blockchain, a large portion of
+application data such as user profiles, analytics, logs, metadata, and UI-driven
+state is better suited to an off-chain data store. Storing everything on-chain
+is neither cost-effective nor performance-friendly. On-chain data is expensive
+to store and slow to query for complex front-end or dashboard use cases.
+
+This is where a **hybrid architecture** becomes essential. In such an approach,
+data is partitioned based on its importance and usage:
+
+- **On-chain layer** serves as the source of truth for verifiable,
+  consensus-driven actions like token transfers, proofs, and governance.
+- **Off-chain layer** handles high-volume, user-generated, or fast-changing data
+  that benefits from relational structure, rich queries, and low latency.
+
+This model provides the best of both worlds: **immutability and trust from
+blockchain**, and **speed, flexibility, and developer-friendliness from
+traditional databases**.
+
+## How Hasura on SettleMint Supports This Architecture
+
+SettleMint offers Hasura as a Backend-as-a-Service (BaaS), tightly integrated
+into its low-code blockchain development stack. Hasura provides a
+high-performance, real-time GraphQL API layer on top of a PostgreSQL database,
+and allows developers to instantly query, filter, and subscribe to changes in
+the data without writing custom backend logic.
+
+### Key Capabilities of Hasura on SettleMint
+
+- A fully managed **PostgreSQL database** is provisioned automatically with each
+  Hasura instance.
+- Hasura auto-generates a powerful and expressive **GraphQL API** for all the
+  tables and relationships defined in the database.
+- It allows **integration with external databases** or REST/GraphQL services,
+  making it possible to unify multiple data sources behind one GraphQL endpoint.
+- **Role-based access control** ensures secure data access aligned with business
+  logic and user permissions.
+
+## Benefits of Using Hasura in a Blockchain Project
+
+Hasura is especially useful for building interfaces, dashboards, and off-chain
+tools in blockchain applications. Developers can use it to:
+
+- Store non-critical or frequently updated data like user preferences, audit
+  logs, or API call metadata.
+- Power admin panels or reporting dashboards with complex filtering, sorting,
+  and aggregation capabilities.
+- Perform fast and reliable queries without the overhead of smart contract reads
+  or event processing.
+- Sync or mirror blockchain data into Postgres via indexing services (like The
+  Graph or custom workers), and build additional logic around it.
+
+For example, while the verification of a credential or the execution of a
+transaction happens on-chain, the user’s profile details, usage history, or
+interactions with the platform can be managed off-chain using Hasura. This
+results in a responsive and scalable user experience, without compromising on
+the core security and trust guarantees of blockchain.
+
+# Off-chain Database Use Cases in Blockchain Applications
+
+| Category                        | Use Cases                                                                                        |
+| ------------------------------- | ------------------------------------------------------------------------------------------------ |
+| **User Management & Metadata**  | User profiles, KYC/AML data, Recovery info, Social links, Preferences, Session tokens            |
+| **Dashboards & Reporting**      | Admin panels, KPIs, Filters & aggregation, Charts, Audit logs, Time-series insights              |
+| **App Logic & State**           | Workflow states, Business rules, Off-chain approvals, Drafts, Automation triggers, API call logs |
+| **User Content**                | Blog posts, Comments, Ratings, Articles, Feedback, Forum threads, Attachments                    |
+| **External/API Data**           | Oracle/cache data, API mirrors, Off-chain credentials, IoT inputs, External system sync          |
+| **Historical & Time Data**      | Snapshots, Transition logs, Archived state, Event sync history, Audit trails                     |
+| **Content & Config**            | UI content, Static pages, Themes, Menus, Feature flags, Editable app config                      |
+| **UX & Transactions**           | Pending tx queues, Gas estimates, Slippage data, NFT views, Pre-submit staging, Local metadata   |
+| **Admin & Dev Tools**           | Schema maps, Dev notes, Admin dashboards, Background jobs, Flagged items                         |
+| **Security & Access**           | Role bindings, Access logs, Encrypted fields, Policy metadata, Permissions history               |
+| **Hybrid & Indexing**           | Enriched on-chain data, Indexed events, ID mapping, Postgres mirroring, ETL-ready layers         |
+| **E-commerce / Token Economy**  | Product catalog, Shopping cart, Delivery tracking, Disputes, Refund metadata                     |
+| **Education / DAO / Community** | Learning progress, Badges, Voting drafts, Moderation flags, Contribution history                 |
+| **Data Ops & Recovery**         | Data backups, Exportable datasets, Disaster recovery layer, Compliance archiving                 |
+
+## Add Hasura
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Navigate to Application
+      Navigate to the **application** where you want to add Hasura.
+      
+      ### Access Integration Tools
+      Click **Integration tools** in the left navigation, and then click **Add an integration tool**. This opens a form.
+      
+      ### Configure Hasura
+      1. Select **Hasura**, and click **Continue**
+      2. Choose a **name** for your backend-as-a-service
+      3. Choose a deployment plan (provider, region, resource pack)
+      4. Click **Confirm** to add it
+    </Steps>
+  </Tab>
+
+  <Tab value="SDK CLI">
+    First ensure you're authenticated:
+    ```bash
+    settlemint login
+    ```
+
+    Create Hasura instance:
+    ```bash
+    settlemint platform create integration-tool hasura <name>
+
+    # Get information about the command and all available options
+    settlemint platform create integration-tool hasura --help
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    For a full example of how to create a blockchain explorer using the SDK, see the [Hasura SDK API Reference](https://www.npmjs.com/package/@settlemint/sdk-hasura#api-reference).
+
+    <Callout type="tip">
+    The SDK enables you to easily query and mutate data stored in your SettleMint-powered PostgreSQL databases through a type-safe GraphQL interface. For detailed API reference, check out the [Hasura SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/hasura).
+    </Callout>
+
+  </Tab>
+</Tabs>
+
+## Some Basic Features
+
+- Under the data subtab you can create an arbitrary number of **schema's**. A
+  schema is a collection of tables.
+- In a schema you can create **tables**, choose which columns you want and
+  define relations and indexes.
+- You can add, edit and delete **data** in these columns as well.
+  [Learn more here](https://hasura.io/docs/2.0/schema/postgres/tables/)
+
+Any table you make is instantly visible in the **API subtab**. Note that by
+using the **REST and Derive Action buttons** you can convert queries into REST
+endpoints if that fits your application better. Using the **Code Exporter
+button** you can get the actual code snippets you can use in your application or
+the integration studio.
+
+A bit more advanced are **actions**. Actions are custom queries or mutations
+that are resolved via HTTP handlers. Actions can be used to carry out complex
+data validations, data enrichment from external sources or execute just about
+any custom business logic. Actions can be kickstarted by using the **Derive
+Action button** in the **API subtab**.
+[Learn more here.](https://hasura.io/docs/2.0/actions/overview/)
+
+If you need to execute tasks based on changes to your database you can leverage
+**Events**. An **Event Trigger** atomically captures events (insert, update,
+delete) on a specified table and then reliably calls a HTTP webhook to run some
+custom business logic.
+[Learn more here.](https://hasura.io/docs/latest/graphql/core/event-triggers/index.html)
+
+**Cron Triggers** can be used to reliably trigger HTTP endpoints to run some
+custom business logic periodically based on a cron schedule.
+
+**One-off Scheduled Events** are individual events that can be scheduled to
+reliably trigger a HTTP webhook to run some custom business logic at a
+particular timestamp.
+
+**Access to your database** can be handled all the way to the row level by using
+the authentication and authorisation options available in Hasura.
+[Learn more here.](https://hasura.io/docs/2.0/auth/overview/)
+
+This is of course on top of the
+[application access tokens](/building-with-settlemint/application-access-tokens)
+and [personal access tokens](/building-with-settlemint/personal-access-tokens)
+in the platform you can use to close off access to the entire API.
+
+## Usage Examples
+
+You can interact with your Hasura database in two ways: through the GraphQL API
+(recommended) or directly via PostgreSQL connection.
+
+<Tabs items={['GraphQL API (Recommended)', 'PostgreSQL']}>
+  <Tab value="GraphQL API (Recommended)">
+    ```javascript
+    import fetch from 'node-fetch';
+
+    // Configure your authentication details
+    const HASURA_ENDPOINT = "YOUR_HASURA_ENDPOINT";
+    const HASURA_ADMIN_SECRET = "YOUR_HASURA_ADMIN_SECRET"; // Found in the "Connect" tab of Hasura console
+    const APP_ACCESS_TOKEN = "YOUR_APP_ACCESS_TOKEN"; // Generated following the Application Access Tokens guide
+
+    // Reusable function to make GraphQL requests
+    async function fetchGraphQL(operationsDoc, operationName, variables) {
+      try {
+        const result = await fetch(
+          HASURA_ENDPOINT,
+          {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+              'x-hasura-admin-secret': HASURA_ADMIN_SECRET,
+              'x-auth-token': APP_ACCESS_TOKEN
+            },
+            body: JSON.stringify({
+              query: operationsDoc,
+              variables: variables,
+              operationName: operationName
+            })
+          }
+        );
+
+        if (!result.ok) {
+          const text = await result.text();
+          throw new Error(`HTTP error! status: ${result.status}, body: ${text}`);
+        }
+
+        return await result.json();
+      } catch (error) {
+        console.error('Request failed:', error);
+        throw error;
+      }
+    }
+
+    // Query to fetch verification records
+    const operationsDoc = `
+      query MyQuery {
+        verification {
+          id
+        }
+      }
+    `;
+
+    // Mutation to insert a new verification record
+    const insertOperationDoc = `
+      mutation InsertVerification($name: String!, $status: String!) {
+        insert_verification_one(object: {name: $name, status: $status}) {
+          id
+          name
+          status
+        }
+      }
+    `;
+
+    // Function to fetch verification records
+    async function main() {
+      try {
+        const { errors, data } = await fetchGraphQL(operationsDoc, "MyQuery", {});
+
+        if (errors) {
+          console.error('GraphQL Errors:', errors);
+          return;
+        }
+
+        console.log('Data:', data);
+      } catch (error) {
+        console.error('Failed:', error);
+      }
+    }
+
+    // Function to insert a new verification record
+    async function insertWithGraphQL() {
+      try {
+        const { errors, data } = await fetchGraphQL(
+          insertOperationDoc,
+          "InsertVerification",
+          {
+            name: "Test User",
+            status: "pending"
+          }
+        );
+
+        if (errors) {
+          console.error('GraphQL Errors:', errors);
+          return;
+        }
+
+        console.log('Inserted Data:', data);
+      } catch (error) {
+        console.error('Failed:', error);
+      }
+    }
+
+    // Execute both query and mutation
+    main();
+    insertWithGraphQL();
+    ```
+
+  </Tab>
+  <Tab value="PostgreSQL">
+    ```javascript 
+    import pkg from 'pg';
+    const { Pool } = pkg;
+
+    // Initialize PostgreSQL connection (get connection string from Hasura console -> "Connect" tab)
+    const pool = new Pool({
+      connectionString: 'YOUR_POSTGRES_CONNECTION_STRING'
+    });
+
+    // Simple query to read all records from verification table
+    const readData = async () => {
+      const query = 'SELECT * FROM verification';
+      const result = await pool.query(query);
+      console.log('Current Data:', result.rows);
+    };
+
+    // Insert a new verification record with sample data
+    const insertData = async () => {
+      const query = `
+        INSERT INTO verification (id, identifier, value, created_at, expires_at)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING *`;
+
+      // Sample values - modify according to your needs
+      const values = [
+        'test-id-123',
+        'test-identifier',
+        'test-value',
+        new Date(),
+        new Date(Date.now() + 24 * 60 * 60 * 1000) // Sets expiry to 24h from now
+      ];
+
+      const result = await pool.query(query, values);
+      console.log('Inserted:', result.rows[0]);
+    };
+
+    // Update an existing record by ID
+    const updateData = async () => {
+      const query = `
+        UPDATE verification
+        SET value = $1, updated_at = $2
+        WHERE id = $3
+        RETURNING *`;
+
+      const values = ['updated-value', new Date(), 'test-id-123'];
+      const result = await pool.query(query, values);
+      console.log('Updated:', result.rows[0]);
+    };
+
+    // Execute all operations in sequence
+    async function main() {
+      try {
+        await readData();
+        await insertData();
+        await updateData();
+        await readData();
+      } finally {
+        await pool.end(); // Close database connection
+      }
+    }
+
+    main();
+    ```
+
+  </Tab>
+</Tabs>
+
+## Hasura Postgress database access and connection
+
+![Hasura Connect](../../../img/building-with-settlemint/hasura-connect.png)
+
+For GraphQL API:
+
+1. **Hasura Admin Secret**: Found in the "Connect" tab of Hasura console
+2. **Application Access Token**: Generate this by following our
+   [Application Access Tokens guide](/building-with-settlemint/application-access-tokens)
+
+For PostgreSQL:
+
+1. **PostgreSQL Connection String**: Found in the "Connect" tab of Hasura
+   console under "Database URL"
+
+<Callout type="warning">
+  Always keep your credentials secure and never expose them in client-side code.
+  Use environment variables or a secure configuration management system in
+  production environments.
+</Callout>
+
+Understanding postgress connection string
+
+**postgresql://hasura-f1cd9:0c510604a378d348e7ed@p2p.gke-europe.settlemint.com:30787/hasura-f1cd9**
+
+Here's how it's broken down:
+
+- **Protocol**: `postgresql://`  
+  Indicates the connection type — PostgreSQL database over TCP.
+
+- **Username**: `hasura-f1cd9`  
+  The database username used for authentication.
+
+- **Password**: `0c510604a378d348e7ed`  
+  The corresponding password for the above username.
+
+- **Host**: `p2p.gke-europe.settlemint.com`  
+  The server address (domain or IP) where the PostgreSQL database is hosted.
+
+- **Port**: `30787`  
+  The network port on which the PostgreSQL service is listening.
+
+- **Database Name**: `hasura-f1cd9`  
+  The specific PostgreSQL database to connect to on that server.
+
+## Hasura Backup
+
+Via CLI pgdump command
+
+```sql
+PGPASSWORD=0c510604a378d348e7ed pg_dump \
+  -h p2p.gke-europe.settlemint.com \
+  -p 30787 \
+  -U hasura-f1cd9 \
+  -d hasura-f1cd9 \
+  -F p \
+  -f ~/Desktop/hasura_backup.sql
+```
+
+## Taking backup via Hasura CLI
+
+1. Hasura Database
+2. Hasura Metadata
+
+### Steps for taking a backup of Hasura Database
+
+1. Install Hasura CLI
+   (https://hasura.io/docs/latest/hasura-cli/install-hasura-cli/)
+2. Run hasura init command to initiate a new Hasura project in the working
+   directory.
+3. Edit config.yaml file to configure remote Hasura instance. We need to
+   generate an API Key in BPaaS and pass it with the endpoint.
+
+Syntax of config.yaml:
+
+```
+version: 3
+endpoint: <hasura-db-endpoint-here/API-key>
+admin_secret: <admin-secret-here>
+metadata_directory: metadata
+actions:
+ kind: synchronous
+ handler_webhook_baseurl: http://localhost:3000
+```
+
+Example
+
+```
+endpoint: https://hasuradb-15ce.gke-japan.settlemint.com/sm_aat_86530f5bf93d82a9
+admin_secret: dc5eb1b93f43fd28c53e
+metadata_directory: metadata
+actions:
+ kind: synchronous
+ handler_webhook_baseurl: http://localhost:3000
+
+```
+
+4. Run hasura console command. (this command will sync everything to your local
+   hasura instance.)
+5. Run this curl command to generate DB export:
+
+Curl Format
+
+```
+curl -d '{"opts": [ "-O", "-x", "--schema=public", "--inserts"], "clean_output": true, "source": "default"}' -H "x-hasura-admin-secret: <SecretKey>" <Endpoint URL/APIKey>/v1alpha1/pg_dump > db.sql
+```
+
+Example Curl
+
+```
+curl -d '{"opts": [ "-O", "-x", "--schema=public", "--inserts"], "clean_output": true, "source": "default"}' -H "x-hasura-admin-secret:78b0e4618125322de0eb" https://fuchsiacapybara-7f70.gke-europe.settlemint.com/bpaas-1d79Acd6A2f112EA450F1C07a372a7D582E6121F/v1alpha1/pg_dump > db.sql
+```
+
+### Importing data into a new instance
+
+Please copy the content of the exported db.sql file, paste it and execute as a
+SQL statement.
+
+### Steps for taking a backup of Hasura Metadata
+
+Hasura Metadata Export is a collection of yaml files which captures all the
+Metadata required by the GraphQL Engine. This includes info about tables that
+are tracked, permission rules, relationships, and event triggers that are
+defined on those tables.
+
+If you have already initialized your project via the Hasura CLI you should see
+the Metadata directory structure in your project directory.
+
+To export your entire Metadata using the Hasura CLI execute the following
+command in your terminal:
+
+```
+#in hasura CLI
+hasura metadata export
+```
+
+This will export the Metadata as YAML files in the /metadata directory
+
+### Steps for importing or applying Hasura Metadata
+
+You can apply Metadata from one Hasura Server instance to another. You can also
+apply an older or modified version of an instance's Metadata onto itself to
+replace the existing Metadata. Applying or importing completely replaces the
+Metadata on that instance, i.e. you lose any Metadata that existed before
+applying.
+
+```
+#in hasura CLI
+hasura metadata apply
+```
+
+### Reload Hasura Metadata
+
+In some cases, the Metadata can be out of sync with the database schema. For
+example, when a new column has been added to a table via an external tool.
+
+```
+#in hasura CLI
+hasura metadata reload
+```
+
+For more on Hasura Metadata, refer:
+https://hasura.io/docs/latest/migrations-metadata-seeds/manage-metadata/ For
+more on Hasura Migrations, refer:
+https://hasura.io/docs/latest/migrations-metadata-seeds/manage-migrations/
+
+<div style={{
+  backgroundColor: "#D1E5E8", 
+  color: "#000000", 
+  padding: "0.5px 10px 10px 10px",
+  borderRadius: "10px", 
+  fontSize: "18px", 
+  fontWeight: "light",
+  lineHeight: "1.5",
+  textAlign: "left"
+}}>
+Congratulations.!!
+
+You have succesfully configured Hasura backend-as-a-service layer with the
+off-chain database of your choice.
+
+From here we will proceed to adding centralized and non-centralized storage for
+our images, documents, videos, archive files and other storage needs.
+
+</div>
+
+```
+Keywords:hasura, off-chain database, graphql api, postgresql, backend-as-a-service, settlemint, low-code development, hybrid architecture, metadata export, data triggers, event triggers, cron jobs, custom actions, database backups, graphql mutations, integration tools, user metadata, hasura sdk, database schema, role-based access, api permissions, application data, indexing service, on-chain sync, table relationships, api endpoints, postgres connection, pg_dump, data recovery, hasura cli, admin secret, data enrichment, hasura deployment, application logic, audit logs, database mirroring, scalable data, off-chain storage, business logic, external services integration, node.js, pg client, graphql subscriptions, realtime api, hasura metadata, metadata apply, database restore, api tokens, secure access, decentralized app, blockchain application, settlemint graphql
+```

@@ -1,0 +1,269 @@
+---
+title: Understanding Subgraphs
+description: Guide to Subgraphs on SettleMint platform
+---
+
+# 🧾 Subgraph Project Structure – Deep Dive for `MyContract.sol`
+
+This document provides a complete, line-by-line breakdown of a subgraph project
+folder designed to index events from an Ethereum smart contract named
+`MyContract.sol`. It follows the conventions used by
+[The Graph Protocol](https://thegraph.com) and tooling like
+[SettleMint Subgraph Generator](https://settlemint.com).
+
+---
+
+## 📁 Folder Structure
+
+```plaintext
+subgraph/
+│
+├── subgraph.config.json                 # Global generator settings
+│
+├── datasources/
+│   ├── mycontract.gql.json              # GraphQL schema definition (JSON-based)
+│   ├── mycontract.ts                    # AssemblyScript event handlers for MyContract
+│   └── mycontract.yaml                  # Subgraph manifest (datasource-level config)
+│
+└── fetch/
+    └── mycontractdata.ts               # Utility functions for entity fetch/create
+```
+
+---
+
+## 🔧 `subgraph.config.json`
+
+### ✅ Purpose:
+
+This file is consumed by SettleMint's CLI or The Graph CLI (`graph codegen`,
+`graph build`) to bootstrap subgraph code and configuration.
+
+### 🔍 Breakdown:
+
+```json
+{
+  "output": "generated/scs.",
+  "chain": "localhost",
+  "datasources": [
+    {
+      "name": "MyContract",
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0,
+      "module": ["mycontract"]
+    }
+  ]
+}
+```
+
+| Field         | Description                                                                                                                  |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `output`      | Directory for generated TypeScript types (`generated/` folder). Often linked to `schema.graphql`, `ABI`, and handler typing. |
+| `chain`       | Blockchain environment to index (e.g., `mainnet`, `localhost`, `polygon`, `arbitrum-one`).                                   |
+| `datasources` | Array of contract modules to be indexed. Each maps to a folder and .yaml config inside `datasources/`.                       |
+| `name`        | Logical name of this contract or module (used in code and schema).                                                           |
+| `address`     | On-chain deployed address of `MyContract.sol`. Must be accurate for indexing to work.                                        |
+| `startBlock`  | First block number to index from (skip historical blocks for faster sync).                                                   |
+| `module`      | Name of folder containing `*.yaml`, `*.ts`, and `*.gql.json` files for this contract.                                        |
+
+> 💡 **Tip:** Use the block number where your contract was deployed to avoid
+> unnecessary indexing of irrelevant historical data.
+
+---
+
+## 📄 `datasources/mycontract.gql.json`
+
+### ✅ Purpose:
+
+This is a **JSON-encoded GraphQL schema**, which defines the shape of your
+indexed data. Each `type` here corresponds to an **entity** stored in the
+subgraph’s database.
+
+### 🧾 Example:
+
+```json
+[
+  {
+    "name": "MyEntity",
+    "description": "Stores state emitted from MyContract events",
+    "fields": [
+      { "name": "id", "type": "ID!" },
+      { "name": "creator", "type": "Bytes!" },
+      { "name": "status", "type": "String!" },
+      { "name": "timestamp", "type": "BigInt!" }
+    ]
+  }
+]
+```
+
+### 🔍 Field Types:
+
+- `ID!`: Required unique identifier (`string` format, often tx hash or entity
+  composite key).
+- `Bytes`: EVM-style address or 32-byte values.
+- `BigInt`: For uint256, block numbers, timestamps.
+- `String`, `Boolean`, `Int`: Basic GraphQL types.
+- `@derivedFrom`: Used for reverse relationships (foreign keys) but only in
+  `.graphql`, not `.gql.json`.
+
+> 💡 Use `id` as a combination of `transactionHash-logIndex` for uniqueness in
+> event-based entities.
+
+---
+
+## 📄 `datasources/mycontract.yaml`
+
+### ✅ Purpose:
+
+This is the **manifest file** that connects your smart contract to its:
+
+- Deployed address
+- ABI definition
+- Events you want to index
+- GraphQL schema
+- Event handler functions
+
+### 🧾 Example:
+
+```yaml
+specVersion: 0.0.2
+schema:
+  file: mycontract.gql.json
+
+dataSources:
+  - kind: ethereum/contract
+    name: MyContract
+    network: localhost
+    source:
+      address: "0x0000000000000000000000000000000000000000"
+      abi: MyContract
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      language: wasm/assemblyscript
+      apiVersion: 0.0.5
+      entities:
+        - MyEntity
+      abis:
+        - name: MyContract
+          file: "../../abis/MyContract.json"
+      eventHandlers:
+        - event: MyEvent(indexed uint256,string)
+          handler: handleMyEvent
+      file: mycontract.ts
+```
+
+### 🔍 Key Fields:
+
+| Section            | Field      | Description                                                        |
+| ------------------ | ---------- | ------------------------------------------------------------------ |
+| `dataSources`      | `name`     | Logical label for contract.                                        |
+| `source.address`   |            | Deployed contract address.                                         |
+| `source.abi`       |            | Refers to `name` under `abis:`.                                    |
+| `startBlock`       |            | Block number from which to start processing.                       |
+| `mapping.entities` |            | List of entities affected by this contract.                        |
+| `abis.file`        |            | Path to `.json` ABI file of contract (must match source).          |
+| `eventHandlers`    | `event:`   | Signature of the Solidity event being indexed.                     |
+|                    | `handler:` | Name of exported function from `.ts` file that handles this event. |
+
+> ⚠️ `event:` must **exactly match** the ABI event signature, including indexed
+> fields.
+
+---
+
+## 📄 `datasources/mycontract.ts`
+
+### ✅ Purpose:
+
+This file contains **AssemblyScript handler functions** that transform on-chain
+events into **GraphQL entities**. These handlers are executed by the subgraph
+runtime when matching events appear on-chain.
+
+### 🧾 Example:
+
+```ts
+import { BigInt } from "@graphprotocol/graph-ts";
+import { MyEvent as MyEventType } from "../generated/MyContract/MyContract";
+import { MyEntity } from "../generated/schema";
+import { fetchMyEntity } from "../fetch/mycontractdata";
+
+export function handleMyEvent(event: MyEventType): void {
+  let entity = fetchMyEntity(event.params.id);
+  entity.creator = event.transaction.from;
+  entity.status = event.params.status;
+  entity.timestamp = event.block.timestamp;
+  entity.save();
+}
+```
+
+### 🔍 What's Happening:
+
+- Event is imported from auto-generated `MyContract.ts` (compiled ABI).
+- A helper is called to load or create an entity (`fetchMyEntity`).
+- Event parameters and context (tx sender, timestamp) are assigned to fields.
+- Entity is stored using `.save()`.
+
+> 🧩 Best practice: use `fetch*` functions to reduce duplication and enforce
+> default values.
+
+---
+
+## 📄 `fetch/mycontractdata.ts`
+
+### ✅ Purpose:
+
+Contains utility functions to fetch an entity from the store **or create it if
+it doesn't exist**. Useful for enforcing schema defaults and ensuring consistent
+object initialization.
+
+### 🧾 Example:
+
+```ts
+import { MyEntity } from "../../generated/schema";
+import { BigInt } from "@graphprotocol/graph-ts";
+
+export function fetchMyEntity(id: BigInt): MyEntity {
+  let key = id.toString();
+  let entity = MyEntity.load(key);
+
+  if (!entity) {
+    entity = new MyEntity(key);
+    entity.creator = Bytes.empty();
+    entity.status = "PENDING";
+    entity.timestamp = BigInt.zero();
+  }
+
+  return entity;
+}
+```
+
+### 🔍 Why It's Important:
+
+- Prevents null pointer errors in `.ts` handler files.
+- Centralizes logic for initializing new entities.
+- Keeps handler functions small and readable.
+
+---
+
+## ✅ Summary
+
+| File                   | Purpose                                                     |
+| ---------------------- | ----------------------------------------------------------- |
+| `subgraph.config.json` | Global configuration (network, modules, output path).       |
+| `mycontract.gql.json`  | GraphQL schema defining the structure of data to be stored. |
+| `mycontract.yaml`      | Contract address, ABI, events, and mapping file linkage.    |
+| `mycontract.ts`        | Event-to-entity transformation logic in AssemblyScript.     |
+| `mycontractdata.ts`    | Reusable logic to load or create GraphQL entities safely.   |
+
+---
+
+## 🛠️ Best Practices
+
+- 🧪 Always test your subgraph locally with a dev chain before deploying.
+- 🧱 Use composite IDs (`txHash-logIndex`) for events to avoid collisions.
+- ⚙️ Keep `fetch/` files modular to reduce logic in event handlers.
+- 📊 Use `BigInt`, `Bytes`, and `Boolean` types consistently with EVM data.
+
+---
+
+> 🔁 This setup is modular, clean, and scalable for multi-contract projects,
+> cross-chain indexing, or advanced state machine tracking.

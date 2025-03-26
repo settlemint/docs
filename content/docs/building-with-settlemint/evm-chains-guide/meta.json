@@ -1,0 +1,20 @@
+{
+  "label": "EVM Chains Guide",
+  "title": "EVM Chains Guide",
+  "icon": "Grid2x2Plus",
+  "pages": [
+    "create-an-application",
+    "add-network-and-nodes",
+    "add-private-keys",
+    "setup-code-studio",
+    "deploy-smart-contracts",
+    "setup-api-portal",
+    "setup-graph-middleware",
+    "setup-offchain-database",
+    "setup-storage",
+    "deploy-custom-services",
+    "integration-studio",
+    "attestation-indexer",
+    "audit-logs"
+  ]
+}

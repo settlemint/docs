@@ -1,0 +1,14 @@
+{
+  "title": "Platform Components",
+  "icon": "Network",
+  "pages": [
+    "blockchain-infrastructure",
+    "dev-tools",
+    "middleware-and-api-layer",
+    "database-and-storage",
+    "custom-deployments",
+    "security-and-authentication",
+    "usage-and-logs",
+    "account-billing"
+  ]
+}

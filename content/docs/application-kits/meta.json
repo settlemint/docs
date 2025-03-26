@@ -1,0 +1,6 @@
+{
+  "label": "Application Kits",
+  "title": "Application Kits",
+  "icon": "Bolt",
+  "pages": ["asset-tokenization"]
+}
