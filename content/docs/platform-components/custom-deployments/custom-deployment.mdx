@@ -1,5 +1,5 @@
 ---
-title: Custom Deployment
+title: "Custom deployment"
 description: Guide to deploying custom Docker images on SettleMint
 ---
 
@@ -13,7 +13,7 @@ frontend applications, on the SettleMint platform. This feature provides
 flexibility for integrating custom solutions within your blockchain-based
 applications.
 
-## Create a Custom Deployment
+## Create a custom deployment
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
@@ -81,7 +81,7 @@ applications.
   </Tab>
 </Tabs>
 
-## DNS Configuration for Custom Domains
+## Dns configuration for custom domains
 
 When using custom domains with your Custom Deployment, you'll need to configure
 your DNS settings correctly. Here's how to set it up:
@@ -146,7 +146,7 @@ subdomains. The main difference lies in the type of DNS record you create (ALIAS
 for top-level domains, CNAME for subdomains) and whether you need to remove
 existing records.
 
-## Manage Custom Deployments
+## Manage custom deployments
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
@@ -205,7 +205,7 @@ existing records.
   </Tab>
 </Tabs>
 
-## Limitations and Considerations
+## Limitations and considerations
 
 When using Custom Deployment, keep the following limitations in mind:
 
@@ -228,7 +228,7 @@ When using Custom Deployment, keep the following limitations in mind:
    container images. Ensure your Docker images are built for AMD architecture to
    guarantee smooth compatibility with our infrastructure.
 
-## Best Practices
+## Best practices
 
 - Design your applications to be stateless and horizontally scalable
 - Use environment variables for configuration to make your deployments more

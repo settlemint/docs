@@ -1,5 +1,5 @@
 ---
-title: Setup off-chain Database
+title: "Setup off-chain database"
 description: Add Hasura backend-as-a-service with off-chain database
 ---
 
@@ -47,7 +47,7 @@ Hasura GraphQL APIs for managing application data.
 
 ![Add Hasura](../../../img/building-with-settlemint/add-hasura.png)
 
-## Need for a On-chain and Off-chain Data Architecture
+## Need for a on-chain and off-chain data architecture
 
 In blockchain-based applications, not all data needs to—or should—reside
 on-chain. While critical state changes, token ownerships, or verifiable proofs
@@ -69,7 +69,7 @@ This model provides the best of both worlds: **immutability and trust from
 blockchain**, and **speed, flexibility, and developer-friendliness from
 traditional databases**.
 
-## How Hasura on SettleMint Supports This Architecture
+## How hasura on settlemint supports this architecture
 
 SettleMint offers Hasura as a Backend-as-a-Service (BaaS), tightly integrated
 into its low-code blockchain development stack. Hasura provides a
@@ -77,7 +77,7 @@ high-performance, real-time GraphQL API layer on top of a PostgreSQL database,
 and allows developers to instantly query, filter, and subscribe to changes in
 the data without writing custom backend logic.
 
-### Key Capabilities of Hasura on SettleMint
+### Key capabilities of hasura on settlemint
 
 - A fully managed **PostgreSQL database** is provisioned automatically with each
   Hasura instance.
@@ -88,7 +88,7 @@ the data without writing custom backend logic.
 - **Role-based access control** ensures secure data access aligned with business
   logic and user permissions.
 
-## Benefits of Using Hasura in a Blockchain Project
+## Benefits of using hasura in a blockchain project
 
 Hasura is especially useful for building interfaces, dashboards, and off-chain
 tools in blockchain applications. Developers can use it to:
@@ -109,7 +109,7 @@ results in a responsive and scalable user experience, without compromising on
 the core security and trust guarantees of blockchain.
 
 
-# Off-chain Database Use Cases in Blockchain Applications
+# Off-chain database use cases in blockchain applications
 
 | Category                        | Use Cases                                                                                        |
 | ------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -128,7 +128,7 @@ the core security and trust guarantees of blockchain.
 | **Education / DAO / Community** | Learning progress, Badges, Voting drafts, Moderation flags, Contribution history                 |
 | **Data Ops & Recovery**         | Data backups, Exportable datasets, Disaster recovery layer, Compliance archiving                 |
 
-## Add Hasura
+## Add hasura
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
@@ -173,7 +173,7 @@ the core security and trust guarantees of blockchain.
   </Tab>
 </Tabs>
 
-## Some Basic Features
+## Some basic features
 
 - Under the data subtab you can create an arbitrary number of **schema's**. A
   schema is a collection of tables.
@@ -219,7 +219,7 @@ in the platform you can use to close off access to the entire API.
 
 
 
-## Usage Examples
+## Usage examples
 
 You can interact with your Hasura database in two ways: through the GraphQL API
 (recommended) or directly via PostgreSQL connection.
@@ -399,7 +399,7 @@ You can interact with your Hasura database in two ways: through the GraphQL API
   </Tab>
 </Tabs>
 
-## Hasura Postgress database access and connection
+## Hasura postgress database access and connection
 
 ![Hasura Connect](../../../img/building-with-settlemint/hasura-connect.png)
 
@@ -445,7 +445,7 @@ Here's how it's broken down:
   The specific PostgreSQL database to connect to on that server.
 
 
-## Hasura Backup
+## Hasura backup
 
 Via CLI pgdump command
 
@@ -461,12 +461,12 @@ PGPASSWORD=0c510604a378d348e7ed pg_dump \
 
 
 
-## Taking backup via Hasura CLI
+## Taking backup via hasura cli
 
 1. Hasura Database
 2. Hasura Metadata
 
-### Steps for taking a backup of Hasura Database
+### Steps for taking a backup of hasura database
 
 1. Install Hasura CLI
    (https://hasura.io/docs/latest/hasura-cli/install-hasura-cli/)
@@ -522,7 +522,7 @@ SQL statement.
 
 
 
-### Steps for taking a backup of Hasura Metadata
+### Steps for taking a backup of hasura metadata
 
 Hasura Metadata Export is a collection of yaml files which captures all the
 Metadata required by the GraphQL Engine. This includes info about tables that
@@ -542,7 +542,7 @@ hasura metadata export
 
 This will export the Metadata as YAML files in the /metadata directory
 
-### Steps for importing or applying Hasura Metadata
+### Steps for importing or applying hasura metadata
 
 You can apply Metadata from one Hasura Server instance to another. You can also
 apply an older or modified version of an instance's Metadata onto itself to
@@ -555,7 +555,7 @@ applying.
 hasura metadata apply
 ```
 
-### Reload Hasura Metadata
+### Reload hasura metadata
 
 In some cases, the Metadata can be out of sync with the database schema. For
 example, when a new column has been added to a table via an external tool.

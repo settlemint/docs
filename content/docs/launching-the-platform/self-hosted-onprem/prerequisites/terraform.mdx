@@ -1,5 +1,5 @@
 ---
-title: Terraform Installation (Optional)
+title: "Terraform installation (optional)"
 description: Optional quick setup using Terraform for testing environments
 ---
 
@@ -9,7 +9,7 @@ import { Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 <Callout type="warning">
-### Quick Setup Only
+### Quick setup only
 This Terraform-based installation is designed for quick setup and testing environments only. For production deployments, we strongly recommend following the manual installation process to properly configure and secure each component according to your organization's requirements.
 
 **Key limitations:**
@@ -41,20 +41,20 @@ This Terraform-based installation is designed for quick setup and testing enviro
   </Card>
 </div>
 
-## Required APIs
+## Required apis
 
 <Steps>
   ### Enable Container API
   Visit: `https://console.developers.google.com/apis/api/container.googleapis.com/overview?project=<project_id>`
 
-### Enable Cloud KMS API
+### Enable cloud kms api
 
 Visit:
 `https://console.developers.google.com/apis/api/cloudkms.googleapis.com/overview?project=<project_id>`
 
 </Steps>
 
-## IAM Permissions
+## Iam permissions
 
 <Tabs items={['Quick Setup', 'Granular Permissions']}>
   <Tab value="Quick Setup">
@@ -72,7 +72,7 @@ Visit:
   </Tab>
 </Tabs>
 
-## Installation Steps
+## Installation steps
 
 <Steps>
   ### Clone Repository
@@ -80,23 +80,23 @@ Visit:
   git clone git@github.com:settlemint/tutorial-btp-on-gcp.git
   ```
 
-### Set Environment Variables
+### Set environment variables
 
 ```bash
-# DNS zone (subdomain) for platform access
+# Dns zone (subdomain) for platform access
 export TF_VAR_gcp_dns_zone='YOUR_DNS_ZONE'
 
-# Your GCP project ID
+# Your gcp project id
 export TF_VAR_gcp_project_id='YOUR_GCP_PROJECT_ID'
 
-# Target GCP region
+# Target gcp region
 export TF_VAR_gcp_region='YOUR_GCP_REGION'
 
-# OAuth credentials
+# Oauth credentials
 export TF_VAR_gcp_client_id='YOUR_GCP_CLIENT_ID'
 export TF_VAR_gcp_client_secret='YOUR_GCP_CLIENT_SECRET'
 
-# Registry credentials (provided by SettleMint)
+# Registry credentials (provided by settlemint)
 export TF_VAR_oci_registry_username='YOUR_REGISTRY_USERNAME'
 export TF_VAR_oci_registry_password='YOUR_REGISTRY_PASSWORD'
 export TF_VAR_btp_version='BTP_VERSION'
@@ -104,7 +104,7 @@ export TF_VAR_btp_version='BTP_VERSION'
 
 </Steps>
 
-## DNS Zone Setup
+## Dns zone setup
 
 <Steps>
   ### Navigate to DNS Zone Directory
@@ -112,14 +112,14 @@ export TF_VAR_btp_version='BTP_VERSION'
   cd tutorial-btp-on-gcp/00_dns_zone
   ```
 
-### Create DNS Zone
+### Create dns zone
 
 ```bash
 terraform init
 terraform apply
 ```
 
-### Configure Domain Registrar
+### Configure domain registrar
 
 Add NS records for your subdomain (e.g., btp.settlemint.com) pointing to Google
 nameservers:
@@ -129,7 +129,7 @@ nameservers:
 - ns-cloud-a3.googledomains.com
 - ns-cloud-a4.googledomains.com
 
-### Verify DNS Delegation
+### Verify dns delegation
 
 ```bash
 dig NS btp.settlemint.com
@@ -137,7 +137,7 @@ dig NS btp.settlemint.com
 
 </Steps>
 
-## Platform Infrastructure Setup
+## Platform infrastructure setup
 
 <Steps>
   ### Navigate to Infrastructure Directory
@@ -145,7 +145,7 @@ dig NS btp.settlemint.com
   cd ../01_infrastructure
   ```
 
-### Deploy Infrastructure
+### Deploy infrastructure
 
 ```bash
 terraform init
@@ -167,17 +167,17 @@ terraform apply
   </Callout>
 </Steps>
 
-## Next Steps
+## Next steps
 
 <Steps>
   ### Access Platform
   Visit `https://btp.<your-domain>`
 
-### Complete Setup
+### Complete setup
 
 Follow the initial setup wizard
 
-### Review Documentation
+### Review documentation
 
 Check the
 [platform documentation](/launching-the-platform/self-hosted/introduction)

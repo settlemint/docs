@@ -1,5 +1,5 @@
 ---
-title: Private Keys
+title: "Private keys"
 description: Guide to managing private keys on SettleMint
 ---
 
@@ -8,7 +8,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
 
-# Private Keys
+# Private keys
 
 Private key management is a crucial aspect of blockchain security, ensuring that transactions are securely signed and verified. Blockchain transactions require **private keys** for **authentication, ownership verification, and signing**, and the associated blockchain address must have sufficient funds to cover **transaction fees (gas costs)**.
 
@@ -20,7 +20,7 @@ Depending on risk, compliance requirements, and scale, SettleMint supports multi
 Each approach integrates with the **Transaction Signer**, guaranteeing seamless and secure execution of on-chain operations.
 ---
 
-## Importance of Private Key Management
+## Importance of private key management
 
 Private keys are essential for:
 - **Digitally signing transactions** before they are broadcast to the blockchain.
@@ -32,24 +32,24 @@ Improper handling of private keys can lead to **unauthorized access, irreversibl
 
 ---
 
-## Key Management Approaches
+## Key management approaches
 
 SettleMint supports multiple **key storage and generation options** to balance security, usability, and compliance.
 
-### 1. **Externally Generated Private Keys**
+### 1. **externally generated private keys**
 Users can create and manage their private keys **outside of SettleMint** and import them when needed. Common options include:
 - **MetaMask** – A popular Ethereum-based wallet.
 - **Ledger/Trezor** – Secure hardware wallets for private key storage.
 - **OpenSSL & CLI Tools** – For manually generating and managing key pairs.
 - **Cloud-Based Key Vaults** – Secure solutions like AWS KMS, Azure Key Vault, and GCP KMS.
 
-### 2. **Private Key Management in SettleMint**
+### 2. **private key management in settlemint**
 SettleMint provides **built-in private key generation and storage**, allowing users to:
 - **Generate ECDSA P-256, (HD) ECDSA P-256, and HSM private keys** within the platform.
 - **Manage multiple keys** for different blockchain networks.
 - **Securely sign transactions** without exposing private keys externally.
 
-### 3. **Custom Key Material: Mnemonic & Derivation Path**
+### 3. **custom key material: mnemonic & derivation path**
 For advanced users, SettleMint allows the use of **custom key material**, including:
 - **Mnemonics** – A **12/24-word recovery phrase** that generates a **Hierarchical Deterministic (HD) Wallet**.
 - **Derivation Paths** – Structured key generation paths, such as:
@@ -60,7 +60,7 @@ Using **HD ECDSA P-256**, users can derive multiple child keys from a **master s
 
 ---
 
-## Signing Transactions in SettleMint
+## Signing transactions in settlemint
 
 SettleMint integrates **a signing proxy** that ensures secure transaction execution. 
 
@@ -75,17 +75,17 @@ This setup allows **seamless integration** with **external blockchain developmen
 
 ---
 
-## Security Considerations
+## Security considerations
 
-### 1. **Software-Based Private Key Storage**
+### 1. **software-based private key storage**
 - Keys are stored in **software memory** for easy access.
 - Suitable for **low-risk applications** but vulnerable to potential attacks.
 
-### 2. **Hierarchical Deterministic (HD) Key Management**
+### 2. **hierarchical deterministic (hd) key management**
 - Generates **multiple child keys** from a **single mnemonic seed**.
 - Ensures **structured key backups and recovery**.
 
-### 3. **Hardware Security Modules (HSMs)**
+### 3. **hardware security modules (hsms)**
 - Uses **tamper-resistant hardware devices** for **strong security**.
 - Preferred for **enterprise-grade and regulated environments**.
 
@@ -97,7 +97,7 @@ This setup allows **seamless integration** with **external blockchain developmen
 
 ---
 
-## Best Practices for Private Key Security
+## Best practices for private key security
 
 - **Use Secure Backups** – Store keys in **encrypted, air-gapped storage solutions**.
 - **Enable Multi-Factor Authentication (MFA)** – Adds an extra layer of protection.
@@ -107,7 +107,7 @@ This setup allows **seamless integration** with **external blockchain developmen
 
 ---
 
-## Additional Resources
+## Additional resources
 
 - **[Ethereum JSON-RPC API](https://eth.wiki/json-rpc/API)**
 - **[Hardhat JSON-RPC Signing Guide](https://hardhat.org/config/#json-rpc-based-networks)**

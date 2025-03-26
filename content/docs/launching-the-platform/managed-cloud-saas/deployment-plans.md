@@ -1,5 +1,5 @@
 ---
-title: Deployment Plans
+title: "Deployment plans"
 description: Guide to deployment plans and resource allocation in SettleMint
 ---
 
@@ -25,7 +25,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   </Card>
 </div>
 
-## Infrastructure Types
+## Infrastructure types
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
   <Card>
@@ -50,9 +50,9 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   us](mailto:support@settlemint.com).
 </Callout>
 
-## Cloud Providers & Regions
+## Cloud providers & regions
 
-### Choose Provider
+### Choose provider
 
 Select from supported cloud providers:
 
@@ -60,7 +60,7 @@ Select from supported cloud providers:
 - Amazon Web Services
 - Microsoft Azure
 
-### Select Region
+### Select region
 
 Pick available regions based on:
 
@@ -68,7 +68,7 @@ Pick available regions based on:
 - Compliance requirements
 - Performance needs
 
-## Resource Packs
+## Resource packs
 
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
   <Card>
@@ -93,7 +93,7 @@ Pick available regions based on:
   </Card>
 </div>
 
-## Recommended Setups
+## Recommended setups
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
   <Card>

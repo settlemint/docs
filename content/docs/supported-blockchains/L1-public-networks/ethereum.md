@@ -7,7 +7,7 @@ cryptocurrency, called Ether (ETH) or Ethereum, and its own native programming
 language called Solidity to build and publish dApps (distributed applications)
 on the Ethereum blockchain.
 
-## Mainnet and Testnet
+## Mainnet and testnet
 
 cle SettleMint supports, the Ethereum **Mainnet**, the **Sepolia Testnet** and
 the **Holesky Testnet**.

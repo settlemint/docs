@@ -16,7 +16,7 @@ decentralization. The Optimism network is secured by a decentralized network of
 validators, and it is governed by a DAO (decentralized autonomous organization).
 This ensures that Optimism is not controlled by any single entity.
 
-## Mainnet and Testnet
+## Mainnet and testnet
 
 SettleMint supports, the **OP Mainnet** and the **OP Goerlli Testnet**.
 

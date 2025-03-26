@@ -1,5 +1,5 @@
 ---
-title: "Hyperledger Fabric"
+title: "Hyperledger fabric"
 ---
 
 Hyperledger Fabric is an open source enterprise-grade permissioned distributed

@@ -7,7 +7,7 @@ called AVAX. It focuses on scalability, speed and low transactions costs.
 Avalanche is fully compatible with Ethereum components, dApps (distributed
 applications), and tooling.
 
-## Mainnet and Testnet
+## Mainnet and testnet
 
 SettleMint supports both the Avalanche **Mainnet** and the **Fuji Testnet**.
 
@@ -21,21 +21,21 @@ You can consider the Testnet as a prototype and the Mainnet as the official
 production blockchain. Or think of this as an analog to production versus
 staging servers.
 
-## X-Chain, C-Chain and P-Chain
+## X-chain, c-chain and p-chain
 
 Avalanche is somewhat unique, because its Mainnet is made up of three
 blockchains: X-Chain, C-Chain, and P-Chain.
 
-### X-Chain: Exchange Chain
+### X-chain: exchange chain
 
 This blockchain is used to create digital assets and carry out transactions,
 which are paid in AVAX.
 
-### C-Chain: Contract Chain
+### C-chain: contract chain
 
 This blockchain runs smart contracts and is compatible with Ethereum.
 
-### P-Chain: Platform Chain
+### P-chain: platform chain
 
 This is the blockchain where anyone can create their own custom blockchain
 network, called a subnet or subnetwork. A subnet is managed by its own

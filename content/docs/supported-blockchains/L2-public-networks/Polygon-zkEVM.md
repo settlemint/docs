@@ -1,5 +1,5 @@
 ---
-title: "Polygon zkEVM"
+title: "Polygon zkevm"
 ---
 
 Polygon zkEVM, introduced by the Polygon (formerly Matic) team in March 2023,
@@ -12,7 +12,7 @@ seamlessly. Polygon zkEVM provides a complete EVM-like experience for developers
 and users alike, with significantly lower transaction costs and higher
 throughput than Ethereum.
 
-## Mainnet and Testnet
+## Mainnet and testnet
 
 SettleMint supports both the Polygon zkEVM **Mainnet** and the **Testnet**.
 
@@ -28,7 +28,7 @@ You can consider the Testnet as a prototype and the Mainnet as the official
 production blockchain. Or think of this as an analog to production versus
 staging servers.
 
-## zkEVM
+## Zkevm
 
 zkEVM stands for "zero-knowledge Ethereum Virtual Machine". It is a type of
 Ethereum scaling solution that uses zero-knowledge proofs (ZKPs) to verify the

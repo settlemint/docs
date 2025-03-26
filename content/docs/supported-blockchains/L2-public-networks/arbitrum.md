@@ -17,7 +17,7 @@ of validators, and it is governed by a DAO (decentralized autonomous
 organization). This ensures that Arbitrum is not controlled by any single
 entity.
 
-## Mainnet and Testnet
+## Mainnet and testnet
 
 SettleMint supports, the **Arbitrum One Mainnet** and the **Arbitrum Testnet** .
 

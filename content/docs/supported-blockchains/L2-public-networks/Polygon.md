@@ -18,7 +18,7 @@ ecosystem is growing fast.
 
 Polygon has its own cryptocurrency, called MATIC.
 
-## Mainnet and Testnet
+## Mainnet and testnet
 
 SettleMint supports both the Polygon **Mainnet** and the **Amoy Testnet**.
 

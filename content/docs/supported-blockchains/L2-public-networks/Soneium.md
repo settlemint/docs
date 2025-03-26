@@ -35,7 +35,7 @@ risk.
 You can consider the Testnet as a prototype environment, similar to a staging
 server in traditional software development.
 
-## Future Mainnet
+## Future mainnet
 
 While Soneium does not have a mainnet at this time, it is anticipated that a
 mainnet will be launched in the future. The mainnet will be the primary public

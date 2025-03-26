@@ -1,5 +1,5 @@
 ---
-title: Integration Studio
+title: "Integration studio"
 description: Low-code development environment for implementing business logic
 ---
 
@@ -50,35 +50,35 @@ business solution to life.
 
 [Learn more about the basic concepts of Node-RED here](https://nodered.org/docs/user-guide/concepts)
 
-## Adding the Integration Studio
+## Adding the integration studio
 
 Navigate to the **application** where you want to add the integration studio.
 Click **Integration tools** in the left navigation, and then click **Add an
 integration tool**. This opens a form.
 
 <Steps>
-### Select Integration Studio
+### Select integration studio
 Select **Integration Studio** and click **Continue** to proceed.
 
-### Choose a Name
+### Choose a name
 
 Choose a **name** for your Integration Studio. Choose one that will be easily
 recognizable in your dashboards (eg. Crowdsale Flow)
 
-### Select Deployment Plan
+### Select deployment plan
 
 Choose a deployment plan. Select the type, cloud provider, region and resource
 pack.
 [More about deployment plans](/launching-the-platform/managed-cloud-deployment/deployment-plans)
 
-### Confirm Setup
+### Confirm setup
 
 You can see the **resource cost** for the Integration Studio displayed at the
 bottom of the form. Click **Confirm** to add the Integration Studio.
 
 </Steps>
 
-## Using the Integration Studio
+## Using the integration studio
 
 When the Integration Studio is deployed, click on it from the list, and go to
 the **Interface** tab to start building your flows. You can also view the
@@ -105,7 +105,7 @@ If you do not have a Polygon Mumbai Node, you can easily
 [deploy a node](/platfrom-components/add-a-node-to-a-network) first.
 
 <Steps>
-### Add HTTP Input Node
+### Add http input node
 Drag and drop a **Http In node** to listen for requests. If you double-click the node, you will see you have a couple parameters to set:
 
 - `METHOD` - set it to `GET`. This is HTTP Method that your node is configured
@@ -113,7 +113,7 @@ Drag and drop a **Http In node** to listen for requests. If you double-click the
 - `URL` - set it to `/getLatestBlock`. This the endpoint that your node will
   listen to.
 
-### Add Function Node
+### Add function node
 
 Drag and drop a **function node**. This is the node that will query the
 blockchain for the block number. Double-click the node to configure it.
@@ -180,7 +180,7 @@ the setup tab. Example for ethers providers:
 
 </Callout>
 
-### Add HTTP Response Node
+### Add http response node
 
 Drag and drop a **Http Response node** to reply to the request. Double-click and
 configure:
@@ -191,7 +191,7 @@ configure:
 Click on the `Deploy` button in the top right corner to save and deploy your
 changes.
 
-### Test Your Endpoint
+### Test your endpoint
 
 Now, go back to the **Connect tab** of your Integration Studio to see your **API
 endpoint**, which looks something like

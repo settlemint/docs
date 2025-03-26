@@ -1,5 +1,5 @@
 ---
-title: Deploy Chaincode
+title: "Deploy chaincode"
 description: Guide to deploy chaincode
 ---
 
@@ -32,7 +32,7 @@ After deployment, functions can be tested directly by invoking or querying them 
 </div>
 </div>
 
-## Learning with a **Asset Transfer** chaincode example
+## Learning with a **asset transfer** chaincode example
 
 The goal of this tutorial is to design and build a simple Asset Transfer chaincode
 using typescript. While the visible use case is centered around managing user data
@@ -53,20 +53,29 @@ By the end of this tutorial, you’ll not only learn the foundational patterns
 that apply to many real-world blockchain applications but also understand how to
 develop and deploy chaincodes on SettleMint platform.
 
-## 1. Let's start with the solidity chaincode code
+## 1. let's start with the typescript chaincode code
 
-A chaincode is a self-executing program deployed on the blockchain that defines rules and logic for how data or assets are managed without relying on intermediaries. In this tutorial, we are writing our chaincode using Solidity, the most widely adopted programming language for Ethereum and EVM-compatible blockchains. Solidity is a statically typed, contract-oriented language designed specifically for writing chaincodes that run on the Ethereum Virtual Machine (EVM).
+A **chaincode** is a self-executing smart contract deployed on the Hyperledger Fabric network. It defines the business logic that governs how assets are created, modified, or queried on the ledger — all in a trusted, peer-to-peer environment without intermediaries. In this tutorial, we will write our chaincode using **TypeScript**, a statically typed superset of JavaScript that is well-suited for building secure, modular, and maintainable Fabric chaincode.
 
-If you’re new to Solidity or want to deepen your understanding, here are some helpful resources:
-	-	Official Solidity Documentation: https://soliditylang.org/
-	- Solidity by Example (interactive guide): https://solidity-by-example.org
-	-	CryptoZombies (gamified Solidity learning): https://cryptozombies.io/en/solidity
+Hyperledger Fabric officially supports chaincode written in TypeScript (and JavaScript), allowing developers to leverage familiar web development tools, strong typing, and modern asynchronous programming patterns.
 
-These resources provide both foundational knowledge and hands-on coding exercises to help you become comfortable with writing and deploying chaincodes.
+If you're new to Fabric chaincode development or want to go deeper with TypeScript-based chaincodes, here are some useful resources to get started:
 
-In your learning phase, you can also use ChatGPT: https://chatgpt.com/ or any of your go to AI tools for generation of basic solidity chaincodes.
+- **Official Fabric Chaincode (TypeScript) Docs**:  
+  [https://hyperledger-fabric.readthedocs.io/en/latest/chaincode4ade.html](https://hyperledger-fabric.readthedocs.io/en/latest/chaincode4ade.html)
 
-### Example Asset Transfer chaincode typescript code
+- **Fabric Samples Repository (TypeScript Chaincode)**:  
+  [https://github.com/hyperledger/fabric-samples/tree/main/asset-transfer-typescript](https://github.com/hyperledger/fabric-samples/tree/main/asset-transfer-typescript)
+
+- **fabric-shim API Reference (Chaincode SDK for TypeScript)**:  
+  [https://hyperledger.github.io/fabric-chaincode-node/](https://hyperledger.github.io/fabric-chaincode-node/)
+
+These resources will help you understand how to structure your project, use the `fabric-shim` SDK, define transaction functions, and handle data interactions securely and efficiently.
+
+For generating boilerplate chaincode templates or testing simple logic, you can also leverage AI tools like [ChatGPT](https://chatgpt.com/) or your preferred code generation assistant to scaffold TypeScript chaincode quickly. Just ensure you validate the generated logic against Fabric’s lifecycle and endorsement policies before using it in production environments.
+
+With TypeScript, you get the benefits of modern tooling, better type safety, and an easier development experience — especially if you're coming from a web or full-stack background.
+### Example asset transfer chaincode typescript code
 
 **index.ts**
 
@@ -290,7 +299,7 @@ Below is a structured overview of the key events and functions defined in the co
 | `DeleteAsset`    | `string id`                                                                                      | Emitted when an asset is deleted           |
 | `TransferAsset`  | `string id`, `string newOwner`                                                                   | Emitted when ownership of an asset changes |
 
-###  Functions
+### Functions
 
 | Function Name     | Parameters                                                                                       | Returns             | Description                                              |
 |-------------------|--------------------------------------------------------------------------------------------------|---------------------|----------------------------------------------------------|
@@ -304,7 +313,7 @@ Below is a structured overview of the key events and functions defined in the co
 | `GetAllAssets`    | –                                                                                                | `string` (JSON)     | Retrieves all assets stored in the ledger                |
 
 
-## CRUD Mapping for the Chaincode
+## Crud mapping for the chaincode
 
 This table maps traditional Web2-style CRUD operations to the equivalent transaction functions in the Fabric chaincode:
 
@@ -317,12 +326,12 @@ This table maps traditional Web2-style CRUD operations to the equivalent transac
 
 
 
-## Packaging and deploying chaincode 
+## Packaging and deploying chaincode
 
 
 ![Chaincode Package Deploy](../../../img/building-with-settlemint/chaincode-package-deploy.png)
 
-## Chaincode Lifecycle Management on SettleMint (Fabric)
+## Chaincode lifecycle management on settlemint (fabric)
 
 This guide explains the process to **compile**, **package**, **install**, **approve**, **commit**, **initialize**, **query**, and **invoke** Hyperledger Fabric chaincode using `chaincode.sh` provided in the BTP platform IDE.
 
@@ -344,7 +353,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 1. Compile and Package Chaincode
+## 1. compile and package chaincode
 
 **Step:** Compile TypeScript into JavaScript (if runtime is Node.js) and create the chaincode `.tar.gz` package.
 
@@ -357,7 +366,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 2. Install Chaincode on Peer
+## 2. install chaincode on peer
 
 **Step:** Uploads the packaged chaincode file to a specified peer.
 
@@ -369,7 +378,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 3. Approve Chaincode for Org
+## 3. approve chaincode for org
 
 **Step:** Approves the chaincode definition using the provided peer and orderer.
 
@@ -381,7 +390,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 4. Check Commit Readiness (Optional)
+## 4. check commit readiness (optional)
 
 **Step:** Validates whether enough orgs have approved the chaincode.
 
@@ -392,7 +401,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 5. Commit Chaincode
+## 5. commit chaincode
 
 **Step:** Commits the approved chaincode definition to the channel.
 
@@ -404,7 +413,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 6. Initialize Chaincode (Optional)
+## 6. initialize chaincode (optional)
 
 **Step:** Calls the init function (e.g., `InitLedger`) if defined.
 
@@ -415,7 +424,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 7. Query Chaincode
+## 7. query chaincode
 
 **Step:** Read data from ledger via chaincode function.
 
@@ -427,7 +436,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 8. Invoke Chaincode
+## 8. invoke chaincode
 
 **Step:** Write/update ledger state via chaincode.
 
@@ -439,13 +448,13 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 9. Test Build Locally
+## 9. test build locally
 
 Optional workspace tasks like `build package`, `test workspace` are available in Code Studio’s **Task Manager** panel to automate test builds.
 
 ---
 
-## Helpful Queries
+## Helpful queries
 
 | Command                                | Description                                      |
 |----------------------------------------|--------------------------------------------------|
@@ -458,7 +467,7 @@ Optional workspace tasks like `build package`, `test workspace` are available in
 
 ---
 
-## Channel Management
+## Channel management
 
 | Command                                                  | Purpose                          |
 |-----------------------------------------------------------|----------------------------------|

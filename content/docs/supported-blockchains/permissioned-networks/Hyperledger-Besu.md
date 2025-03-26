@@ -1,5 +1,5 @@
 ---
-title: "Hyperledger Besu"
+title: "Hyperledger besu"
 ---
 
 Enterprise Ethereum is the permissioned blockchain version of public Ethereum.
@@ -7,7 +7,7 @@ The two major Enterprise Ethereum clients are **Hyperledger Besu and Quorum**.
 Both clients have implemented a permission layer, which only allows known nodes,
 designed specifically for use in a consortium environment, to join the network.
 
-## What is Hyperledger Besu?
+## What is hyperledger besu?
 
 Hyperledger Besu is an open-source Ethereum client developed under the Apache
 2.0 license and written in Java. It was started by the Linux Foundation under

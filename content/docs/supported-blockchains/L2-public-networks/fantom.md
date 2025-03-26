@@ -14,7 +14,7 @@ emphasizes decentralization. The network is secured by a decentralized network
 of validators and governed through on-chain governance, ensuring it is not
 controlled by any single entity.
 
-## Mainnet and Testnet
+## Mainnet and testnet
 
 SettleMint supports, the **Fantom Mainnet** and the **Fantom Testnet**.
 

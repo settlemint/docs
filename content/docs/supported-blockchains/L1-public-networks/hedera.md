@@ -14,7 +14,7 @@ ordering, making it suitable for enterprise-grade applications. Unlike
 blockchain-based systems, Hedera's Hashgraph algorithm ensures fast, fair, and
 secure transactions without compromising decentralization.
 
-## Mainnet and Testnet
+## Mainnet and testnet
 
 SettleMint supports, the **Hedera Mainnet** and the **Hedera Testnet**.
 
@@ -44,7 +44,7 @@ consensus is reached efficiently and quickly. This method ensures that Hedera
 remains decentralized and resilient against attacks while maintaining high
 performance.
 
-## JSON RPC Relay
+## Json rpc relay
 
 The Hedera JSON-RPC Relay is an open-source project implementing the Ethereum
 JSON-RPC standard. The JSON-RPC relay allows developers to interact with Hedera

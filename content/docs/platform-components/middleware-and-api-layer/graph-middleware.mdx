@@ -1,5 +1,5 @@
 ---
-title: Graph Middleware
+title: "Graph middleware"
 description: Guide to using middleware in SettleMint
 ---
 
@@ -31,7 +31,7 @@ blockchain node in place.
   </Card>
 </div>
 
-## How to Add Middleware
+## How to add middleware
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
@@ -104,7 +104,7 @@ blockchain node in place.
   </Tab>
 </Tabs>
 
-## Manage Middleware
+## Manage middleware
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
@@ -144,7 +144,7 @@ blockchain node in place.
   </Tab>
 </Tabs>
 
-## The Graph Middleware
+## The graph middleware
 
 The Graph provides powerful indexing capabilities for EVM chains through
 subgraphs. Use this middleware when you need:
@@ -153,7 +153,7 @@ subgraphs. Use this middleware when you need:
 - Complex GraphQL queries
 - Real-time data updates
 
-### Using The Graph SDK
+### Using the graph sdk
 
 ```typescript
 import { createTheGraphClient } from "@settlemint/sdk-thegraph";
@@ -173,7 +173,7 @@ const { client: graphClient, graphql } = createTheGraphClient({
   documentation](https://github.com/settlemint/sdk/tree/main/sdk/thegraph).
 </Callout>
 
-### Using The Graph Middleware
+### Using the graph middleware
 
 [The Graph](https://thegraph.com/en/) is a protocol for indexing and querying
 blockchain data from networks. It can be used with all EVM-compatible chains

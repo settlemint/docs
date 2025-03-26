@@ -1,32 +1,32 @@
 ---
-title: Network Manager
+title: "Network manager"
 description:
   Blockchain network manager offers a user-friendly interface for configuring
   private permissioned networks, connecting to Layer 1 and Layer 2 public
   networks, and joining existing external networks.
 ---
 
-## Key Capabilities
+## Key capabilities
 
-### Create Private Permissioned Networks
+### Create private permissioned networks
 
 - Deploy **Hyperledger Besu, Hyperledger Fabric, or Quorum** networks with
   pre-configured templates and guided workflows, ensuring rapid setup for
   enterprise use cases.
 
-### Connect with Public Networks
+### Connect with public networks
 
 - Seamlessly integrate with **Ethereum, Polygon, Hedera, Avalanche, Arbitrum,
   Optimism**, and other leading public blockchains, enabling hybrid solutions
   that leverage both public and private networks.
 
-### Join External Networks
+### Join external networks
 
 - Use **SettleMint's tooling** to connect to existing networks, expand
   infrastructure, or migrate to the SettleMint platform, providing flexibility
   for organizations with pre-existing blockchain deployments.
 
-### Join via Invitation Code
+### Join via invitation code
 
 - Easily connect to **pre-existing networks** within SettleMint using an
   invitation code, streamlining collaboration in consortium setups.
@@ -35,7 +35,7 @@ description:
 
 ![Create Network](../../../img/platfrom-components/add-network.png)
 
-## Supported Networks
+## Supported networks
 
 The SettleMint Network Manager supports a wide range of blockchain protocols,
 catering to both private permissioned and public network requirements. Below is
@@ -56,9 +56,9 @@ a summary of the supported networks:
 
 ---
 
-## Network Deployment & Configuration
+## Network deployment & configuration
 
-### EVM-Based Private Networks (Besu, Quorum)
+### Evm-based private networks (besu, quorum)
 
 ![EVM Network Config](../../../img/platfrom-components/evm-config.png)
 
@@ -74,7 +74,7 @@ permissioned **EVM-based network**:
 | EVM Stack Size      | Maximum stack size for the Ethereum Virtual Machine (EVM).      |
 | Contract Size Limit | Maximum size of a smart contract in kilobytes (KB).             |
 
-#### Genesis Block Configuration
+#### Genesis block configuration
 
 The `genesis.json` file is a critical component of EVM-based blockchain
 networks, defining the initial state and parameters of the blockchain to ensure
@@ -88,7 +88,7 @@ secure and structured network operations. Key elements include:
 - **QBFT Validator Information**: Defines the nodes responsible for validating
   transactions in Quorum Byzantine Fault Tolerance (QBFT)-based networks.
 
-#### Developer Integrations
+#### Developer integrations
 
 The SettleMint Network Manager provides developer-friendly tools to facilitate
 smart contract development and network interactions:
@@ -98,7 +98,7 @@ smart contract development and network interactions:
 - **Genesis file availability**: Users can access and download `genesis.json`
   file, allowing for easy network expansion outside SettleMint platform.
 
-### Hyperledger Fabric Networks
+### Hyperledger fabric networks
 
 ![Fabric Network Config](../../../img/platfrom-components/fabric-config.png)
 Users can configure the following settings before deploying a **Fabric
@@ -112,7 +112,7 @@ network**:
 | Absolute Max Bytes in Batch  | Upper limit on batch size in megabytes (MB).                                             |
 | Preferred Max Bytes in Batch | Preferred batch size in megabytes (MB).                                                  |
 
-#### Channel Configuration and Policies
+#### Channel configuration and policies
 
 Hyperledger Fabric networks use a `configtx.json` file to define network
 channels, membership rules, and policies. Key components include:
@@ -132,7 +132,7 @@ channels, membership rules, and policies. Key components include:
   - **Max Messages Per Batch**: Controls block size.
 - **Consensus Type**: Typically `etcdraft`, a Raft-based ordering service.
 
-#### Network Governance and Security
+#### Network governance and security
 
 Hyperledger Fabric networks require robust security and governance mechanisms:
 
@@ -147,9 +147,9 @@ Hyperledger Fabric networks require robust security and governance mechanisms:
 
 ---
 
-## Network Monitoring & Management
+## Network monitoring & management
 
-### EVM-Based Networks
+### Evm-based networks
 
 ![EVM Network Info](../../../img/platfrom-components/evm-network-info.png)
 
@@ -161,18 +161,18 @@ The **dashboard** provides insights into:
   size limit, EVM stack size.
 - **Genesis File Access**: Contains initial network configuration.
 
-#### System Recommendations
+#### System recommendations
 
 > **Recommendation**  
 > At least **four validator nodes** are required to ensure **Byzantine Fault
 > Tolerance**.
 
-#### Faucet Wallet
+#### Faucet wallet
 
 - Includes **mnemonic phrase, private key, derivation path, Ethereum address**.
 - Provides a **large test balance** for development and testing.
 
-#### Public Network Monitoring Parameters
+#### Public network monitoring parameters
 
 The **dashboard** provides real-time analytics on:
 
@@ -188,7 +188,7 @@ The **dashboard** provides real-time analytics on:
 - Block size over time
 - Geographical location of nodes
 
-#### Monitoring and Analytics
+#### Monitoring and analytics
 
 ![EVM Network Stats](../../../img/platfrom-components/evm-network-stats.png)
 
@@ -204,7 +204,7 @@ The Network Manager provides real-time insights into network performance:
 - **Pending Transactions**: Monitoring helps identify potential bottlenecks in
   the system, enhancing troubleshooting and optimization efforts.
 
-### Hyperledger Fabric Networks
+### Hyperledger fabric networks
 
 ![Fabric Network Info](../../../img/platfrom-components/fabric-network-info.png)
 
@@ -218,7 +218,7 @@ The **dashboard** offers comprehensive network monitoring, including:
   - Maximum messages
   - Batch size
 
-#### Real-Time Performance Monitoring
+#### Real-time performance monitoring
 
 ![Fabric Network Stats](../../../img/platfrom-components/fabric-network-stats.png)
 
@@ -233,13 +233,13 @@ The **dashboard** offers comprehensive network monitoring, including:
 - Endorsement policy compliance tracking to ensure transactions adhere to
   predefined security and governance policies.
 
-#### System Recommendations
+#### System recommendations
 
 > **Recommendation**  
 > Alerts for **fault tolerance** and **orderer node requirements** are provided
 > in the system.
 
-#### Key Benefits
+#### Key benefits
 
 - Simplifies the deployment process for Hyperledger Fabric networks through a
   guided setup approach.
@@ -252,16 +252,16 @@ The **dashboard** offers comprehensive network monitoring, including:
 
 ---
 
-# Supported Blockchain Network Protocols
+# Supported blockchain network protocols
 
-## Private Permissioned Networks
+## Private permissioned networks
 
 SettleMint's Network Manager excels at creating and managing private
 permissioned networks, which are ideal for enterprises requiring strict control
 over data privacy, access, and governance. Below are the supported frameworks,
 enriched with additional details and practical use cases.
 
-### Hyperledger Besu
+### Hyperledger besu
 
 <table>
   <tbody>
@@ -362,7 +362,7 @@ enriched with additional details and practical use cases.
 
 ---
 
-### Hyperledger Fabric
+### Hyperledger fabric
 
 <table>
   <tbody>
@@ -413,7 +413,7 @@ enriched with additional details and practical use cases.
 
 ---
 
-## Layer 1 (L1) Public Networks
+## Layer 1 (l1) public networks
 
 ### Ethereum
 
@@ -515,7 +515,7 @@ enriched with additional details and practical use cases.
 
 ---
 
-### Hedera Hashgraph
+### Hedera hashgraph
 
 <table>
   <tbody>
@@ -565,9 +565,9 @@ enriched with additional details and practical use cases.
 
 ---
 
-## Layer 2 (L2) Public Networks
+## Layer 2 (l2) public networks
 
-### Polygon PoS
+### Polygon pos
 
 <table>
   <tbody>
@@ -617,7 +617,7 @@ enriched with additional details and practical use cases.
 
 ---
 
-### Polygon zkEVM
+### Polygon zkevm
 
 <table>
   <tbody>

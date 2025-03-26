@@ -1,5 +1,5 @@
 ---
-title: Add Network and nodes
+title: "Add network and nodes"
 description: Guide to adding a Blockchain Network to your application
 ---
 
@@ -65,7 +65,7 @@ haven't created an application yet, follow our
 [Create Application](/building-with-settlemint/evm-chains-guide/create-an-organization-and-application)
 guide first.
 
-## 1. Add Blockchain Network
+## 1. add blockchain network
 
 For EVM Chains, SettleMint offers Hyperledger Besu and Quorum for permissioned
 networks and a bunch of public networks to choose from. For the list of
@@ -78,7 +78,7 @@ When we deploy a network, first node is automatically deployed with it and is an
 orderer node. Once you have deployed a permissioned network or joined a public
 network, you can add more nodes to it.
 
-## 2. Add Blockchain Nodes
+## 2. add blockchain nodes
 
 To see and add nodes, please click on **Blockchain Nodes** tile on the dashboard
 or use the **Blockchain Nodes** link in the left menu.
@@ -97,7 +97,7 @@ network**:
 | Absolute Max Bytes in Batch  | Upper limit on batch size in megabytes (MB).                                             |
 | Preferred Max Bytes in Batch | Preferred batch size in megabytes (MB).                                                  |
 
-#### Channel Configuration and Policies
+#### Channel configuration and policies
 
 Hyperledger Fabric networks use a `configtx.json` file to define network
 channels, membership rules, and policies. Key components include:
@@ -117,7 +117,7 @@ channels, membership rules, and policies. Key components include:
   - **Max Messages Per Batch**: Controls block size.
 - **Consensus Type**: Typically `etcdraft`, a Raft-based ordering service.
 
-#### Network Governance and Security
+#### Network governance and security
 
 Hyperledger Fabric networks require robust security and governance mechanisms:
 
@@ -132,7 +132,7 @@ Hyperledger Fabric networks require robust security and governance mechanisms:
 
 ---
 
-### Hyperledger Fabric Networks
+### Hyperledger fabric networks
 
 ![Fabric Network Info](../../../img/platfrom-components/fabric-network-info.png)
 
@@ -146,7 +146,7 @@ The **dashboard** offers comprehensive network monitoring, including:
   - Maximum messages
   - Batch size
 
-#### Real-Time Performance Monitoring
+#### Real-time performance monitoring
 
 ![Fabric Network Stats](../../../img/platfrom-components/fabric-network-stats.png)
 
@@ -161,13 +161,13 @@ The **dashboard** offers comprehensive network monitoring, including:
 - Endorsement policy compliance tracking to ensure transactions adhere to
   predefined security and governance policies.
 
-#### System Recommendations
+#### System recommendations
 
 > **Recommendation**  
 > Alerts for **fault tolerance** and **orderer node requirements** are provided
 > in the system.
 
-#### Key Benefits
+#### Key benefits
 
 - Simplifies the deployment process for Hyperledger Fabric networks through a
   guided setup approach.
@@ -180,7 +180,7 @@ The **dashboard** offers comprehensive network monitoring, including:
 
 ---
 
-# Hyperledger Fabric Explorer
+# Hyperledger fabric explorer
 
 Hyperledger Explorer is a web-based tool designed to provide a **comprehensive
 and real-time** view of blockchain operations within **Hyperledger Fabric**
@@ -216,7 +216,7 @@ organizations leveraging **Hyperledger Fabric**.
   - Graphical visualizations of blockchain activity.
   - Hover-based insights for precise data analysis.
 
-## Dashboard Overview
+## Dashboard overview
 
 The **Dashboard** serves as the main interface, providing an overview of the
 blockchain network. It includes various panels such as **Peer Lists, Network
@@ -232,7 +232,7 @@ Notification Panel** presents key block details, including:
 Each block link redirects to an in-depth **Block Details** view, offering
 insights into timestamps, hashes, and transaction summaries.
 
-## Network & Channel Management
+## Network & channel management
 
 The **Network View** presents details on configured properties for each channel.
 Users can analyze peer statuses, their roles, and network configurations,
@@ -242,7 +242,7 @@ The **Channel List** section provides an overview of available channels,
 enabling users to navigate different segments of the blockchain network
 effortlessly.
 
-## Exploring Blocks & Transactions
+## Exploring blocks & transactions
 
 Hyperledger Explorer provides powerful tools for tracking blockchain activities:
 
@@ -253,7 +253,7 @@ Hyperledger Explorer provides powerful tools for tracking blockchain activities:
 - **JSON Transaction Views**: Enables structured previews with fold/unfold
   options for easy data inspection.
 
-## Chaincodes & Smart Contracts
+## Chaincodes & smart contracts
 
 The **Chaincode List** presents installed chaincodes across the network,
 allowing filtering and sorting by:
@@ -266,7 +266,7 @@ allowing filtering and sorting by:
 This section helps users manage smart contracts efficiently and track changes
 over time.
 
-## Analytics & Metrics
+## Analytics & metrics
 
 A dedicated **Metrics Panel** delivers real-time statistics, such as:
 

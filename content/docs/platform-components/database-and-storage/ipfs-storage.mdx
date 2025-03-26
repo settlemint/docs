@@ -1,5 +1,5 @@
 ---
-title: IPFS Storage
+title: "Ipfs storage"
 description: Guide to using IPFS storage solutions in SettleMint
 ---
 
@@ -13,7 +13,7 @@ import { Card } from "fumadocs-ui/components/card";
 Within **SettleMint**, **IPFS is available as a storage option**, allowing developers to **store, retrieve, and manage files seamlessly** for blockchain applications. It enables **off-chain data storage**, ensuring that blockchain networks remain efficient while still being able to reference large datasets securely.
 [Learn more on IPFS here](https://docs.ipfs.tech/concepts/)
 
-### Why Use IPFS?
+### Why use ipfs?
 
 - **Decentralized & Fault-Tolerant** – No single point of failure.
 - **Content Addressability** – Files are retrieved using unique cryptographic **Content Identifiers (CIDs)** rather than URLs.
@@ -25,7 +25,7 @@ Within **SettleMint**, **IPFS is available as a storage option**, allowing devel
 
 SettleMint offers **IPFS as a decentralized storage solution**, allowing users to store data in a **distributed, verifiable, and tamper-proof manner**. This is particularly useful for **storing large files, metadata, documents, NFTs, and other digital assets** that would otherwise be expensive or inefficient to store directly on-chain.
 
-### Features of IPFS Storage in SettleMint
+### Features of ipfs storage in settlemint
 
 - **Seamless File Upload & Retrieval** – Store files and retrieve them via **CIDs**.
 - **Blockchain Integration** – Reference IPFS-stored files within **smart contracts**.
@@ -35,7 +35,7 @@ SettleMint offers **IPFS as a decentralized storage solution**, allowing users t
 
 ---
 
-## API Reference
+## Api reference
 
 SettleMint provides **multiple APIs** for interacting with IPFS:
 
@@ -50,7 +50,7 @@ For full API specifications, refer to **SettleMint’s API documentation**.
 
 ---
 
-## Credentials & Authentication
+## Credentials & authentication
 
 To interact with **SettleMint’s IPFS cluster**, users need authentication credentials:
 
@@ -65,17 +65,17 @@ To interact with **SettleMint’s IPFS cluster**, users need authentication cred
 
 These credentials ensure **secure access** to the IPFS storage layer.
 
-# InterPlanetary File System (IPFS)
+# Interplanetary file system (ipfs)
 
 InterPlanetary File System (IPFS) is an open-source, peer-to-peer distributed file system for storing and accessing content on the decentralized web. Unlike traditional HTTP-based systems that locate data by server address (URL), IPFS uses content addressing – identifying data by its content hash – to retrieve files from any node that holds them. By combining ideas from well-established technologies (like distributed hash tables and Git-like Merkle trees), IPFS enables a global, versioned, and content-addressable storage network.
 
 This document provides a technical overview of IPFS, explaining its underlying architecture and practical usage for developers, architects, and technically inclined stakeholders. We will cover IPFS's foundational principles, how files are stored and retrieved via content IDs (CIDs), the core components and protocols that make up IPFS, methods of interacting with the network, common usage patterns (from file sharing to dApp integration), as well as the benefits, limitations, and best practices for deploying IPFS in production environments.
 
-## Foundational Principles of IPFS
+## Foundational principles of ipfs
 
 IPFS is built on several key principles that distinguish it from traditional file storage and sharing systems:
 
-### Content Addressing and CIDs
+### Content addressing and cids
 
 At the heart of IPFS is content addressing – every piece of data is identified by a content identifier (CID) which is derived from the data itself (via a cryptographic hash). In simpler terms, the address of a file in IPFS is its content, not the location of a server. This means that if two files have exactly the same content, they will have the same CID, and that CID will always refer to that content regardless of where it is stored.
 
@@ -85,7 +85,7 @@ Content addressing provides strong integrity guarantees: if you fetch data by it
 
 In summary, IPFS's content addressing decouples the what (the data) from the where (the location), enabling data to be retrieved from any peer in the network that has it.
 
-### Merkle DAG (Content Linking and Immutability)
+### Merkle dag (content linking and immutability)
 
 IPFS represents data as a Merkle Directed Acyclic Graph (Merkle DAG) – a structure in which each node (file block or object) is linked via hashes to other nodes. Every file added to IPFS is stored as a Merkle DAG: if the file is small enough it might be a single block (node) whose CID is the hash of the file, but larger files are broken into many hashed blocks linked together (Lesson: Turn a File into a Tree of Hashes | IPFS Primer).
 
@@ -97,7 +97,7 @@ IPFS's data model, called IPLD (InterPlanetary Linked Data), generalizes this Me
 
 The Merkle DAG approach gives IPFS its properties of content integrity and naturally supports a versioned file system (much like how Git commits form a DAG of versions).
 
-### Peer-to-Peer Networking and Decentralization
+### Peer-to-peer networking and decentralization
 
 IPFS operates over a distributed peer-to-peer (P2P) network of nodes rather than client-server architecture. Any computer running an IPFS node can participate in the network, storing data and fulfilling requests from others. There are no central servers holding the authoritative copy of content; instead, content is shared and cached by many peers.
 
@@ -107,11 +107,11 @@ Peers discover and communicate with each other using a networking library called
 
 This peer network forms the substrate over which IPFS content is distributed. A new node joining IPFS initially connects to a set of bootstrap peers and then learns about other peers progressively. In essence, IPFS creates a global swarm of peers that collectively store and serve content, akin to a sophisticated BitTorrent-like swarm but for a unified filesystem.
 
-## IPFS Architecture and Core Components
+## Ipfs architecture and core components
 
 Under the hood, IPFS is composed of several interconnected subsystems that work together to enable content-addressed storage and retrieval. The core components of IPFS include the node software (sometimes called a Kubo node, formerly go-ipfs), the distributed hash table for peer/content discovery, the Bitswap exchange protocol, and the IPLD data model layer. Let's explore these components in more detail:
 
-### IPFS Nodes and Repositories
+### Ipfs nodes and repositories
 
 An IPFS node is a program (and by extension, the machine running it) that participates in the IPFS network. Each node stores data in a local repository which contains the content blocks the node has pinned or cached, as well as indexing information. Nodes can be run by anyone – from personal laptops to servers – and all nodes collectively form the IPFS network.
 
@@ -121,7 +121,7 @@ Nodes do not automatically replicate all data; instead, a node stores only the c
 
 The node exposes a few interfaces for users/applications: a command-line interface, a RESTful HTTP API, and optionally a gateway interface for browser access. In essence, an IPFS node is a self-contained peer that can store content (in a local Merkle block store), connect to other peers, advertise the content it holds, and fetch content from others upon request.
 
-### Distributed Hash Table (DHT) for Content Routing
+### Distributed hash table (dht) for content routing
 
 To locate which nodes have a given piece of content (CID), IPFS relies on a distributed hash table (DHT) called Kademlia. The IPFS DHT is a decentralized index that maps CIDs to the peer IDs of nodes that can provide that content. When a node adds content to IPFS, it announces (publishes) to the DHT that "Peer X has content with CID Y". Later, when some node wants to retrieve that CID, it performs a DHT lookup to find provider records – essentially the network addresses of peers who have the content.
 
@@ -131,7 +131,7 @@ The public IPFS DHT (sometimes called the Amino DHT) is a global, open network a
 
 In addition to the DHT, IPFS can also use mDNS (multicast DNS) for discovering peers on a local network (useful for LAN or offline scenarios), and can fall back to delegated routing (asking a trusted server to perform DHT queries on behalf of lightweight nodes) in constrained environments. But the primary mechanism is the Kademlia DHT which allows any node to ask the network for providers of a given CID.
 
-### Bitswap: The Block Exchange Protocol
+### Bitswap: the block exchange protocol
 
 Once you know which peers have the content you want, the next step is to retrieve the data. IPFS uses a protocol called Bitswap to coordinate the transfer of content blocks between peers.. When an IPFS node needs blocks (identified by CIDs), it sends out Bitswap wantlist messages to peers it's connected to, asking for those CIDs. Peers that have the requested blocks will respond by sending them back.
 
@@ -141,7 +141,7 @@ Peers running Bitswap maintain a ledger to incentivize fairness (they track data
 
 Overall, Bitswap is the engine that moves blocks around in IPFS: it's how data actually gets from point A to point B (or C, D, etc.), once point B knows that point A (and others) have what it needs.
 
-### IPLD and Data Formats
+### Ipld and data formats
 
 IPLD (InterPlanetary Linked Data) is the data model layer of IPFS that defines how structured data is represented as content-addressable objects. All content in IPFS – files, directories, and other complex data – is expressed in terms of IPLD nodes and links. An IPLD node can be thought of as a small data object (e.g., a file chunk or a directory listing) with a content-addressable identifier (CID). Links between IPLD nodes are just CIDs pointing to other nodes, which, thanks to content addressing, also serve as cryptographic pointers. The Merkle DAG we discussed earlier is essentially an IPLD instance.
 
@@ -149,11 +149,11 @@ IPLD is designed to be flexible: it supports multiple codecs and formats (throug
 
 IPLD gives IPFS advantages like easy upgradability and interoperability: new data structures or hash functions can be introduced without breaking the system, because CIDs are self-describing and IPLD provides a common framework. IPLD is the component that ensures IPFS isn't limited to a single file format or data type – it's a universal graph layer where any content-addressed data structure can be modeled and linked.
 
-## Storing and Retrieving Files on IPFS
+## Storing and retrieving files on ipfs
 
 One of the core functions of IPFS is, of course, adding files and getting them back. Let's walk through how files are stored and retrieved in IPFS using content addressing and the components above:
 
-### Adding (Storing) a File
+### Adding (storing) a file
 
 Suppose you want to store a file on IPFS. Using the IPFS CLI or API, you run `ipfs add <filename>`. The IPFS node first chunkifies the file into blocks (default ~256 KB each) and generates cryptographic hashes for each block. If the file is small enough to fit in one block, that block's hash is the file's CID. If the file is larger, IPFS creates a Merkle DAG: it will create a root IPFS object (a kind of meta-block) that contains the hashes (CIDs) of all the file's chunks as links. This root object gets its own hash which becomes the CID representing the entire file.
 
@@ -161,7 +161,7 @@ IPFS then stores all these blocks in the local repository. As a final step, the 
 
 Notably, adding a file to IPFS does not mean the whole world immediately gets a copy – it means the file is now available on the network through your node. Other peers can retrieve it if they know the CID or discover it. Also, IPFS ensures identical content isn't duplicated: if you add a file that contains some blocks already present on your node (or if you add the exact same file twice), it will reuse the existing blocks rather than store duplicates, thanks to content-addressing (this deduplication can work across files and even across users in the network in cases where the same chunks are shared).
 
-### Retrieving a File
+### Retrieving a file
 
 Now, how does someone fetch that file using IPFS? Given the CID of the content, an IPFS node will perform a lookup to find who has the data, then fetch the data block by block. In practice, the process works in two phases: content routing and content transfer.
 
@@ -173,7 +173,7 @@ When all the pieces are retrieved, IPFS assembles them (following the DAG links)
 
 By design, IPFS retrieval is location-agnostic – it doesn't matter where the content comes from, as long as the content hash matches. You could get one chunk from a server across the ocean and another from a peer on your local network; the resulting file is verified and identical to the original. This distributed retrieval provides robustness and potentially better performance through locality (if a nearby node has the data) and redundancy. And since content is addressed by hash, IPFS ensures you never get the wrong file – if someone tries to send bogus data, the hash won't match and it will be rejected.
 
-## Data Persistence and Pinning
+## Data persistence and pinning
 
 By design, IPFS is agnostic about persistence: it doesn't automatically make content permanent or highly available; it simply provides the mechanism to distribute and retrieve it. Persistence in IPFS is the responsibility of nodes that care about the data. When you add a file to IPFS, your local node now has a copy and will serve it to others – as long as you keep that node running and don't remove the data. Other nodes that download that file may cache it, but caches are not guaranteed to stay forever (nodes have limited storage and will eventually clean up data that isn't explicitly marked to keep).
 
@@ -182,27 +182,27 @@ The act of marking data as "do not delete" on an IPFS node is called pinning. Pi
 In a decentralized context, this could be the original uploader or any number of volunteers or service providers who decide the content is worth keeping. IPFS itself doesn't replicate content across the network without instruction; you either rely on others to fetch and thereby temporarily host it, or you use additional services to distribute copies. Many decentralized storage setups use multiple IPFS nodes (or pinning services) to ensure there are always several online copies of important data. If no node pins a piece of content and no
 
 
-## Use Cases for IPFS in Blockchain Applications
+## Use cases for ipfs in blockchain applications
 
-### 1. **Smart Contract Data Storage**  
+### 1. **smart contract data storage**
    - Instead of storing large data **on-chain**, store it **off-chain** on IPFS and reference the **CID** in smart contracts.
    - Example: **Legal documents, digital agreements, audit records**.
 
-### 2. **NFT Metadata & Digital Assets**  
+### 2. **nft metadata & digital assets**
    - Store **metadata, images, and media** for NFTs in a decentralized and tamper-proof manner.
    - Example: **NFT artwork, game assets, token metadata**.
 
-### 3. **Decentralized Identity & Credentials**  
+### 3. **decentralized identity & credentials**
    - Store and verify **identity documents, certificates, and credentials** securely on IPFS.
    - Example: **Verifiable credentials in education, healthcare, and finance**.
 
-### 4. **Immutable Data Storage for Regulatory Compliance**  
+### 4. **immutable data storage for regulatory compliance**
    - Ensure **auditable and tamper-proof records** for compliance-heavy industries.
    - Example: **Financial records, compliance reports, supply chain tracking**.
 
 ---
 
-## Best Practices & Considerations
+## Best practices & considerations
 
 - **Pinning Important Files** – IPFS operates on a caching mechanism, meaning files may be garbage-collected if not pinned.
 - **CID Management** – Since CIDs are content-based hashes, file updates result in new CIDs. Maintain proper reference tracking.
@@ -220,7 +220,7 @@ For further assistance, refer to **SettleMint's documentation** or the **officia
 
 ---
 
-## Additional Resources
+## Additional resources
 
 - **[IPFS Official Documentation](https://docs.ipfs.io/)**
 - **[SettleMint Platform Guide](https://console.settlemint.com/documentation)**
