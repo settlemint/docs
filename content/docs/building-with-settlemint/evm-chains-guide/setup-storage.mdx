@@ -27,40 +27,40 @@ S3-compatible private storage layer) through the SettleMint platform. Both
 options serve different use cases—IPFS excels in immutability and decentralized
 access, while S3-style storage is better for secure, private, and
 high-performance file delivery.
-
+<br> </br>
 To get started, navigate to the relevant application in your SettleMint
 workspace and open the storage section from the left-hand menu. Click add
 storage, which opens a configuration form. Choose the storage type—either IPFS
 for decentralized or MinIO for private object storage. Assign a name and
 configure your deployment settings like region, provider, and resource pack.
 Once confirmed, the storage service will be deployed and available for use.
-
+<br> </br>
 Once provisioned, you can access and manage your storage instance from the
 manage storage section. Here, you will be able to view the storage endpoint,
 health status, and metadata configuration. If using IPFS, you'll be interacting
 with content hashes (CIDs), while MinIO offers an S3-compatible interface where
 files are stored under buckets and can be accessed via signed URLs.
-
+<br> </br>
 Using the SettleMint SDK or CLI, developers will be able to list, query, and
 manage storage instances programmatically. The SDK provides a typed interface to
 connect, upload, retrieve, and delete files. For example, the
 @settlemint/sdk-ipfs package allows seamless pinning and retrieval of files
 using CIDs. Similarly, @settlemint/sdk-minio wraps around common S3 operations
 like uploading files, generating expirable download URLs, and managing buckets.
-
+<br> </br>
 Depending on your use case, both IPFS and MinIO can serve as complementary
 layers. For public-facing and immutable content—such as NFT metadata, DAO
 governance artifacts, or verifiable documents—IPFS is well suited. For private,
 regulated, or access-controlled files—like KYC documents, user uploads, admin
 reports, and internal metadata—MinIO offers a robust alternative with access
 control and performance guarantees.
-
+<br> </br>
 In practice, a dApp may use both systems in tandem: the file is stored in
 S3/MinIO for fast access and usability, while its content hash is stored on IPFS
 (and optionally, linked on-chain) to provide tamper-proof guarantees and content
 validation. This hybrid model ensures performance, security, and
 decentralization where it matters most.
-
+<br> </br>
 Once storage is connected, users and developers can begin uploading files via
 frontend integrations, backend scripts, or SDK calls. Content uploaded to IPFS
 will return a CID, which can be persisted on-chain or referenced in subgraphs
