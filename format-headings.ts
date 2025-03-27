@@ -60,11 +60,7 @@ function restoreAbbreviations(
 
 // Function to convert text to sentence case
 function toSentenceCase(text: string): string {
-  // Handle markdown formatting
-  const startsWithAsterisks = text.startsWith("**");
-  const endsWithAsterisks = text.endsWith("**");
-
-  // Remove formatting for processing
+  // Remove any remaining asterisks
   let cleanText = text.replace(/\*\*/g, "").trim();
 
   // Preserve abbreviations
@@ -77,34 +73,34 @@ function toSentenceCase(text: string): string {
     processedText.slice(1).toLowerCase();
 
   // Restore abbreviations
-  sentenceCaseText = restoreAbbreviations(sentenceCaseText, replacements);
-
-  // Restore formatting
-  if (startsWithAsterisks) sentenceCaseText = "**" + sentenceCaseText;
-  if (endsWithAsterisks) sentenceCaseText = sentenceCaseText + "**";
-
-  return sentenceCaseText;
+  return restoreAbbreviations(sentenceCaseText, replacements);
 }
 
 // Function to process a single line
 function processLine(line: string): string {
-  // Match any number of hashes followed by optional number and dot
-  // This will match patterns like:
-  // "# heading"
-  // "### 1. heading"
-  // "## 42. heading"
-  const headingMatch = line.match(
-    /^(#{1,6})\s*(?:(\d+)\.\s*)?(\*{0,2}.*\*{0,2})$/
-  );
+  // First, check if it's a heading line
+  if (!line.startsWith("#")) {
+    return line;
+  }
 
-  if (headingMatch) {
-    const [_, hashes, number, content] = headingMatch;
-    // If it's a numbered heading, format accordingly
-    if (number) {
-      return `${hashes} ${number}. ${toSentenceCase(content.trim())}`;
+  // Updated regex to handle all numbering patterns, but preserve existing formatting
+  const headingRegex =
+    /^(#{1,6})\s*(\*\*)?(?:(\d{1,2}\.(?:\d{1,2})?)\.\s*)?([a-zA-Z].*?)(\*\*)?$/;
+  const match = line.match(headingRegex);
+
+  if (match) {
+    const [_, hashes, startBold, numbers, content, endBold] = match;
+
+    // Capitalize first letter of the content
+    const processedContent = content.charAt(0).toUpperCase() + content.slice(1);
+
+    // Reconstruct the line maintaining original formatting
+    if (startBold) {
+      // Only add ** if they were present in the original
+      return `${hashes} ${startBold}${numbers ? numbers + ". " : ""}${processedContent}${endBold || "**"}`;
+    } else {
+      return `${hashes} ${numbers ? numbers + ". " : ""}${processedContent}`;
     }
-    // Regular heading
-    return `${hashes} ${toSentenceCase(content.trim())}`;
   }
 
   return line;
