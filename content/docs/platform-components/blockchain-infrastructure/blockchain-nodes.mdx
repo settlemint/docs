@@ -93,12 +93,12 @@ ledgers**, enhancing **privacy and scalability**.
 
 ## **Certificate authorities**
 
-Certificate Authorities play a key role in the network
-because they dispense X.509 certificates that can be used to identify components
-as belonging to an organization. Certificates issued by CAs can also be used to
-sign transactions to indicate that an organization endorses the transaction
-result - a precondition of it being accepted onto the ledger. Let's examine
-these two aspects of a CA in a little more detail.
+Certificate Authorities play a key role in the network because they dispense
+X.509 certificates that can be used to identify components as belonging to an
+organization. Certificates issued by CAs can also be used to sign transactions
+to indicate that an organization endorses the transaction result - a
+precondition of it being accepted onto the ledger. Let's examine these two
+aspects of a CA in a little more detail.
 
 Firstly, different components of the blockchain network use certificates to
 identify themselves to each other as being from a particular organization. CAs
@@ -129,11 +129,11 @@ Fabric-CA documentation website.
 
 ## **Identities**
 
-The different actors in a blockchain network include peers, orderers,
-client applications, administrators and more. Each of these actors — active
-elements inside or outside a network able to consume services — has a digital
-identity encapsulated in an X.509 digital certificate. These identities really
-matter because they determine the exact permissions over resources and access to
+The different actors in a blockchain network include peers, orderers, client
+applications, administrators and more. Each of these actors — active elements
+inside or outside a network able to consume services — has a digital identity
+encapsulated in an X.509 digital certificate. These identities really matter
+because they determine the exact permissions over resources and access to
 information that actors have in a blockchain network.
 
 A digital identity furthermore has some additional attributes that Fabric uses
@@ -161,11 +161,11 @@ administrators, and client applications.
 
 ## **Peers**
 
-Peers are a fundamental element of the network because they host ledgers
-and chaincode (which contain smart contracts) and are therefore one of the
-physical points at which organizations that transact on a channel connect to the
-channel (the other being an application). A peer can belong to as many channels
-as an organizations deems appropriate (depending on factors like the processing
+Peers are a fundamental element of the network because they host ledgers and
+chaincode (which contain smart contracts) and are therefore one of the physical
+points at which organizations that transact on a channel connect to the channel
+(the other being an application). A peer can belong to as many channels as an
+organizations deems appropriate (depending on factors like the processing
 limitations of the peer pod and data residency rules that exist in a particular
 country).
 
@@ -174,12 +174,12 @@ documentation website.
 
 ## **Orderers**
 
-An orderer (also known as an "ordering node") does transaction
-ordering, which along with other orderer nodes forms an ordering service.
-Because Fabric's design relies on deterministic consensus algorithms, any block
-validated by the peer is guaranteed to be final and correct. Orderers also
-enforce basic access control for channels, restricting who can read and write
-data to them, and who can configure them.
+An orderer (also known as an "ordering node") does transaction ordering, which
+along with other orderer nodes forms an ordering service. Because Fabric's
+design relies on deterministic consensus algorithms, any block validated by the
+peer is guaranteed to be final and correct. Orderers also enforce basic access
+control for channels, restricting who can read and write data to them, and who
+can configure them.
 
 The ordering service gathers endorsed transactions from applications and orders
 them into transaction blocks, which are subsequently distributed to every peer
@@ -227,7 +227,7 @@ developers to:
 - **Interact with blockchain APIs** through JSON-RPC, WebSockets, and GraphQL.
 - **Manage security and identity credentials** via cryptographic key management.
 
-## Node types on settlemint platform
+## Node types on SettleMint platform
 
 For Ethereum, SettleMint provides support for the Geth client. This means that
 when you add an Ethereum node, you get a Geth node by default. All nodes running
@@ -526,7 +526,7 @@ JSON-RPC, GraphQL, etc.).
   <Tab value="SDK CLI">
     ```bash
     # Get node connection details
-    settlemint platform read node <node-name> --show-connection
+    SettleMint platform read node <node-name> --show-connection
     ```
   </Tab>
 

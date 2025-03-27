@@ -22,7 +22,7 @@ Before starting the installation, ensure you have:
 
 ## Installation steps
 
-### 1. Sign in to the settlemint helm registry
+### 1. Sign in to the SettleMint helm registry
 
 ```bash
 helm registry login harbor.settlemint.com --username <username> --password <password>
@@ -35,7 +35,7 @@ Replace `<username>` and `<password>` with your provided credentials.
 View all available configuration options:
 
 ```bash
-helm show values oci://registry.settlemint.com/settlemint-platform/settlemint --version 7.0.0
+helm show values oci://registry.settlemint.com/settlemint-platform/SettleMint --version 7.0.0
 ```
 
 ### 3. Install the platform
@@ -463,8 +463,8 @@ support:
 Install the platform:
 
 ```bash
-helm upgrade --install settlemint oci://registry.settlemint.com/settlemint-platform/settlemint \
-  --namespace settlemint \
+helm upgrade --install SettleMint oci://registry.settlemint.com/settlemint-platform/SettleMint \
+  --namespace SettleMint \
   --version 7.0.0 \
   --create-namespace \
   --values values.yaml
@@ -705,15 +705,15 @@ If you encounter issues during installation:
 1. Debug the installation:
 
 ```bash
-helm upgrade --install --debug --dry-run settlemint oci://registry.settlemint.com/settlemint-platform/settlemint \
-  --namespace settlemint \
+helm upgrade --install --debug --dry-run SettleMint oci://registry.settlemint.com/settlemint-platform/SettleMint \
+  --namespace SettleMint \
   --values values.yaml
 ```
 
 2. Check pod logs:
 
 ```bash
-kubectl logs -n settlemint <pod-name>
+kubectl logs -n SettleMint <pod-name>
 ```
 
 3. Generate a support bundle:
@@ -734,7 +734,7 @@ Send the generated support bundle to
 To remove the platform:
 
 ```bash
-helm delete settlemint --namespace settlemint
+helm delete SettleMint --namespace settlemint
 ```
 
 **Note:** This will not delete persistent volumes or other resources outside of

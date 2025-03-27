@@ -38,9 +38,16 @@ deployed and running, and fund them as needed for gas-based transactions.
 
 # Private keys
 
-Sending transactions on a blockchain network requires two essential components: a private key to cryptographically sign your transactions, and sufficient funds in your wallet to cover the associated gas fees. Without either element, transaction execution will fail.
+Sending transactions on a blockchain network requires two essential components:
+a private key to cryptographically sign your transactions, and sufficient funds
+in your wallet to cover the associated gas fees. Without either element,
+transaction execution will fail.
 
-While you can use external private keys created with tools like MetaMask or other wallet solutions, **SettleMint offers a more integrated approach**. The platform provides built-in functionality to **create and manage private keys directly within your environment**, eliminating the need for external wallet management.
+While you can use external private keys created with tools like MetaMask or
+other wallet solutions, **SettleMint offers a more integrated approach**. The
+platform provides built-in functionality to **create and manage private keys
+directly within your environment**, eliminating the need for external wallet
+management.
 
 When you deploy a blockchain node, it contains a signing proxy that captures the
 eth_sendTransaction call, uses the appropriate key from the private key section
@@ -78,16 +85,16 @@ private key—ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
   <Tab value="SDK CLI">
     ```bash
     # Create Accessible ECDSA P256 key
-    settlemint platform create private-key accessible-ecdsa-p256 my-key \
+    SettleMint platform create private-key accessible-ecdsa-p256 my-key \
       --application my-app \
       --blockchain-node node-123
 
     # Create HD ECDSA P256 key
-    settlemint platform create private-key hd-ecdsa-p256 my-key \
+    SettleMint platform create private-key hd-ecdsa-p256 my-key \
       --application my-app
 
     # Create HSM ECDSA P256 key
-    settlemint platform create private-key hsm-ecdsa-p256 my-key \
+    SettleMint platform create private-key hsm-ecdsa-p256 my-key \
       --application my-app
     ```
 
@@ -136,28 +143,32 @@ makes key-to-node assignment a required step in any production or test setup
 involving deployment, contract interactions, or any state-changing blockchain
 transaction.
 
-**How to attach a private key to a node** 
-1. Go to the private keys section of
-your SettleMint workspace. 
-2. Click on the private key (e.g., "Deployer") you
-wish to use for signing transactions. 
-3. Navigate to the nodes tab of that
-private key's page. 
-4. You'll see a list of available nodes in your network
-(validator and RPC nodes). 
-5. Select the nodes that should use this key for
-transaction signing. These will usually be RPC nodes or validators depending on
-your setup. 
-6. Once selected, the key becomes active on these nodes and is used
-for signing all outgoing transactions initiated from the platform.
+**How to attach a private key to a node**
 
-**Best practices and nuances** 
-1. Always attach the key to at least one node
-before deploying a smart contract. In most cases, attaching it to an RPC node is sufficient. 
-2. Avoid attaching the same key to multiple nodes unless required, to reduce the risk of key misuse or unnecessary transaction replay. 
-3. Ensure the private key has sufficient funds (ETH or native token) to pay for gas costs associated with contract deployment if working on public chains or non-zero gas fee networks. 
-4. For security reasons, only assign signing permissions to nodes you trust and control. 
-5. Consider using an HD key if you want to manage multiple identities derived from the same mnemonic, but ensure the correct derivation path is used.
+1. Go to the private keys section of your SettleMint workspace.
+2. Click on the private key (e.g., "Deployer") you wish to use for signing
+   transactions.
+3. Navigate to the nodes tab of that private key's page.
+4. You'll see a list of available nodes in your network (validator and RPC
+   nodes).
+5. Select the nodes that should use this key for transaction signing. These will
+   usually be RPC nodes or validators depending on your setup.
+6. Once selected, the key becomes active on these nodes and is used for signing
+   all outgoing transactions initiated from the platform.
+
+**Best practices and nuances**
+
+1. Always attach the key to at least one node before deploying a smart contract.
+   In most cases, attaching it to an RPC node is sufficient.
+2. Avoid attaching the same key to multiple nodes unless required, to reduce the
+   risk of key misuse or unnecessary transaction replay.
+3. Ensure the private key has sufficient funds (ETH or native token) to pay for
+   gas costs associated with contract deployment if working on public chains or
+   non-zero gas fee networks.
+4. For security reasons, only assign signing permissions to nodes you trust and
+   control.
+5. Consider using an HD key if you want to manage multiple identities derived
+   from the same mnemonic, but ensure the correct derivation path is used.
 
 ## Manage private keys
 
@@ -174,13 +185,13 @@ before deploying a smart contract. In most cases, attaching it to an RPC node is
   <Tab value="SDK CLI">
     ```bash
     # List all private keys
-    settlemint platform list private-keys --application <app-name>
+    SettleMint platform list private-keys --application <app-name>
 
     # View specific key details
-    settlemint platform read private-key <private-key-unique-name>
+    SettleMint platform read private-key <private-key-unique-name>
 
     # Restart a private key
-    settlemint platform restart private-key <private-key-unique-name>
+    SettleMint platform restart private-key <private-key-unique-name>
     ```
 
   </Tab>

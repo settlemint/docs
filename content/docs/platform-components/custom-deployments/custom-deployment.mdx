@@ -32,7 +32,7 @@ applications.
   <Tab value="SDK CLI">
     ```bash
     # Create a custom deployment
-    settlemint platform create custom-deployment my-deployment \
+    SettleMint platform create custom-deployment my-deployment \
       --application my-app \
       --image-repository registry.example.com \
       --image-name my-app \
@@ -42,7 +42,7 @@ applications.
       --region europe-west1
 
     # With environment variables
-    settlemint platform create custom-deployment my-deployment \
+    SettleMint platform create custom-deployment my-deployment \
       --application my-app \
       --image-repository registry.example.com \
       --image-name my-app \
@@ -162,16 +162,16 @@ existing records.
   <Tab value="SDK CLI">
     ```bash
     # List custom deployments
-    settlemint platform list custom-deployments --application my-app
+    SettleMint platform list custom-deployments --application my-app
 
     # Get deployment details
-    settlemint platform read custom-deployment my-deployment
+    SettleMint platform read custom-deployment my-deployment
 
     # Restart deployment
-    settlemint platform restart custom-deployment my-deployment
+    SettleMint platform restart custom-deployment my-deployment
 
     # Edit deployment
-    settlemint platform edit custom-deployment my-deployment \
+    SettleMint platform edit custom-deployment my-deployment \
       --container-image registry.example.com/my-app:v2
     ```
 

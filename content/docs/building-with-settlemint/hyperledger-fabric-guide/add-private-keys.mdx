@@ -34,7 +34,7 @@ deployed and running, and fund them as needed for gas-based transactions.
 </div>
 </div>
 
-## How to add private keys and user wallets in settlemint platform
+## How to add private keys and user wallets in SettleMint platform
 
 # Private keys
 
@@ -73,16 +73,16 @@ private key—ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
   <Tab value="SDK CLI">
     ```bash
     # Create Accessible ECDSA P256 key
-    settlemint platform create private-key accessible-ecdsa-p256 my-key \
+    SettleMint platform create private-key accessible-ecdsa-p256 my-key \
       --application my-app \
       --blockchain-node node-123
 
     # Create HD ECDSA P256 key
-    settlemint platform create private-key hd-ecdsa-p256 my-key \
+    SettleMint platform create private-key hd-ecdsa-p256 my-key \
       --application my-app
 
     # Create HSM ECDSA P256 key
-    settlemint platform create private-key hsm-ecdsa-p256 my-key \
+    SettleMint platform create private-key hsm-ecdsa-p256 my-key \
       --application my-app
     ```
 
@@ -127,13 +127,13 @@ private key—ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
   <Tab value="SDK CLI">
     ```bash
     # List all private keys
-    settlemint platform list private-keys --application <app-name>
+    SettleMint platform list private-keys --application <app-name>
 
     # View specific key details
-    settlemint platform read private-key <private-key-unique-name>
+    SettleMint platform read private-key <private-key-unique-name>
 
     # Restart a private key
-    settlemint platform restart private-key <private-key-unique-name>
+    SettleMint platform restart private-key <private-key-unique-name>
     ```
 
   </Tab>

@@ -9,7 +9,6 @@ import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
 import React from "react";
 
-
 <div style={{
   backgroundColor: "#e1eafd", 
   color: "#356fee", 
@@ -24,51 +23,78 @@ import React from "react";
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
 To build a blockchain application, the first step is setting up a blockchain network. You can either deploy a permissioned network such as Hyperledger Besu or Quorum, or connect to an existing L1 or L2 public network like Ethereum, Polygon PoS, Hedera, Polygon zkEVM, Avalanche, Arbitrum, or Optimism. Both mainnet and testnet versions are available for public networks.
 
-When creating an application on SettleMint, you will be prompted to select a network type and assign it a name. For permissioned networks, you control the entire network infrastructure, including validator nodes. A first validating node is automatically deployed along with your permissioned network. For public networks, the validators are already established by the network's consensus participants, and SettleMint will deploy an archive node that connects to the chosen public network.
+When creating an application on SettleMint, you will be prompted to select a
+network type and assign it a name. For permissioned networks, you control the
+entire network infrastructure, including validator nodes. A first validating
+node is automatically deployed along with your permissioned network. For public
+networks, the validators are already established by the network's consensus
+participants, and SettleMint will deploy an archive node that connects to the
+chosen public network.
 
-In SettleMint-managed (SaaS) mode, you will need to choose between a shared or dedicated cluster for deployment. You can also select a cloud provider and a data center of your choice. Additionally, you will have the option to select from small, medium, or large resource packs, which can be scaled up or down later as needed.
+In SettleMint-managed (SaaS) mode, you will need to choose between a shared or
+dedicated cluster for deployment. You can also select a cloud provider and a
+data center of your choice. Additionally, you will have the option to select
+from small, medium, or large resource packs, which can be scaled up or down
+later as needed.
 
-For permissioned networks, you can configure network settings and customize the genesis file before deployment. For most use cases, keeping the default settings is recommended. After deployment, your network manager and first node will be fully operational within minutes.
+For permissioned networks, you can configure network settings and customize the
+genesis file before deployment. For most use cases, keeping the default settings
+is recommended. After deployment, your network manager and first node will be
+fully operational within minutes.
 
-To enhance reliability in permissioned networks, you should add more nodes for fault tolerance. The best practice is to deploy four validator nodes and two non-validator nodes to ensure Byzantine fault tolerance. For public networks, you might want to deploy additional archive or full nodes to improve reliability of your connection to the network.
+To enhance reliability in permissioned networks, you should add more nodes for
+fault tolerance. The best practice is to deploy four validator nodes and two
+non-validator nodes to ensure Byzantine fault tolerance. For public networks,
+you might want to deploy additional archive or full nodes to improve reliability
+of your connection to the network.
 
-Once your network and nodes are running, adding a load balancer will help distribute network traffic efficiently and improve performance. You can then access the Insights tab to integrate monitoring tools. For permissioned networks, you can add Blockscout blockchain explorer to track transactions and network activity. If you are using public networks, you can use their publicly available blockchain explorers instead.
+Once your network and nodes are running, adding a load balancer will help
+distribute network traffic efficiently and improve performance. You can then
+access the Insights tab to integrate monitoring tools. For permissioned
+networks, you can add Blockscout blockchain explorer to track transactions and
+network activity. If you are using public networks, you can use their publicly
+available blockchain explorers instead.
 
 </div>
 </div>
 
 ## Prerequisites
+
 Before setting up a blockchain network, you need to have an application created
 in your workspace. Applications provide the organizational context for all your
-blockchain resources including networks, nodes, and development tools. If you haven't created an application yet, follow our
-[create application](/building-with-settlemint/evm-chains-guide/create-an-application) guide
-first.
+blockchain resources including networks, nodes, and development tools. If you
+haven't created an application yet, follow our
+[create application](/building-with-settlemint/evm-chains-guide/create-an-application)
+guide first.
 
 ## 1. Add a blockchain network
 
-For EVM Chains, SettleMint offers Hyperledger Besu and Quorum for permissioned networks and a bunch of public networks to choose from. 
-For the list of supported networks please refer - [supported networks](/platform-components/blockchain-infrastructure/network-manager#supported-blockchain-network-protocols)
+For EVM Chains, SettleMint offers Hyperledger Besu and Quorum for permissioned
+networks and a bunch of public networks to choose from. For the list of
+supported networks please refer -
+[supported networks](/platform-components/blockchain-infrastructure/network-manager#supported-blockchain-network-protocols)
 
 ![Select Network](../../../img/building-with-settlemint/select-network.png)
 
-You can perform the same action via the SettleMint SDK CLI as well - 
+You can perform the same action via the SettleMint SDK CLI as well -
 
 <Tabs items={['SDK CLI', 'Platform UI','SDK JS']}>
 
   <Tab value="SDK CLI">
     First ensure you're authenticated:
     ```bash
-    settlemint login
+    SettleMint login
     ```
 
     Create a blockchain network:
     ```bash
-    settlemint platform create blockchain-network besu <network-name> \
+    SettleMint platform create blockchain-network besu <network-name> \
       --node-name <node-name>
 
     # Get information about the command and all available options
-    settlemint platform create blockchain-network besu --help
+    SettleMint platform create blockchain-network besu --help
     ```
+
   </Tab>
 
     <Tab value="Platform UI">
@@ -87,6 +113,7 @@ You can perform the same action via the SettleMint SDK CLI as well -
         <li>Click <strong>Confirm</strong> to add the network.</li>
       </ol>
     </div>
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -142,14 +169,14 @@ You can perform the same action via the SettleMint SDK CLI as well -
 
 </Tabs>
 
-
 <div className="grid grid-cols-2 gap-4 items-start">
   {/* Left Column - Text Content */}
   <div className="flex flex-col justify-start pt-2">
   <p>While deploying a network, you can tune various parameters to optimize performance and execution. The Chain ID serves as a unique identifier for your blockchain network, ensuring proper differentiation from others. The Seconds per block setting controls the block time interval, impacting transaction finality speed. Gas price defines the transaction cost per unit of gas, influencing network fees, while the Gas limit determines the maximum gas allowed per block, affecting computational capacity.</p>
   </div>
 
-  {/* Right Column - Image */}
+{/* Right Column - Image */}
+
   <div>
     ![Add Network](../../../img/building-with-settlemint/evm-config.png)
   </div>
@@ -157,25 +184,24 @@ You can perform the same action via the SettleMint SDK CLI as well -
 The EVM stack size configures the stack depth for smart contract execution, and the Contract size limit sets the maximum contract code size to manage deployment constraints. Adjusting these settings allows for greater scalability, efficiency, and cost control based on your specific use case.
 For EVM Chains, SettleMint allows you to set key genesis file paramters for a custom network configuration.
 
-
 ## Manage a network
 
-Network management can be done via SettleMint SDK CLI using these commands - 
+Network management can be done via SettleMint SDK CLI using these commands -
 
 <Tabs items={['SDK CLI','Platform UI','SDK JS']}>
  <Tab value="SDK CLI">
     ```bash
     # List networks
-    settlemint platform list blockchain-networks --application <app-name>
+    SettleMint platform list blockchain-networks --application <app-name>
 
     # Get network details
-    settlemint platform read blockchain-network <network-name>
+    SettleMint platform read blockchain-network <network-name>
 
     # Delete network
-    settlemint platform delete blockchain-network <network-name>
+    SettleMint platform delete blockchain-network <network-name>
 
     # Restart network
-    settlemint platform restart blockchain-network <network-name>
+    SettleMint platform restart blockchain-network <network-name>
     ```
 
   </Tab>
@@ -207,27 +233,25 @@ Network management can be done via SettleMint SDK CLI using these commands -
   </Tab>
 </Tabs>
 
-
-When we deploy a network, first node is automatically deployed with it and is a validator node. Once you have deployed a permissioned network or joined a public network, you
-can add more nodes to it. 
-
+When we deploy a network, first node is automatically deployed with it and is a
+validator node. Once you have deployed a permissioned network or joined a public
+network, you can add more nodes to it.
 
 ## 2. Add blockchain nodes
 
-To see and add nodes, please click on **Blockchain Nodes** tile on the dashboard or use the **Blockchain Nodes** link in the left menu.
+To see and add nodes, please click on **Blockchain Nodes** tile on the dashboard
+or use the **Blockchain Nodes** link in the left menu.
 
- ![Add Node](../../../img/building-with-settlemint/add-node-via-ui.png)
+![Add Node](../../../img/building-with-settlemint/add-node-via-ui.png)
 
 We recommend the following number of nodes for each envrionment:
 
 | Blockchain Network   | Node Type           | Minimum Nodes for Fault Tolerance |
-|----------------------|---------------------|-----------------------------------|
+| -------------------- | ------------------- | --------------------------------- |
 | **Hyperledger Besu** | Validator Nodes     | 4 (Byzantine Fault Tolerant BFT)  |
 | **Hyperledger Besu** | Non-Validator Nodes | 2 (for redundancy)                |
 | **GoQuorum**         | Validator Nodes     | 4 (Istanbul BFT)                  |
 | **GoQuorum**         | Non-Validator Nodes | 2 (for redundancy)                |
-
-
 
 Nodes can also be added using SettleMint SDK CLI using the following commands-
 
@@ -250,25 +274,27 @@ Nodes can also be added using SettleMint SDK CLI using the following commands-
         <li>Click <strong>Confirm</strong>.</li>
       </ol>
     </div>
+
   </Tab>
 
   <Tab value="SDK CLI">
     First ensure you're authenticated:
     ```bash
-    settlemint login
+    SettleMint login
     ```
 
     Create a blockchain node:
     ```bash
-    settlemint platform create blockchain-node besu <node-name> \
+    SettleMint platform create blockchain-node besu <node-name> \
       --blockchain-network <network-name> \
       --node-type <VALIDATOR|NON_VALIDATOR> \
       --provider <provider> \
       --region <region>
 
     # Get help
-    settlemint platform create blockchain-node --help
+    SettleMint platform create blockchain-node --help
     ```
+
   </Tab>
 
   <Tab value="SDK JS">
@@ -303,7 +329,8 @@ Nodes can also be added using SettleMint SDK CLI using the following commands-
 
 ## Manage node
 
-You can view node details and status, can monitor node health, pause and restart, or upgrade the node via the SDK CLI or the Platform UI. 
+You can view node details and status, can monitor node health, pause and
+restart, or upgrade the node via the SDK CLI or the Platform UI.
 
 <Tabs items={['SDK CLI', 'Platform UI', 'SDK JS']}>
   <Tab value="Platform UI">
@@ -316,10 +343,10 @@ You can view node details and status, can monitor node health, pause and restart
   <Tab value="SDK CLI">
     ```bash
     # List nodes
-    settlemint platform list services --application <application-name>
+    SettleMint platform list services --application <application-name>
 
     # Restart node
-    settlemint platform restart blockchain-node <node-name>
+    SettleMint platform restart blockchain-node <node-name>
     ```
 
   </Tab>
@@ -345,33 +372,40 @@ You can view node details and status, can monitor node health, pause and restart
 
 ## 3. Add load balancer
 
-To add a load balancer, navigate to the **Blockchain nodes** section in the SettleMint platform and select your deployed network. Click "Add load balancer", choose the region, provider, and desired resource configuration. Once deployed, the load balancer helps distribute traffic efficiently, improving network reliability and performance.
+To add a load balancer, navigate to the **Blockchain nodes** section in the
+SettleMint platform and select your deployed network. Click "Add load balancer",
+choose the region, provider, and desired resource configuration. Once deployed,
+the load balancer helps distribute traffic efficiently, improving network
+reliability and performance.
 
-When selecting nodes to connect to the load balancer, ensure you include at least two non-validator nodes for optimal redundancy. The load balancer can be configured to route requests to specific nodes based on workload distribution, ensuring high availability and fault tolerance in your blockchain network.
+When selecting nodes to connect to the load balancer, ensure you include at
+least two non-validator nodes for optimal redundancy. The load balancer can be
+configured to route requests to specific nodes based on workload distribution,
+ensuring high availability and fault tolerance in your blockchain network.
 
 ![Add load balancer](../../../img/building-with-settlemint/evm-load-balancer.png)
 
 ## 4. Add blockchain explorer
 
-To add blockscout blockchain explorer for EVM based permissioned networks, navigate to **Insights** via the left menu or the dashboard tile.
-For public networks, you may use publicly available blockchain explorers for the respective network. 
+To add blockscout blockchain explorer for EVM based permissioned networks,
+navigate to **Insights** via the left menu or the dashboard tile. For public
+networks, you may use publicly available blockchain explorers for the respective
+network.
 
 ![Add insights](../../../img/building-with-settlemint/add-insights.png)
 ![Insight details](../../../img/building-with-settlemint/insight-details.png)
 
 ### For public networks, please use the following blockchain explorers
 
-| **Network**          | **Mainnet Explorer** | **Testnet Explorer** |
-|----------------------|---------------------|----------------------|
-| **Ethereum**        | [Etherscan](https://etherscan.io/) | [Sepolia](https://sepolia.etherscan.io/) / [Holesky](https://holesky.etherscan.io/) |
-| **Avalanche**       | [SnowTrace](https://snowtrace.io/) | [Fuji](https://testnet.snowtrace.io/) |
-| **Hedera Hashgraph**| [HashScan](https://hashscan.io/mainnet) | [HashScan Testnet](https://hashscan.io/testnet) |
-| **Polygon PoS**     | [PolygonScan](https://polygonscan.com/) | [Amoy](https://amoy.polygonscan.com//) |
-| **Polygon zkEVM**   | [zkEVM Explorer](https://zkevm.polygonscan.com/) | [zkEVM Testnet](https://testnet-zkevm.polygonscan.com/) |
-| **Optimism**        | [Optimistic Etherscan](https://optimistic.etherscan.io/) | [Optimism Goerli](https://goerli-optimism.etherscan.io/) |
-| **Arbitrum**        | [Arbiscan](https://arbiscan.io/) | [Arbitrum Goerli](https://goerli.arbiscan.io/) |
-
-
+| **Network**          | **Mainnet Explorer**                                     | **Testnet Explorer**                                                                |
+| -------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Ethereum**         | [Etherscan](https://etherscan.io/)                       | [Sepolia](https://sepolia.etherscan.io/) / [Holesky](https://holesky.etherscan.io/) |
+| **Avalanche**        | [SnowTrace](https://snowtrace.io/)                       | [Fuji](https://testnet.snowtrace.io/)                                               |
+| **Hedera Hashgraph** | [HashScan](https://hashscan.io/mainnet)                  | [HashScan Testnet](https://hashscan.io/testnet)                                     |
+| **Polygon PoS**      | [PolygonScan](https://polygonscan.com/)                  | [Amoy](https://amoy.polygonscan.com//)                                              |
+| **Polygon zkEVM**    | [zkEVM Explorer](https://zkevm.polygonscan.com/)         | [zkEVM Testnet](https://testnet-zkevm.polygonscan.com/)                             |
+| **Optimism**         | [Optimistic Etherscan](https://optimistic.etherscan.io/) | [Optimism Goerli](https://goerli-optimism.etherscan.io/)                            |
+| **Arbitrum**         | [Arbiscan](https://arbiscan.io/)                         | [Arbitrum Goerli](https://goerli.arbiscan.io/)                                      |
 
 <div style={{
   backgroundColor: "#D1E5E8", 
@@ -385,11 +419,11 @@ For public networks, you may use publicly available blockchain explorers for the
 }}>
 Congratulations!
 
-You have succesfully built the blockchain infrastructure layer for you application. 
-From here you can proceed for creating or setting up private keys for transaction signer and user wallets.
+You have succesfully built the blockchain infrastructure layer for you
+application. From here you can proceed for creating or setting up private keys
+for transaction signer and user wallets.
 
 </div>
-
 
 ```
 Keywords

@@ -55,19 +55,19 @@ blockchain node in place.
   <Tab value="SDK CLI">
     First ensure you're authenticated:
     ```bash
-    settlemint login
+    SettleMint login
     ```
 
     Create a middleware:
     ```bash
     # Get the list of available middleware types
-    settlemint platform create middleware --help
+    SettleMint platform create middleware --help
 
     # Create a middleware
-    settlemint platform create middleware <type> <name>
+    SettleMint platform create middleware <type> <name>
 
     # Get information about the command and all available options
-    settlemint platform create middleware <type> --help
+    SettleMint platform create middleware <type> --help
     ```
 
   </Tab>
@@ -118,13 +118,13 @@ blockchain node in place.
   <Tab value="SDK CLI">
     ```bash
     # List middlewares
-    settlemint platform list middlewares --application <app-name>
+    SettleMint platform list middlewares --application <app-name>
 
     # Get middleware details
-    settlemint platform read middleware <middleware-name>
+    SettleMint platform read middleware <middleware-name>
 
     # Delete middleware
-    settlemint platform delete middleware <middleware-name>
+    SettleMint platform delete middleware <middleware-name>
     ```
 
   </Tab>
@@ -284,4 +284,3 @@ The following tasks need to be run in this sequence:
 The indexing of your smart contracts has now started. This can take a while, but
 once done you can query the middleware for your data in seconds using the
 **GraphQL API**. You can find the **endpoint** in the **Connect-tab**.
-
