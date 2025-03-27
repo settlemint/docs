@@ -1,41 +1,41 @@
 ---
-title: Getting Started
+title: "Getting started"
 description: Overview of blockchain development process
 ---
 
 ## Application development journey on SettleMint
 
 1. **Blockchain infrastructure setup** (network and node configuration)
-2. **Security & compliance** (Private Key Management, Authentication Tokens)
-3. **Smart contract development** (Code Studio, SDK, CLI)
-4. **Middleware & API Creation** (API Portal, Graph Middleware, FabConnect)
-5. **Off-Chain data srorage and integration** (Hasura, S3, IPFS )
-6. **Deployment & scaling** (Package, Deploy, Scale)
+2. **Security & compliance** (private key management, authentication tokens)
+3. **Smart contract development** (code studio, SDK, CLI)
+4. **Middleware & API creation** (API portal, graph middleware, FabConnect)
+5. **Off-chain data storage and integration** (Hasura, S3, IPFS)
+6. **Deployment & scaling** (package, deploy, scale)
 
 **Brief Step-by-Step Guide** to help you create a working blockchain app
 quickly.
 
 ### 1. Lay the foundation
 
-Use the **Blockchain Network Manager** to configure a public (e.g., Ethereum) or
-private (e.g., Besu, Quorum, Fabric) network. Deploy **Blockchain
-Nodes**—validating for consensus, non-validating for load distribution. Add a
-**Blockchain Load Balancer** to handle traffic and set up the **Transaction
-Signer** for secure transaction submissions. Finally, confirm everything is
-operational in the **Blockchain Explorer**.
+Use the **blockchain network manager** to configure a public (e.g., Ethereum) or
+private (e.g., Besu, Quorum, Fabric) network. Deploy **blockchain
+nodes**—validating for consensus, non-validating for load distribution. Add a
+**blockchain load balancer** to handle traffic and set up the **transaction
+signer** for secure transaction submissions. Finally, confirm everything is
+operational in the **blockchain explorer**.
 
 <ins>Brief Step-by-Step Guide:</ins>
 1. Define application scope (supply chain, identity, etc.). 
-2. In the Network Manager, select and configure your network (public or private). 
+2. In the network manager, select and configure your network (public or private). 
 3. Spin up validating or non-validating nodes. 
 4. Enable load balancing and secure transaction signing. 
-5. Check network activity and node health in the Explorer.
+5. Check network activity and node health in the explorer.
 
 ### 2. Generate keys and tokens
 
 Select the right private key management strategy—software, HD wallets, or
 HSM—based on your security profile. Generate private keys and attach them to transaction signers.
-Generate and use **Access Tokens (PAT/AAT)** for controlling platform or API interactions. 
+Generate and use **access tokens (PAT/AAT)** for controlling platform or API interactions. 
 
 <ins>Brief Step-by-Step Guide:</ins>
 1. Pick a key management approach that fits your risk tolerance. 
@@ -46,29 +46,29 @@ Generate and use **Access Tokens (PAT/AAT)** for controlling platform or API int
 
 ### 3. Develop and deploy smart contracts
 
-Write on-chain logic in **Code Studio** (Solidity/Chaincode) or the **SDK CLI**.
+Write on-chain logic in **code studio** (Solidity/Chaincode) or the **SDK CLI**.
 Rely on frameworks like Foundry/Hardhat for testing, then compile and deploy
-once you’re satisfied. The platform tracks deployments for easy rollback and
+once you're satisfied. The platform tracks deployments for easy rollback and
 version control.
 
 <ins>Brief Step-by-Step Guide:</ins>
-1. Write your contract using Code Studio or your preferred IDE. 
+1. Write your contract using code studio or your preferred IDE. 
 2. Test thoroughly using built-in or external test frameworks. 
 3. Compile and deploy to a test network. 
-4. Inspect events in the Explorer to verify success. 
+4. Inspect events in the explorer to verify success. 
 5. Move to production upon final validation.
 
-### 4. Setup Middlwares and get APIs
+### 4. Setup middleware and get APIs
 
-The **Smart Contract API Portal** converts your contract ABI into immediate REST
-or GraphQL endpoints. The **Graph Middleware** handles read operations, indexing
-on-chain data for fast queries. If required, the **Ethereum Attestation
-Indexer** can manage trust attestations for identity or compliance.
+The **smart contract API portal** converts your contract ABI into immediate REST
+or GraphQL endpoints. The **graph middleware** handles read operations, indexing
+on-chain data for fast queries. If required, the **Ethereum attestation
+indexer** can manage trust attestations for identity or compliance.
 
 <ins>Brief Step-by-Step Guide:</ins>
-1. Upload your contract ABI to the Smart Contract API Portal. 
+1. Upload your contract ABI to the smart contract API portal. 
 2. Check automatically generated REST/GraphQL endpoints. 
-3. Configure Graph Middleware for event indexing using sub-graphs 
+3. Configure graph middleware for event indexing using sub-graphs 
 4. Add specialized indexers (e.g., EAS) for credential or compliance data. 
 5. Test endpoints in a simple front end or script.
 
@@ -76,29 +76,29 @@ Indexer** can manage trust attestations for identity or compliance.
 
 Enterprise-grade dApps often require off-chain data handling. Connect **S3
 (MinIO)** or **IPFS** for files, and use **Hasura** on PostgreSQL for structured
-data. Meanwhile, orchestrate off-chain triggers with the **Integration Studio**
+data. Meanwhile, orchestrate off-chain triggers with the **integration studio**
 (e.g., emailing the admin after a token transfer). By the end, your blockchain
 logic seamlessly interacts with centralized services.
 
 <ins>Brief Step-by-Step Guide:</ins>
 1. Decide on S3 vs. IPFS for file needs. 
 2. Implement Hasura GraphQL for off-chain data queries and updates. 
-3. Configure events in Integration Studio to automate workflows. 
+3. Configure events in integration studio to automate workflows. 
 4. Sync on-chain calls and off-chain records in real time.
-5. Confirm data consistency and reliability via logs or Explorer audits.
+5. Confirm data consistency and reliability via logs or explorer audits.
 
 
 ### 6. Deploy, monitor, and scale
 
 Finally, **containerize** your front end (React, Angular, Vue) and back-end
-microservices. SettleMint’s **Custom Deployments** module makes updates
+microservices. SettleMint's **custom deployments** module makes updates
 simpler—no downtime or big reconfigurations. Continuous monitoring checks
 performance and security, letting you expand capacity as your user base grows.
 
 <ins>Brief Step-by-Step Guide:</ins>
 1. Package all components into containers. 
-2. Deploy them (SaaS or Self-Managed)
-via SettleMint’s interface. 
+2. Deploy them (SaaS or self-managed)
+via SettleMint's interface. 
 3. Benchmark performance under typical and peak loads. 
 4. Fine-tune scaling rules and resource allocations. 
 5. Iterate on your solution as usage patterns evolve.

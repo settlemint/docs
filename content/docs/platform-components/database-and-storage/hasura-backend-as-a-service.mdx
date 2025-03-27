@@ -1,5 +1,5 @@
 ---
-title: Hasura Backend-as-a-Service
+title: "Hasura backend-as-a-service"
 description: Guide to using Hasura in SettleMint
 ---
 
@@ -8,7 +8,7 @@ import { Card } from "fumadocs-ui/components/card";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
-# Hasura - Backend-as-a-service
+# Hasura - backend-as-a-service
 
 Many dApps need more than just decentralized tools to build an end-to-end
 solution. The SettleMint Hasura SDK provides a seamless way to interact with
@@ -18,7 +18,7 @@ Hasura GraphQL APIs for managing application data.
 
 Hasura is an open-source Backend-as-a-Service (BaaS) platform that provides instant, real-time GraphQL APIs backed by your relational databases. It connects to your data sources (e.g. PostgreSQL, MS SQL, etc.) and **auto-generates a unified GraphQL schema** with queries, mutations, and subscriptions for your data – all secured by a built-in authorization layer . In practical terms, simply pointing Hasura at an existing database gives you a ready-to-use GraphQL API with CRUD operations, real-time capabilities, and fine-grained access control out of the box  This allows development teams to **rapidly build data-driven applications** without writing boilerplate backend code, while still retaining the flexibility to add custom business logic when needed.
 
-## Core Functionality: Auto-Generated GraphQL from Your Database
+## Core functionality: auto-generated graphql from your database
 
 At the heart of Hasura is its ability to instantly create a full-featured GraphQL API from a relational database schema. When you connect Hasura to a database (commonly PostgreSQL, though Hasura supports multiple databases like MySQL, SQL Server, etc.), it introspects the schema and automatically **generates GraphQL types and operations for each table**. 
 
@@ -33,7 +33,7 @@ Behind the scenes, Hasura’s engine compiles incoming GraphQL requests **direct
 
 **Tracking Tables & Schema:** In Hasura’s console or via its API, you “track” the tables and views you want to expose. Once tracked, those tables are instantly available in the GraphQL schema. Hasura generates a GraphQL type for each table and a comprehensive set of operations for CRUD and real-time queries on that table. For example, if `users` is tracked, your API might include `query { users(...) { ... } }` for fetching data, `mutation { insert_users(...) }` for inserts, and `subscription { users(...) }` to subscribe to live changes. All of this happens **without writing any server code** – Hasura’s automation covers ~80% of typical API needs, letting developers focus on the unique parts of their application.
 
-## Real-Time GraphQL Subscriptions
+## Real-time graphql subscriptions
 
 One of Hasura’s standout features is its **real-time capabilities**. Any GraphQL query that you can perform on Hasura can also be made as a **subscription**, enabling clients to get live updates whenever the underlying data changes. Under the hood, Hasura handles the complexity of monitoring the database for changes and pushing those updates to subscribed clients over WebSocket connections. Developers don’t need to set up separate real-time servers or polling; you simply use GraphQL subscriptions and Hasura streams the data changes to the client. 
 
@@ -41,7 +41,7 @@ This makes building **real-time applications (chat apps, live dashboards, data m
 
 Subscriptions are useful for a variety of use cases: live feeds, notifications, collaborative editing apps, or any scenario where you want the UI to reflect server state in real time. By handling the heavy lifting for you, Hasura’s real-time engine greatly reduces the effort to build reactive applications. Moreover, because Hasura’s subscription handling is built into its compiled query engine, it **scales** well – the engine can handle high numbers of concurrent subscriptions by sharing work and using efficient data push algorithms (using techniques like live query invalidation and batching of updates). In summary, Hasura delivers **real-time GraphQL out-of-the-box**, turning your database into a live data source for clients with virtually no extra code or infrastructure.
 
-## Event Triggers for Async Workflows
+## Event triggers for async workflows
 
 Besides querying data in real-time, Hasura allows you to react to data changes via **Event Triggers**. Event Triggers are a mechanism to invoke custom business logic whenever certain database events occur. You can configure Hasura to listen on specific tables (for inserts, updates, or deletions) and call a webhook or serverless function when those events happen. This effectively turns your database into an event source for your application – enabling an **event-driven architecture** with minimal effort.
 
@@ -57,7 +57,7 @@ Typical uses of Event Triggers include:
 
 By offloading these event triggers to Hasura, developers can decouple complex workflows from the request-response cycle of the app. The **integration with serverless functions is seamless** – Hasura can effectively serve as the glue between the database and cloud function triggers. In summary, Event Triggers empower you to **extend Hasura with custom business logic in an asynchronous, scalable way**, turning database changes into actionable events in your architecture.
 
-## Remote Schemas for API Integration (GraphQL Federation)
+## Remote schemas for api integration (graphql federation)
 
 Hasura supports a modular, federated architecture through **Remote Schemas**. This feature allows you to **merge external GraphQL schemas** (from other services or third-party APIs) into Hasura’s unified GraphQL API ([Remote Schemas Overview | Hasura GraphQL Docs](https://hasura.io/docs/2.0/remote-schemas/overview/#:~:text=Hasura%20has%20the%20ability%20to,it%20like%20automated%20schema%20stitching)). In essence, Hasura can act as a **single GraphQL gateway** that combines your database data with other GraphQL-based services, so clients can query both through one endpoint.
 
@@ -69,7 +69,7 @@ Setting up a remote schema is straightforward – you provide Hasura with the re
 
 Remote Schemas enable a **microservices-friendly architecture**: you can keep specialized GraphQL services for certain domains (or use third-party GraphQL APIs) and let Hasura aggregate them. This provides **modularity** (each service can be developed/maintained independently) while still giving clients a single endpoint. In practice, many teams use Hasura to front multiple databases and services – for example, combining a PostgreSQL database, a legacy REST API (exposed via Hasura Actions or a GraphQL wrapper), and maybe a cloud service’s GraphQL API, all into one GraphQL schema. The result is a **unified, federated GraphQL graph** that greatly simplifies client interactions.
 
-## Role-Based Access Control and Security
+## Role-based access control and security
 
 Hasura includes a powerful **role-based access control (RBAC)** system to enforce fine-grained authorization rules on the API. From the Hasura console or via metadata, you can define **roles** (e.g. `user`, `admin`, `manager`, `anonymous`) and specify, for each role, what operations are allowed on which tables, columns, and rows. These permissions are applied automatically by Hasura for every GraphQL query or mutation, ensuring that each request **only returns or modifies data that the requesting role is allowed to access** ([Authentication and Authorization Overview | Hasura GraphQL Docs](https://hasura.io/docs/2.0/auth/overview/#:~:text=With%20Hasura%2C%20you%20can%20easily,application%20is%20secure%20and%20robust)).
 
@@ -87,7 +87,7 @@ Key aspects of Hasura’s RBAC and security model:
 
 Through this RBAC system, Hasura ensures that your auto-generated API is **secure for production use**. It essentially brings database-level access control to the GraphQL layer, including the ability to leverage your database’s features (like row-level security policies in Postgres) in combination with Hasura’s rules. The result is a GraphQL API where each request is scoped to the user’s privileges, without requiring manual checks in application code. By combining Hasura’s RBAC with your authentication of choice, you get a robust security model covering authentication **and** authorization for all data operations.
 
-## Metadata Management and Migrations
+## Metadata management and migrations
 
 In Hasura, the state of your GraphQL API (what tables are tracked, what relationships exist, what permissions are defined, etc.) is represented as **metadata**. This metadata is essentially a collection of configurations that tells the GraphQL engine how to expose your data. Hasura provides tools to manage this metadata and your database schema changes in a version-controlled, reproducible way – crucial for teams working across development, staging, and production environments.
 
@@ -103,7 +103,7 @@ Some best practices with migrations/metadata include: developing with the Hasura
 
 In short, Hasura treats the database schema and GraphQL API config as first-class artifacts that can be **managed like code**. This is essential for collaborating on a Hasura project in a team and for maintaining **consistency across dev/staging/prod** in enterprise setups.
 
-## Auto-Generated REST Endpoints
+## Auto-generated rest endpoints
 
 While GraphQL is Hasura’s primary interface, Hasura also caters to RESTful patterns by allowing you to **expose REST endpoints** for specific queries or mutations. This feature (often called “RESTified Endpoints”) is useful for cases where you might need a traditional REST API for integration or backward compatibility, without giving up Hasura’s automation.
 

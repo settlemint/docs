@@ -9,7 +9,8 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "postinstall": "fumadocs-mdx",
-    "docker": "bash -c \"docker buildx build . --provenance true --sbom true --platform=linux/amd64,linux/arm64 -t ghcr.io/settlemint/btp-docs:${VERSION:-7.0.0-dev.$(date +%s)} --push --progress=plain\""
+    "docker": "bash -c \"docker buildx build . --provenance true --sbom true --platform=linux/amd64,linux/arm64 -t ghcr.io/settlemint/btp-docs:${VERSION:-7.0.0-dev.$(date +%s)} --push --progress=plain\"",
+    "generate-sitemap": "bun scripts/generate-sitemap.ts"
   },
   "dependencies": {
     "@next/third-parties": "15.2.4",

@@ -1,5 +1,5 @@
 ---
-title: Platform Installation
+title: "Platform installation"
 sidebar_position: 3
 ---
 
@@ -20,9 +20,9 @@ Before starting the installation, ensure you have:
 - kubectl access to your cluster
 - Admin permissions
 
-## Installation Steps
+## Installation steps
 
-### 1. Sign in to the SettleMint Helm Registry
+### 1. Sign in to the SettleMint helm registry
 
 ```bash
 helm registry login harbor.settlemint.com --username <username> --password <password>
@@ -30,15 +30,15 @@ helm registry login harbor.settlemint.com --username <username> --password <pass
 
 Replace `<username>` and `<password>` with your provided credentials.
 
-### 2. Review Configuration Options
+### 2. Review configuration options
 
 View all available configuration options:
 
 ```bash
-helm show values oci://registry.settlemint.com/settlemint-platform/settlemint --version 7.0.0
+helm show values oci://registry.settlemint.com/settlemint-platform/SettleMint --version 7.0.0
 ```
 
-### 3. Install the Platform
+### 3. Install the platform
 
 Create a values file (values.yaml) with your configuration:
 
@@ -281,7 +281,7 @@ features:
         bscscan: ""
         arbiscan: ""
         optimistic: ""
-    ide:
+    IDE:
       image:
         registry: ghcr.io
         repository: settlemint/btp-ide
@@ -463,14 +463,14 @@ support:
 Install the platform:
 
 ```bash
-helm upgrade --install settlemint oci://registry.settlemint.com/settlemint-platform/settlemint \
-  --namespace settlemint \
+helm upgrade --install SettleMint oci://registry.settlemint.com/settlemint-platform/SettleMint \
+  --namespace SettleMint \
   --version 7.0.0 \
   --create-namespace \
   --values values.yaml
 ```
 
-### 4. Verify Installation
+### 4. Verify installation
 
 Check the deployment status:
 
@@ -480,24 +480,24 @@ kubectl get pods -n settlemint
 
 Verify all pods are running and ready.
 
-### 5. Access the Platform
+### 5. Access the platform
 
 Once all pods are running, access the platform at `https://<your-domain>`.
 
-### 6. Target Clusters Configuration
+### 6. Target clusters configuration
 
 The platform supports deploying blockchain nodes and applications to multiple
 target clusters across different cloud providers and regions. This section
 explains how to configure target clusters in your values file.
 
-#### Target Structure
+#### Target structure
 
 The targets configuration uses a simple 2-level hierarchy:
 
 - **Target** (top level grouping)
 - **Clusters** (individual Kubernetes clusters)
 
-#### Basic Configuration Example
+#### Basic configuration example
 
 ```yaml
 features:
@@ -569,15 +569,15 @@ features:
                   max: 32767
 ```
 
-#### Configuration Options
+#### Configuration options
 
-##### Target Level
+##### Target level
 
 - `id`: Unique identifier for the target group
 - `name`: Display name
 - `icon`: Icon identifier for the UI
 
-##### Cluster Level
+##### Cluster level
 
 - `id`: Unique identifier for the cluster
 - `name`: Display name for the region/location
@@ -587,7 +587,7 @@ features:
   - `lat`: Latitude
   - `lon`: Longitude
 
-##### Namespace Configuration
+##### Namespace configuration
 
 ```yaml
 namespace:
@@ -601,7 +601,7 @@ namespace:
     prefix: "sm" # Prefix for created namespaces
 ```
 
-##### Connection Settings
+##### Connection settings
 
 ```yaml
 connection:
@@ -611,7 +611,7 @@ connection:
     enabled: true
 ```
 
-##### Domain Configuration
+##### Domain configuration
 
 ```yaml
 domains:
@@ -624,7 +624,7 @@ The domain configuration determines how services in the cluster will be
 accessed. Each cluster needs a unique domain that resolves to its ingress
 controller.
 
-##### Storage Configuration
+##### Storage configuration
 
 ```yaml
 storage:
@@ -638,7 +638,7 @@ Storage class recommendations per cloud provider:
 - EKS: Use `"gp3"` for general purpose or `"io1"` for high-performance workloads
 - AKS: Use `"managed-premium"` for production or `"default"` for development
 
-##### Ingress Configuration
+##### Ingress configuration
 
 ```yaml
 ingress:
@@ -652,7 +652,7 @@ options:
 - `"azure/application-gateway"` for Azure Application Gateway
 - `"alb"` for AWS Application Load Balancer
 
-##### Capabilities Configuration
+##### Capabilities configuration
 
 ```yaml
 capabilities:
@@ -672,7 +672,7 @@ Capabilities determine what features are available in the cluster:
   - The port range should be within Kubernetes defaults (30000-32767)
   - Ensure the range doesn't conflict with other services
 
-#### Important Considerations
+#### Important considerations
 
 1. **Domain Names**
 
@@ -705,15 +705,15 @@ If you encounter issues during installation:
 1. Debug the installation:
 
 ```bash
-helm upgrade --install --debug --dry-run settlemint oci://registry.settlemint.com/settlemint-platform/settlemint \
-  --namespace settlemint \
+helm upgrade --install --debug --dry-run SettleMint oci://registry.settlemint.com/settlemint-platform/SettleMint \
+  --namespace SettleMint \
   --values values.yaml
 ```
 
 2. Check pod logs:
 
 ```bash
-kubectl logs -n settlemint <pod-name>
+kubectl logs -n SettleMint <pod-name>
 ```
 
 3. Generate a support bundle:
@@ -734,7 +734,7 @@ Send the generated support bundle to
 To remove the platform:
 
 ```bash
-helm delete settlemint --namespace settlemint
+helm delete SettleMint --namespace settlemint
 ```
 
 **Note:** This will not delete persistent volumes or other resources outside of

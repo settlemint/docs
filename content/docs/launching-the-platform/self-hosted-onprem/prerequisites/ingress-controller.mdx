@@ -1,5 +1,5 @@
 ---
-title: Ingress Controller
+title: "Ingress controller"
 description:
   Setup and configure the ingress controller for your self-hosted platform
 ---
@@ -28,7 +28,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   </Card>
 </div>
 
-## Deployment Options
+## Deployment options
 
 <Tabs items={['Helm Chart', 'Cloud Marketplace']}>
   <Tab value="Helm Chart">
@@ -78,7 +78,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   kubectl get pods -n ingress-nginx
   ```
 
-### Verify service and IP allocation
+### Verify service and ip allocation
 
 ```bash
 kubectl get svc -n ingress-nginx
@@ -86,10 +86,10 @@ kubectl get svc -n ingress-nginx
 
 </Steps>
 
-## Information Collection
+## Information collection
 
 <Callout type="success">
-### Required Values for Platform Installation
+### Required values for platform installation
 
 - [ ] Ingress class name (default: `nginx`)
 - [ ] Load balancer IP address
@@ -122,7 +122,7 @@ ingress:
   </Card>
 </div>
 
-## Next Steps
+## Next steps
 
 <Steps>
   ### Verify ingress controller is running ### Note down the load balancer IP

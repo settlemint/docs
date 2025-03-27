@@ -1,5 +1,5 @@
 ---
-title: Integration studio
+title: "Integration studio"
 description: Visual workflow builder for custom APIs and integrations
 ---
 
@@ -21,19 +21,51 @@ import { Card } from "fumadocs-ui/components/card";
   Summary  
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
 
-The Integration Studio is a dedicated low-code environment that enables developers and business users to build backend workflows, API endpoints, and custom logic using a visual interface. Powered by Node-RED, it offers an intuitive drag-and-drop experience for orchestrating flows between smart contracts, external APIs, databases, and storage systems—all within the SettleMint ecosystem.
+The Integration Studio is a dedicated low-code environment that enables
+developers and business users to build backend workflows, API endpoints, and
+custom logic using a visual interface. Powered by Node-RED, it offers an
+intuitive drag-and-drop experience for orchestrating flows between smart
+contracts, external APIs, databases, and storage systems—all within the
+SettleMint ecosystem.
 
-Instead of writing boilerplate backend code, developers will define logic using nodes and flows, visually representing how data moves between services. These flows can be triggered by webhooks, user interactions, smart contract events, or timed executions. Under the hood, each Integration Studio is deployed as an isolated and scalable container that supports JavaScript-based execution, environment configuration, and secure API access.
+Instead of writing boilerplate backend code, developers will define logic using
+nodes and flows, visually representing how data moves between services. These
+flows can be triggered by webhooks, user interactions, smart contract events, or
+timed executions. Under the hood, each Integration Studio is deployed as an
+isolated and scalable container that supports JavaScript-based execution,
+environment configuration, and secure API access.
 
-Each node in the flow is designed to perform a specific task—such as receiving HTTP input, transforming payloads, calling external APIs, or executing custom JavaScript functions. These nodes are connected inside a flow, which represents a unit of logic or an end-to-end integration path. You can create multiple flows within the same Integration Studio instance, allowing you to modularize your business logic and deploy distinct endpoints for different application use cases.
+Each node in the flow is designed to perform a specific task—such as receiving
+HTTP input, transforming payloads, calling external APIs, or executing custom
+JavaScript functions. These nodes are connected inside a flow, which represents
+a unit of logic or an end-to-end integration path. You can create multiple flows
+within the same Integration Studio instance, allowing you to modularize your
+business logic and deploy distinct endpoints for different application use
+cases.
 
-When developers deploy the Integration Studio to their application, a secure Node-RED editor is provisioned, accessible via the platform UI. The visual interface includes common built-in nodes and pre-integrated libraries like ethers (for blockchain interaction), ipfsHttpClient (for decentralized storage), and others. Additional libraries can also be added manually in the project settings.
+When developers deploy the Integration Studio to their application, a secure
+Node-RED editor is provisioned, accessible via the platform UI. The visual
+interface includes common built-in nodes and pre-integrated libraries like
+ethers (for blockchain interaction), ipfsHttpClient (for decentralized storage),
+and others. Additional libraries can also be added manually in the project
+settings.
 
-A common scenario might involve triggering a flow via an HTTP request, fetching on-chain data from a smart contract using ethers.js, formatting the result, and returning it as a JSON response. These kinds of flows can be designed in minutes—providing API endpoints that are automatically hosted and secured by SettleMint infrastructure.
+A common scenario might involve triggering a flow via an HTTP request, fetching
+on-chain data from a smart contract using ethers.js, formatting the result, and
+returning it as a JSON response. These kinds of flows can be designed in
+minutes—providing API endpoints that are automatically hosted and secured by
+SettleMint infrastructure.
 
-Developers can configure API Keys to restrict access to these endpoints and monitor calls using the platform’s access token management system. Every endpoint is served over HTTPS and can be integrated with frontend dApps, backend services, or third-party platforms.
+Developers can configure API Keys to restrict access to these endpoints and
+monitor calls using the platform’s access token management system. Every
+endpoint is served over HTTPS and can be integrated with frontend dApps, backend
+services, or third-party platforms.
 
-The simplicity of visual programming, combined with the power of JavaScript, makes Integration Studio a robust backend builder tailored for blockchain applications. It significantly reduces development time while maintaining flexibility for custom use cases. Developers gain fine-grained control over how their dApp behaves off-chain, without leaving the SettleMint environment.
+The simplicity of visual programming, combined with the power of JavaScript,
+makes Integration Studio a robust backend builder tailored for blockchain
+applications. It significantly reduces development time while maintaining
+flexibility for custom use cases. Developers gain fine-grained control over how
+their dApp behaves off-chain, without leaving the SettleMint environment.
 
 </div>
 </div>
@@ -82,7 +114,7 @@ business solution to life.
 
 [Learn more about the basic concepts of Node-RED here](https://nodered.org/docs/user-guide/concepts)
 
-## Adding the Integration Studio
+## Adding the integration studio
 
 Navigate to the **application** where you want to add the integration studio.
 Click **Integration tools** in the left navigation, and then click **Add an
@@ -91,28 +123,28 @@ integration tool**. This opens a form.
 ![Add Integration Studio](../../../img/building-with-settlemint/add-integration-studio.png)
 
 <Steps>
-### Select Integration Studio
+### Select integration studio
 Select **Integration Studio** and click **Continue** to proceed.
 
-### Choose a Name
+### Choose a name
 
 Choose a **name** for your Integration Studio. Choose one that will be easily
 recognizable in your dashboards (eg. Crowdsale Flow)
 
-### Select Deployment Plan
+### Select deployment plan
 
 Choose a deployment plan. Select the type, cloud provider, region and resource
 pack.
 [More about deployment plans](/launching-the-platform/managed-cloud-deployment/deployment-plans)
 
-### Confirm Setup
+### Confirm setup
 
 You can see the **resource cost** for the Integration Studio displayed at the
 bottom of the form. Click **Confirm** to add the Integration Studio.
 
 </Steps>
 
-## Using the Integration Studio
+## Using the integration studio
 
 When the Integration Studio is deployed, click on it from the list, and go to
 the **Interface** tab to start building your flows. You can also view the
@@ -128,7 +160,6 @@ performs.
 
 ![Integration Studio Flows](../../../img/building-with-settlemint/integration-studio-flows.png)
 
-
 ### Setting up a flow
 
 Before we show you how to set up your own flow, we recommend reading this
@@ -140,7 +171,7 @@ If you do not have a Polygon Mumbai Node, you can easily
 [deploy a node](/platfrom-components/add-a-node-to-a-network) first.
 
 <Steps>
-### Add HTTP Input Node
+### Add http input node
 Drag and drop a **Http In node** to listen for requests. If you double-click the node, you will see you have a couple parameters to set:
 
 - `METHOD` - set it to `GET`. This is HTTP Method that your node is configured
@@ -148,7 +179,7 @@ Drag and drop a **Http In node** to listen for requests. If you double-click the
 - `URL` - set it to `/getLatestBlock`. This the endpoint that your node will
   listen to.
 
-### Add Function Node
+### Add function node
 
 Drag and drop a **function node**. This is the node that will query the
 blockchain for the block number. Double-click the node to configure it.
@@ -215,7 +246,7 @@ the setup tab. Example for ethers providers:
 
 </Callout>
 
-### Add HTTP Response Node
+### Add http response node
 
 Drag and drop a **Http Response node** to reply to the request. Double-click and
 configure:
@@ -226,7 +257,7 @@ configure:
 Click on the `Deploy` button in the top right corner to save and deploy your
 changes.
 
-### Test Your Endpoint
+### Test your endpoint
 
 Now, go back to the **Connect tab** of your Integration Studio to see your **API
 endpoint**, which looks something like
@@ -256,6 +287,4 @@ You can access 4000 plus pre-built modules from the in-built library.
 You can use the Integration Studio to build very complex flows. Learn more in
 this [cookbook by Node-RED](https://cookbook.nodered.org/) on the different
 types of flows.
-```
-Keywords: integration studio, settlemint, node-red, low-code backend, visual workflow builder, backend orchestration, api automation, smart contract integration, ethers.js, ipfs integration, flow editor, visual programming, decentralized backend, visual api builder, smart contract api trigger, event-driven flows, javascript nodes, node-red flows, nodered http endpoint, settlemint integration tools, create api without code, blockchain backend, integration platform, nodered smart contract, decentralized logic, on-chain off-chain bridge, javascript automation, rpc calls node-red, smart contract events, web3 api orchestrator, nodered blockchain trigger, settlemint api workflow, node-red example flow, ethers provider integration, integration studio example, http in node, http response node, application access token, api token settlemint, nodered visual ide, smart contract backend flow, node-red drag drop, low-code automation tool, settlemint visual interface, nodered ethers provider, integration studio deployment, settlemint workflow setup, nodered function node, rpc endpoint integration, integration flow design, smart contract event handler, ipfs client node-red, integration studio cookbooks, no-code contract orchestration, backend-as-a-service blockchain
-```
+

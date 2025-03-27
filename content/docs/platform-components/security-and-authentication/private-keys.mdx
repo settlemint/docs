@@ -1,5 +1,5 @@
 ---
-title: Private Keys
+title: "Private keys"
 description: Guide to managing private keys on SettleMint
 ---
 
@@ -8,106 +8,143 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
 
-# Private Keys
+# Private keys
 
-Private key management is a crucial aspect of blockchain security, ensuring that transactions are securely signed and verified. Blockchain transactions require **private keys** for **authentication, ownership verification, and signing**, and the associated blockchain address must have sufficient funds to cover **transaction fees (gas costs)**.
+Private key management is a crucial aspect of blockchain security, ensuring that
+transactions are securely signed and verified. Blockchain transactions require
+**private keys** for **authentication, ownership verification, and signing**,
+and the associated blockchain address must have sufficient funds to cover
+**transaction fees (gas costs)**.
 
-Depending on risk, compliance requirements, and scale, SettleMint supports multiple approaches:
+Depending on risk, compliance requirements, and scale, SettleMint supports
+multiple approaches:
 
 - **Accessible ECDSA P-256**: Straightforward software-based storage.
-- **Hierarchical Deterministic (HD) ECDSA P-256**: Generate multiple child keys from a master seed for structured backups.
-- **Hardware Security Modules (HSMs)**: Tamper-resistant devices ensuring maximum security for enterprise or regulated use cases.
-Each approach integrates with the **Transaction Signer**, guaranteeing seamless and secure execution of on-chain operations.
+- **Hierarchical Deterministic (HD) ECDSA P-256**: Generate multiple child keys
+  from a master seed for structured backups.
+- **Hardware Security Modules (HSMs)**: Tamper-resistant devices ensuring
+  maximum security for enterprise or regulated use cases. Each approach
+  integrates with the **Transaction Signer**, guaranteeing seamless and secure
+  execution of on-chain operations.
+
 ---
 
-## Importance of Private Key Management
+## Importance of private key management
 
 Private keys are essential for:
-- **Digitally signing transactions** before they are broadcast to the blockchain.
+
+- **Digitally signing transactions** before they are broadcast to the
+  blockchain.
 - **Generating public addresses** for receiving assets.
 - **Ensuring ownership** of blockchain-based assets.
 - **Providing security** through cryptographic encryption.
 
-Improper handling of private keys can lead to **unauthorized access, irreversible loss of funds, and compromised blockchain operations**.
+Improper handling of private keys can lead to **unauthorized access,
+irreversible loss of funds, and compromised blockchain operations**.
 
 ---
 
-## Key Management Approaches
+## Key management approaches
 
-SettleMint supports multiple **key storage and generation options** to balance security, usability, and compliance.
+SettleMint supports multiple **key storage and generation options** to balance
+security, usability, and compliance.
 
-### 1. **Externally Generated Private Keys**
-Users can create and manage their private keys **outside of SettleMint** and import them when needed. Common options include:
+### 1. **Externally generated private keys**
+
+Users can create and manage their private keys **outside of SettleMint** and
+import them when needed. Common options include:
+
 - **MetaMask** – A popular Ethereum-based wallet.
 - **Ledger/Trezor** – Secure hardware wallets for private key storage.
 - **OpenSSL & CLI Tools** – For manually generating and managing key pairs.
-- **Cloud-Based Key Vaults** – Secure solutions like AWS KMS, Azure Key Vault, and GCP KMS.
+- **Cloud-Based Key Vaults** – Secure solutions like AWS KMS, Azure Key Vault,
+  and GCP KMS.
 
-### 2. **Private Key Management in SettleMint**
-SettleMint provides **built-in private key generation and storage**, allowing users to:
-- **Generate ECDSA P-256, (HD) ECDSA P-256, and HSM private keys** within the platform.
+### 2. **Private key management in settlemint**
+
+SettleMint provides **built-in private key generation and storage**, allowing
+users to:
+
+- **Generate ECDSA P-256, (HD) ECDSA P-256, and HSM private keys** within the
+  platform.
 - **Manage multiple keys** for different blockchain networks.
 - **Securely sign transactions** without exposing private keys externally.
 
-### 3. **Custom Key Material: Mnemonic & Derivation Path**
-For advanced users, SettleMint allows the use of **custom key material**, including:
-- **Mnemonics** – A **12/24-word recovery phrase** that generates a **Hierarchical Deterministic (HD) Wallet**.
+### 3. **Custom key material: mnemonic & derivation path**
+
+For advanced users, SettleMint allows the use of **custom key material**,
+including:
+
+- **Mnemonics** – A **12/24-word recovery phrase** that generates a
+  **Hierarchical Deterministic (HD) Wallet**.
 - **Derivation Paths** – Structured key generation paths, such as:
   - `m/44'/60'/0'/0/0` (Ethereum Standard)
   - `m/44'/0'/0'/0/0` (Bitcoin Standard)
 
-Using **HD ECDSA P-256**, users can derive multiple child keys from a **master seed**, allowing structured backups and better key management.
+Using **HD ECDSA P-256**, users can derive multiple child keys from a **master
+seed**, allowing structured backups and better key management.
 
 ---
 
-## Signing Transactions in SettleMint
+## Signing transactions in settlemint
 
-SettleMint integrates **a signing proxy** that ensures secure transaction execution. 
+SettleMint integrates **a signing proxy** that ensures secure transaction
+execution.
 
 - **Captures `eth_sendTransaction` calls** made via **JSON-RPC endpoints**.
 - **Uses the appropriate private key** from the key management section.
 - **Signs the transaction** before sending it to the blockchain node.
 
-This setup allows **seamless integration** with **external blockchain development tools**, such as:
+This setup allows **seamless integration** with **external blockchain
+development tools**, such as:
 
-- **JSON-RPC API** – Direct node interactions ([Ethereum JSON-RPC](https://eth.wiki/json-rpc/API)).
-- **Hardhat Framework** – Remote transaction signing ([Hardhat Configuration](https://hardhat.org/config/#json-rpc-based-networks)).
+- **JSON-RPC API** – Direct node interactions
+  ([Ethereum JSON-RPC](https://eth.wiki/json-rpc/API)).
+- **Hardhat Framework** – Remote transaction signing
+  ([Hardhat Configuration](https://hardhat.org/config/#json-rpc-based-networks)).
 
 ---
 
-## Security Considerations
+## Security considerations
 
-### 1. **Software-Based Private Key Storage**
+### 1. **Software-based private key storage**
+
 - Keys are stored in **software memory** for easy access.
 - Suitable for **low-risk applications** but vulnerable to potential attacks.
 
-### 2. **Hierarchical Deterministic (HD) Key Management**
+### 2. **Hierarchical deterministic (hd) key management**
+
 - Generates **multiple child keys** from a **single mnemonic seed**.
 - Ensures **structured key backups and recovery**.
 
-### 3. **Hardware Security Modules (HSMs)**
+### 3. **Hardware security modules (hsms)**
+
 - Uses **tamper-resistant hardware devices** for **strong security**.
 - Preferred for **enterprise-grade and regulated environments**.
 
-| **Storage Method**  | **Security Level** | **Best Use Case** |
-|---------------------|-------------------|-------------------|
-| Software (ECDSA)   | Medium  | Low-risk applications, fast access needs. |
-| HD Wallets         | High    | Structured backups, multi-account setups. |
-| HSM                | Very High | Enterprise, regulatory compliance. |
+| **Storage Method** | **Security Level** | **Best Use Case**                         |
+| ------------------ | ------------------ | ----------------------------------------- |
+| Software (ECDSA)   | Medium             | Low-risk applications, fast access needs. |
+| HD Wallets         | High               | Structured backups, multi-account setups. |
+| HSM                | Very High          | Enterprise, regulatory compliance.        |
 
 ---
 
-## Best Practices for Private Key Security
+## Best practices for private key security
 
-- **Use Secure Backups** – Store keys in **encrypted, air-gapped storage solutions**.
-- **Enable Multi-Factor Authentication (MFA)** – Adds an extra layer of protection.
-- **Restrict Access via IAM Policies** – Implement **role-based security controls**.
-- **Rotate Keys Regularly** – Minimizes risk associated with long-term key exposure.
+- **Use Secure Backups** – Store keys in **encrypted, air-gapped storage
+  solutions**.
+- **Enable Multi-Factor Authentication (MFA)** – Adds an extra layer of
+  protection.
+- **Restrict Access via IAM Policies** – Implement **role-based security
+  controls**.
+- **Rotate Keys Regularly** – Minimizes risk associated with long-term key
+  exposure.
 - **Monitor Transactions** – Set up **alerts for unauthorized activity**.
 
 ---
 
-## Additional Resources
+## Additional resources
 
 - **[Ethereum JSON-RPC API](https://eth.wiki/json-rpc/API)**
 - **[Hardhat JSON-RPC Signing Guide](https://hardhat.org/config/#json-rpc-based-networks)**
@@ -116,7 +153,6 @@ This setup allows **seamless integration** with **external blockchain developmen
 - **[AWS Key Management Service](https://aws.amazon.com/kms/)**
 
 ---
-
 
 You can sign transactions with private keys you created outside SettleMint with
 e.g. MetaMask or other wallet solutions. SettleMint however provides an option
@@ -153,16 +189,16 @@ configured to use the "remote" default option for signing.
   <Tab value="SDK CLI">
     ```bash
     # Create Accessible ECDSA P256 key
-    settlemint platform create private-key accessible-ecdsa-p256 my-key \
+    SettleMint platform create private-key accessible-ecdsa-p256 my-key \
       --application my-app \
       --blockchain-node node-123
 
     # Create HD ECDSA P256 key
-    settlemint platform create private-key hd-ecdsa-p256 my-key \
+    SettleMint platform create private-key hd-ecdsa-p256 my-key \
       --application my-app
 
     # Create HSM ECDSA P256 key
-    settlemint platform create private-key hsm-ecdsa-p256 my-key \
+    SettleMint platform create private-key hsm-ecdsa-p256 my-key \
       --application my-app
     ```
 
@@ -207,13 +243,13 @@ configured to use the "remote" default option for signing.
   <Tab value="SDK CLI">
     ```bash
     # List all private keys
-    settlemint platform list private-keys --application <app-name>
+    SettleMint platform list private-keys --application <app-name>
 
     # View specific key details
-    settlemint platform read private-key <private-key-unique-name>
+    SettleMint platform read private-key <private-key-unique-name>
 
     # Restart a private key
-    settlemint platform restart private-key <private-key-unique-name>
+    SettleMint platform restart private-key <private-key-unique-name>
     ```
 
   </Tab>

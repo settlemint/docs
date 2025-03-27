@@ -1,5 +1,5 @@
 ---
-title: OAuth Provider
+title: "Oauth provider"
 description: Setup and configure OAuth provider for your self-hosted platform
 ---
 
@@ -28,7 +28,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   </Card>
 </div>
 
-## Provider Options
+## Provider options
 
 <Tabs items={['Google OAuth', 'Azure AD', 'Custom OIDC']}>
   <Tab value="Google OAuth">
@@ -101,7 +101,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   </Tab>
 </Tabs>
 
-## JWT Configuration
+## Jwt configuration
 
 <Steps>
   ### Generate a secure signing key ```bash openssl rand -base64 32 ```
@@ -111,10 +111,10 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   Store this key securely - it's used to sign user sessions.
 </Callout>
 
-## Information Collection
+## Information collection
 
 <Callout type="success">
-### Required Values for Platform Installation
+### Required values for platform installation
 
 - [ ] OAuth Client ID
 - [ ] OAuth Client Secret

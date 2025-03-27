@@ -1,5 +1,5 @@
 ---
-title: CLI
+title: "CLI"
 description: Overview of the SettleMint CLI
 ---
 
@@ -12,7 +12,7 @@ supports integration with popular package managers like npm, Yarn, Bun, and
 pnpm, offering both local and global installation options, as well as automation
 capabilities through GitHub Actions.
 
-## Core Functionality
+## Core functionality
 
 The **SettleMint CLI (`@settlemint/sdk-cli`)** is a command-line interface
 designed to simplify blockchain development and infrastructure management. It
@@ -28,11 +28,11 @@ enables developers to:
 The CLI supports **multiple package managers** (npm, Yarn, Bun, pnpm) and
 **integrates with GitHub Actions**, providing automation for CI/CD workflows.
 
-> **TIP:** To verify installation, run `settlemint --version` after setup.
+> **TIP:** To verify installation, run `SettleMint --version` after setup.
 
 ---
 
-## Core Functionality
+## Core functionality
 
 The SettleMint CLI provides a rich set of commands to streamline blockchain
 tasks. Below is an overview of key commands:
@@ -41,20 +41,20 @@ tasks. Below is an overview of key commands:
 
 | **Command**                                                         | **Description**                                                    |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| `settlemint --version`                                              | Displays the installed CLI version.                                |
-| `settlemint --help`                                                 | Shows available commands and subcommands.                          |
-| `settlemint login`                                                  | Authenticates with SettleMint using a Personal Access Token (PAT). |
-| `settlemint create --project-name <name> --template <template>`     | Initializes a new project from a template.                         |
-| `settlemint connect`                                                | Connects your project to SettleMint infrastructure.                |
-| `settlemint scs hardhat deploy remote --accept-defaults`            | Deploys smart contracts remotely using Hardhat.                    |
-| `settlemint scs subgraph deploy --accept-defaults <subgraph-name>`  | Deploys a subgraph for blockchain data indexing.                   |
-| `settlemint codegen`                                                | Generates TypeScript code for dApp integrations.                   |
+| `SettleMint --version`                                              | Displays the installed CLI version.                                |
+| `SettleMint --help`                                                 | Shows available commands and subcommands.                          |
+| `SettleMint login`                                                  | Authenticates with SettleMint using a Personal Access Token (PAT). |
+| `SettleMint create --project-name <name> --template <template>`     | Initializes a new project from a template.                         |
+| `SettleMint connect`                                                | Connects your project to SettleMint infrastructure.                |
+| `SettleMint scs hardhat deploy remote --accept-defaults`            | Deploys smart contracts remotely using Hardhat.                    |
+| `SettleMint scs subgraph deploy --accept-defaults <subgraph-name>`  | Deploys a subgraph for blockchain data indexing.                   |
+| `SettleMint codegen`                                                | Generates TypeScript code for dApp integrations.                   |
 | `npm run dev` (or `bun run dev`, etc.)                              | Starts your dApp in development mode.                              |
-| `settlemint scs create --project-name <name> --use-case <use-case>` | Creates a project from a smart contract template.                  |
-| `settlemint scs foundry test`                                       | Runs smart contract tests using Foundry.                           |
+| `SettleMint scs create --project-name <name> --use-case <use-case>` | Creates a project from a smart contract template.                  |
+| `SettleMint scs foundry test`                                       | Runs smart contract tests using Foundry.                           |
 
 > **NOTE:** Many commands support additional flags (e.g., `--accept-defaults`).
-> Use `--help` for more details (`settlemint create --help`).
+> Use `--help` for more details (`SettleMint create --help`).
 
 ---
 
@@ -62,12 +62,12 @@ tasks. Below is an overview of key commands:
 
 The CLI can be installed globally or as a project dependency:
 
-### **Global Installation**
+### **Global installation**
 
 npm install -g @settlemint/sdk-cli
 
 With a hierarchical command structure and detailed help options (e.g.,
-`settlemint --help`), the CLI ensures intuitive navigation through every task.
+`SettleMint --help`), the CLI ensures intuitive navigation through every task.
 
 The SettleMint CLI transforms blockchain development by offering:
 
@@ -85,7 +85,7 @@ The SettleMint CLI transforms blockchain development by offering:
 This tool caters to everyone from individual developers to enterprise teams,
 making blockchain technology more approachable and effective.
 
-## Additional Resources
+## Additional resources
 
 For in-depth guidance and setup details, explore these official SettleMint
 resources:
@@ -100,11 +100,11 @@ resources:
 - **Contributing Opportunities**: Learn how to contribute to the CLI via the
   [SettleMint GitHub page](https://github.com/SettleMint).
 
-## Getting Started
+## Getting started
 
 To begin, install the SettleMint CLI globally with
 `npm install -g @settlemint/sdk-cli` (or use your preferred package manager),
-then confirm the installation with `settlemint --version`. Unlock the potential
+then confirm the installation with `SettleMint --version`. Unlock the potential
 of blockchain development with a tool engineered for speed, security, and
 simplicity.
 

@@ -1,5 +1,5 @@
 ---
-title: Insights
+title: "Insights"
 description: Guide to using blockchain explorers in SettleMint
 ---
 
@@ -14,7 +14,7 @@ provides insightful dashboards via integrated blockchain explorers:
 - **Blockscout** - For EVM compatible networks (Besu, Polygon Edge)
 - **Hyperledger Explorer** - For Fabric networks
 
-## Add Blockchain Explorer
+## Add blockchain explorer
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
@@ -32,16 +32,16 @@ provides insightful dashboards via integrated blockchain explorers:
   <Tab value="SDK CLI">
     First ensure you're authenticated:
     ```bash
-    settlemint login
+    SettleMint login
     ```
 
     Create blockchain explorer:
     ```bash
     # Create blockchain explorer
-    settlemint platform create insights blockscout <name>
+    SettleMint platform create insights blockscout <name>
 
     # Get information about the command and all available options
-    settlemint platform create insights blockscout --help
+    SettleMint platform create insights blockscout --help
     ```
 
   </Tab>
@@ -51,7 +51,7 @@ provides insightful dashboards via integrated blockchain explorers:
   </Tab>
 </Tabs>
 
-## Manage Explorer
+## Manage explorer
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
@@ -79,10 +79,10 @@ provides insightful dashboards via integrated blockchain explorers:
   <Tab value="SDK CLI">
     ```bash
     # List explorers
-    settlemint platform list services --type insights
+    SettleMint platform list services --type insights
 
     # Restart explorer
-    settlemint platform restart insights blockscout <name>
+    SettleMint platform restart insights blockscout <name>
     ```
 
   </Tab>
@@ -110,7 +110,7 @@ provides insightful dashboards via integrated blockchain explorers:
   </Tab>
 </Tabs>
 
-## Using the Explorer
+## Using the explorer
 
 When the blockchain explorer is deployed and running successfully, you can:
 
@@ -128,7 +128,7 @@ Key features:
 
 ![Blockscout Interface](../../../img/platfrom-components/blockscout-dashboard.png)
 
-### Transaction Details
+### Transaction details
 
 Click a Transaction hash to see detailed information including:
 
@@ -139,7 +139,7 @@ Click a Transaction hash to see detailed information including:
 
 ![Transaction View](../../../img/platfrom-components/blockscout-transactions.png)
 
-### Address Details
+### Address details
 
 Click an Account address to view:
 
@@ -154,7 +154,7 @@ Click an Account address to view:
   All operations require appropriate permissions in your workspace.
 </Callout>
 
-# Blockscout Explorer for EVM Chains
+# Blockscout explorer for**abbr_krb5c93ug**chains
 
 Blockscout is an open-source blockchain explorer optimized for Ethereum Virtual
 Machine (EVM)-compatible networks. It provides a comprehensive interface for
@@ -194,7 +194,7 @@ interaction via the platform. This functionality supports use cases such as
 wallet tracking, address investigation, and contract deployment verification,
 making it an indispensable resource for EVM developers and security analysts.
 
-## API Overview
+## Api overview
 
 Blockscout provides multiple API interfaces to interact with blockchain data,
 including REST API, JSON RPC & ETH Compatible RPC Endpoints, and GraphQL. These
@@ -204,7 +204,7 @@ API and data support.
 
 ![Blockscout Rest APIs](../../../img/platfrom-components/blockscout-rest.png)
 
-### API Access
+### Api access
 
 ```
 REST API URL: /api
@@ -212,7 +212,7 @@ JSON RPC URL: /api/eth-rpc
 GraphQL URL: /graphiql
 ```
 
-## REST API Endpoints
+## Rest api endpoints
 
 The REST API supports both GET and POST requests and is structured around
 modules and actions. The following modules are supported: Account, Logs, Token,
@@ -282,7 +282,7 @@ GET /tokens/{address_hash}/instances/{id}/transfers-count    # Get NFT transfer 
 PATCH /tokens/{address_hash}/instances/{id}/refetch-metadata # Re-fetch NFT metadata
 ```
 
-### Smart Contracts
+### Smart contracts
 
 ```http
 GET /smart-contracts                                     # Get verified smart contracts
@@ -292,7 +292,7 @@ GET /smart-contracts/{address_hash}/methods-write        # Get write methods of 
 POST /smart-contracts/{address_hash}/query-read-method   # Query a smart contract's read method
 ```
 
-### Statistics & Charts
+### Statistics & charts
 
 ```http
 GET /stats                                               # Get statistics counters
@@ -300,7 +300,7 @@ GET /stats/charts/transactions                           # Get transactions char
 GET /stats/charts/market                                 # Get market chart
 ```
 
-### Other Endpoints
+### Other endpoints
 
 ```http
 GET /config/json-rpc-url                                 # Get JSON-RPC URL
@@ -316,7 +316,7 @@ SmartContract, NFTInstance, TokenInfo, and TransactionSummary.
 
 **Last Updated:** 8 months ago
 
-## JSON RPC & ETH Compatible RPC Endpoints
+## Json rpc & eth compatible rpc endpoints
 
 In addition to custom RPC endpoints, the Blockscout ETH RPC API supports most
 commonly used methods in the exact format specified for Ethereum nodes, as per
@@ -324,7 +324,7 @@ the Ethereum JSON-RPC Specification. These methods are provided for convenience
 and are most suitable as a fallback option in your JSON RPC API providers. For
 other use cases, REST or custom RPC methods are recommended.
 
-### Supported Methods
+### Supported methods
 
 ```json
 eth_blockNumber                  # Returns the latest block number in the chain in hexadecimal format
@@ -345,7 +345,7 @@ eth_sendRawTransaction           # Sends a raw transaction
 eth_call                         # Executes a new message call immediately without creating a transaction
 ```
 
-## GraphQL in Blockscout
+## Graphql in blockscout
 
 The Graph is a decentralized protocol for indexing and querying blockchain data,
 making it easier to access and use. It acts like a librarian for blockchain
@@ -364,7 +364,7 @@ and querying, enabling more advanced dApp development.
 
 ![Blockscout GraphQL](../../../img/platfrom-components/blockscout-graphql.png)
 
-### What is GraphQL?
+### What is graphql?
 
 GraphQL is an open-source data query and manipulation language for APIs, and a
 runtime for fulfilling queries with existing data. It provides an efficient,
@@ -373,7 +373,7 @@ define the structure of the data required, and exactly the same structure of the
 data is returned from the server, preventing excessively large amounts of data
 from being returned.
 
-#### Key Concepts of GraphQL
+#### Key concepts of graphql
 
 - **Hierarchical:** Queries are structured hierarchically, allowing nested data
   retrieval.
@@ -382,7 +382,7 @@ from being returned.
 - **Client-Specified Queries:** Clients can request exactly the data they need,
   reducing over-fetching or under-fetching.
 
-#### Advantages of GraphQL
+#### Advantages of graphql
 
 - **Declarative Integration on Client:** Clients specify what data/operations
   they need.
@@ -390,7 +390,7 @@ from being returned.
   structure.
 - **Support for Real-Time Data:** Enables real-time updates with subscriptions.
 
-### Query Types
+### Query types
 
 There are three main query types in a GraphQL schema:
 
@@ -399,14 +399,14 @@ There are three main query types in a GraphQL schema:
 3. **Subscription:** Subscribe to real-time data, such as new posts in a
    category.
 
-### Access GraphQL API
+### Access graphql api
 
 To access Blockscout's GraphQL interface, use **GraphiQL**, an in-browser IDE
 for exploring GraphQL, which is built into Blockscout. From the APIs dropdown
 menu, choose GraphQL. Alternatively, you can use your favorite HTTP client to
 send requests to the GraphQL endpoint.
 
-#### GraphiQL Interface
+#### Graphiql interface
 
 The GraphiQL interface provides a user-friendly environment to explore and test
 GraphQL queries. It includes a documentation explorer (Docs section) that
@@ -425,7 +425,7 @@ block(number: Int!): Block                     # Gets a block by number
 transaction(hash: FullHash!): Transaction      # Gets a transaction by hash
 ```
 
-#### Example Query to Retrieve Transactions for a Specific Address
+#### Example query to retrieve transactions for a specific address
 
 ```graphql
 {
@@ -445,7 +445,7 @@ transaction(hash: FullHash!): Transaction      # Gets a transaction by hash
 }
 ```
 
-## Hyperledger Fabric Explorer
+## Hyperledger fabric explorer
 
 Hyperledger Explorer is a web-based tool designed to provide a **comprehensive
 and real-time** view of blockchain operations within **Hyperledger Fabric**
@@ -481,7 +481,7 @@ organizations leveraging **Hyperledger Fabric**.
   - Graphical visualizations of blockchain activity.
   - Hover-based insights for precise data analysis.
 
-## Dashboard Overview
+## Dashboard overview
 
 The **Dashboard** serves as the main interface, providing an overview of the
 blockchain network. It includes various panels such as **Peer Lists, Network
@@ -497,7 +497,7 @@ Notification Panel** presents key block details, including:
 Each block link redirects to an in-depth **Block Details** view, offering
 insights into timestamps, hashes, and transaction summaries.
 
-## Network & Channel Management
+## Network & channel management
 
 The **Network View** presents details on configured properties for each channel.
 Users can analyze peer statuses, their roles, and network configurations,
@@ -507,7 +507,7 @@ The **Channel List** section provides an overview of available channels,
 enabling users to navigate different segments of the blockchain network
 effortlessly.
 
-## Exploring Blocks & Transactions
+## Exploring blocks & transactions
 
 Hyperledger Explorer provides powerful tools for tracking blockchain activities:
 
@@ -518,7 +518,7 @@ Hyperledger Explorer provides powerful tools for tracking blockchain activities:
 - **JSON Transaction Views**: Enables structured previews with fold/unfold
   options for easy data inspection.
 
-## Chaincodes & Smart Contracts
+## Chaincodes & smart contracts
 
 The **Chaincode List** presents installed chaincodes across the network,
 allowing filtering and sorting by:
@@ -531,7 +531,7 @@ allowing filtering and sorting by:
 This section helps users manage smart contracts efficiently and track changes
 over time.
 
-## Analytics & Metrics
+## Analytics & metrics
 
 A dedicated **Metrics Panel** delivers real-time statistics, such as:
 

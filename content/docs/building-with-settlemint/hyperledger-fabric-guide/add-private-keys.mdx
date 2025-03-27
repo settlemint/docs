@@ -1,5 +1,5 @@
 ---
-title: Add Private Keys
+title: "Add private keys"
 description: How to create and use private keys on SettleMint platform
 ---
 
@@ -36,7 +36,7 @@ deployed and running, and fund them as needed for gas-based transactions.
 
 ## How to add private keys and user wallets in SettleMint platform
 
-# Private Keys
+# Private keys
 
 To send transactions to a blockchain network, you need a private key to sign
 these transactions, and the private key should contain enough funds to cover the
@@ -73,16 +73,16 @@ private key—ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
   <Tab value="SDK CLI">
     ```bash
     # Create Accessible ECDSA P256 key
-    settlemint platform create private-key accessible-ecdsa-p256 my-key \
+    SettleMint platform create private-key accessible-ecdsa-p256 my-key \
       --application my-app \
       --blockchain-node node-123
 
     # Create HD ECDSA P256 key
-    settlemint platform create private-key hd-ecdsa-p256 my-key \
+    SettleMint platform create private-key hd-ecdsa-p256 my-key \
       --application my-app
 
     # Create HSM ECDSA P256 key
-    settlemint platform create private-key hsm-ecdsa-p256 my-key \
+    SettleMint platform create private-key hsm-ecdsa-p256 my-key \
       --application my-app
     ```
 
@@ -127,13 +127,13 @@ private key—ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
   <Tab value="SDK CLI">
     ```bash
     # List all private keys
-    settlemint platform list private-keys --application <app-name>
+    SettleMint platform list private-keys --application <app-name>
 
     # View specific key details
-    settlemint platform read private-key <private-key-unique-name>
+    SettleMint platform read private-key <private-key-unique-name>
 
     # Restart a private key
-    settlemint platform restart private-key <private-key-unique-name>
+    SettleMint platform restart private-key <private-key-unique-name>
     ```
 
   </Tab>
@@ -174,7 +174,7 @@ contain enough funds to cover the gas price.
   networks that require gas fees.
 </Callout>
 
-## User Wallets
+## User wallets
 
 SettleMint's **User Wallets** feature offers a production-ready solution for
 managing infinite wallets with efficiency and scalability. This tool empowers
@@ -186,7 +186,7 @@ also simplifies wallet recovery since all wallets are derived from a single
 master key. User wallets use the same signing proxy to sign transactions with
 the corresponding user private key.
 
-## Create and Setup User Wallets
+## Create and setup user wallets
 
 To set up your user wallets, navigate to your application, click **Private
 keys** in the left navigation, and then click **Create a private key**. This
@@ -225,7 +225,4 @@ for chaincode development and deployment.
 
 </div>
 
-```
-Keywords
-private key, user wallet, SettleMint platform, ECDSA P256, HD ECDSA P256, HSM ECDSA P256, smart contract deployment, transaction signing, attach private key to node, eth_sendTransaction, signing proxy, blockchain node, RPC node, validator node, gas fees, fund private key, mnemonic, derivation path, user wallet creation, scalable wallet management, unique address, nonce management, key material, SDK CLI, SDK JS, platform UI, JSON-RPC, Hardhat integration, key restart, key balances, secure key management, hierarchical deterministic wallet, load balancer, application setup, custom key material
-```
+

@@ -1,7 +1,6 @@
 {
   "label": "Hedera Hashgraph Guide",
   "title": "Hedera Hashgraph Guide",
-  "icon": "Grid2x2Plus",
   "pages": [
     "introduction-to-hedera",
     "setup-account-and-billing",

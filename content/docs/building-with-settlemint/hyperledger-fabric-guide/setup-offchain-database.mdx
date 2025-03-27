@@ -1,5 +1,5 @@
 ---
-title: Setup off-chain Database
+title: "Setup off-chain database"
 description: Add Hasura backend-as-a-service with off-chain database
 ---
 
@@ -7,7 +7,6 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
-
 
 <div style={{
   backgroundColor: "#e1eafd", 
@@ -23,23 +22,56 @@ import { Card } from "fumadocs-ui/components/card";
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
 To integrate off-chain storage into your blockchain application, you should begin by adding Hasura as a backend-as-a-service via SettleMint. This will provision a fully managed PostgreSQL database, paired with a real-time GraphQL API layer. It enables you to manage non-critical or frequently updated data that doesn’t need to live on-chain, without compromising performance or flexibility.
 
-Start by navigating to your application and opening the Integration Tools section. Click on Add an integration tool, select Hasura, and follow the steps to choose a name, provider, region, and resource plan. Once deployed, a dedicated Hasura instance will be available, complete with its own admin console, GraphQL API, and Postgres connection string. You can manage and monitor the instance from the same interface.
+Start by navigating to your application and opening the Integration Tools
+section. Click on Add an integration tool, select Hasura, and follow the steps
+to choose a name, provider, region, and resource plan. Once deployed, a
+dedicated Hasura instance will be available, complete with its own admin
+console, GraphQL API, and Postgres connection string. You can manage and monitor
+the instance from the same interface.
 
-Once Hasura is set up, you can define your database schema by creating tables and relationships under the Data tab. You can add, modify, and delete rows directly from the console, or connect to the database using a PostgreSQL client or code. Every schema and table you define becomes instantly queryable using the GraphQL API. The API tab will auto-generate queries and mutations, and also allow you to derive REST endpoints or export code snippets for frontend/backend use.
+Once Hasura is set up, you can define your database schema by creating tables
+and relationships under the Data tab. You can add, modify, and delete rows
+directly from the console, or connect to the database using a PostgreSQL client
+or code. Every schema and table you define becomes instantly queryable using the
+GraphQL API. The API tab will auto-generate queries and mutations, and also
+allow you to derive REST endpoints or export code snippets for frontend/backend
+use.
 
-For custom business logic, you can implement Actions, which are HTTP handlers triggered by GraphQL mutations. These are useful for data validation, enrichment, or chaining smart contract calls. If you want to respond to database changes in real-time, use Event Triggers to invoke webhooks when specific inserts, updates, or deletions happen. For recurring jobs, Cron Triggers can invoke workflows on a schedule, and One-off Scheduled Events allow precision control over future events.
+For custom business logic, you can implement Actions, which are HTTP handlers
+triggered by GraphQL mutations. These are useful for data validation,
+enrichment, or chaining smart contract calls. If you want to respond to database
+changes in real-time, use Event Triggers to invoke webhooks when specific
+inserts, updates, or deletions happen. For recurring jobs, Cron Triggers can
+invoke workflows on a schedule, and One-off Scheduled Events allow precision
+control over future events.
 
-Authentication and authorization can be finely controlled through role-based access rules. Hasura allows you to enforce row-level permissions and restrict query types based on user roles. To ensure secure API access, use the Hasura admin secret and your application access token, both available from the Connect tab of your Hasura console.
+Authentication and authorization can be finely controlled through role-based
+access rules. Hasura allows you to enforce row-level permissions and restrict
+query types based on user roles. To ensure secure API access, use the Hasura
+admin secret and your application access token, both available from the Connect
+tab of your Hasura console.
 
-You’ll also have the option to connect to the Hasura PostgreSQL instance directly using the connection string. This is useful for running SQL scripts, performing migrations, or executing batch jobs. Whether you’re using a Node.js backend or a command-line tool like psql, your Hasura database acts like any standard PostgreSQL instance, with enterprise-grade reliability.
+You’ll also have the option to connect to the Hasura PostgreSQL instance
+directly using the connection string. This is useful for running SQL scripts,
+performing migrations, or executing batch jobs. Whether you’re using a Node.js
+backend or a command-line tool like psql, your Hasura database acts like any
+standard PostgreSQL instance, with enterprise-grade reliability.
 
-Backups are easy to configure using the pg_dump utility or via the Hasura CLI. You can export both your database data and metadata, and restore them in new environments as needed. Use hasura metadata export to get a full snapshot of your permissions, tracked tables, actions, and relationships. Then use hasura metadata apply or hasura metadata reload to rehydrate or sync a new instance.
+Backups are easy to configure using the pg_dump utility or via the Hasura CLI.
+You can export both your database data and metadata, and restore them in new
+environments as needed. Use hasura metadata export to get a full snapshot of
+your permissions, tracked tables, actions, and relationships. Then use hasura
+metadata apply or hasura metadata reload to rehydrate or sync a new instance.
 
-By combining Hasura’s flexibility with the immutability of your on-chain smart contracts, you will be able to design a clean hybrid architecture—critical operations are stored securely on-chain, while scalable, queryable, and user-driven data remains off-chain. This setup dramatically improves user experience, simplifies front-end development, and keeps infrastructure costs under control.
+By combining Hasura’s flexibility with the immutability of your on-chain smart
+contracts, you will be able to design a clean hybrid architecture—critical
+operations are stored securely on-chain, while scalable, queryable, and
+user-driven data remains off-chain. This setup dramatically improves user
+experience, simplifies front-end development, and keeps infrastructure costs
+under control.
 
 </div>
 </div>
-
 
 Many dApps need more than just decentralized tools to build an end-to-end
 solution. The SettleMint Hasura SDK provides a seamless way to interact with
@@ -47,7 +79,7 @@ Hasura GraphQL APIs for managing application data.
 
 ![Add Hasura](../../../img/building-with-settlemint/add-hasura.png)
 
-## Need for a On-chain and Off-chain Data Architecture
+## Need for a on-chain and off-chain data architecture
 
 In blockchain-based applications, not all data needs to—or should—reside
 on-chain. While critical state changes, token ownerships, or verifiable proofs
@@ -69,7 +101,7 @@ This model provides the best of both worlds: **immutability and trust from
 blockchain**, and **speed, flexibility, and developer-friendliness from
 traditional databases**.
 
-## How Hasura on SettleMint Supports This Architecture
+## How hasura on SettleMint supports this architecture
 
 SettleMint offers Hasura as a Backend-as-a-Service (BaaS), tightly integrated
 into its low-code blockchain development stack. Hasura provides a
@@ -77,7 +109,7 @@ high-performance, real-time GraphQL API layer on top of a PostgreSQL database,
 and allows developers to instantly query, filter, and subscribe to changes in
 the data without writing custom backend logic.
 
-### Key Capabilities of Hasura on SettleMint
+### Key capabilities of hasura on settlemint
 
 - A fully managed **PostgreSQL database** is provisioned automatically with each
   Hasura instance.
@@ -88,7 +120,7 @@ the data without writing custom backend logic.
 - **Role-based access control** ensures secure data access aligned with business
   logic and user permissions.
 
-## Benefits of Using Hasura in a Blockchain Project
+## Benefits of using hasura in a blockchain project
 
 Hasura is especially useful for building interfaces, dashboards, and off-chain
 tools in blockchain applications. Developers can use it to:
@@ -108,8 +140,7 @@ interactions with the platform can be managed off-chain using Hasura. This
 results in a responsive and scalable user experience, without compromising on
 the core security and trust guarantees of blockchain.
 
-
-# Off-chain Database Use Cases in Blockchain Applications
+# Off-chain database use cases in blockchain applications
 
 | Category                        | Use Cases                                                                                        |
 | ------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -128,7 +159,7 @@ the core security and trust guarantees of blockchain.
 | **Education / DAO / Community** | Learning progress, Badges, Voting drafts, Moderation flags, Contribution history                 |
 | **Data Ops & Recovery**         | Data backups, Exportable datasets, Disaster recovery layer, Compliance archiving                 |
 
-## Add Hasura
+## Add hasura
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
@@ -150,15 +181,15 @@ the core security and trust guarantees of blockchain.
   <Tab value="SDK CLI">
     First ensure you're authenticated:
     ```bash
-    settlemint login
+    SettleMint login
     ```
 
     Create Hasura instance:
     ```bash
-    settlemint platform create integration-tool hasura <name>
+    SettleMint platform create integration-tool hasura <name>
 
     # Get information about the command and all available options
-    settlemint platform create integration-tool hasura --help
+    SettleMint platform create integration-tool hasura --help
     ```
 
   </Tab>
@@ -173,7 +204,7 @@ the core security and trust guarantees of blockchain.
   </Tab>
 </Tabs>
 
-## Some Basic Features
+## Some basic features
 
 - Under the data subtab you can create an arbitrary number of **schema's**. A
   schema is a collection of tables.
@@ -217,9 +248,7 @@ This is of course on top of the
 and [personal access tokens](/building-with-settlemint/personal-access-tokens)
 in the platform you can use to close off access to the entire API.
 
-
-
-## Usage Examples
+## Usage examples
 
 You can interact with your Hasura database in two ways: through the GraphQL API
 (recommended) or directly via PostgreSQL connection.
@@ -399,7 +428,7 @@ You can interact with your Hasura database in two ways: through the GraphQL API
   </Tab>
 </Tabs>
 
-## Hasura Postgress database access and connection
+## Hasura postgress database access and connection
 
 ![Hasura Connect](../../../img/building-with-settlemint/hasura-connect.png)
 
@@ -420,7 +449,7 @@ For PostgreSQL:
   production environments.
 </Callout>
 
-Understanding postgress connection string 
+Understanding postgress connection string
 
 **postgresql://hasura-f1cd9:0c510604a378d348e7ed@p2p.gke-europe.settlemint.com:30787/hasura-f1cd9**
 
@@ -444,8 +473,7 @@ Here's how it's broken down:
 - **Database Name**: `hasura-f1cd9`  
   The specific PostgreSQL database to connect to on that server.
 
-
-## Hasura Backup
+## Hasura backup
 
 Via CLI pgdump command
 
@@ -457,16 +485,14 @@ PGPASSWORD=0c510604a378d348e7ed pg_dump \
   -d hasura-f1cd9 \
   -F p \
   -f ~/Desktop/hasura_backup.sql
-  ```
+```
 
-
-
-## Taking backup via Hasura CLI
+## Taking backup via hasura**abbr_flprofqzl**
 
 1. Hasura Database
 2. Hasura Metadata
 
-### Steps for taking a backup of Hasura Database
+### Steps for taking a backup of hasura database
 
 1. Install Hasura CLI
    (https://hasura.io/docs/latest/hasura-cli/install-hasura-cli/)
@@ -520,9 +546,7 @@ curl -d '{"opts": [ "-O", "-x", "--schema=public", "--inserts"], "clean_output":
 Please copy the content of the exported db.sql file, paste it and execute as a
 SQL statement.
 
-
-
-### Steps for taking a backup of Hasura Metadata
+### Steps for taking a backup of hasura metadata
 
 Hasura Metadata Export is a collection of yaml files which captures all the
 Metadata required by the GraphQL Engine. This includes info about tables that
@@ -536,13 +560,13 @@ To export your entire Metadata using the Hasura CLI execute the following
 command in your terminal:
 
 ```
-#in hasura CLI
+# In hasura__abbr_e1v88g3fk__
 hasura metadata export
 ```
 
 This will export the Metadata as YAML files in the /metadata directory
 
-### Steps for importing or applying Hasura Metadata
+### Steps for importing or applying hasura metadata
 
 You can apply Metadata from one Hasura Server instance to another. You can also
 apply an older or modified version of an instance's Metadata onto itself to
@@ -551,17 +575,17 @@ Metadata on that instance, i.e. you lose any Metadata that existed before
 applying.
 
 ```
-#in hasura CLI
+# In hasura__abbr_7pvp3stmv__
 hasura metadata apply
 ```
 
-### Reload Hasura Metadata
+### Reload hasura metadata
 
 In some cases, the Metadata can be out of sync with the database schema. For
 example, when a new column has been added to a table via an external tool.
 
 ```
-#in hasura CLI
+# In hasura__abbr_scgjt6qou__
 hasura metadata reload
 ```
 
@@ -569,7 +593,6 @@ For more on Hasura Metadata, refer:
 https://hasura.io/docs/latest/migrations-metadata-seeds/manage-metadata/ For
 more on Hasura Migrations, refer:
 https://hasura.io/docs/latest/migrations-metadata-seeds/manage-migrations/
-
 
 <div style={{
   backgroundColor: "#D1E5E8", 
@@ -583,13 +606,12 @@ https://hasura.io/docs/latest/migrations-metadata-seeds/manage-migrations/
 }}>
 Congratulations.!!
 
-You have succesfully configured Hasura backend-as-a-service layer with the off-chain database of your choice.  
+You have succesfully configured Hasura backend-as-a-service layer with the
+off-chain database of your choice.
 
-From here we will proceed to adding centralized and non-centralized storage for our images, documents, videos, archive files and other storage needs.
+From here we will proceed to adding centralized and non-centralized storage for
+our images, documents, videos, archive files and other storage needs.
 
 </div>
 
 
-```
-Keywords:hasura, off-chain database, graphql api, postgresql, backend-as-a-service, settlemint, low-code development, hybrid architecture, metadata export, data triggers, event triggers, cron jobs, custom actions, database backups, graphql mutations, integration tools, user metadata, hasura sdk, database schema, role-based access, api permissions, application data, indexing service, on-chain sync, table relationships, api endpoints, postgres connection, pg_dump, data recovery, hasura cli, admin secret, data enrichment, hasura deployment, application logic, audit logs, database mirroring, scalable data, off-chain storage, business logic, external services integration, node.js, pg client, graphql subscriptions, realtime api, hasura metadata, metadata apply, database restore, api tokens, secure access, decentralized app, blockchain application, settlemint graphql 
-```

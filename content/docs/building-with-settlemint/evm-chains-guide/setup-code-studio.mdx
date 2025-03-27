@@ -1,7 +1,7 @@
 ---
-title: Setup Code Studio
+title: "Setup code studio"
 description:
-  Guide to setup Code Studio IDE to develop and deploy smart contracts and
+  Guide to setup code studio IDE to develop and deploy smart contracts and
   sub-graphs
 ---
 
@@ -24,19 +24,19 @@ import { Card } from "fumadocs-ui/components/card";
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
 
 To start developing and deploying smart contracts on the SettleMint platform,
-you’ll first need to add Code Studio to your application. This provides you with
+you'll first need to add code studio to your application. This provides you with
 a full-featured web-based IDE, pre-configured for blockchain development using
 tools like Hardhat, Foundry, and The Graph. Once added, you can use built-in
 tasks to build, test, deploy, and index your smart contracts and subgraphs, all
 within the same environment.
 
-You can add Code Studio through the Platform UI by selecting it as a dev tool
+You can add code studio through the platform UI by selecting it as a dev tool
 and linking it with a smart contract set and a template. Alternatively, you can
 use the SDK CLI or SDK JS to programmatically create and manage smart contract
-sets. These interfaces give you flexibility depending on whether you’re working
+sets. These interfaces give you flexibility depending on whether you're working
 from the console or integrating via scripts or automation.
 
-After setup, you’ll be able to customize your smart contracts directly within
+After setup, you'll be able to customize your smart contracts directly within
 the IDE. A task manager will guide you through building and deploying them to
 local or SettleMint-hosted blockchain networks. You can also integrate subgraphs
 for indexing and querying contract data using The Graph.
@@ -52,10 +52,10 @@ projects.
 
 ## How to setup code studio and deploy smart contracts on SettleMint platform
 
-Code Studio is SettleMint’s fully integrated, web-based IDE built specifically
+Code studio is SettleMint's fully integrated, web-based IDE built specifically
 for blockchain development. It provides developers with a familiar Visual Studio
 Code experience directly in the browser, pre-configured with essential tools
-like Hardhat, Foundry, and The Graph. Code Studio enables seamless development,
+like Hardhat, Foundry, and The Graph. Code studio enables seamless development,
 testing, deployment, and indexing of smart contracts and subgraphs, all within a
 unified environment.
 
@@ -68,7 +68,7 @@ development.
 
 ![Add Code Studio](../../../img/building-with-settlemint/add-code-studio.png)
 
-Despite offering full configurability, Code Studio includes all essential
+Despite offering full configurability, code studio includes all essential
 dependencies pre-installed, saving time and avoiding setup friction. It supports
 extensions for formatting, linting, testing, and AI-assisted development,
 mirroring the convenience of a local VS Code setup. Every component—from
@@ -83,9 +83,9 @@ Smart contract sets allow you to incorporate **business logic** into your
 application by deploying smart contracts that run on the blockchain. You can add
 a smart contract set via different methods as part of your development workflow.
 
-## EVM IDE Project Structure
+## **abbr_eh7glgd44**ide project structure
 
-The EVM IDE project structure in Code Studio is thoughtfully organized to
+The EVM IDE project structure in code studio is thoughtfully organized to
 support efficient smart contract development, testing, and deployment. Each
 folder serves a specific purpose in the dApp development lifecycle, aligning
 with industry-standard tools like Hardhat, Foundry, and The Graph.
@@ -104,9 +104,9 @@ with industry-standard tools like Hardhat, Foundry, and The Graph.
 | `cache_forge/`  | Caching directory for Foundry to speed up compilation and reuse outputs.                          |
 | `node_modules/` | Contains installed npm packages and dependencies used in Hardhat or other JS-based tools.         |
 
-## Code Studio IDE Task Manager
+## Code studio**abbr_remh50vdc**task manager
 
-The Code Studio IDE Task Manager acts as a centralized hub for running all
+The code studio IDE task manager acts as a centralized hub for running all
 essential development scripts, giving developers a streamlined way to manage the
 entire smart contract lifecycle. It also includes integrated SettleMint CLI
 tasks for logging in and managing authenticated platform interactions, ensuring
@@ -121,7 +121,7 @@ explanations.
 | SettleMint - Login                           | SettleMint CLI | Logs into the SettleMint platform via CLI for authenticated deployments. |
 | Foundry - Build                              | Foundry        | Compiles the smart contracts using Foundry.                              |
 | Hardhat - Build                              | Hardhat        | Compiles the smart contracts using Hardhat.                              |
-| Foundry - Test                               | Foundry        | Runs tests using Foundry’s native testing framework.                     |
+| Foundry - Test                               | Foundry        | Runs tests using Foundry's native testing framework.                     |
 | Hardhat - Test                               | Hardhat        | Executes tests using Hardhat's JavaScript-based test suite.              |
 | Foundry - Format                             | Foundry        | Formats smart contract code for readability (optional).                  |
 | Foundry - Start network                      | Foundry        | Starts a local Foundry testnet environment.                              |
@@ -150,36 +150,36 @@ retrieve addresses later for interactions, frontend integrations, or upgrades.
 <Tabs items={['SDK CLI', 'Platform UI', 'SDK JS']}>
   <Tab value="Platform UI">
     <Steps>
-      ### Navigate to Application
+      ### Navigate to application
       Navigate to the **application** where you want to add the smart contract set.
 
-      ### Open Dev Tools
-      Open **Dev tools** and click on **Add a Dev tool**.
+      ### Open dev tools
+      Open **dev tools** and click on **add a dev tool**.
 
       ![Dev tools](../../../img/smart-contract-sets/empty-dev-tools.png)
 
-      ### Select Code Studio
-      Select **Code Studio** as the Dev tool type.
+      ### Select code studio
+      Select **code studio** as the dev tool type.
 
       ![Select Code Studio](../../../img/smart-contract-sets/select-code-studio.png)
 
-      ### Choose Smart Contract Set
-      Then choose **Smart Contract Set**.
+      ### Choose smart contract set
+      Then choose **smart contract set**.
 
       ![Select Smart Contract Set](../../../img/smart-contract-sets/select-smart-contract-set.png)
 
-      ### Pick a Template
-      Pick a **template**; the Code Studio will load with your chosen smart contract template.
+      ### Pick a template
+      Pick a **template**; the code studio will load with your chosen smart contract template.
 
       ![Select Template](../../../img/smart-contract-sets/select-template.png)
 
-      ### Enter Details
-      Click **Continue** to enter details such as the Dev tool name, user, and deployment plan.
+      ### Enter details
+      Click **continue** to enter details such as the dev tool name, user, and deployment plan.
 
       ![Click Continue](../../../img/smart-contract-sets/click-continue.png)
 
       ### Confirm
-      Confirm the resource cost and click **Confirm** to add the smart contract set.
+      Confirm the resource cost and click **confirm** to add the smart contract set.
     </Steps>
 
     You can now further configure and eventually deploy your smart contracts.
@@ -190,18 +190,18 @@ retrieve addresses later for interactions, frontend integrations, or upgrades.
     First, ensure you are authenticated:
 
     ```bash
-    settlemint login
+    SettleMint login
     ```
 
     You can create a smart contract set either on the platform or locally:
 
-    ### Create on Platform
+    ### Create on platform
 
     Then create a smart contract set with the following command (refer to the
     [CLI docs](/building-with-settlemint/15_dev-tools/1_SDK.md) for more details):
 
     ```bash
-    settlemint platform create smart-contract-set <tool-name> \
+    SettleMint platform create smart-contract-set <tool-name> \
       --application <application-name> \
       --template <template-name> \
       --deployment-plan <deployment-plan>
@@ -210,13 +210,13 @@ retrieve addresses later for interactions, frontend integrations, or upgrades.
     For example:
 
     ```bash
-    settlemint platform create smart-contract-set my-scset \
+    SettleMint platform create smart-contract-set my-scset \
       --application my-app \
       --template default \
       --deployment-plan starter
     ```
 
-    ### Working with Smart Contract Sets Locally
+    ### Working with smart contract sets locally
 
     You can also work with smart contract sets in your local development environment. This is useful for development and testing before deploying to the platform.
 
@@ -224,7 +224,7 @@ retrieve addresses later for interactions, frontend integrations, or upgrades.
 
     ```bash
     # Create a new smart contract set
-    settlemint scs create
+    SettleMint scs create
 
     # You'll see the SettleMint ASCII art and then be prompted:
     ✔ What is the name of your new SettleMint project? my awesome project
@@ -243,13 +243,13 @@ retrieve addresses later for interactions, frontend integrations, or upgrades.
     Once created, you can use these commands to work with your local smart contract set:
 
     ```bash
-    settlemint scs -h  # Show all available commands
+    SettleMint scs -h  # Show all available commands
 
     # Main commands:
-    settlemint scs create        # Create a new smart contract set
-    settlemint scs foundry      # Foundry commands for building and testing
-    settlemint scs hardhat      # Hardhat commands for building, testing and deploying
-    settlemint scs subgraph    # Commands for managing TheGraph subgraphs
+    SettleMint scs create        # Create a new smart contract set
+    SettleMint scs foundry      # Foundry commands for building and testing
+    SettleMint scs hardhat      # Hardhat commands for building, testing and deploying
+    SettleMint scs subgraph    # Commands for managing TheGraph subgraphs
     ```
 
     The scaffolded project includes everything you need to start developing smart contracts:
@@ -258,19 +258,19 @@ retrieve addresses later for interactions, frontend integrations, or upgrades.
     - Deployment scripts
     - Development tools configuration
 
-    ### Managing Platform Smart Contract Sets
+    ### Managing platform smart contract sets
 
     Manage your platform smart contract sets with:
 
     ```bash
     # List smart contract sets
-    settlemint platform list smart-contract-sets --application <application-name>
+    SettleMint platform list smart-contract-sets --application <application-name>
 
     # Read smart contract set details
-    settlemint platform read smart-contract-set <smart-contract-set-name>
+    SettleMint platform read smart-contract-set <smart-contract-set-name>
 
     # Delete a smart contract set
-    settlemint platform delete smart-contract-set <smart-contract-set-name>
+    SettleMint platform delete smart-contract-set <smart-contract-set-name>
     ```
 
   </Tab>
@@ -316,7 +316,7 @@ retrieve addresses later for interactions, frontend integrations, or upgrades.
     ```
 
     <Callout type="tip">
-    Get your access token from the Platform UI under **User Settings → API Tokens**.
+    Get your access token from the platform UI under **user settings → API tokens**.
     </Callout>
 
   </Tab>
@@ -330,7 +330,7 @@ retrieve addresses later for interactions, frontend integrations, or upgrades.
 ## Customize smart contracts
 
 You can customize your smart contracts using the built-in IDE. The smart
-contract sets include a Generative AI plugin to assist with development.
+contract sets include a generative AI plugin to assist with development.
 [Learn more about the AI plugin here.](./ai-plugin)
 
 ## Smart contract template library
@@ -341,19 +341,18 @@ the deployment process. These templates enable users to quickly customize and
 extend their blockchain applications, leveraging tested and community-enhanced
 frameworks to reduce development time and accelerate market entry.
 
-## Open-Source Smart Contract Templates under the MIT License
+## Open-source smart contract templates under the mit license
 
 Benefit from the expertise of the blockchain community and trust in the
 reliability of your smart contracts. These templates are vetted and used by
 major enterprises and institutions, ensuring enhanced security and confidence in
 your deployments.
 
-## Smart Contract Template Library
+## Smart contract template library
 
 The programming language used depends on the target protocol:
 
 - **Solidity** for EVM-compatible networks
-
 
 | Template                                                                                             | Description                                                                                   |
 | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
@@ -371,7 +370,7 @@ The programming language used depends on the target protocol:
 | [Diamond bond](https://github.com/settlemint/solidity-diamond-bond)                                  | Example of a tokenized bond using modular smart contracts (Diamond pattern).                  |
 | [Attestation Service](https://github.com/settlemint/solidity-attestation-service)                    | Service template for managing on-chain verifiable claims and attestations.                    |
 
-## Create Your Own Smart Contract Templates for Your Consortium
+## Create your own smart contract templates for your consortium
 
 Within the self-managed Blockchain Transformation Platform (BTP), you can create
 and add your own templates for use within your consortium. This fosters a
@@ -398,6 +397,4 @@ development and deployment of smart contracts and indexing sub-graphs.
 
 </div>
 
-```
-Keywords: code studio, smart contract development, settlemint, web ide, smart contract set, code studio ide, deploy smart contracts, hardhat, foundry, the graph, subgraph development, ethereum development, evm compatible, solidity, vs code ide, low-code blockchain, blockchain ide, settlemint sdk, smart contract templates, contract deployment, ignition scripts, code studio tasks, hardhat test, foundry test, subgraph codegen, graphql indexing, visual studio code, smart contract automation, code studio cli, sdk js, smart contract management, web3 development, settlemint platform, blockchain application development, evm tools, contract template library, blockchain ide setup, smart contract customization, contract compilation, ethereum smart contracts, subgraph deployment, contract set creation, code studio setup, github integration, blockchain workflows, devtools integration, dapp development, contract lifecycle management, erc20 template, erc721 template, ai plugin smart contract, blockchain code templates, platform network deployment
-```
+

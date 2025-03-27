@@ -1,5 +1,5 @@
 ---
-title: Deploy Smart Contracts
+title: "Deploy smart contracts"
 description: Guide to deploy smart contracts and sub-graphs
 ---
 
@@ -23,11 +23,11 @@ import { Card } from "fumadocs-ui/components/card";
   Summary
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
     
-To begin, you’ll need to write your Solidity smart contract that defines your application’s business logic. This includes designing the data structure using struct, storing the data with mapping, and emitting events to support off-chain indexing. Once written, the contract should be placed in the contracts/ folder inside your Code Studio workspace.
+To begin, you'll need to write your Solidity smart contract that defines your application's business logic. This includes designing the data structure using struct, storing the data with mapping, and emitting events to support off-chain indexing. Once written, the contract should be placed in the contracts/ folder inside your code studio workspace.
 
 Next, you need to prepare a deployment script using Hardhat Ignition. This
 script should go into the ignition/modules/ folder and will declare how your
-smart contract should be deployed. You’ll use the buildModule function to
+smart contract should be deployed. You'll use the buildModule function to
 specify which contract to deploy and how it should be initialized.
 
 After setting up the script, you should compile the contract. This step
@@ -36,17 +36,17 @@ are essential for testing, deploying, and integrating the contract with other
 components. Depending on the tool used (Hardhat or Foundry), the output will be
 stored in the artifacts/ or out/ directory respectively.
 
-Once compiled, it’s important to thoroughly test your contract using either
+Once compiled, it's important to thoroughly test your contract using either
 Foundry or Hardhat. These tests will simulate real-world conditions. Writing
 these tests helps you catch logic errors early before deployment.
 
-When the contract passes all tests, you’re ready to deploy. Start your local
-network using the Hardhat - Start Network script and run the deployment script
-through the IDE task manager. You’ll be prompted to select your custom
+When the contract passes all tests, you're ready to deploy. Start your local
+network using the Hardhat - start network script and run the deployment script
+through the IDE task manager. You'll be prompted to select your custom
 deployment script file before the deployment begins.
 
 Finally, to deploy to a SettleMint-hosted blockchain network, authenticate using
-the SettleMint Login script, select the appropriate node and private key, and
+the SettleMint login script, select the appropriate node and private key, and
 confirm deployment. The deployed address will be saved in a JSON file under
 ignition/deployments/, which can then be used in middleware or frontend
 applications to interact with the contract.
@@ -54,9 +54,9 @@ applications to interact with the contract.
 </div>
 </div>
 
-## Learning with a **User Data Manager** smart contract example
+## Learning with a user data manager smart contract example
 
-The goal of this tutorial is to design and build a simple User Data Manager
+The goal of this tutorial is to design and build a simple user data manager
 using Solidity. While the visible use case is centered around managing user data
 (such as name, email, age, etc.), the hidden objective is to demonstrate the
 core thought process behind building a smart contract that can store, update,
@@ -71,7 +71,7 @@ mimic realistic scenarios (Understand that transaction data is never deleted,
 just a more recent entry is added about that record in a newer block on
 blockchain)
 
-By the end of this tutorial, you’ll not only learn the foundational patterns
+By the end of this tutorial, you'll not only learn the foundational patterns
 that apply to many real-world blockchain applications but also understand how to
 develop and deploy smart contracts on SettleMint platform.
 
@@ -85,7 +85,7 @@ EVM-compatible blockchains. Solidity is a statically typed, contract-oriented
 language designed specifically for writing smart contracts that run on the
 Ethereum Virtual Machine (EVM).
 
-If you’re new to Solidity or want to deepen your understanding, here are some
+If you're new to Solidity or want to deepen your understanding, here are some
 helpful resources: - Official Solidity Documentation:
 https://soliditylang.org/ - Solidity by Example (interactive guide):
 https://solidity-by-example.org - CryptoZombies (gamified Solidity learning):
@@ -98,7 +98,7 @@ contracts.
 In your learning phase, you can also use ChatGPT: https://chatgpt.com/ or any of
 your go to AI tools for generation of basic solidity smart contracts.
 
-### Example UserData smart contract solidity code
+### Example userdata smart contract solidity code
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -276,7 +276,7 @@ contract UserData {
      * @param userId Unique identifier for the user.
      * @return The UserProfile struct containing the user's information.
      */
-    function getProfile(uint256 userId) public view returns (UserProfile memory) {
+    function getProfile(uint256 userId) public view returns (UserData.UserProfile memory) {
         // 4.3.1 Ensure the profile exists (not soft-deleted)
         require(!profiles[userId].isDeleted, "Profile not found or has been deleted");
         return profiles[userId];
@@ -306,7 +306,7 @@ contract UserData {
 > Please ensure that smart contract emits all required paramters in every event,
 > otherwise, while indexing we will not get the parameters which are not emited.
 
-## Smart Contract — Events & Functions Overview
+## Smart contract — events & functions overview
 
 In a smart contract, we define a clear set of events and functions to manage the
 lifecycle of user profiles. These building blocks enable seamless interaction
@@ -333,7 +333,7 @@ contract:
 | 4.3 | `getProfile`    | `uint256 userId`                                                                                     | `UserProfile memory` | Retrieves the profile if not soft-deleted |
 | 4.4 | `deleteProfile` | `uint256 userId`                                                                                     | –                    | Soft-deletes the profile                  |
 
-## CRUD Mapping for the Smart Contract
+## Crud mapping for the smart contract
 
 This table maps traditional Web2-style CRUD operations to the equivalent
 Solidity functions in the smart contract:
@@ -341,13 +341,13 @@ Solidity functions in the smart contract:
 | **CRUD**   | **Solidity Function** | **Explanation**                                                                                                                                                                                                                                                                                                |
 | ---------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Create** | `createProfile()`     | Adds a new user profile to the blockchain using a unique `userId`. This simulates an `INSERT` operation in databases. It checks that the profile does not already exist (unless soft-deleted) and stores the user's details. Emits `ProfileCreated` with full data for off-chain indexing.                     |
-| **Read**   | `getProfile()`        | Retrieves an existing profile by its `userId` — similar to a `SELECT` query in SQL. It returns the user's profile only if it hasn’t been soft-deleted. This function is marked `view`, meaning it does not modify blockchain state and can be called without gas.                                              |
+| **Read**   | `getProfile()`        | Retrieves an existing profile by its `userId` — similar to a `SELECT` query in SQL. It returns the user's profile only if it hasn't been soft-deleted. This function is marked `view`, meaning it does not modify blockchain state and can be called without gas.                                              |
 | **Update** | `updateProfile()`     | Modifies all fields of an existing user profile. Acts like an `UPDATE` in Web2 databases. It ensures the profile exists and is not deleted, then updates it with the provided values. Emits `ProfileUpdated` with full details for off-chain use.                                                              |
 | **Delete** | `deleteProfile()`     | Performs a **soft delete** by setting the `isDeleted` flag to `true`, without removing the actual data from storage. This is similar to a logical delete used in many enterprise databases. The data remains on-chain (for auditability), but `getProfile()` will no longer return it. Emits `ProfileDeleted`. |
 
 ## 2. Let's add this smart contract to code studio
 
-When you deploy an **Empty** smart contract set on SettleMint platfrom, you get
+When you deploy an **empty** smart contract set on SettleMint platform, you get
 a very simple **Counter.sol** contract as an example, you may delete it.
 
 In the contracts folder create a file called **UserData.sol** and copy paste the
@@ -355,7 +355,7 @@ content of the above smart contract code.
 
 ## 3. Prepare deployment script
 
-In **Ignition** folder, you will find a folder called **Modules**, there you
+In **ignition** folder, you will find a folder called **modules**, there you
 will find a **main.ts** file which is basically a contract deployment script.
 You may delete it if you already know or once you understand the structure. In
 this folder create a file called **deployUser.ts**
@@ -388,18 +388,30 @@ deployed. This is how it knows which contract is being refered.
 The deployed contract instance is stored in a variable called userdata. This
 instance is then returned from the module so it can be accessed later if needed.
 Finally, the module is exported as the default export so it can be run by
-Hardhat’s Ignition system using the CLI.
+Hardhat's Ignition system using the CLI.
 
 ## 4. Compile the smart contract code
 
-When a Solidity smart contract is compiled, the source code is transformed into
-low-level bytecode that can be executed on the Ethereum Virtual Machine (EVM).
-This process also generates important metadata such as the ABI (Application
-Binary Interface), which defines how external applications or scripts can
-interact with the contract’s functions and events. Additionally, the compiler
-produces debugging information, source maps, and compiler settings. These
-outputs are essential for deploying, testing, and integrating the contract with
-dApps or frontend applications.
+
+<div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
+
+  <div style={{ flex: '1', paddingLeft: '1rem' }}>
+    <ul>
+    To run various scripts to compile, test, deploy smart contracts and sub-graphs you need to go to left top area of the IDE and go to task manager section.
+    When a Solidity smart contract is compiled, the source code is transformed into low-level bytecode that can be executed on the Ethereum Virtual Machine (EVM).
+This process also generates important metadata such as the ABI (Application Binary Interface), which defines how external applications or scripts can interact with the contract's functions and events.
+Additionally, the compiler produces debugging information, source maps, and compiler settings. These
+outputs are essential for deploying, testing, and integrating the contract with dApps or frontend applications
+    </ul>
+  </div>
+
+    <div style={{ flex: '0 0 50%' }}>
+    ![Settlemint](../../../img/building-with-settlemint/task-manager.png)
+  </div>
+</div>
+
+
+
 
 If you compile using Foundry Build then in **out** folder a folder will be
 created with the name of your smart contract file name, and within that folder,
@@ -414,7 +426,7 @@ folder - artifacts.d.ts, ContractName.d.ts, ContractName.dbg.ts,
 ContractName.json are generated. ContractName.json is the ABI.
 ![Hardhat Compile Smart Contract](../../../img/building-with-settlemint/hardhat-build.png)
 
-When you compile a Solidity smart contract in SettleMint , it processes .sol
+When you compile a Solidity smart contract in SettleMint, it processes .sol
 files and generates various output artifacts needed for deployment and
 interaction. For example, after compiling UserData.sol, you get the following
 inside the artifacts/ directory:
@@ -454,7 +466,7 @@ Hardhat) enable expressive and readable test assertions.
 In the **test** folder in IDE, create a **UserData.t.sol** file for Foundry test
 script.
 
-It uses forge-std/Test.sol is a powerful utility library provided by Foundry’s
+It uses forge-std/Test.sol is a powerful utility library provided by Foundry's
 standard library (forge-std) that simplifies writing and executing tests for
 smart contracts. It extends the base Solidity Test contract and includes a rich
 set of assertions, cheatcodes, and debugging tools that make testing more
@@ -597,7 +609,7 @@ describe("UserData", function () {
   // along with the address of the first wallet client.
   async function deployUserFixture() {
     // Deploy the UserData contract using viem.
-    // The contract name ("UserData") must match your contract’s name.
+    // The contract name ("UserData") must match your contract's name.
     const userContract = await hre.viem.deployContract("UserData");
     // Get the first wallet client's account address to use as a signer for simulate calls.
     const account = (await hre.viem.getWalletClients())[0].account.address;
@@ -785,7 +797,7 @@ describe("UserData", function () {
 });
 ```
 
-This test script leverages Hardhat’s modern support for viem, a lightweight and
+This test script leverages Hardhat's modern support for viem, a lightweight and
 fast alternative to Ethers.js, designed for more efficient interaction with
 Ethereum contracts. The test uses loadFixture from
 hardhat-toolbox-viem/network-helpers to ensure test isolation and efficient
@@ -794,28 +806,28 @@ deployments—each test gets a clean contract instance to work with.
 Inside the script, we define a fixture function (deployUserFixture) to deploy
 the User contract and provide access to the publicClient. The tests cover all
 core functionalities of the contract: creating, updating, reading, and
-soft-deleting user profiles. Assertions are written using Chai’s expect syntax,
+soft-deleting user profiles. Assertions are written using Chai's expect syntax,
 while contract interactions (like write.createProfile and read.getProfile)
 follow the Viem pattern, making the test code both concise and expressive.
 
-Please run **Hardhat Test** script to test the smart contract
+Please run **hardhat test** script to test the smart contract
 
 ![Hardhat Test Pass](../../../img/building-with-settlemint/hardhat-test.png)
 
 Once the test is pass, you can deploy to local hardhat network by using script -
-**Hardhat - Deploy to Local Network**
+**hardhat - deploy to local network**
 
-Start test network using **Hardhat - Start Network** script in task manager.
+Start test network using **hardhat - start network** script in task manager.
 
 ![Start Hardhat Local Network](../../../img/building-with-settlemint/hardhat-start-test-network.png)
 
 Deploy to test network
 ![Hardhat Deploy Local](../../../img/building-with-settlemint/hardhat-deploy-on-test-network.png)
 
-If you click on **Hardhat Deploy to Local Network** and nothing happens, then
+If you click on **hardhat - deploy to local network** and nothing happens, then
 you are missing the step to select the correct deployment script and hitting
-enter key. You will see a message - **Extra commandline arguments, e.g. --verify
-(Press 'Enter' to confirm or 'Escape' to cancel)** in the top middle of the IDE,
+enter key. You will see a message - **extra commandline arguments, e.g. --verify
+(press 'enter' to confirm or 'escape' to cancel)** in the top middle of the IDE,
 hit enter, you will see **ignition/modules/main.ts**, edit the last part at put
 the correct filename (e.g. deployUserData.ts), basically the name of the
 deployment script you created in ignition folder, and hit enter agian to run the
@@ -829,10 +841,10 @@ Hardhat deploy to platform network enter the path of the deployment script
 
 ignition/modules/deployUserData.ts
 
-> If you click on **Hardhat Deploy to Local Network** and nothing happens, then
+> If you click on **hardhat - deploy to local network** and nothing happens, then
 > you are missing the step to select the correct deployment script and hitting
-> enter key. You will see a message - **Extra commandline arguments, e.g.
-> --verify (Press 'Enter' to confirm or 'Escape' to cancel)** in the top middle
+> enter key. You will see a message - **extra commandline arguments, e.g.
+> --verify (press 'enter' to confirm or 'escape' to cancel)** in the top middle
 > of the IDE, hit enter, you will see **ignition/modules/main.ts**, edit the
 > last part at put the correct filename (e.g. deployUser.ts), basically the name
 > of the deployment script you created in ignition folder, and hit enter agian
@@ -840,7 +852,7 @@ ignition/modules/deployUserData.ts
 > whether on local network or platform network.
 >
 > Before deploying to network, please do not forget to login to SettleMint
-> network via script **SettleMint Login**
+> network via script **SettleMint login**
 
 Select the node to which you wish to deploy this smart contract. If you get an
 error, please ensure that a private key was created and attached to the node on
@@ -850,7 +862,7 @@ Select the private key you wish to use to deploy smart contract. If you are
 using a public network or a network with gas fee, then make sure that this
 private key's wallet is funded.
 
-Select yes when prompted - **Confirm deploy to network (network name)? ›
+Select yes when prompted - **confirm deploy to network (network name)? ›
 (y/N)**.
 
 Wait for a few minutes for the contract to be deployed.
@@ -870,7 +882,7 @@ igntition>deployments folder.
   lineHeight: "1.5",
   textAlign: "left"
 }}>
-Congratulations.!!
+Congratulations!
 
 You have successfully compiled, tested and deployed your smart contract on
 blockchain network.
@@ -880,6 +892,3 @@ transactions, write data to chain and read data in a structured format.
 
 </div>
 
-```
-Keywords: Solidity, smart contracts, Ethereum, SettleMint, Hardhat, Foundry, Ignition, deployment, contract testing, user profile manager, CRUD operations, soft delete, ABI, EVM, struct, mapping, events, contract compilation, sub-graphs, blockchain development, test automation, forge-std, viem, chai, JavaScript, TypeScript, contract address, deployment script, smart contract storage, blockchain identity, dApp backend, on-chain data, revert handling, metadata, contract artifacts, local network, private key, gas fees, node selection, build process
-```

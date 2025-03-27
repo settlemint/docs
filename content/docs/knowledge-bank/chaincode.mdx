@@ -1,19 +1,19 @@
 ---
-title: Chaincode Development
+title: "Chaincode development"
 description: Guide to Hyperledger Fabric chaincode development
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Card } from "fumadocs-ui/components/card";
 
-# Chaincode Development
+# Chaincode development
 
 <Callout type="info">
   Chaincode is Hyperledger Fabric's implementation of smart contracts, enabling
   business logic execution in private networks.
 </Callout>
 
-## Core Concepts
+## Core concepts
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
   <Card>
@@ -35,7 +35,7 @@ import { Card } from "fumadocs-ui/components/card";
 
 ## Implementation
 
-### Basic Structure
+### Basic structure
 
 ```go
 package main
@@ -54,7 +54,7 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 }
 ```
 
-### State Management
+### State management
 
 ```go
 func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id string, value string) error {
@@ -79,27 +79,27 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 }
 ```
 
-## Key Features
+## Key features
 
-### 1. Private Data Collections
+### 1. Private data collections
 
 - Confidential data storage
 - Hash-based verification
 - Collection-level policies
 
-### 2. Channel Capabilities
+### 2. Channel capabilities
 
 - Isolated execution
 - Separate ledgers
 - Targeted distribution
 
-### 3. Endorsement Policies
+### 3. Endorsement policies
 
 - Multi-party validation
 - Flexible policies
 - Custom requirements
 
-## Best Practices
+## Best practices
 
 1. **Performance**
 

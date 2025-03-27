@@ -1,9 +1,9 @@
 ---
-title: Understanding Subgraphs
+title: "Understanding subgraphs"
 description: Guide to Subgraphs on SettleMint platform
 ---
 
-# 🧾 Subgraph Project Structure – Deep Dive for `MyContract.sol`
+# 🧾 subgraph project structure – deep dive for `mycontract.sol`
 
 This document provides a complete, line-by-line breakdown of a subgraph project
 folder designed to index events from an Ethereum smart contract named
@@ -13,7 +13,7 @@ folder designed to index events from an Ethereum smart contract named
 
 ---
 
-## 📁 Folder Structure
+## 📁 folder structure
 
 ```plaintext
 subgraph/
@@ -33,12 +33,12 @@ subgraph/
 
 ## 🔧 `subgraph.config.json`
 
-### ✅ Purpose:
+### ✅ purpose:
 
 This file is consumed by SettleMint's CLI or The Graph CLI (`graph codegen`,
 `graph build`) to bootstrap subgraph code and configuration.
 
-### 🔍 Breakdown:
+### 🔍 breakdown:
 
 ```json
 {
@@ -72,13 +72,13 @@ This file is consumed by SettleMint's CLI or The Graph CLI (`graph codegen`,
 
 ## 📄 `datasources/mycontract.gql.json`
 
-### ✅ Purpose:
+### ✅ purpose:
 
 This is a **JSON-encoded GraphQL schema**, which defines the shape of your
 indexed data. Each `type` here corresponds to an **entity** stored in the
 subgraph’s database.
 
-### 🧾 Example:
+### 🧾 example:
 
 ```json
 [
@@ -95,7 +95,7 @@ subgraph’s database.
 ]
 ```
 
-### 🔍 Field Types:
+### 🔍 field types:
 
 - `ID!`: Required unique identifier (`string` format, often tx hash or entity
   composite key).
@@ -112,7 +112,7 @@ subgraph’s database.
 
 ## 📄 `datasources/mycontract.yaml`
 
-### ✅ Purpose:
+### ✅ purpose:
 
 This is the **manifest file** that connects your smart contract to its:
 
@@ -122,7 +122,7 @@ This is the **manifest file** that connects your smart contract to its:
 - GraphQL schema
 - Event handler functions
 
-### 🧾 Example:
+### 🧾 example:
 
 ```yaml
 specVersion: 0.0.2
@@ -152,7 +152,7 @@ dataSources:
       file: mycontract.ts
 ```
 
-### 🔍 Key Fields:
+### 🔍 key fields:
 
 | Section            | Field      | Description                                                        |
 | ------------------ | ---------- | ------------------------------------------------------------------ |
@@ -172,13 +172,13 @@ dataSources:
 
 ## 📄 `datasources/mycontract.ts`
 
-### ✅ Purpose:
+### ✅ purpose:
 
 This file contains **AssemblyScript handler functions** that transform on-chain
 events into **GraphQL entities**. These handlers are executed by the subgraph
 runtime when matching events appear on-chain.
 
-### 🧾 Example:
+### 🧾 example:
 
 ```ts
 import { BigInt } from "@graphprotocol/graph-ts";
@@ -195,7 +195,7 @@ export function handleMyEvent(event: MyEventType): void {
 }
 ```
 
-### 🔍 What's Happening:
+### 🔍 what's happening:
 
 - Event is imported from auto-generated `MyContract.ts` (compiled ABI).
 - A helper is called to load or create an entity (`fetchMyEntity`).
@@ -209,13 +209,13 @@ export function handleMyEvent(event: MyEventType): void {
 
 ## 📄 `fetch/mycontractdata.ts`
 
-### ✅ Purpose:
+### ✅ purpose:
 
 Contains utility functions to fetch an entity from the store **or create it if
 it doesn't exist**. Useful for enforcing schema defaults and ensuring consistent
 object initialization.
 
-### 🧾 Example:
+### 🧾 example:
 
 ```ts
 import { MyEntity } from "../../generated/schema";
@@ -236,7 +236,7 @@ export function fetchMyEntity(id: BigInt): MyEntity {
 }
 ```
 
-### 🔍 Why It's Important:
+### 🔍 why it's important:
 
 - Prevents null pointer errors in `.ts` handler files.
 - Centralizes logic for initializing new entities.
@@ -244,7 +244,7 @@ export function fetchMyEntity(id: BigInt): MyEntity {
 
 ---
 
-## ✅ Summary
+## ✅ summary
 
 | File                   | Purpose                                                     |
 | ---------------------- | ----------------------------------------------------------- |
@@ -256,7 +256,7 @@ export function fetchMyEntity(id: BigInt): MyEntity {
 
 ---
 
-## 🛠️ Best Practices
+## 🛠️ best practices
 
 - 🧪 Always test your subgraph locally with a dev chain before deploying.
 - 🧱 Use composite IDs (`txHash-logIndex`) for events to avoid collisions.

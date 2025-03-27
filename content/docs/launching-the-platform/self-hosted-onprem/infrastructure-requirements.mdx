@@ -1,5 +1,5 @@
 ---
-title: Infrastructure Requirements
+title: "Infrastructure requirements"
 description: Infrastructure requirements for self-hosting the platform
 ---
 
@@ -13,7 +13,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   deploy.
 </Callout>
 
-## Compute Resources
+## Compute resources
 
 <Tabs items={["Minimum Requirements", "Recommended Specifications"]}>
   <Tab value="Minimum Requirements">
@@ -39,7 +39,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   </Tab>
 </Tabs>
 
-## Network Requirements
+## Network requirements
 
 The platform requires specific network configurations to ensure secure and
 reliable communication between components:
@@ -72,7 +72,7 @@ reliable communication between components:
   groups to control traffic flow between components.
 </Callout>
 
-## Storage Requirements
+## Storage requirements
 
 Proper storage configuration is crucial for platform stability and performance.
 Consider the following requirements:
@@ -100,7 +100,7 @@ Consider the following requirements:
 </div>
 
 <Callout>
-### Storage Best Practices
+### Storage best practices
 
 - Use separate volumes for different components
 - Implement regular backup procedures
@@ -109,7 +109,7 @@ Consider the following requirements:
 
 </Callout>
 
-## Prerequisites Resource Requirements
+## Prerequisites resource requirements
 
 <Callout type="info">
   When hosting prerequisites on the same infrastructure, these requirements must
@@ -209,7 +209,7 @@ Consider the following requirements:
 </Tabs>
 
 <Callout type="warning">
-### Production Considerations
+### Production considerations
 
 These are baseline requirements. For production environments, consider:
 
@@ -220,7 +220,7 @@ These are baseline requirements. For production environments, consider:
 
 </Callout>
 
-### Total Resource Summary
+### Total resource summary
 
 For a production setup hosting both platform and prerequisites:
 
@@ -253,7 +253,7 @@ For a production setup hosting both platform and prerequisites:
   </div>
 </div>
 
-## Service Requirements
+## Service requirements
 
 The platform allows you to deploy services in two ways:
 
@@ -287,7 +287,7 @@ The platform allows you to deploy services in two ways:
 </div>
 
 <Callout>
-### Infrastructure Planning Strategy
+### Infrastructure planning strategy
 We recommend:
 
 1. List all services you plan to deploy
@@ -299,7 +299,7 @@ We recommend:
 </Callout>
 
 <Callout type="info">
-### Example Calculation
+### Example calculation
 Let's calculate requirements for a setup with:
 
 - 2 Polygon nodes (Mainnet & Mumbai)

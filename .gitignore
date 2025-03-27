@@ -5,6 +5,7 @@
 .contentlayer
 .content-collections
 .source
+.docusaurus
 
 # test & build
 /coverage

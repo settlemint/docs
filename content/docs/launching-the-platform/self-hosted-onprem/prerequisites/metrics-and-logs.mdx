@@ -1,5 +1,5 @@
 ---
-title: Metrics and Logs
+title: "Metrics and logs"
 description: Configure monitoring and logging for your self-hosted platform
 ---
 
@@ -28,7 +28,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   </Card>
 </div>
 
-## Deployment Options
+## Deployment options
 
 <Tabs items={['Lightweight Stack (Recommended)', 'Full Prometheus Stack']}>
   <Tab value="Lightweight Stack (Recommended)">
@@ -123,10 +123,10 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
   </Card>
 </div>
 
-## Information Collection
+## Information collection
 
 <Callout type="success">
-### Required Values for Platform Installation
+### Required values for platform installation
 
 - [ ] Metrics endpoint URL
 - [ ] Logs endpoint URL
@@ -153,7 +153,7 @@ features:
   curl -f "http://victoria-metrics:8428/health"
   ```
 
-### Check Loki
+### Check loki
 
 ```bash
 curl -f "http://loki:3100/ready"

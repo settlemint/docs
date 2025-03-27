@@ -1,13 +1,13 @@
 ---
-title: "Get Support"
+title: "Get support"
 ---
 
-# Contact Us
+# Contact us
 
 We are here to provide support for all your troubleshooting and technical
 questions.
 
-## Reach Us
+## Reach us
 
 Email us at **[support@settlemint.com](mailto:support@settlemint.com)** for any
 assistance.
