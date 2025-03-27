@@ -394,21 +394,26 @@ Hardhat's Ignition system using the CLI.
 
 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
 
-  <div style={{ flex: '1', paddingLeft: '1rem' }}>
-    <ul>
-    To run various scripts to compile, test, deploy smart contracts and sub-graphs you need to go to left top area of the IDE and go to task manager section.
-    When a Solidity smart contract is compiled, the source code is transformed into low-level bytecode that can be executed on the Ethereum Virtual Machine (EVM).
-This process also generates important metadata such as the ABI (Application Binary Interface), which defines how external applications or scripts can interact with the contract's functions and events.
-Additionally, the compiler produces debugging information, source maps, and compiler settings. These
-outputs are essential for deploying, testing, and integrating the contract with dApps or frontend applications
-    </ul>
-  </div>
+<div style={{ flex: "1", paddingLeft: "1rem" }}>
+  <ul>
+    To run various scripts to compile, test, deploy smart contracts and
+    sub-graphs you need to go to left top area of the IDE and go to task manager
+    section. When a Solidity smart contract is compiled, the source code is
+    transformed into low-level bytecode that can be executed on the Ethereum
+    Virtual Machine (EVM). This process also generates important metadata such
+    as the ABI (Application Binary Interface), which defines how external
+    applications or scripts can interact with the contract's functions and
+    events. Additionally, the compiler produces debugging information, source
+    maps, and compiler settings. These outputs are essential for deploying,
+    testing, and integrating the contract with dApps or frontend applications
+  </ul>
+</div>
 
     <div style={{ flex: '0 0 50%' }}>
     ![Settlemint](../../../img/building-with-settlemint/task-manager.png)
+
   </div>
 </div>
-
 
 If you compile using Foundry Build then in **out** folder a folder will be
 created with the name of your smart contract file name, and within that folder,
@@ -838,15 +843,15 @@ Hardhat deploy to platform network enter the path of the deployment script
 
 ignition/modules/deployUserData.ts
 
-> If you click on **hardhat - deploy to local network** and nothing happens, then
-> you are missing the step to select the correct deployment script and hitting
-> enter key. You will see a message - **extra commandline arguments, e.g.
-> --verify (press 'enter' to confirm or 'escape' to cancel)** in the top middle
-> of the IDE, hit enter, you will see **ignition/modules/main.ts**, edit the
-> last part at put the correct filename (e.g. deployUser.ts), basically the name
-> of the deployment script you created in ignition folder, and hit enter agian
-> to run the deployment script. This remains true for all the deploy cases,
-> whether on local network or platform network.
+> If you click on **hardhat - deploy to local network** and nothing happens,
+> then you are missing the step to select the correct deployment script and
+> hitting enter key. You will see a message - **extra commandline arguments,
+> e.g. --verify (press 'enter' to confirm or 'escape' to cancel)** in the top
+> middle of the IDE, hit enter, you will see **ignition/modules/main.ts**, edit
+> the last part at put the correct filename (e.g. deployUser.ts), basically the
+> name of the deployment script you created in ignition folder, and hit enter
+> agian to run the deployment script. This remains true for all the deploy
+> cases, whether on local network or platform network.
 >
 > Before deploying to network, please do not forget to login to SettleMint
 > network via script **SettleMint login**
@@ -888,4 +893,3 @@ Now you can proceed to middlewares for getting APIs to do smart contract
 transactions, write data to chain and read data in a structured format.
 
 </div>
-
