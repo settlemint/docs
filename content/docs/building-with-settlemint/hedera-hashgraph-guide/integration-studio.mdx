@@ -21,19 +21,51 @@ import { Card } from "fumadocs-ui/components/card";
   Summary  
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
 
-The Integration Studio is a dedicated low-code environment that enables developers and business users to build backend workflows, API endpoints, and custom logic using a visual interface. Powered by Node-RED, it offers an intuitive drag-and-drop experience for orchestrating flows between smart contracts, external APIs, databases, and storage systems—all within the SettleMint ecosystem.
+The Integration Studio is a dedicated low-code environment that enables
+developers and business users to build backend workflows, API endpoints, and
+custom logic using a visual interface. Powered by Node-RED, it offers an
+intuitive drag-and-drop experience for orchestrating flows between smart
+contracts, external APIs, databases, and storage systems—all within the
+SettleMint ecosystem.
 
-Instead of writing boilerplate backend code, developers will define logic using nodes and flows, visually representing how data moves between services. These flows can be triggered by webhooks, user interactions, smart contract events, or timed executions. Under the hood, each Integration Studio is deployed as an isolated and scalable container that supports JavaScript-based execution, environment configuration, and secure API access.
+Instead of writing boilerplate backend code, developers will define logic using
+nodes and flows, visually representing how data moves between services. These
+flows can be triggered by webhooks, user interactions, smart contract events, or
+timed executions. Under the hood, each Integration Studio is deployed as an
+isolated and scalable container that supports JavaScript-based execution,
+environment configuration, and secure API access.
 
-Each node in the flow is designed to perform a specific task—such as receiving HTTP input, transforming payloads, calling external APIs, or executing custom JavaScript functions. These nodes are connected inside a flow, which represents a unit of logic or an end-to-end integration path. You can create multiple flows within the same Integration Studio instance, allowing you to modularize your business logic and deploy distinct endpoints for different application use cases.
+Each node in the flow is designed to perform a specific task—such as receiving
+HTTP input, transforming payloads, calling external APIs, or executing custom
+JavaScript functions. These nodes are connected inside a flow, which represents
+a unit of logic or an end-to-end integration path. You can create multiple flows
+within the same Integration Studio instance, allowing you to modularize your
+business logic and deploy distinct endpoints for different application use
+cases.
 
-When developers deploy the Integration Studio to their application, a secure Node-RED editor is provisioned, accessible via the platform UI. The visual interface includes common built-in nodes and pre-integrated libraries like ethers (for blockchain interaction), ipfsHttpClient (for decentralized storage), and others. Additional libraries can also be added manually in the project settings.
+When developers deploy the Integration Studio to their application, a secure
+Node-RED editor is provisioned, accessible via the platform UI. The visual
+interface includes common built-in nodes and pre-integrated libraries like
+ethers (for blockchain interaction), ipfsHttpClient (for decentralized storage),
+and others. Additional libraries can also be added manually in the project
+settings.
 
-A common scenario might involve triggering a flow via an HTTP request, fetching on-chain data from a smart contract using ethers.js, formatting the result, and returning it as a JSON response. These kinds of flows can be designed in minutes—providing API endpoints that are automatically hosted and secured by SettleMint infrastructure.
+A common scenario might involve triggering a flow via an HTTP request, fetching
+on-chain data from a smart contract using ethers.js, formatting the result, and
+returning it as a JSON response. These kinds of flows can be designed in
+minutes—providing API endpoints that are automatically hosted and secured by
+SettleMint infrastructure.
 
-Developers can configure API Keys to restrict access to these endpoints and monitor calls using the platform’s access token management system. Every endpoint is served over HTTPS and can be integrated with frontend dApps, backend services, or third-party platforms.
+Developers can configure API Keys to restrict access to these endpoints and
+monitor calls using the platform’s access token management system. Every
+endpoint is served over HTTPS and can be integrated with frontend dApps, backend
+services, or third-party platforms.
 
-The simplicity of visual programming, combined with the power of JavaScript, makes Integration Studio a robust backend builder tailored for blockchain applications. It significantly reduces development time while maintaining flexibility for custom use cases. Developers gain fine-grained control over how their dApp behaves off-chain, without leaving the SettleMint environment.
+The simplicity of visual programming, combined with the power of JavaScript,
+makes Integration Studio a robust backend builder tailored for blockchain
+applications. It significantly reduces development time while maintaining
+flexibility for custom use cases. Developers gain fine-grained control over how
+their dApp behaves off-chain, without leaving the SettleMint environment.
 
 </div>
 </div>
@@ -127,7 +159,6 @@ written in JavaScript, and it represents the actions the particular node
 performs.
 
 ![Integration Studio Flows](../../../img/building-with-settlemint/integration-studio-flows.png)
-
 
 ### Setting up a flow
 
@@ -256,6 +287,7 @@ You can access 4000 plus pre-built modules from the in-built library.
 You can use the Integration Studio to build very complex flows. Learn more in
 this [cookbook by Node-RED](https://cookbook.nodered.org/) on the different
 types of flows.
+
 ```
-Keywords: integration studio, settlemint, node-red, low-code backend, visual workflow builder, backend orchestration, api automation, smart contract integration, ethers.js, ipfs integration, flow editor, visual programming, decentralized backend, visual api builder, smart contract api trigger, event-driven flows, javascript nodes, node-red flows, nodered http endpoint, settlemint integration tools, create api without code, blockchain backend, integration platform, nodered smart contract, decentralized logic, on-chain off-chain bridge, javascript automation, rpc calls node-red, smart contract events, web3 api orchestrator, nodered blockchain trigger, settlemint api workflow, node-red example flow, ethers provider integration, integration studio example, http in node, http response node, application access token, api token settlemint, nodered visual ide, smart contract backend flow, node-red drag drop, low-code automation tool, settlemint visual interface, nodered ethers provider, integration studio deployment, settlemint workflow setup, nodered function node, rpc endpoint integration, integration flow design, smart contract event handler, ipfs client node-red, integration studio cookbooks, no-code contract orchestration, backend-as-a-service blockchain
+Keywords: integration studio, settlemint, node-red, low-code backend, visual workflow builder, backend orchestration, api automation, smart contract integration, ethers.js, ipfs integration, flow editor, visual programming, decentralized backend, visual api builder, smart contract api trigger, event-driven flows, javascript nodes, node-red flows, nodered http endpoint, settlemint integration tools, create api without code, blockchain backend, integration platform, nodered smart contract, decentralized logic, on-chain off-chain bridge, javascript automation, rpc calls node-red, smart contract events, web3 api orchestrator, nodered blockchain trigger, settlemint api workflow, node-red example flow, ethers provider integration, integration studio example, http in node, http response node, application access token, api token settlemint, nodered visual IDE, smart contract backend flow, node-red drag drop, low-code automation tool, settlemint visual interface, nodered ethers provider, integration studio deployment, settlemint workflow setup, nodered function node, rpc endpoint integration, integration flow design, smart contract event handler, ipfs client node-red, integration studio cookbooks, no-code contract orchestration, backend-as-a-service blockchain
 ```

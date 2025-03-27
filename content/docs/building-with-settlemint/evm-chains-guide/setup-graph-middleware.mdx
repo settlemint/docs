@@ -191,7 +191,7 @@ blockchain node in place.
   </Tab>
 </Tabs>
 
-## Subgraph folder structure in code studio ide
+## Subgraph folder structure in code studio IDE
 
 ```
 subgraph/
@@ -207,10 +207,9 @@ subgraph/
 └── mycontract.ts
 ```
 
-
 ## Subgraph deployment process
 
-### 1. collect constants needed
+### 1. Collect constants needed
 
 Find the chain ID of the network from igntition>deployments folder name
 (chain-ID) or from the Platform UI at Blockchain Networks > Selcted Network >
@@ -219,13 +218,25 @@ Details page, it will be something like **47440**.
 Locate the contract address, deployed contract address is stored in
 deployed_addresses.json file located in igntition>deployments folder.
 
-### 2. building subgraph.config.json file
+### 2. Building subgraph.config.json file
 
-  This file is the foundational configuration for your subgraph. It defines how and where the subgraph will be generated and which contracts it will be tracking. Think of it as the control panel that the subgraph compiler reads to understand what contracts to index, where to start indexing from (which block), and which folder contains the relevant configurations (e.g., YAML manifest, mappings, schema, etc.). 
-  
-  Each object in the datasources array represents a separate contract. You specify the contract’s name, address, the block number at which the indexer should begin listening, and the path to the module folder (which holds the YAML manifest and mapping logic). This file is essential when working with Graph CLI or SDKs for compiling and deploying subgraphs. 
-  
-  When writing this file from scratch, you will need to gather the deployed contract address, decide the indexing start block (can be 0 or a specific block to save resources), and organize contract-related files in a logical module folder.
+This file is the foundational configuration for your subgraph. It defines how
+and where the subgraph will be generated and which contracts it will be
+tracking. Think of it as the control panel that the subgraph compiler reads to
+understand what contracts to index, where to start indexing from (which block),
+and which folder contains the relevant configurations (e.g., YAML manifest,
+mappings, schema, etc.).
+
+Each object in the datasources array represents a separate contract. You specify
+the contract’s name, address, the block number at which the indexer should begin
+listening, and the path to the module folder (which holds the YAML manifest and
+mapping logic). This file is essential when working with Graph CLI or SDKs for
+compiling and deploying subgraphs.
+
+When writing this file from scratch, you will need to gather the deployed
+contract address, decide the indexing start block (can be 0 or a specific block
+to save resources), and organize contract-related files in a logical module
+folder.
 
 ```json
 {
@@ -244,14 +255,23 @@ deployed_addresses.json file located in igntition>deployments folder.
 
 ### 3 create userdata.yaml file
 
-This is the YAML manifest file that tells the subgraph how to interact with a specific smart contract on-chain. 
-It defines the contract’s ABI, address, the events to listen to, and the mapping logic that should be triggered for each event. 
+This is the YAML manifest file that tells the subgraph how to interact with a
+specific smart contract on-chain. It defines the contract’s ABI, address, the
+events to listen to, and the mapping logic that should be triggered for each
+event.
 
-The structure must follow a strict YAML format—wrong indentation or a missing property can break the subgraph. 
-Under the source section, you provide the contract’s address, the ABI name, and the block from which indexing should begin. 
+The structure must follow a strict YAML format—wrong indentation or a missing
+property can break the subgraph. Under the source section, you provide the
+contract’s address, the ABI name, and the block from which indexing should
+begin.
 
-The mapping section details how the subgraph handles events. It specifies the API version, programming language (AssemblyScript), the entities it will touch, and the path to the mapping file. 
-Each eventHandler entry pairs an event signature (from the contract) with a function that will process it. When writing this from scratch, ensure that all event signatures exactly match those in your contract (parameter order and types must be accurate), and align them with the corresponding handler function names.
+The mapping section details how the subgraph handles events. It specifies the
+API version, programming language (AssemblyScript), the entities it will touch,
+and the path to the mapping file. Each eventHandler entry pairs an event
+signature (from the contract) with a function that will process it. When writing
+this from scratch, ensure that all event signatures exactly match those in your
+contract (parameter order and types must be accurate), and align them with the
+corresponding handler function names.
 
 ```yaml
 - kind: ethereum/contract
@@ -283,18 +303,23 @@ Each eventHandler entry pairs an event signature (from the contract) with a func
     file: { file }
 ```
 
-### 4. create userdata.gql.json file
+### 4. Create userdata.gql.json file
 
+This JSON file defines the GraphQL schema that powers your subgraph’s data
+structure. It outlines the shape of your data, which entities will be stored in
+the Graph Node’s underlying database, and the fields each entity will expose to
+users via GraphQL queries.
 
-This JSON file defines the GraphQL schema that powers your subgraph’s data structure. 
-It outlines the shape of your data, which entities will be stored in the Graph Node’s underlying database, and the fields each entity will expose to users via GraphQL queries. 
+Every event-based entity (like ProfileCreated, ProfileUpdated, ProfileDeleted)
+is linked to the main entity (here, UserProfile) to maintain a historical audit
+trail. Each entity must have an id field of type ID!, which serves as the
+primary key.
 
-Every event-based entity (like ProfileCreated, ProfileUpdated, ProfileDeleted) is linked to the main entity (here, UserProfile) to maintain a historical audit trail. 
-Each entity must have an id field of type ID!, which serves as the primary key. 
-
-You then define all other fields with their data types and nullability. 
-When writing this schema, think in terms of how data will be queried: What information will consumers of the subgraph want to retrieve? 
-The names and types must exactly reflect the logic in your mapping files. For reuse across projects, just align this schema with the domain model of your contract.
+You then define all other fields with their data types and nullability. When
+writing this schema, think in terms of how data will be queried: What
+information will consumers of the subgraph want to retrieve? The names and types
+must exactly reflect the logic in your mapping files. For reuse across projects,
+just align this schema with the domain model of your contract.
 
 ```
 [
@@ -341,16 +366,22 @@ The names and types must exactly reflect the logic in your mapping files. For re
 ]
 ```
 
-### 5. create userdata.ts file
+### 5. Create userdata.ts file
 
-This file contains the event handler functions written in AssemblyScript. 
-It directly responds to the events emitted by your smart contract and updates the subgraph’s store accordingly. 
-Each exported function matches an event in the YAML manifest. Inside each function, the handler builds a unique ID for the event (usually combining the transaction hash and log index), processes the event payload, and updates or creates the relevant entity (here, UserProfile). 
+This file contains the event handler functions written in AssemblyScript. It
+directly responds to the events emitted by your smart contract and updates the
+subgraph’s store accordingly. Each exported function matches an event in the
+YAML manifest. Inside each function, the handler builds a unique ID for the
+event (usually combining the transaction hash and log index), processes the
+event payload, and updates or creates the relevant entity (here, UserProfile).
 
-The logic can include custom processing like formatting values, filtering, or even transforming data types. 
-This file is where your business logic resides, similar to an event-driven backend microservice. 
-You should keep this file modular and focused, avoiding code repetition by calling reusable helper functions like fetchUserProfile. When writing this from scratch, always import the generated event types and schema entities, and handle edge cases like entity non-existence or inconsistent values.
-
+The logic can include custom processing like formatting values, filtering, or
+even transforming data types. This file is where your business logic resides,
+similar to an event-driven backend microservice. You should keep this file
+modular and focused, avoiding code repetition by calling reusable helper
+functions like fetchUserProfile. When writing this from scratch, always import
+the generated event types and schema entities, and handle edge cases like entity
+non-existence or inconsistent values.
 
 ```ts
 import { BigInt } from "@graphprotocol/graph-ts";
@@ -422,16 +453,20 @@ export function handleProfileDeleted(event: ProfileDeletedEvent): void {
 }
 ```
 
-### 6. create another userdata.ts in the fetch folder
+### 6. Create another userdata.ts in the fetch folder
 
-This is a helper utility designed to avoid redundancy in your mapping file. 
-It abstracts the logic of either loading an existing entity or creating a new one if it doesn’t exist. 
+This is a helper utility designed to avoid redundancy in your mapping file. It
+abstracts the logic of either loading an existing entity or creating a new one
+if it doesn’t exist.
 
-It enhances reusability and reduces boilerplate in each handler function. 
-The naming convention of this file usually mirrors the module or entity it’s associated with (e.g., fetch/userdata.ts). 
+It enhances reusability and reduces boilerplate in each handler function. The
+naming convention of this file usually mirrors the module or entity it’s
+associated with (e.g., fetch/userdata.ts).
 
-The logic inside the function uses the userId (or other unique identifier) as a string key and ensures that all required fields have a default value. 
-When writing this from scratch, ensure every field in your GraphQL schema has an initialized value to prevent errors during Graph Node processing.
+The logic inside the function uses the userId (or other unique identifier) as a
+string key and ensures that all required fields have a default value. When
+writing this from scratch, ensure every field in your GraphQL schema has an
+initialized value to prevent errors during Graph Node processing.
 
 ```ts
 import { BigInt } from "@graphprotocol/graph-ts";
@@ -518,15 +553,15 @@ classDef tooling fill:#F0F9FF,stroke:#0284C7,stroke-width:1px
 
 ## Codegen, build and deploy subgraph
 
-### Run codegen script using the task manager of the ide
+### Run codegen script using the task manager of the IDE
 
 ![Graph Codegen](../../../img/building-with-settlemint/graph-codegen.png)
 
-### Run graph build script using the task manager of the ide
+### Run graph build script using the task manager of the IDE
 
 ![Graph Build](../../../img/building-with-settlemint/graph-build.png)
 
-### Run graph deploy script using the task manager of the ide
+### Run graph deploy script using the task manager of the IDE
 
 ![Graph Deploy](../../../img/building-with-settlemint/graph-deploy.png)
 
@@ -581,11 +616,11 @@ Congratulations.!!
 
 You have succesfully configured Graph Middleware and deployed subgraphs to
 enable smart contractindexing. With this you have both read and write middelware
-for your smart contracts. 
+for your smart contracts.
 
-This marks the end of the core Web3 development, from
-here we will proceed to adding off-chain database and storage options to enable
-us to have a holistic backend and storage layer for our application.
+This marks the end of the core Web3 development, from here we will proceed to
+adding off-chain database and storage options to enable us to have a holistic
+backend and storage layer for our application.
 
 </div>
 

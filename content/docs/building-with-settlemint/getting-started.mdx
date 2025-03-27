@@ -15,7 +15,7 @@ description: Overview of blockchain development process
 **Brief Step-by-Step Guide** to help you create a working blockchain app
 quickly.
 
-### 1. lay the foundation
+### 1. Lay the foundation
 
 Use the **Blockchain Network Manager** to configure a public (e.g., Ethereum) or
 private (e.g., Besu, Quorum, Fabric) network. Deploy **Blockchain
@@ -31,7 +31,7 @@ operational in the **Blockchain Explorer**.
 4. Enable load balancing and secure transaction signing. 
 5. Check network activity and node health in the Explorer.
 
-### 2. generate keys and tokens
+### 2. Generate keys and tokens
 
 Select the right private key management strategy—software, HD wallets, or
 HSM—based on your security profile. Generate private keys and attach them to transaction signers.
@@ -44,7 +44,7 @@ Generate and use **Access Tokens (PAT/AAT)** for controlling platform or API int
 4. Conduct or schedule compliance audits as needed. 
 5. Document any custom security protocols for internal reference.
 
-### 3. develop and deploy smart contracts
+### 3. Develop and deploy smart contracts
 
 Write on-chain logic in **Code Studio** (Solidity/Chaincode) or the **SDK CLI**.
 Rely on frameworks like Foundry/Hardhat for testing, then compile and deploy
@@ -58,7 +58,7 @@ version control.
 4. Inspect events in the Explorer to verify success. 
 5. Move to production upon final validation.
 
-### 4. setup middlwares and get apis
+### 4. Setup middlwares and get apis
 
 The **Smart Contract API Portal** converts your contract ABI into immediate REST
 or GraphQL endpoints. The **Graph Middleware** handles read operations, indexing
@@ -72,7 +72,7 @@ Indexer** can manage trust attestations for identity or compliance.
 4. Add specialized indexers (e.g., EAS) for credential or compliance data. 
 5. Test endpoints in a simple front end or script.
 
-### 5. integrate and finalize the application
+### 5. Integrate and finalize the application
 
 Enterprise-grade dApps often require off-chain data handling. Connect **S3
 (MinIO)** or **IPFS** for files, and use **Hasura** on PostgreSQL for structured
@@ -88,7 +88,7 @@ logic seamlessly interacts with centralized services.
 5. Confirm data consistency and reliability via logs or Explorer audits.
 
 
-### 6. deploy, monitor, and scale
+### 6. Deploy, monitor, and scale
 
 Finally, **containerize** your front end (React, Angular, Vue) and back-end
 microservices. SettleMint’s **Custom Deployments** module makes updates

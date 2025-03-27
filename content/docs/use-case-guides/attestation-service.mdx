@@ -22,7 +22,7 @@ import { Card } from "fumadocs-ui/components/card";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
-## 1. introduction to eas
+## 1. Introduction to eas
 
 ### What is eas?
 
@@ -51,7 +51,7 @@ identities, or events that can be independently verified by others.
 
 ---
 
-## 2. key concepts
+## 2. Key concepts
 
 ### Core components
 
@@ -78,7 +78,7 @@ identities, or events that can be independently verified by others.
 
 ---
 
-## 3. how eas works
+## 3. How eas works
 
 ```mermaid
 graph TD
@@ -106,7 +106,7 @@ graph TD
 
 ---
 
-## 4. contract deployment
+## 4. Contract deployment
 
 Before deploying the EAS contracts, you must add the smart contract set to your
 project.
@@ -188,7 +188,7 @@ in the SettleMint IDE or via the **Terminal**.
 
 ---
 
-## 5. registering a schema
+## 5. Registering a schema
 
 ### Example use case
 
@@ -254,7 +254,7 @@ registerSchema();
 
 ---
 
-## 6. creating attestations
+## 6. Creating attestations
 
 ### Example use case
 
@@ -326,7 +326,7 @@ async function createAttestation() {
 createAttestation();
 ```
 
-## 7. verifying attestations
+## 7. Verifying attestations
 
 Verification is essential to ensure the integrity and authenticity of
 attestations. You can verify attestations using one of the following methods:
@@ -511,7 +511,7 @@ console.log("✅ Is the attestation valid?", isValid);
 - **Custom Resolver**: Use for on-chain validation with additional rules, such
   as verifying trusted attesters or specific data formats.
 
-## 8. using the attestation indexer
+## 8. Using the attestation indexer
 
 ### Setup attestation indexer
 
@@ -578,7 +578,7 @@ const attestations = await queryAttestations(schemaId);
 console.log("Attestations:", attestations);
 ```
 
-## 9. integration studio implementation
+## 9. Integration studio implementation
 
 For those using integration studio, we've created a complete flow implementation
 of the EAS interactions. This flow automates the entire process we covered in

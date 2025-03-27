@@ -53,7 +53,7 @@ By the end of this tutorial, you’ll not only learn the foundational patterns
 that apply to many real-world blockchain applications but also understand how to
 develop and deploy chaincodes on SettleMint platform.
 
-## 1. let's start with the typescript chaincode code
+## 1. Let's start with the typescript chaincode code
 
 A **chaincode** is a self-executing smart contract deployed on the Hyperledger Fabric network. It defines the business logic that governs how assets are created, modified, or queried on the ledger — all in a trusted, peer-to-peer environment without intermediaries. In this tutorial, we will write our chaincode using **TypeScript**, a statically typed superset of JavaScript that is well-suited for building secure, modular, and maintainable Fabric chaincode.
 
@@ -353,7 +353,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 1. compile and package chaincode
+## 1. Compile and package chaincode
 
 **Step:** Compile TypeScript into JavaScript (if runtime is Node.js) and create the chaincode `.tar.gz` package.
 
@@ -366,7 +366,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 2. install chaincode on peer
+## 2. Install chaincode on peer
 
 **Step:** Uploads the packaged chaincode file to a specified peer.
 
@@ -378,7 +378,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 3. approve chaincode for org
+## 3. Approve chaincode for org
 
 **Step:** Approves the chaincode definition using the provided peer and orderer.
 
@@ -390,7 +390,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 4. check commit readiness (optional)
+## 4. Check commit readiness (optional)
 
 **Step:** Validates whether enough orgs have approved the chaincode.
 
@@ -401,7 +401,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 5. commit chaincode
+## 5. Commit chaincode
 
 **Step:** Commits the approved chaincode definition to the channel.
 
@@ -413,7 +413,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 6. initialize chaincode (optional)
+## 6. Initialize chaincode (optional)
 
 **Step:** Calls the init function (e.g., `InitLedger`) if defined.
 
@@ -424,7 +424,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 7. query chaincode
+## 7. Query chaincode
 
 **Step:** Read data from ledger via chaincode function.
 
@@ -436,7 +436,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 8. invoke chaincode
+## 8. Invoke chaincode
 
 **Step:** Write/update ledger state via chaincode.
 
@@ -448,7 +448,7 @@ Ensure the following environment variables are set before you begin:
 
 ---
 
-## 9. test build locally
+## 9. Test build locally
 
 Optional workspace tasks like `build package`, `test workspace` are available in Code Studio’s **Task Manager** panel to automate test builds.
 

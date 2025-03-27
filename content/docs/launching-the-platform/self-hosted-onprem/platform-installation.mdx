@@ -22,7 +22,7 @@ Before starting the installation, ensure you have:
 
 ## Installation steps
 
-### 1. sign in to the settlemint helm registry
+### 1. Sign in to the settlemint helm registry
 
 ```bash
 helm registry login harbor.settlemint.com --username <username> --password <password>
@@ -30,7 +30,7 @@ helm registry login harbor.settlemint.com --username <username> --password <pass
 
 Replace `<username>` and `<password>` with your provided credentials.
 
-### 2. review configuration options
+### 2. Review configuration options
 
 View all available configuration options:
 
@@ -38,7 +38,7 @@ View all available configuration options:
 helm show values oci://registry.settlemint.com/settlemint-platform/settlemint --version 7.0.0
 ```
 
-### 3. install the platform
+### 3. Install the platform
 
 Create a values file (values.yaml) with your configuration:
 
@@ -281,7 +281,7 @@ features:
         bscscan: ""
         arbiscan: ""
         optimistic: ""
-    ide:
+    IDE:
       image:
         registry: ghcr.io
         repository: settlemint/btp-ide
@@ -470,7 +470,7 @@ helm upgrade --install settlemint oci://registry.settlemint.com/settlemint-platf
   --values values.yaml
 ```
 
-### 4. verify installation
+### 4. Verify installation
 
 Check the deployment status:
 
@@ -480,11 +480,11 @@ kubectl get pods -n settlemint
 
 Verify all pods are running and ready.
 
-### 5. access the platform
+### 5. Access the platform
 
 Once all pods are running, access the platform at `https://<your-domain>`.
 
-### 6. target clusters configuration
+### 6. Target clusters configuration
 
 The platform supports deploying blockchain nodes and applications to multiple
 target clusters across different cloud providers and regions. This section

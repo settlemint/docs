@@ -75,7 +75,7 @@ By the end of this tutorial, you’ll not only learn the foundational patterns
 that apply to many real-world blockchain applications but also understand how to
 develop and deploy smart contracts on SettleMint platform.
 
-## 1. let's start with the solidity smart contract code
+## 1. Let's start with the solidity smart contract code
 
 A smart contract is a self-executing program deployed on the blockchain that defines rules and logic for how data or assets are managed without relying on intermediaries. In this tutorial, we are writing our smart contract using Solidity, the most widely adopted programming language for Ethereum and EVM-compatible blockchains. Solidity is a statically typed, contract-oriented language designed specifically for writing smart contracts that run on the Ethereum Virtual Machine (EVM).
 
@@ -332,7 +332,7 @@ Solidity functions in the smart contract:
 | **Update** | `updateProfile()`     | Modifies all fields of an existing user profile. Acts like an `UPDATE` in Web2 databases. It ensures the profile exists and is not deleted, then updates it with the provided values. Emits `ProfileUpdated` with full details for off-chain use.                                                              |
 | **Delete** | `deleteProfile()`     | Performs a **soft delete** by setting the `isDeleted` flag to `true`, without removing the actual data from storage. This is similar to a logical delete used in many enterprise databases. The data remains on-chain (for auditability), but `getProfile()` will no longer return it. Emits `ProfileDeleted`. |
 
-## 2. let's add this smart contract to code studio
+## 2. Let's add this smart contract to code studio
 
 When you deploy an **Empty** smart contract set on SettleMint platfrom, you get
 a very simple **Counter.sol** contract as an example, you may delete it.
@@ -340,7 +340,7 @@ a very simple **Counter.sol** contract as an example, you may delete it.
 In the contracts folder create a file called **UserData.sol** and copy paste the
 content of the above smart contract code.
 
-## 3. prepare deployment script
+## 3. Prepare deployment script
 
 In **Ignition** folder, you will find a folder called **Modules**, there you
 will find a **main.ts** file which is basically a contract deployment script.
@@ -377,7 +377,7 @@ instance is then returned from the module so it can be accessed later if needed.
 Finally, the module is exported as the default export so it can be run by
 Hardhat’s Ignition system using the CLI.
 
-## 4. compile the smart contract code
+## 4. Compile the smart contract code
 
 When a Solidity smart contract is compiled, the source code is transformed into
 low-level bytecode that can be executed on the Ethereum Virtual Machine (EVM).
@@ -420,7 +420,7 @@ inside the artifacts/ directory:
 - hash.json – Contains detailed compiler input/output and full metadata for the
   build process, useful for verifying or analyzing compilation details
 
-## 5. test the smart contract
+## 5. Test the smart contract
 
 Smart contract testing is a critical part of the development lifecycle in
 blockchain and decentralized application (dApp) projects. Since smart contracts
@@ -809,7 +809,7 @@ deployment script you created in ignition folder, and hit enter agian to run the
 deployment script. This remains true for all the deploy cases, whether on local
 network or platform network.
 
-## 6. deploy the smart contract to platform network
+## 6. Deploy the smart contract to platform network
 
 Hardhat deploy to platform network enter the path of the deployment script
 ![Select node to deploy](../../../img/building-with-settlemint/select-deployment-script.png)

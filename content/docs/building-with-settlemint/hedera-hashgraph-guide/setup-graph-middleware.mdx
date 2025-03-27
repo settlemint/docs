@@ -191,7 +191,7 @@ blockchain node in place.
   </Tab>
 </Tabs>
 
-## Subgraph folder structure in code studio ide
+## Subgraph folder structure in code studio IDE
 
 ```
 subgraph/
@@ -207,7 +207,7 @@ subgraph/
 └── mycontract.ts
 ```
 
-### 1. subgraph.config.json
+### 1. Subgraph.config.json
 
 This file contains the global configuration for your subgraph. It specifies:
 
@@ -217,31 +217,31 @@ This file contains the global configuration for your subgraph. It specifies:
   index. Each entry defines the contract address, the block number to start
   indexing from, and the module (folder) containing the datasource’s files.
 
-### 2. datasources/mycontract.gql.json
+### 2. Datasources/mycontract.gql.json
 
 This file is a JSON representation of your GraphQL schema. It defines the
 entities that the subgraph will index and store in the Graph Node’s database.
 
-### 3. datasources/mycontract.yaml
+### 3. Datasources/mycontract.yaml
 
 This YAML manifest configures how the subgraph ingests on-chain data from your
 contract. It specifies the contract address, ABI, event handlers, entities, and
 mapping file. Be very careful about YAML structure, any deviation or missing
 indentation can cause errors.
 
-### 4. datasources/mycontract.ts
+### 4. Datasources/mycontract.ts
 
 This AssemblyScript file contains the logic that listens for events and writes
 data into the Graph’s store by updating entities.
 
-### 5. fetch/mycontract.ts
+### 5. Fetch/mycontract.ts
 
 This file provides a reusable function to fetch or create MyEntity instances. It
 helps avoid repetitive code in your mapping file.
 
 ## Subgraph deployment process
 
-### 1. collect constants needed
+### 1. Collect constants needed
 
 Find the chain ID of the network from igntition>deployments folder name
 (chain-ID) or from the Platform UI at Blockchain Networks > Selcted Network >
@@ -250,7 +250,7 @@ Details page, it will be something like **47440**.
 Locate the contract address, deployed contract address is stored in
 deployed_addresses.json file located in igntition>deployments folder.
 
-### 2. building subgraph.config.json file
+### 2. Building subgraph.config.json file
 
 ```json
 {
@@ -299,7 +299,7 @@ deployed_addresses.json file located in igntition>deployments folder.
     file: { file }
 ```
 
-### 4. create userdata.gql.json file
+### 4. Create userdata.gql.json file
 
 ```
 [
@@ -346,7 +346,7 @@ deployed_addresses.json file located in igntition>deployments folder.
 ]
 ```
 
-### 5. create userdata.ts file
+### 5. Create userdata.ts file
 
 ```ts
 import { BigInt } from "@graphprotocol/graph-ts";
@@ -418,7 +418,7 @@ export function handleProfileDeleted(event: ProfileDeletedEvent): void {
 }
 ```
 
-### 6. create another userdata.ts in the fetch folder
+### 6. Create another userdata.ts in the fetch folder
 
 ```ts
 import { BigInt } from "@graphprotocol/graph-ts";
@@ -512,11 +512,11 @@ Congratulations.!!
 
 You have succesfully configured Graph Middleware and deployed subgraphs to
 enable smart contractindexing. With this you have both read and write middelware
-for your smart contracts. 
+for your smart contracts.
 
-This marks the end of the core Web3 development, from
-here we will proceed to adding off-chain database and storage options to enable
-us to have a holistic backend and storage layer for our application.
+This marks the end of the core Web3 development, from here we will proceed to
+adding off-chain database and storage options to enable us to have a holistic
+backend and storage layer for our application.
 
 </div>
 
