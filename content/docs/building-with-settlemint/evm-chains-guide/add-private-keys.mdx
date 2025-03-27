@@ -42,13 +42,13 @@ Sending transactions on a blockchain network requires two essential components:
 a private key to cryptographically sign your transactions, and sufficient funds
 in your wallet to cover the associated gas fees. Without either element,
 transaction execution will fail.
-
+<br> </br>
 While you can use external private keys created with tools like MetaMask or
 other wallet solutions, **SettleMint offers a more integrated approach**. The
 platform provides built-in functionality to **create and manage private keys
 directly within your environment**, eliminating the need for external wallet
 management.
-
+<br> </br>
 When you deploy a blockchain node, it contains a signing proxy that captures the
 eth_sendTransaction call, uses the appropriate key from the private key section
 to sign it, and sends it onwards to the blockchain node. You can use this proxy

@@ -27,51 +27,51 @@ done through custom deployments, which allow you to run containerized
 applications using your own Docker images. This enables seamless integration of
 user interfaces, REST APIs, microservices, or other utilities directly within
 the blockchain-powered environment of your application.
-
+<br> </br>
 The typical use cases include hosting React/Vue/Next.js-based UIs, creating
 custom indexers or oracles, exposing specialized API services, or deploying
 off-chain business logic in containerized environments. These deployments are
 sandboxed, stateless, and run in secure, managed infrastructure, making them
 suitable for both development and production.
-
+<br> </br>
 To get started, you'll first need to containerize your application (if not
 already done) and push the image to a container registry—this can be Docker Hub,
 GitHub Container Registry, or a private registry. The image must be built for
 AMD architecture, as the SettleMint infrastructure currently supports AMD-based
 workloads.
-
+<br> </br>
 Once your image is ready, you can initiate a custom deployment through the
 platform UI, CLI, or SDK. You'll provide the container image path, optional
 environment variables, deployment region, and resource configurations. After the
 container spins up successfully, your service will be publicly accessible via
 the auto-assigned endpoint. For frontend apps, this can act as your live
 production URL.
-
+<br> </br>
 For applications requiring a custom domain, SettleMint allows you to bind domain
 names to the deployed container. You can configure the domain in the platform
 and then update your DNS records accordingly. The platform supports both ALIAS
 records for top-level domains and CNAME records for subdomains. SSL/TLS
 certificates are automatically handled unless you opt for a custom cert setup.
-
+<br> </br>
 Once the deployment is live, you can manage it using the custom deployment
 dashboard in the platform. This includes editing environment variables,
 restarting the container, updating the image version, checking logs, and
 monitoring availability. You can also script or automate these tasks using the
 SDK or CLI as needed.
-
+<br> </br>
 A few considerations: custom deployments are stateless by design, so any data
 you want to persist should be stored using services like Hasura for off-chain
 database functionality or MinIO/IPFS for file storage. The container's
 filesystem is read-only to enhance security and portability. Additionally, apps
 won't run with root privileges, so ensure your container adheres to standard
 non-root user practices.
-
+<br> </br>
 This feature is especially useful when you need to tightly couple your UI or
 service logic with the on-chain components—enabling a clean, integrated workflow
 for dApps, admin consoles, analytics dashboards, API bridges, or token utility
 services. It offers flexibility without leaving the SettleMint ecosystem, all
 while adhering to scalable and cloud-native design principles.
-
+<br> </br>
 </div>
 </div>
 

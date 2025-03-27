@@ -24,33 +24,33 @@ import { Card } from "fumadocs-ui/components/card";
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
     
 To begin, you'll need to write your Solidity smart contract that defines your application's business logic. This includes designing the data structure using struct, storing the data with mapping, and emitting events to support off-chain indexing. Once written, the contract should be placed in the contracts/ folder inside your code studio workspace.
-
+<br> </br>
 Next, you need to prepare a deployment script using Hardhat Ignition. This
 script should go into the ignition/modules/ folder and will declare how your
 smart contract should be deployed. You'll use the buildModule function to
 specify which contract to deploy and how it should be initialized.
-
+<br> </br>
 After setting up the script, you should compile the contract. This step
 generates the necessary build artifacts, including the ABI and bytecode, which
 are essential for testing, deploying, and integrating the contract with other
 components. Depending on the tool used (Hardhat or Foundry), the output will be
 stored in the artifacts/ or out/ directory respectively.
-
+<br> </br>
 Once compiled, it's important to thoroughly test your contract using either
 Foundry or Hardhat. These tests will simulate real-world conditions. Writing
 these tests helps you catch logic errors early before deployment.
-
+<br> </br>
 When the contract passes all tests, you're ready to deploy. Start your local
 network using the Hardhat - start network script and run the deployment script
 through the IDE task manager. You'll be prompted to select your custom
 deployment script file before the deployment begins.
-
+<br> </br>
 Finally, to deploy to a SettleMint-hosted blockchain network, authenticate using
 the SettleMint login script, select the appropriate node and private key, and
 confirm deployment. The deployed address will be saved in a JSON file under
 ignition/deployments/, which can then be used in middleware or frontend
 applications to interact with the contract.
-
+<br> </br>
 </div>
 </div>
 
