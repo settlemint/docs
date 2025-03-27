@@ -8,6 +8,12 @@ const ABBREVIATIONS = [
   "AI",
   "MCP",
   "IDE",
+  "HSM",
+  "API",
+  "SDK",
+  "URL",
+  "JSON",
+  "GraphQL",
 
   // Add more abbreviations here in UPPERCASE
   // Example:
@@ -83,24 +89,15 @@ function processLine(line: string): string {
     return line;
   }
 
-  // Updated regex to handle all numbering patterns, but preserve existing formatting
+  // Updated regex to handle all cases including spaced asterisks
   const headingRegex =
-    /^(#{1,6})\s*(\*\*)?(?:(\d{1,2}\.(?:\d{1,2})?)\.\s*)?([a-zA-Z].*?)(\*\*)?$/;
+    /^(#{1,6}\s*\*{0,2}\s*(?:\d+(?:\.\d+)?\.?\s*)?)([a-zA-Z])(.*?)$/;
   const match = line.match(headingRegex);
 
   if (match) {
-    const [_, hashes, startBold, numbers, content, endBold] = match;
-
-    // Capitalize first letter of the content
-    const processedContent = content.charAt(0).toUpperCase() + content.slice(1);
-
-    // Reconstruct the line maintaining original formatting
-    if (startBold) {
-      // Only add ** if they were present in the original
-      return `${hashes} ${startBold}${numbers ? numbers + ". " : ""}${processedContent}${endBold || "**"}`;
-    } else {
-      return `${hashes} ${numbers ? numbers + ". " : ""}${processedContent}`;
-    }
+    const [_, prefix, firstLetter, rest] = match;
+    // Only capitalize the first letter, keep everything else exactly as is
+    return `${prefix}${firstLetter.toUpperCase()}${rest}`;
   }
 
   return line;
