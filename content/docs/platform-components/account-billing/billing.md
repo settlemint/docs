@@ -61,7 +61,7 @@ your account. Invoices are also visible on the SettleMint platform. Navigate to
 the **Invoices** section of your organization, via the homepage, or via your
 organization dashboard.
 
-:::info questions?
+:::tip questions?
 
 If you have any questions related to the use of credits, or for any reason
 cannot provide credit card information upon account creation, but still want to
