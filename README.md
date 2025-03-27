@@ -19,3 +19,11 @@
   <a href="https://github.com/settlemint/docs/issues">Issues</a>
   <br />
 </div>
+
+
+To generate sitemap 
+
+```
+bun add -d globby prettier
+```
+

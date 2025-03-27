@@ -53,9 +53,9 @@ network, enabling secure ownership transfer and efficient trading.
 
 ## Building an asset tokenization application
 
-## Part 1: resource setup
+## Part 1: Resource setup
 
-### 1. create an application
+### 1. Create an application
 
 To start, you need to create an application on SettleMint. An application is a
 collection of the different components on SettleMint that will help run your
@@ -68,7 +68,7 @@ top right of the dashboard (four boxes). Click `Add an application`.
 
 You will now be able to create a blockchain application and give it a name.
 
-### 2. deploy a network and node
+### 2. Deploy a network and node
 
 After creating an application, you can now deploy a network and node. We will
 use both of these resources to deploy our Asset Tokenization Smart Contract.
@@ -102,7 +102,7 @@ After clicking confirm, the node and network will start deploying at the same
 time. You will see the status as `Running` once both have been successfully
 deployed.
 
-### 3. create ipfs storage
+### 3. Create ipfs storage
 
 This guide uses a simple image as the tokenized asset. This image will be pinned
 on IPFS, so the next step is to deploy a storage service.
@@ -113,7 +113,7 @@ Click on `Storage` and then select `Add storage`. Then select `IPFS` and create
 an instance called `Token Storage`. You can choose the same deployment plan that
 you did earlier with the network and node.
 
-### 4. deploy a private key
+### 4. Deploy a private key
 
 To get access to the node you deployed, you will need to generate a private key.
 
@@ -123,12 +123,12 @@ To create a key, click on the `Private Keys` option, then select the
 `Accessible EC DSA P256` option. Create a name and select the node that you
 deployed in the earlier step.
 
-## Part 2: the smart contract
+## Part 2: The smart contract
 
 Now that you have deployed the needed resources, you can create and deploy the
 Asset Tokenization smart contract.
 
-### 1. create a smart contract set
+### 1. Create a smart contract set
 
 To create a Smart contract set, navigate to the `Dev tools` section in the left
 sidebar. From there, click on `Add a dev tool`, choose `Code Studio` and then
@@ -141,7 +141,7 @@ For more information on how to add a smart contract set,
 
 ![Create a Smart Contract](../../img/developer-guides/asset-tokenization/create-empty-smart-contract.png)
 
-### 2. opening the integrated development environment (ide)
+### 2. Opening the integrated development environment (ide)
 
 To add and edit the smart contract code, you will use the IDE.
 
@@ -150,7 +150,7 @@ To add and edit the smart contract code, you will use the IDE.
 Once the resource has been deployed, select the `IDE` tab and then
 `View in fullscreen mode`.
 
-### 3. adding the smart contract code
+### 3. Adding the smart contract code
 
 With the IDE open in fullscreen, create a new file for your Asset Tokenization
 smart contract.
@@ -348,7 +348,7 @@ contract AssetTokenization is Initializable, UUPSUpgradeable, ERC1155SupplyUpgra
 
 </details>
 
-### 4. change the deployment configuration
+### 4. Change the deployment configuration
 
 With the code pasted in the IDE, you now need to change the deployment settings
 to include the smart contract you have just created.
@@ -379,7 +379,7 @@ export default AssetTokenizationModule;
 
 </details>
 
-### 5. deploy the contract
+### 5. Deploy the contract
 
 With those settings changed, you are now ready to compile and deploy your smart
 contract.
@@ -406,9 +406,9 @@ To deploy your smart contract:
   need it later for the integration.
 </Callout>
 
-## Part 3: connect the resources
+## Part 3: Connect the resources
 
-### 1. upload an image to ipfs
+### 1. Upload an image to ipfs
 
 You will now upload the image to the IPFS storage service you deployed earlier.
 
@@ -439,7 +439,7 @@ Select the `Set pinning` option. This will make sure your file remains on IPFS.
 
 Choose the local node option and click `Apply`.
 
-### 2. get the json-rpc endpoint
+### 2. Get the json-rpc endpoint
 
 To connect to the network that you have created, you need to get your JSON-RPC
 connection URL.
@@ -457,7 +457,7 @@ The URL can be found by:
   integration.
 </Callout>
 
-### 3. creating an access token
+### 3. Creating an access token
 
 To connect to your node and storage, you will need an access token. We recommend
 you use an application access token.
@@ -475,7 +475,7 @@ You will now see your access token. Copy the token since you cannot see it
 again! For more information on how to use access tokens,
 [see our Access Tokens section](/building-with-settlemint/application-access-tokens).
 
-### 4. setup integration studio deployment
+### 4. Setup integration studio deployment
 
 The final step is to create a deployment of the `Integration Studio`.
 
@@ -726,7 +726,7 @@ glbVar.rpcEndpoint);\nglobal.set('abi',glbVar.abi)\n\nreturn msg;", "outputs":
 ```
 </details>
 
-### 5. interact with the smart contract
+### 5. Interact with the smart contract
 
 The Integration Studio allows you to interact with your smart contract and add business logic.
 Go to the newly created `Asset Tokenisation` tab in the Integration Studio.
