@@ -40,7 +40,7 @@ ordered into blocks using mechanisms like **Raft** or **Byzantine Fault Tolerant
 
 ---
 
-### **types of nodes in evm-based blockchains**
+### **Types of nodes in evm-based blockchains**
 
 - **Validator Nodes:** Actively participate in consensus by proposing and
   finalizing new blocks. These nodes maintain ledger integrity by operating
@@ -51,7 +51,7 @@ ordered into blocks using mechanisms like **Raft** or **Byzantine Fault Tolerant
   smart contract execution**. They maintain updated copies of the blockchain
   without finalizing blocks.
 
-### **among non-validator nodes:**
+### **Among non-validator nodes:**
 
 - **Full Nodes:** Store the entire blockchain history and verify transactions
   without participating in block finalization.
@@ -59,7 +59,7 @@ ordered into blocks using mechanisms like **Raft** or **Byzantine Fault Tolerant
   historical blockchain states, making them essential for querying past
   transactions.
 
-### **core components of an evm-based node**
+### **Core components of an evm-based node**
 
 - **Execution Layer (EVM):** Processes smart contracts and updates the
   blockchain state.
@@ -72,7 +72,7 @@ ordered into blocks using mechanisms like **Raft** or **Byzantine Fault Tolerant
 
 ---
 
-### **types of nodes in hyperledger fabric**
+### **Types of nodes in hyperledger fabric**
 
 - **Peer Nodes:** Maintain the ledger and execute smart contracts
   (**Chaincode**).
@@ -91,7 +91,7 @@ Unlike EVM-based blockchains, Fabric nodes **do not store a global state in
 shared memory**. Instead, they use separate **key-value stores and dedicated
 ledgers**, enhancing **privacy and scalability**.
 
-## **certificate authorities**
+## **Certificate authorities**
 
 Certificate Authorities play a key role in the network
 because they dispense X.509 certificates that can be used to identify components
@@ -127,7 +127,7 @@ accepting transactions onto the ledger.
 More information about the Fabric-CA can be found on the official Hyperledger
 Fabric-CA documentation website.
 
-## **identities**
+## **Identities**
 
 The different actors in a blockchain network include peers, orderers,
 client applications, administrators and more. Each of these actors — active
@@ -159,7 +159,7 @@ dual-headed CA, meaning that it is used for issuing MSP and TLS certificates.
 This CA must be used to issue all certificates for the network, orderers, peers,
 administrators, and client applications.
 
-## **peers**
+## **Peers**
 
 Peers are a fundamental element of the network because they host ledgers
 and chaincode (which contain smart contracts) and are therefore one of the
@@ -172,7 +172,7 @@ country).
 More information about peers can be found on the official Hyperledger Fabric
 documentation website.
 
-## **orderers**
+## **Orderers**
 
 An orderer (also known as an "ordering node") does transaction
 ordering, which along with other orderer nodes forms an ordering service.
@@ -202,7 +202,7 @@ Hyperledger Fabric (install them locally and download the node's certificates)
 or by creating a Smart contract set which is a configured web IDE with all the
 necessary files and binaries to interact with your peer node and orderers.
 
-### **core components of a hyperledger fabric node**
+### **Core components of a hyperledger fabric node**
 
 - **Chaincode Layer:** Executes smart contract logic and enforces business
   rules.
@@ -212,7 +212,7 @@ necessary files and binaries to interact with your peer node and orderers.
 - **Membership Service Provider (MSP):** Governs identity verification, access
   policies, and network governance.
 
-## **settlemint platform’s node manager**
+## **Settlemint platform’s node manager**
 
 ![Nodes List](../../../img/platfrom-components/node-list.png)
 
@@ -299,15 +299,15 @@ debugging.
 
 ![Node JSON RPC](../../../img/platfrom-components/node-jsonrpc.png)
 
-#### **key features:**
+#### **Key features:**
 
 - Querying blockchain information (blocks, transactions, accounts).
 - Sending transactions and interacting with smart contracts.
 - Debugging and tracing blockchain activities.
 
-#### **json-rpc methods (grouped by category):**
+#### **Json-rpc methods (grouped by category):**
 
-##### **transaction & gas management**
+##### **Transaction & gas management**
 
 | Method                     | Description                                |
 | -------------------------- | ------------------------------------------ |
@@ -318,7 +318,7 @@ debugging.
 | `eth_sendRawTransaction`   | Sends a signed transaction.                |
 | `eth_sendTransaction`      | Sends a new transaction.                   |
 
-##### **transaction pool**
+##### **Transaction pool**
 
 | Method                           | Description                                  |
 | -------------------------------- | -------------------------------------------- |
@@ -327,7 +327,7 @@ debugging.
 | `txpool_besuPendingTransactions` | Fetches Besu pending transactions.           |
 | `txpool_besuStatistics`          | Provides statistics on the transaction pool. |
 
-##### **blockchain data**
+##### **Blockchain data**
 
 | Method                      | Description                          |
 | --------------------------- | ------------------------------------ |
@@ -338,7 +338,7 @@ debugging.
 | `eth_getTransactionReceipt` | Retrieves transaction receipt.       |
 | `eth_getLogs`               | Fetches logs for a given filter.     |
 
-##### **mining & network**
+##### **Mining & network**
 
 | Method                | Description                             |
 | --------------------- | --------------------------------------- |
@@ -348,7 +348,7 @@ debugging.
 | `eth_syncing`         | Checks if the node is syncing.          |
 | `net_peerCount`       | Returns the number of peers connected.  |
 
-##### **debug & trace**
+##### **Debug & trace**
 
 | Method                    | Description                                        |
 | ------------------------- | -------------------------------------------------- |
@@ -365,7 +365,7 @@ GraphQL provides an efficient querying method for blockchain data.
 
 ![Node GraphQL](../../../img/platfrom-components/node-graphql.png)
 
-#### **benefits:**
+#### **Benefits:**
 
 - Fetch specific blockchain details, such as transaction history.
 - Optimize data retrieval for dApps and front-end applications.
@@ -379,7 +379,7 @@ performance.
 
 ![Node Resources](../../../img/platfrom-components/node-resources.png)
 
-#### **capabilities:**
+#### **Capabilities:**
 
 - Prevent system overload by tracking hardware usage.
 - Ensure proper network connectivity and peer synchronization.
@@ -444,7 +444,7 @@ This section contains **cryptographic details** for network security:
 - **Node’s TLS Certificates & Public Keys** – Verifies node identity.
 - **Private Keys & Certificates** – Used for authentication and encryption.
 
-#### **capabilities:**
+#### **Capabilities:**
 
 - **Secure Network Communication** – TLS encryption for data integrity.
 - **Node Authentication** – Ensures trusted interactions within Fabric.

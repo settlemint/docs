@@ -1,9 +1,88 @@
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
+// Abbreviations configuration - ADD NEW ABBREVIATIONS HERE
+const ABBREVIATIONS = [
+  "CLI",
+  "EVM",
+  "AI",
+  "MCP",
+  "IDE",
+  // Add more abbreviations here in UPPERCASE
+  // Example:
+  // 'API',
+  // 'SDK',
+  // 'URL',
+];
+
+// Create a regex pattern for abbreviations that matches:
+// 1. When they're in parentheses: (CLI)
+// 2. When they're standalone with spaces: " CLI "
+// 3. When they're at start of line with space after: "CLI "
+// 4. When they're at end of line with space before: " CLI"
+const createAbbreviationPattern = (abbr: string) => {
+  return new RegExp(
+    `(?:\\(${abbr}\\))|(?:^${abbr}\\s)|(?:\\s${abbr}\\s)|(?:\\s${abbr}$)`,
+    "gi"
+  );
+};
+
+function preserveAbbreviations(text: string): {
+  text: string;
+  replacements: Map<string, string>;
+} {
+  const replacements = new Map<string, string>();
+  let processedText = text;
+
+  ABBREVIATIONS.forEach((abbr) => {
+    const pattern = createAbbreviationPattern(abbr);
+    processedText = processedText.replace(pattern, (match) => {
+      const placeholder = `__ABBR_${Math.random().toString(36).substr(2, 9)}__`;
+      replacements.set(placeholder, match.replace(abbr, abbr.toUpperCase()));
+      return placeholder;
+    });
+  });
+
+  return { text: processedText, replacements };
+}
+
+function restoreAbbreviations(
+  text: string,
+  replacements: Map<string, string>
+): string {
+  let restoredText = text;
+  replacements.forEach((value, placeholder) => {
+    restoredText = restoredText.replace(placeholder, value);
+  });
+  return restoredText;
+}
+
 // Function to convert text to sentence case
 function toSentenceCase(text: string): string {
-  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  // Handle markdown formatting
+  const startsWithAsterisks = text.startsWith("**");
+  const endsWithAsterisks = text.endsWith("**");
+
+  // Remove formatting for processing
+  let cleanText = text.replace(/\*\*/g, "").trim();
+
+  // Preserve abbreviations
+  const { text: processedText, replacements } =
+    preserveAbbreviations(cleanText);
+
+  // Convert to sentence case
+  let sentenceCaseText =
+    processedText.charAt(0).toUpperCase() +
+    processedText.slice(1).toLowerCase();
+
+  // Restore abbreviations
+  sentenceCaseText = restoreAbbreviations(sentenceCaseText, replacements);
+
+  // Restore formatting
+  if (startsWithAsterisks) sentenceCaseText = "**" + sentenceCaseText;
+  if (endsWithAsterisks) sentenceCaseText = sentenceCaseText + "**";
+
+  return sentenceCaseText;
 }
 
 // Function to process a single line
@@ -13,7 +92,9 @@ function processLine(line: string): string {
   // "# heading"
   // "### 1. heading"
   // "## 42. heading"
-  const headingMatch = line.match(/^(#{1,6})\s*(?:(\d+)\.\s*)?(.+)$/);
+  const headingMatch = line.match(
+    /^(#{1,6})\s*(?:(\d+)\.\s*)?(\*{0,2}.*\*{0,2})$/
+  );
 
   if (headingMatch) {
     const [_, hashes, number, content] = headingMatch;

@@ -36,20 +36,20 @@ Improper handling of private keys can lead to **unauthorized access, irreversibl
 
 SettleMint supports multiple **key storage and generation options** to balance security, usability, and compliance.
 
-### 1. **externally generated private keys**
+### 1. **Externally generated private keys**
 Users can create and manage their private keys **outside of SettleMint** and import them when needed. Common options include:
 - **MetaMask** – A popular Ethereum-based wallet.
 - **Ledger/Trezor** – Secure hardware wallets for private key storage.
 - **OpenSSL & CLI Tools** – For manually generating and managing key pairs.
 - **Cloud-Based Key Vaults** – Secure solutions like AWS KMS, Azure Key Vault, and GCP KMS.
 
-### 2. **private key management in settlemint**
+### 2. **Private key management in settlemint**
 SettleMint provides **built-in private key generation and storage**, allowing users to:
 - **Generate ECDSA P-256, (HD) ECDSA P-256, and HSM private keys** within the platform.
 - **Manage multiple keys** for different blockchain networks.
 - **Securely sign transactions** without exposing private keys externally.
 
-### 3. **custom key material: mnemonic & derivation path**
+### 3. **Custom key material: mnemonic & derivation path**
 For advanced users, SettleMint allows the use of **custom key material**, including:
 - **Mnemonics** – A **12/24-word recovery phrase** that generates a **Hierarchical Deterministic (HD) Wallet**.
 - **Derivation Paths** – Structured key generation paths, such as:
@@ -77,15 +77,15 @@ This setup allows **seamless integration** with **external blockchain developmen
 
 ## Security considerations
 
-### 1. **software-based private key storage**
+### 1. **Software-based private key storage**
 - Keys are stored in **software memory** for easy access.
 - Suitable for **low-risk applications** but vulnerable to potential attacks.
 
-### 2. **hierarchical deterministic (hd) key management**
+### 2. **Hierarchical deterministic (hd) key management**
 - Generates **multiple child keys** from a **single mnemonic seed**.
 - Ensures **structured key backups and recovery**.
 
-### 3. **hardware security modules (hsms)**
+### 3. **Hardware security modules (hsms)**
 - Uses **tamper-resistant hardware devices** for **strong security**.
 - Preferred for **enterprise-grade and regulated environments**.
 
