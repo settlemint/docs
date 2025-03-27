@@ -29,15 +29,15 @@ access, while S3-style storage is better for secure, private, and
 high-performance file delivery.
 
 To get started, navigate to the relevant application in your SettleMint
-workspace and open the Storage section from the left-hand menu. Click Add
-Storage, which opens a configuration form. Choose the storage type—either IPFS
+workspace and open the storage section from the left-hand menu. Click add
+storage, which opens a configuration form. Choose the storage type—either IPFS
 for decentralized or MinIO for private object storage. Assign a name and
 configure your deployment settings like region, provider, and resource pack.
 Once confirmed, the storage service will be deployed and available for use.
 
 Once provisioned, you can access and manage your storage instance from the
-Manage Storage section. Here, you will be able to view the storage endpoint,
-health status, and metadata configuration. If using IPFS, you’ll be interacting
+manage storage section. Here, you will be able to view the storage endpoint,
+health status, and metadata configuration. If using IPFS, you'll be interacting
 with content hashes (CIDs), while MinIO offers an S3-compatible interface where
 files are stored under buckets and can be accessed via signed URLs.
 
@@ -85,7 +85,7 @@ Below are separate use case tables for each.
 
 ---
 
-## 🌐 ipfs (interplanetary file system)
+## 🌐 IPFS (Interplanetary File System)
 
 IPFS is a decentralized protocol for storing and sharing files in a peer-to-peer
 network. Files are addressed by their content hash (CID), ensuring immutability
@@ -106,9 +106,9 @@ and verification.
 
 ---
 
-## ☁️ minio s3 (simple storage service)
+## ☁️ MinIO S3 (Simple Storage Service)
 
-MiniO S3 is a centralized cloud storage platform that offers speed, scalability,
+MinIO S3 is a centralized cloud storage platform that offers speed, scalability,
 and rich security features. It is especially suitable for private or
 enterprise-grade applications.
 
@@ -149,14 +149,14 @@ decentralization.
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
-    Navigate to the **application** where you want to add storage. Click **Storage** in the left navigation, and then click **Add storage**. This opens a form.
+    Navigate to the **application** where you want to add storage. Click **storage** in the left navigation, and then click **add storage**. This opens a form.
 
     <Steps>
-      ### Configure Storage
+      ### Configure storage
       1. Choose storage type (IPFS or MinIO)
-      2. Choose a **Storage name**
+      2. Choose a **storage name**
       3. Configure deployment settings
-      4. Click **Confirm**
+      4. Click **confirm**
     </Steps>
 
   </Tab>
@@ -185,7 +185,7 @@ decentralization.
     For a full example of how to connect to a storage using the SDK, see the [MinIO SDK API Reference](https://www.npmjs.com/package/@settlemint/sdk-minio#api-reference) or [IPFS SDK API Reference](https://www.npmjs.com/package/@settlemint/sdk-ipfs#api-reference).
 
     <Callout type="info">
-    Get your access token from the Platform UI under User Settings → API Tokens.
+    Get your access token from the platform UI under **user settings → API tokens**.
     </Callout>
 
     <Callout type="info">
@@ -201,7 +201,7 @@ decentralization.
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
   <Tab value="Platform UI">
-    Navigate to your storage and click **Manage storage** to:
+    Navigate to your storage and click **manage storage** to:
     - View storage details and status
     - Monitor health
     - Access storage interface
@@ -255,7 +255,8 @@ decentralization.
   lineHeight: "1.5",
   textAlign: "left"
 }}>
-Congratulations.!!
+
+Congratulations!
 
 You have succesfully added S3 and IPFS storage to your application environment.
 

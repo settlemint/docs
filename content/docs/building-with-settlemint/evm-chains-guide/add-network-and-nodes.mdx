@@ -1,6 +1,6 @@
 ---
-title: "Add network and nodes"
-description: Guide to adding a Blockchain Network to your application
+title: Add Network and nodes
+description: Guide to adding a blockchain network to your application
 ---
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
@@ -22,17 +22,17 @@ import React from "react";
 }}>
   Summary  
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
-To build a blockchain application, the first step is setting up a blockchain network with the correct number of validating and non-validating nodes. You can either deploy a permissioned network such as Hyperledger Besu or GoQuorum, or connect to an L1 or L2 Public Network like Ethereum, Polygon PoS, Hedera, Polygon zkEVM, Avalanche, Arbitrum, or Optimism. Both mainnet and testnet versions are available for public networks.
+To build a blockchain application, the first step is setting up a blockchain network. You can either deploy a permissioned network such as Hyperledger Besu or Quorum, or connect to an existing L1 or L2 public network like Ethereum, Polygon PoS, Hedera, Polygon zkEVM, Avalanche, Arbitrum, or Optimism. Both mainnet and testnet versions are available for public networks.
 
-When creating an application on SettleMint, you will be prompted to select a network and assign it a name. By default, a first validating node is deployed along with the network, and you must assign a name to it as well. You may optionally provide an EC DSA P256 private key to use as custom key material for the node identity. If no key is provided, SettleMint will generate one automatically and save it in your private keys.
+When creating an application on SettleMint, you will be prompted to select a network type and assign it a name. For permissioned networks, you control the entire network infrastructure, including validator nodes. A first validating node is automatically deployed along with your permissioned network. For public networks, the validators are already established by the network's consensus participants, and SettleMint will deploy an archive node that connects to the chosen public network.
 
 In SettleMint-managed (SaaS) mode, you will need to choose between a shared or dedicated cluster for deployment. You can also select a cloud provider and a data center of your choice. Additionally, you will have the option to select from small, medium, or large resource packs, which can be scaled up or down later as needed.
 
-Before deploying the network, you will have the option to configure network settings and customize the genesis file. For most use cases, it is recommended to keep the default settings. Once configured, you can proceed with deployment. After a few minutes, your network manager and first node will be fully operational.
+For permissioned networks, you can configure network settings and customize the genesis file before deployment. For most use cases, keeping the default settings is recommended. After deployment, your network manager and first node will be fully operational within minutes.
 
-To enhance reliability, you should add more nodes to your network for fault tolerance. The best practice is to deploy four validator nodes and two non-validator nodes. Once the nodes are set up, adding a load balancer will help distribute network traffic efficiently and improve performance.
+To enhance reliability in permissioned networks, you should add more nodes for fault tolerance. The best practice is to deploy four validator nodes and two non-validator nodes to ensure Byzantine fault tolerance. For public networks, you might want to deploy additional archive or full nodes to improve reliability of your connection to the network.
 
-Once your network, nodes, and load balancer are running, you can access the Insights tab to integrate monitoring tools. For permissioned networks, you can add Blockscout Blockchain Explorer to track transactions and network activity. If you are using public EVM networks, publicly available blockchain explorers can be used instead.
+Once your network and nodes are running, adding a load balancer will help distribute network traffic efficiently and improve performance. You can then access the Insights tab to integrate monitoring tools. For permissioned networks, you can add Blockscout blockchain explorer to track transactions and network activity. If you are using public networks, you can use their publicly available blockchain explorers instead.
 
 </div>
 </div>
@@ -41,13 +41,13 @@ Once your network, nodes, and load balancer are running, you can access the Insi
 Before setting up a blockchain network, you need to have an application created
 in your workspace. Applications provide the organizational context for all your
 blockchain resources including networks, nodes, and development tools. If you haven't created an application yet, follow our
-[Create Application](/building-with-settlemint/evm-chains-guide/create-an-organization-and-application) guide
+[create application](/building-with-settlemint/evm-chains-guide/create-an-application) guide
 first.
 
-## 1. Add blockchain network
+## 1. Add a blockchain network
 
 For EVM Chains, SettleMint offers Hyperledger Besu and Quorum for permissioned networks and a bunch of public networks to choose from. 
-For the list of supported networks please refer - [Supported Networks](/platform-components/blockchain-infrastructure/network-manager#supported-blockchain-network-protocols)
+For the list of supported networks please refer - [supported networks](/platform-components/blockchain-infrastructure/network-manager#supported-blockchain-network-protocols)
 
 ![Select Network](../../../img/building-with-settlemint/select-network.png)
 
@@ -73,15 +73,15 @@ You can perform the same action via the SettleMint SDK CLI as well -
 
     <Tab value="Platform UI">
     <div className="leading-tight">
-      <h3 className="mb-1">Navigate to Application</h3>
-      <p>Navigate to the <strong>application</strong> where you will create the network.</p>
+      <h3 className="mb-1">Navigate to application</h3>
+      <p>Go to the application containing your network.</p>
 
-      <h3 className="mb-1">Add Network</h3>
+      <h3 className="mb-1">Add network</h3>
       <p>Click <strong>Add blockchain network</strong> to open a form.</p>
 
-      <h3 className="mb-1">Configure Network</h3>
+      <h3 className="mb-1">Configure network</h3>
       <ol className="list-decimal list-inside leading-tight">
-        <li><strong>Select the protocol</strong> of your choice and click <strong>Continue</strong>.</li>
+        <li>Select the <strong>protocol</strong> of your choice and click <strong>Continue</strong>.</li>
         <li>Choose a <strong>network name</strong> and a <strong>node name</strong>.</li>
         <li>Configure your deployment settings and network parameters.</li>
         <li>Click <strong>Confirm</strong> to add the network.</li>
@@ -235,13 +235,13 @@ Nodes can also be added using SettleMint SDK CLI using the following commands-
 
   <Tab value="Platform UI">
     <div className="leading-tight">
-      <h3 className="mb-1">Navigate to Application</h3>
+      <h3 className="mb-1">Navigate to application</h3>
       <p>Go to the application containing your network.</p>
 
-      <h3 className="mb-1">Access Nodes</h3>
+      <h3 className="mb-1">Access nodes</h3>
       <p>Click <strong>Blockchain nodes</strong> in the left navigation.</p>
 
-      <h3 className="mb-1">Configure Node</h3>
+      <h3 className="mb-1">Configure node</h3>
       <ol className="list-decimal list-inside leading-tight">
         <li>Click <strong>Add a blockchain node</strong>.</li>
         <li>Select the blockchain network to add this node to.</li>
@@ -345,21 +345,21 @@ You can view node details and status, can monitor node health, pause and restart
 
 ## 3. Add load balancer
 
-To add a load balancer, navigate to the **Blockchain Nodes** section in the SettleMint platform and select your deployed network. Click “Add Load Balancer”, choose the region, provider, and desired resource configuration. Once deployed, the load balancer helps distribute traffic efficiently, improving network reliability and performance.
+To add a load balancer, navigate to the **Blockchain nodes** section in the SettleMint platform and select your deployed network. Click "Add load balancer", choose the region, provider, and desired resource configuration. Once deployed, the load balancer helps distribute traffic efficiently, improving network reliability and performance.
 
 When selecting nodes to connect to the load balancer, ensure you include at least two non-validator nodes for optimal redundancy. The load balancer can be configured to route requests to specific nodes based on workload distribution, ensuring high availability and fault tolerance in your blockchain network.
 
-![Add Load Balancer](../../../img/building-with-settlemint/evm-load-balancer.png)
+![Add load balancer](../../../img/building-with-settlemint/evm-load-balancer.png)
 
 ## 4. Add blockchain explorer
 
 To add blockscout blockchain explorer for EVM based permissioned networks, navigate to **Insights** via the left menu or the dashboard tile.
 For public networks, you may use publicly available blockchain explorers for the respective network. 
 
-![Add Insights](../../../img/building-with-settlemint/add-insights.png)
-![Insight Details](../../../img/building-with-settlemint/insight-details.png)
+![Add insights](../../../img/building-with-settlemint/add-insights.png)
+![Insight details](../../../img/building-with-settlemint/insight-details.png)
 
-### For public networks, please use the following blockchain explorers-
+### For public networks, please use the following blockchain explorers
 
 | **Network**          | **Mainnet Explorer** | **Testnet Explorer** |
 |----------------------|---------------------|----------------------|
@@ -383,7 +383,7 @@ For public networks, you may use publicly available blockchain explorers for the
   lineHeight: "1.5",
   textAlign: "left"
 }}>
-Congratulations.!!
+Congratulations!
 
 You have succesfully built the blockchain infrastructure layer for you application. 
 From here you can proceed for creating or setting up private keys for transaction signer and user wallets.

@@ -1,5 +1,5 @@
 ---
-title: "Create an application"
+title: Create an application
 description: Guide to creating a blockchain application on SettleMint
 ---
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
@@ -19,7 +19,7 @@ import { Card } from "fumadocs-ui/components/card";
 }}>
   Summary  
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px", marginBottom: "2px" }}>
-To get started on the SettleMint platform, you need to create an organization by going to the homepage or clicking the grid icon, then selecting “Create new organization.” You’ll need to enter a name and complete the billing setup using Stripe to activate it. 
+To get started on the SettleMint platform, you need to create an organization by going to the homepage or clicking the grid icon, then selecting "create new organization." You'll need to enter a name and complete the billing setup using Stripe to activate it. 
 
 Once your organization is ready, you need to invite your team members by entering their email addresses, selecting their roles, and sending the invitation. After that, you need to create an application within the organization by giving it a name and confirming. 
 
@@ -27,13 +27,13 @@ You can manage your organization and applications from the dashboard—change na
 </div>
 </div>
 
-## How to create an organization and application in settlemint platform
+## How to create an organization and application in SettleMint platform
 
-An organization is the highest level of hierarchy in SettleMint. It's at this level that you can  create and manage blockchain applications, invite team members to collaborate and manage billing. 
+An organization is the highest level of hierarchy in SettleMint. It's at this level that you can create and manage blockchain applications, invite team members to collaborate and manage billing. 
 
-![Organization and Applications](../../../img/building-with-settlemint/organization_and_application.png)
+![Organization and applications](../../../img/building-with-settlemint/organization_and_application.png)
 
-![Add Organization](../../../img/building-with-settlemint/add-org.png)
+![Add organization](../../../img/building-with-settlemint/add-org.png)
 
 You created your first organization when you signed up to use the SettleMint
 platform, but you can create as many organizations as you want, e.g. for your
@@ -43,11 +43,11 @@ work, manage collaboration, and keep your invoices clearly organized.
 <div className="flex flex-col md:flex-row items-start gap-8">
 
   <div className="md:w-1/2">
-    <h2>Create an Organization</h2>
+    <h2>Create an organization</h2>
 
     Navigate to the <strong>homepage</strong>, or click the <strong>grid icon</strong> in the upper right corner.
 
-    Click <strong>Create new organization</strong>. This opens a form. Follow these steps to create your organization:
+    Click <strong>create new organization</strong>. This opens a form. Follow these steps to create your organization:
 
     Choose a <strong>name</strong> for your organization. Choose a name that is easily
     recognizable in your dashboards, e.g. your company name, department name, team name, etc.
@@ -55,7 +55,7 @@ work, manage collaboration, and keep your invoices clearly organized.
 
   </div>
   <div className="md:w-1/2">
-    ![Add Organization](../../../img/building-with-settlemint/add-organization.png)
+    ![Add organization](../../../img/building-with-settlemint/add-organization.png)
   </div>
 </div>
 
@@ -65,7 +65,7 @@ work, manage collaboration, and keep your invoices clearly organized.
   <div className="flex flex-col justify-start pt-2">
   <p>Enter **billing information**. SettleMint creates a billing account for this
 organization. You will be billed monthly for the resources you use within this
-organization. Provide your billing details securely via Stripe, with support for Visa, Mastercard, and Amex, to activate your organization. Follow the prompts to complete the setup and gain full access to SettleMint’s blockchain development tools. Ensure all details are accurate to enable a smooth onboarding experience. Your organization is billed monthly, with the invoice dates set for 1st of every month.</p>
+organization. Provide your billing details securely via Stripe, with support for Visa, Mastercard, and Amex, to activate your organization. Follow the prompts to complete the setup and gain full access to SettleMint's blockchain development tools. Ensure all details are accurate to enable a smooth onboarding experience. Your organization is billed monthly, with the invoice dates set for 1st of every month.</p>
   </div>
 
   {/* Right Column - Image */}
@@ -74,7 +74,7 @@ organization. Provide your billing details securely via Stripe, with support for
   </div>
 </div>
 
- Click **Confirm** to go to the organization dashboard. From here,
+ Click **confirm** to go to the organization dashboard. From here,
 you can create your first application in this organization. The dashboard will show you a summary of your
 organization's applications, the members in this organization, and a status of
 the resource costs for the current month.
@@ -85,18 +85,18 @@ this organization, with no limitations.
 
 ## Invite new organization members
 
-![Invite Members](../../../img/building-with-settlemint/invite-member-to-org.png)
+![Invite members](../../../img/building-with-settlemint/invite-member-to-org.png)
 
-Navigate to the **Members section** of your organization, via the homepage, or
+Navigate to the **members section** of your organization, via the homepage, or
 via your organization dashboard.
 
 Follow these steps to invite new members to your organization:
 
-1. Click **Invite new member**.
+1. Click **invite new member**.
 2. Enter the **email adress** of the person you want to invite.
 3. Select their **role**, i.e. whether they will be an administrator or a user.
 4. Optionally, you can add a **message** to be included in the invitation email.
-5. Click **Confirm** to go to the list of your organization's members. Your
+5. Click **confirm** to go to the list of your organization's members. Your
    email invitation has now been sent, and you see in the list that it is
    pending.
 
@@ -104,13 +104,13 @@ Follow these steps to invite new members to your organization:
 
 Navigate to the **organization dashboard**.
 
-Click **Manage organization** to see the available actions. You can only perform
+Click **manage organization** to see the available actions. You can only perform
 these actions if you have administrator rights for this organization.
 
-- **Change name** - Changes the organization name without any further impact.
-- **Delete organization** - Removes the organization from the platform.
+- **change name** - Changes the organization name without any further impact.
+- **delete organization** - Removes the organization from the platform.
 
-On Organization Dashboard
+On organization dashboard
 - See all applications in that organization.
 - See all members of the organization
 - See all the internal applications and clients if in partner mode
@@ -136,21 +136,21 @@ contract sets and any other related blockchain resource.
 
 ## How to create a new application
 
-<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
-  <Tab value="Platform UI">
-    ![Create an App](../../../img/building-with-settlemint/create-application.png)
+<Tabs items={['platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="platform UI">
+    ![Create an app](../../../img/building-with-settlemint/create-application.png)
 
     <Steps>
-      ### Access Application Creation
+      ### Access application creation
       In the upper right corner of any page, click the **grid icon**
 
-      ### Navigate & Create
+      ### Navigate & create
       - Navigate to your workspace
-      - Click **Create new application**
+      - Click **create new application**
 
-      ### Configure Application
+      ### Configure application
       - Choose a **name** for your application
-      - Click **Confirm** to create the application
+      - Click **confirm** to create the application
     </Steps>
 
   </Tab>
@@ -207,7 +207,7 @@ contract sets and any other related blockchain resource.
     ```
 
     <Callout type="info">
-    Get your access token from the Platform UI under User Settings → API Tokens.
+    Get your access token from the platform UI under user settings → API tokens.
     </Callout>
 
   </Tab>
@@ -215,15 +215,15 @@ contract sets and any other related blockchain resource.
 
 ## Manage an application
 
-The SettleMint Platform Dashboard provides a centralized view of blockchain infrastructure, offering real-time insights into system components. With health status indicators, including error and warning counts, it ensures system stability while enabling users to proactively address potential issues. Resource usage tracking helps manage costs efficiently, providing month-to-date expense insights. 
+The SettleMint platform dashboard provides a centralized view of blockchain infrastructure, offering real-time insights into system components. With health status indicators, including error and warning counts, it ensures system stability while enabling users to proactively address potential issues. Resource usage tracking helps manage costs efficiently, providing month-to-date expense insights. 
 
-Each component features a “Details” link for quick access to in-depth information, while the intuitive navigation panel allows seamless access to key modules such as Audit Logs, Access Tokens, and Insights. Built-in support options further enhance usability, ensuring users can quickly troubleshoot and resolve issues. 
+Each component features a "details" link for quick access to in-depth information, while the intuitive navigation panel allows seamless access to key modules such as audit logs, access tokens, and insights. Built-in support options further enhance usability, ensuring users can quickly troubleshoot and resolve issues. 
 
-![Application Dashboard](../../../img/building-with-settlemint/app-dashboard.png)
+![Application dashboard](../../../img/building-with-settlemint/app-dashboard.png)
 
-<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
-  <Tab value="Platform UI">
-    Navigate to your application and click **Manage app** to see available actions:
+<Tabs items={['platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="platform UI">
+    Navigate to your application and click **manage app** to see available actions:
     - View application details
     - Update application name
     - Delete application
@@ -270,7 +270,7 @@ Each component features a “Details” link for quick access to in-depth inform
   lineHeight: "1.5",
   textAlign: "left"
 }}>
-Congratulations.!!
+Congratulations!
 
 You have successfully created an organization and added an application within it. From here, you can proceed to deploy a network, add nodes, a load balancer, and a blockchain explorer
 </div>

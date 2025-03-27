@@ -26,7 +26,7 @@ After creating a key, it must be attached to at least one node to enable
 transaction signing—this is critical for smart contract deployment. Without it,
 the deployment will fail.
 
-SettleMint also offers User Wallets, a scalable solution that generates wallets
+SettleMint also offers user wallets, a scalable solution that generates wallets
 from a single HD ECDSA 256 key. Each user gets a unique address for privacy and
 parallel transaction support. You can create user wallets once your HD key is
 deployed and running, and fund them as needed for gas-based transactions.
@@ -57,14 +57,14 @@ to use the "remote" default option for signing.
 
 ## Create a private key
 
-To add a private key in the SettleMint platform, navigate to the Private keys
+To add a private key in the SettleMint platform, navigate to the private keys
 section and click Create a private key. You'll be prompted to select the type of
 private key—ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
 ![Add Private Key](../../../img/building-with-settlemint/add-private-key.png)
 
 <Tabs items={['SDK CLI', 'Platform UI','SDK JS']}>
   <Tab value="Platform UI">
-    Navigate to your **application**, click **Private keys** in the left navigation, and then click **Create a private key**. This opens a form.
+    Navigate to your **application**, click **private keys** in the left navigation, and then click **create a private key**. This opens a form.
 
     Follow these steps to create the private key:
 
@@ -75,7 +75,7 @@ private key—ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
 
     2. Choose a **name** for your private key
     3. Select the **nodes** on which you want the key to be active
-    4. Click **Confirm** to create the key
+    4. Click **confirm** to create the key
 
   </Tab>
   
@@ -141,14 +141,14 @@ involving deployment, contract interactions, or any state-changing blockchain
 transaction.
 
 **How to attach a private key to a node** 
-1. Go to the Private keys section of
+1. Go to the private keys section of
 your SettleMint workspace. 
 2. Click on the private key (e.g., "Deployer") you
 wish to use for signing transactions. 
-3. Navigate to the Nodes tab of that
+3. Navigate to the nodes tab of that
 private key's page. 
 4. You'll see a list of available nodes in your network
-(Validator and RPC nodes). 
+(validator and RPC nodes). 
 5. Select the nodes that should use this key for
 transaction signing. These will usually be RPC nodes or validators depending on
 your setup. 
@@ -167,7 +167,7 @@ before deploying a smart contract. In most cases, attaching it to an RPC node is
 
 <Tabs items={['SDK CLI', 'Platform UI', 'SDK JS']}>
   <Tab value="Platform UI">
-    1. Navigate to your application's **Private keys** section
+    1. Navigate to your application's **private keys** section
     2. Click on a private key to:
        - View details and status
        - Manage node associations
@@ -232,8 +232,8 @@ The HBAR balance will appear in your SettleMint wallet once the transaction is p
 For funding your wallet:
 
 1. Click the **private key** in the overview to see detailed information
-2. Open the **Balances tab**
-3. Click **Fund**
+2. Open the **balances tab**
+3. Click **fund**
 4. Scan the **QR code** with your wallet/exchange to fund the key
 
 <Callout type="info">
@@ -243,7 +243,7 @@ For funding your wallet:
 
 ## User wallets
 
-SettleMint's **User Wallets** feature offers a production-ready solution for
+SettleMint's **user wallets** feature offers a production-ready solution for
 managing infinite wallets with efficiency and scalability. This tool empowers
 users with seamless wallet generation, ensuring **cost-effective management**
 and eliminating additional expenses. By generating **unique addresses for each
@@ -255,19 +255,19 @@ the corresponding user private key.
 
 ## Create and setup user wallets
 
-To set up your user wallets, navigate to your application, click **Private
-keys** in the left navigation, and then click **Create a private key**. This
+To set up your user wallets, navigate to your application, click **private
+keys** in the left navigation, and then click **create a private key**. This
 opens a form.
 
 Select **HD ECDSA P256** as the private key type then, enter a **name** for your
 deployment. You can also select the nodes or load balancers on which you want to
 enable the user wallets. You can change this later if you want to use your user
-wallets on a different node. Click **Confirm** to deploy the wallet.
+wallets on a different node. Click **confirm** to deploy the wallet.
 
-When your deployment status is **Running**, you can click on it to check the
-details. You can see the Mnemonic from which the user wallets are generated
-under **Key material**. Upon initialization, the User Wallets section is empty.
-To create your first user wallet, click on **Create a user wallet**.
+When your deployment status is **running**, you can click on it to check the
+details. You can see the mnemonic from which the user wallets are generated
+under **key material**. Upon initialization, the user wallets section is empty.
+To create your first user wallet, click on **create a user wallet**.
 
 ![Create User Wallet](../../../img/building-with-settlemint/user-wallet.png)
 
@@ -285,9 +285,10 @@ the address displayed in the list.
   lineHeight: "1.5",
   textAlign: "left"
 }}>
-Congratulations.!!
 
-You have successfully created Private Keys and User Wallets.
+Congratulations!
+
+You have successfully created private keys and user wallets.
 
 You have also attached private keys to node transaction signer and you are ready
 for smart contract development and deployment.

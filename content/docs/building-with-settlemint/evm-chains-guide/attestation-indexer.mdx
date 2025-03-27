@@ -21,27 +21,27 @@ import { Card } from "fumadocs-ui/components/card";
   Summary  
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
 
-The Ethereum Attestation Indexer is a tool that allows you to track, store, and query verifiable claims (attestations) made using the Ethereum Attestation Service (EAS). It provides a GraphQL API to easily fetch attestation data based on schemas you define.
+The ethereum attestation indexer is a tool that allows you to track, store, and query verifiable claims (attestations) made using the ethereum attestation service (EAS). It provides a GraphQL API to easily fetch attestation data based on schemas you define.
 
-To use it, you’ll first deploy the necessary EAS smart contracts (Schema Registry and EAS) on your blockchain network using SettleMint’s Code Studio and Task Manager. Once deployed, you can register custom schemas and create attestations that follow those schema structures.
+To use it, you'll first deploy the necessary EAS smart contracts (schema registry and EAS) on your blockchain network using SettleMint's code studio and task manager. Once deployed, you can register custom schemas and create attestations that follow those schema structures.
 
-After setup, the Attestation Indexer can be added via the Middleware section of your application. Once connected to your contract addresses, it will index attestation events, and you can use the built-in GraphQL UI or API access to query them in real time.
+After setup, the attestation indexer can be added via the middleware section of your application. Once connected to your contract addresses, it will index attestation events, and you can use the built-in GraphQL UI or API access to query them in real time.
 
 </div>
 </div>
 
-## 1. Introduction to eas
+## 1. Introduction to EAS
 
-### What is eas?
+### What is EAS?
 
-Ethereum Attestation Service (EAS) is a decentralized protocol that allows users
+Ethereum attestation service (EAS) is a decentralized protocol that allows users
 to create, verify, and manage attestations (verifiable claims) on the Ethereum
 blockchain. It provides a standardized way to make claims about data,
 identities, or events that can be independently verified by others.
 
-![Add Attestation Indexer](../../../img/building-with-settlemint/add-attestation-indexer.png)
+![Add attestation indexer](../../../img/building-with-settlemint/add-attestation-indexer.png)
 
-### Why use eas?
+### Why use EAS?
 
 - **Decentralization**: No central authority is needed to verify claims.
 - **Interoperability**: Standardized schemas allow for cross-platform
@@ -53,7 +53,7 @@ identities, or events that can be independently verified by others.
   width="100%"
   height="400"
   src="https://www.youtube.com/embed/DMGj5GNll0k"
-  title="Understanding Ethereum Attestation Service (EAS)"
+  title="Understanding ethereum attestation service (EAS)"
   frameBorder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
   allowFullScreen
@@ -71,18 +71,18 @@ identities, or events that can be independently verified by others.
    - Schemas define the structure and data types of attestations, ensuring that
      all attestations conform to a predefined format.
 
-2. **EAS Contract**:
+2. **EAS contract**:
 
    - The main contract that handles the creation and management of attestations.
    - It interacts with the `SchemaRegistry` to ensure that attestations adhere
      to the defined schemas.
 
-![Configure Attestation Indexer](../../../img/building-with-settlemint/configure-attestation-indexer.png)
+![Configure attestation indexer](../../../img/building-with-settlemint/configure-attestation-indexer.png)
 
 3. **Attestations**:
 
    - Verifiable claims stored on the blockchain.
-   - Created and managed by the `EAS Contract`.
+   - Created and managed by the `EAS contract`.
 
 4. **Resolvers**:
    - Optional contracts that provide additional validation logic for
@@ -96,11 +96,11 @@ identities, or events that can be independently verified by others.
 graph TD
     SchemaRegistry["SchemaRegistry"]
     UsersSystems["Users/Systems"]
-    EASContract["EAS Contract"]
+    EASContract["EAS contract"]
     Verifiers["Verifiers"]
     Attestations["Attestations"]
 
-    SchemaRegistry -- "Defines Data Structure" --> EASContract
+    SchemaRegistry -- "Defines data structure" --> EASContract
     UsersSystems -- "Interact" --> EASContract
     EASContract -- "Creates" --> Attestations
     Verifiers -- "Verify" --> Attestations
@@ -108,12 +108,12 @@ graph TD
 
 ### Workflow
 
-1. **Schema Definition**: Start by defining a schema using the
+1. **Schema definition**: Start by defining a schema using the
    **SchemaRegistry** contract.
-2. **Attestation Creation**: Use the **EAS Contract** to create attestations
+2. **Attestation creation**: Use the **EAS contract** to create attestations
    based on the schema.
-3. **Optional Validation**: Resolvers can be used for further validation logic.
-4. **On-chain Storage**: Attestations are securely stored and retrievable
+3. **Optional validation**: Resolvers can be used for further validation logic.
+4. **On-chain storage**: Attestations are securely stored and retrievable
    on-chain.
 
 ---
@@ -125,41 +125,41 @@ project.
 
 ### Adding the smart contract set
 
-1. **Navigate to the Dev tools Section**: Go to the application dashboard of the
+1. **Navigate to the dev tools section**: Go to the application dashboard of the
    application where you want to deploy the EAS contracts, then navigate to the
-   **Dev tools** section in the left sidebar.
-2. **Select the Attestation Service Set**: From there, click on **Add a dev
-   tool**, choose **Code Studio** and then **Smart Contract Set**. Choose the
-   **Attestation Service** template.
+   **dev tools** section in the left sidebar.
+2. **Select the attestation service set**: From there, click on **add a dev
+   tool**, choose **code studio** and then **smart contract set**. Choose the
+   **attestation service** template.
 3. **Customize**: Modify the set as needed for your specific project.
 4. **Save**: Save the configuration.
 
 For detailed instructions, visit the
-[Smart Contract Sets Documentation](/platfrom-components/dev-tools/code-studio/smart-contract-sets/smart-contract-sets).
+[smart contract sets documentation](/platfrom-components/dev-tools/code-studio/smart-contract-sets/smart-contract-sets).
 
 ---
 
 ### Deploying the contracts
 
-Once the contract set is ready, you can deploy it using either the **Task Menu**
-in the SettleMint IDE or via the **Terminal**.
+Once the contract set is ready, you can deploy it using either the **task menu**
+in the SettleMint IDE or via the **terminal**.
 
 <Tabs>
-<Tab value="task-menu" label="Task Menu">
+<Tab value="task-menu" label="Task menu">
 
 #### Deploy using the task menu
 
-1. **Open the Task Menu**:
+1. **Open the task menu**:
 
-   - In the SettleMint Integrated IDE, access the **Task Menu** from the
+   - In the SettleMint integrated IDE, access the **task menu** from the
      sidebar.
 
-2. **Select Deployment Task**:
+2. **Select deployment task**:
 
-   - Choose the task corresponding to the **Hardhat- Reset & Deploy to platform
+   - Choose the task corresponding to the **Hardhat- reset & deploy to platform
      network** module.
 
-3. **Monitor Deployment Logs**:
+3. **Monitor deployment logs**:
    - The terminal output will display the deployment progress and contract
      addresses.
 
@@ -168,7 +168,7 @@ in the SettleMint IDE or via the **Terminal**.
 
 #### Deploy using the terminal
 
-1. **Prepare the Deployment Module**:  
+1. **Prepare the deployment module**:  
    Ensure the module is defined in `ignition/modules/main.ts`:
 
    ```typescript
@@ -184,14 +184,14 @@ in the SettleMint IDE or via the **Terminal**.
    export default CustomEASModule;
    ```
 
-2. **Run the Deployment Command**:  
+2. **Run the deployment command**:  
    Execute the following command in your terminal:
 
    ```bash
    scs-btp hardhat deploy --module ignition/modules/main.ts
    ```
 
-3. **Monitor Deployment Logs**:
+3. **Monitor deployment logs**:
    - The terminal output will display the deployment progress and contract
      addresses.
 
@@ -345,7 +345,7 @@ attestations. You can verify attestations using one of the following methods:
 
 1. **Using the EAS SDK**: Perform lightweight, off-chain verification
    programmatically.
-2. **Using a Custom Smart Contract Resolver**: Add custom on-chain validation
+2. **Using a custom smart contract resolver**: Add custom on-chain validation
    logic for attestations.
 
 ### Choose your verification method
@@ -388,7 +388,7 @@ async function verifyAttestation(attestationUID) {
   }
 
   // Show the attestation details
-  console.log("✅ Attestation Details:");
+  console.log("✅ Attestation details:");
   console.log("Attester:", attestation.attester); // Who created this attestation
   console.log("Data:", attestation.data); // The actual attested data
   console.log("Revoked:", attestation.revoked ? "Yes" : "No"); // Is it still valid?
@@ -401,10 +401,10 @@ verifyAttestation("YOUR_ATTESTATION_UID_HERE");
 ##### Key points
 
 - **Lightweight**: Suitable for most off-chain verifications.
-- **No Custom Logic**: Fetches and verifies data stored in EAS.
+- **No custom logic**: Fetches and verifies data stored in EAS.
 
 </Tab>
-<Tab value="custom-resolver" label="Using a Custom Smart Contract Resolver">
+<Tab value="custom-resolver" label="Using a custom smart contract resolver">
 
 #### Verification using a custom smart contract resolver
 
@@ -508,8 +508,8 @@ console.log("✅ Is the attestation valid?", isValid);
 
 ##### Key points
 
-- **Customizable Rules**: Add your own validation logic to the resolver.
-- **On-Chain Validation**: Ensures attestations meet specific conditions before
+- **Customizable rules**: Add your own validation logic to the resolver.
+- **On-chain validation**: Ensures attestations meet specific conditions before
   they are considered valid.
 
 </Tab>
@@ -520,19 +520,19 @@ console.log("✅ Is the attestation valid?", isValid);
 ### When to use each method?
 
 - **EAS SDK**: Best for off-chain applications where simple validation suffices.
-- **Custom Resolver**: Use for on-chain validation with additional rules, such
+- **Custom resolver**: Use for on-chain validation with additional rules, such
   as verifying trusted attesters or specific data formats.
 
 ## 8. Using the attestation indexer
 
 ### Setup attestation indexer
 
-1. Go to your application's **Middleware** section
-2. Click "Add a middleware"
-3. Select "Attestation Indexer"
+1. Go to your application's **middleware** section
+2. Click "add a middleware"
+3. Select "attestation indexer"
 4. Configure with your contract addresses:
-   - EAS Contract: `EAS contract address`
-   - Schema Registry: `Schema Registry contract address`
+   - EAS contract: `EAS contract address`
+   - Schema registry: `Schema registry contract address`
 
 ### Querying attestations
 
@@ -540,10 +540,10 @@ console.log("✅ Is the attestation valid?", isValid);
 
 After deployment:
 
-1. Go to your Attestation Indexer
-2. Click "Connections" tab
+1. Go to your attestation indexer
+2. Click "connections" tab
 3. You'll find your GraphQL endpoint URL
-4. Create an Application Access Token (Settings → Application Access Tokens)
+4. Create an application access token (settings → application access tokens)
 
 #### Using the graphql ui
 
@@ -600,17 +600,17 @@ this guide.
 
 The flow includes:
 
-- EAS Configuration Setup
-- Schema Registration
-- Attestation Creation
-- Attestation Verification
+- EAS configuration setup
+- Schema registration
+- Attestation creation
+- Attestation verification
 - Debug nodes for monitoring results
 
 ### Installation
 
-1. In Integration Studio, go to Import → Clipboard
+1. In integration studio, go to import → clipboard
 2. Paste the flow JSON below
-3. Click Import
+3. Click import
 
 <details>
 <summary>Click to view/copy the complete Node-RED flow JSON</summary>
@@ -620,7 +620,7 @@ The flow includes:
   {
     "id": "eas_flow",
     "type": "tab",
-    "label": "EAS Attestation Flow",
+    "label": "EAS attestation flow",
     "disabled": false,
     "info": ""
   },
@@ -628,7 +628,7 @@ The flow includes:
     "id": "setup_inject",
     "type": "inject",
     "z": "eas_flow",
-    "name": "Inputs: RpcUrl, Registry address,Eas address, Private key",
+    "name": "Inputs: RpcUrl, registry address, eas address, private key",
     "props": [
       {
         "p": "rpcUrl",
@@ -664,8 +664,8 @@ The flow includes:
     "id": "setup_function",
     "type": "function",
     "z": "eas_flow",
-    "name": "Setup Global Variables",
-    "func": "// Initialize provider with specific network parameters\nconst provider = new ethers.JsonRpcProvider(msg.rpcUrl)\n\nconst signer = new ethers.Wallet(msg.privateKey, provider);\n\n// Initialize EAS with specific gas settings\nconst eas = new eassdk.EAS(msg.easAddress);\neas.connect(signer);\n\n// Store in global context\nglobal.set('provider', provider);\nglobal.set('signer', signer);\nglobal.set('eas', eas);\nglobal.set('registryAddress', msg.registryAddress);\n\nmsg.payload = 'EAS Configuration Initialized';\nreturn msg;",
+    "name": "Setup global variables",
+    "func": "// Initialize provider with specific network parameters\nconst provider = new ethers.JsonRpcProvider(msg.rpcUrl)\n\nconst signer = new ethers.Wallet(msg.privateKey, provider);\n\n// Initialize EAS with specific gas settings\nconst eas = new eassdk.EAS(msg.easAddress);\neas.connect(signer);\n\n// Store in global context\nglobal.set('provider', provider);\nglobal.set('signer', signer);\nglobal.set('eas', eas);\nglobal.set('registryAddress', msg.registryAddress);\n\nmsg.payload = 'EAS configuration initialized';\nreturn msg;",
     "outputs": 1,
     "timeout": "",
     "noerr": 0,
@@ -689,7 +689,7 @@ The flow includes:
     "id": "register_inject",
     "type": "inject",
     "z": "eas_flow",
-    "name": "Register Schema",
+    "name": "Register schema",
     "props": [],
     "repeat": "",
     "crontab": "",
@@ -704,7 +704,7 @@ The flow includes:
     "id": "register_function",
     "type": "function",
     "z": "eas_flow",
-    "name": "Register Schema",
+    "name": "Register schema",
     "func": "// Get global variables set in init\nconst signer = global.get('signer');\nconst registryAddress = global.get('registryAddress');\n\n// Initialize SchemaRegistry contract\nconst schemaRegistry = new ethers.Contract(\n    registryAddress,\n    [\n        \"event Registered(bytes32 indexed uid, address indexed owner, string schema, address resolver, bool revocable)\",\n        \"function register(string calldata schema, address resolver, bool revocable) external returns (bytes32)\"\n    ],\n    signer\n);\n\n// Define what data fields our attestations will contain\nconst schema = \"string username, string platform, string handle\";\nconst resolverAddress = \"0x0000000000000000000000000000000000000000\";  // No special validation needed\nconst revocable = true;  // Attestations can be revoked if needed\n\ntry {\n    const tx = await schemaRegistry.register(schema, resolverAddress, revocable);\n    const receipt = await tx.wait();\n\n    const schemaUID = receipt.logs[0].topics[1];\n    // Store schemaUID in global context for later use\n    global.set('schemaUID', schemaUID);\n\n    msg.payload = {\n        success: true,\n        schemaUID: schemaUID,\n        message: \"Schema registered successfully!\"\n    };\n} catch (error) {\n    msg.payload = {\n        success: false,\n        error: error.message\n    };\n}\n\nreturn msg;",
     "outputs": 1,
     "timeout": "",
@@ -725,7 +725,7 @@ The flow includes:
     "id": "create_inject",
     "type": "inject",
     "z": "eas_flow",
-    "name": "Input: Schema uid",
+    "name": "Input: schema uid",
     "props": [
       {
         "p": "schemaUID",
@@ -746,7 +746,7 @@ The flow includes:
     "id": "create_function",
     "type": "function",
     "z": "eas_flow",
-    "name": "Create Attestation",
+    "name": "Create attestation",
     "func": "// Get global variables\nconst eas = global.get('eas');\nconst schemaUID = msg.schemaUID;\n\n// Create an encoder that matches our schema structure\nconst schemaEncoder = new eassdk.SchemaEncoder(\"string username, string platform, string handle\");\n\n// The actual data we want to attest to\nconst attestationData = [\n    { name: \"username\", value: \"awesome_developer\", type: \"string\" },\n    { name: \"platform\", value: \"GitHub\", type: \"string\" },\n    { name: \"handle\", value: \"@devmaster\", type: \"string\" }\n];\n\ntry {\n    // Convert our data into the format EAS expects\n    const encodedData = schemaEncoder.encodeData(attestationData);\n\n    // Create the attestation\n    const tx = await eas.attest({\n        schema: schemaUID,\n        data: {\n            recipient: \"0x0000000000000000000000000000000000000000\",  // Public attestation\n            expirationTime: 0,              // Never expires\n            revocable: true,                // Can be revoked later if needed\n            data: encodedData              // Our encoded attestation data\n        }\n    });\n\n    // Wait for confirmation and get the result\n    const receipt = await tx.wait();\n\n    // Store attestation UID for later verification\n    global.set('attestationUID', receipt.attestationUID);\n\n    msg.payload = {\n        success: true,\n        attestationUID: receipt,\n        message: \"Attestation created successfully!\"\n    };\n} catch (error) {\n    msg.payload = {\n        success: false,\n        error: error.message\n    };\n}\n\nreturn msg;",
     "outputs": 1,
     "timeout": "",
@@ -771,7 +771,7 @@ The flow includes:
     "id": "verify_inject",
     "type": "inject",
     "z": "eas_flow",
-    "name": "Input: Attestation UID",
+    "name": "Input: attestation UID",
     "props": [
       {
         "p": "attestationUID",
@@ -792,7 +792,7 @@ The flow includes:
     "id": "verify_function",
     "type": "function",
     "z": "eas_flow",
-    "name": "Verify Attestation",
+    "name": "Verify attestation",
     "func": "const eas = global.get('eas');\nconst attestationUID = msg.attestationUID;\n\ntry {\n    const attestation = await eas.getAttestation(attestationUID);\n    const schemaEncoder = new eassdk.SchemaEncoder(\"string pshandle, string socialMedia, string socialMediaHandle\");\n    const decodedData = schemaEncoder.decodeData(attestation.data);\n\n    msg.payload = {\n        isValid: !attestation.revoked,\n        attestation: {\n            attester: attestation.attester,\n            time: new Date(Number(attestation.time) * 1000).toLocaleString(),\n            expirationTime: attestation.expirationTime > 0 \n                ? new Date(Number(attestation.expirationTime) * 1000).toLocaleString()\n                : 'Never',\n            revoked: attestation.revoked\n        },\n        data: {\n            psHandle: decodedData[0].value.toString(),\n            socialMedia: decodedData[1].value.toString(),\n            socialMediaHandle: decodedData[2].value.toString()\n        }\n    };\n} catch (error) {\n    msg.payload = { \n        success: false, \n        error: error.message,\n        details: JSON.stringify(error, Object.getOwnPropertyNames(error))\n    };\n}\n\nreturn msg;",
     "outputs": 1,
     "timeout": "",
@@ -817,7 +817,7 @@ The flow includes:
     "id": "setup_debug",
     "type": "debug",
     "z": "eas_flow",
-    "name": "Setup Result",
+    "name": "Setup result",
     "active": true,
     "tosidebar": true,
     "console": false,
@@ -832,7 +832,7 @@ The flow includes:
     "id": "register_debug",
     "type": "debug",
     "z": "eas_flow",
-    "name": "Register Result",
+    "name": "Register result",
     "active": true,
     "tosidebar": true,
     "console": false,
@@ -847,7 +847,7 @@ The flow includes:
     "id": "create_debug",
     "type": "debug",
     "z": "eas_flow",
-    "name": "Create Result",
+    "name": "Create result",
     "active": true,
     "tosidebar": true,
     "console": false,
@@ -862,7 +862,7 @@ The flow includes:
     "id": "verify_debug",
     "type": "debug",
     "z": "eas_flow",
-    "name": "Verify Result",
+    "name": "Verify result",
     "active": true,
     "tosidebar": true,
     "console": false,
@@ -877,7 +877,7 @@ The flow includes:
     "id": "1322bb7438d96baf",
     "type": "comment",
     "z": "eas_flow",
-    "name": "Initialize EAS Config",
+    "name": "Initialize EAS config",
     "info": "",
     "x": 110,
     "y": 60,
@@ -897,7 +897,7 @@ The flow includes:
     "id": "2be090c17b5e4fce",
     "type": "comment",
     "z": "eas_flow",
-    "name": "Create Attestation",
+    "name": "Create attestation",
     "info": "",
     "x": 110,
     "y": 340,
@@ -907,7 +907,7 @@ The flow includes:
     "id": "3d99f76c5c0bdaf0",
     "type": "comment",
     "z": "eas_flow",
-    "name": "Verify Attestation",
+    "name": "Verify attestation",
     "info": "",
     "x": 110,
     "y": 480,
@@ -922,9 +922,9 @@ The flow includes:
 
 1. Update the setup inject node with your:
    - RPC URL
-   - Registry Address
-   - EAS Address
-   - Private Key
+   - Registry address
+   - EAS address
+   - Private key
 2. Customize the schema in the register function
 3. Deploy the flow
 4. Test each step sequentially using the inject nodes
@@ -935,4 +935,3 @@ The flow provides debug outputs at each step to monitor the process.
 
 ```
 Keywords: ethereum attestation indexer, ethereum attestation service, eas indexer, attestation subgraph, on-chain attestations, decode eas data, verify attestations, fetch attestation by id, schema-based attestation index, ethereum attestations sdk, eas mainnet, polygon attestation index, subgraph eas, graphql ethereum attestations, reading attestations blockchain, ethereum identity attestations, structured attestation data, eas frontend integration, eas read api, attestation query builder, verifiable claims blockchain, decentralized identity ethereum, indexing attestation registry, attestations smart contract, ethereum attestation events, ethereum attestation json, parse attestation calldata, ethereum data attestation index, attest registry indexer, eth attest subgraph graphql, onchain trust signals, attestations explorer eas, fetch user attestations eas, eas typescript sdk, eas attestation uid, encode decode attestation data, ethereum digital credentials, eas api query, trust infrastructure on ethereum, public verifiable attestations, zk attestations indexing, verify issuer of attestation, open attestations graphql, eas ipfs data link, zk identity graph index, ethereum data integrity protocol, open attestation resolver
-```
