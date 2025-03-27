@@ -392,14 +392,26 @@ Hardhat's Ignition system using the CLI.
 
 ## 4. Compile the smart contract code
 
-When a Solidity smart contract is compiled, the source code is transformed into
-low-level bytecode that can be executed on the Ethereum Virtual Machine (EVM).
-This process also generates important metadata such as the ABI (Application
-Binary Interface), which defines how external applications or scripts can
-interact with the contract's functions and events. Additionally, the compiler
-produces debugging information, source maps, and compiler settings. These
-outputs are essential for deploying, testing, and integrating the contract with
-dApps or frontend applications.
+
+<div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
+
+  <div style={{ flex: '1', paddingLeft: '1rem' }}>
+    <ul>
+    To run various scripts to compile, test, deploy smart contracts and sub-graphs you need to go to left top area of the IDE and go to task manager section.
+    When a Solidity smart contract is compiled, the source code is transformed into low-level bytecode that can be executed on the Ethereum Virtual Machine (EVM).
+This process also generates important metadata such as the ABI (Application Binary Interface), which defines how external applications or scripts can interact with the contract's functions and events.
+Additionally, the compiler produces debugging information, source maps, and compiler settings. These
+outputs are essential for deploying, testing, and integrating the contract with dApps or frontend applications
+    </ul>
+  </div>
+
+    <div style={{ flex: '0 0 50%' }}>
+    ![Settlemint](../../../img/building-with-settlemint/task-manager.png)
+  </div>
+</div>
+
+
+
 
 If you compile using Foundry Build then in **out** folder a folder will be
 created with the name of your smart contract file name, and within that folder,

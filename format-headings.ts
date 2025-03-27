@@ -8,6 +8,7 @@ const ABBREVIATIONS = [
   "AI",
   "MCP",
   "IDE",
+
   // Add more abbreviations here in UPPERCASE
   // Example:
   // 'API',
