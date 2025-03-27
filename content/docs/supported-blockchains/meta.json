@@ -1,5 +1,6 @@
 {
   "title": "Supported Blockchains",
+  "label": "Supported Blockchains",
   "icon": "Box",
   "pages": ["permissioned-networks", "L1-public-networks", "L2-public-networks"]
 }
