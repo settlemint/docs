@@ -21,58 +21,67 @@ import Link from "next/link";
 </div>
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-
-<a
-  href="/documentation/building-with-settlemint/getting-started"
-  className="block no-underline rounded-xl px-3 py-0 shadow-sm bg-blue-200 dark:bg-blue-950 text-slate-800 dark:text-white hover:shadow-md transition"
->
-  <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
-    Protocol Guides
-  </h3>
-  <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal -mt-0.5 mb-1">
-    Find supported protocols and explore various protocol specific developer
-    guides.
-  </div>
-</a>
+  <a
+    href="/documentation/building-with-settlemint/getting-started"
+    className="block no-underline rounded-xl py-0 shadow-sm bg-blue-200 dark:bg-blue-950 text-slate-800 dark:text-white hover:shadow-md transition"
+  >
+    <Card>
+      <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
+        Protocol Guides
+      </h3>
+      <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal -mt-0.5 mb-1">
+        Find supported protocols and explore various protocol specific developer
+        guides.
+      </div>
+    </Card>
+  </a>
 
 <a
   href="/documentation/platform-components/blockchain-infrastructure/network-manager"
-  className="block no-underline rounded-xl px-3 py-0 shadow-sm bg-blue-200 dark:bg-blue-950 text-slate-800 dark:text-white hover:shadow-md transition"
+  className="block no-underline rounded-xl py-0 shadow-sm bg-blue-200 dark:bg-blue-950 text-slate-800 dark:text-white hover:shadow-md transition"
 >
-  <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
-    Platform Components
-  </h3>
-  <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal -mt-0.5 mb-1">
-    Learn about SettleMint Platform components and their role in application
-    development journey.
-  </div>
-</a>
-<a
-  href="/documentation/launching-the-platform/self-hosted-onprem/introduction"
-  className="block no-underline rounded-xl px-3 py-0 shadow-sm bg-blue-200 dark:bg-blue-950 text-slate-800 dark:text-white hover:shadow-md transition"
->
-  <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
-    Deployment Options
-  </h3>
-  <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal -mt-0.5 mb-1">
-    Learn how you can deploy SettleMint platform in cloud environment or on-prem
-    data center of your choice.
-  </div>
+  <Card>
+    <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
+      Platform Components
+    </h3>
+    <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal -mt-0.5 mb-1">
+      Learn about SettleMint Platform components and their role in application
+      development journey.
+    </div>
+  </Card>
 </a>
 
-<a
-  href="/documentation/knowledge-bank/blockchain-introduction"
-  className="block no-underline rounded-xl px-3 py-0 shadow-sm bg-blue-200 dark:bg-blue-950 text-slate-800 dark:text-white hover:shadow-md transition"
->
-  <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
-    Knowledge Bank
-  </h3>
-  <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal -mt-0.5 mb-1">
-    Understand fundamentals of blockchain, use-cases, latest news and stay
-    current with the technology.
-  </div>
-</a>
+  <a
+    href="/documentation/launching-the-platform/self-hosted-onprem/introduction"
+    className="block no-underline rounded-xl py-0 shadow-sm text-slate-800 dark:text-white hover:shadow-md transition"
+  >
+    <Card>
+      <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
+        Deployment Options
+      </h3>
 
+      <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal -mt-0.5 mb-1">
+        Learn how you can deploy SettleMint platform in cloud environment or
+        on-prem data center of your choice.
+      </div>
+    </Card>
+
+  </a>
+
+  <a
+     href="/documentation/knowledge-bank/blockchain-introduction"
+    className="block no-underline rounded-xl py-0 shadow-sm bg-blue-200 dark:bg-blue-950 text-slate-800 dark:text-white hover:shadow-md transition"
+  >
+    <Card className="h-full">
+      <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
+        Knowledge Bank
+      </h3>
+      <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal">
+        Understand fundamentals of blockchain, use-cases, latest news and stay
+        current with the technology.
+      </div>
+    </Card>
+  </a>
 </div>
 
 ## Building on SettleMint
@@ -82,7 +91,7 @@ import Link from "next/link";
     <tr>
       <td
         colSpan="3"
-        className="bg-blue-200 dark:bg-blue-950 text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b border-blue-300 dark:border-blue-900"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
       >
         EVM Chains Development Guide
       </td>
@@ -91,7 +100,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/evm-chains-guide/create-an-application"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Create An Application
         </Link>
@@ -99,7 +108,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/evm-chains-guide/add-network-and-nodes"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Add Network And Nodes
         </Link>
@@ -107,7 +116,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/evm-chains-guide/add-private-keys"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Add Private Keys
         </Link>
@@ -117,7 +126,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/evm-chains-guide/setup-code-studio"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Setup Code Studio
         </Link>
@@ -125,7 +134,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/evm-chains-guide/deploy-smart-contracts"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Deploy Smart Contracts
         </Link>
@@ -133,7 +142,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/evm-chains-guide/setup-api-portal"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Setup API Portal
         </Link>
@@ -143,7 +152,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/evm-chains-guide/setup-graph-middleware"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Setup Graph Middleware
         </Link>
@@ -209,7 +218,7 @@ import Link from "next/link";
     <tr>
       <td
         colSpan="3"
-        className="bg-blue-200 dark:bg-blue-950 text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b border-blue-300 dark:border-blue-900"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
       >
         Hyperledger Fabric Development Guide
       </td>
@@ -218,7 +227,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/create-an-application"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Create An Application
         </Link>
@@ -226,7 +235,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Add Network And Nodes
         </Link>
@@ -234,7 +243,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/add-private-keys"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Add Private Keys
         </Link>
@@ -244,7 +253,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/setup-code-studio"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Setup Code Studio
         </Link>
@@ -252,7 +261,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Deploy Chain Code
         </Link>
@@ -260,7 +269,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/setup-api-portal"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Setup API Portal
         </Link>
@@ -270,7 +279,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/setup-fabconnect-middleware"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Setup Fabconnect Middleware
         </Link>
@@ -278,7 +287,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/setup-offchain-database"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Setup Offchain Database
         </Link>
@@ -286,7 +295,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/setup-storage"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Setup Storage
         </Link>
@@ -296,7 +305,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/deploy-custom-services"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Deploy Custom Services
         </Link>
@@ -304,7 +313,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/integration-studio"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Integration Studio
         </Link>
@@ -312,7 +321,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/building-with-settlemint/hyperledger-fabric-guide/audit-logs"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Audit Logs
         </Link>
@@ -328,7 +337,7 @@ import Link from "next/link";
     <tr>
       <td
         colSpan="3"
-        className="bg-blue-200 dark:bg-blue-950 text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b border-blue-300 dark:border-blue-900"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
       >
         Blockchain Infrastructure
       </td>
@@ -337,7 +346,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/blockchain-infrastructure/network-manager"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Network Manager
         </Link>
@@ -345,7 +354,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/blockchain-infrastructure/blockchain-nodes"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Blockchain Nodes
         </Link>
@@ -353,7 +362,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/blockchain-infrastructure/consortium-manager"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Consortium Manager
         </Link>
@@ -363,7 +372,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/blockchain-infrastructure/transaction-signer"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Transaction Signer
         </Link>
@@ -371,7 +380,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/blockchain-infrastructure/load-balancer"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Load Balancer
         </Link>
@@ -379,7 +388,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/blockchain-infrastructure/insights"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Insights
         </Link>
@@ -389,7 +398,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/blockchain-infrastructure/health-monitoring-tools"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Health Monitoring Tools
         </Link>
@@ -397,7 +406,7 @@ import Link from "next/link";
       <td colSpan="2" className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/blockchain-infrastructure/resource-usage"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Resource Usage
         </Link>
@@ -411,7 +420,7 @@ import Link from "next/link";
     <tr>
       <td
         colSpan="3"
-        className="bg-blue-200 dark:bg-blue-950 text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b border-blue-300 dark:border-blue-900"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
       >
         Dev Tools, Middlewares and APIs
       </td>
@@ -421,7 +430,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/dev-tools/code-studio"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Code Studio
         </Link>
@@ -429,7 +438,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/dev-tools/ai-code-assistant"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           AI code Assistant
         </Link>
@@ -437,7 +446,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/dev-tools/sdk"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           SDK
         </Link>
@@ -447,7 +456,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/dev-tools/cli"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           CLI
         </Link>
@@ -455,7 +464,7 @@ import Link from "next/link";
       <td colSpan="2" className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/dev-tools/mcp"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           MCP
         </Link>
@@ -465,7 +474,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/middleware-and-api-layer/graph-middleware"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Graph Middleware
         </Link>
@@ -473,7 +482,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/middleware-and-api-layer/smart-contract-api-portal"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Smart Contract API Portal
         </Link>
@@ -481,7 +490,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/middleware-and-api-layer/attestation-indexer"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Attestation Indexer
         </Link>
@@ -491,7 +500,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/middleware-and-api-layer/fabconnect"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Fabconnect
         </Link>
@@ -499,7 +508,7 @@ import Link from "next/link";
       <td colSpan="2" className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/middleware-and-api-layer/integration-studio"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Integration Studio
         </Link>
@@ -514,7 +523,7 @@ import Link from "next/link";
     <tr>
       <td
         colSpan="3"
-        className="bg-blue-200 dark:bg-blue-950 text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b border-blue-300 dark:border-blue-900"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
       >
         Storage, Database, Security and Auth
       </td>
@@ -523,7 +532,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/database-and-storage/hasura-backend-as-a-service"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Hasura Backend As A Service
         </Link>
@@ -531,7 +540,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/database-and-storage/ipfs-storage"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           IPFS Storage
         </Link>
@@ -539,7 +548,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/database-and-storage/s3-storage"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           S3 Storage
         </Link>
@@ -549,7 +558,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/seecurity-and-authentication/private-keys"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Private Keys
         </Link>
@@ -557,7 +566,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/seecurity-and-authentication/user-wallets"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           User Wallets
         </Link>
@@ -565,7 +574,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/seecurity-and-authentication/personal-access-tokens"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Personal Access Tokens
         </Link>
@@ -575,7 +584,7 @@ import Link from "next/link";
       <td colSpan="3" className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/platform-components/seecurity-and-authentication/application-access-tokens"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Application Access Tokens
         </Link>
@@ -591,7 +600,7 @@ import Link from "next/link";
     <tr>
       <td
         colSpan="3"
-        className="bg-blue-200 dark:bg-blue-950 text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b border-blue-300 dark:border-blue-900"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
       >
         Knowledge Bank
       </td>
@@ -600,7 +609,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/blockchain-introduction"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Blockchain Introduction
         </Link>
@@ -608,7 +617,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/public-blockchains"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Public Blockchains
         </Link>
@@ -616,7 +625,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/private-blockchains"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Private Blockchains
         </Link>
@@ -626,7 +635,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/blockchain-app-design"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Blockchain App Design
         </Link>
@@ -634,7 +643,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/smart-contracts"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Smart Contracts
         </Link>
@@ -642,7 +651,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/solidity"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Solidity
         </Link>
@@ -652,7 +661,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/subgraphs"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Subgraphs
         </Link>
@@ -660,7 +669,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/chaincode"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Chaincode
         </Link>
@@ -668,7 +677,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/keys-and-security"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Keys And Security
         </Link>
@@ -678,7 +687,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/bfsi-usecases"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           BFSI Usecases
         </Link>
@@ -686,7 +695,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/public-sector-usecases"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Public Sector Usecases
         </Link>
@@ -694,7 +703,7 @@ import Link from "next/link";
       <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
         <Link
           href="/knowledge-bank/industrial-usecases"
-          className="no-underline text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 hover:underline"
+          className="no-underline text-sm-accent hover:underline"
         >
           Industrial Usecases
         </Link>

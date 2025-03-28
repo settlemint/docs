@@ -20,11 +20,10 @@
   <br />
 </div>
 
-
-
 ### Prerequisites
 
-Make sure you have [Bun](https://bun.sh/) installed on your system. If not, you can install it by running:
+Make sure you have [Bun](https://bun.sh/) installed on your system. If not, you
+can install it by running:
 
 ```bash
 curl -fsSL https://bun.sh/install | bash
@@ -33,12 +32,14 @@ curl -fsSL https://bun.sh/install | bash
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/settlemint/docs
 cd yourproject
 ```
 
 2. Install dependencies:
+
 ```bash
 bun install
 ```
@@ -53,7 +54,8 @@ In the project directory, you can run:
 bun run dev
 ```
 
-This starts the development server with hot-reload enabled. 
+This starts the development server with hot-reload enabled. Navigate to
+/documentation
 
 ### Build
 
@@ -71,17 +73,18 @@ bun run start
 
 Runs the built application in production mode.
 
-
 ## Troubleshooting
 
 If you encounter any issues:
 
 1. Make sure Bun is up to date:
+
 ```bash
 bun upgrade
 ```
 
 2. Clear Bun's cache:
+
 ```bash
 rm -rf node_modules
 rm bun.lockb

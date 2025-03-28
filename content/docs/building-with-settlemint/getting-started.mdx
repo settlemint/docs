@@ -25,24 +25,23 @@ signer** for secure transaction submissions. Finally, confirm everything is
 operational in the **blockchain explorer**.
 
 <ins>Brief Step-by-Step Guide:</ins>
-1. Define application scope (supply chain, identity, etc.). 
-2. In the network manager, select and configure your network (public or private). 
-3. Spin up validating or non-validating nodes. 
-4. Enable load balancing and secure transaction signing. 
-5. Check network activity and node health in the explorer.
+1. Define application scope (supply chain, identity, etc.). 2. In the network
+manager, select and configure your network (public or private). 3. Spin up
+validating or non-validating nodes. 4. Enable load balancing and secure
+transaction signing. 5. Check network activity and node health in the explorer.
 
 ### 2. Generate keys and tokens
 
 Select the right private key management strategy—software, HD wallets, or
-HSM—based on your security profile. Generate private keys and attach them to transaction signers.
-Generate and use **access tokens (PAT/AAT)** for controlling platform or API interactions. 
+HSM—based on your security profile. Generate private keys and attach them to
+transaction signers. Generate and use **access tokens (PAT/AAT)** for
+controlling platform or API interactions.
 
 <ins>Brief Step-by-Step Guide:</ins>
-1. Pick a key management approach that fits your risk tolerance. 
-2. Issue PATs for developers, AATs for back-end services. 
-3. Set up logging, monitoring, and regular security reviews. 
-4. Conduct or schedule compliance audits as needed. 
-5. Document any custom security protocols for internal reference.
+1. Pick a key management approach that fits your risk tolerance. 2. Issue PATs
+for developers, AATs for back-end services. 3. Set up logging, monitoring, and
+regular security reviews. 4. Conduct or schedule compliance audits as needed. 5.
+Document any custom security protocols for internal reference.
 
 ### 3. Develop and deploy smart contracts
 
@@ -52,11 +51,10 @@ once you're satisfied. The platform tracks deployments for easy rollback and
 version control.
 
 <ins>Brief Step-by-Step Guide:</ins>
-1. Write your contract using code studio or your preferred IDE. 
-2. Test thoroughly using built-in or external test frameworks. 
-3. Compile and deploy to a test network. 
-4. Inspect events in the explorer to verify success. 
-5. Move to production upon final validation.
+1. Write your contract using code studio or your preferred IDE. 2. Test
+thoroughly using built-in or external test frameworks. 3. Compile and deploy to
+a test network. 4. Inspect events in the explorer to verify success. 5. Move to
+production upon final validation.
 
 ### 4. Setup middleware and get APIs
 
@@ -66,11 +64,11 @@ on-chain data for fast queries. If required, the **Ethereum attestation
 indexer** can manage trust attestations for identity or compliance.
 
 <ins>Brief Step-by-Step Guide:</ins>
-1. Upload your contract ABI to the smart contract API portal. 
-2. Check automatically generated REST/GraphQL endpoints. 
-3. Configure graph middleware for event indexing using sub-graphs 
-4. Add specialized indexers (e.g., EAS) for credential or compliance data. 
-5. Test endpoints in a simple front end or script.
+1. Upload your contract ABI to the smart contract API portal. 2. Check
+automatically generated REST/GraphQL endpoints. 3. Configure graph middleware
+for event indexing using sub-graphs 4. Add specialized indexers (e.g., EAS) for
+credential or compliance data. 5. Test endpoints in a simple front end or
+script.
 
 ### 5. Integrate and finalize the application
 
@@ -81,12 +79,10 @@ data. Meanwhile, orchestrate off-chain triggers with the **integration studio**
 logic seamlessly interacts with centralized services.
 
 <ins>Brief Step-by-Step Guide:</ins>
-1. Decide on S3 vs. IPFS for file needs. 
-2. Implement Hasura GraphQL for off-chain data queries and updates. 
-3. Configure events in integration studio to automate workflows. 
-4. Sync on-chain calls and off-chain records in real time.
+1. Decide on S3 vs. IPFS for file needs. 2. Implement Hasura GraphQL for
+off-chain data queries and updates. 3. Configure events in integration studio to
+automate workflows. 4. Sync on-chain calls and off-chain records in real time.
 5. Confirm data consistency and reliability via logs or explorer audits.
-
 
 ### 6. Deploy, monitor, and scale
 
@@ -96,11 +92,9 @@ simpler—no downtime or big reconfigurations. Continuous monitoring checks
 performance and security, letting you expand capacity as your user base grows.
 
 <ins>Brief Step-by-Step Guide:</ins>
-1. Package all components into containers. 
-2. Deploy them (SaaS or self-managed)
-via SettleMint's interface. 
-3. Benchmark performance under typical and peak loads. 
-4. Fine-tune scaling rules and resource allocations. 
-5. Iterate on your solution as usage patterns evolve.
+1. Package all components into containers. 2. Deploy them (SaaS or self-managed)
+via SettleMint's interface. 3. Benchmark performance under typical and peak
+loads. 4. Fine-tune scaling rules and resource allocations. 5. Iterate on your
+solution as usage patterns evolve.
 
 ---

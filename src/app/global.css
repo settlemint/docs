@@ -255,6 +255,11 @@
   );
 }
 
+
+th {
+  @apply bg-fd-secondary;
+}
+
 [data-card="true"] {
   @apply border-0;
   background: transparent

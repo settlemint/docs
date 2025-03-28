@@ -21,11 +21,20 @@ import { Card } from "fumadocs-ui/components/card";
   Summary  
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
 
-The ethereum attestation indexer is a tool that allows you to track, store, and query verifiable claims (attestations) made using the ethereum attestation service (EAS). It provides a GraphQL API to easily fetch attestation data based on schemas you define.
+The ethereum attestation indexer is a tool that allows you to track, store, and
+query verifiable claims (attestations) made using the ethereum attestation
+service (EAS). It provides a GraphQL API to easily fetch attestation data based
+on schemas you define.
 
-To use it, you'll first deploy the necessary EAS smart contracts (schema registry and EAS) on your blockchain network using SettleMint's code studio and task manager. Once deployed, you can register custom schemas and create attestations that follow those schema structures.
+To use it, you'll first deploy the necessary EAS smart contracts (schema
+registry and EAS) on your blockchain network using SettleMint's code studio and
+task manager. Once deployed, you can register custom schemas and create
+attestations that follow those schema structures.
 
-After setup, the attestation indexer can be added via the middleware section of your application. Once connected to your contract addresses, it will index attestation events, and you can use the built-in GraphQL UI or API access to query them in real time.
+After setup, the attestation indexer can be added via the middleware section of
+your application. Once connected to your contract addresses, it will index
+attestation events, and you can use the built-in GraphQL UI or API access to
+query them in real time.
 
 </div>
 </div>
@@ -930,6 +939,3 @@ The flow includes:
 4. Test each step sequentially using the inject nodes
 
 The flow provides debug outputs at each step to monitor the process.
-
-
-
