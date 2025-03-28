@@ -1,5 +1,5 @@
 {
   "title": "Use Case Guides",
   "icon": "Code",
-  "pages": ["asset-tokenization", "attestation-service"]
+  "pages": ["template-libraries", "asset-tokenization", "attestation-service"]
 }

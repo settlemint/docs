@@ -9,6 +9,7 @@
     "custom-deployments",
     "security-and-authentication",
     "usage-and-logs",
-    "account-billing"
+    "account-billing",
+    "platform-info"
   ]
 }

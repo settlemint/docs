@@ -78,7 +78,7 @@ identities, or events that can be independently verified by others.
 
 ---
 
-## 3. How eas works
+## 3. How EAS works
 
 ```mermaid
 graph TD
@@ -281,7 +281,7 @@ const config = {
 // Connect to the blockchain
 const provider = new ethers.JsonRpcProvider(config.rpcUrl);
 const signer = new ethers.Wallet(config.privateKey, provider);
-const eas = new EAS(config.easAddress);
+const EAS = new EAS(config.easAddress);
 eas.connect(signer);
 
 // Create an encoder that matches our schema structure
@@ -341,7 +341,7 @@ attestations. You can verify attestations using one of the following methods:
 <Tabs>
 <Tab value="eas-sdk" label="Using the EAS SDK">
 
-#### Verification using the eas sdk
+#### Verification using the EAS sdk
 
 The EAS SDK provides an easy way to verify attestations programmatically, making
 it ideal for off-chain use cases.
@@ -361,7 +361,7 @@ const config = {
 async function verifyAttestation(attestationUID) {
   // Setup our blockchain connection
   const provider = new ethers.JsonRpcProvider(config.rpcUrl);
-  const eas = new EAS(config.easAddress);
+  const EAS = new EAS(config.easAddress);
   eas.connect(provider);
 
   console.log("🔍 Verifying attestation:", attestationUID);
@@ -653,7 +653,7 @@ The flow includes:
     "type": "function",
     "z": "eas_flow",
     "name": "Setup Global Variables",
-    "func": "// Initialize provider with specific network parameters\nconst provider = new ethers.JsonRpcProvider(msg.rpcUrl)\n\nconst signer = new ethers.Wallet(msg.privateKey, provider);\n\n// Initialize EAS with specific gas settings\nconst eas = new eassdk.EAS(msg.easAddress);\neas.connect(signer);\n\n// Store in global context\nglobal.set('provider', provider);\nglobal.set('signer', signer);\nglobal.set('eas', eas);\nglobal.set('registryAddress', msg.registryAddress);\n\nmsg.payload = 'EAS Configuration Initialized';\nreturn msg;",
+    "func": "// Initialize provider with specific network parameters\nconst provider = new ethers.JsonRpcProvider(msg.rpcUrl)\n\nconst signer = new ethers.Wallet(msg.privateKey, provider);\n\n// Initialize EAS with specific gas settings\nconst EAS = new eassdk.EAS(msg.easAddress);\neas.connect(signer);\n\n// Store in global context\nglobal.set('provider', provider);\nglobal.set('signer', signer);\nglobal.set('eas', eas);\nglobal.set('registryAddress', msg.registryAddress);\n\nmsg.payload = 'EAS Configuration Initialized';\nreturn msg;",
     "outputs": 1,
     "timeout": "",
     "noerr": 0,
@@ -735,7 +735,7 @@ The flow includes:
     "type": "function",
     "z": "eas_flow",
     "name": "Create Attestation",
-    "func": "// Get global variables\nconst eas = global.get('eas');\nconst schemaUID = msg.schemaUID;\n\n// Create an encoder that matches our schema structure\nconst schemaEncoder = new eassdk.SchemaEncoder(\"string username, string platform, string handle\");\n\n// The actual data we want to attest to\nconst attestationData = [\n    { name: \"username\", value: \"awesome_developer\", type: \"string\" },\n    { name: \"platform\", value: \"GitHub\", type: \"string\" },\n    { name: \"handle\", value: \"@devmaster\", type: \"string\" }\n];\n\ntry {\n    // Convert our data into the format EAS expects\n    const encodedData = schemaEncoder.encodeData(attestationData);\n\n    // Create the attestation\n    const tx = await eas.attest({\n        schema: schemaUID,\n        data: {\n            recipient: \"0x0000000000000000000000000000000000000000\",  // Public attestation\n            expirationTime: 0,              // Never expires\n            revocable: true,                // Can be revoked later if needed\n            data: encodedData              // Our encoded attestation data\n        }\n    });\n\n    // Wait for confirmation and get the result\n    const receipt = await tx.wait();\n\n    // Store attestation UID for later verification\n    global.set('attestationUID', receipt.attestationUID);\n\n    msg.payload = {\n        success: true,\n        attestationUID: receipt,\n        message: \"Attestation created successfully!\"\n    };\n} catch (error) {\n    msg.payload = {\n        success: false,\n        error: error.message\n    };\n}\n\nreturn msg;",
+    "func": "// Get global variables\nconst EAS = global.get('eas');\nconst schemaUID = msg.schemaUID;\n\n// Create an encoder that matches our schema structure\nconst schemaEncoder = new eassdk.SchemaEncoder(\"string username, string platform, string handle\");\n\n// The actual data we want to attest to\nconst attestationData = [\n    { name: \"username\", value: \"awesome_developer\", type: \"string\" },\n    { name: \"platform\", value: \"GitHub\", type: \"string\" },\n    { name: \"handle\", value: \"@devmaster\", type: \"string\" }\n];\n\ntry {\n    // Convert our data into the format EAS expects\n    const encodedData = schemaEncoder.encodeData(attestationData);\n\n    // Create the attestation\n    const tx = await eas.attest({\n        schema: schemaUID,\n        data: {\n            recipient: \"0x0000000000000000000000000000000000000000\",  // Public attestation\n            expirationTime: 0,              // Never expires\n            revocable: true,                // Can be revoked later if needed\n            data: encodedData              // Our encoded attestation data\n        }\n    });\n\n    // Wait for confirmation and get the result\n    const receipt = await tx.wait();\n\n    // Store attestation UID for later verification\n    global.set('attestationUID', receipt.attestationUID);\n\n    msg.payload = {\n        success: true,\n        attestationUID: receipt,\n        message: \"Attestation created successfully!\"\n    };\n} catch (error) {\n    msg.payload = {\n        success: false,\n        error: error.message\n    };\n}\n\nreturn msg;",
     "outputs": 1,
     "timeout": "",
     "noerr": 0,
@@ -781,7 +781,7 @@ The flow includes:
     "type": "function",
     "z": "eas_flow",
     "name": "Verify Attestation",
-    "func": "const eas = global.get('eas');\nconst attestationUID = msg.attestationUID;\n\ntry {\n    const attestation = await eas.getAttestation(attestationUID);\n    const schemaEncoder = new eassdk.SchemaEncoder(\"string pshandle, string socialMedia, string socialMediaHandle\");\n    const decodedData = schemaEncoder.decodeData(attestation.data);\n\n    msg.payload = {\n        isValid: !attestation.revoked,\n        attestation: {\n            attester: attestation.attester,\n            time: new Date(Number(attestation.time) * 1000).toLocaleString(),\n            expirationTime: attestation.expirationTime > 0 \n                ? new Date(Number(attestation.expirationTime) * 1000).toLocaleString()\n                : 'Never',\n            revoked: attestation.revoked\n        },\n        data: {\n            psHandle: decodedData[0].value.toString(),\n            socialMedia: decodedData[1].value.toString(),\n            socialMediaHandle: decodedData[2].value.toString()\n        }\n    };\n} catch (error) {\n    msg.payload = { \n        success: false, \n        error: error.message,\n        details: JSON.stringify(error, Object.getOwnPropertyNames(error))\n    };\n}\n\nreturn msg;",
+    "func": "const EAS = global.get('eas');\nconst attestationUID = msg.attestationUID;\n\ntry {\n    const attestation = await eas.getAttestation(attestationUID);\n    const schemaEncoder = new eassdk.SchemaEncoder(\"string pshandle, string socialMedia, string socialMediaHandle\");\n    const decodedData = schemaEncoder.decodeData(attestation.data);\n\n    msg.payload = {\n        isValid: !attestation.revoked,\n        attestation: {\n            attester: attestation.attester,\n            time: new Date(Number(attestation.time) * 1000).toLocaleString(),\n            expirationTime: attestation.expirationTime > 0 \n                ? new Date(Number(attestation.expirationTime) * 1000).toLocaleString()\n                : 'Never',\n            revoked: attestation.revoked\n        },\n        data: {\n            psHandle: decodedData[0].value.toString(),\n            socialMedia: decodedData[1].value.toString(),\n            socialMediaHandle: decodedData[2].value.toString()\n        }\n    };\n} catch (error) {\n    msg.payload = { \n        success: false, \n        error: error.message,\n        details: JSON.stringify(error, Object.getOwnPropertyNames(error))\n    };\n}\n\nreturn msg;",
     "outputs": 1,
     "timeout": "",
     "noerr": 0,
