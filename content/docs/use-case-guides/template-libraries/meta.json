@@ -1,0 +1,8 @@
+{
+  "title": "Template Libraries",
+  "pages": [
+    "introduction",
+    "evm-smart-contracts",
+    "fabric-chaincodes"
+  ]
+}

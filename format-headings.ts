@@ -8,6 +8,8 @@ const ABBREVIATIONS = [
   "AI",
   "MCP",
   "IDE",
+  "EAS",
+  "LLM",
   "HSM",
   "API",
   "SDK",

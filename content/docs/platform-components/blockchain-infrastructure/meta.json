@@ -7,8 +7,6 @@
     "consortium-manager",
     "transaction-signer",
     "load-balancer",
-    "insights",
-    "health-monitoring-tools",
-    "resource-usage"
+    "insights"
   ]
 }

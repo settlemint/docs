@@ -1,0 +1,133 @@
+---
+title: "Introduction"
+description: Overview of EVM and Fabric contract templates
+---
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+
+
+## Smart Contract & Chaincode Templates (EVM & Fabric)
+
+- **EVM-compatible networks** using **Solidity** (e.g., Ethereum, Besu, Quorum Polygon, Avalanche)
+- **Hyperledger Fabric** networks using **GoLang** and **TypeScript**
+
+These templates are crafted for developers looking to **accelerate smart contract or chaincode development**, ensure **security alignment**, and streamline **integration with middleware, APIs, and off-chain systems**.
+
+---
+
+## What Are These Templates?
+
+These are **starter libraries** built with industry-relevant design patterns and reusable code components. Each one includes:
+
+### EVM Templates (Solidity + TypeScript)
+
+- Core Solidity contracts structured for modular deployment  
+- Built-in patterns like Ownable, role-based access control, and event logging  
+- TypeScript SDK bindings for contract interaction and deployment
+
+### Fabric Templates (GoLang + TypeScript)
+
+- GoLang-based chaincode modules for key-value data storage, access control, and function invocation  
+- Transaction flow patterns using Fabric Contract API  
+- TypeScript client SDKs for ledger access, endorsement submission, and result handling
+
+Each template is intended to work as a **scaffold**, allowing developers to focus on **domain logic**, not base plumbing.
+
+---
+
+## What Do These Templates Help With?
+
+By using these templates, you will:
+
+- Avoid writing redundant boilerplate for state reads/writes, ACLs, and access layers  
+- Kick-start **full-stack blockchain workflows** with backend, smart contracts, and integration layers  
+- Implement **clean separation of concerns** between business logic and system orchestration  
+- Follow best practices for security, gas/resource efficiency, and observability  
+- Accelerate delivery of POCs, MVPs, or production-grade logic
+
+---
+
+## Important Notes Before Usage
+
+<Callout type="warning" title="Please review before use">
+  These templates are <strong>reference implementations</strong>, not ready-to-deploy production contracts or chaincode. Always customize and test thoroughly before using in any live or sensitive environment.
+</Callout>
+
+**Key cautions:**
+
+- **Security**: Templates are not audited. Critical paths like funds transfer or permission control must be reviewed manually and/or formally verified.  
+- **Customization Required**: The templates are generic. Specific business logic, regulatory constraints, and contract-specific behaviors must be implemented manually.  
+- **Resource Considerations**: Smart contract templates must be gas-efficient (EVM), and Fabric templates must avoid long execution or response times due to chaincode lifecycle constraints.  
+- **Environment Sensitivity**: Test on devnets (e.g., Ganache, local Fabric) before deploying on public/mainnet infrastructure.
+
+---
+
+## Best Practices for Template Adoption
+
+### 1. **Separate Core Logic and Permissions**
+
+- Define role-based modifiers (Solidity) or access logic (GoLang) as reusable layers  
+- Avoid embedded ACLs in core business functions to maintain clarity and auditability  
+
+### 2. **Follow Transactional Boundaries**
+
+- In Fabric: Avoid multiple read/write invocations inside a loop unless atomicity is ensured  
+- In EVM: Minimize state changes per call to avoid unnecessary gas consumption or complexity  
+
+### 3. **Structure Events Consistently**
+
+- Use semantic, structured event naming (`ProfileCreated`, `AssetTransferred`)  
+- Emit key identifiers and indexes for off-chain sync and indexing systems (e.g., The Graph, Kafka listeners)  
+
+### 4. **Leverage Strong Typing in TypeScript SDKs**
+
+- Use typed interfaces for contract interaction and payload schemas  
+- Ensure runtime error handling for all transaction submission flows and network responses  
+
+### 5. **Use Version Control for Models**
+
+- Store contract/chaincode hashes and deployment metadata  
+- Implement migration logic for versioned schema changes in smart contracts or ledger records  
+
+### 6. **Align With CI/CD and Test Frameworks**
+
+- Add unit and integration tests with frameworks like Mocha, Chai, Jest (for TS), and Go test (for Fabric)  
+- Include basic gas profiling or peer endorsement simulations  
+- Use GitHub Actions, GitLab CI, or similar for continuous checks  
+
+### 7. **Adopt Secure Development Patterns**
+
+- Avoid dynamic `delegatecall` or unbounded loops in Solidity  
+- Use Fabric's built-in MSP identity abstraction for managing user roles  
+- Sanitize and validate all inputs rigorously, both on-chain and at the API level  
+
+---
+
+## Languages & Tooling Used
+
+| Template Layer        | Language   | Usage                               |
+| --------------------- | ---------- | ----------------------------------- |
+| Smart Contracts (EVM) | Solidity   | Core business logic on-chain        |
+| Chaincode (Fabric)    | GoLang     | Permissioned chain logic            |
+| Integration Layer     | TypeScript | Contract calls, event listeners, UI |
+
+
+---
+
+## What's Next?
+
+You can now browse specific templates in:
+
+- `EVM Contracts` (Solidity)
+- `Fabric Chaincode` (GoLang + TypeScript)
+
+The smart contract and chaincode libraries aim to help developers and teams:
+
+- Move from zero to working logic quickly  
+- Avoid reinventing core state and ACL patterns  
+- Align with best practices across Solidity, GoLang, and TypeScript  
+- Establish a common starting point for internal or client-facing solutions
+
+Use them as a **launchpad**, not an endpoint — always customize to your environment, test with realistic data, and plan for maintainability and audit readiness.
