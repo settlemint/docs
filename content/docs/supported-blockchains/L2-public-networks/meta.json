@@ -1,5 +1,5 @@
 {
   "label": "L2 Public Networks",
   "title": "L2 Public Networks",
-  "pages": ["polygon", "polygon-zkevm", "optimism", "soneium"]
+  "pages": ["polygon", "polygon-zkevm", "optimism", "soneium","arbitrum"]
 }
