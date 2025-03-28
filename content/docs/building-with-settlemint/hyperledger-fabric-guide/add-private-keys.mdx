@@ -8,30 +8,35 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
 
-<div style={{
-  backgroundColor: "#e1eafd", 
-  color: "#356fee", 
-  padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
-  fontWeight: "bold",
-  lineHeight: "1.5",
-  textAlign: "left"
-}}>
-  Summary  
+<div
+  style={{
+    backgroundColor: "#e1eafd",
+    color: "#356fee",
+    padding: "0.5px 10px 10px 10px",
+    borderRadius: "10px",
+    fontSize: "18px",
+    fontWeight: "bold",
+    lineHeight: "1.5",
+    textAlign: "left",
+  }}
+>
+  Summary
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
-To send transactions on a blockchain, you need a private key (with enough funds for gas for networks with a fee). You can create and manage private keys directly within SettleMint using ECDSA, HD ECDSA, or HSM key types.
-<br> </br>
-After creating a key, it must be attached to at least one node to enable
-transaction signing—this is critical for smart contract deployment. Without it,
-the deployment will fail.
-<br> </br>
-SettleMint also offers User Wallets, a scalable solution that generates wallets
-from a single HD ECDSA 256 key. Each user gets a unique address for privacy and
-parallel transaction support. You can create user wallets once your HD key is
-deployed and running, and fund them as needed for gas-based transactions.
-<br> </br>
-</div>
+    To send transactions on a blockchain, you need a private key (with enough
+    funds for gas for networks with a fee). You can create and manage private
+    keys directly within SettleMint using ECDSA, HD ECDSA, or HSM key types.
+    <br> </br>
+    After creating a key, it must be attached to at least one node to enable
+    transaction signing—this is critical for smart contract deployment. Without
+    it, the deployment will fail.
+    <br> </br>
+    SettleMint also offers User Wallets, a scalable solution that generates
+    wallets from a single HD ECDSA 256 key. Each user gets a unique address for
+    privacy and parallel transaction support. You can create user wallets once
+    your HD key is deployed and running, and fund them as needed for gas-based
+    transactions.
+    <br> </br>
+  </div>
 </div>
 
 ## How to add private keys and user wallets in SettleMint platform
@@ -224,5 +229,3 @@ You have successfully created Private Keys and User Wallets and you are ready
 for chaincode development and deployment.
 
 </div>
-
-

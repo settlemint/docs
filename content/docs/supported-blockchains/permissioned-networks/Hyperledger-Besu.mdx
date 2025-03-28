@@ -19,9 +19,6 @@ designed specifically for use in a consortium environment, to join the network.
   </div>
 </div>
 
-
-
-
 ## What is hyperledger besu?
 
 Hyperledger Besu is an open-source Ethereum client developed under the Apache
@@ -75,11 +72,21 @@ much greater transaction throughput.
 
 **SettleMint's Enterprise Ethereum networks always use QBFT**
 
-In QBFT networks, a set of validator nodes is responsible for maintaining consensus on the blockchain. Similar to IBFT, these validators participate in a round-based process to propose and validate blocks. At the start of each round, one validator is chosen as the proposer. This proposer puts forward a new block to be added to the chain.
+In QBFT networks, a set of validator nodes is responsible for maintaining
+consensus on the blockchain. Similar to IBFT, these validators participate in a
+round-based process to propose and validate blocks. At the start of each round,
+one validator is chosen as the proposer. This proposer puts forward a new block
+to be added to the chain.
 
-The remaining validators review the proposed block and share their votes. If a supermajority (at least 66%) of the validators agree that the block is valid, it is finalized and committed to the chain. Like IBFT 2.0, QBFT achieves immediate finality — blocks are either committed or discarded in a single round. There are no forks, and every valid block becomes a permanent part of the main chain.
+The remaining validators review the proposed block and share their votes. If a
+supermajority (at least 66%) of the validators agree that the block is valid, it
+is finalized and committed to the chain. Like IBFT 2.0, QBFT achieves immediate
+finality — blocks are either committed or discarded in a single round. There are
+no forks, and every valid block becomes a permanent part of the main chain.
 
-QBFT enhances performance and fault tolerance over IBFT by introducing optimizations for large validator sets, making it better suited for enterprise-grade and high-throughput networks.
+QBFT enhances performance and fault tolerance over IBFT by introducing
+optimizations for large validator sets, making it better suited for
+enterprise-grade and high-throughput networks.
 
 When you deploy a Hyperledger Besu blockchain network on SettleMint, it should
 be Byzantine fault tolerance.

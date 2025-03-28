@@ -42,6 +42,7 @@ Sending transactions on a blockchain network requires two essential components:
 a private key to cryptographically sign your transactions, and sufficient funds
 in your wallet to cover the associated gas fees. Without either element,
 transaction execution will fail.
+
 <br> </br>
 While you can use external private keys created with tools like MetaMask or
 other wallet solutions, **SettleMint offers a more integrated approach**. The
@@ -54,9 +55,9 @@ eth_sendTransaction call, uses the appropriate key from the private key section
 to sign it, and sends it onwards to the blockchain node. You can use this proxy
 directly via the node's JSON-RPC endpoints
 ([JSON-RPC](https://ethereum.org/en/developers/docs/apis/json-rpc/)) and via
-tools like Hardhat
-([HardHat RPC](https://hardhat.org/config/#json-rpc-based-networks)) configured
-to use the "remote" default option for signing.
+tools like Hardhat ([HardHat
+RPC](https://hardhat.org/config/#json-rpc-based-networks)) configured to use the
+"remote" default option for signing.
 
 ## Create a private key
 
@@ -284,6 +285,3 @@ You have also attached private keys to node transaction signer and you are ready
 for smart contract development and deployment.
 
 </div>
-
-
-

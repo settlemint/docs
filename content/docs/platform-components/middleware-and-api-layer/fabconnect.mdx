@@ -52,29 +52,29 @@ FireFly FabConnect provides three main sets of API endpoints:
 
 Below is a summary of the available API endpoints:
 
-| Path                            | Method | Summary                                                                 |
-| ------------------------------- | ------ | ----------------------------------------------------------------------- |
-| /identities                     | GET    | List all signing identities registered with the Fabric CA               |
-| /identities                     | POST   | Register a new signing account with the Fabric CA                       |
-| /identities/          | GET    | Get the signing identity registered with the Fabric CA                  |
-| /identities/          | PUT    | Modify an existing signing identity                                     |
-| /identities/param/enroll   | POST   | Enroll the registered signing identity with the Fabric CA               |
-| /identities/param/reenroll | POST   | Re-enroll the registered signing identity with the Fabric CA            |
-| /identities/param/revoke   | POST   | Revoke enrollment certificates for the registered signing identity      |
-| /chaininfo                      | GET    | Return ledger information for a specified channel                       |
+| Path                          | Method | Summary                                                                 |
+| ----------------------------- | ------ | ----------------------------------------------------------------------- |
+| /identities                   | GET    | List all signing identities registered with the Fabric CA               |
+| /identities                   | POST   | Register a new signing account with the Fabric CA                       |
+| /identities/                  | GET    | Get the signing identity registered with the Fabric CA                  |
+| /identities/                  | PUT    | Modify an existing signing identity                                     |
+| /identities/param/enroll      | POST   | Enroll the registered signing identity with the Fabric CA               |
+| /identities/param/reenroll    | POST   | Re-enroll the registered signing identity with the Fabric CA            |
+| /identities/param/revoke      | POST   | Revoke enrollment certificates for the registered signing identity      |
+| /chaininfo                    | GET    | Return ledger information for a specified channel                       |
 | /blocks/blockNumberOrHash     | GET    | Query a block by number or hash                                         |
 | /blockByTxId/txId             | GET    | Query a block by a transaction ID included in the block                 |
-| /transactions                   | POST   | Send proposal to peers and transaction with endorsements to the orderer |
+| /transactions                 | POST   | Send proposal to peers and transaction with endorsements to the orderer |
 | /transactions/txId            | GET    | Query a transaction by ID (hash) on a channel                           |
-| /query                          | POST   | Send a query request to the target chaincode                            |
-| /receipts                       | GET    | Retrieve transaction receipts from the receipts store                   |
+| /query                        | POST   | Send a query request to the target chaincode                            |
+| /receipts                     | GET    | Retrieve transaction receipts from the receipts store                   |
 | /receipts/receiptId           | GET    | Retrieve a transaction receipt by receipt ID                            |
-| /eventstreams                   | GET    | List all event streams                                                  |
-| /eventstreams                   | POST   | Create a new event stream                                               |
+| /eventstreams                 | GET    | List all event streams                                                  |
+| /eventstreams                 | POST   | Create a new event stream                                               |
 | /eventstreams/eventstreamId   | GET    | Get an event stream by ID                                               |
 | /eventstreams/eventstreamId   | DELETE | Delete an event stream by ID                                            |
-| /subscriptions                  | GET    | List all subscriptions under the specified event stream                 |
-| /subscriptions                  | POST   | Create a new subscription under the specified event stream              |
+| /subscriptions                | GET    | List all subscriptions under the specified event stream                 |
+| /subscriptions                | POST   | Create a new subscription under the specified event stream              |
 | /subscriptions/subscriptionId | GET    | Get a subscription by ID                                                |
 | /subscriptions/subscriptionId | DELETE | Delete a subscription by ID                                             |
 

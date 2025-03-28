@@ -9,53 +9,60 @@ import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
 import React from "react";
 
-<div style={{
-  backgroundColor: "#e1eafd", 
-  color: "#356fee", 
-  padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
-  fontWeight: "bold",
-  lineHeight: "1.5",
-  textAlign: "left"
-}}>
-  Summary  
+<div
+  style={{
+    backgroundColor: "#e1eafd",
+    color: "#356fee",
+    padding: "0.5px 10px 10px 10px",
+    borderRadius: "10px",
+    fontSize: "18px",
+    fontWeight: "bold",
+    lineHeight: "1.5",
+    textAlign: "left",
+  }}
+>
+  Summary
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
-To build a blockchain application, the first step is setting up a blockchain network. You can either deploy a permissioned network such as Hyperledger Besu or Quorum, or connect to an existing L1 or L2 public network like Ethereum, Polygon PoS, Hedera, Polygon zkEVM, Avalanche, Arbitrum, or Optimism. Both mainnet and testnet versions are available for public networks.
-<br> </br>
-When creating an application on SettleMint, you will be prompted to select a
-network type and assign it a name. For permissioned networks, you control the
-entire network infrastructure, including validator nodes. A first validating
-node is automatically deployed along with your permissioned network. For public
-networks, the validators are already established by the network's consensus
-participants, and SettleMint will deploy an archive node that connects to the
-chosen public network.
-<br> </br>
-In SettleMint-managed (SaaS) mode, you will need to choose between a shared or
-dedicated cluster for deployment. You can also select a cloud provider and a
-data center of your choice. Additionally, you will have the option to select
-from small, medium, or large resource packs, which can be scaled up or down
-later as needed.
-<br> </br>
-For permissioned networks, you can configure network settings and customize the
-genesis file before deployment. For most use cases, keeping the default settings
-is recommended. After deployment, your network manager and first node will be
-fully operational within minutes.
-<br> </br>
-To enhance reliability in permissioned networks, you should add more nodes for
-fault tolerance. The best practice is to deploy four validator nodes and two
-non-validator nodes to ensure Byzantine fault tolerance. For public networks,
-you might want to deploy additional archive or full nodes to improve reliability
-of your connection to the network.
-<br> </br>
-Once your network and nodes are running, adding a load balancer will help
-distribute network traffic efficiently and improve performance. You can then
-access the Insights tab to integrate monitoring tools. For permissioned
-networks, you can add Blockscout blockchain explorer to track transactions and
-network activity. If you are using public networks, you can use their publicly
-available blockchain explorers instead.
-<br> </br>
-</div>
+    To build a blockchain application, the first step is setting up a blockchain
+    network. You can either deploy a permissioned network such as Hyperledger
+    Besu or Quorum, or connect to an existing L1 or L2 public network like
+    Ethereum, Polygon PoS, Hedera, Polygon zkEVM, Avalanche, Arbitrum, or
+    Optimism. Both mainnet and testnet versions are available for public
+    networks.
+    <br> </br>
+    When creating an application on SettleMint, you will be prompted to select a
+    network type and assign it a name. For permissioned networks, you control
+    the entire network infrastructure, including validator nodes. A first
+    validating node is automatically deployed along with your permissioned
+    network. For public networks, the validators are already established by the
+    network's consensus participants, and SettleMint will deploy an archive node
+    that connects to the chosen public network.
+    <br> </br>
+    In SettleMint-managed (SaaS) mode, you will need to choose between a shared
+    or dedicated cluster for deployment. You can also select a cloud provider
+    and a data center of your choice. Additionally, you will have the option to
+    select from small, medium, or large resource packs, which can be scaled up
+    or down later as needed.
+    <br> </br>
+    For permissioned networks, you can configure network settings and customize
+    the genesis file before deployment. For most use cases, keeping the default
+    settings is recommended. After deployment, your network manager and first
+    node will be fully operational within minutes.
+    <br> </br>
+    To enhance reliability in permissioned networks, you should add more nodes
+    for fault tolerance. The best practice is to deploy four validator nodes and
+    two non-validator nodes to ensure Byzantine fault tolerance. For public
+    networks, you might want to deploy additional archive or full nodes to
+    improve reliability of your connection to the network.
+    <br> </br>
+    Once your network and nodes are running, adding a load balancer will help
+    distribute network traffic efficiently and improve performance. You can then
+    access the Insights tab to integrate monitoring tools. For permissioned
+    networks, you can add Blockscout blockchain explorer to track transactions
+    and network activity. If you are using public networks, you can use their
+    publicly available blockchain explorers instead.
+    <br> </br>
+  </div>
 </div>
 
 ## Prerequisites
@@ -424,5 +431,3 @@ application. From here you can proceed for creating or setting up private keys
 for transaction signer and user wallets.
 
 </div>
-
-
