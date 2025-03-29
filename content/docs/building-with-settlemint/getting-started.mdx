@@ -181,19 +181,19 @@ description: Overview of blockchain development process
           ],
           [
             "2",
-            "Create a new organization. This acts as a boundary for apps and users.",
+            "Once logged in, create a new organization",
             "Create organization",
             "/documentation/building-with-settlemint/setup-account-and-billing",
           ],
           [
             "3",
-            "From Settings > Team, invite colleagues and assign roles such as Admin or User.",
-            "Manage team members",
+            "Invite collaborators and assign them roles such as Admin or User.",
+            "Add team members",
             "/documentation/platform-components/blockchain-infrastructure/consortium-manager",
           ],
           [
             "4",
-            "Within the org, create an application where you will have your blockchain components and tools",
+            "Within the organization, create an application",
             "Create Application",
             "/documentation/building-with-settlemint/evm-chains-guide/create-an-application",
           ],
@@ -223,7 +223,7 @@ description: Overview of blockchain development process
   </div>
 </details>
 
-{/* Section 2: Blockchain Network & Node Deployment */}
+{/* Section 2: Blockchain network & node deployment */}
 
 <details
   data-card="true"
@@ -247,20 +247,20 @@ description: Overview of blockchain development process
         {[
           [
             "5",
-            "Add a permissioned or public EVM-compatible blockchain network using the 'Add Network' option.",
-            "Add EVM Network",
+            "Add an EVM blockchain network using the 'Add Network' option.",
+            "Add network",
             "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes",
           ],
           [
             "6",
-            "Deploy remaining nodes for byzantine fault tolerance and DR",
+            "Deploy remaining nodes for byzantine fault tolerance and distaster recovery",
             "Add nodes",
             "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#2-add-blockchain-nodes",
           ],
           [
             "7",
             "Add the Blockchain Explorer (Insights) to view transactions and logs.",
-            "Add blockchain explorer",
+            "Add insights",
             "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#4-add-blockchain-explorer",
           ],
           [
@@ -295,7 +295,7 @@ description: Overview of blockchain development process
   </div>
 </details>
 
-{/* Section 3: Smart Contract Development & Deployment */}
+{/* Section 3: Smart contract development & deployment */}
 
 <details
   data-card="true"
@@ -326,30 +326,30 @@ description: Overview of blockchain development process
           [
             "10",
             "Develop your smart contract code or use one of the templates",
-            "Develop smart contract",
+            "Develop contract",
             "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#1-lets-start-with-the-solidity-smart-contract-code",
           ],
           [
             "11",
-            "Compile contracts using Task Manager or terminal to generate bytecode and ABI.",
-            "Compile Contracts",
-            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#4-compile-the-smart-contract-code",
-          ],
-          [
-            "12",
-            "Write test and deployment scripts under /test and /scripts using Hardhat or Truffle.",
-            "Write Scripts",
+            "Write test scripts and test your smart contract ",
+            "Test contract",
             "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#5-test-the-smart-contract",
           ],
           [
+            "12",
+            "Compile smart contract and get the ABI",
+            "Compile contract",
+            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#4-compile-the-smart-contract-code",
+          ],
+          [
             "13",
-            "Login to SettleMint via CLI using your personal access token and deploy contracts via Task Manager. Choose node and deployer key when prompted.",
-            "Deploy Contract",
+            "Deploy contract to the network",
+            "Deploy contract",
             "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#6-deploy-the-smart-contract-to-platform-network",
           ],
           [
             "14",
-            "Take a note of deployed smart contract address.",
+            "Note the deployed contract address",
             "Get contract address",
             "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#deployed-contract-address",
           ],
@@ -379,7 +379,7 @@ description: Overview of blockchain development process
   </div>
 </details>
 
-{/* Section 4: API Generation & Event Indexing */}
+{/* Section 4: Setup middlewares and get APIs */}
 
 <details
   data-card="true"
@@ -403,20 +403,20 @@ description: Overview of blockchain development process
         {[
           [
             "15",
-            "Enable API Portal from Middleware. Upload ABI to generate REST/OpenAPI endpoints.",
-            "API Portal",
+            "Add API portal and get write APIs for your contract",
+            "API portal",
             "/documentation/building-with-settlemint/evm-chains-guide/setup-api-portal",
           ],
           [
             "16",
-            "Add Graph Middleware and write subgraph files in IDE.",
-            "Subgraph Setup",
+            "Add Graph Middleware and write subgraph files in IDE",
+            "Setup subgraph",
             "/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#subgraph-deployment-process",
           ],
           [
             "17",
-            "Run codegen and build commands in terminal, then deploy subgraph to hosted service.",
-            "Deploy Subgraph",
+            "Build and deploy sub-graphs to setup indexing",
+            "Deploy subgraph",
             "/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#codegen-build-and-deploy-subgraph",
           ],
           [
@@ -427,7 +427,7 @@ description: Overview of blockchain development process
           ],
           [
             "19",
-            "Verify subgraph output, logs, and event handlers from the Graph UI.",
+            "Read indexed data from Graph middleware",
             "Read data from chain",
             "/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#graph-middleware---querying-data",
           ],
@@ -457,7 +457,7 @@ description: Overview of blockchain development process
   </div>
 </details>
 
-{/* Section 5: Off-Chain Data, Storage & Integration */}
+{/* Section 5: Off-Chain database, storage & integrations */}
 
 <details
   data-card="true"
@@ -481,20 +481,20 @@ description: Overview of blockchain development process
         {[
           [
             "20",
-            "Add Hasura from Integration Tools to provision a PostgreSQL database with GraphQL APIs.",
-            "Hasura Setup",
+            "Add Hasura to provision a PostgreSQL database with GraphQL APIs.",
+            "Setup hasura",
             "/documentation/building-with-settlemint/evm-chains-guide/setup-offchain-database",
           ],
           [
             "21",
-            "Add MinIO or IPFS for centralized/decentralized file storage. Copy access keys and endpoints.",
-            "Add Storage",
+            "Add MinIO or IPFS for centralized/decentralized file storage.",
+            "Add storage",
             "/documentation/building-with-settlemint/evm-chains-guide/setup-storage",
           ],
           [
             "22",
-            "Enable Integration Studio for event-based workflows like on-chain → webhook.",
-            "Integration Flow",
+            "Enable Integration Studio for creating custom APIs and flows",
+            "Add integration studio",
             "/documentation/building-with-settlemint/evm-chains-guide/integration-studio",
           ],
         ].map(([step, action, link, url]) => (
@@ -523,7 +523,7 @@ description: Overview of blockchain development process
   </div>
 </details>
 
-{/* Section 6: Frontend & CI/CD Deployment */}
+{/* Section 6: Deploy frontend and other services */}
 
 <details
   data-card="true"
@@ -547,21 +547,20 @@ description: Overview of blockchain development process
         {[
           [
             "23",
-            "Use Custom Deployment module to deploy the Docker container and set domain + secrets.",
-            "Deploy Frontend",
+            "Use Custom Deployment module to deploy frontend or other services",
+            "Deploy frontend",
             "/documentation/building-with-settlemint/evm-chains-guide/deploy-custom-services",
           ],
           [
             "24",
-            "Monitor RAM, CPU, bandwidth, and container uptime from the deployment dashboard.",
-            "Monitor Dashboard",
+            "Monitor RAM, CPU, and disk usage or apply upgrades.",
+            "Monitoring dashboards",
             "/documentation/platform-components/usage-and-logs/monitoring-tools",
           ],
-    
           [
             "25",
-            "Use in-app chat or support@settlemint.com for queries or assistance.",
-            "Support",
+            "Reach out to us for further assistance or technical support",
+            "Get support",
             "/documentation/support/support",
           ],
         ].map(([step, action, link, url]) => (
@@ -590,6 +589,8 @@ description: Overview of blockchain development process
   </div>
 </details>
 
+# =========
+
 ## Fabric Development Overview
 
 {/* Section 1: Platform Setup & Network Configuration */}
@@ -616,51 +617,27 @@ description: Overview of blockchain development process
         {[
           [
             "1",
-            "Go to console.settlemint.com, sign up and login using a corporate or team email.",
-            "Sign Up Guide",
-            "https://console.settlemint.com/signup",
+            "Sign up at console.settlemint.com using a corporate email.",
+            "Sign Up",
+            "https://console.settlemint.com/",
           ],
           [
             "2",
-            "Add organization (e.g. clientname-projectname).",
-            "Create Org",
-            "https://console.settlemint.com/organizations/create",
+            "Once logged in, create a new organization",
+            "Create organization",
+            "/documentation/building-with-settlemint/setup-account-and-billing",
           ],
           [
             "3",
-            "Invite collaborators and assign roles (Admin, Developer, Viewer).",
-            "Team Access",
-            "https://console.settlemint.com/organizations/team",
+            "Invite collaborators and assign them roles such as Admin or User.",
+            "Add team members",
+            "/documentation/platform-components/blockchain-infrastructure/consortium-manager",
           ],
           [
             "4",
-            "Add an application to represent your environment (e.g., audit-prod).",
-            "New App Setup",
-            "https://console.settlemint.com/applications/new",
-          ],
-          [
-            "5",
-            "Add Hyperledger Fabric network; first node = Org1.",
-            "Add Fabric Network",
-            "https://console.settlemint.com/networks/fabric/create",
-          ],
-          [
-            "6",
-            "Add additional nodes for Org2, Org3 to simulate MSPs.",
-            "Add Fabric Nodes",
-            "https://console.settlemint.com/networks/fabric/nodes",
-          ],
-          [
-            "7",
-            "Attach a load balancer for API traffic routing.",
-            "Load Balancer",
-            "https://console.settlemint.com/network/loadbalancer",
-          ],
-          [
-            "8",
-            "Enable Explorer (Insights) to view blocks and state changes.",
-            "Explorer Setup",
-            "https://console.settlemint.com/explorer",
+            "Within the organization, create an application",
+            "Create Application",
+            "/documentation/building-with-settlemint/evm-chains-guide/create-an-application",
           ],
         ].map(([step, action, link, url]) => (
           <tr
@@ -688,14 +665,14 @@ description: Overview of blockchain development process
   </div>
 </details>
 
-{/* Section 2: Keys, Middleware & Access Tokens */}
+{/* Section 2: Blockchain network & node deployment */}
 
 <details
   data-card="true"
   className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
 >
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Keys, Middleware & Access Tokens</span>
+    <span>Blockchain Network & Node Deployment</span>
     <svg
       className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
       fill="none"
@@ -711,52 +688,22 @@ description: Overview of blockchain development process
       <tbody>
         {[
           [
-            "9",
-            "Add a key named Deployer and assign to Fabric org.",
-            "Deployer Identity",
-            "https://console.settlemint.com/identities/deployer",
+            "5",
+            "Add an Fabric blockchain network using the 'Add Network' option.",
+            "Add network",
+            "/documentation/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes",
           ],
           [
-            "10",
-            'Create a Personal Access Token (PAT), set "Never Expire" for dev.',
-            "PAT Token",
-            "https://console.settlemint.com/access-tokens/personal",
+            "6",
+            "Deploy remaining nodes for fault tolerance and distaster recovery",
+            "Add nodes",
+            "/documentation/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes#2-add-blockchain-nodes",
           ],
           [
-            "11",
-            "Enable Code Studio IDE. Choose an empty or chaincode project.",
-            "Enable IDE",
-            "https://console.settlemint.com/code-studio",
-          ],
-          [
-            "12",
-            "Add FabConnect Middleware to expose REST endpoints.",
-            "Add FabConnect",
-            "https://console.settlemint.com/middleware/fabconnect",
-          ],
-          [
-            "13",
-            "Add Hasura for GraphQL-based off-chain data access.",
-            "Add Hasura",
-            "https://console.settlemint.com/middleware/hasura",
-          ],
-          [
-            "14",
-            "Optionally add Integration Studio for event-based workflows.",
-            "Integration Studio",
-            "https://console.settlemint.com/integration-studio",
-          ],
-          [
-            "15",
-            "Add MinIO or IPFS storage for your file architecture.",
-            "Storage Setup",
-            "https://console.settlemint.com/storage",
-          ],
-          [
-            "16",
-            "Generate an application-scoped token for integrations.",
-            "App Token",
-            "https://console.settlemint.com/access-tokens/applications",
+            "7",
+            "Add the Blockchain Explorer to view transactions and logs.",
+            "Add insights",
+            "/documentation/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes#hyperledger-fabric-explorer",
           ],
         ].map(([step, action, link, url]) => (
           <tr
@@ -807,44 +754,26 @@ description: Overview of blockchain development process
       <tbody>
         {[
           [
-            "17",
-            "Write chaincode (Go, JS, TS) in /chaincode folder using Fabric SDK.",
+            "8",
+            "Write chaincode in the code studio IDE",
             "Write Chaincode",
-            "https://console.settlemint.com/code-studio/chaincode",
+            "/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code",
           ],
           [
-            "18",
-            "Add unit tests or mocks for local verification.",
-            "Write Tests",
-            "https://console.settlemint.com/code-studio/chaincode/tests",
-          ],
-          [
-            "19",
-            "Package the chaincode using Task Manager into .tar.gz.",
+            "9",
+            "Package the chaincode",
             "Package Chaincode",
-            "https://console.settlemint.com/task-manager/package",
+            "/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code#1-compile-and-package-chaincode",
           ],
           [
-            "20",
-            "Install and simulate approvals from each org as per policy.",
-            "Approve Definition",
-            "https://console.settlemint.com/networks/fabric/approval",
+            "10",
+            "Commit and initialize chaincode",
+            "Commit and initialize chaincode",
+            "/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code#5-commit-chaincode",
           ],
           [
-            "21",
-            "Commit chaincode definition to Fabric channel.",
-            "Commit Chaincode",
-            "https://console.settlemint.com/networks/fabric/commit",
-          ],
-          [
-            "22",
-            "Initialize chaincode via FabConnect if Init is defined.",
-            "Initialize Chaincode",
-            "https://console.settlemint.com/fabconnect/initialize",
-          ],
-          [
-            "23",
-            "Deploy FabConnect API and connect to the chaincode.",
+            "11",
+            "Deploy FabConnect middeware to get APIs on your chaincode",
             "Deploy FabConnect",
             "https://console.settlemint.com/fabconnect/deploy",
           ],
@@ -874,14 +803,14 @@ description: Overview of blockchain development process
   </div>
 </details>
 
-{/* Section 4: Data Indexing & Off-Chain Integrations */}
+{/* Section 5: Off-Chain database, storage & integrations */}
 
 <details
   data-card="true"
   className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
 >
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Data Indexing & Off-Chain Integrations</span>
+    <span>Off-Chain Data, Storage & Integration</span>
     <svg
       className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
       fill="none"
@@ -897,40 +826,22 @@ description: Overview of blockchain development process
       <tbody>
         {[
           [
-            "24",
-            "Build event listeners in IDE or Integration Studio.",
-            "Fabric Events",
-            "https://console.settlemint.com/events/listeners",
+            "12",
+            "Add Hasura to provision a PostgreSQL database with GraphQL APIs.",
+            "Setup hasura",
+            "/documentation/building-with-settlemint/evm-chains-guide/setup-offchain-database",
           ],
           [
-            "25",
-            "Send emitted events to Hasura or backend DB.",
-            "Index Fabric Events",
-            "https://console.settlemint.com/events/indexing",
+            "13",
+            "Add MinIO or IPFS for centralized/decentralized file storage.",
+            "Add storage",
+            "/documentation/building-with-settlemint/evm-chains-guide/setup-storage",
           ],
           [
-            "26",
-            "Test chaincode with FabConnect Swagger or Postman.",
-            "Test FabConnect",
-            "https://console.settlemint.com/fabconnect/swagger",
-          ],
-          [
-            "27",
-            "Perform invoke or query using proper identity + payload.",
-            "FabConnect Txn",
-            "https://console.settlemint.com/fabconnect/transactions",
-          ],
-          [
-            "28",
-            "View transaction in Insights: RW sets, endorsements.",
-            "Txn Explorer",
-            "https://console.settlemint.com/explorer/transactions",
-          ],
-          [
-            "29",
-            "Re-query via FabConnect to confirm state update.",
-            "Query Fabric",
-            "https://console.settlemint.com/fabconnect/query",
+            "14",
+            "Enable Integration Studio for creating custom APIs and flows",
+            "Add integration studio",
+            "/documentation/building-with-settlemint/evm-chains-guide/integration-studio",
           ],
         ].map(([step, action, link, url]) => (
           <tr
@@ -958,14 +869,14 @@ description: Overview of blockchain development process
   </div>
 </details>
 
-{/* Section 5: Application Completion: Backend, Frontend & Deployment */}
+{/* Section 6: Deploy frontend and other services */}
 
 <details
   data-card="true"
   className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
 >
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Application Completion: Backend, Frontend & Deployment</span>
+    <span>Frontend deployment, monitoring and support</span>
     <svg
       className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
       fill="none"
@@ -981,70 +892,22 @@ description: Overview of blockchain development process
       <tbody>
         {[
           [
-            "30",
-            "Create event-based flows in Integration Studio and test them.",
-            "Custom Flow",
-            "https://console.settlemint.com/integration-studio/custom-flows",
+            "15",
+            "Use Custom Deployment module to deploy frontend or other services",
+            "Deploy frontend",
+            "/documentation/building-with-settlemint/evm-chains-guide/deploy-custom-services",
           ],
           [
-            "31",
-            "Access Hasura, create relationships and permissions.",
-            "Hasura DB",
-            "https://console.settlemint.com/hasura/db",
+            "16",
+            "Monitor RAM, CPU, and disk usage or apply upgrades.",
+            "Monitoring dashboards",
+            "/documentation/platform-components/usage-and-logs/monitoring-tools",
           ],
           [
-            "32",
-            "Create tables for logs, audit trails, or off-chain metadata.",
-            "Create Tables",
-            "https://console.settlemint.com/hasura/tables",
-          ],
-          [
-            "33",
-            "Get access keys for MinIO/IPFS and store in env variables.",
-            "Storage Params",
-            "https://console.settlemint.com/storage/env",
-          ],
-          [
-            "34",
-            "Build your frontend connecting FabConnect, Hasura, Storage.",
-            "Frontend Build",
-            "https://console.settlemint.com/frontend/build",
-          ],
-          [
-            "35",
-            "Dockerize the frontend and configure deployment settings.",
-            "Dockerize Frontend",
-            "https://console.settlemint.com/frontend/dockerize",
-          ],
-          [
-            "36",
-            "Deploy frontend via Custom Deployment UI with ENV secrets.",
-            "Deploy Frontend",
-            "https://console.settlemint.com/deployment/ui",
-          ],
-          [
-            "37",
-            "Deploy microservices or job schedulers as needed.",
-            "Deploy Microservices",
-            "https://console.settlemint.com/microservices",
-          ],
-          [
-            "38",
-            "Monitor usage and set auto-scaling rules via dashboard.",
-            "Monitor Resources",
-            "https://console.settlemint.com/dashboard/monitoring",
-          ],
-          [
-            "39",
-            "Contact support at support@settlemint.com or in-app chat.",
-            "Support",
-            "https://console.settlemint.com/support",
-          ],
-          [
-            "40",
-            "Share feedback and showcase your project on social media.",
-            "Share Feedback",
-            "https://console.settlemint.com/feedback",
+            "17",
+            "Reach out to us for further assistance or technical support",
+            "Get support",
+            "/documentation/support/support",
           ],
         ].map(([step, action, link, url]) => (
           <tr

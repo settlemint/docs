@@ -22,22 +22,27 @@ import { Card } from "fumadocs-ui/components/card";
 >
   Summary
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
-    
-The process starts by defining a clean and structured chaincode using TypeScript. Transaction functions are added to handle common operations—creating new entries, reading existing ones, updating data, and deleting records. These functions follow familiar CRUD patterns but are designed to work within the immutable environment of a blockchain. Events are emitted during each transaction to make state changes observable by off-chain systems or external services.
-
-Once the code is ready, it's compiled and packaged into a deployable archive.
-The chaincode is then installed on peers, approved by organizations, and
-committed to a Fabric channel using a lifecycle management script. If needed, an
-init function can be invoked to populate default data or configure initial
-state.
-
-After deployment, functions can be tested directly by invoking or querying them
-through the provided CLI. This end-to-end workflow—from writing the chaincode to
-interacting with it on-chain—follows a consistent and repeatable pattern, making
-it easier to manage chaincode across different stages of development and
-deployment.
-
-</div>
+    The process starts by defining a clean and structured chaincode using
+    TypeScript. Transaction functions are added to handle common
+    operations—creating new entries, reading existing ones, updating data, and
+    deleting records. These functions follow familiar CRUD patterns but are
+    designed to work within the immutable environment of a blockchain. Events
+    are emitted during each transaction to make state changes observable by
+    off-chain systems or external services.
+    <br> </br>
+    Once the code is ready, it's compiled and packaged into a deployable
+    archive. The chaincode is then installed on peers, approved by
+    organizations, and committed to a Fabric channel using a lifecycle
+    management script. If needed, an init function can be invoked to populate
+    default data or configure initial state.
+    <br> </br>
+    After deployment, functions can be tested directly by invoking or querying
+    them through the provided CLI. This end-to-end workflow—from writing the
+    chaincode to interacting with it on-chain—follows a consistent and
+    repeatable pattern, making it easier to manage chaincode across different
+    stages of development and deployment.
+    <br> </br>
+  </div>
 </div>
 
 ## Learning with a asset transfer chaincode example
@@ -541,6 +546,7 @@ chaincode lifecycle management. It integrates with SettleMint APIs to
 orchestrate everything from packaging to deployment to post-deployment
 operations across multiple peers and orderers.
 
+<br></br>
 <div style={{
   backgroundColor: "#D1E5E8", 
   color: "#000000", 

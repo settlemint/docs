@@ -27,45 +27,46 @@ your read layer, enabling powerful querying of on-chain events using a GraphQL
 interface. This is particularly useful when you want to retrieve and analyze
 historical smart contract data in a structured, filterable format.
 
+<br> </br>
 First, you'll need to add the middleware itself. Head to the middleware section
 inside your application on the SettleMint platform. Click add a middleware, and
 select graph as the type. Assign a name, pick the blockchain node (where your
 smart contract is deployed), configure the deployment settings, and confirm.
 This action will provision the underlying infrastructure required to run your
 subgraph.
-
+<br> </br>
 Next, you will create the subgraph package in code studio. The subgraph folder
 contains all the code and configuration required for indexing and querying your
 smart contract's events. You will define a subgraph.config.json file that lists
 the network (via chain ID), your contract address, and the data sources (i.e.,
 smart contracts and associated modules) that the subgraph will index.
-
+<br> </br>
 Inside the datasources folder, you will create a userdata.yaml manifest file
 that outlines the smart contract address, ABI path, start block, and
 event-handler mappings. This YAML file connects emitted events like
 ProfileCreated, ProfileUpdated, and ProfileDeleted with specific AssemblyScript
 functions that define how the data is processed and stored.
-
+<br> </br>
 You will then define the schema in userdata.gql.json. This is your GraphQL
 schema, which defines the structure of your indexed data. Entities like
 UserProfile, ProfileCreated, and ProfileUpdated are defined here, each with the
 fields to be stored and queried later via GraphQL.
-
+<br> </br>
 Once the schema is ready, you will implement the mapping logic in userdata.ts,
 which listens for emitted events and updates the subgraph's entities
 accordingly. A helper file inside the fetch directory will provide utility logic
 to create or retrieve entities without code repetition.
-
+<br> </br>
 After writing all files, you will run the codegen, build, and deploy scripts
 using the provided task buttons in code studio. These scripts will compile your
 schema and mapping into WebAssembly (WASM), bundle it for deployment, and push
 it to the graph middleware node.
-
+<br> </br>
 Once deployed, you will be able to open the graph middleware's GraphQL explorer
 and run queries against your indexed data. You can query by ID or use the plural
 form to get a list of entries. This enables your application or analytics layer
 to fetch historical state data in a fast and reliable way.
-
+<br> </br>
 </div>
 </div>
 
@@ -602,6 +603,7 @@ We can query based on the ID
 Or we can query to return all entries
 ![Graph Query multiple Profiles](../../../img/building-with-settlemint/graph-query-profiles.png)
 
+<br></br>
 <div style={{
   backgroundColor: "#D1E5E8", 
   color: "#000000", 

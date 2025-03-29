@@ -5,6 +5,8 @@
     "blockchain-introduction",
     "public-blockchains",
     "private-blockchains",
+    "besu-transaction-flow",
+    "fabric-transaction-flow",
     "blockchain-app-design",
     "smart-contracts",
     "solidity",
