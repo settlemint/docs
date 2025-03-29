@@ -26,8 +26,8 @@
     "lucide-react": "0.484.0",
     "next": "15.2.4",
     "prettier": "3.5.3",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "tailwind-merge": "3.0.2",
     "tailwindcss-animate": "1.0.7",
     "ultracite": "4.2.0"
