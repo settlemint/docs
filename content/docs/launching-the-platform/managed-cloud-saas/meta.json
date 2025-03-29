@@ -1,5 +1,5 @@
 {
   "title": "Managed Cloud: SaaS",
   "icon": "Cloud",
-  "pages": ["supported-cloud-providers", "deployment-plans"]
+  "pages": ["introduction", "supported-cloud-providers", "deployment-plans"]
 }

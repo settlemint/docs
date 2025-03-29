@@ -149,11 +149,14 @@ description: Overview of blockchain development process
   </Card>
 </div>
 
-## EVM Development Overview
+## EVM development overview
 
 {/* Section 1: Platform Setup & Environment Preparation */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
     <span>Platform Setup & Environment Preparation</span>
     <svg
@@ -172,31 +175,36 @@ description: Overview of blockchain development process
         {[
           [
             "1",
-            "Sign up at console.settlemint.com using a corporate or team email to create a shared workspace.",
-            "Sign Up Guide",
-            "https://console.settlemint.com/signup",
+            "Sign up at console.settlemint.com using a corporate email.",
+            "Sign Up",
+            "https://console.settlemint.com/",
           ],
           [
             "2",
-            "Create a new organization (e.g., energy-credit-market). This acts as a boundary for apps and users.",
-            "Create Org",
-            "https://console.settlemint.com/organizations/create",
+            "Create a new organization. This acts as a boundary for apps and users.",
+            "Create organization",
+            "/documentation/building-with-settlemint/setup-account-and-billing",
           ],
           [
             "3",
-            "From Settings > Team, invite colleagues and assign roles such as Developer, Auditor, or Admin.",
-            "Manage Team",
-            "https://console.settlemint.com/organizations/team",
+            "From Settings > Team, invite colleagues and assign roles such as Admin or User.",
+            "Manage team members",
+            "/documentation/platform-components/blockchain-infrastructure/consortium-manager",
           ],
           [
             "4",
-            "Within the org, create an application to group blockchain, contracts, middleware, and storage.",
-            "New App",
-            "https://console.settlemint.com/applications/new",
+            "Within the org, create an application where you will have your blockchain components and tools",
+            "Create Application",
+            "/documentation/building-with-settlemint/evm-chains-guide/create-an-application",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
@@ -217,7 +225,10 @@ description: Overview of blockchain development process
 
 {/* Section 2: Blockchain Network & Node Deployment */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
     <span>Blockchain Network & Node Deployment</span>
     <svg
@@ -236,31 +247,36 @@ description: Overview of blockchain development process
         {[
           [
             "5",
-            "Add an EVM-compatible blockchain (Ethereum, Polygon, BNB) using the 'Add Network' option.",
+            "Add a permissioned or public EVM-compatible blockchain network using the 'Add Network' option.",
             "Add EVM Network",
-            "https://console.settlemint.com/networks/evm/create",
+            "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes",
           ],
           [
             "6",
-            "Select node type (RPC, Archive, Private). Deploy the base node for the chain.",
-            "Deploy Node",
-            "https://console.settlemint.com/networks/evm/nodes",
+            "Deploy remaining nodes for byzantine fault tolerance and DR",
+            "Add nodes",
+            "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#2-add-blockchain-nodes",
           ],
           [
             "7",
-            "Enable the Blockchain Explorer (Insights) to view transactions and logs.",
-            "Enable Explorer",
-            "https://console.settlemint.com/explorer",
+            "Add the Blockchain Explorer (Insights) to view transactions and logs.",
+            "Add blockchain explorer",
+            "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#4-add-blockchain-explorer",
           ],
           [
             "8",
             "Optionally add a load balancer to distribute traffic across nodes.",
-            "Load Balancer",
-            "https://console.settlemint.com/network/loadbalancer",
+            "Add load balancer",
+            "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#3-add-load-balancer",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
@@ -281,7 +297,10 @@ description: Overview of blockchain development process
 
 {/* Section 3: Smart Contract Development & Deployment */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
     <span>Smart Contract Development & Deployment</span>
     <svg
@@ -300,43 +319,48 @@ description: Overview of blockchain development process
         {[
           [
             "9",
-            "Write Solidity contracts in /contracts folder using Code Studio IDE.",
-            "Open IDE",
-            "https://console.settlemint.com/code-studio",
+            "Add Code Studio IDE to create development environment",
+            "Setup code studio",
+            "/documentation/building-with-settlemint/evm-chains-guide/setup-code-studio",
           ],
           [
             "10",
-            "Use OpenZeppelin libraries (e.g., ERC20, Ownable) for modular and secure development.",
-            "OpenZeppelin Docs",
-            "https://console.openzeppelin.com",
+            "Develop your smart contract code or use one of the templates",
+            "Develop smart contract",
+            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#1-lets-start-with-the-solidity-smart-contract-code",
           ],
           [
             "11",
-            "Write test and deployment scripts under /test and /scripts using Hardhat or Truffle.",
-            "Write Scripts",
-            "https://console.settlemint.com/code-studio/scripts",
+            "Compile contracts using Task Manager or terminal to generate bytecode and ABI.",
+            "Compile Contracts",
+            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#4-compile-the-smart-contract-code",
           ],
           [
             "12",
-            "Compile contracts using Task Manager or terminal to generate bytecode and ABI.",
-            "Compile Contracts",
-            "https://console.settlemint.com/task-manager/compile",
+            "Write test and deployment scripts under /test and /scripts using Hardhat or Truffle.",
+            "Write Scripts",
+            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#5-test-the-smart-contract",
           ],
           [
             "13",
-            "Deploy contracts via Task Manager. Choose node and deployer key.",
+            "Login to SettleMint via CLI using your personal access token and deploy contracts via Task Manager. Choose node and deployer key when prompted.",
             "Deploy Contract",
-            "https://console.settlemint.com/task-manager/deploy",
+            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#6-deploy-the-smart-contract-to-platform-network",
           ],
           [
             "14",
-            "Copy deployed address and ABI for API Portal and frontend integration.",
-            "Access ABI",
-            "https://console.settlemint.com/code-studio/artifacts",
+            "Take a note of deployed smart contract address.",
+            "Get contract address",
+            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#deployed-contract-address",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
@@ -357,7 +381,10 @@ description: Overview of blockchain development process
 
 {/* Section 4: API Generation & Event Indexing */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
     <span>API Generation & Event Indexing</span>
     <svg
@@ -378,35 +405,40 @@ description: Overview of blockchain development process
             "15",
             "Enable API Portal from Middleware. Upload ABI to generate REST/OpenAPI endpoints.",
             "API Portal",
-            "https://console.settlemint.com/middleware/api-portal",
+            "/documentation/building-with-settlemint/evm-chains-guide/setup-api-portal",
           ],
           [
             "16",
-            "Configure endpoint mapping, method types, and security roles in API Portal.",
-            "Configure API",
-            "https://console.settlemint.com/middleware/api-portal/configure",
+            "Add Graph Middleware and write subgraph files in IDE.",
+            "Subgraph Setup",
+            "/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#subgraph-deployment-process",
           ],
           [
             "17",
-            "Add Graph Middleware and upload subgraph schema, mappings, and event signatures.",
-            "Subgraph Setup",
-            "https://console.settlemint.com/middleware/graph",
+            "Run codegen and build commands in terminal, then deploy subgraph to hosted service.",
+            "Deploy Subgraph",
+            "/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#codegen-build-and-deploy-subgraph",
           ],
           [
             "18",
-            "Run codegen and build commands in terminal, then deploy subgraph to hosted service.",
-            "Deploy Subgraph",
-            "https://console.settlemint.com/middleware/graph/deploy",
+            "Do a transaction from API Portal",
+            "Write data on chain",
+            "/documentation/building-with-settlemint/evm-chains-guide/setup-api-portal#4-how-to-configure-rest-api-requests-in-the-portal",
           ],
           [
             "19",
             "Verify subgraph output, logs, and event handlers from the Graph UI.",
-            "Graph UI",
-            "https://console.settlemint.com/middleware/graph/explorer",
+            "Read data from chain",
+            "/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#graph-middleware---querying-data",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
@@ -427,7 +459,10 @@ description: Overview of blockchain development process
 
 {/* Section 5: Off-Chain Data, Storage & Integration */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
     <span>Off-Chain Data, Storage & Integration</span>
     <svg
@@ -448,29 +483,28 @@ description: Overview of blockchain development process
             "20",
             "Add Hasura from Integration Tools to provision a PostgreSQL database with GraphQL APIs.",
             "Hasura Setup",
-            "https://console.settlemint.com/middleware/hasura",
+            "/documentation/building-with-settlemint/evm-chains-guide/setup-offchain-database",
           ],
           [
             "21",
-            "Create relational tables for KYC, metadata, or linked event data.",
-            "Create Tables",
-            "https://console.settlemint.com/hasura/tables",
+            "Add MinIO or IPFS for centralized/decentralized file storage. Copy access keys and endpoints.",
+            "Add Storage",
+            "/documentation/building-with-settlemint/evm-chains-guide/setup-storage",
           ],
           [
             "22",
-            "Add MinIO or IPFS for centralized/decentralized file storage. Copy access keys and endpoints.",
-            "Add Storage",
-            "https://console.settlemint.com/storage",
-          ],
-          [
-            "23",
             "Enable Integration Studio for event-based workflows like on-chain → webhook.",
             "Integration Flow",
-            "https://console.settlemint.com/integration-studio",
+            "/documentation/building-with-settlemint/evm-chains-guide/integration-studio",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
@@ -491,9 +525,12 @@ description: Overview of blockchain development process
 
 {/* Section 6: Frontend & CI/CD Deployment */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Frontend & CI/CD Deployment</span>
+    <span>Frontend deployment, monitoring and support</span>
     <svg
       className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
       fill="none"
@@ -509,50 +546,32 @@ description: Overview of blockchain development process
       <tbody>
         {[
           [
-            "24",
-            "Build frontend using React, Vue or Angular integrating GraphQL (Hasura) and REST (API Portal).",
-            "Frontend Guide",
-            "https://console.settlemint.com/frontend",
-          ],
-          [
-            "25",
-            "Configure environment variables like ABI paths, node RPC, access tokens, and Graph endpoints.",
-            "ENV Config",
-            "https://console.settlemint.com/frontend/env",
-          ],
-          [
-            "26",
-            "Create a Dockerfile and test the build locally before pushing to Custom Deployment.",
-            "Docker Guide",
-            "https://console.settlemint.com/frontend/dockerize",
-          ],
-          [
-            "27",
+            "23",
             "Use Custom Deployment module to deploy the Docker container and set domain + secrets.",
             "Deploy Frontend",
-            "https://console.settlemint.com/deployment/ui",
+            "/documentation/building-with-settlemint/evm-chains-guide/deploy-custom-services",
           ],
           [
-            "28",
+            "24",
             "Monitor RAM, CPU, bandwidth, and container uptime from the deployment dashboard.",
             "Monitor Dashboard",
-            "https://console.settlemint.com/dashboard/monitoring",
+            "/documentation/platform-components/usage-and-logs/monitoring-tools",
           ],
+    
           [
-            "29",
-            "Access real-time logs for Smart Contracts, Graph, API Portal, and Docker containers.",
-            "App Logs",
-            "https://console.settlemint.com/logs",
-          ],
-          [
-            "30",
+            "25",
             "Use in-app chat or support@settlemint.com for queries or assistance.",
             "Support",
-            "https://console.settlemint.com/support",
+            "/documentation/support/support",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
@@ -575,7 +594,10 @@ description: Overview of blockchain development process
 
 {/* Section 1: Platform Setup & Network Configuration */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
     <span>Platform Setup & Network Configuration</span>
     <svg
@@ -641,8 +663,13 @@ description: Overview of blockchain development process
             "https://console.settlemint.com/explorer",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
@@ -663,7 +690,10 @@ description: Overview of blockchain development process
 
 {/* Section 2: Keys, Middleware & Access Tokens */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
     <span>Keys, Middleware & Access Tokens</span>
     <svg
@@ -729,8 +759,13 @@ description: Overview of blockchain development process
             "https://console.settlemint.com/access-tokens/applications",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
@@ -751,7 +786,10 @@ description: Overview of blockchain development process
 
 {/* Section 3: Chaincode Development & Deployment */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
     <span>Chaincode Development & Deployment</span>
     <svg
@@ -811,8 +849,13 @@ description: Overview of blockchain development process
             "https://console.settlemint.com/fabconnect/deploy",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
@@ -833,7 +876,10 @@ description: Overview of blockchain development process
 
 {/* Section 4: Data Indexing & Off-Chain Integrations */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
     <span>Data Indexing & Off-Chain Integrations</span>
     <svg
@@ -887,8 +933,13 @@ description: Overview of blockchain development process
             "https://console.settlemint.com/fabconnect/query",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
@@ -909,7 +960,10 @@ description: Overview of blockchain development process
 
 {/* Section 5: Application Completion: Backend, Frontend & Deployment */}
 
-<details className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3">
+<details
+  data-card="true"
+  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
+>
   <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
     <span>Application Completion: Backend, Frontend & Deployment</span>
     <svg
@@ -993,8 +1047,13 @@ description: Overview of blockchain development process
             "https://console.settlemint.com/feedback",
           ],
         ].map(([step, action, link, url]) => (
-          <tr key={step} className="border-b border-gray-100 dark:border-gray-800">
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">{step}</td>
+          <tr
+            key={step}
+            className="border-b border-gray-100 dark:border-gray-800"
+          >
+            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
+              {step}
+            </td>
             <td className="py-2">{action}</td>
             <td className="py-2">
               <a
