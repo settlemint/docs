@@ -841,6 +841,12 @@ network or platform network.
 
 ## 6. Deploy the smart contract to platform network
 
+Use **SettleMint Login** script in task manager to login, you will need your
+personal access token. To generate personal access token, refer -
+[Personal access token](/platform-components/security-and-authentication/personal-access-tokens)
+
+<br></br>
+
 Hardhat deploy to platform network enter the path of the deployment script
 ![Select node to deploy](../../../img/building-with-settlemint/select-deployment-script.png)
 
@@ -872,11 +878,14 @@ Select yes when prompted - **confirm deploy to network (network name)? ›
 
 Wait for a few minutes for the contract to be deployed.
 
+## Deployed contract address
+
 Deployed contract address is stored in deployed_addresses.json file located in
 igntition>deployments folder.
 
 ![Contract Deployed](../../../img/building-with-settlemint/contract-deployed-cli.png)
 
+<br></br>
 <div style={{
   backgroundColor: "#D1E5E8", 
   color: "#000000", 
@@ -890,9 +899,7 @@ igntition>deployments folder.
 Congratulations!
 
 You have successfully compiled, tested and deployed your smart contract on
-blockchain network.
-
-Now you can proceed to middlewares for getting APIs to do smart contract
+blockchain network. Now you can proceed to middlewares for getting APIs to do smart contract
 transactions, write data to chain and read data in a structured format.
 
 </div>

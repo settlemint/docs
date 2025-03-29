@@ -1,0 +1,855 @@
+---
+title: "Besu transaction cycle"
+description: Hyperledger besu transaction cycle
+---
+
+## Ethereum Virtual Machine (EVM) Transaction Lifecycle
+
+### Key Generation and Account Creation
+
+The transaction lifecycle begins with cryptographic key generation using the
+secp256k1 elliptic curve. A randomly generated 256-bit private key produces a
+corresponding public key through elliptic curve multiplication. The Ethereum
+address is derived as the last 20 bytes of the Keccak-256 hash of the
+uncompressed public key. This address serves as the account identifier,
+analogous to a bank account number in traditional finance.
+
+### Smart Contract Compilation and Encoding
+
+For smart contract interactions, Solidity code undergoes compilation into two
+critical components:
+
+1. **Bytecode**: The EVM-executable machine code containing initialization and
+   runtime segments
+2. **ABI**: A JSON interface specifying function signatures and parameter
+   types  
+   Constructor arguments are encoded using Recursive Length Prefix (RLP)
+   encoding and appended to the deployment bytecode. Dynamic types like strings
+   include length prefixes and offsets in their encoding scheme.
+
+### Transaction Construction and Signing
+
+Transactions contain several critical fields:
+
+- `nonce`: Sequence number preventing replay attacks
+- `gasPrice`/`gasLimit`: Fee market parameters
+- `chainId`: Network identifier (EIP-155)
+- `data`: For contract calls, ABI-encoded function selectors and arguments
+
+These are signed using ECDSA with the sender's private key, producing three
+signature components:
+
+- `v`: Recovery identifier + chainId×2 + 35
+- `r`, `s`: Components of the elliptic curve signature
+
+### EVM Execution Mechanics
+
+The EVM processes transactions through deterministic opcode execution:
+
+1. **Calldata Decoding**: Extracts function selectors and parameters using ABI
+   specifications
+2. **Storage Computation**: State variables are stored at slots computed via
+   `keccak256(padded_slot_index)`
+3. **State Modification**: `SSTORE` updates contract storage, while `SLOAD`
+   reads values
+4. **Memory Management**: Temporary data stored in linear memory during
+   execution
+
+### State Trie Architecture
+
+Ethereum maintains three Merkle Patricia Tries (MPT):
+
+1. **State Trie**: Maps addresses to account states (nonce, balance,
+   storageRoot, codeHash)
+2. **Storage Trie**: Contract-specific key-value storage (updated per
+   transaction)
+3. **Receipts Trie**: Transaction execution metadata
+
+Each storage slot update modifies the trie structure, with branch nodes (17-item
+arrays) and leaf nodes (compact-encoded paths) forming cryptographic proofs of
+state transitions.
+
+### Layer 2 Scaling Solutions
+
+#### zkEVMs
+
+- **Validity Proofs**: Generate cryptographic proofs of correct execution
+- **On-chain Verification**: Posts state roots + SNARK/STARK proofs to L1
+- **Full EVM Equivalence**: Maintains identical storage layouts and ABI encoding
+
+#### Optimistic Rollups
+
+- **Fraud Proofs**: Challenges invalid state transitions during dispute windows
+- **Data Availability**: Batches transaction data via calldata compression
+- **Delayed Finality**: 7-day challenge periods for state finalization
+
+### Deterministic Execution Guarantees
+
+The system enforces consistency through:
+
+- **RLP Encoding**: Standardized serialization for all persistent data
+- **Keccak-256 Hashing**: Uniform slot computation across execution environments
+- **Gas Accounting**: Precise opcode cost tracking preventing infinite loops
+
+This architecture demonstrates how Ethereum combines cryptographic primitives,
+optimized data structures, and distributed consensus to achieve secure,
+verifiable computation in a decentralized environment.
+
+## EVM Transaction Lifecycle
+
+## 1. Key Pair & Account Creation
+
+Ethereum accounts are generated using the elliptic curve secp256k1. The private
+key is a randomly generated 256-bit number, the public key is computed via
+elliptic curve multiplication, and the address is the last 20 bytes of the
+Keccak256 hash of the uncompressed public key.
+
+```javascript
+const { ethers } = require("ethers");
+const wallet = ethers.Wallet.createRandom();
+
+console.log("Private Key:", wallet.privateKey);
+console.log("Public Key:", wallet.publicKey);
+console.log("Address:", wallet.address);
+```
+
+Example Output:
+
+```
+Private Key: 0x9c332b1492d2d9ccdbb4b4628d8695095ad2c22b86c5ef79a2173e0c6f877c22
+Public Key:  0x04535b2d2a6c9c44c1791f26791ed5ed1e50481f79cf6bdb238a5d4ae54fe65d74a57e72a2ef5e22a0f8bb006e6f85ea552d4c4c30df5c841b43f9cd1493acfb80
+Address:     0xd8cD4DAfD4e581dE9e69fB9588b6E547C206Efd1
+```
+
+Layman Explanation: Your Ethereum identity is just a pair of cryptographic keys.
+The private key is like your password. The address is like your bank account
+number — derived from the public key using a hashing function.
+
+---
+
+## 2. Smart Contract: HelloWorld.sol
+
+We write a basic smart contract with a message variable and a setter method.
+
+```solidity
+pragma solidity ^0.8.0;
+
+contract HelloWorld {
+    string public message;
+
+    constructor(string memory _msg) {
+        message = _msg;
+    }
+
+    function updateMessage(string memory _msg) public {
+        message = _msg;
+    }
+}
+```
+
+Layman Explanation: This contract is a small program that stores a message. When
+deployed, it sets the message to something like "Hello Ethereum!" and anyone can
+later update it.
+
+---
+
+## 3. Compilation → ABI & Bytecode
+
+We compile the contract using solc and extract:
+
+- ABI — a JSON description of the contract interface
+- Bytecode — the raw EVM machine code
+
+ABI:
+
+```json
+[
+  {
+    "inputs": [{ "internalType": "string", "name": "_msg", "type": "string" }],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "message",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "_msg", "type": "string" }],
+    "name": "updateMessage",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
+```
+
+Bytecode (full, no truncation):
+
+```
+0x608060405234801561001057600080fd5b5060405161011b38038061011b83398101604081905261002f9161003b565b806000819055506100db565b600080fd5b6000819050919050565b61005781610044565b811461006257600080fd5b50565b6000813590506100748161004e565b92915050565b6000602082840312156100905761008f61003f565b5b600061009e84828501610065565b91505092915050565b6100b281610044565b82525050565b60006020820190506100cd60008301846100a9565b92915050565b6000819050919050565b6100e7816100d4565b81146100f257600080fd5b50565b600081359050610104816100de565b92915050565b6000602082840312156101205761011f61003f565b5b600061012e848285016100f5565b9150509291505056fea2646970667358221220bd485cd0e3e06eeb6eac6e324b8e121b6fba8332faafbe3e60ad7fdfaf0b649264736f6c634300080c0033
+```
+
+Layman Explanation: The ABI acts like a menu of available functions in the
+contract. The bytecode is the actual machine-readable code that the EVM will
+run.
+
+---
+
+## 4. Constructor Arguments Encoding
+
+We encode constructor arguments to include with the deployment bytecode.
+
+```javascript
+const ethers = require("ethers");
+
+const encodedArgs = ethers.utils.defaultAbiCoder.encode(
+  ["string"],
+  ["Hello Ethereum!"]
+);
+```
+
+Encoded Constructor Args (hex):
+
+```
+0x0000000000000000000000000000000000000000000000000000000000000020
+0000000000000000000000000000000000000000000000000000000000000010
+48656c6c6f20457468657265756d210000000000000000000000000000000000
+```
+
+- 0x20: offset to string data
+- 0x10: length of string (16 bytes)
+- "Hello Ethereum!" = 0x48656c6c6f20457468657265756d21 padded to 32 bytes
+
+Final Full Deployment Bytecode = bytecode + encoded args:
+
+```
+0x608060405234801561001057600080fd5b5060405161011b38038061011b83398101604081905261002f9161003b565b806000819055506100db565b600080fd5b6000819050919050565b61005781610044565b811461006257600080fd5b50565b6000813590506100748161004e565b92915050565b6000602082840312156100905761008f61003f565b5b600061009e84828501610065565b91505092915050565b6100b281610044565b82525050565b60006020820190506100cd60008301846100a9565b92915050565b6000819050919050565b6100e7816100d4565b81146100f257600080fd5b50565b600081359050610104816100de565b92915050565b6000602082840312156101205761011f61003f565b5b600061012e848285016100f5565b9150509291505056fea2646970667358221220bd485cd0e3e06eeb6eac6e324b8e121b6fba8332faafbe3e60ad7fdfaf0b649264736f6c634300080c00330000000000000000000000000000000000000000000000000000000000000020
+0000000000000000000000000000000000000000000000000000000000000010
+48656c6c6f20457468657265756d210000000000000000000000000000000000
+```
+
+Layman Explanation: We attach the initial message ("Hello Ethereum!") to the
+bytecode during deployment. The encoded version includes length and position
+info so the EVM can read it correctly when deploying.
+
+---
+
+## 5. Raw Deployment Transaction: RLP Encoding and ECDSA Signature
+
+We will now create a raw transaction to deploy the HelloWorld contract, and
+generate its signature using ECDSA over the RLP-encoded payload.
+
+Transaction Object (Pre-Signature):
+
+```json
+{
+  "nonce": "0x00",
+  "gasPrice": "0x04a817c800", // 20 gwei
+  "gasLimit": "0x2dc6c0", // 3000000
+  "to": null, // contract creation
+  "value": "0x00",
+  "data": "<FULL_BYTECODE_WITH_ARGS>",
+  "chainId": 1
+}
+```
+
+Step 1: RLP Encoding (pre-signature)
+
+RLP of the transaction (pre-signature) includes:
+
+```
+[
+  nonce,
+  gasPrice,
+  gasLimit,
+  to (null → 0x),
+  value,
+  data,
+  chainId,
+  0,
+  0
+]
+```
+
+We use:
+
+```
+nonce     = 0x00
+gasPrice  = 0x04a817c800 (20,000,000,000 wei)
+gasLimit  = 0x2dc6c0     (3000000)
+to        = null         (for contract deployment)
+value     = 0x00
+data      = <full contract bytecode + args> (as in Point 4)
+chainId   = 1
+```
+
+Full RLP-Encoded Unsigned TX (Hex):
+
+```
+0xf9012a808504a817c800832dc6c080b90124608060405234801561001057600080fd5b5060405161011b38038061011b83398101604081905261002f9161003b565b806000819055506100db565b600080fd5b6000819050919050565b61005781610044565b811461006257600080fd5b50565b6000813590506100748161004e565b92915050565b6000602082840312156100905761008f61003f565b5b600061009e84828501610065565b91505092915050565b6100b281610044565b82525050565b60006020820190506100cd60008301846100a9565b92915050565b6000819050919050565b6100e7816100d4565b81146100f257600080fd5b50565b600081359050610104816100de565b92915050565b6000602082840312156101205761011f61003f565b5b600061012e848285016100f5565b9150509291505056fea2646970667358221220bd485cd0e3e06eeb6eac6e324b8e121b6fba8332faafbe3e60ad7fdfaf0b649264736f6c634300080c00330000000000000000000000000000000000000000000000000000000000000020
+0000000000000000000000000000000000000000000000000000000000000010
+48656c6c6f20457468657265756d210000000000000000000000000000000000
+018080
+```
+
+---
+
+Step 2: Sign the Keccak256 Hash of Above
+
+We now hash the RLP-encoded transaction (excluding v, r, s) and sign it using
+the private key.
+
+```javascript
+const txHash = keccak256(rlpEncodedUnsignedTx);
+const signature = ecsign(txHash, privateKey);
+```
+
+Example:
+
+```json
+{
+  "v": 0x25,
+  "r": "0x3aeec3c3a7eb1a13c6d408419816f6bb5563a9cf4263a6b9d170e9bb5b88e5bb",
+  "s": "0x275d3d113e2f06d90d3dc9e16ff3387ff145f1fe9d62c1e421693d6d24eaa598"
+}
+```
+
+- v = 37 = 1 \* 2 + 35 for chain ID 1 (EIP-155)
+- r, s are ECDSA signature components (from secp256k1)
+
+---
+
+Final Signed Raw Transaction (RLP w/ Signature):
+
+```
+0xf9015a808504a817c800832dc6c080b90124608060405234801561001057600080fd5b5060405161011b38038061011b83398101604081905261002f9161003b565b806000819055506100db565b600080fd5b6000819050919050565b61005781610044565b811461006257600080fd5b50565b6000813590506100748161004e565b92915050565b6000602082840312156100905761008f61003f565b5b600061009e84828501610065565b91505092915050565b6100b281610044565b82525050565b60006020820190506100cd60008301846100a9565b92915050565b6000819050919050565b6100e7816100d4565b81146100f257600080fd5b50565b600081359050610104816100de565b92915050565b6000602082840312156101205761011f61003f565b5b600061012e848285016100f5565b9150509291505056fea2646970667358221220bd485cd0e3e06eeb6eac6e324b8e121b6fba8332faafbe3e60ad7fdfaf0b649264736f6c634300080c00330000000000000000000000000000000000000000000000000000000000000020
+0000000000000000000000000000000000000000000000000000000000000010
+48656c6c6f20457468657265756d210000000000000000000000000000000000
+25
+3aeec3c3a7eb1a13c6d408419816f6bb5563a9cf4263a6b9d170e9bb5b88e5bb
+275d3d113e2f06d90d3dc9e16ff3387ff145f1fe9d62c1e421693d6d24eaa598
+```
+
+Layman Explanation: This is like digitally signing a message that says "Deploy
+this program with this code." The r and s values prove it's your signature. The
+v value tells the network which chain you're sending it to.
+
+---
+
+## 6. Send Transaction to Ethereum Network
+
+The signed raw transaction is sent via:
+
+```javascript
+await provider.sendTransaction(signedTx);
+```
+
+A node will verify:
+
+- Signature is valid (recover sender address)
+- Nonce is correct
+- Sender has enough ETH to cover gasLimit × gasPrice
+
+If valid, the transaction is broadcast into the mempool and included in the next
+block.
+
+---
+
+## 7. Contract Address Calculation
+
+The contract address is computed before deployment completes using:
+
+```javascript
+const contractAddress = ethers.utils.getContractAddress({
+  from: "0xd8cD4DAfD4e581dE9e69fB9588b6E547C206Efd1",
+  nonce: 0,
+});
+```
+
+Internally:
+
+```
+contractAddress = keccak256(rlp([sender, nonce]))[12:]
+```
+
+Step-by-step:
+
+1. RLP([0xd8cD4DAfD4e581dE9e69fB9588b6E547C206Efd1, 0]) → 0xd6... (RLP-encoded)
+2. keccak256(RLP) →
+   0x5cbd38cc74f924b1ef5eb86d9b54f9931f75d7e3c5e17a63ab7aeb7ddde893b1
+3. Contract Address = 0x5cbd38cc74f924b1ef5eb86d9b54f9931f75d7e3
+
+Layman Explanation: Ethereum pre-computes the future address of the contract
+using your address and how many transactions you've sent before (the nonce).
+
+---
+
+## 8. Storage Trie Initialization
+
+Ethereum contracts store all state variables in a Merkle Patricia Trie. Each
+storage slot is addressed by:
+
+```javascript
+slotKey = keccak256(padded_slot_index);
+```
+
+For variable message at slot 0x00:
+
+```javascript
+slot = ethers.utils.keccak256(ethers.utils.hexZeroPad("0x00", 32));
+// Output:
+("0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563");
+```
+
+Layman Explanation: The contract's internal variables are stored in a key-value
+database where keys are hashed. Slot 0x00 refers to the first declared state
+variable, which is message.
+
+---
+
+9. Submit updateMessage("Goodbye Ethereum!")
+
+We now send a second transaction that calls the smart contract's updateMessage()
+function with the new string "Goodbye Ethereum!".
+
+Encode Calldata with ABI
+
+```javascript
+const iface = new ethers.utils.Interface(abi);
+const data = iface.encodeFunctionData("updateMessage", ["Goodbye Ethereum!"]);
+```
+
+---
+
+Full Calldata (Untruncated):
+
+```
+0xc47f00270000000000000000000000000000000000000000000000000000000000000020
+0000000000000000000000000000000000000000000000000000000000000011
+476f6f6462796520457468657265756d2100000000000000000000000000000000
+```
+
+Breakdown:
+
+| Bytes Range | Value                                 | Meaning                                                            |
+| ----------- | ------------------------------------- | ------------------------------------------------------------------ |
+| 0x00–0x04   | 0xc47f0027                            | Function selector = keccak256("updateMessage(string)").slice(0, 4) |
+| 0x04–0x24   | 0000000000...0000020                  | Offset to start of string data (32 bytes)                          |
+| 0x24–0x44   | 0000000000...0000011                  | Length of the string = 17 bytes                                    |
+| 0x44–0x64   | 476f6f6462796520457468657265756d21... | ASCII "Goodbye Ethereum!" padded to 32 bytes                       |
+
+Layman Explanation: This is the binary version of: "Hey smart contract, call
+updateMessage() with the new string 'Goodbye Ethereum!'" The EVM uses this exact
+layout to read parameters.
+
+---
+
+## 9. Construct and Sign Transaction
+
+```javascript
+const tx = {
+  nonce: 1,
+  to: "0x5cbd38cc74f924b1ef5eb86d9b54f9931f75d7e3", // deployed contract address
+  gasPrice: ethers.utils.parseUnits("20", "gwei"),
+  gasLimit: 100000,
+  value: 0,
+  data:
+    "0xc47f00270000000000000000000000000000000000000000000000000000000000000020" +
+    "0000000000000000000000000000000000000000000000000000000000000011" +
+    "476f6f6462796520457468657265756d2100000000000000000000000000000000",
+  chainId: 1,
+};
+
+const signedTx = await wallet.signTransaction(tx);
+```
+
+---
+
+## 10. EVM Execution Trace for updateMessage()
+
+Let's now simulate the internal EVM execution step-by-step.
+
+The EVM receives the transaction, parses the calldata, and executes opcodes that
+perform:
+
+- Decoding the dynamic string argument
+- Computing the storage slot
+- Writing the new string to that slot using SSTORE
+
+Instruction-Level Breakdown (Simplified):
+
+```
+CALLDATALOAD           → push offset (0x20) → stack: [0x20]
+ADD                    → string pointer = 0x04 + 0x20 = 0x24
+CALLDATALOAD           → string length (0x11)
+[... memory allocation and copy string ...]
+SHA3                   → keccak256(0x00) = storage slot
+SSTORE                 → write to slot
+```
+
+---
+
+Storage Slot Computation
+
+```javascript
+slotKey = ethers.utils.keccak256(ethers.utils.hexZeroPad("0x00", 32));
+
+// Result:
+("0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563");
+```
+
+---
+
+Storage Value (UTF-8 String → Hex)
+
+"Goodbye Ethereum!" (17 bytes) → 0x476f6f6462796520457468657265756d21
+
+Padded to 32 bytes (for EVM):
+
+```
+0x476f6f6462796520457468657265756d2100000000000000000000000000000000
+```
+
+Layman Explanation: The EVM copies the string to memory, calculates the exact
+key to store it under, and then saves the new message in the contract's
+database.
+
+---
+
+## 11. State Trie and Storage Trie Update
+
+The Ethereum state trie now reflects this update.
+
+Account Object:
+
+```json
+{
+  "nonce": 2,
+  "balance": 0,
+  "storageRoot": "0xa1c9f3d17704e632bb58bb85e332e0bcbcc181c1cce6dd13a6adca048f2e94f3",
+  "codeHash": "0x1b449b7a3f5b631d5fa963dfba2dfc19a7d62a9a79e0f6828aee5f785dcfd94a"
+}
+```
+
+- nonce: 2 (this is the second tx from the account)
+- storageRoot: Merkle root of contract's key-value store (after update)
+- codeHash: unchanged unless contract self-destructs or is overwritten
+
+---
+
+Storage Trie Node:
+
+Key (slot):
+
+```
+0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563
+```
+
+Value (RLP encoded string):
+
+```
+0x83476f6f6462796520457468657265756d21
+```
+
+Explanation:
+
+- RLP prefix 0x83 means string length is 3 bytes more than 32 — due to prefix
+- The value is a string, padded and hashed into the trie
+
+Layman Explanation: The new message replaces the old one in a secure data
+structure called the Merkle Patricia Trie. The root hash of this trie proves
+that the value was updated, even without seeing the full database.
+
+---
+
+## 12. Transaction Receipt, Logs, and Bloom Filter
+
+If an event was emitted, logs would be added to the receipt. Even though we
+didn't emit an event, here's what a standard receipt might include.
+
+Example Receipt:
+
+```json
+{
+  "transactionHash": "0x9e81fbb3b8fd95f81c0b4161d8ef25824e64920bca134a9b469ec72f4db3cf61",
+  "blockNumber": 18465123,
+  "from": "0xd8cD4DAfD4e581dE9e69fB9588b6E547C206Efd1",
+  "to": "0x5cbd38cc74f924b1ef5eb86d9b54f9931f75d7e3",
+  "gasUsed": "0x4a38", // 19000+ gas
+  "status": "0x1", // success
+  "logs": [],
+  "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+}
+```
+
+Layman Explanation: This receipt is like a receipt you get from a store: it
+proves the transaction happened. The Bloom filter is a searchable fingerprint of
+all logs in the block — so you can find your transaction without scanning
+everything.
+
+---
+
+## 13. Merkle Patricia Trie Proofs: Structure, Path, Nodes
+
+Ethereum uses a Merkle Patricia Trie (MPT) for three major tries:
+
+| Trie         | Purpose                    | Root Hash Stored In  |
+| ------------ | -------------------------- | -------------------- |
+| State Trie   | All EOAs and contracts     | Block header         |
+| Storage Trie | Contract key-value storage | Per-contract account |
+| Receipt Trie | All tx receipts in a block | Block header         |
+
+Each key is hashed with Keccak256 and converted to hex-nibbles (base-16) for
+trie traversal. Nodes are:
+
+- Branch node: 17 slots (16 for hex chars + 1 for value)
+- Extension/Leaf node: [prefix, value] with compact encoding
+
+---
+
+Example: Storage Trie Proof Path for Slot 0x00
+
+Slot key (from earlier):
+
+```
+key = 0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563
+```
+
+Hex nibble path:
+
+```
+[2, 9, 0, d, e, c, d, 9, 5, 4, 8, b, 6, 2, a, 8, d, 6, 0, 3, 4, 5, a, 9, 8, 8, 3, 8, 6, f, c, 8, 4, b, a, 6, b, c, 9, 5, 4, 8, 4, 0, 0, 8, f, 6, 3, 6, 2, f, 9, 3, 1, 6, 0, e, f, 3, e, 5, 6, 3]
+```
+
+The path guides the trie down nodes (branch → extension → leaf).
+
+Each proof includes:
+
+- All nodes from root → leaf
+- Sibling hashes
+- RLP encoding of node contents
+
+---
+
+Example Leaf Node:
+
+```json
+[
+  "0x35ab3c...", // Compact-encoded key
+  "0x83476f6f6462796520457468657265756d21"
+]
+```
+
+Layman Explanation: The Ethereum state is like a massive tree of keys and
+values. To prove something exists in it, you can walk the exact path and show
+only the parts needed — no need to reveal the entire tree. This enables
+efficient proof of data inclusion.
+
+---
+
+## 14. Final Contract Account Object (Post-Execution)
+
+After two transactions, the account object in the state trie looks like this:
+
+```json
+{
+  "address": "0x5cbd38cc74f924b1ef5eb86d9b54f9931f75d7e3",
+  "nonce": 1,
+  "balance": "0x00",
+  "codeHash": "0x1b449b7a3f5b631d5fa963dfba2dfc19a7d62a9a79e0f6828aee5f785dcfd94a",
+  "storageRoot": "0xa1c9f3d17704e632bb58bb85e332e0bcbcc181c1cce6dd13a6adca048f2e94f3"
+}
+```
+
+Details:
+
+- nonce: Number of txs this contract has sent (usually 1 or 0)
+- codeHash: keccak256(contract bytecode)
+- storageRoot: Root hash of contract's internal storage trie
+
+---
+
+## 15. ZK-Rollup (zkEVM) Transaction Lifecycle Differences
+
+zkEVM-compatible rollups (e.g. Polygon zkEVM, Scroll, Taiko) execute
+transactions differently:
+
+Execution Flow:
+
+1. Transaction is submitted to the zk-rollup (off-chain)
+2. EVM is simulated inside a zk-circuit
+3. A validity proof is generated for:
+   - Execution trace
+   - State changes
+   - Storage writes
+4. L1 receives:
+   - Final stateRoot
+   - SNARK/STARK proof
+   - Compressed calldata
+
+---
+
+Compatible With:
+
+| Feature              | zkEVM Behavior      |
+| -------------------- | ------------------- |
+| Bytecode             | Fully supported     |
+| Storage slot hashing | Identical           |
+| Calldata encoding    | Same ABI format     |
+| Gas metering         | Emulated in circuit |
+| Logs/events          | Recorded for proof  |
+
+Layman Explanation: Instead of making every Ethereum node re-execute your
+transaction, zkEVM rollups do it once, then prove mathematically to everyone
+else that the result is valid. The proof is posted to Ethereum, and no one needs
+to trust the prover — the math guarantees correctness.
+
+---
+
+## 16. Optimistic Rollups (Arbitrum, Optimism)
+
+Optimistic Rollups take a different approach.
+
+Execution Model:
+
+1. Transactions are sent to the rollup chain
+2. Execution is done off-chain, but results are considered valid by default
+3. After a delay window (e.g. 7 days), L1 finalizes the result
+4. Anyone can submit a fraud proof if they detect an invalid state root
+
+---
+
+L1 Calldata Format
+
+Rollup batches are posted to Ethereum as calldata in a single tx:
+
+```
+0x0000...
+|-- tx1 calldata
+|-- tx2 calldata
+|-- ...
+```
+
+Calldata compression techniques:
+
+- Zlib/snappy
+- Merkle batching
+- Prefix compression
+
+---
+
+Rollup vs zkEVM Differences
+
+| Feature           | Optimistic Rollup       | zkEVM                        |
+| ----------------- | ----------------------- | ---------------------------- |
+| Trust model       | Fraud-proof (challenge) | Validity-proof (math)        |
+| Finality          | Delayed (7 days)        | Near-instant                 |
+| Gas efficiency    | Higher (calldata heavy) | Lower (proof cost amortized) |
+| EVM compatibility | High (native EVM)       | High (EVM circuits)          |
+
+Layman Explanation: Optimistic rollups assume everything is okay unless someone
+proves otherwise. zkEVMs prove everything is correct from the start. Both post
+data to Ethereum, but the trust assumptions and confirmation times are
+different.
+
+---
+
+Final World State Snapshot
+
+```json
+{
+  "ContractAddress": "0x5cbd38cc74f924b1ef5eb86d9b54f9931f75d7e3",
+  "Storage": {
+    "SlotKey": "0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563",
+    "SlotValue": "0x476f6f6462796520457468657265756d2100000000000000000000000000000000"
+  },
+  "AccountObject": {
+    "nonce": 1,
+    "codeHash": "0x1b449b7a3f5b631d5fa963dfba2dfc19a7d62a9a79e0f6828aee5f785dcfd94a",
+    "storageRoot": "0xa1c9f3d17704e632bb58bb85e332e0bcbcc181c1cce6dd13a6adca048f2e94f3"
+  },
+  "LastTransaction": {
+    "Function": "updateMessage(string)",
+    "Calldata": "0xc47f00270000000000000000000000000000000000000000000000000000000000000020" +
+                "0000000000000000000000000000000000000000000000000000000000000011" +
+                "476f6f6462796520457468657265756d2100000000000000000000000000000000",
+    "v": "0x25",
+    "r": "0x3aeec3c3a7eb1a13c6d408419816f6bb5563a9cf4263a6b9d170e9bb5b88e5bb",
+    "s": "0x275d3d113e2f06d90d3dc9e16ff3387ff145f1fe9d62c1e421693d6d24eaa598"
+  },
+  "ExecutionContext": {
+    "L1": "Ethereum Mainnet",
+    "Rollups": {
+      "zkEVM": "Validity proof enforces correctness",
+      "Optimistic": "Post and challenge model with 7d delay"
+    }
+  }
+}
+```
+
+---
+
+## Ethereum vs Hyperledger Fabric - Comparison
+
+## Technical Comparison Table
+
+| Category                           | Ethereum (EVM-Based Chains)                                  | Hyperledger Fabric                                              |
+| ---------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
+| **1. Identity Model**              | ECDSA secp256k1 key pair; address = Keccak256(pubkey)[12:]   | X.509 certificates issued by Membership Service Providers (MSP) |
+| **2. Network Type**                | Public or permissioned P2P (Ethereum Mainnet, Polygon, BSC)  | Fully permissioned consortium network                           |
+| **3. Ledger Architecture**         | Global state stored in Merkle Patricia Trie (MPT)            | Channel-based key-value store (LevelDB/CouchDB)                 |
+| **4. State Model**                 | Account-based: balances and storage in accounts              | Key-value database with versioned keys per channel              |
+| **5. Smart Contract Format**       | EVM bytecode; written in Solidity/Vyper/Yul                  | Chaincode packages in Go, JavaScript, or Java                   |
+| **6. Contract Execution**          | Executed in deterministic sandbox (EVM)                      | Executed in Docker containers as chaincode                      |
+| **7. Contract Invocation**         | `eth_sendTransaction`: ABI-encoded calldata                  | SDK submits proposals → endorsers simulate                      |
+| **8. Transaction Structure**       | Nonce, to, value, gas, calldata, signature                   | Proposal + RW Set + endorsements + signature                    |
+| **9. Signing Mechanism**           | ECDSA (v, r, s) signature from sender                        | X.509-based MSP identities; multiple endorsements               |
+| **10. Endorsement Model**          | No built-in multi-party endorsement (unless multisig logic)  | Explicit endorsement policy per chaincode                       |
+| **11. Consensus Mechanism**        | PoS (Ethereum 2.0), PoW (legacy), rollup validators          | Ordering service (Raft, BFT) + validation per org               |
+| **12. Ordering Layer**             | Implicit in block mining / validator proposal                | Dedicated ordering nodes create canonical blocks                |
+| **13. State Change Process**       | Contract executes → SSTORE updates global state              | Endorsers simulate → Orderer orders → Peers validate/commit     |
+| **14. Double-Spend Prevention**    | State root update + nonce per account                        | MVCC: Version check of key during commit phase                  |
+| **15. Finality Model**             | Probabilistic (PoW), deterministic (PoS/finality gadget)     | Deterministic finality after commit                             |
+| **16. Privacy Model**              | Fully public by default; private txs via rollups/middleware  | Channel-based segregation + Private Data Collections (PDCs)     |
+| **17. Data Visibility**            | All nodes hold all state (global visibility)                 | Per-channel; only authorized peers see data                     |
+| **18. Data Storage Format**        | MPT for state; key-value in trie; Keccak256 slots            | Simple key-value in LevelDB/CouchDB                             |
+| **19. Transaction Validation**     | EVM bytecode + gas + opcode checks                           | Validation system chaincode enforces endorsement policy + MVCC  |
+| **20. Gas / Resource Metering**    | Gas metering for all computation and storage                 | No gas model; logic must guard resource consumption             |
+| **21. Events and Logs**            | LOGn opcode emits indexed events                             | Chaincode emits named events; clients can subscribe             |
+| **22. Query Capability**           | JSON-RPC, The Graph, GraphQL, custom RPC                     | CouchDB rich queries, GetHistoryForKey, ad hoc queries          |
+| **23. Time Constraints**           | Optional: `block.timestamp`, `validUntil` for EIP-1559 txs   | Custom fields in chaincode; no native tx expiry                 |
+| **24. Execution Environment**      | Global EVM sandbox; each node runs all txs                   | Isolated Docker container per chaincode; endorsers simulate     |
+| **25. Deployment Flow**            | Deploy via signed transaction containing bytecode            | Lifecycle: package → install → approve → commit                 |
+| **26. Smart Contract Upgrade**     | Manual via proxy pattern or CREATE2                          | Controlled upgrade via chaincode lifecycle & endorsement policy |
+| **27. Programming Languages**      | Solidity (primary), Vyper, Yul                               | Go (primary), also JavaScript and Java                          |
+| **28. Auditability & History**     | Full block-by-block transaction trace, Merkle proof of state | Immutable ledger + key history queries                          |
+| **29. Hashing Functions**          | Keccak256 (SHA-3 variant)                                    | SHA-256, SHA-512 (standard cryptographic primitives)            |
+| **30. zk / Confidentiality Tools** | zkRollups, zkEVM, TornadoCash, Aztec                         | External ZKP libraries; no native zero-knowledge integration    |
+
+---
+
+## Execution Lifecycle Comparison
+
+| Stage             | Ethereum (EVM)                               | Hyperledger Fabric                                       |
+| ----------------- | -------------------------------------------- | -------------------------------------------------------- |
+| **1. Initiation** | User signs tx with ECDSA and submits to node | Client sends proposal to endorsing peers via SDK         |
+| **2. Simulation** | EVM runs the tx using opcode interpreter     | Endorsing peers simulate chaincode, generate RW set      |
+| **3. Signing**    | Sender signs tx (v, r, s)                    | Each endorser signs the proposal response                |
+| **4. Ordering**   | Block produced by validator                  | Ordering service batches txs into blocks                 |
+| **5. Validation** | Gas limit, signature, nonce, storage check   | Validation system checks endorsement + MVCC versioning   |
+| **6. Commit**     | State trie updated, new root in block header | Valid txs update state in DB; invalid txs marked as such |
+| **7. Finality**   | Final after sufficient blocks (PoW/PoS)      | Final immediately after block commit                     |
+
+---
+
+## Summary Insights
+
+- **Ethereum** offers a globally synchronized, public execution model with gas
+  metering and strong ecosystem tooling. It emphasizes decentralization,
+  programmability, and composability.
+- **Fabric** is a modular enterprise-grade DLT with configurable privacy,
+  endorsement policies, and deterministic execution. It separates simulation
+  from ordering, enabling fine-grained control.

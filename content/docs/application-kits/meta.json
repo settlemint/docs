@@ -2,5 +2,5 @@
   "label": "Application Kits",
   "title": "Application Kits",
   "icon": "Bolt",
-  "pages": ["asset-tokenization"]
+  "pages": ["introduction", "asset-tokenization"]
 }

@@ -85,6 +85,31 @@ or use the **Blockchain Nodes** link in the left menu.
 
 ![Add Node](../../../img/building-with-settlemint/add-fabric-node-ui.png)
 
+To bootstrap a functional and fault-tolerant Hyperledger Fabric network, certain
+minimum infrastructure elements are needed. These include peer nodes for each
+organization and orderer nodes for the consensus layer. While development or
+test networks can run on minimal nodes, production networks typically enforce
+fault-tolerant configurations using Raft consensus and multiple organizations.
+
+### Minimum recommended node setup for fabric
+
+| Component               | Minimum Nodes | Recommended Setup        | Notes                                                                 |
+| ----------------------- | ------------- | ------------------------ | --------------------------------------------------------------------- |
+| Peer Nodes              | 1 per org     | 2+ per org               | At least one anchor peer is needed per org; more for load balancing.  |
+| Orderer Nodes           | 3 (Raft)      | 5 (odd number preferred) | Raft requires a quorum (>50%) for consensus; use odd numbers.         |
+| Organizations           | 2             | 3+                       | More orgs simulate decentralized governance and endorsement policies. |
+| Certificate Authorities | 1 per org     | 1 per org + TLS CA       | Separate TLS and root CA improves security isolation.                 |
+
+- **Peer Nodes**: A network with a single organization and one peer node is
+  technically valid but does not reflect real consortium setups. For endorsement
+  policies and distributed state replication, at least two orgs with peers are
+  recommended.
+- **Orderers with Raft**: Raft ordering service requires **at least 3 nodes**
+  for high availability. Using 5 nodes allows for one node to go down without
+  losing quorum.
+- **CA Services**: Each org should operate its own CA for identity issuance. TLS
+  CAs are often split for better separation of concerns.
+
 ![Fabric Network Config](../../../img/platfrom-components/fabric-config.png)
 Users can configure the following settings before deploying a **Fabric
 network**:
@@ -277,6 +302,7 @@ A dedicated **Metrics Panel** delivers real-time statistics, such as:
 These visual analytics tools enhance user insights and ensure efficient
 blockchain monitoring.
 
+<br></br>
 <div style={{
   backgroundColor: "#D1E5E8", 
   color: "#000000", 
