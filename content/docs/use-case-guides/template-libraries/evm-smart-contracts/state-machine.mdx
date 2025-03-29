@@ -260,7 +260,7 @@ const statemachine = await factory.deploy(
 
 ### 3. Indexing on-chain data
 
-#### statemachinemetadata Indexing Module
+#### Statemachinemetadata Indexing Module
 
 The statemachinemetadata indexing module has 3 main and 1 helper file:
 
@@ -271,7 +271,7 @@ The statemachinemetadata indexing module has 3 main and 1 helper file:
 
 And a helper file at `subgraph/fetch/statemachinemetadata.ts`
 
-#### 1. statemachinemetadata Schema
+#### 1. Statemachinemetadata Schema
 
 We define 2 entities in the schema:
 
@@ -306,7 +306,7 @@ This is the entity representing the `Transition` event emitted by the
 `Generic.sol` statemachine contract. Its fields represent the information
 emitted by the event.
 
-#### 2. statemachinemetadata Subgraph Manifest Template
+#### 2. Statemachinemetadata Subgraph Manifest Template
 
 The field of interest to us in the subgraph manifest template at
 `subgraph/datasource/statemachinemetadata.yaml` is the `eventHandlers` field.
@@ -322,7 +322,7 @@ We listen to the `Transition` event emitted by the `Generic` statemachine
 contract. When that event is emitted, we call the `handleTransitions` mapping
 function defined in `subgraph/datasource/statemachinemetadata.ts`
 
-#### 3. statemachinemetadata Mapping function
+#### 3. Statemachinemetadata Mapping function
 
 The mapping functions for the `statemachinemetadata` indexing module are defined
 in `subgraph/datasource/statemachinemetadata.ts`
