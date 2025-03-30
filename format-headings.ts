@@ -16,6 +16,8 @@ const ABBREVIATIONS = [
   "URL",
   "JSON",
   "GraphQL",
+  "BFSI",
+  "dApp",
 
   // Add more abbreviations here in UPPERCASE
   // Example:
