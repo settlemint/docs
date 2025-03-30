@@ -1,5 +1,6 @@
 {
   "label": "Get Support",
   "position": 5,
-  "icon": "LifeBuoy"
+  "icon": "LifeBuoy",
+  "pages": ["support", "slas", "faqs"]
 }
