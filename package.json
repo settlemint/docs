@@ -39,7 +39,7 @@
     "@types/node": "22.13.14",
     "@types/react": "19.0.12",
     "@types/react-dom": "19.0.4",
-    "babel-plugin-react-compiler": "19.0.0-beta-e552027-20250112",
+    "babel-plugin-react-compiler": "19.0.0-beta-e993439-20250328",
     "postcss": "8.5.3",
     "tailwindcss": "4.0.17",
     "typescript": "5.8.2",
