@@ -425,7 +425,7 @@ button[data-search-full] {
 /* Define code block height */
 
 pre {
-  max-height: 20rem !important;
+  max-height: 24rem !important;
   overflow-y: auto;
 }
 
