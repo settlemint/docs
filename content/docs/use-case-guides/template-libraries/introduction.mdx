@@ -48,16 +48,71 @@ By using these templates, you will:
 - Accelerate delivery of POCs, MVPs, or production-grade logic
 
 ---
+SettleMint's smart contract templates serve as open-source, ready-to-use
+foundations for blockchain application development, significantly accelerating
+the deployment process. These templates enable users to quickly customize and
+extend their blockchain applications, leveraging tested and community-enhanced
+frameworks to reduce development time and accelerate market entry.
+
+## Open-source smart contract templates under the MIT license
+
+Benefit from the expertise of the blockchain community and trust in the
+reliability of your smart contracts. These templates are vetted and used by
+major enterprises and institutions, ensuring enhanced security and confidence in
+your deployments.
+
+## Template library
+
+The programming languages for smart contracts differ depending on the protocol:
+
+- For **EVM-compatible networks** (like Ethereum), smart contracts are written
+  in **Solidity**.
+- For **Hyperledger Fabric**, smart contracts (also called chaincode) are
+  written in **TypeScript** or **Go**.
+
+---
+
+### Solidity contracts IDE
+
+| Template                                                                                    | Description                               |
+| ------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| [Empty](https://github.com/settlemint/solidity-empty)                                       | A minimal smart contract in Solidity      |
+| [ERC20 Token](https://github.com/settlemint/solidity-token-erc20)                           | Standard ERC20 token implementation       |
+| [ERC20 with MetaTx](https://github.com/settlemint/solidity-token-erc20-metatx)              | ERC20 token with meta-transaction support |
+| [ERC20 with Crowdsale](https://github.com/settlemint/solidity-token-erc20-crowdsale)        | ERC20 token with integrated crowdsale     |
+| [ERC1155 Token](https://github.com/settlemint/solidity-token-erc1155)                       | Multi-token standard (ERC1155)            |
+| [ERC721](https://github.com/settlemint/solidity-token-erc721)                               | Standard NFT token (ERC721)               |
+| [ERC721a](https://github.com/settlemint/solidity-token-erc721a)                             | Gas-optimized NFT (ERC721A)               |
+| [ERC721 Generative Art](https://github.com/settlemint/solidity-token-erc721-generative-art) | NFT with generative art logic             |
+| [Soulbound Token](https://github.com/settlemint/solidity-token-soulbound)                   | Non-transferable token                    |
+| [Supply Chain](https://github.com/settlemint/solidity-supplychain)                          | Asset tracking across supply chain        |
+| [State Machine](https://github.com/settlemint/solidity-statemachine)                        | State transition logic                    |
+| [Diamond Bond](https://github.com/settlemint/solidity-diamond-bond)                         | Bond issuance and tracking                |
+| [Attestation Service](https://github.com/settlemint/solidity-attestation-service)           | Verifiable claim attestations             |
+
+---
+
+### Chaincode templates (hyperledger fabric)
+
+| Template                                                                                    | Description                              |
+| ------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| [Empty (TypeScript)](https://github.com/settlemint/chaincode-typescript-empty)              | Minimal TypeScript chaincode             |
+| [Empty with PDC (TypeScript)](https://github.com/settlemint/chaincode-typescript-empty-pdc) | Chaincode using private data collections |
+| [Empty (Go)](https://github.com/settlemint/chaincode-go-empty)                              | Minimal Go chaincode                     |
+
+---
+
 
 ## Important Notes Before Usage
 
 <Callout type="warning" title="Please review before use">
-  These templates are <strong>reference implementations</strong>, not ready-to-deploy production contracts or chaincode. Always customize and test thoroughly before using in any live or sensitive environment.
+  These templates are <strong>reference implementations</strong>, not ready-to-deploy production contracts or chaincode. 
+  Always customize and test thoroughly before using in any live or sensitive environment.
 </Callout>
 
 **Key cautions:**
 
-- **Security**: Templates are not audited. Critical paths like funds transfer or permission control must be reviewed manually and/or formally verified.  
+- **Security**: Templates should be audited for your use case and environment specifics. Critical paths like funds transfer or permission control must be reviewed manually and/or formally verified.  
 - **Customization Required**: The templates are generic. Specific business logic, regulatory constraints, and contract-specific behaviors must be implemented manually.  
 - **Resource Considerations**: Smart contract templates must be gas-efficient (EVM), and Fabric templates must avoid long execution or response times due to chaincode lifecycle constraints.  
 - **Environment Sensitivity**: Test on devnets (e.g., Ganache, local Fabric) before deploying on public/mainnet infrastructure.

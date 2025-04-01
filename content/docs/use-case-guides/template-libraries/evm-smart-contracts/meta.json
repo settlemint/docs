@@ -1,4 +1,4 @@
 {
   "title": "EVM Templates",
-  "pages": ["erc20", "erc721", "state-machine", "land-registry", "health-records"]
+  "pages": ["erc20", "erc721", "state-machine","intellectual-property", "land-registry", "health-records"]
 }

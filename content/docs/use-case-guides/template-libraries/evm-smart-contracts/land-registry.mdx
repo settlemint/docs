@@ -9,6 +9,29 @@ tracks essential information like area, GPS coordinates, and buyer/seller
 details, while addressing privacy concerns by hashing sensitive data like
 national IDs.
 
+## Disclaimer
+
+This smart contract implementation is provided for educational and illustrative
+purposes only. It represents a conceptual framework for blockchain-based land
+registry systems.
+
+Key considerations before any production use:
+
+- **Legal Compliance**: Land registration systems are highly regulated and vary
+  significantly by jurisdiction. This implementation would require substantial
+  modification to meet specific legal requirements in any given location.
+
+- **Security Review**: The contract should undergo comprehensive security
+  auditing by qualified blockchain security professionals before handling real
+  property or financial transactions.
+
+- **No Warranty**: The authors and contributors disclaim all liability for any
+  use of this software. Users assume all risks associated with implementation
+  and operation.
+
+- **Consultation Required**: Any organization considering use of this technology
+  should obtain advice from qualified legal counsel, real estate professionals,
+  and blockchain security experts before deployment.
 
 
 #### Contract Features
@@ -167,6 +190,15 @@ contract LandRegistry is
     {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(REGISTRAR_ROLE, msg.sender);
+    }
+
+    // ========== PAUSE/UNPAUSE FUNCTIONS ==========
+    function pause() external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _pause();
+    }
+
+    function unpause() external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _unpause();
     }
 
     // ========== CORE FUNCTIONS ==========
@@ -343,9 +375,10 @@ contract LandRegistry is
             requestId,
             request.isMerge
         )));
+        require(!_usedSignatures[digest], "Signature already used");
         address signer = digest.recover(signature);
         require(hasRole(REGISTRAR_ROLE, signer), "Invalid signer");
-
+        _usedSignatures[digest] = true;
         request.approvalSignatures.push(signature);
 
         if (request.approvalSignatures.length >= governanceApprovalThreshold) {
@@ -469,10 +502,11 @@ contract LandRegistry is
                 parentParcels: _asSingletonArray(originalParcelId),
                 paymentHistory: original.paymentHistory,
                 lastTaxPaid: original.lastTaxPaid,
-                ipfsHash: original.ipfsHash
+                ipfsHash: original.ipfsHash // Default to original IPFS hash; update off-chain if necessary
             });
 
             _mint(original.owner, newParcelId);
+            _setTokenURI(newParcelId, original.ipfsHash);
             newParcelIds[i] = newParcelId;
         }
 
@@ -507,7 +541,7 @@ contract LandRegistry is
             parcelNumber: request.newParcelNumbers[0],
             owner: commonOwner,
             area: totalArea,
-            gpsPolygon: "", // Would be set by off-chain service
+            gpsPolygon: "", // To be set by off-chain service
             jurisdiction: commonJurisdiction,
             landUseType: _parcels[request.parcelIds[0]].landUseType,
             landRate: _calculateAverageRate(request.parcelIds),
@@ -516,10 +550,12 @@ contract LandRegistry is
             parentParcels: request.parcelIds,
             paymentHistory: _combinePaymentHistories(request.parcelIds),
             lastTaxPaid: block.timestamp,
-            ipfsHash: "" // Would be set by off-chain service
+            ipfsHash: "" // To be updated off-chain
         });
 
         _mint(commonOwner, newParcelId);
+        // Optionally, set token URI when IPFS hash is available
+        _setTokenURI(newParcelId, "");
 
         // Burn original parcels
         for (uint i = 0; i < request.parcelIds.length; i++) {
@@ -583,7 +619,7 @@ contract LandRegistry is
     }
 
     function _verifyKYC(address, string memory, bytes memory) private pure returns (bool) {
-        return true; // Would integrate with KYC provider
+        return true; // Integration with KYC provider should be implemented
     }
 
     // ========== OVERRIDES ==========
@@ -897,30 +933,3 @@ for ERC-721 tokens and EIP-712 signatures.
 5. **Integration Testing**: Thoroughly test all functions in a controlled
    environment before processing live transactions.
 
-## 8. Disclaimer
-
-This smart contract implementation is provided for educational and illustrative
-purposes only. It represents a conceptual framework for blockchain-based land
-registry systems.
-
-Key considerations before any production use:
-
-- **Legal Compliance**: Land registration systems are highly regulated and vary
-  significantly by jurisdiction. This implementation would require substantial
-  modification to meet specific legal requirements in any given location.
-
-- **Security Review**: The contract should undergo comprehensive security
-  auditing by qualified blockchain security professionals before handling real
-  property or financial transactions.
-
-- **Operational Risks**: Like all smart contract systems, this implementation
-  carries risks including potential vulnerabilities, key management challenges,
-  and blockchain network dependencies.
-
-- **No Warranty**: The authors and contributors disclaim all liability for any
-  use of this software. Users assume all risks associated with implementation
-  and operation.
-
-- **Consultation Required**: Any organization considering use of this technology
-  should obtain advice from qualified legal counsel, real estate professionals,
-  and blockchain security experts before deployment.

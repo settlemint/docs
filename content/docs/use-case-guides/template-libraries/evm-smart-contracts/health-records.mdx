@@ -2,9 +2,50 @@
 title: "Health Records"
 ---
 
-A healthcare smart contract is a blockchain-based program designed to automate and securely manage various processes within the healthcare ecosystem, such as patient data access, provider accreditation, insurance claim processing, and treatment record keeping. These contracts enforce logic through code, ensuring that only authorized entities can perform sensitive actions like registering patients, submitting medical claims, or accessing health records. By using cryptographic consent and role-based access control, healthcare smart contracts give patients greater control over their data while reducing the administrative overhead for providers and insurers. All interactions are logged immutably, providing transparency and accountability for regulators and auditors.
+A healthcare smart contract is a blockchain-based program designed to automate
+and securely manage various processes within the healthcare ecosystem, such as
+patient data access, provider accreditation, insurance claim processing, and
+treatment record keeping. These contracts enforce logic through code, ensuring
+that only authorized entities can perform sensitive actions like registering
+patients, submitting medical claims, or accessing health records. By using
+cryptographic consent and role-based access control, healthcare smart contracts
+give patients greater control over their data while reducing the administrative
+overhead for providers and insurers. All interactions are logged immutably,
+providing transparency and accountability for regulators and auditors.
 
-The use of healthcare smart contracts supports a wide range of applications, including the creation of national electronic health record systems, streamlined insurance claim workflows, public health campaign tracking, and secure sharing of health credentials. These contracts help address major challenges in the healthcare sector such as data fragmentation, fraud, manual processing delays, and lack of traceability. They ensure compliance with legal frameworks by encoding privacy rules directly into the system and by enabling real-time auditability of care delivery and financial transactions.
+<br></br>
+The use of healthcare smart contracts supports a wide range of applications,
+including the creation of national electronic health record systems, streamlined
+insurance claim workflows, public health campaign tracking, and secure sharing
+of health credentials. These contracts help address major challenges in the
+healthcare sector such as data fragmentation, fraud, manual processing delays,
+and lack of traceability. They ensure compliance with legal frameworks by
+encoding privacy rules directly into the system and by enabling real-time
+auditability of care delivery and financial transactions.
+
+## Disclaimer
+
+This smart contract implementation is provided for educational and illustrative
+purposes only. It represents a conceptual framework for blockchain-based
+healthcare systems.
+
+Key considerations before any production use:
+
+- **Legal Compliance**: healthcare systems are highly regulated and vary
+  significantly by jurisdiction. This implementation would require substantial
+  modification to meet specific legal requirements in any given location.
+
+- **Security Review**: The contract should undergo comprehensive security
+  auditing by qualified blockchain security professionals before handling real
+  user or financial transactions.
+
+- **No Warranty**: The authors and contributors disclaim all liability for any
+  use of this code. Users assume all risks associated with implementation and
+  operation.
+
+- **Consultation Required**: Any organization considering using this template
+  should obtain advice from qualified legal counsel, and blockchain security
+  experts before deployment.
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -17,7 +58,7 @@ import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 
-contract NationalHealthcareSystem is 
+contract NationalHealthcareSystem is
     Initializable,
     UUPSUpgradeable,
     AccessControlUpgradeable,
@@ -30,7 +71,7 @@ contract NationalHealthcareSystem is
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     bytes32 public constant PROVIDER_ROLE = keccak256("PROVIDER_ROLE");
     bytes32 public constant AUDITOR_ROLE = keccak256("AUDITOR_ROLE");
-    
+
     // ICD-10 code length validation
     uint256 public constant MIN_DIAGNOSIS_CODE_LENGTH = 3;
     uint256 public constant MAX_DIAGNOSIS_CODE_LENGTH = 7;
@@ -80,7 +121,9 @@ contract NationalHealthcareSystem is
         uint256 submissionDate;
         uint256 approvalDate;
         uint256 settlementDate;
+        uint256 denialDate;
         string denialReason;
+        string[] supportingEHRs; // Supporting EHR documents (e.g., IPFS hashes)
     }
 
     enum ClaimStatus {
@@ -102,6 +145,9 @@ contract NationalHealthcareSystem is
     mapping(bytes32 => bool) private _registeredNationalIds;
     mapping(address => uint256) private _addressToPatientId;
     mapping(string => uint256) private _licenseToProviderCount;
+
+    // New: Array to track provider addresses
+    address[] private _providerAddresses;
 
     // ========== EVENTS ==========
     event PatientRegistered(uint256 indexed patientId, address indexed walletAddress);
@@ -143,7 +189,7 @@ contract NationalHealthcareSystem is
     modifier validDiagnosisCode(string memory code) {
         bytes memory codeBytes = bytes(code);
         require(
-            codeBytes.length >= MIN_DIAGNOSIS_CODE_LENGTH && 
+            codeBytes.length >= MIN_DIAGNOSIS_CODE_LENGTH &&
             codeBytes.length <= MAX_DIAGNOSIS_CODE_LENGTH,
             "Invalid diagnosis code"
         );
@@ -165,13 +211,18 @@ contract NationalHealthcareSystem is
         _setupRole(DEFAULT_ADMIN_ROLE, superAdmin);
         _setupRole(ADMIN_ROLE, superAdmin);
         _setupRole(AUDITOR_ROLE, superAdmin);
+
+        // Increment patient counter so that the first valid patientId is 1
+        _patientIds.increment();
     }
 
-    function _authorizeUpgrade(address newImplementation) 
-        internal 
-        override 
-        onlyRole(DEFAULT_ADMIN_ROLE) 
-    {}
+    function _authorizeUpgrade(address newImplementation)
+        internal
+        override
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        require(newImplementation != address(0), "Invalid new implementation");
+    }
 
     // ========== PATIENT REGISTRY (ENHANCED) ==========
     function registerPatient(
@@ -231,6 +282,9 @@ contract NationalHealthcareSystem is
 
         _licenseToProviderCount[licenseNumber]++;
         _grantRole(PROVIDER_ROLE, providerAddress);
+
+        // Track the provider address for consent lookups
+        _providerAddresses.push(providerAddress);
 
         emit ProviderRegistered(providerAddress, providerType);
     }
@@ -295,9 +349,9 @@ contract NationalHealthcareSystem is
         string memory diagnosisCode,
         uint256 amountRequested,
         string[] calldata supportingEHRs
-    ) external onlyActiveProvider onlyWithConsent(patientAddress) validDiagnosisCode(diagnosisCode) 
+    ) external onlyActiveProvider onlyWithConsent(patientAddress) validDiagnosisCode(diagnosisCode)
       whenNotPaused nonReentrant returns (uint256) {
-        
+
         _claimIds.increment();
         uint256 claimId = _claimIds.current();
 
@@ -311,7 +365,9 @@ contract NationalHealthcareSystem is
             submissionDate: block.timestamp,
             approvalDate: 0,
             settlementDate: 0,
-            denialReason: ""
+            denialDate: 0,
+            denialReason: "",
+            supportingEHRs: supportingEHRs
         });
 
         emit ClaimSubmitted(claimId, patientAddress, diagnosisCode);
@@ -341,9 +397,18 @@ contract NationalHealthcareSystem is
 
         _claims[claimId].status = ClaimStatus.DENIED;
         _claims[claimId].denialReason = reason;
-        _claims[claimId].approvalDate = block.timestamp;
+        _claims[claimId].denialDate = block.timestamp;
 
         emit ClaimDenied(claimId, reason);
+    }
+
+    // New: Settle an approved claim
+    function settleClaim(uint256 claimId) external onlyRole(ADMIN_ROLE) whenNotPaused {
+        require(_claims[claimId].status == ClaimStatus.APPROVED, "Claim must be approved to settle");
+        _claims[claimId].status = ClaimStatus.SETTLED;
+        _claims[claimId].settlementDate = block.timestamp;
+
+        emit ClaimSettled(claimId);
     }
 
     // ========== EMERGENCY FUNCTIONS ==========
@@ -361,15 +426,15 @@ contract NationalHealthcareSystem is
     function getPatientConsents(address patientAddress) external view returns (Consent[] memory) {
         uint256 count;
         address[] memory providers = _getAllProviders();
-        
-        // First pass to count valid consents
+
+        // First pass: count valid consents
         for (uint i = 0; i < providers.length; i++) {
             if (_consents[patientAddress][providers[i]].isGranted) {
                 count++;
             }
         }
 
-        // Second pass to populate array
+        // Second pass: populate result array
         Consent[] memory result = new Consent[](count);
         uint256 index;
         for (uint i = 0; i < providers.length; i++) {
@@ -388,9 +453,7 @@ contract NationalHealthcareSystem is
     }
 
     function _getAllProviders() private view returns (address[] memory) {
-        // Implementation would track provider addresses separately
-        // Simplified for demonstration
-        return new address[](0);
+        return _providerAddresses;
     }
 
     function _verifyGovernmentSignature(
@@ -398,7 +461,7 @@ contract NationalHealthcareSystem is
         bytes32 nationalIdHash,
         bytes calldata signature
     ) private pure returns (bool) {
-        // Implementation would verify signed message from government authority
+        // Robust verification logic to be implemented.
         return true;
     }
 
@@ -408,189 +471,221 @@ contract NationalHealthcareSystem is
         string memory providerType,
         bytes calldata proof
     ) private pure returns (bool) {
-        // Implementation would verify provider accreditation
+        // Robust accreditation verification to be implemented.
         return true;
     }
 }
 ```
 
-Here's a comprehensive Markdown documentation for the National Healthcare Smart Contract System:
+## Detailed explanation:
 
-### Purpose
-The Healthcare Smart Contract System is a blockchain-based solution designed to:
+---
 
-- Securely manage patient health records
-- Streamline insurance claim processing
-- Maintain provider accreditation
-- Ensure regulatory compliance through decentralized technology
+## 1. Upgradeability and initialization
 
-### Key Components
+- **Upgradeable architecture**:  
+  The contract uses the UUPS (Universal Upgradeable Proxy Standard) pattern to
+  allow its implementation to be updated without losing state. The
+  `_authorizeUpgrade` function restricts upgrades to addresses that hold the
+  `DEFAULT_ADMIN_ROLE` and ensures that the new implementation address is valid
+  (non-zero).
 
-| Component | Description |
-|-----------|-------------|
-| Patient Registry | Manages citizen enrollment with KYC verification |
-| Provider Network | Accredits healthcare facilities and professionals |
-| Consent Ledger | Tracks granular data access permissions |
-| EHR System | Stores encrypted health record references |
-| Claims Processor | Automates insurance claim lifecycle |
+- **Initialization process**:  
+  Instead of a traditional constructor, the contract has an `initialize`
+  function that:
+  - Initializes inherited modules such as access control, upgradeability,
+    pausing, and reentrancy guards.
+  - Sets up key roles (`DEFAULT_ADMIN_ROLE`, `ADMIN_ROLE`, and `AUDITOR_ROLE`)
+    with a provided super administrator.
+  - Increments the patient ID counter during initialization so that the first
+    patient receives an ID of 1, thereby avoiding potential ambiguity with an
+    unregistered state.
 
-## Architecture
+---
 
-### Technical Stack
+## 2. Access control and role management
 
-```solidity
-- Ethereum Virtual Machine (EVM) compatible
-- Solidity 0.8.19
-- OpenZeppelin Upgradeable Contracts
-- UUPS Proxy Pattern
-- IPFS for decentralized storage
-```
+- **Defined Roles**:  
+  The contract establishes three main roles:
 
-### Contract Inheritance
+  - **ADMIN_ROLE**: Grants permissions for administrative actions including
+    patient and provider registration, status updates, and claim management.
+  - **PROVIDER_ROLE**: Assigned to healthcare providers after successful
+    registration and accreditation.
+  - **AUDITOR_ROLE**: Intended for users responsible for oversight and auditing
+    without direct control over system operations.
 
-![Inheritance Diagram]
-```
-NationalHealthcareSystem
-├── Initializable
-├── UUPSUpgradeable
-├── AccessControlUpgradeable
-├── PausableUpgradeable
-└── ReentrancyGuardUpgradeable
-```
+- **Modifiers for Security**:  
+  Several modifiers enforce strict access control and state validations:
+  - `onlyActiveProvider`: Ensures that a provider is active and not suspended
+    before they can execute certain functions.
+  - `onlyValidPatient`: Confirms that a patient is registered by checking for a
+    non-zero patient ID.
+  - `onlyWithConsent`: Validates that a provider has been granted consent by the
+    patient.
+  - `validDiagnosisCode`: Checks that a diagnosis code is within the acceptable
+    ICD-10 length range (between 3 and 7 characters).
 
-### Data Flow
+---
 
-1. **Registration**:
-   - Patients enroll with government-verified credentials
-   - Providers submit accreditation proofs
+## 3. Patient registry
 
-2. **Consent**:
-   - Patients grant/revoke access to specific providers
-   - Consent records timestamped on-chain
+- **Patient Data Structure**:  
+  The `Patient` struct holds critical information including:
 
-3. **EHR Management**:
-   - Providers submit encrypted health data to IPFS
-   - Content hashes stored on-chain
+  - The wallet address.
+  - A SHA-3 hashed version of the national ID.
+  - An active status flag.
+  - Timestamps for registration and the most recent update.
 
-4. **Claims Processing**:
-   - Providers submit claims with diagnosis codes
-   - Admins approve/deny with documented reasons
-   - Approved claims marked as settled
+- **Patient registration process**:  
+  The `registerPatient` function (accessible only by an admin) performs several
+  validations:
 
-## Core Features
+  - It confirms that the hashed national ID has not been registered before.
+  - It ensures that the wallet address is not already associated with another
+    patient.
+  - It verifies a government signature (currently a placeholder) to authenticate
+    the registration.
 
-### 1. Patient Management
+  On successful validation, a new patient ID is generated (starting from 1), and
+  the patient’s data is stored. The mapping from wallet address to patient ID is
+  also updated for quick lookups.
 
-**Functions**:
-- `registerPatient()`: Government-verified enrollment
-- `updatePatientStatus()`: Activate/deactivate records
-- `getPatientConsents()`: View all granted permissions
+- **Updating patient status**:  
+  Administrators can change the active status of a patient using the
+  `updatePatientStatus` function, which also updates the patient’s last modified
+  timestamp.
 
-**Data Structure**:
-```solidity
-struct Patient {
-    address walletAddress;
-    bytes32 nationalIdHash; // SHA-3 hashed
-    bool isActive;
-    uint256 registrationDate;
-    uint256 lastUpdated;
-}
-```
+---
 
-### 2. Provider Network
+## 4. Provider registry
 
-**Verification Process**:
-1. Submit license and accreditation proof
-2. Admin reviews off-chain documents
-3. Contract records on-chain status
+- **Provider data structure**:  
+  The `Provider` struct contains:
 
-**Key Functions**:
-- `registerProvider()`: With credential verification
-- `suspendProvider()`: Immediate access revocation
-- `getProviderDetails()`: View full profile
+  - The provider's name, license number, and type (e.g., "HOSPITAL", "CLINIC",
+    "LAB").
+  - Flags indicating if the provider is active or suspended.
+  - Timestamps for when the provider was registered and last updated.
 
-### 3. Consent Management
+- **Provider registration and tracking**:  
+  The `registerProvider` function allows an admin to add a new provider after:
 
-**Features**:
-- Purpose-specific consent ("TREATMENT", "CLAIMS", "RESEARCH")
-- Time-stamped grant/revoke records
-- Provider-specific access control
+  - Checking that the provider is not already registered.
+  - Verifying the provider’s accreditation using a placeholder function.
 
-**Flow**:
-```mermaid
-sequenceDiagram
-    Patient->>Contract: grantConsent(provider, purpose)
-    Contract->>Blockchain: Emit ConsentGranted event
-    Provider->>Contract: submitEHR()
-    Contract->>Provider: Verify consent exists
-```
+  Once validated, the provider’s data is stored, the `PROVIDER_ROLE` is granted,
+  and the provider’s address is added to a dedicated array
+  (`_providerAddresses`). This array is later used to retrieve all provider
+  addresses for operations like consent management.
 
-### 4. Electronic Health Records
+- **Provider suspension**:  
+  Administrators can suspend or reinstate a provider using the `suspendProvider`
+  function, which updates the provider’s suspension status and last updated
+  timestamp.
 
-**Storage Model**:
-- Off-chain: Encrypted data on IPFS
-- On-chain: Content-addressed references with:
-  - Data integrity hashes
-  - Document classification
-  - Submission timestamps
+---
 
-**Access Control**:
-```solidity
-require(
-    hasRole(PROVIDER_ROLE, msg.sender) &&
-    _consents[patient][msg.sender].isGranted,
-    "Access denied"
-);
-```
+## 5. Consent management
 
-### 5. Insurance Claims
+- **Consent data structure**:  
+  The `Consent` struct records:
 
-**Lifecycle States**:
-```solidity
-enum ClaimStatus {
-    PENDING,
-    APPROVED,
-    DENIED,
-    SETTLED
-}
-```
+  - The provider’s address for which consent is granted.
+  - A flag indicating whether the consent is active.
+  - Timestamps for when the consent was granted and, if applicable, when it was
+    revoked.
+  - The purpose for which consent is provided (e.g., "TREATMENT", "CLAIMS",
+    "RESEARCH").
 
-**Validation Checks**:
-- Active provider status
-- Valid patient consent
-- ICD-10 code formatting
-- Supporting EHR references
+- **Granting and revoking consent**:
+  - **Granting consent**:  
+    Patients can call `grantConsent` to allow a provider to access their data
+    for a specific purpose. This function checks that the provider exists and
+    that consent has not been previously granted.
+  - **Revoking consent**:  
+    The `revokeConsent` function allows patients to withdraw consent, updating
+    the consent status and recording the time of revocation.
 
-## Security Model
+---
 
-### Access Control Matrix
+## 6. Electronic health records (EHR) Management
 
-| Role | Permissions |
-|------|-------------|
-| DEFAULT_ADMIN | Full system control, upgrades |
-| ADMIN_ROLE | Manage patients/providers, process claims |
-| PROVIDER_ROLE | Submit EHRs and claims |
-| AUDITOR_ROLE | Read-only access to all data |
+- **EHR data structure**:  
+  The `EHR` struct is used to store:
 
-### Protection Mechanisms
+  - An IPFS hash that points to the off-chain location of the health record.
+  - The provider’s address that is adding the record.
+  - The document type (such as "PRESCRIPTION", "LAB_RESULT", or "IMAGE").
+  - A timestamp of when the record was added.
+  - A data hash for ensuring the integrity of the record.
 
-1. **Reentrancy Guards**:
-   - Applied to all state-changing functions
-   - Uses OpenZeppelin's nonReentrant modifier
+- **Recording EHRs**:  
+  The `addEHR` function enables an active provider (with valid consent from the
+  patient) to add an EHR. The record is stored in an array associated with the
+  patient’s address and an event is emitted to log this addition.
 
-2. **Input Validation**:
-   ```solidity
-   modifier validDiagnosisCode(string memory code) {
-       require(bytes(code).length >= 3, "Invalid code");
-       _;
-   }
-   ```
+---
 
-3. **Emergency Stops**:
-   - Circuit breaker pattern
-   - Pause all non-essential functions
+## 7. Insurance claims management
 
-4. **Data Integrity**:
-   - IPFS content hashing
-   - On-chain hash verification
+- **Insurance claim data structure**:  
+  The `InsuranceClaim` struct encapsulates:
 
+  - Addresses for both the patient and the provider.
+  - The diagnosis code (which must adhere to ICD-10 length requirements).
+  - The requested amount and the amount that gets approved.
+  - A status field using an enum (`PENDING`, `APPROVED`, `DENIED`, `SETTLED`).
+  - Timestamps for submission, approval, settlement, and denial.
+  - A string to record the reason for denial.
+  - An array to hold supporting EHR document references (e.g., IPFS hashes).
+
+- **Claims workflow**:
+  - **Submission**:  
+    The `submitClaim` function lets a provider submit a claim on behalf of a
+    patient (with proper consent). It validates the diagnosis code, accepts
+    supporting EHRs, and logs the claim submission.
+  - **Approval**:  
+    Through the `approveClaim` function, an admin can approve a claim, ensuring
+    the approved amount does not exceed the requested amount. The approval
+    timestamp is recorded.
+  - **Denial**:  
+    The `denyClaim` function allows an admin to deny a claim, documenting the
+    reason and timestamp for the denial.
+  - **Settlement**:  
+    The newly added `settleClaim` function permits an admin to mark an approved
+    claim as settled, updating its status and recording the settlement
+    timestamp.
+
+---
+
+## 8. Emergency controls
+
+- **Pausing operations**:  
+  The contract integrates a pausing mechanism using OpenZeppelin’s pausable
+  module.
+
+  - The `emergencyPause` function allows an admin to pause all contract
+    operations, which is useful in a crisis or security incident.
+  - The `emergencyUnpause` function restores normal operations.
+
+  Both functions emit events to provide an audit trail of emergency actions.
+
+---
+
+## 9. View functions and private helpers
+
+- **Retrieving patient consents**:  
+  The `getPatientConsents` function gathers all active consents for a given
+  patient by iterating through the tracked provider addresses. It compiles and
+  returns an array of active consent records.
+
+- **Private helper functions**:
+  - `_providerExists`: Checks if a provider is registered by verifying the
+    existence of a license number.
+  - `_getAllProviders`: Returns the list of all registered provider addresses
+    stored in `_providerAddresses`.
+  - `_verifyGovernmentSignature` and `_verifyAccreditation`: These are stub
+    functions that currently always return true; they serve as placeholders
+    where robust external verification logic will be integrated.
