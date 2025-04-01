@@ -4,7 +4,6 @@
   "pages": [
     "create-an-application",
     "add-network-and-nodes",
-    "add-private-keys",
     "setup-code-studio",
     "deploy-chain-code",
     "setup-api-portal",
