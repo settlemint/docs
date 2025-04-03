@@ -33,7 +33,7 @@
     "ultracite": "4.2.1"
   },
   "devDependencies": {
-    "@fumadocs/cli": "0.0.8",
+    "@fumadocs/cli": "0.1.0",
     "@tailwindcss/postcss": "4.1.1",
     "@types/mdx": "2.0.13",
     "@types/node": "22.14.0",
