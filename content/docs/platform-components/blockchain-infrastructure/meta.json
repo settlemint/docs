@@ -1,0 +1,12 @@
+{
+  "title": "Blockchain Infrastructure",
+  "icon": "Blocks",
+  "pages": [
+    "network-manager",
+    "blockchain-nodes",
+    "consortium-manager",
+    "transaction-signer",
+    "load-balancer",
+    "insights"
+  ]
+}

@@ -1,0 +1,303 @@
+---
+title: "Create an application"
+description: Guide to creating a blockchain application on SettleMint
+---
+
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
+
+<div
+  style={{
+    backgroundColor: "#e1eafd",
+    color: "#356fee",
+    padding: "0.5px 10px 10px 10px",
+    borderRadius: "10px",
+    fontSize: "18px",
+    fontWeight: "bold",
+    lineHeight: "1.5",
+    textAlign: "left",
+  }}
+>
+  Summary
+  <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
+    To get started on the SettleMint platform, you need to create an
+    organization by going to the homepage or clicking the grid icon, then
+    selecting “Create new organization.” You’ll need to enter a name and
+    complete the billing setup using Stripe to activate it.
+    <br> </br>
+    Once your organization is ready, you need to invite your team members by
+    entering their email addresses, selecting their roles, and sending the
+    invitation. After that, you need to create an application within the
+    organization by giving it a name and confirming.
+    <br> </br>
+    You can manage your organization and applications from the dashboard—change
+    names, invite more members, or delete resources when needed. You can also
+    create and manage applications using the SDK CLI or SDK JS if you prefer to
+    work programmatically.
+    <br> </br>
+  </div>
+</div>
+
+## How to create an organization and application in SettleMint platform
+
+An organization is the highest level of hierarchy in SettleMint. It's at this
+level that you can create and manage blockchain applications, invite team
+members to collaborate and manage billing.
+
+![Organization and Applications](../../../img/building-with-settlemint/organization_and_application.png)
+
+![Add Organization](../../../img/building-with-settlemint/add-org.png)
+
+You created your first organization when you signed up to use the SettleMint
+platform, but you can create as many organizations as you want, e.g. for your
+company, departments, teams, clients, etc. Organizations help you structure your
+work, manage collaboration, and keep your invoices clearly organized.
+
+<div className="flex flex-col md:flex-row items-start gap-8">
+
+  <div className="md:w-1/2">
+    <h2>Create an Organization</h2>
+
+    Navigate to the <strong>homepage</strong>, or click the <strong>grid icon</strong> in the upper right corner.
+
+    Click <strong>Create new organization</strong>. This opens a form. Follow these steps to create your organization:
+
+    Choose a <strong>name</strong> for your organization. Choose a name that is easily
+    recognizable in your dashboards, e.g. your company name, department name, team name, etc.
+    You can change the name of your organization at any time.
+
+  </div>
+  <div className="md:w-1/2">
+    ![Add Organization](../../../img/building-with-settlemint/add-organization.png)
+  </div>
+</div>
+
+<div className="grid grid-cols-2 gap-4 items-start">
+  {/* Left Column - Text Content */}
+  <div className="flex flex-col justify-start pt-2">
+  <p>Enter **billing information**. SettleMint creates a billing account for this
+organization. You will be billed monthly for the resources you use within this
+organization. Provide your billing details securely via Stripe, with support for Visa, Mastercard, and Amex, to activate your organization. Follow the prompts to complete the setup and gain full access to SettleMint’s blockchain development tools. Ensure all details are accurate to enable a smooth onboarding experience. Your organization is billed monthly, with the invoice dates set for 1st of every month.</p>
+  </div>
+
+{/* Right Column - Image */}
+
+  <div>
+    ![SettleMint Signup](../../../img/building-with-settlemint/create-org-billing.png)
+  </div>
+</div>
+
+Click **Confirm** to go to the organization dashboard. From here, you can create
+your first application in this organization. The dashboard will show you a
+summary of your organization's applications, the members in this organization,
+and a status of the resource costs for the current month.
+
+When you create an organization, you are the owner, and therefore an
+administrator of the organization. This means you can perform all actions within
+this organization, with no limitations.
+
+## Invite new organization members
+
+![Invite Members](../../../img/building-with-settlemint/invite-member-to-org.png)
+
+Navigate to the **Members section** of your organization, via the homepage, or
+via your organization dashboard.
+
+Follow these steps to invite new members to your organization:
+
+1. Click **Invite new member**.
+2. Enter the **email adress** of the person you want to invite.
+3. Select their **role**, i.e. whether they will be an administrator or a user.
+4. Optionally, you can add a **message** to be included in the invitation email.
+5. Click **Confirm** to go to the list of your organization's members. Your
+   email invitation has now been sent, and you see in the list that it is
+   pending.
+
+## Manage an organization
+
+Navigate to the **organization dashboard**.
+
+Click **Manage organization** to see the available actions. You can only perform
+these actions if you have administrator rights for this organization.
+
+- **Change name** - Changes the organization name without any further impact.
+- **Delete organization** - Removes the organization from the platform.
+
+On Organization Dashboard
+
+- See all applications in that organization.
+- See all members of the organization
+- See all the internal applications and clients if in partner mode
+
+:::warning Warning
+
+You can only delete an organization when it has no applications related to it.
+Applications have to be deleted one by one, once all their related resources
+(e.g. networks, nodes, smart contract sets, etc.) have been deleted.
+
+:::
+
+## Create an application
+
+An application is the context in which you organize your networks, nodes, smart
+contract sets and any other related blockchain resource.
+
+<Callout type="info">
+  You will always need to create an application before you can deploy or join
+  networks, and add nodes.
+</Callout>
+
+## How to create a new application
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    ![Create an App](../../../img/building-with-settlemint/create-application.png)
+
+    <Steps>
+      ### Access Application Creation
+      In the upper right corner of any page, click the **grid icon**
+
+      ### Navigate & Create
+      - Navigate to your workspace
+      - Click **Create new application**
+
+      ### Configure Application
+      - Choose a **name** for your application
+      - Click **Confirm** to create the application
+    </Steps>
+
+  </Tab>
+
+  <Tab value="SDK CLI">
+    First, install the [SDK CLI](https://github.com/settlemint/sdk/blob/main/sdk/cli/README.md#usage) as a global dependency.
+
+    Then, ensure you're authenticated. For more information on authentication, see the [SDK CLI documentation](https://github.com/settlemint/sdk/blob/main/sdk/cli/README.md#login-to-the-platform).
+    ```bash
+    SettleMint login
+    ```
+
+    Create an application:
+    ```bash
+    SettleMint platform create application <name>
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    import { createSettleMintClient } from '@settlemint/sdk-js';
+
+    const client = createSettleMintClient({
+      accessToken: 'your_access_token',
+      instance: 'https://console.settlemint.com'
+    });
+
+    // Create application
+    const createApp = async () => {
+      const result = await client.application.create({
+        workspaceUniqueName: "your-workspace",
+        name: "myApp"
+      });
+      console.log('Application created:', result);
+    };
+
+    // List applications
+    const listApps = async () => {
+      const apps = await client.application.list("your-workspace");
+      console.log('Applications:', apps);
+    };
+
+    // Read application details
+    const readApp = async () => {
+      const app = await client.application.read("app-unique-name");
+      console.log('Application details:', app);
+    };
+
+    // Delete application
+    const deleteApp = async () => {
+      await client.application.delete("application-unique-name");
+    };
+    ```
+
+    <Callout type="info">
+    Get your access token from the Platform UI under User Settings → API Tokens.
+    </Callout>
+
+  </Tab>
+</Tabs>
+
+## Manage an application
+
+The SettleMint Platform Dashboard provides a centralized view of blockchain
+infrastructure, offering real-time insights into system components. With health
+status indicators, including error and warning counts, it ensures system
+stability while enabling users to proactively address potential issues. Resource
+usage tracking helps manage costs efficiently, providing month-to-date expense
+insights.
+
+Each component features a “Details” link for quick access to in-depth
+information, while the intuitive navigation panel allows seamless access to key
+modules such as Audit Logs, Access Tokens, and Insights. Built-in support
+options further enhance usability, ensuring users can quickly troubleshoot and
+resolve issues.
+
+![Application Dashboard](../../../img/building-with-settlemint/app-dashboard.png)
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    Navigate to your application and click **Manage app** to see available actions:
+    - View application details
+    - Update application name
+    - Delete application
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # List applications
+    SettleMint platform list applications
+
+    # Delete application
+    SettleMint platform delete application <name>
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // List applications
+    await client.application.list("your-workspace");
+
+    // Read application
+    await client.application.read("app-unique-name");
+
+    // Delete application
+    await client.application.delete("app-unique-name");
+    ```
+
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+  All operations require appropriate permissions in your workspace.
+</Callout>
+
+<br></br>
+<div style={{
+  backgroundColor: "#D1E5E8", 
+  color: "#000000", 
+  padding: "0.5px 10px 10px 10px",
+  borderRadius: "10px", 
+  fontSize: "18px", 
+  fontWeight: "light",
+  lineHeight: "1.5",
+  textAlign: "left"
+}}>
+Congratulations.!!
+
+You have successfully created an organization and added an application within
+it. From here, you can proceed to deploy a network, add nodes, a load balancer,
+and a blockchain explorer
+
+</div>

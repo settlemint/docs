@@ -1,0 +1,140 @@
+---
+title: "Firefly fabconnect"
+description: Firefly fabconnect for Hyperledger Fabric Networks
+---
+
+FireFly FabConnect is a **Fabric middleware** that provides an API layer for
+interacting with **Hyperledger Fabric networks**. It abstracts the complexities
+of Fabric’s native SDKs, enabling developers to interact with the blockchain
+using **RESTful APIs** and **WebSocket-based event streaming**. FireFly
+FabConnect is designed to handle **identity management, transaction submission,
+and event subscriptions**, making it an essential component for enterprise
+blockchain solutions.
+
+### Adding fabconnect middleware in settlemint
+
+1. **Navigate to Middleware Selection**
+
+   - Go to the **Middleware** section in SettleMint.
+   - Select **FireFly FabConnect** from the available options.
+
+2. **Select Network and Nodes**
+   - **Step 1:** Enter a name for the middleware instance (e.g., `FabConnect`).
+   - **Step 2:** Choose a **peer node** from the available **Hyperledger
+     Fabric** nodes.
+   - **Step 3:** Select an **orderer node** to process transactions.
+   - **Step 4:** Confirm the setup and deploy FabConnect.
+
+Once selected, SettleMint automatically installs and configures FireFly
+FabConnect, making it ready for use with minimal effort.
+
+---
+
+## Api categories
+
+FireFly FabConnect provides three main sets of API endpoints:
+
+1. **Client MSPs (Wallet)**
+
+   - Register and enroll Fabric identities.
+   - Modify and revoke existing identities.
+   - Retrieve identity details.
+
+2. **Transactions**
+
+   - Submit transactions to Fabric networks.
+   - Query transaction results and receipts.
+   - Retrieve ledger details, such as blocks and chain information.
+
+3. **Events**
+   - Subscribe to blockchain events using regex-based filters.
+   - Stream real-time events via WebSocket.
+
+Below is a summary of the available API endpoints:
+
+| Path                          | Method | Summary                                                                 |
+| ----------------------------- | ------ | ----------------------------------------------------------------------- |
+| /identities                   | GET    | List all signing identities registered with the Fabric CA               |
+| /identities                   | POST   | Register a new signing account with the Fabric CA                       |
+| /identities/                  | GET    | Get the signing identity registered with the Fabric CA                  |
+| /identities/                  | PUT    | Modify an existing signing identity                                     |
+| /identities/param/enroll      | POST   | Enroll the registered signing identity with the Fabric CA               |
+| /identities/param/reenroll    | POST   | Re-enroll the registered signing identity with the Fabric CA            |
+| /identities/param/revoke      | POST   | Revoke enrollment certificates for the registered signing identity      |
+| /chaininfo                    | GET    | Return ledger information for a specified channel                       |
+| /blocks/blockNumberOrHash     | GET    | Query a block by number or hash                                         |
+| /blockByTxId/txId             | GET    | Query a block by a transaction ID included in the block                 |
+| /transactions                 | POST   | Send proposal to peers and transaction with endorsements to the orderer |
+| /transactions/txId            | GET    | Query a transaction by ID (hash) on a channel                           |
+| /query                        | POST   | Send a query request to the target chaincode                            |
+| /receipts                     | GET    | Retrieve transaction receipts from the receipts store                   |
+| /receipts/receiptId           | GET    | Retrieve a transaction receipt by receipt ID                            |
+| /eventstreams                 | GET    | List all event streams                                                  |
+| /eventstreams                 | POST   | Create a new event stream                                               |
+| /eventstreams/eventstreamId   | GET    | Get an event stream by ID                                               |
+| /eventstreams/eventstreamId   | DELETE | Delete an event stream by ID                                            |
+| /subscriptions                | GET    | List all subscriptions under the specified event stream                 |
+| /subscriptions                | POST   | Create a new subscription under the specified event stream              |
+| /subscriptions/subscriptionId | GET    | Get a subscription by ID                                                |
+| /subscriptions/subscriptionId | DELETE | Delete a subscription by ID                                             |
+
+For a full API specification, refer to the
+[Swagger Documentation](https://github.com/hyperledger/firefly-fabconnect).
+
+---
+
+## Prerequisites
+
+To use FireFly FabConnect within SettleMint, ensure:
+
+- A **Hyperledger Fabric Network** is deployed and accessible.
+- Fabric **peer and orderer nodes** are available for selection.
+- API credentials for Fabric CA (if identity management is required).
+
+Since FireFly FabConnect is managed within SettleMint, there is no need to
+manually install or configure the service.
+
+---
+
+## Integration & usage
+
+Once FireFly FabConnect is set up in SettleMint:
+
+1. **API Access**
+
+   - Use the provided **RESTful API endpoints** to interact with the Fabric
+     network.
+   - Query blockchain data, submit transactions, and manage identities.
+
+2. **Event Subscriptions**
+
+   - Set up WebSocket or webhook-based event listeners.
+   - Receive real-time updates on transactions and smart contract events.
+
+3. **Identity Management**
+   - Register new Fabric identities.
+   - Enroll and revoke identities as needed.
+
+The API simplifies interaction with the Fabric network, making blockchain
+integration seamless.
+
+---
+
+## Troubleshooting
+
+- **Nodes Not Available?** Ensure your Fabric network is running with active
+  peer and orderer nodes.
+- **Transaction Errors?** Check the transaction payload format and ensure it
+  matches the Fabric chaincode specifications.
+- **Event Subscription Issues?** Validate the WebSocket connection and event
+  filters.
+
+For further support, refer to FireFly FabConnect's official documentation.
+
+---
+
+## Additional resources
+
+- **[FireFly FabConnect GitHub](https://github.com/hyperledger/firefly-fabconnect)**
+- **[Hyperledger FireFly Documentation](https://hyperledger.github.io/firefly/)**
+- **[Hyperledger Fabric Documentation](https://hyperledger-fabric.readthedocs.io/)**

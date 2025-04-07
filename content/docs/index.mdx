@@ -1,57 +1,703 @@
 ---
-title: Platform Overview
-icon: House
+title: "Welcome to SettleMint developer documentation"
+icon: house
 ---
 
-SettleMint makes it easy for any developer to build, deploy and integrate
-blockchain applications rapidly. How? By radically simplifying the entire
-blockchain development process through our Blockchain Transformation platform.
-This drastically reduces the complexity and the time needed for each step in the
-blockchain development process.
+import Link from "next/link";
 
-## Getting Started
+<div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
+  <div style={{ flex: '0 0 10%' }}>
+    ![Settlemint](../img/settlemint-logo/SM_logo_icon_ORGNL.png)
+  </div>
+  <div style={{ flex: '1', paddingLeft: '1rem' }}>
+    <ul>
+      <li>Available as a SaaS platfrom or deploy anywhere - on cloud or on-prem. .</li>
+      <li>Full-stack, comprehensive suite of tools, services and guides.</li>
+      <li>Learning academy, detailed documentation, customer success team</li>
 
-<Cards>
-  <Card
-    title="SettleMint Components"
-    description="Learn about the services and tools you can can use on SettleMint"
-    href="/about-settlemint/components"
-  />
-  <Card
-    title="Supported Blockchains"
-    description="Learn about the supported blockchains that you can use"
-    href="/about-settlemint/supported-blockchains"
-  />
-  <Card
-    title="Create an Application"
-    description="Create Your First Application using SettleMint on a Managed Cloud"
-    href="/building-with-settlemint/create-an-application"
-  />
-  <Card
-    title="Install On-Premise"
-    description="Learn about the supported blockchains that you can use"
-    href="/launching-the-platform/self-hosted/introduction"
-  />
-</Cards>
+    </ul>
 
-## Start Building
+  </div>
+</div>
 
-Follow these developer guides to start building on SettleMint
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+  <a
+    href="/documentation/building-with-settlemint/getting-started"
+    className="block no-underline rounded-xl py-0 shadow-sm bg-blue-200 dark:bg-blue-950 text-slate-800 dark:text-white hover:shadow-md transition"
+  >
+    <Card>
+      <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
+        Development guides
+      </h3>
+      <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal -mt-0.5 mb-1">
+        Explore EVM and Hyperledger Fabric specific developer guides. Get started here.
+      </div>
+    </Card>
+  </a>
 
-<Cards>
-  <Card
-    title="Hello World Application"
-    description="Create Your First Application using SettleMint on a Managed Cloud"
-    href="/building-with-settlemint/create-an-application"
-  />
-  <Card
-    title="Connect Frontend - NextJS"
-    description="Learn how to create a custom frontend by building and ERC20 token transfer application"
-    href="/developer-guides/connect-frontend"
-  />
-  <Card
-    title="Asset Tokenization"
-    description="Build a Asset Tokenization blockchain application"
-    href="/developer-guides/asset-tokenization"
-  />
-</Cards>
+<a
+  href="/documentation/platform-components/blockchain-infrastructure/network-manager"
+  className="block no-underline rounded-xl py-0 shadow-sm bg-blue-200 dark:bg-blue-950 text-slate-800 dark:text-white hover:shadow-md transition"
+>
+  <Card>
+    <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
+      Platform components
+    </h3>
+    <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal -mt-0.5 mb-1">
+      Learn about SettleMint Platform components and their role in application
+      development journey.
+    </div>
+  </Card>
+</a>
+
+  <a
+    href="/documentation/launching-the-platform/self-hosted-onprem/introduction"
+    className="block no-underline rounded-xl py-0 shadow-sm text-slate-800 dark:text-white hover:shadow-md transition"
+  >
+    <Card>
+      <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
+        Deployment options
+      </h3>
+
+      <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal -mt-0.5 mb-1">
+        Learn how you can deploy SettleMint platform in cloud environment or
+        on-prem data center of your choice.
+      </div>
+    </Card>
+
+  </a>
+
+  <a
+     href="/documentation/knowledge-bank/blockchain-introduction"
+    className="block no-underline rounded-xl py-0 shadow-sm bg-blue-200 dark:bg-blue-950 text-slate-800 dark:text-white hover:shadow-md transition"
+  >
+    <Card className="h-full">
+      <h3 className="text-lg font-semibold m-0 leading-normal mt-3">
+        Knowledge bank
+      </h3>
+      <div className="text-sm text-slate-700 dark:text-slate-200 leading-normal">
+        Understand fundamentals of blockchain, use-cases, latest news and stay
+        current with the technology.
+      </div>
+    </Card>
+  </a>
+</div>
+
+![SettleMint Platform](../img/platform.png)
+
+## Building on SettleMint
+
+<table className="table-auto text-sm leading-none w-full">
+  <tbody>
+    <tr>
+      <td
+        colSpan="3"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
+      >
+        EVM chains development guide
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/create-an-application"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Create An Application
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/add-network-and-nodes"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Add Network And Nodes
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/add-private-keys"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Add Private Keys
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/setup-code-studio"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Setup Code Studio
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/deploy-smart-contracts"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Deploy Smart Contracts
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/setup-api-portal"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Setup API Portal
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/setup-graph-middleware"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Setup Graph Middleware
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/setup-offchain-database"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Setup Offchain Database
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/setup-storage"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Setup Storage
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/deploy-custom-services"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Deploy Custom Services
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/integration-studio"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Integration Studio
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/attestation-indexer"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Attestation Indexer
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td colSpan="3" className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/building-with-settlemint/evm-chains-guide/audit-logs"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Audit Logs
+        </Link>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table className="table-auto text-sm leading-none w-full">
+  <tbody>
+    <tr>
+      <td
+        colSpan="3"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
+      >
+        Hyperledger fabric development guide
+      </td>
+    </tr>
+
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link href="/building-with-settlemint/hyperledger-fabric-guide/create-an-application" className="no-underline text-sm-accent hover:underline">
+          Create An Application
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link href="/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes" className="no-underline text-sm-accent hover:underline">
+          Add Network And Nodes
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link href="/building-with-settlemint/hyperledger-fabric-guide/setup-code-studio" className="no-underline text-sm-accent hover:underline">
+          Setup Code Studio
+        </Link>
+      </td>
+    </tr>
+
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link href="/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code" className="no-underline text-sm-accent hover:underline">
+          Deploy Chain Code
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link href="/building-with-settlemint/hyperledger-fabric-guide/setup-fabconnect-middleware" className="no-underline text-sm-accent hover:underline">
+          Setup Fabconnect Middleware
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link href="/building-with-settlemint/hyperledger-fabric-guide/setup-offchain-database" className="no-underline text-sm-accent hover:underline">
+          Setup Offchain Database
+        </Link>
+      </td>
+    </tr>
+
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link href="/building-with-settlemint/hyperledger-fabric-guide/setup-storage" className="no-underline text-sm-accent hover:underline">
+          Setup Storage
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link href="/building-with-settlemint/hyperledger-fabric-guide/deploy-custom-services" className="no-underline text-sm-accent hover:underline">
+          Deploy Custom Services
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link href="/building-with-settlemint/hyperledger-fabric-guide/integration-studio" className="no-underline text-sm-accent hover:underline">
+          Integration Studio
+        </Link>
+      </td>
+    </tr>
+
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link href="/building-with-settlemint/hyperledger-fabric-guide/audit-logs" className="no-underline text-sm-accent hover:underline">
+          Audit Logs
+        </Link>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+  <div style={{ flex: '1' }}>
+    <h2 style={{ marginBottom: '1rem' }}>Platform components</h2>
+
+      SettleMint offers the most complete and easiest-to-use blockchain development platform, purpose-built to accelerate enterprise adoption. Its modular architecture covers every layer of the stack, from infrastructure and blockchain networks to smart contract development, data indexing, API generation, and integration tooling.
+
+<br></br>
+      Each platform component is designed for rapid deployment, seamless scalability, and full lifecycle management. Developers benefit from well tested tools, built-in IDE, SDKs, and pre-built application kits, while IT teams get robust governance, observability, and DevOps automation.
+  </div>
+  <div style={{ flex: '0 0 50%' }}>
+  ![Settlemint Stack Diagram](../img/mushroom.png)
+  </div>
+</div>
+
+<table className="table-auto text-sm leading-none w-full">
+  <tbody>
+    <tr>
+      <td
+        colSpan="3"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
+      >
+        Blockchain Infrastructure
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/blockchain-infrastructure/network-manager"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Network Manager
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/blockchain-infrastructure/blockchain-nodes"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Blockchain Nodes
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/blockchain-infrastructure/consortium-manager"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Consortium Manager
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/blockchain-infrastructure/transaction-signer"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Transaction Signer
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/blockchain-infrastructure/load-balancer"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Load Balancer
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/blockchain-infrastructure/insights"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Insights
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/usage-and-logs/monitoring-tools"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Health Monitoring Tools
+        </Link>
+      </td>
+      <td colSpan="2" className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/usage-and-logs/resource-usage"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Resource Usage
+        </Link>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table className="table-auto text-sm leading-none w-full">
+  <tbody>
+    <tr>
+      <td
+        colSpan="3"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
+      >
+        Dev Tools, Middlewares and APIs
+      </td>
+    </tr>
+
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/dev-tools/code-studio"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Code Studio
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/dev-tools/ai-code-assistant"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          AI code Assistant
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/dev-tools/sdk"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          SDK
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/dev-tools/cli"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          CLI
+        </Link>
+      </td>
+      <td colSpan="2" className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/dev-tools/mcp"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          MCP
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/middleware-and-api-layer/graph-middleware"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Graph Middleware
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/middleware-and-api-layer/smart-contract-api-portal"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Smart Contract API Portal
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/middleware-and-api-layer/attestation-indexer"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Attestation Indexer
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/middleware-and-api-layer/fabconnect"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Fabconnect
+        </Link>
+      </td>
+      <td colSpan="2" className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/middleware-and-api-layer/fabconnect"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Setup API Portal
+        </Link>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<table className="table-auto text-sm leading-none w-full">
+  <tbody>
+    <tr>
+      <td
+        colSpan="3"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
+      >
+        Storage, Database, Security and Auth
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/database-and-storage/hasura-backend-as-a-service"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Hasura Backend As A Service
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/database-and-storage/ipfs-storage"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          IPFS Storage
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/database-and-storage/s3-storage"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          S3 Storage
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/security-and-authentication/private-keys"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Private Keys
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/security-and-authentication/user-wallets"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          User Wallets
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/security-and-authentication/personal-access-tokens"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Personal Access Tokens
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td colSpan="3" className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/platform-components/security-and-authentication/application-access-tokens"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Application Access Tokens
+        </Link>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Learning material
+
+<table className="table-auto text-sm leading-none w-full">
+  <tbody>
+    <tr>
+      <td
+        colSpan="3"
+        className="bg-fd-secondary text-center py-2 pl-3 text-[15px] font-semibold text-slate-800 dark:text-white border-b"
+      >
+        Knowledge Bank
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/blockchain-introduction"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Blockchain Introduction
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/public-blockchains"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Public Blockchains
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/private-blockchains"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Private Blockchains
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/blockchain-app-design"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Blockchain App Design
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/smart-contracts"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Smart Contracts
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/solidity"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Solidity
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/subgraphs"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Subgraphs
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/chaincode"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Chaincode
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/keys-and-security"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Keys And Security
+        </Link>
+      </td>
+    </tr>
+    <tr className="align-top">
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/bfsi-usecases"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          BFSI Usecases
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/public-sector-usecases"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Public Sector Usecases
+        </Link>
+      </td>
+      <td className="py-2 pl-3 text-slate-800 dark:text-slate-200">
+        <Link
+          href="/knowledge-bank/industrial-usecases"
+          className="no-underline text-sm-accent hover:underline"
+        >
+          Industrial Usecases
+        </Link>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Application kits
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+    <div style={{ flex: '0 0 50%' }}>
+  ![Settlemint Stack Diagram](../img/application-kits/cover-kits.webp)
+  </div>
+  <div style={{ flex: '1' }}>
+
+SettleMint Application Kits are designed to dramatically accelerate the
+development of enterprise blockchain applications by providing pre-packaged,
+full-stack solutions inlculding both - smart contrcats and the dAPP UI for
+common use cases.
+
+Read more - [Aplication kits](/application-kits/introduction)
+
+</div>
+</div>

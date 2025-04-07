@@ -1,0 +1,11 @@
+{
+  "title": "Middleware and API Layer",
+  "icon": "Split",
+  "pages": [
+    "graph-middleware",
+    "smart-contract-api-portal",
+    "attestation-indexer",
+    "fabconnect",
+    "integration-studio"
+  ]
+}

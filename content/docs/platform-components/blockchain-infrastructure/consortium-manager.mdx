@@ -1,0 +1,120 @@
+---
+title: "Consortium manager"
+description: Guide to using blockchain explorers in SettleMint
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+
+Permissioned networks, although started by a single organization, allow multiple
+organizations with a shared business goal to come together and form the
+consortium. The different organizations transacting with each other in a
+permissioned network are called **network participants**. The organization who
+created the network, i.e. the owner, can invite network participants and set
+specific permissions for the organizations joining the network.
+
+![Invite Member to Org](../../../img/platfrom-components/invite-member-to-org.png)
+
+Depending on how you organize your work, you can grow the network with new
+participants in two ways:
+
+- **Invite an organization** to join the SettleMint platform so they can join
+  the network (e.g. if the organization itself is responsible for adding and
+  managing their nodes)
+- **Add an organization** to the network yourself (e.g. if the organization is
+  your client and you are managing the project for them)
+
+## Invite an organization
+
+Navigate to the relevant **application**, and click **Blockchain network** in
+the left navigation.
+
+![Invite Organization](../../../img/platfrom-components/invite-org-to-network.png)
+
+Open the **Participants** tab and click **Invite organization**. This opens a
+form.
+
+<Steps>
+### Enter contact information
+Enter the **email address** of the contact person from the organization you want to invite.
+
+### Set permissions
+
+Set the **permissions** for this new network participant. You can change these
+permissions at any time.
+
+### Add optional message
+
+Optionally, you can add a **message** to be included in the invitation email.
+
+### Confirm invitation
+
+Click **Confirm** to go to the list of organizations participating in the
+network. Your email invitation has now been sent, and you see in the list that
+it is pending.
+
+</Steps>
+
+The invitation email includes a code that the recipient can use to get access to
+the network.
+
+## Add an organization
+
+Navigate to the relevant **application**, and click **Blockchain network** in
+the left navigation.
+
+Open the **Participants** tab and click **Add organization**. This opens a form.
+
+<Steps>
+### Define organization
+Define the **organization**. You can select an organization you already have in place, or create a new one and choose a name for this new organization. Separate invoices are generated for each organization, so creating a new organization might be more convenient if you need to separate invoices.
+
+### Enter billing information
+
+Enter **billing information** if you created a new organization. SettleMint
+creates a billing account for this organization. You will be billed monthly for
+the resources you use within this organization.
+
+### Define application
+
+Define the **application**. You can select an application you already created,
+or create a new one and choose a name for this new application.
+
+### Set permissions
+
+Set the **permissions** for this new network participant. You can change these
+permissions at any time.
+
+### Confirm addition
+
+Click **Confirm** to go to the list of organizations participating in the
+network. You see the new participant added to the list.
+
+</Steps>
+
+## Manage a network participant
+
+Navigate to the relevant **application**, and click **Blockchain network** in
+the left navigation.
+
+Open the **Participants** tab and click **Manage participant** to see available
+actions. You can only perform these actions if you have administrator rights.
+
+**Change permissions** - Changes the network participant's permissions with
+immediate effect.
+
+<Callout type="info">
+  All operations require appropriate permissions in your workspace.
+</Callout>
+
+# Join a network by invitation
+
+In a permissioned blockchain network (often called a consortium network),
+participants need to be invited by the network's owner to join the network.
+
+![Invite Organization User](../../../img/platfrom-components/invite-user-to-network.png)
+
+<Callout type="info">
+  You need an invitation code from the network owner to join a permissioned
+  network.
+</Callout>

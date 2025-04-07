@@ -1,0 +1,269 @@
+---
+title: "Setup storage"
+description: Add S3 or IPFS storage
+---
+
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
+
+<div style={{
+  backgroundColor: "#e1eafd", 
+  color: "#356fee", 
+  padding: "0.5px 10px 10px 10px",
+  borderRadius: "10px", 
+  fontSize: "18px", 
+  fontWeight: "bold",
+  lineHeight: "1.5",
+  textAlign: "left"
+}}>
+  Summary  
+  <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
+
+To integrate off-chain file storage into your blockchain application, you can
+configure either IPFS (for decentralized content addressing) or MinIO (an
+S3-compatible private storage layer) through the SettleMint platform. Both
+options serve different use cases—IPFS excels in immutability and decentralized
+access, while S3-style storage is better for secure, private, and
+high-performance file delivery.
+
+<br> </br>
+To get started, navigate to the relevant application in your SettleMint
+workspace and open the storage section from the left-hand menu. Click add
+storage, which opens a configuration form. Choose the storage type—either IPFS
+for decentralized or MinIO for private object storage. Assign a name and
+configure your deployment settings like region, provider, and resource pack.
+Once confirmed, the storage service will be deployed and available for use.
+<br> </br>
+Once provisioned, you can access and manage your storage instance from the
+manage storage section. Here, you will be able to view the storage endpoint,
+health status, and metadata configuration. If using IPFS, you'll be interacting
+with content hashes (CIDs), while MinIO offers an S3-compatible interface where
+files are stored under buckets and can be accessed via signed URLs.
+<br> </br>
+Using the SettleMint SDK or CLI, developers will be able to list, query, and
+manage storage instances programmatically. The SDK provides a typed interface to
+connect, upload, retrieve, and delete files. For example, the
+@settlemint/sdk-ipfs package allows seamless pinning and retrieval of files
+using CIDs. Similarly, @settlemint/sdk-minio wraps around common S3 operations
+like uploading files, generating expirable download URLs, and managing buckets.
+<br> </br>
+Depending on your use case, both IPFS and MinIO can serve as complementary
+layers. For public-facing and immutable content—such as NFT metadata, DAO
+governance artifacts, or verifiable documents—IPFS is well suited. For private,
+regulated, or access-controlled files—like KYC documents, user uploads, admin
+reports, and internal metadata—MinIO offers a robust alternative with access
+control and performance guarantees.
+<br> </br>
+In practice, a dApp may use both systems in tandem: the file is stored in
+S3/MinIO for fast access and usability, while its content hash is stored on IPFS
+(and optionally, linked on-chain) to provide tamper-proof guarantees and content
+validation. This hybrid model ensures performance, security, and
+decentralization where it matters most.
+<br> </br>
+Once storage is connected, users and developers can begin uploading files via
+frontend integrations, backend scripts, or SDK calls. Content uploaded to IPFS
+will return a CID, which can be persisted on-chain or referenced in subgraphs
+and APIs. Files on S3/MinIO can be secured using signed URLs or policies, making
+them suitable for user role–based access or limited-time file sharing.
+<br> </br>
+</div>
+</div>
+
+## Off-chain file storage use cases in blockchain applications
+
+Blockchain applications often require storing documents, images, videos, or
+metadata off-chain due to cost, performance, or privacy reasons. Two common
+approaches are:
+
+- **IPFS**: A decentralized, content-addressed file system ideal for immutable,
+  verifiable, and censorship-resistant data.
+- **MiniO S3**: A centralized, enterprise-grade storage solution that supports
+  private files, fine-grained access control, and fast retrieval.
+
+Below are separate use case tables for each.
+
+---
+
+## 🌐 IPFS (Interplanetary File System)
+
+IPFS is a decentralized protocol for storing and sharing files in a peer-to-peer
+network. Files are addressed by their content hash (CID), ensuring immutability
+and verification.
+
+| Category                   | Use Cases                                                                              |
+| -------------------------- | -------------------------------------------------------------------------------------- |
+| **NFTs & Metadata**        | NFT images and media, Metadata JSON, Reveal assets, Provenance data                    |
+| **Decentralized Identity** | Hash of KYC documents, Verifiable credentials, DID documents, Encrypted identity data  |
+| **DAOs & Governance**      | Proposals with supporting files, Community manifestos, Off-chain vote metadata         |
+| **Public Records**         | Timestamped proofs, Open access research, Transparent regulatory disclosures           |
+| **Content Publishing**     | Articles, Audio files, Podcasts, Open knowledge archives                               |
+| **Gaming & Metaverse**     | 3D assets, Wearables, In-game items, IPFS-based map data                               |
+| **Token Ecosystems**       | Whitepapers, Token metadata, Proof-of-reserve documents                                |
+| **Data Integrity Proofs**  | Merkle tree files, Hashed content for audit, CID-linked validation                     |
+| **Hybrid dApps**           | On-chain reference to CID, IPFS-pinned metadata, Public shareable URIs                 |
+| **Data Portability**       | Decentralized content backups, Peer-to-peer file sharing, Long-term open data archives |
+
+---
+
+## ☁️ MinIO S3 (Simple Storage Service)
+
+MinIO S3 is a centralized cloud storage platform that offers speed, scalability,
+and rich security features. It is especially suitable for private or
+enterprise-grade applications.
+
+| Category                      | Use Cases                                                                               |
+| ----------------------------- | --------------------------------------------------------------------------------------- |
+| **KYC / Identity Management** | Encrypted KYC files, ID document storage, Compliance scans, Signature uploads           |
+| **User Uploads**              | Profile pictures, File attachments, Media uploads, Form attachments                     |
+| **Admin Dashboards**          | Exported reports, Internal analytics files, Logs and snapshots                          |
+| **E-Commerce / Marketplaces** | Product images, Order confirmations, Receipts, Invoices                                 |
+| **Private DAO Ops**           | Budget spreadsheets, Voting records, Internal documents                                 |
+| **Education Platforms**       | Certificates, Course PDFs, Student submissions                                          |
+| **Customer Support**          | Ticket attachments, User-submitted evidence, File-based case history                    |
+| **Real-Time Interfaces**      | UI asset delivery, Previews, Optimized media for front-end display                      |
+| **Data Recovery**             | Automatic backups, Encrypted snapshots, Versioned file histories                        |
+| **Secure Downloads**          | Signed URLs for restricted access, Expirable public links, S3-based token-gated content |
+
+---
+
+## Summary: when to use which?
+
+| Use Case Pattern                      | Recommended Storage |
+| ------------------------------------- | ------------------- |
+| Public, immutable content             | **IPFS**            |
+| Verifiable, on-chain linked data      | **IPFS**            |
+| Private or role-based content         | **S3**              |
+| Fast real-time access (UI/media)      | **S3**              |
+| Hybrid (IPFS for hash, S3 for access) | **Both**            |
+
+Each system has unique advantages. For truly decentralized applications where
+transparency and verifiability matter, IPFS is a natural fit. For operational
+scalability, secure access, and enterprise-grade needs, S3 provides a reliable
+foundation.
+
+In hybrid dApps, combining both ensures performance without compromising on
+decentralization.
+
+## Add storage
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    Navigate to the **application** where you want to add storage. Click **storage** in the left navigation, and then click **add storage**. This opens a form.
+
+    <Steps>
+      ### Configure storage
+      1. Choose storage type (IPFS or MinIO)
+      2. Choose a **storage name**
+      3. Configure deployment settings
+      4. Click **confirm**
+    </Steps>
+
+  </Tab>
+
+  <Tab value="SDK CLI">
+    First ensure you're authenticated:
+    ```bash
+    SettleMint login
+    ```
+
+    Create storage:
+    ```bash
+    # Get the list of available storage types
+    SettleMint platform create storage --help
+
+    # Create storage
+    SettleMint platform create storage <type> <name>
+
+    # Get information about the command and all available options
+    SettleMint platform create storage <type> --help
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    For a full example of how to connect to a storage using the SDK, see the [MinIO SDK API Reference](https://www.npmjs.com/package/@settlemint/sdk-minio#api-reference) or [IPFS SDK API Reference](https://www.npmjs.com/package/@settlemint/sdk-ipfs#api-reference).
+
+    <Callout type="info">
+    Get your access token from the platform UI under **user settings → API tokens**.
+    </Callout>
+
+    <Callout type="info">
+    The SDK enables you to:
+    - Use IPFS for decentralized storage - check out the [IPFS SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/ipfs)
+    - Use MinIO for S3-compatible storage - check out the [MinIO SDK documentation](https://github.com/settlemint/sdk/tree/main/sdk/minio)
+    </Callout>
+
+  </Tab>
+</Tabs>
+
+## Manage storage
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    Navigate to your storage and click **manage storage** to:
+    - View storage details and status
+    - Monitor health
+    - Access storage interface
+    - Update configurations
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # List storage instances
+    SettleMint platform list storage --application <app-name>
+
+    # Get storage details
+    SettleMint platform read storage <name>
+
+    # Delete storage
+    SettleMint platform delete storage <name>
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // List storage instances
+    const listStorage = async () => {
+      const storages = await client.storage.list("your-app-id");
+      console.log('Storage instances:', storages);
+    };
+
+    // Get storage details
+    const getStorage = async () => {
+      const storage = await client.storage.read("storage-unique-name");
+      console.log('Storage details:', storage);
+    };
+
+    // Delete storage
+    const deleteStorage = async () => {
+      await client.storage.delete("storage-unique-name");
+    };
+    ```
+
+  </Tab>
+</Tabs>
+
+<br></br>
+<div style={{
+  backgroundColor: "#D1E5E8", 
+  color: "#000000", 
+  padding: "0.5px 10px 10px 10px",
+  borderRadius: "10px", 
+  fontSize: "18px", 
+  fontWeight: "light",
+  lineHeight: "1.5",
+  textAlign: "left"
+}}>
+
+Congratulations!
+
+You have succesfully added S3 and IPFS storage to your application environment.
+
+From here we will proceed to adding custom container deployments where you can
+host your application front end user interface or any other service or services
+required to complete your application.
+
+</div>

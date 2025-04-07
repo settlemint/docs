@@ -1,0 +1,5 @@
+{
+  "title": "Managed Cloud: SaaS",
+  "icon": "Cloud",
+  "pages": ["introduction", "supported-cloud-providers", "deployment-plans"]
+}

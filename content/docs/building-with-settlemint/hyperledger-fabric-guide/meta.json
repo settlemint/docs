@@ -1,0 +1,17 @@
+{
+  "label": "Hyperledger Fabric Guide",
+  "title": "Hyperledger Fabric Guide",
+  "pages": [
+    "create-an-application",
+    "add-network-and-nodes",
+    "setup-code-studio",
+    "deploy-chain-code",
+    "setup-api-portal",
+    "setup-fabconnect-middleware",
+    "setup-offchain-database",
+    "setup-storage",
+    "deploy-custom-services",
+    "integration-studio",
+    "audit-logs"
+  ]
+}

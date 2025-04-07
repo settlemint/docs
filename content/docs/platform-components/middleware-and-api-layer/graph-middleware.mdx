@@ -1,0 +1,286 @@
+---
+title: "Graph middleware"
+description: Guide to using middleware in SettleMint
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
+Middleware acts as a bridge between your blockchain network and applications,
+providing essential services like data indexing, API access, and event
+monitoring. Before adding middleware, ensure you have an application and
+blockchain node in place.
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Available Options
+    - **Graph Middleware** - For EVM chains, providing subgraph-based indexing with GraphQL API
+    - **Smart Contract Portal** - For EVM chains, offering REST & GraphQL APIs with webhooks
+    - **FabConnect** - For Hyperledger Fabric, providing RESTful API
+    - **Attestation Indexer** - Specialized indexer for attestations with GraphQL API
+  </Card>
+
+  <Card>
+    ### Key Features
+    - Data indexing
+    - API access
+    - Event monitoring
+    - Webhook support
+  </Card>
+</div>
+
+## How to add middleware
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      ### Navigate to Application
+      Navigate to the **application** where you want to add middleware.
+
+      ### Access Middleware Section
+      Click **Middleware** in the left navigation, and then click **Add a middleware**. This opens a form.
+
+      ### Configure Middleware
+      1. Choose middleware type (Graph or Portal)
+      2. Choose a **Middleware name**
+      3. Select the **blockchain node**
+      4. Configure deployment settings
+      5. Click **Confirm**
+    </Steps>
+
+  </Tab>
+
+  <Tab value="SDK CLI">
+    First ensure you're authenticated:
+    ```bash
+    SettleMint login
+    ```
+
+    Create a middleware:
+    ```bash
+    # Get the list of available middleware types
+    SettleMint platform create middleware --help
+
+    # Create a middleware
+    SettleMint platform create middleware <type> <name>
+
+    # Get information about the command and all available options
+    SettleMint platform create middleware <type> --help
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    import { createSettleMintClient } from '@settlemint/sdk-js';
+
+    const client = createSettleMintClient({
+      accessToken: 'your_access_token',
+      instance: 'https://console.settlemint.com'
+    });
+
+    // Create middleware
+    const createMiddleware = async () => {
+      const result = await client.middleware.create({
+        applicationUniqueName: "your-app-unique-name",
+        name: "my-middleware",
+        type: "SHARED",
+        interface: "GRAPH",
+        blockchainNodeUniqueName: "your-node-unique-name",
+        region: "EUROPE",  // Required
+        provider: "GKE",   // Required
+        size: "SMALL"      // Valid options: "SMALL" | "MEDIUM" | "LARGE"
+      });
+      console.log('Middleware created:', result);
+    };
+    ```
+
+    <Callout type="tip">
+    Get your access token from the Platform UI under User Settings → API Tokens.
+    </Callout>
+
+  </Tab>
+</Tabs>
+
+## Manage middleware
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    Navigate to your middleware and click **Manage middleware** to:
+    - View middleware details and status
+    - Update configurations
+    - Monitor health
+    - Access endpoints
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # List middlewares
+    SettleMint platform list middlewares --application <app-name>
+
+    # Get middleware details
+    SettleMint platform read middleware <middleware-name>
+
+    # Delete middleware
+    SettleMint platform delete middleware <middleware-name>
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // List middlewares
+    await client.middleware.list("your-app");
+
+    // Get middleware details
+    await client.middleware.read("middleware-unique-name");
+
+    // Delete middleware
+    await client.middleware.delete("middleware-unique-name");
+    ```
+
+  </Tab>
+</Tabs>
+
+## The graph middleware
+
+The Graph provides powerful indexing capabilities for EVM chains through
+subgraphs. Use this middleware when you need:
+
+- Custom indexing logic through subgraph manifests
+- Complex GraphQL queries
+- Real-time data updates
+
+### Using the graph sdk
+
+```typescript
+import { createTheGraphClient } from "@settlemint/sdk-thegraph";
+
+const { client: graphClient, graphql } = createTheGraphClient({
+  instances: JSON.parse(
+    process.env.SETTLEMINT_THEGRAPH_SUBGRAPHS_ENDPOINTS || "[]"
+  ),
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN!,
+  subgraphName: "your-subgraph",
+});
+```
+
+<Callout type="tip">
+  For detailed API reference and advanced usage examples, check out the
+  [TheGraph SDK
+  documentation](https://github.com/settlemint/sdk/tree/main/sdk/thegraph).
+</Callout>
+
+### Using the graph middleware
+
+[The Graph](https://thegraph.com/en/) is a protocol for indexing and querying
+blockchain data from networks. It can be used with all EVM-compatible chains
+like Ethereum, Hyperledger Besu, Polygon, Avalanche, etc. You can run it on your
+own blockchain nodes (both public and permissioned).
+
+Using the Graph protocol, you can create **subgraphs** that define which
+blockchain data will be indexed. The middleware will then use these subgraphs to
+correctly index your smart contracts and expose a developer-friendly and
+efficient **GraphQL API**, allowing you to query the data you need.
+
+We have some prebuilt subgraph indexing modules included in the smart contract
+set, and you can build your own modules if you have a custom smart contract set.
+
+<Callout type="warning">
+  Before you start, make sure you are running an EVM-compatible network
+  (Ethereum, Polygon, Hyperledger Besu, Avalanche, etc.)
+</Callout>
+
+When the middleware is deployed, follow these steps to start using it:
+
+### Define and deploy a subgraph
+
+Navigate to the **smart contract set** which you want to index, go the
+**details** and open the **IDE**. Here you will define the subgraph to set the
+indexing specifications, and deploy it so it can be loaded into the middleware.
+There are instructions included in the IDE to help you.
+
+#### Subgraph raw configuration
+
+Inside the root you will find a file called `subgraph.config.json` that contains
+the raw configuration of the subgraph. The important section is the
+**datasources** section.
+
+- **Name** - here we defined the smart contracts with their name (the name of
+  the artifact created in the 'deployments' folder when running the deploy task)
+- **Address & Startblock** - You will notice the startblock and address to be 0.
+  You must fill these in when your contract has been deployed. The block number
+  and the address can be found in the **deployment** folder, under **ignition**.
+- **Module** - In the modules array all the indexing modules to activate for
+  this smart contract.
+
+#### About the indexing modules
+
+We provide **two libraries** of indexing modules: one by the **OpenZeppelin**
+team for all the common smart contracts in their smart contract library, and one
+by the **SettleMint** team to extend the capabilities of the OpenZeppelin one,
+and to provide indexing of the specific SettleMint smart contract sets.
+
+The OpenZeppelin set contains the following indexing modules:
+
+- accesscontrol
+- erc1155
+- erc1967upgrade
+- erc20
+- erc721
+- governor
+- ownable
+- pausable
+- timelock
+- voting
+
+The SettleMint set contains the following indexing modules:
+
+- erc721ipfs: to extend the ERC-721 from OpenZeppelin to index IPFS metadata of
+  your ERC-721 tokens
+- crowdsale/vestingvault/vestingwallet: to index and expose all the data for the
+  crowdsale contract set
+- forwarder: for the ERC-20 Meta transactions forwarder data
+- statemachinemetadata: to index IPFS metadata for state machines
+
+These are available in the `subgraph` folder in your IDE. You can create your
+own modules for any other data you want to index, or for custom smart contracts
+not part of the default sets. And you can modify the existing ones if you want
+to index things a bit different.
+
+#### Write your own indexing module
+
+You can also write your own custom indexing module for smart contracts that are
+not part of the default sets.
+
+Follow these steps to create a custom indexing module:
+
+- Primitives to generate a GraphQL schema: `subgraph/datasource/x.gql.json` - In
+  order to allow composability, the schema are not defined in the GraphQL format
+  but rather in a dedicated JSON format which is can be assembled and compiled
+  to GraphQL.
+- Template to generate a subgraph manifest: `subgraph/datasource/x.yaml` - This
+  file lists all the events that the datasources should listen to, and links
+  that to the corresponding indexing logic.
+- Indexing logic: `subgraph/datasources/x.ts` and (optionally)
+  `subgraph/fetch/x.ts` - This is the core logic that processes the events to
+  index the onchain activity.
+
+[To learn more, check it out on Github.](https://github.com/OpenZeppelin/openzeppelin-subgraphs)
+
+#### Start your subgraph
+
+The following tasks need to be run in this sequence:
+
+- `btp-scs subgraph codegen` - Generates the AssemblyScript types for your
+  contracts ABI.
+- `btp-scs subgraph build` - Compiles the WASM files based on the outputs
+  generated by `btp-scs subgraph codegen`.
+- `btp-scs subgraph deploy` - Deploys the WASM files to IPFS and updates the
+  middleware to start or update the indexing.
+
+The indexing of your smart contracts has now started. This can take a while, but
+once done you can query the middleware for your data in seconds using the
+**GraphQL API**. You can find the **endpoint** in the **Connect-tab**.

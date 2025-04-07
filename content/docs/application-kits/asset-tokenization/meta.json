@@ -1,0 +1,5 @@
+{
+  "label": "Asset Tokenization",
+  "title": "Asset Tokenization",
+  "pages": ["introduction", "signup-and-login", "deployment", "usecases", "contracts"]
+}

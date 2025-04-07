@@ -1,0 +1,1531 @@
+---
+title: "Public blockchains"
+description: Understanding public blockchain networks and their characteristics
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+
+# Public blockchain networks
+
+<Callout type="info">
+  Public blockchains are permissionless networks where anyone can participate in
+  the network operations.
+</Callout>
+
+## Major public networks
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Layer 1 Networks
+    - **Ethereum**
+      - Smart contract platform
+      - EVM compatibility
+      - Large developer ecosystem
+    - **Bitcoin**
+      - First blockchain
+      - Store of value
+      - Limited programmability
+  </Card>
+
+  <Card>
+    ### Layer 2 Solutions
+    - **Polygon PoS**
+      - Ethereum sidechain
+      - Fast transactions
+      - Low fees
+    - **Optimism & Arbitrum**
+      - Optimistic rollups
+      - EVM compatible
+      - Scalability focused
+  </Card>
+</div>
+
+## Public blockchain architecture deep dive: bitcoin, ethereum, and polygon
+
+## Bitcoin: architecture and core components
+
+Bitcoin is the original public blockchain, designed as a decentralized ledger of
+transactions. Its architecture is relatively simple and highly robust, optimized
+for security and censorship-resistance. Bitcoin uses a UTXO (Unspent Transaction
+Output) model and Nakamoto Proof-of-Work (PoW) consensus to append new blocks to
+its chain. Key technical components of Bitcoin include the block structure,
+transaction format, mining mechanism, and peer-to-peer networking.
+
+## Block structure and composition in bitcoin
+
+Each Bitcoin block consists of a block header and a list of transactions (the
+block body). The header is 80 bytes and contains several fields critical to
+linking blocks and proving work:
+
+- Version: A 4-byte field indicating the software/protocol version and consensus
+  rule set used by the miner.
+- Previous Block Hash: A 32-byte hash pointer referencing the prior block in the
+  chain, establishing the chain continuity.
+- Merkle Root: A 32-byte hash of the root of the Merkle tree of all transactions
+  in this block. Every transaction's hash is combined pairwise up the tree to
+  produce this single root, which allows efficient verification of any
+  transaction's inclusion.
+- Timestamp: A 4-byte timestamp (Unix epoch format) roughly indicating when the
+  miner created the block (to the nearest second). It helps in ordering blocks
+  and is used in difficulty adjustment calculations.
+- Difficulty Target (nBits): A 4-byte encoded target threshold that the block's
+  hash must be below for the PoW to be valid. This represents the mining
+  difficulty for that block.
+- Nonce: A 4-byte arbitrary number that miners vary to find a hash below the
+  target. Together with other fields (and extra nonce data in the coinbase
+  transaction), the nonce is what miners adjust in brute-force to produce a
+  valid block hash.
+
+Following the header, a block includes a variable number of transactions. The
+first transaction is always the coinbase transaction, which has no inputs and
+creates new bitcoins (the block reward) to pay the miner. The coinbase also
+often contains extra data (like the miner's signature or signal flags for
+upgrades) and, since Segregated Witness, commits to an additional witness Merkle
+root for SegWit data. All other transactions are user-generated transfers of
+bitcoins.
+
+Bitcoin's use of a Merkle tree for transactions means that one can prove a
+particular transaction is in a block by supplying an authentication path (the
+neighboring hashes up the tree). The block header alone (which is just 80 bytes)
+is enough for light clients (SPV clients) to verify chain proof-of-work and
+transaction inclusion via Merkle proofs, without downloading full transactions.
+
+Block Size and Weight: In Bitcoin's original design, blocks were limited to 1 MB
+in size. The Segregated Witness (SegWit) upgrade in 2017 introduced the concept
+of block weight, allowing up to 4 million weight units (WU), roughly equating to
+4 MB of data when counting witness (signature) data separately. This increased
+throughput modestly while maintaining compatibility. The block header itself
+remains constant in size; the number of transactions per block depends on their
+size and the current block weight limit.
+
+## Transaction format and utxo model
+
+Bitcoin transactions are structured around the UTXO model. Each transaction
+consumes some existing unspent outputs as inputs and creates new outputs:
+
+- Inputs: Each input references a previous transaction's output by txid and
+  output index, and provides an unlocking script (scriptSig) that satisfies the
+  conditions set by that previous output's locking script. Typically, the
+  previous output's script requires a signature from a certain public key; the
+  input therefore contains a digital signature (and public key) proving the
+  spender's authorization. If the input is from a SegWit output, part of the
+  unlocking script is instead provided in a separate witness field.
+- Outputs: Each output contains a value (amount of BTC in satoshis) and a
+  locking script (scriptPubKey) that specifies the conditions required to spend
+  this output in the future. The most common locking script is a public key hash
+  (Pay-to-Pubkey-Hash, or P2PKH) which means the output can only be spent by
+  presenting a corresponding signature and public key. Other types include P2SH
+  (Pay-to-Script-Hash), multisig, or newer ones like P2WPKH (native SegWit) and
+  Taproot outputs.
+- Transaction Metadata: Bitcoin transactions also include a version number, a
+  locktime (which can specify the earliest time or block height when it can be
+  included in the chain), and sequence numbers on inputs (used for relative
+  timelocks or to signal replacement policies like RBF).
+
+When a Bitcoin transaction is created, it must obey the rule that the sum of
+inputs ≥ sum of outputs. The difference (inputs minus outputs) is the
+transaction fee paid to the miner. Because Bitcoin uses UTXO, each output can
+only be spent once; once consumed as an input in a new transaction, that UTXO is
+considered spent and is no longer valid. The set of all unspent outputs in the
+system forms the UTXO set, which is the core of Bitcoin's state. Unlike an
+account model, there are no balances stored for addresses – only UTXOs that any
+given address can spend.
+
+Bitcoin's scripting language is deliberately simple and not Turing-complete.
+It's a stack-based bytecode that enables basic conditions (hash locks, signature
+checks, timelocks, multisignature, etc.). This simplicity enhances security and
+predictability. Scripts execute during transaction validation: each input's
+unlocking script is combined with the referenced output's locking script to form
+a complete script which the Bitcoin node executes. If the script returns true
+(valid signature, etc.), the input is considered valid. If any input's script
+fails, the entire transaction is invalid.
+
+Taproot and Upgrades: In recent upgrades (like Taproot in 2021), Bitcoin has
+improved its script capabilities and privacy. Taproot outputs allow complex
+spending conditions (multi-signatures, alternative scripts) to remain hidden
+unless used, and use Schnorr signatures which enable batching and more flexible
+scripting (MAST – Merklized Abstract Syntax Trees). These upgrades are part of
+Bitcoin's slow but steady evolution while preserving the fundamental
+architecture.
+
+## Transaction lifecycle: from creation to finality in bitcoin
+
+Bitcoin transactions pass through several stages from the moment a user
+initiates a payment to final settlement:
+
+1. Creation and Signing: A user's wallet application selects one or more UTXOs
+   that the user controls (has keys for) as inputs, specifies one or more
+   outputs (addresses and amounts to pay, plus change back to themselves if
+   any), and then signs the inputs. The result is a complete, serialized
+   transaction ready for broadcast. Each input is signed with the owner's
+   private key, and the signature proves authorization to spend the referenced
+   UTXO. The wallet will also calculate an appropriate fee to include, based on
+   the transaction size in bytes and current fee rates needed for timely mining.
+2. Broadcast to Network: The signed transaction is sent to a nearby Bitcoin node
+   (often the user's own full node or a connected node). That node will validate
+   the transaction: checking signatures, ensuring inputs exist and are unspent,
+   and that it abides by consensus rules (no overspending, proper format, etc.).
+   If valid, the node accepts it into its mempool (the in-memory pool of valid
+   but unconfirmed transactions) and then propagates it to its peers. Bitcoin's
+   peer-to-peer network uses a gossip protocol – each node relays new
+   transactions to other nodes, spreading quickly across the global network.
+   Nodes announce transactions by their hash (inv messages), and peers request
+   full details (via getdata) if they haven't seen it.
+3. Mempool and Waiting: Once in the mempool, the transaction waits to be
+   included in a block. Each node's mempool might hold thousands of
+   transactions. Miners (which are specialized full nodes) are constantly
+   looking at their mempool to select transactions for the next block.
+   Typically, miners prioritize by fee rate (satoshis per byte) to maximize
+   their revenue. Users can increase fees to get faster confirmation, especially
+   in times of congestion.
+4. Mining and Inclusion in a Block: A miner assembles a candidate block: it
+   picks a set of transactions from its mempool (up to the block weight limit,
+   and usually maximizing total fees), and then builds the Merkle tree of
+   transactions to set the Merkle root in the block header. It sets the other
+   header fields (pointing to the tip of the chain the miner is extending,
+   current timestamp, the target difficulty from the network, etc.), and puts
+   the coinbase transaction as the first transaction (paying themselves the
+   block subsidy plus the sum of selected transaction fees). Now the miner
+   begins the PoW hashing process: varying the nonce (and if needed, modifying
+   extra data in the coinbase to extend the search space) and hashing the header
+   to find a hash below the target. This is essentially a brute-force race
+   performed by mining hardware (ASICs) across the network.
+5. Block Propagation: When a miner finally finds a valid hash meeting the
+   difficulty target, it has successfully mined a new block. The miner
+   immediately broadcasts this new block to its peers. Just like transactions,
+   blocks propagate via gossip: nodes announce the new block hash to peers, who
+   then request the block if they don't have it. Efficient relay protocols (like
+   Compact Blocks and Graphene) compress the data by assuming peers have most
+   transactions already, further speeding up propagation. The goal is to spread
+   a new block to the majority of nodes (and miners) within a few seconds, so
+   the network can start building the next block on top of it.
+6. Validation and Chain Update: Each node that receives the new block will
+   validate it thoroughly. This includes verifying the block header's PoW (hash
+   meets target), checking that the block's transactions are all valid (no
+   double spends, signatures correct, scripts run to true, no inflation beyond
+   block reward, etc.), and that the block follows consensus rules (size/weight
+   limits, correct coinbase reward, valid Merkle root, etc.). If everything
+   checks out, the node links the block to its existing chain. This extends the
+   main chain (the node's best chain tip).
+7. Confirmations and Finality: The user's transaction is now confirmed in that
+   block. The block that contains it becomes part of the blockchain. However, at
+   this point, the confirmation is still probabilistic – there is a chance
+   (albeit small) that another competing block could appear (a chain fork) and
+   override this block if it gets more PoW work. Nakamoto consensus, which
+   Bitcoin uses, prioritizes the longest (heaviest) chain. Finality in Bitcoin
+   is not instant; instead, the probability of reversal decreases as more blocks
+   are added on top. A common best practice is waiting for 6 confirmations (6
+   additional blocks) for high-value transactions, which takes on average ~60
+   minutes. Six blocks deep, a transaction is extremely unlikely to be reversed
+   barring an immense and infeasible reorganization attack. Practically, for
+   lower-value payments or everyday use, fewer confirmations (or even one
+   confirmation) are acceptable risk in most cases, given Bitcoin's hashrate and
+   security.
+
+Bitcoin's consensus mechanism, Nakamoto Consensus, relies on this probabilistic
+finality and economic incentives. Miners are incentivized by block rewards and
+fees to follow the rules and extend the longest valid chain. If they try to
+cheat (e.g., double spend or create an invalid block), honest nodes will reject
+those blocks and they will have wasted their energy. Approximately every 10
+minutes a new block is mined on average, by design. The network automatically
+adjusts the difficulty every 2016 blocks (~ every 2 weeks) to maintain that
+cadence, increasing difficulty if blocks came in too fast (hash power increased)
+or decreasing it if blocks were too slow (hash power lost).
+
+## Mining and proof-of-work consensus
+
+Proof-of-Work is the heartbeat of Bitcoin's security. In PoW, miners compete to
+solve a computationally difficult puzzle: find a block header whose SHA-256 hash
+is below a target value. This target is adjusted so that, statistically, the
+entire network will find a valid block about every 10 minutes. The puzzle's
+difficulty ensures that no single party can dominate block creation without
+commanding enormous computational resources, and it ties the creation of blocks
+to a real-world cost (energy expenditure).
+
+Mining Process Details: Bitcoin mining today is performed by specialized
+hardware (ASICs) that can compute SHA-256 hashes trillions of times per second.
+Miners typically join mining pools, where many miners share work and split
+rewards, smoothing out the variance of finding blocks. Within a pool or solo,
+the process is:
+
+- Construct the block header (as described earlier), including the Merkle root
+  of chosen transactions and the reference to the previous block.
+- Set the nonce to an initial value (and adjust extraNonce in the coinbase if
+  needed for more range).
+- Hash the block header (essentially performing double SHA-256 per attempt).
+- Check if the resulting 256-bit hash interpreted as a number is less than the
+  target (which is stored in the block header as nBits).
+- If not, modify the nonce (or extraNonce) and hash again. Repeat rapidly.
+
+This is a brute force search in a vast space. The target is inversely related to
+difficulty: a lower target means fewer acceptable hashes and thus more work on
+average to find one. The current Bitcoin difficulty makes the target so low that
+miners must perform on the order of 2^[[70+]] hashes on average to find a valid
+block. This enormous number is what secures the chain—an attacker would need at
+least 51% of the global hash power to consistently outcompete honest miners,
+which is economically and physically prohibitive at Bitcoin's scale.
+
+Chain Reorganization: If two miners happen to find a block at nearly the same
+time (a race condition), the network could temporarily see a fork (split brain)
+where some nodes have one block as tip and others have the competing block. This
+is resolved when the next block is found: whichever chain becomes longer (i.e.,
+gains the next block) will be accepted as the main chain, and the other block
+becomes an "orphaned" block. Bitcoin's consensus dictates that all miners should
+switch to mining on the longest valid chain. This mechanism, simple but
+effective, eventually converges all honest nodes on a single chain. Orphaned
+blocks are rare and transactions in them return to the mempool to await
+inclusion in a later block.
+
+## Network topology and message propagation
+
+Bitcoin's network is a peer-to-peer unstructured mesh. Nodes in the network
+connect to a random set of peers (by default, up to 8 outbound connections for a
+full node, and accepting inbound connections from others). There is no
+centralized node; any node can join and leave, and discovery is done through a
+mix of DNS seed servers and peer exchanges. The design goal for the P2P layer is
+to reliably broadcast transactions and blocks to all participants in a timely
+manner, despite the network's decentralized nature and latency.
+
+Propagation Mechanisms: Bitcoin nodes use an "inv" (inventory) message system to
+announce new objects (transactions or blocks) by their hashes. Peers that don't
+have the object can request it with a "getdata" message. To avoid flooding the
+network with large data, Bitcoin employs strategies like:
+
+- Gossip with random delays: Nodes will announce new transactions to a subset of
+  peers with a slight delay and not to everyone at once, to reduce redundant
+  traffic.
+- Relay Policies: A transaction must pass certain checks (minimal fees, standard
+  script forms, etc.) for a node to relay it (this prevents spam and malicious
+  data from propagating).
+- Compact Block Relay: When propagating new blocks, instead of sending full
+  blocks (which might be large), nodes often send a "compact" block message
+  which contains the block header and short hashes of transactions. Peers
+  reconstruct the block from their mempool for any known transactions, and only
+  ask for missing ones. This dramatically cuts down block propagation time and
+  bandwidth.
+
+Latency and Throughput: Bitcoin's design prioritizes decentralization over
+performance. The 10-minute block interval helps ensure that propagation and
+validation of blocks (which could be up to ~4MB of data with SegWit) is easily
+done within that time by nodes globally, even with modest network connections.
+The trade-off is higher latency (it takes minutes to confirm transactions).
+However, this is an acceptable cost to achieve a permissionless system with
+thousands of nodes reaching eventual agreement.
+
+## State management: utxo set
+
+Bitcoin's global state at any point in time can be thought of as the set of all
+unspent transaction outputs (UTXOs). Maintaining this UTXO set is crucial for
+validating new transactions (to check if inputs are unspent and amount
+balances). Full nodes keep an indexed database of UTXOs in memory or on disk for
+quick lookup. Each new block updates the UTXO set by removing spent outputs and
+adding new outputs from transactions in that block.
+
+This model has implications:
+
+- Scalability: The UTXO set grows over time as more transactions create outputs.
+  Nodes need to manage this state efficiently. Pruning spent outputs is
+  straightforward (they're removed once spent), but the set can still grow
+  large. Bitcoin full nodes currently handle a UTXO set containing many millions
+  of entries.
+- Parallelization: Transactions that spend distinct UTXOs can theoretically be
+  processed in parallel, since there are no global balances to update – just
+  individual outputs being consumed. In practice, Bitcoin validates transactions
+  mostly sequentially within a block, but the UTXO model lends itself to easier
+  sharding or parallel processing attempts because state is fragmented among
+  outputs.
+- Simplicity: There is no notion of accounts or contract storage – just discrete
+  coins moving around. This makes Bitcoin's state model simpler but also limits
+  expressiveness for complex applications (hence why Bitcoin's on-chain
+  scripting is intentionally limited).
+
+## Smart contract capabilities (or lack thereof)
+
+Bitcoin does not have a general-purpose smart contract platform akin to
+Ethereum's EVM. Its Script language enables only rudimentary smart contract-like
+functionality (conditional spending). Examples include multi-signature wallets,
+hash-time locked contracts (HTLCs) for payment channels (the basis of the
+Lightning Network), and other simple constructs. Scripts are not Turing-complete
+(no loops, for instance), which means you cannot implement arbitrary logic or
+complex decentralized applications directly on Bitcoin's base layer. This is by
+design, focusing Bitcoin on being sound digital cash and leaving more expressive
+smart contracts to layer-2 solutions or other blockchains.
+
+That said, off-chain or layer-2 protocols (like the Lightning Network for
+micropayments, sidechains like Rootstock or Liquid, etc.) extend Bitcoin's
+functionality by using on-chain scripts as anchors or adjudication mechanisms,
+while doing more complex logic off-chain. This preserves Bitcoin's base layer
+stability and simplicity.
+
+## Summary (bitcoin):
+
+Bitcoin's architecture emphasizes security, consistency, and decentralization.
+Blocks link via hashes and PoW, transactions rely on UTXOs and simple scripts,
+and consensus is maintained through miners expending real-world resources. Its
+limitations in throughput and expressiveness are a trade-off for being the most
+battle-tested, decentralized value settlement layer.
+
+## Ethereum: architecture and innovations
+
+Ethereum is a public blockchain designed not only for cryptocurrency
+transactions but also for general-purpose computation via smart contracts.
+Launched in 2015, Ethereum introduced an account-based model and the Ethereum
+Virtual Machine (EVM), enabling Turing-complete scripts on-chain. Over time,
+Ethereum's architecture has evolved — most notably transitioning from
+Proof-of-Work to Proof-of-Stake (PoS) in 2022 (the event known as The Merge).
+Ethereum's design is more complex than Bitcoin's, featuring a richer transaction
+and state model, gas metering for computation, and different block structure and
+consensus details.
+
+## Account model and global state
+
+Unlike Bitcoin's UTXOs, Ethereum uses an account-based state model. The global
+state is a mapping of accounts (identified by 20-byte addresses) to their
+current state. There are two types of accounts:
+
+- Externally Owned Accounts (EOAs): Regular user accounts controlled by private
+  keys. They have a balance of Ether and a nonce (transaction count), but no
+  associated code.
+- Contract Accounts: Accounts that have associated smart contract code and
+  persistent storage. Contracts also have balance (they can hold Ether) and a
+  nonce (number of contract-creations from that account), and importantly, code
+  that executes when they receive a transaction or message call.
+
+The entire world state (all account balances, nonces, contract code and storage)
+is stored in a data structure called the Merkle-Patricia Trie, which is a
+cryptographic trie (prefix tree) that is also a Merkle tree. Ethereum's state
+trie root hash is part of each block header, meaning that each block commits to
+a specific world state after applying that block's transactions. This allows a
+client to verify any account's state with a Merkle proof against the state root
+in a trusted block header. In fact, Ethereum uses three interrelated Merkle
+tries:
+
+- State Trie: Mapping account addresses to account state objects (balance,
+  nonce, code hash, storage root).
+- Storage Trie: For each contract account, its storage (a key-value store) is
+  itself stored as a Merkle trie, the root of which is stored in the account's
+  state object.
+- Transaction Trie and Receipt Trie: Each block has a trie of transactions
+  included and a trie of receipts (outcomes of each transaction). The roots of
+  these tries are in the block header as well (transactionsRoot and
+  receiptsRoot).
+
+This trie structure makes verifying parts of the state possible without having
+the entire state (useful for light clients). However, maintaining these tries is
+heavy for full nodes, as the state can grow large and changes every transaction.
+
+In Ethereum, each transaction directly updates the global state by debiting one
+account and crediting another (for value transfers) or modifying contract
+storage and code (for contract calls). This is a more fluid model than
+Bitcoin's; it's easier to query an account balance or send funds from one
+account to another without managing multiple UTXOs. But it also means that
+validating transactions requires knowing and updating shared global state, which
+can be more complex to scale.
+
+## Ethereum block structure
+
+Ethereum blocks contain a header, a list of transactions, and a list of ommers
+(uncles). The block header in Ethereum (pre-Merge, in PoW) includes:
+
+- Parent Hash: Hash of the previous block's header.
+- Ommers Hash: Hash of the list of ommer headers (ommer is Ethereum's term for a
+  stale block, analogous to Bitcoin's orphan, that can be included for a minor
+  reward).
+- Miner (Beneficiary) Address: The Ethereum address of the miner (block
+  proposer) to receive block rewards (mining reward and gas fees).
+- State Root: The Merkle root of the state trie after all transactions in the
+  block are executed.
+- Transactions Root: Merkle root of the transactions list.
+- Receipts Root: Merkle root of the receipts (each transaction's execution
+  result: logs, status, gas used, etc.).
+- Logs Bloom: A 256-byte bloom filter aggregating all logs (events) generated by
+  transactions in the block. This allows quick filtering for particular log
+  topics without scanning every transaction.
+- Difficulty: The PoW difficulty level for this block (makes sense only in PoW
+  era).
+- Number: Block number (height in the chain).
+- Gas Limit: The maximum amount of gas that all transactions in the block
+  combined can consume. This parameter is set by the miner within protocol
+  constraints and can adjust slowly over time.
+- Gas Used: Total gas consumed by all transactions in this block.
+- Timestamp: When the block was mined (seconds since Unix epoch).
+- Extra Data: An optional 0–32 byte field for arbitrary data (mining pools often
+  used this for tagging blocks with an identifier).
+- MixHash: A field from PoW (Ethash) mining, part of the proof that a sufficient
+  amount of work was done (it's a hash output from the mining algorithm).
+- Nonce: An 8-byte PoW nonce (combined with MixHash and block header, proves the
+  miner did enough work).
+
+This block header is much larger than Bitcoin's (over 500 bytes due to trie
+roots and the bloom filter). After The Merge (when Ethereum moved to PoS), some
+fields lost significance:
+
+- Difficulty is no longer used (replaced internally by a 'terminal total
+  difficulty' check at the merge transition).
+- Nonce and MixHash are no longer updated by mining, so they became essentially
+  constant placeholders (Nonce is now fixed at 0x0000000000000000 in PoS blocks,
+  and MixHash (renamed in code to "prevrandao") now contains a random value
+  contributed by the beacon chain for randomness in contracts).
+- Ommers/Uncles no longer exist in PoS (because block proposals are not
+  competing like in PoW, so no stale blocks are produced under normal
+  conditions).
+
+The block body in Ethereum contains:
+
+- Transactions: Each transaction (details below) is executed in order. The
+  results of these executions update the state trie. By the end of processing
+  all txs, the final state root must match the header's stateRoot. If a block's
+  state root doesn't match the result of executing its transactions on the
+  parent state, the block is invalid.
+- Ommers (Uncle) List: In PoW Ethereum (pre-Merge), miners could include up to 2
+  uncle blocks – these are headers of blocks that were mined almost concurrently
+  but did not make it into the main chain (maybe because another miner's block
+  at the same height was chosen). Including them gives a small reward to the
+  miner of the uncle and the including miner, and helps decentralization by
+  compensating miners with slightly slower block propagation. Uncles had to be
+  recent (within 6 blocks or so) and valid but not in the main chain. In PoS
+  Ethereum, the concept of uncles is obsolete.
+
+One notable aspect of Ethereum blocks is the Gas Limit. Unlike Bitcoin which has
+a block size limit, Ethereum limits computational work per block via gas. Miners
+(now validators) can slightly adjust this gas limit target, voting it up or down
+by a bounded amount each block, which allows the network to adapt throughput
+based on capacity. Historically, the gas limit has grown from ~5 million in
+early days to about 15 million, and after EIP-1559 it's somewhat elastic around
+a target (with a hard cap at 2x target for temporary spikes). This gas limit
+translates to a variable number of transactions per block because some
+transactions use more gas (complex smart contract calls) and some use less
+(simple ETH transfers).
+
+Block Time: Ethereum blocks were targeted at ~15 seconds during the PoW era.
+Under PoS, blocks are produced in fixed 12-second slots. Generally, one block
+per slot (some slots can be empty if a validator misses their turn). This
+regularizes block times a bit more. A 12-second block time means Ethereum
+confirms transactions much faster than Bitcoin's 10 minutes, but it also means
+more potential forks in PoW (which was mitigated by the uncle mechanism). Under
+PoS, the protocol assigns a unique validator to propose each block, reducing
+collision.
+
+## Transaction lifecycle in ethereum
+
+Ethereum transactions are more complex than Bitcoin's, as they can encode not
+just value transfers but also contract calls and creation of new contracts. A
+transaction in Ethereum includes:
+
+- Nonce: A sequence number for the sender account, which ensures each
+  transaction can be processed once and in order. The first transaction from an
+  account has nonce 0, then 1, and so on. This prevents replay and double-spend
+  by ordering the transactions from an account.
+- Gas Price (or Max Fee): In the legacy model, each transaction specified a gas
+  price (in gwei per gas unit) that the sender is willing to pay. After EIP-1559
+  (August 2021), the model changed: now each transaction includes a max fee per
+  gas and a max priority fee. The protocol sets a base fee per gas (which rises
+  and falls with congestion), and the user can add a tip (priority fee) to
+  incentivize inclusion. The effective gas price paid is base fee + priority
+  (capped by the max fee).
+- Gas Limit (per tx): The maximum gas the sender allows this transaction to
+  consume. This protects against buggy or malicious contracts running infinitely
+  – if gas runs out, the transaction is reverted (but still fees are paid for
+  gas used).
+- To: The recipient address (20 bytes), which could be an EOA for a simple
+  payment or a contract address to invoke, or empty if the transaction is
+  creating a new contract.
+- Value: Amount of Ether (in wei) to send to the recipient (can be zero for pure
+  contract calls).
+- Data: An arbitrary-length byte field. For contract calls, this holds the
+  function signature and parameters; for contract creation, it contains the
+  compiled bytecode of the contract; for simple ETH transfers, data can be empty
+  or any message.
+- v, r, s (Signature): The Elliptic Curve digital signature components proving
+  the transaction is authorized by the private key of the sender's address.
+  Ethereum uses secp256k1 like Bitcoin, but signs over the transaction data
+  (including the chain ID for replay protection since EIP-155).
+
+When a user sends an Ethereum transaction:
+
+1. Creation and Signing: The user's wallet (or dApp via web3) constructs the
+   transaction object with the fields above. It must get the current nonce for
+   the sending account (by querying a node) and decide on fee parameters (base
+   fee is known from the last block, and a tip is chosen). The user signs the
+   transaction with their private key, producing v, r, s.
+2. Broadcast to Network: The signed transaction (commonly RLP encoded) is sent
+   to an Ethereum node. The node verifies the signature (recovers the sender
+   address and checks it matches the nonce/account), checks that the sender has
+   enough Ether balance to cover the value + gas_limit \* max_fee, and that the
+   nonce is correct (next one in sequence). If valid, the node adds it to its
+   local mempool.
+3. Mempool and Propagation: Similar to Bitcoin, Ethereum nodes gossip
+   transactions to peers. There isn't a global "mempool" but each node maintains
+   its own set of pending txns. The transactions are sorted mainly by fee
+   priority (especially post EIP-1559, miners choose transactions giving the
+   highest priority fee first, since base fee is fixed per block). Under high
+   load, users must pay higher tips to get priority.
+4. Block Inclusion (Mining/Validation): In PoW Ethereum (before Merge), miners
+   would pick the highest-paying transactions fitting in the block's gas limit.
+   In PoS Ethereum, the chosen validator of the slot will do similarly.
+   Transactions are executed sequentially in the block – the state is updated
+   for each. If a transaction runs out of gas or otherwise fails (reverts), it
+   still consumes the gas (the block includes it and the failure is recorded in
+   the receipt, and the state is unchanged by that tx except gas deduction).
+   Because failed transactions waste gas, miners usually still include them if
+   they pay fees, since the miner gets the gas fee even for reverted tx. Once
+   the block is filled up to the gas limit (or the available transactions are
+   exhausted or not worth the lower fees), the block is sealed.
+5. Consensus and Execution: The new block, once proposed, is broadcast and
+   validated by other nodes. Each node will re-execute every transaction in the
+   block to ensure the resulting state matches the block header's stateRoot and
+   that no rules were broken (correct gas computation, no invalid opcodes,
+   sender had enough balance, etc.). Ethereum's consensus rules are essentially
+   "the canonical chain is the one with valid blocks that the consensus
+   mechanism (PoW longest chain or PoS fork choice) dictates".
+6. Confirmation and Finality: Under PoW, Ethereum's block confirmations were
+   probabilistic like Bitcoin (though with faster blocks, forks occurred more
+   often, which is why even 12 confirmations (~3 minutes) were often considered
+   safe for Ethereum transactions). The uncle mechanism reduced the risk for
+   miners but from a user perspective finality was still probabilistic – albeit
+   on the order of minutes instead of an hour. Under PoS (after The Merge),
+   Ethereum now has a notion of finality at the protocol level: validators vote
+   on checkpoints (every 32-slot epoch) using Casper FFG (Friendly Finality
+   Gadget). When two-thirds of validators attest to a checkpoint and then again
+   to a subsequent one, the earlier checkpoint is finalized. In practice, this
+   means Ethereum blocks reach absolute finality typically within 2 epochs (64
+   slots, which is about 12–13 minutes). In normal operation, finality happens
+   regularly and automatically; if the network is partitioned or many validators
+   are offline, finality could delay, but the design strongly incentivizes
+   liveness. Thus, Ethereum offers faster confirmation and deterministic
+   finality within minutes – a major improvement for high-value settlements,
+   where waiting an hour on Bitcoin might be impractical. Until finality,
+   Ethereum blocks are still somewhat tentative, but the chain uses a
+   fork-choice rule (LMD-GHOST) that makes reorgs after even a few blocks deep
+   extremely rare barring an attack.
+
+## Proof-of-work (ethash) to proof-of-stake transition
+
+Ethereum originally used a PoW algorithm called Ethash. Ethash was a memory-hard
+hash algorithm (based on DAG lookups and Keccak hashing) designed to be
+ASIC-resistant (though ASICs were eventually developed). Block time ~15s, and
+difficulty adjusted with each block to target that interval. Ethereum's PoW had
+one twist: the difficulty bomb, a mechanism intended to exponentially increase
+difficulty at a certain block number to "freeze" PoW and force the transition to
+PoS (this bomb was postponed several times until the Merge).
+
+Ethash Mining: Similar to Bitcoin's mining, Ethash miners would assemble blocks
+and try varying a nonce (and an additional field called nonce2 in the mix-hash
+calculation) to find a hash below target. Ethash required computing a
+pseudo-random dataset (the DAG, about 4+ GB in size) each epoch and using it in
+hashing, making memory bandwidth the bottleneck (to discourage pure ASIC
+advantages). The mining reward in Ethereum included a static block reward (which
+changed over time, e.g., 2 ETH per block in recent years) plus all gas fees from
+transactions (minus the portion burned by EIP-1559 base fee after that upgrade –
+post EIP-1559, the base fee is destroyed, only the tip goes to miner).
+
+By 2022, Ethereum developers launched the Beacon Chain (a PoS chain running in
+parallel) and then merged it with the main chain, turning off PoW entirely. Now
+Ethereum's consensus is pure PoS with no mining at all.
+
+Proof-of-Stake (Casper and Beacon Chain): Ethereum's PoS is implemented via the
+Beacon Chain, which manages validators and coordinates block production and
+finality:
+
+- Validators join by staking 32 ETH into a deposit contract on Ethereum (this
+  was done on the PoW chain and continues on the PoS chain for new entrants).
+- Validators are pseudo-randomly assigned to propose blocks or attest (vote) on
+  blocks. Every 12-second slot, one validator is the proposer who creates a
+  block (now just an "execution payload" plus consensus info) and others are
+  attesters.
+- Attesters are organized into committees per slot that vote on the block of
+  that slot and also on checkpoint epochs. If a validator misses their turn or
+  votes contrary to the majority, they get minor penalties; if they try to
+  attack (e.g., double sign or surround votes), they can be slashed (losing a
+  portion of their stake and being ejected).
+- Finality via Casper FFG means once supermajority votes checkpoint, it's
+  irreversible unless 1/3 of validators are slashed (which is extremely costly
+  for an attacker, in the billions of USD at today's stake).
+- The fork-choice rule is "latest message driven GHOST" (LMD-GHOST), which means
+  nodes consider the chain with the most aggregated weight of attestations
+  supporting it, favoring the heaviest attested chain head between finality
+  checkpoints.
+
+Under PoS, Ethereum's block time remains ~12s, but the variance is nearly zero
+(no more block time variability due to PoW luck). Transactions are still
+processed by each block's proposer in the execution layer (the EVM chain as
+before), so from the user perspective, nothing changed in how transactions look
+or what the block contains; only how the block creator is chosen and how
+consensus is reached has changed.
+
+The removal of mining drastically cuts Ethereum's energy usage (over 99%
+reduction) and also changed the economic issuance (no more large block rewards,
+only small issuance to validators and fee burn often exceeds issuance, making
+ETH possibly deflationary at times).
+
+## Smart contract execution: the ethereum virtual machine - EVM
+
+One of Ethereum's core innovations is the Ethereum Virtual Machine. The EVM is a
+stack-based virtual CPU that executes contract bytecode. Every Ethereum full
+node runs the EVM as part of transaction processing, to determine the outcome of
+contract calls. Key aspects of the EVM and execution environment:
+
+- Smart Contracts: Contracts are stored on-chain as deployed bytecode (a series
+  of EVM opcodes). Each contract has its own persistent storage (a key-value
+  store mapping 256-bit keys to 256-bit values), which is part of the global
+  state trie. When a contract's code executes, it can read and write its
+  storage, send internal transactions (calls) to other contracts or accounts,
+  perform arithmetic, logic, control flow, etc., subject to gas limits.
+- Gas and Fees: To prevent infinite loops and hogging of resources, Ethereum
+  introduces gas, a unit of computation. Every EVM instruction has a fixed gas
+  cost (e.g., an ADD might cost 3 gas, an SSTORE (storing to contract storage)
+  costs 20,000 gas or more, etc.). When a transaction is sent, the sender must
+  provide a gas limit and will pay fees for each gas unit consumed. If execution
+  exhausts the gas before finishing, it's halted and reverted. If it finishes
+  with gas left, the unused gas is refunded (and the sender isn't charged for
+  those). Gas ensures Turing-completeness doesn't come at the cost of halting
+  problem – the fact that you have to pay for every step guarantees eventual
+  completion or termination of execution.
+- EVM Model: The EVM is stack-based (with 1024-slot deep stack), operates on
+  256-bit words for all operations (which makes arithmetic easier for
+  cryptographic operations but somewhat inefficient for typical 32-bit/64-bit
+  tasks). It has a memory (volatile, not persisted, used for holding data during
+  execution) and the aforementioned storage (persisted between calls for that
+  contract). Contracts can call other contracts or create new contracts; these
+  actions consume additional gas (and form an internal call stack).
+- Messages and Calls: A contract invocation (either from an EOA or
+  contract-to-contract) is called a message call. It's like a transaction
+  initiated internally. The EVM handles these calls by creating a new execution
+  context for the callee, with its own gas allotment (which can be limited by
+  the caller). This is how contracts interact – they call functions of other
+  contracts.
+- Deterministic Execution: All nodes execute the same code with the same initial
+  state, so they should all get the same result and state root.
+  Non-deterministic actions (like accessing real time, randomness, etc.) are
+  either done via special opcode that draws from known values (block timestamp,
+  or now beacon chain randomness via PREVRANDAO opcode) or via oracles (external
+  data fed on-chain) – but the EVM itself is deterministic.
+- Logs: Contracts can emit log events (which do not affect state but are
+  recorded in transaction receipts and indexed by the bloom filter in block
+  header). These logs are not used by the consensus, but they're useful for
+  off-chain listeners (dApps) to watch for events.
+- Reentrancy and Security: Because contracts can call each other, care must be
+  taken (the infamous DAO hack was due to reentrant calls). Ethereum's execution
+  model allows complex interactions, which also opens up a surface for bugs.
+  Over time, best practices and patterns (and new features like reentrancy
+  guards or shifts to languages like Vyper or use of the
+  Checks-Effects-Interactions pattern) have evolved to mitigate common pitfalls.
+
+EVM Compatibility: Ethereum's EVM became a sort of standard for many other
+blockchains (like Binance Smart Chain, Avalanche C-Chain, Polygon, etc.),
+because it allows reuse of the vast ecosystem of developer tools and contract
+code. The downside is the EVM wasn't designed for extreme throughput – it's
+single-threaded and all nodes execute all transactions, which can be a
+bottleneck. Efforts to evolve the EVM or replace it (e.g., Ethereum's planned
+move to eWASM which was later deprioritized, or other chains using WebAssembly
+VMs) stem from the need for more performance. Still, as of 2025 Ethereum's main
+execution engine remains the EVM, now running under PoS consensus.
+
+## Networking and propagation in ethereum
+
+Ethereum's peer-to-peer network is similar in spirit to Bitcoin's but has its
+own protocol (devp2p with the ETH subprotocol). Key points:
+
+- Ethereum nodes gossip transactions and blocks across the network. The
+  propagation of blocks, due to faster cadence, had to be optimized early:
+  Ethereum used a protocol for propagating blocks quickly (including techniques
+  like the Forwarding via Relay and "FruityMesh"-like random topologies). In
+  recent years Ethereum also adopted the concept of block gossip and perhaps
+  versions of compact block or delta propagation to handle the high tx volume.
+- The network also must propagate attestations and consensus votes in the PoS
+  era. That is handled by the beacon chain's networking (often using libp2p
+  gossipsub topics for different message types like blocks, attestations, sync
+  committee signatures, etc.).
+- Uncles (Ommer) propagation: In PoW, nodes would also propagate uncle blocks.
+  Now in PoS, there's basically no such concept aside from maybe handling if a
+  validator proposes after missing a slot (but then it's just a normal chain
+  fork scenario, resolved by fork-choice quickly).
+- Transaction Propagation: Ethereum historically had large mempools and needed
+  to propagate lots of transactions. The concept of gossip with certain rules
+  (don't spam low-fee tx to everyone, etc.) and possibly filtering by min gas
+  price are used to manage propagation.
+
+Given Ethereum's higher TX volume, its networking layer is designed to handle
+many more messages per second than Bitcoin's. It achieves this in part by the
+lighter weight of messages (Ethereum uses a binary protocol over TCP, with RLP
+encoding), and in part by allowing nodes to specialize (some might not keep full
+tx gossip if they're archival nodes, etc.). The upcoming protocol upgrades like
+EIP-4844 (Proto-Danksharding) will introduce new message types (blobs for data
+availability) and rely on the P2P layer to broadcast large blobs efficiently.
+
+## Scalability approaches: layer 2 and sharding
+
+While Ethereum is not yet sharded at the base layer (original Ethereum 2.0 plans
+for execution sharding have shifted toward a rollup-centric roadmap), it heavily
+relies on Layer-2 scaling solutions. These include:
+
+- Rollups: Both Optimistic Rollups (like Optimism, Arbitrum) and ZK-Rollups
+  (like zkSync, StarkNet, Polygon zkEVM) that execute transactions off-chain (or
+  off-mainchain) and post succinct proofs or summaries on Ethereum. Ethereum's
+  base layer is evolving to support these via data sharding (eventually
+  providing lots of space for rollup data).
+- State Channels and Payment Channels: Generalized state channels or specific
+  payment channels (e.g., Raiden Network, similar to Bitcoin's Lightning) allow
+  users to transact off-chain with only occasional settlements on-chain.
+- Sidechains: Independent chains like Polygon's PoS chain (discussed below) or
+  xDai/Gnosis Chain, which use their own validators but connect to Ethereum, are
+  another approach to scaling out transactions without burdening L1.
+
+Ethereum's ethos is now to keep the L1 as a secure, decentralized base (with
+moderate capacity) and let most transactions happen on L2, inheriting security
+from L1 but not congesting it. This contrasts with some other chains that try to
+scale on the base layer via different consensus or architecture choices, which
+we'll explore.
+
+## Polygon (matic pos chain): hybrid layer-2 architecture
+
+Polygon (formerly Matic Network) is a platform aimed at scaling Ethereum. The
+Polygon PoS chain is a prominent public blockchain that operates as a
+commit-chain (often considered a sidechain) to Ethereum. It uses a
+Proof-of-Stake based consensus with a large set of validators, while
+periodically committing checkpoints to Ethereum for finality and security.
+Polygon's design is a hybrid of a sidechain and a plasma-like framework,
+combining the speed of a separate chain with the security assurances of Ethereum
+as a base layer. The architecture is tiered, with a dual consensus mechanism
+(Bor and Heimdall layers) and interoperability with Ethereum.
+
+## Architecture overview
+
+Polygon's PoS chain architecture can be thought of in three layers:
+
+- Ethereum Layer (Mainchain): Polygon relies on Ethereum as the ultimate source
+  of truth. A set of smart contracts on Ethereum manages the validator staking,
+  checkpoint submission, and dispute resolution (for plasma exits). Validators
+  stake the Polygon's token (originally MATIC, now upgraded to a token called
+  POL) on Ethereum to secure the PoS chain. This means Polygon's validator set
+  and root of trust is anchored in Ethereum – if something goes wrong on the
+  Polygon sidechain, transactions can potentially be settled or exited via
+  Ethereum.
+- Heimdall (Consensus) Layer: Heimdall is the layer of validators running a
+  consensus protocol (based on Tendermint, a BFT consensus engine) to manage the
+  PoS mechanism and handle periodic checkpointing of sidechain state to
+  Ethereum. Heimdall nodes track the state of the sidechain, collect signatures
+  from validators, and produce a checkpoint (basically a Merkle root of all
+  blocks produced in a span) that is then submitted to the Ethereum contracts.
+  This provides finality for batches of Polygon blocks once a checkpoint is
+  accepted on Ethereum. Heimdall is also responsible for validator set
+  management (updating who is active, based on stake and Ethereum contract info)
+  and slashing misbehaving validators.
+- Bor (Block Producer) Layer: Bor nodes are the block producers that actually
+  create the blocks on the Polygon sidechain. Bor is essentially a modified
+  Ethereum client (a fork of Geth) that is optimized for fast block production
+  and uses a simpler consensus, relying on validator selection from Heimdall. A
+  subset of the validators (the block producer set) is selected in rounds to
+  create blocks using a lightweight consensus (which is often a simpler
+  authority or committee-based protocol, since the security is backed by the
+  higher-level BFT checkpointing). Bor layer runs an EVM-compatible chain –
+  meaning it functions much like Ethereum (same transaction format, uses gas,
+  runs EVM smart contracts), so developers can deploy solidity contracts on
+  Polygon just as they would on Ethereum, but with faster and cheaper
+  transactions.
+
+This dual-layer approach allows Polygon to have rapid block times (on the order
+of 2 seconds) and high throughput on the Bor chain, while Heimdall's periodic
+checkpoints (for example, every few minutes or after a certain number of blocks)
+anchor the sidechain state to Ethereum. If an invalid state were somehow
+introduced on the sidechain (e.g., through a malicious majority on Polygon),
+users could potentially challenge or exit via the Ethereum contracts (this is
+the Plasma aspect: the ability to exit funds from the sidechain by providing
+proof of their coins in the last valid checkpointed state).
+
+## Consensus mechanism: tendermint-based pos and plasma checkpoints
+
+Polygon's consensus on the Heimdall layer uses a BFT algorithm derived from
+Tendermint. Tendermint provides instant finality assuming a supermajority of
+validators are honest. In Polygon:
+
+- Validators stake tokens on Ethereum and run Heimdall nodes.
+- Heimdall (Tendermint) organizes validators in a rotating leader schedule
+  (Tendermint's round-robin). For each checkpoint interval, one validator is the
+  proposer to initiate the checkpoint, and others sign off on it. If the
+  proposer fails or a checkpoint submission doesn't succeed, Tendermint rounds
+  handle a new proposer.
+- A checkpoint consists of the Merkle root of all blocks since the last
+  checkpoint and some metadata (e.g., range of block numbers, etc.). The
+  selected proposer validator packages this and actually sends a transaction to
+  the Ethereum contract with that data (along with aggregated signatures of many
+  validators to prove consensus).
+- The Ethereum contract verifies the signatures and the included state root.
+  Once accepted, that batch of Polygon blocks is considered finalized with the
+  security of Ethereum – it would require a fraudulent checkpoint (which would
+  require a large share of validators to sign, who would then get slashed by
+  Ethereum if proven invalid) to undo it.
+
+Between checkpoints, the Polygon chain's blocks are not finalized in the BFT
+sense (depending on the exact implementation). However, because the same
+validators are typically following a consensus on the sidechain blocks as well,
+they usually won't revert unless there's a serious issue. In practice, Polygon's
+Bor chain often uses a simpler Proof-of-Stake consensus where a single block
+producer (from the validator set) creates blocks in sequence (possibly somewhat
+like a round-robin leader sequence or a small committee). The block producers
+are periodically shuffled (the shuffle uses on-chain randomness from Ethereum or
+some decentralized source to prevent predictability). This is akin to a
+delegated PoS or round-robin PoA on the block layer, which is very fast but by
+itself not super decentralized if considered alone. The decentralization and
+security comes from the larger Heimdall validator set overseeing and
+checkpointing it.
+
+Hybrid PoS+Plasma Design: The term "Plasma" in Polygon's context refers to the
+ability to fall back to mainchain security. Plasma is a design for child chains
+that rely on mainchain fraud proofs to secure funds. Polygon's chain borrows
+some Plasma concepts:
+
+- Users can choose to use the Plasma bridge for certain assets, which means
+  their withdrawals from Polygon require a waiting period and proof (in case of
+  fraud). Plasma mode is more secure (robust against even some sidechain
+  failures) but has restrictions (only simple transfers of assets, no
+  generalized state).
+- Or users can use the PoS bridge, which trusts the validator signatures on
+  checkpoints for faster withdrawals and supports arbitrary state (like NFTs,
+  smart contracts interactions). The PoS bridge assumes >2/3 of validators are
+  honest to be secure (just like the sidechain itself).
+
+This flexibility allows developers to pick stronger security or more
+functionality as needed.
+
+In summary, Polygon's consensus is effectively Proof-of-Stake with 100+
+validators (anyone can stake and become a validator, though often delegated
+staking occurs), running a BFT consensus (instant finality) for checkpoints and
+governance, and a faster block producer sub-protocol for block-by-block
+production. It's a layered consensus: fast blocks on Bor, periodic BFT finality
+on Heimdall. This contrasts with Ethereum's single-layer PoS where every slot is
+finalized later, or Bitcoin's PoW where finality is probabilistic.
+
+## Block production and structure on polygon
+
+Blocks on the Polygon PoS chain (Bor chain) look much like Ethereum blocks.
+Since Bor is a fork of Geth, an Polygon block contains:
+
+- A header (with parent hash, state root, tx root, receipts root, etc.), though
+  consensus fields differ because Polygon doesn't do PoW. Instead, there might
+  be a slot number or something to indicate sequence. It might not include
+  difficulty or nonce in any meaningful way.
+- A list of transactions (which are Ethereum-format transactions, using gas,
+  etc.).
+- Possibly a list of "guard" or consensus info (but likely not explicitly, since
+  consensus is off-chain in Tendermint signatures, not recorded in each block
+  header like Ethereum's attestations).
+
+The block time on Polygon is much shorter than Ethereum mainnet. Often 2 seconds
+per block is cited. This means each block has far fewer transactions than an
+Ethereum block might (due to time), but overall throughput can be higher given
+many more blocks per minute. The gas limit per block on Polygon is also high
+(potentially similar or higher than Ethereum's, since they aimed for high
+throughput).
+
+Because the Bor chain is permissioned to a set of known validators (even if open
+to join via staking, at any epoch the set is fixed), block propagation and
+validation can be faster—each node might connect more directly to all block
+producers or have optimized gossip.
+
+Finality of Blocks: Within the Polygon chain, the Bor layer might not have
+immediate finality (if it's just one producer after another, a rogue producer
+could equivocate and cause a fork). However, since the producers are validators
+under watch, and every few minutes the checkpoint locks in the history, the
+chain is generally run as if finalized by social consensus unless a serious
+issue arises. The Tendermint consensus on Heimdall could, in theory, also sign
+off on each block for instant finality, but that would be slower for block
+production. Instead, they trade off some temporary forkability for speed,
+knowing that finality comes with checkpoints.
+
+## Transaction lifecycle on polygon pos chain
+
+From a user's perspective, using Polygon's PoS chain is similar to using
+Ethereum, with some additional steps for bridging:
+
+1. Moving Assets to Polygon: Typically, a user locks tokens (like ERC-20 or
+   ERC-721 assets, or ETH) in a smart contract on Ethereum and an equivalent
+   amount is minted or made available on Polygon (via the PoS bridge or Plasma
+   bridge). This initial deposit and final withdrawal are where the hybrid
+   security comes into play.
+2. Transacting on Polygon: Once funds are on Polygon, the user can send
+   transactions on the Polygon network just like on Ethereum: they have a
+   Polygon address (same keys as their Ethereum address), send transactions with
+   nonce, gas price (on Polygon paid in MATIC/POL token as gas), etc. The
+   transaction gets broadcast to Polygon nodes and lands in a Bor block usually
+   within a few seconds. Gas fees on Polygon are very low due to lower demand
+   and higher throughput (plus their token value differences).
+3. Block Confirmation: Within a couple seconds the transaction is in a block.
+   Polygon's chain may have confirmations akin to Ethereum's (next blocks on
+   top). But soon, a checkpoint will include this block hash. Checkpoints might
+   be created, say, every 30 minutes or when 100–200 blocks have been produced
+   (specific parameters can vary). When the checkpoint that covers this block is
+   submitted and finalized on Ethereum, that transaction effectively has the
+   security of Ethereum backing it.
+4. Withdrawing / Finalizing back to Ethereum: If the user wants to withdraw
+   assets back to Ethereum, if using the PoS bridge, they rely on validator
+   signatures (which are assumed honest after checkpoint finality) to unlock
+   funds after a short delay. If using the Plasma bridge, they might wait a
+   challenge period (e.g., 7 days) to be sure no invalid state was pushed.
+
+During normal operation, users simply see near-instant transactions and a degree
+of finality after maybe a minute or so (once a checkpoint is created and signed,
+even before it's submitted, validators consider those blocks final). The
+experience is high-speed, leveraging the trust that validators will behave (due
+to stake at risk).
+
+## State management and EVM compatibility
+
+The Polygon PoS chain is fully EVM-compatible. It maintains an account-based
+state model nearly identical to Ethereum's:
+
+- Accounts (EOA and contracts) exist with balances in MATIC, storage for
+  contracts, etc.
+- It has its own set of ERC-20 tokens, NFTs, etc., which often mirror Ethereum
+  assets via bridges.
+- The state is managed in a trie (since it's a fork of Geth, it likely uses
+  similar data structures for state).
+- It supports the same JSON-RPC APIs as Ethereum, so Ethereum tooling (Metamask,
+  Truffle, Hardhat) works on Polygon with just a network config change.
+
+This compatibility was a huge factor in Polygon's adoption: developers can
+deploy existing Ethereum contracts with minimal changes to get much better
+performance for their dApps.
+
+One difference is scale: Because Polygon can push more transactions, the state
+can grow faster in size than Ethereum's, but since it's not as decentralized (in
+terms of hardware requirements and number of full nodes), they can handle higher
+state growth at the cost of centralization pressures. There may also be
+differences in chain parameters (like block gas limit, etc.), but logically it
+functions the same as Ethereum's execution layer.
+
+Data Availability: One risk in sidechains is data availability – if the chain
+validators went rogue and withhold blocks, users could have difficulty proving
+things to exit. Polygon's design, by checkpointing only the Merkle root, doesn't
+put all transaction data on Ethereum (unlike a rollup). So it does rely on the
+assumption that the majority of validators keep the data available and honest.
+If a situation occurred where a bad block was checkpointed, users would need
+those block details to prove fraud (which is why the Plasma bridge only works
+for limited transactions where proofs are easier). The trade-off is that Polygon
+can have cheaper transactions since it doesn't publish all data to expensive L1,
+but it introduces a bit more trust in validators for data availability. Newer
+solutions (like Validiums or some sidechains) focus on this distinction, but
+Polygon's approach is to lean on economic incentives and Ethereum anchoring to
+strike a balance.
+
+## Network topology and cross-chain bridge
+
+The Polygon network's P2P layer is similar to an Ethereum-like network, with
+nodes gossiping blocks and transactions. However, since it is effectively
+permissioned (only validators produce blocks), many nodes in the network are
+either validators or observer nodes. In practice, many users rely on public RPC
+endpoints (hosted by services) to interact, rather than running full nodes,
+given it's semi-centralized.
+
+Bridge: The bridge between Polygon and Ethereum is essentially a set of smart
+contracts:
+
+- On Ethereum: contracts for staking (managing validators), deposit/withdraw for
+  assets, and checkpoint management.
+- On Polygon: corresponding logic to manage incoming deposits (mint tokens or
+  release funds) and to freeze assets when moving back.
+
+Validators play a role in the bridge: for the PoS bridge, a quorum of them signs
+off on withdrawals. For the Plasma bridge, fraud proofs could be submitted if
+needed.
+
+## Polygon's proof-of-stake (pos) vs "proof-of-l" (hybrid approach)
+
+The prompt references "Polygon's PoL". While not a standard term, it likely
+refers to Polygon's unique approach to consensus. One could interpret
+Proof-of-Lock (PoL) – the idea that validators lock up stake on Ethereum and
+thus secure the sidechain. Or generally, Polygon's combination of Proof-of-Stake
+and Plasma as a hybrid. In practice:
+
+- Polygon uses staked tokens (locked on Ethereum) to determine validators (so
+  the security comes from a proof-of-stake system).
+- It leverages Ethereum's finality by writing checkpoints (so finality is
+  insured by Ethereum's proof-of-work/now proof-of-stake security).
+- It also inherits some Plasma characteristics for security of funds (users can
+  exit with proof of funds if validators misbehave).
+
+This hybrid model is different from a pure L1 PoS chain that doesn't rely on any
+external chain. Polygon sacrificed some decentralization (smaller validator set
+than Ethereum, and reliant on Ethereum itself) to gain immediate scalability and
+to bootstrap security via Ethereum.
+
+## Summing up polygon:
+
+It achieves fast block times and high throughput via a sidechain that's run by
+its own set of validators under a PoS consensus, yet it periodically defers to
+Ethereum for final checkpoints. It's an interesting middle ground between a pure
+sidechain and a full L2 rollup. Developers and users liked it because it offered
+the Ethereum experience (same technology stack) with much better performance,
+suitable for gaming, NFTs, DeFi without worrying about mainnet gas fees. The
+cost is a bit more trust in validators (though that trust is economically
+reinforced by their stake and Ethereum's oversight).
+
+Polygon has since expanded beyond the PoS chain, working on true layer-2s like
+Polygon zkEVM (a ZK-rollup) and others, but the PoS chain remains a major hub
+and a good example of a public blockchain with a novel consensus design.
+
+## Comparisons with other public blockchains
+
+Beyond Bitcoin, Ethereum, and Polygon, there are several other prominent public
+blockchains, each taking different approaches to consensus, finality, and
+scalability. We will compare a few: Solana, Avalanche, Cardano, and Polkadot,
+focusing on their consensus mechanisms, block times, finality guarantees, and
+scaling strategies. These networks illustrate the spectrum of design trade-offs
+in the blockchain space.
+
+## Solana: high-throughput via proof of history and tower bft
+
+Consensus Mechanism: Solana is a high-performance blockchain that uses a unique
+combination of Proof of Stake (PoS) with an innovation called Proof of History
+(PoH) and a consensus algorithm named Tower BFT (a variant of Practical
+Byzantine Fault Tolerance tuned for PoH). In Solana:
+
+- Proof of History serves as a cryptographic clock. It's essentially a
+  continuously running verifiable delay function (a sequence of SHA-256 hashes)
+  that all nodes follow. These hashes, with timestamps, create a ledger of time.
+  This allows nodes to agree on an ordering of events (transactions, votes)
+  without having to communicate constantly about time – they trust the timeline
+  encoded by the PoH sequence.
+- Tower BFT builds on a PBFT-like consensus but leverages the PoH clock to
+  reduce the communication overhead. Validators can vote on blocks and use the
+  PoH ticks to impose timeouts and leader rotations deterministically. Each
+  validator has a vote locking mechanism: once they vote on a version of the
+  ledger, they can't easily revert without waiting out an exponentially
+  increasing delay. This mechanism prefers liveness – the chain continues
+  producing blocks rapidly, and finalization of a block grows more certain as
+  more votes are stacked on top of it with increasing lockouts.
+- Leader Rotation: Solana elects leaders (block producers) for short intervals
+  (a slot). Because of PoH, each slot is a fixed number of PoH ticks (e.g.,
+  400ms worth of hashing). The schedule of which validator is leader for which
+  slot is decided in advance (pseudo-randomly, based on stake weight and a VRF),
+  so each validator knows when it's their turn to produce a block. Leaders
+  produce blocks in rapid succession.
+
+Block Time and Throughput: Solana's block time is extremely fast – on the order
+of 400 milliseconds per block (one slot). This is much lower than Ethereum's 12s
+or Bitcoin's 10min. With such a short block time, Solana can process a
+continuous stream of transactions. The network has demonstrated high throughput,
+theoretically up to 50,000+ TPS in optimal conditions (and often thousands of
+TPS in practice), thanks to optimizations like parallel transaction processing
+(Solana's runtime can process non-conflicting transactions in parallel, using a
+runtime called Sealevel that identifies which accounts are read/written by each
+transaction).
+
+Finality: Solana's finality is not instant, but it's fast. Typically, within a
+couple of seconds, a block can be considered finalized for practical purposes.
+The protocol doesn't mark an explicit "final" state like Casper, but because of
+the vote lockouts in Tower BFT, the probability of a fork beyond a certain depth
+becomes negligible after some slots. Many references cite around ~1 to 2 seconds
+for confidence or sometimes about ~32 confirmations (~12.8 seconds) to be safe.
+In the context of Solana, even 1 confirmation (0.4s) could be considered, but
+most will wait a handful of blocks. The Zebpay comparison (for example) lists
+Solana finality at ~12.8s, likely being conservative. In essence, Solana
+sacrifices some decentralization (it requires powerful hardware and a limited,
+though growing, validator set) to achieve this speed.
+
+Scalability Approach: Solana's approach is to scale vertically and in parallel
+on a single global state:
+
+- No sharding: Solana keeps one giant state and one ledger, avoiding the
+  complexities of cross-shard communication. Instead, it demands validators to
+  run beefy hardware (high-end CPUs, GPUs for signature verification, lots of
+  RAM and fast SSDs for the ledger).
+- Parallel processing: By carefully planning which transactions can run together
+  (transactions must specify which state (accounts) they will read/write),
+  Solana's runtime can execute many transactions at the same time on different
+  threads or GPU cores, maximizing throughput on modern hardware.
+- Network optimizations: Solana introduced concepts like Turbine, a UDP-based
+  block propagation protocol that breaks blocks into small pieces and
+  scatter-gathers them across the network (similar to erasure coding), and Gulf
+  Stream, a mempool-less forwarding protocol where validators send upcoming
+  transactions to the expected leader in advance, smoothing block production.
+- These innovations allow Solana to reduce latency throughout the system: from
+  networking to consensus to execution.
+
+Smart Contract Environment: Solana does not use the EVM. Instead, it uses eBPF
+(Berkeley Packet Filter bytecode) as the execution format for on-chain programs.
+Developers typically write smart contracts in Rust (or C, C++) and compile to
+BPF bytecode. Solana's model is different: contracts are not autonomous accounts
+with storage as in Ethereum; rather, state is held in designated accounts and
+passed into programs. A program on Solana can be thought of as a deployed
+contract code (identified by a program ID), and it operates on provided account
+data. This model is more explicit about what data is touched by each call (which
+enables the parallelism). It also means the contract logic and contract data are
+separate.
+
+Use Cases: Solana's speed and low fees (fractions of a cent per tx) make it
+attractive for high-frequency trading, gaming, and other use cases that demand
+throughput. The trade-off is that running a Solana validator is
+resource-intensive, so the network tends to be more "heavy" and may centralize
+in data centers. Nonetheless, it represents one extreme of the design space:
+maximize performance by leveraging current hardware and clever protocol design.
+
+## Avalanche: sub-second finality with avalanche consensus and subnets
+
+Consensus Mechanism: Avalanche introduced a novel consensus family often
+referred to as the Avalanche consensus (also "Snowball"/"Snowflake" algorithms).
+It's neither classical BFT nor Nakamoto PoW, but a metastable consensus achieved
+by repeated random subsampling of validators:
+
+- In Avalanche, when a validator sees a transaction or block, it queries a small
+  random subset of other validators about their preference (which conflict do
+  you prefer, A or B?). It then adjusts its own preference based on the majority
+  of responses. This query process is repeated in rounds (with different random
+  samples) until the network gravitates to a unanimous decision. The process
+  leverages probability and randomness to achieve consensus quickly with
+  extremely low communication overhead compared to PBFT (not every validator
+  talks to every other, only random subsets).
+- The result is a consensus that is leaderless (no single proposer that everyone
+  follows each round) and highly robust. It can achieve consensus with high
+  probability in just a couple of network round trips.
+- Avalanche consensus is used to decide which transactions (or blocks) are
+  accepted. It's fast – finality on the order of one second or even sub-second
+  is common because after a few polling rounds, confidence is very high that the
+  decision won't change.
+
+Avalanche's platform actually consists of multiple chains:
+
+- The X-Chain (Exchange chain) which uses a DAG ledger (directed acyclic graph
+  of transactions) and Avalanche consensus to manage asset transfers
+  (UTXO-based, used for native asset management).
+- The C-Chain (Contract chain) which is an instance of the EVM (account-based)
+  and uses a modified Avalanche consensus (called Snowman) that is optimized for
+  totally ordered blocks (Snowman is basically Avalanche consensus but with
+  linear block production, suitable for smart contract execution). C-Chain is
+  where Ethereum-compatible dApps run, so it behaves much like an Ethereum clone
+  but using Avalanche consensus rather than PoW/PoS.
+- The P-Chain (Platform chain) which handles staking, validator membership, and
+  coordination of subnets (it also uses Snowman consensus).
+
+Block Time and Finality: Avalanche blocks (particularly on the C-Chain) are
+quite fast. The network commonly achieves block times of around 1 second, and
+importantly finality is typically achieved within ~1-2 seconds. This means that
+when a transaction is included in a block, within a second or two it is
+irreversible with extremely high confidence. There is no concept of a long
+confirmation wait; Avalanche offers near-immediate finality akin to classical
+BFT systems, but with a much larger validator set (hundreds or thousands of
+validators) due to its efficient consensus. In practice, Avalanche's
+time-to-finality is one of the best among major chains – often cited as
+sub-second in ideal conditions and around 1-2 seconds under load.
+
+Scalability Approach: Avalanche's approach to scaling is two-fold:
+
+- Efficient Consensus: Its consensus can accommodate a high number of validators
+  without a massive performance penalty. Communication complexity is low
+  (probabilistic gossip), so it can maintain decentralization (anyone can be a
+  validator by staking a modest amount of AVAX and running a node) while still
+  achieving high throughput and low latency. This is in contrast to Solana which
+  restricts validator count by hardware demands, or to Ethereum which restricts
+  throughput to maintain decentralization; Avalanche tries to get both via
+  algorithmic efficiency.
+- Subnets: Avalanche is built as a platform for launching interoperable
+  blockchains. The default set (X, P, C chains) is known as the Primary Network,
+  which all validators validate. But Avalanche allows the creation of subnets –
+  a set of validators that can run one or more custom blockchains with their own
+  rules (could be permissioned chains, or chains optimized for specific
+  applications, possibly using different virtual machines). This is a
+  sharding-like approach: each subnet can be considered an independent shard
+  with its own state and execution, and subnets can be heterogeneous (not all
+  have to run EVM; one could run a different VM or application-specific chain).
+- Subnets can communicate via the Primary Network or via bridges, though native
+  interoperability is still evolving.
+- This approach means Avalanche can scale by adding more subnets to handle new
+  workloads, rather than piling everything on one chain. However, the default
+  C-Chain itself can handle a significant load (several thousand TPS) given the
+  consensus performance.
+- Avalanche essentially offers an infrastructure where many blockchains (even
+  with different designs) share a common security model if they are validated by
+  a common validator set. It's up to the creators whether to require all
+  Avalanche validators or a subset.
+
+Smart Contract Environment: The primary smart contract platform on Avalanche is
+the C-Chain, which is EVM-compatible. It mirrors Ethereum's capabilities
+(solidity contracts, same API). This was a strategic choice to attract Ethereum
+developers to easily deploy on Avalanche. The Avalanche C-Chain benefits from
+Avalanche consensus, so you get Ethereum-like smart contracts with much faster
+finality and higher throughput. The downside might be slightly less mature
+tooling or the need to use the Avalanche-specific endpoints, but generally it's
+very close to Ethereum.
+
+Avalanche also supports other VMs via subnets (for example, there is a subnet
+running a Bitcoin-like UTXO chain, and others planned with native Rust or Move
+VMs).
+
+Finality Guarantees: Because Avalanche's consensus doesn't rely on chain depth
+and probabilistic confirmation, once a transaction is confirmed and finalized,
+it's done. Avalanche provides deterministic finality. The probability of
+reversal after finality is essentially zero unless an attacker controls a
+majority of validators (and even then the consensus protocol doesn't create
+typical forks; an attacker would likely have to pause consensus or break it
+rather than secretly create a conflicting history).
+
+Comparative Notes: Avalanche's block time (~1s) and finality (1-2s) are much
+faster than Ethereum's (~12s, ~6-12min finality) and Bitcoin's (10min, 60min+
+finality). It's closer to Solana's in speed, though using a very different
+approach (gossip vs leader-based). Avalanche doesn't reach the raw TPS of Solana
+in one chain (Solana's claimed 50k vs Avalanche maybe a few thousand on
+C-Chain), but Avalanche can scale out with subnets and keep adding more chains
+if needed. Avalanche is also lighter on hardware than Solana; running an
+Avalanche validator is more feasible on consumer hardware (though it still
+benefits from good networking and CPU for cryptographic operations).
+
+## Cardano: ouroboros proof-of-stake and eutxo model
+
+Consensus Mechanism: Cardano is a blockchain platform that emphasizes academic
+research and formally verified security. Its consensus algorithm is a family of
+PoS protocols named Ouroboros. Unlike Ethereum's Casper FFG or Avalanche's BFT,
+Ouroboros is a chain-based Proof-of-Stake similar in spirit to Nakamoto
+consensus but using stake-weighted lottery for block leaders. Key points:
+
+- Ouroboros Praos (current version): Time is divided into epochs (e.g., 5 days
+  long) and each epoch is subdivided into slots (each slot ~1 second according
+  to some sources, though not every slot will have a block). For each slot, the
+  protocol randomly selects a stakeholder (could be a stake pool representative)
+  to be the block producer for that slot, with probability proportional to the
+  amount of stake they control (either themselves or delegated to them).
+- If a slot has a leader, that leader can produce a block. There might be slots
+  with no leader (no block in that slot), which introduces some expected gap
+  between blocks. In practice, Cardano's block time (the average interval with a
+  block) is about 20 seconds. This is because not every one of the 1-second
+  slots results in a block, roughly 5% of slots produce blocks if parameters
+  yield ~20s block time.
+- Slot leader election uses a VRF (Verifiable Random Function) where each
+  potential leader privately checks if they won their slot by inputting some
+  seed and their stake, yielding a proof if yes.
+- Ouroboros, being chain-based, means forks can occur if two leaders are elected
+  close or network delays cause two different blocks for the same slot or
+  adjacent slots. The chain selection rule in Ouroboros is similar to Bitcoin's
+  longest chain (or rather the chain with highest accumulated stake-signed
+  blocks), albeit with tweaks to ensure honest majority of stake leads to
+  eventual convergence.
+- Cardano evolves Ouroboros with versions like Ouroboros Genesis, Ouroboros
+  Omega, each improving aspects like flexibility in offline periods or better
+  random selection. But importantly, it's not instant finality. It inherits a
+  probabilistic finality like Bitcoin: the deeper a block is in the chain, the
+  more secure it is considered.
+
+Finality: As a result of the above, Cardano's transactions have probabilistic
+finality. The network does not have a finality gadget yet (though there are
+future plans to incorporate one possibly, or Ouroboros Leios/chronos might
+improve time consensus). It's often said that a transaction on Cardano is
+considered final after about 10-15 blocks (which at 20s each is a few minutes)
+for practical security, but to be extremely safe (like 99.999% certain), it
+might require on the order of 100 blocks or more. In fact, Cardano's
+documentation suggests that due to the nature of Ouroboros, absolute finality
+"cannot happen in less than one day" in a theoretical sense – implying after an
+epoch boundary, the chain is pretty set. This is far slower finality compared to
+BFT chains, and even slower than Ethereum's finality. However, significant
+rollbacks on Cardano are extremely unlikely unless someone controls a majority
+of stake and can orchestrate a deep reorg.
+
+Scalability Approach: Cardano's base layer scalability relies on protocol
+refinements and on-chain parameter increases:
+
+- It uses eUTXO (Extended UTXO) as its transaction model, not accounts. eUTXO is
+  like Bitcoin's UTXO but with the ability for outputs to carry attached data
+  and scripts (Plutus scripts) that must be satisfied to spend them. This model
+  enables local verification of contract logic and more parallelism (since
+  independent UTXOs can be processed in parallel), but it also means something
+  like a single contract state is more cumbersome to update (it's broken into
+  UTXOs).
+- Cardano has been gradually increasing parameters like block size, script
+  memory limits, etc., to allow more transactions per block. However, on-chain
+  throughput remains moderate (in the order of a few dozen transactions per
+  second at most currently). They haven't pushed base layer throughput to
+  extremes yet.
+- The major scalability plans for Cardano involve layer 2 solutions and
+  sidechains:
+  - Hydra Head Protocol: State channels that allow a group of users to do fast
+    off-chain transactions and only settle the net result to the chain. Hydra
+    could allow many local off-chain ledgers operating for quick interaction
+    (e.g., gaming or fast payments) and leveraging Cardano for security when
+    closing the channel.
+  - Sidechains: Cardano is developing sidechains that could connect to the main
+    chain and use ADA for staking but have different parameters (for example, a
+    sidechain for EVM compatibility or one optimized for privacy). A recently
+    discussed sidechain is Midnight (privacy-focused) and Milkomeda (EVM
+    sidechain) already operates connected to Cardano.
+  - Input Endorsers: A future upgrade in Ouroboros might separate transaction
+    propagation from block confirmation by introducing input endorsers that
+    pre-validate transactions and then include references in blocks, increasing
+    throughput.
+  - Cardano's approach is often to research and slowly deploy upgrades,
+    prioritizing correctness. It may not be the fastest to scale, but it aims to
+    do so methodically.
+
+Smart Contract Environment: Cardano's smart contracts run on a platform called
+Plutus, which uses the eUTXO model. Contracts are written in a Haskell-based
+language (or another high-level language that compiles to Plutus Core). The
+model is quite different from Ethereum's:
+
+- Because of eUTXO, a contract state is represented as UTXOs that a script can
+  spend and produce new UTXOs. All conditions must be satisfied in one
+  transaction, which encourages a style of contracts where logic is applied in
+  the transaction construction and the chain simply verifies it.
+- This makes certain things efficient (parallelism, since independent UTXOs =
+  independent transactions, no global mutex on a contract's storage) but others
+  more complex (composing contracts or doing something like "all participants
+  agree" might require more careful orchestration).
+- Cardano also focuses on formal verification; the Plutus language and the
+  overall design aim to reduce smart contract vulnerabilities (though it's still
+  possible to write bad logic, of course).
+
+Comparative Notes: Cardano tends to have longer latency (20s blocks, no quick
+finality) compared to others. Its throughput has been lower, but with
+improvements and Hydra, it may increase. It trades off raw performance in favor
+of a conservative, research-driven approach. Where Solana and Avalanche push the
+envelope on raw TPS and finality, Cardano emphasizes security proofs and novel
+L2 scaling. In a sense, Cardano aligns closer to Bitcoin's philosophy among
+these, but with PoS and smart contracts.
+
+## Polkadot: heterogeneous sharding with npos and grandpa finality
+
+Consensus Mechanism: Polkadot is a sharded multi-chain network designed to
+connect multiple specialized blockchains (parachains) under one security
+umbrella. Its consensus has two layers:
+
+- Block Production – BABE: Polkadot uses a variant of Ouroboros called BABE
+  (Blind Assignment for Blockchain Extension) for selecting block authors on the
+  relay chain (the main chain). Similar to Cardano, validators are randomly
+  assigned slots to produce relay chain blocks, in a decentralized lottery
+  fashion. BABE runs continuously creating blocks (Polkadot's block time is
+  about 6 seconds).
+- Finality – GRANDPA: Complementing BABE, Polkadot has a finality gadget called
+  GRANDPA (GHOST-based Recursive ANcestor Deriving Prefix Agreement). GRANDPA is
+  a BFT algorithm where validators vote on the chain's state. It doesn't run
+  every block, but when it does run (it can finalize many blocks in one round),
+  it finalizes the longest chain that has 2/3 votes. In practice, GRANDPA might
+  finalize blocks every few seconds or every few rounds depending on network
+  conditions. This means Polkadot blocks get finalized (irreversible) typically
+  within half a minute or less – often a batch of recent blocks are finalized
+  together.
+- Because Polkadot separates block production from finality, it achieves both
+  good throughput (continuous 6s blocks even if finality lags a bit) and
+  deterministic finality eventually. If the network is under heavy load, blocks
+  might still be produced but finality might catch up with a slight delay; if
+  finality is working faster than production, it might finalize every block
+  almost immediately as they come.
+
+Nominated Proof-of-Stake (NPoS): Polkadot's PoS system involves nominators (who
+stake DOT tokens and back certain validators) and validators (who actually run
+nodes and produce/validate blocks). This is an iteration on Delegated PoS, but
+with some differences like nominator's stake being split among possibly several
+validators, and an algorithm to choose a diverse set of validators maximizing
+stake decentralization. Polkadot typically has on the order of a few hundred
+validators (perhaps ~300–1000) in its active set, and many nominators who stake
+behind them.
+
+Sharding via Parachains: Polkadot's big scalability approach is parallel chains
+(parachains). The relay chain (Polkadot main chain) itself doesn't do much in
+terms of smart contracts or heavy transactions; its job is to coordinate and
+finalize states of parachains. Each parachain is a blockchain with its own state
+transition function (it could be a smart contract platform, a runtime for
+identity, a DeFi chain, an IoT chain, etc.). Validators in Polkadot are grouped
+into rotating subsets to validate parachain blocks (they act as collators or
+check the collators' work).
+
+- Each parachain produces blocks in parallel, and those blocks are checked by a
+  subset of validators, then the results (state transitions) are posted to the
+  relay chain as candidates.
+- The relay chain block includes the certified parachain blocks' state roots.
+  GRANDPA finality then finalizes the relay chain block, which means all
+  parachain states in that block are finalized.
+- This architecture allows Polkadot to process many chains' transactions at
+  once, theoretically scaling linearly with the number of parachains. Initially,
+  Polkadot might support e.g. 100 parachains, effectively meaning 100 parallel
+  throughput lanes.
+- Parachains can even have their own consensus if they want (but they rely on
+  Polkadot validators for final approval). Polkadot ensures security via shared
+  staking – an attack on one parachain would require attacking the whole
+  network's validator set.
+
+Block Time and Throughput: The relay chain's 6-second block time means the
+system is fairly responsive. Parachains also effectively follow that tempo (each
+parachain might produce a block each relay chain block or at least have the
+opportunity to). Polkadot's design goal is high aggregate throughput through
+parallelism, although any single parachain might still have limits (depending on
+its own config, e.g., Moonbeam parachain (an Ethereum-like chain on Polkadot)
+might have a block time of 12s and certain gas limit).
+
+Finality: With GRANDPA, Polkadot achieves finality in roughly 1-2 relay chain
+blocks in many cases. For example, it might finalize every second block, or
+finalize a batch after 4 blocks if network is slower. Empirically, Polkadot
+often has finality within ~12 to 30 seconds. In a demonstration, Polkadot has
+achieved finalizing 51 parachains in 30 seconds (as one Reddit mention noted).
+This is far quicker than probabilistic finality and comparable to other
+BFT-style chains. The advantage is this finality covers the entire sharded
+system at once.
+
+Scalability and Upgrades: Polkadot can increase its throughput by:
+
+- adding more parachains (there is a mechanism to auction parachain slots,
+  etc.),
+- using parathreads (pay-as-you-go parachains for lower throughput chains),
+- or future upgrades like asynchronous backing, which pipeline parachain block
+  production more efficiently. Polkadot's architecture is forward-looking; it
+  intends to incorporate further optimizations (for instance, there's work on
+  increasing the number of parallel threads or improving how parachains hand off
+  data).
+
+Smart Contract Environment: Polkadot itself doesn't have a native smart contract
+VM on the relay chain (no user contracts on the relay chain). Instead, smart
+contracts live on parachains. Polkadot provides a framework called Substrate to
+build parachains. Substrate is very flexible; you can compose pallets (modules)
+for governance, balances, etc., and also include a smart contract pallet if you
+want your chain to support contracts. Many parachains exist:
+
+- Moonbeam/Moonriver: EVM-compatible parachains (so essentially an Ethereum-like
+  environment on Polkadot/Kusama).
+- Acala: DeFi focused with its own stablecoin and also EVM compatibility.
+- Parallel, Astar, etc.: Some support EVM, some support WebAssembly smart
+  contracts (Substrate has a WebAssembly VM for smart contracts called
+  ink!/pallet-contracts).
+- Unique Network: NFT-focused chain with custom logic.
+
+This heterogeneous approach means Polkadot doesn't enforce one execution
+environment – each chain can optimize for its use case. However, one downside is
+that achieving cross-chain interoperability (beyond what Polkadot provides via
+XCMP – cross-chain message passing – among parachains) is more complex for
+developers, and liquidity or state is fragmented across chains. Polkadot's
+protocol handles cross-chain messages trustlessly, which is powerful (an asset
+can move from one parachain to another under the same security, unlike bridging
+across totally separate L1s which require external trust). This is one of its
+selling points: a foundation for a multi-chain ecosystem with shared security
+and trust-minimized interoperability.
+
+Comparative Notes: Polkadot stands out for its sharding (multiple parallel
+chains) which neither of the others (Solana, Avalanche, Cardano) do in the same
+unified way (Avalanche has subnets but they are not as tightly coupled; Ethereum
+is planning data sharding but currently relies on L2; Solana is monolithic,
+Cardano primarily monolithic + L2). Polkadot's 6s block and ~finality under 1
+minute put it in a similar league with Avalanche in terms of user experience
+quickness (though Avalanche is a bit faster). Polkadot's security relies on a
+robust validator set and the slashing of misbehavior like any PoS, but it hasn't
+faced major attacks. Also noteworthy is Polkadot's on-chain governance which can
+upgrade the protocol quite flexibly (the network has self-amendment features).
+
+Finally, Polkadot's model means if one parachain congests itself, others are not
+directly slowed (except if it saturates shared resources on the relay chain, but
+they're isolated to a degree). This is a different approach than scaling a
+single chain to handle everything; it aligns with the idea that different
+applications may be better on different specialized chains, but all tied
+together.
+
+⸻
+
+Each of these platforms – Solana, Avalanche, Cardano, Polkadot – showcases
+different design philosophies:
+
+- Solana: maximize performance on one chain, hardware-scale, at the cost of high
+  requirements and more complex networking.
+- Avalanche: invent new consensus to get both speed and decentralization, allow
+  many chains but keep default one chain easy to use (with EVM).
+- Cardano: prioritize security proofs and gradual decentralization, use novel
+  PoS, accept slower finality, and scale through off-chain means.
+- Polkadot: embrace multi-chain from the start, with strong finality and the
+  ability to run many types of blockchains under one network.
+
+These trade-offs reflect the blockchain trilemma (decentralization, security,
+scalability). No single approach is definitively "best" – each is optimizing for
+certain use cases and assumptions.

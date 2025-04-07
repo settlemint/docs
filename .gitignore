@@ -1,10 +1,12 @@
 # deps
 /node_modules
+.bun
 
 # generated content
 .contentlayer
 .content-collections
 .source
+.docusaurus
 
 # test & build
 /coverage
@@ -21,6 +23,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+bun.lockb
 
 # others
 .env*.local

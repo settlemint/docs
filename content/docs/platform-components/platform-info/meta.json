@@ -1,0 +1,9 @@
+{
+  "title": "Platform Information",
+  "icon": "Info",
+  "pages": [
+    "performance",
+    "connect-external-network",
+    "connect-external-node"
+  ]
+}

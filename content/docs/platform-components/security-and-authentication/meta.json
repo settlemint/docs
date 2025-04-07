@@ -1,0 +1,10 @@
+{
+  "title": "Security and Auth",
+  "icon": "Lock",
+  "pages": [
+    "private-keys",
+    "user-wallets",
+    "personal-access-tokens",
+    "application-access-tokens"
+  ]
+}
