@@ -20,8 +20,8 @@
   "rebaseWhen": "auto",
   "packageRules": [
     {
-      "matchPackagePatterns": ["^fumadocs-.*"],
-      "groupName": "fumadocs packages"
+      "groupName": "fumadocs packages",
+      "matchPackageNames": ["/^fumadocs-.*/"]
     }
   ],
   "hostRules": [
