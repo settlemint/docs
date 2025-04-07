@@ -60,6 +60,7 @@ jobs:
         with:
           path: |
             ~/.bun/install/cache
+            ${{ github.workspace }}/.next/cache
 
       - uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5 # v2
         with:
