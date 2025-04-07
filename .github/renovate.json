@@ -18,7 +18,12 @@
   ],
   "labels": ["dependencies"],
   "rebaseWhen": "auto",
-  "packageRules": [],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^fumadocs-.*"],
+      "groupName": "fumadocs packages"
+    }
+  ],
   "hostRules": [
     {
       "timeout": 3000000
