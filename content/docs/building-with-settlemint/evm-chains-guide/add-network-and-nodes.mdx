@@ -90,16 +90,16 @@ You can perform the same action via the SettleMint SDK CLI as well -
   <Tab value="SDK CLI">
     First ensure you're authenticated:
     ```bash
-    SettleMint login
+    settlemint login
     ```
 
     Create a blockchain network:
     ```bash
-    SettleMint platform create blockchain-network besu <network-name> \
+    settlemint platform create blockchain-network besu <network-name> \
       --node-name <node-name>
 
     # Get information about the command and all available options
-    SettleMint platform create blockchain-network besu --help
+    settlemint platform create blockchain-network besu --help
     ```
 
   </Tab>
@@ -199,16 +199,16 @@ Network management can be done via SettleMint SDK CLI using these commands -
  <Tab value="SDK CLI">
     ```bash
     # List networks
-    SettleMint platform list blockchain-networks --application <app-name>
+    settlemint platform list blockchain-networks --application <app-name>
 
     # Get network details
-    SettleMint platform read blockchain-network <network-name>
+    settlemint platform read blockchain-network <network-name>
 
     # Delete network
-    SettleMint platform delete blockchain-network <network-name>
+    settlemint platform delete blockchain-network <network-name>
 
     # Restart network
-    SettleMint platform restart blockchain-network <network-name>
+    settlemint platform restart blockchain-network <network-name>
     ```
 
   </Tab>
@@ -287,19 +287,19 @@ Nodes can also be added using SettleMint SDK CLI using the following commands-
   <Tab value="SDK CLI">
     First ensure you're authenticated:
     ```bash
-    SettleMint login
+    settlemint login
     ```
 
     Create a blockchain node:
     ```bash
-    SettleMint platform create blockchain-node besu <node-name> \
+    settlemint platform create blockchain-node besu <node-name> \
       --blockchain-network <network-name> \
       --node-type <VALIDATOR|NON_VALIDATOR> \
       --provider <provider> \
       --region <region>
 
     # Get help
-    SettleMint platform create blockchain-node --help
+    settlemint platform create blockchain-node --help
     ```
 
   </Tab>
@@ -350,10 +350,10 @@ restart, or upgrade the node via the SDK CLI or the Platform UI.
   <Tab value="SDK CLI">
     ```bash
     # List nodes
-    SettleMint platform list services --application <application-name>
+    settlemint platform list services --application <application-name>
 
     # Restart node
-    SettleMint platform restart blockchain-node <node-name>
+    settlemint platform restart blockchain-node <node-name>
     ```
 
   </Tab>
