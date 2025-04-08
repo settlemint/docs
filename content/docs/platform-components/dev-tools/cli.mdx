@@ -41,17 +41,16 @@ tasks. Below is an overview of key commands:
 
 | **Command**                                                         | **Description**                                                    |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| `SettleMint --version`                                              | Displays the installed CLI version.                                |
-| `SettleMint --help`                                                 | Shows available commands and subcommands.                          |
-| `SettleMint login`                                                  | Authenticates with SettleMint using a Personal Access Token (PAT). |
-| `SettleMint create --project-name <name> --template <template>`     | Initializes a new project from a template.                         |
-| `SettleMint connect`                                                | Connects your project to SettleMint infrastructure.                |
-| `SettleMint scs hardhat deploy remote --accept-defaults`            | Deploys smart contracts remotely using Hardhat.                    |
-| `SettleMint scs subgraph deploy --accept-defaults <subgraph-name>`  | Deploys a subgraph for blockchain data indexing.                   |
-| `SettleMint codegen`                                                | Generates TypeScript code for dApp integrations.                   |
+| `settlemint --version`                                              | Displays the installed CLI version.                                |
+| `settlemint --help`                                                 | Shows available commands and subcommands.                          |
+| `settlemint login`                                                  | Authenticates with SettleMint using a Personal Access Token (PAT). |
+| `settlemint create --project-name <name> --template <template>`     | Initializes a new project from a template.                         |
+| `settlemint scs hardhat deploy remote --accept-defaults`            | Deploys smart contracts remotely using Hardhat.                    |
+| `settlemint scs subgraph deploy --accept-defaults <subgraph-name>`  | Deploys a subgraph for blockchain data indexing.                   |
+| `settlemint codegen`                                                | Generates TypeScript code for dApp integrations.                   |
 | `npm run dev` (or `bun run dev`, etc.)                              | Starts your dApp in development mode.                              |
-| `SettleMint scs create --project-name <name> --use-case <use-case>` | Creates a project from a smart contract template.                  |
-| `SettleMint scs foundry test`                                       | Runs smart contract tests using Foundry.                           |
+| `settlemint scs create --project-name <name> --use-case <use-case>` | Creates a project from a smart contract template.                  |
+| `settlemint scs foundry test`                                       | Runs smart contract tests using Foundry.                           |
 
 > **NOTE:** Many commands support additional flags (e.g., `--accept-defaults`).
 > Use `--help` for more details (`SettleMint create --help`).
