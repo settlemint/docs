@@ -4,60 +4,47 @@ title: "Quorum"
 
 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
   <div style={{ flex: '0 0 15%' }}>
-  ![Quorum](../../../img/blockchain-logos/quorum-logo.png)
+    ![Quorum](../../../img/blockchain-logos/quorum-logo.png)
   </div>
   <div style={{ flex: '1', paddingLeft: '1rem' }}>
-    <ul>
-
-Quorum is an open-source enterprise-grade **permissioned blockchain platform**
-based on Ethereum, designed for use in enterprise contexts. Originally developed
-by **J.P. Morgan**, it extends Ethereum’s capabilities by introducing **privacy
-features, improved performance, and flexible consensus mechanisms** to cater to
-business needs.
-
-    </ul>
-
+    Quorum is an enterprise-grade, permissioned blockchain platform derived from Ethereum and originally developed by J.P. Morgan. It extends Ethereum's features with robust, enterprise-centric innovations, including enhanced performance, flexible consensus, and advanced governance.
   </div>
 </div>
 
-Quorum enables enterprises to build and deploy **secure, private, and
-high-performance blockchain applications** while maintaining **Ethereum
-compatibility**. It is widely used in industries such as **finance, supply
-chain, healthcare, and government services**, where regulatory compliance,
-transparency, and security are critical.
+Quorum empowers organizations to build and deploy **secure, high-performance blockchain applications** while retaining full Ethereum compatibility. Its design caters specifically to industries such as finance, supply chain, healthcare, and government, where compliance, transparency, and security are paramount.
 
-Quorum supports **private transactions**, allowing organizations to conduct
-**confidential smart contract executions** without exposing sensitive data on
-the blockchain. It achieves this by integrating **privacy managers** such as
-**Tessera**, which securely encrypts transaction details while allowing
-authorized participants to access relevant data. Unlike public Ethereum
-networks, Quorum eliminates the need for **cryptocurrency mining**, reducing
-costs and improving transaction efficiency. The platform's **permissioned
-nature** ensures that only authorized participants can join and interact within
-the network, providing **better governance and security** in enterprise
-environments.
+## Dynamic Block Production
 
-## Consensus mechanism
+One of the key strengths of Quorum is its **dynamic block production** mechanism. Unlike public blockchains that generate blocks at fixed intervals regardless of network activity, Quorum's consensus protocols (such as Raft or IBFT) are designed to produce blocks **only when there is an actual transaction to process**. This behavior minimizes wasted computational resources and removes the overhead of mining empty blocks.
 
-Quorum supports multiple **consensus mechanisms** tailored for enterprise use
-cases, including **Raft-based Crash Fault Tolerance (CFT)** and **Istanbul
-Byzantine Fault Tolerance (IBFT)**. The **Raft protocol** follows a
-leader-follower model, ensuring efficient transaction ordering with fast
-finality. It is a **CFT mechanism**, meaning it can tolerate node failures as
-long as a majority (quorum) of nodes remain functional. If a network has three
-nodes, it can sustain the loss of one node; if there are five nodes, up to two
-can fail while maintaining consensus. This approach ensures **high availability
-and fault tolerance**, making it suitable for production deployments.
+### Consensus Models in Quorum
 
-On the other hand, **IBFT** is a Byzantine Fault Tolerant (BFT) consensus
-mechanism that ensures **finality with immediate block confirmation**, making it
-more resilient against malicious actors. IBFT requires a supermajority of nodes
-(at least two-thirds) to agree on a block before it is added to the ledger. This
-mechanism is particularly beneficial in networks where trust between
-participants is **partially decentralized** but must still adhere to **strict
-security and reliability standards**. By supporting both **CFT and BFT models**,
-Quorum allows enterprises to choose the consensus mechanism that best aligns
-with their operational requirements.
+Quorum supports multiple consensus mechanisms designed for enterprise use:
 
-More information can be found on the official  
-[Quorum documentation website](https://consensys.net/docs/quorum/).
+#### Raft (Crash Fault Tolerance)
+- **Efficiency:** The Raft protocol uses a leader/follower structure to order transactions efficiently. Blocks are generated only in response to incoming transactions—there is no periodic block production.
+- **Fault Tolerance:** As a Crash Fault Tolerant (CFT) system, it can handle node failures as long as a majority of the network remains operational. For example, in a three-node network, the failure of one node does not affect consensus.
+
+#### Istanbul Byzantine Fault Tolerance (IBFT)
+- **Immediate Finality:** IBFT is a Byzantine Fault Tolerant (BFT) consensus mechanism that requires a supermajority (at least two-thirds) of nodes to agree on a block before it is finalized. This provides robust security against malicious actors while ensuring that blocks are only created when necessary.
+- **Resilience:** IBFT is ideal in environments with a mix of trusted and untrusted participants and offers rapid confirmation of transactions.
+
+By eliminating the need to produce empty blocks, Quorum ensures that system resources are used only when necessary—improving both throughput and latency.
+
+## Transaction Privacy Considerations
+
+While native implementations of Quorum support **private transactions** (using privacy managers such as Tessera to encrypt sensitive data), **Settlemint does not enable private transaction support**. Our focus is on leveraging Quorum's efficient consensus and on-demand block production to create a secure and performant network environment. This model is particularly attractive for enterprises that prioritize governance, scalability, and resource efficiency over on-chain privacy.
+
+## Key Benefits for Enterprise Deployments
+
+- **Resource Efficiency:** Blocks are created only in response to transaction activity, leading to lower processing overhead.
+- **Scalability:** Flexible consensus options (Raft and IBFT) allow enterprises to tailor the network to their operational needs.
+- **Security and Governance:** As a permissioned platform, Quorum ensures that only authorized participants can transact, supporting higher levels of security and regulatory compliance.
+- **Ethereum Compatibility:** Quorum maintains compatibility with Ethereum, enabling the use of existing smart contract tools and developer resources.
+
+For further details, please refer to the official  
+[Quorum documentation](https://consensys.net/docs/quorum/).
+
+---
+
+This revised guide should provide clear, expert-level insight into Quorum's architecture and the way Settlemint leverages its dynamic, on-demand block production while opting out of private transaction support.
