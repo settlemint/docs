@@ -20,7 +20,7 @@ solutions**. MinIO supports **self-hosted, private cloud, and hybrid
 environments**, allowing users to maintain full control over their storage
 infrastructure.
 
-MinIO’s architecture enables **high-speed read/write operations, horizontal
+MinIO's architecture enables **high-speed read/write operations, horizontal
 scalability, and strong data protection**. It supports **erasure coding,
 encryption, and identity access management (IAM) policies**, ensuring secure and
 efficient storage. Its lightweight nature allows it to run on **bare-metal
@@ -867,7 +867,7 @@ MinIO supports **high-speed storage and retrieval of structured and unstructured
 data**, making it ideal for **machine learning models, analytics, and research
 datasets**.
 
-### 5. **Nft & digital asset storage**
+### 5. **NFT & digital asset storage**
 
 For applications managing **NFTs, gaming assets, or tokenized data**, MinIO
 provides **secure, scalable storage** while ensuring fast access to large media
@@ -877,20 +877,313 @@ files.
 
 ## Api & integration
 
-MinIO’s **S3-compatible API** enables seamless integration with existing
-applications that rely on S3 storage. Common API operations include:
+MinIO in SettleMint provides industry-standard **S3-compatible APIs** for object storage operations. When you deploy MinIO in the SettleMint platform, you'll receive the following endpoint information:
 
-| **Method** | **Endpoint**              | **Description**                                    |
-| ---------- | ------------------------- | -------------------------------------------------- |
-| `PUT`      | `/s3/upload`              | Uploads a file to MinIO storage.                   |
-| `GET`      | `/s3/{bucket}/{filename}` | Retrieves a file from MinIO storage.               |
-| `DELETE`   | `/s3/{bucket}/{filename}` | Deletes a file from MinIO storage.                 |
-| `POST`     | `/s3/presigned-url`       | Generates a pre-signed URL for secure file access. |
+| **Service**      | **Endpoint Format**                                  | **Purpose**                                             |
+| ---------------- | ---------------------------------------------------- | ------------------------------------------------------- |
+| **S3 API**       | `https://your-minio-name.gke-region.settlemint.com`  | Primary endpoint for S3 API operations                  |
+| **Console UI**   | `https://your-minio-name.gke-region.settlemint.com`  | Web-based administration interface                      |
 
-By leveraging these APIs, developers can build **storage-driven applications**
-without modifying existing **S3-compatible services**.
+### S3 API operations
 
----
+The MinIO S3 API supports standard S3 operations, including:
+
+| **Operation**          | **S3 API Method** | **Description**                                    |
+| ---------------------- | ----------------- | -------------------------------------------------- |
+| Create bucket          | `PUT /bucket`     | Creates a new storage bucket                       |
+| Upload object          | `PUT /bucket/key` | Uploads a file to specified bucket path            |
+| Download object        | `GET /bucket/key` | Retrieves a file from storage                      |
+| Delete object          | `DELETE /bucket/key` | Removes a file from storage                     |
+| List objects           | `GET /bucket`     | Lists objects in a bucket                          |
+| Generate presigned URL | `GET /bucket/key?X-Amz-...` | Creates temporary access link to object  |
+
+These operations use the standard S3 protocol and authentication mechanisms, not simplified HTTP endpoints.
+
+### Authentication credentials
+
+Your SettleMint MinIO instance provides the following credentials:
+
+| **Credential**        | **Description**                                 | **Where to Find**                    |
+| --------------------- | ----------------------------------------------- | ------------------------------------ |
+| **Access Key**        | Username for S3 API authentication              | MinIO instance details in dashboard  |
+| **Secret Key**        | Password for S3 API authentication              | MinIO instance details in dashboard  |
+| **Console Username**  | Credentials for web console login               | MinIO instance details in dashboard  |
+| **Console Password**  | Password for web console access                 | MinIO instance details in dashboard  |
+
+## Ways to interact with MinIO
+
+<Tabs items={['Console UI', 'AWS CLI', 'JavaScript', 'Python', 'Go']}>
+  <Tab value="Console UI">
+    ### Web Console Interface
+
+    SettleMint's MinIO provides a modern web-based management console for easy bucket and object management.
+
+    #### Key features
+
+    - **Visual file browser** – Upload, download, and manage files with drag-and-drop
+    - **Bucket management** – Create, delete, and configure buckets
+    - **Access policy configuration** – Set permissions and access controls
+    - **Monitoring dashboard** – View storage usage and performance metrics
+
+    #### To access the Console
+
+    1. Navigate to your MinIO instance URL in the SettleMint dashboard
+    2. Log in with your Console Username and Password
+    3. Use the interface to manage buckets and objects
+
+    The console provides an intuitive way to manage your storage without coding.
+  </Tab>
+
+  <Tab value="AWS CLI">
+    ### AWS CLI Integration
+
+    The AWS Command Line Interface works seamlessly with SettleMint's MinIO service.
+
+    #### Setup
+
+    ```bash
+    # Configure a named profile for your MinIO instance
+    aws configure --profile settlemint-minio
+    # Enter the following details when prompted:
+    # AWS Access Key ID: [Your MinIO Access Key]
+    # AWS Secret Access Key: [Your MinIO Secret Key]
+    # Default region name: us-east-1 (or any region, MinIO ignores this)
+    # Default output format: json
+    ```
+
+    #### Example commands
+
+    ```bash
+    # List buckets
+    aws s3 ls --endpoint-url https://your-minio-name.gke-region.settlemint.com --profile settlemint-minio
+
+    # Create a bucket
+    aws s3 mb s3://my-bucket --endpoint-url https://your-minio-name.gke-region.settlemint.com --profile settlemint-minio
+
+    # Upload a file
+    aws s3 cp local-file.txt s3://my-bucket/ --endpoint-url https://your-minio-name.gke-region.settlemint.com --profile settlemint-minio
+
+    # Download a file
+    aws s3 cp s3://my-bucket/remote-file.txt local-file.txt --endpoint-url https://your-minio-name.gke-region.settlemint.com --profile settlemint-minio
+    ```
+  </Tab>
+
+  <Tab value="JavaScript">
+    ### JavaScript/Node.js Integration
+
+    The AWS SDK for JavaScript works with MinIO's S3-compatible API.
+
+    #### Installation
+
+    ```bash
+    npm install aws-sdk
+    # or
+    bun add aws-sdk
+    ```
+
+    #### Example usage
+
+    ```javascript
+    const AWS = require('aws-sdk');
+
+    // Configure the S3 client
+    const s3 = new AWS.S3({
+      accessKeyId: 'YOUR_MINIO_ACCESS_KEY',
+      secretAccessKey: 'YOUR_MINIO_SECRET_KEY',
+      endpoint: 'https://your-minio-name.gke-region.settlemint.com',
+      s3ForcePathStyle: true, // Required for MinIO
+      signatureVersion: 'v4',
+      region: 'us-east-1' // MinIO ignores this, but it's required
+    });
+
+    // List buckets
+    async function listBuckets() {
+      try {
+        const data = await s3.listBuckets().promise();
+        console.log('Buckets:', data.Buckets);
+        return data.Buckets;
+      } catch (err) {
+        console.error('Error listing buckets:', err);
+      }
+    }
+
+    // Upload a file
+    async function uploadFile(bucketName, objectKey, fileContent) {
+      const params = {
+        Bucket: bucketName,
+        Key: objectKey,
+        Body: fileContent
+      };
+      
+      try {
+        const data = await s3.upload(params).promise();
+        console.log('File uploaded successfully:', data.Location);
+        return data;
+      } catch (err) {
+        console.error('Error uploading file:', err);
+      }
+    }
+
+    // Download a file
+    async function downloadFile(bucketName, objectKey) {
+      const params = {
+        Bucket: bucketName,
+        Key: objectKey
+      };
+      
+      try {
+        const data = await s3.getObject(params).promise();
+        console.log('File content:', data.Body.toString());
+        return data.Body;
+      } catch (err) {
+        console.error('Error downloading file:', err);
+      }
+    }
+    ```
+  </Tab>
+
+  <Tab value="Python">
+    ### Python Integration
+
+    Use the boto3 library to interact with MinIO's S3-compatible API.
+
+    #### Installation
+
+    ```bash
+    pip install boto3
+    ```
+
+    #### Example usage
+
+    ```python
+    import boto3
+    from botocore.client import Config
+
+    # Configure the S3 client
+    s3 = boto3.client(
+        's3',
+        endpoint_url='https://your-minio-name.gke-region.settlemint.com',
+        aws_access_key_id='YOUR_MINIO_ACCESS_KEY',
+        aws_secret_access_key='YOUR_MINIO_SECRET_KEY',
+        config=Config(signature_version='s3v4'),
+        region_name='us-east-1'  # MinIO ignores this, but boto3 requires it
+    )
+
+    # List buckets
+    def list_buckets():
+        try:
+            response = s3.list_buckets()
+            for bucket in response['Buckets']:
+                print(f'Bucket: {bucket["Name"]}')
+            return response['Buckets']
+        except Exception as e:
+            print(f'Error listing buckets: {e}')
+
+    # Upload a file
+    def upload_file(bucket_name, object_key, file_path):
+        try:
+            s3.upload_file(file_path, bucket_name, object_key)
+            print(f'File {file_path} uploaded to {bucket_name}/{object_key}')
+            return True
+        except Exception as e:
+            print(f'Error uploading file: {e}')
+            return False
+
+    # Download a file
+    def download_file(bucket_name, object_key, file_path):
+        try:
+            s3.download_file(bucket_name, object_key, file_path)
+            print(f'File downloaded to {file_path}')
+            return True
+        except Exception as e:
+            print(f'Error downloading file: {e}')
+            return False
+    ```
+  </Tab>
+
+  <Tab value="Go">
+    ### Go Integration
+
+    Use the AWS SDK for Go to interact with MinIO's S3-compatible API.
+
+    #### Installation
+
+    ```bash
+    go get github.com/aws/aws-sdk-go/aws
+    go get github.com/aws/aws-sdk-go/aws/credentials
+    go get github.com/aws/aws-sdk-go/aws/session
+    go get github.com/aws/aws-sdk-go/service/s3
+    ```
+
+    #### Example usage
+
+    ```go
+    package main
+
+    import (
+        "fmt"
+        "os"
+
+        "github.com/aws/aws-sdk-go/aws"
+        "github.com/aws/aws-sdk-go/aws/credentials"
+        "github.com/aws/aws-sdk-go/aws/session"
+        "github.com/aws/aws-sdk-go/service/s3"
+    )
+
+    func main() {
+        // Configure the S3 client
+        s3Config := &aws.Config{
+            Credentials:      credentials.NewStaticCredentials("YOUR_MINIO_ACCESS_KEY", "YOUR_MINIO_SECRET_KEY", ""),
+            Endpoint:         aws.String("https://your-minio-name.gke-region.settlemint.com"),
+            Region:           aws.String("us-east-1"), // MinIO ignores this, but the SDK requires it
+            S3ForcePathStyle: aws.Bool(true),          // Required for MinIO
+        }
+        
+        newSession, err := session.NewSession(s3Config)
+        if err != nil {
+            fmt.Println("Error creating session:", err)
+            return
+        }
+        
+        s3Client := s3.New(newSession)
+        
+        // List buckets
+        listBucketsResult, err := s3Client.ListBuckets(nil)
+        if err != nil {
+            fmt.Println("Error listing buckets:", err)
+            return
+        }
+        
+        fmt.Println("Buckets:")
+        for _, bucket := range listBucketsResult.Buckets {
+            fmt.Println(*bucket.Name)
+        }
+        
+        // Upload a file
+        file, err := os.Open("file-to-upload.txt")
+        if err != nil {
+            fmt.Println("Error opening file:", err)
+            return
+        }
+        defer file.Close()
+        
+        uploadParams := &s3.PutObjectInput{
+            Bucket: aws.String("my-bucket"),
+            Key:    aws.String("file-key.txt"),
+            Body:   file,
+        }
+        
+        _, err = s3Client.PutObject(uploadParams)
+        if err != nil {
+            fmt.Println("Error uploading file:", err)
+            return
+        }
+        
+        fmt.Println("File uploaded successfully")
+    }
+    ```
+  </Tab>
+</Tabs>
 
 ## Security & access control
 

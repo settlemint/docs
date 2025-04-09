@@ -55,34 +55,204 @@ directly on-chain.
 
 ## Api reference
 
-SettleMint provides **multiple APIs** for interacting with IPFS:
+SettleMint provides **multiple IPFS APIs** as shown in your dashboard:
 
-| **Method** | **Endpoint**        | **Description**                                     |
-| ---------- | ------------------- | --------------------------------------------------- |
-| `POST`     | `/ipfs/upload`      | Uploads a file to IPFS and returns its **CID**.     |
-| `GET`      | `/ipfs/{CID}`       | Retrieves a file from IPFS using its **CID**.       |
-| `POST`     | `/ipfs/pin/{CID}`   | Pins a file to prevent it from being removed.       |
-| `DELETE`   | `/ipfs/unpin/{CID}` | Unpins a file, allowing it to be garbage collected. |
+| **API**             | **Endpoint**                                                           | **Purpose**                                                                 |
+| ------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **IPFS HTTP API**   | `https://your-ipfs-name.gke-region.settlemint.com/api/v0`              | Core IPFS node operations (add, cat, get, pin)                              |
+| **Gateway**         | `https://your-ipfs-name.gke-region.settlemint.com/gateway/`            | Public access to IPFS content via HTTP                                      |
+| **Cluster API**     | `https://your-ipfs-name.gke-region.settlemint.com/cluster`             | Manage content across the IPFS cluster                                      |
+| **Pinning API**     | `https://your-ipfs-name.gke-region.settlemint.com/pinning`             | Control pinning operations using the standard IPFS Pinning API              |
 
-For full API specifications, refer to **SettleMint’s API documentation**.
+### Common IPFS HTTP API endpoints
+
+| **HTTP Method** | **Endpoint**                             | **Description**                                         |
+| --------------- | ---------------------------------------- | ------------------------------------------------------- |
+| `POST`          | `/api/v0/add`                            | Uploads a file to IPFS and returns its **CID**          |
+| `POST`          | `/api/v0/cat?arg=<CID>`                  | Retrieves a file's contents from IPFS using its **CID** |
+| `POST`          | `/api/v0/get?arg=<CID>`                  | Downloads a file (with directory structure)             |
+| `POST`          | `/api/v0/pin/add?arg=<CID>`              | Pins a file to prevent it from being garbage collected  |
+| `POST`          | `/api/v0/pin/rm?arg=<CID>`               | Unpins a file                                           |
+| `POST`          | `/api/v0/pin/ls?arg=<CID>&type=all`      | Lists pinned content                                    |
+
+For complete API reference, see the [official IPFS HTTP API documentation](https://docs.ipfs.tech/reference/http/api/).
 
 ---
 
 ## Credentials & authentication
 
-To interact with **SettleMint’s IPFS cluster**, users need authentication
-credentials:
+Your SettleMint IPFS instance provides the following credentials for authentication:
 
-| **Credential**           | **Description**                                     |
-| ------------------------ | --------------------------------------------------- |
-| **Cluster API Username** | Identifies the IPFS cluster user.                   |
-| **Cluster API Password** | Required for **authentication**.                    |
-| **Peer ID**              | Unique identifier for the node in the IPFS network. |
-| **Public Key**           | Used for **cryptographic verification**.            |
-| **Private Key**          | Enables secure **signing of IPFS transactions**.    |
-| **Pinning JWT Token**    | Required for interacting with the **Pinning API**.  |
+| **Credential**           | **Description**                                           | **Used With**                         |
+| ------------------------ | --------------------------------------------------------- | ------------------------------------- |
+| **Cluster API Username** | Identifies your IPFS cluster user (e.g., `your-ipfs-id`)  | Basic Auth for API requests           |
+| **Cluster API Password** | Password for authenticating API requests                   | Basic Auth for API requests           |
+| **Peer ID**              | Unique identifier for your node in the IPFS network        | P2P communication                     |
+| **Public Key**           | Used for cryptographic verification                        | P2P communication                     |
+| **Private Key**          | For signing operations (keep secure)                       | P2P operations/advanced functionality |
+| **Cluster Pinning JWT**  | JWT token for authenticating to the IPFS Pinning API       | Remote pinning services               |
 
-These credentials ensure **secure access** to the IPFS storage layer.
+These credentials can be found in your SettleMint dashboard under the IPFS storage instance details.
+
+### Authentication examples
+
+#### Basic authentication (for HTTP API and Cluster API)
+
+```javascript
+// Basic authentication with your Cluster API credentials
+const username = "your-ipfs-id"; // Your Cluster API Username
+const password = "your-password"; // Your Cluster API Password
+const authString = btoa(`${username}:${password}`);
+
+fetch("https://your-ipfs-name.gke-region.settlemint.com/api/v0/add", {
+  method: "POST",
+  headers: {
+    "Authorization": `Basic ${authString}`
+  },
+  body: formData // Your file in FormData format
+});
+```
+
+#### JWT authentication (for Pinning API)
+
+```javascript
+// JWT authentication with your Cluster Pinning JWT Token
+const jwtToken = "your-pinning-jwt-token";
+
+fetch("https://your-ipfs-name.gke-region.settlemint.com/pinning/pins", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${jwtToken}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    cid: "QmExample...",
+    name: "important-file.txt"
+  })
+});
+```
+
+## Usage examples
+
+Here are practical examples of common IPFS operations with SettleMint:
+
+### 1. Uploading a file
+
+```javascript
+async function uploadToIPFS(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  // Get credentials from your SettleMint dashboard
+  const username = "your-ipfs-id"; // Your Cluster API Username
+  const password = "your-password"; // Your Cluster API Password
+  const authString = btoa(`${username}:${password}`);
+  
+  const response = await fetch("https://your-ipfs-name.gke-region.settlemint.com/api/v0/add", {
+    method: "POST",
+    headers: {
+      "Authorization": `Basic ${authString}`
+    },
+    body: formData
+  });
+  
+  const data = await response.json();
+  console.log("File uploaded with CID:", data.Hash);
+  return data.Hash; // Returns the CID of the uploaded file
+}
+
+// Example usage with file input
+// const file = document.getElementById('fileInput').files[0];
+// uploadToIPFS(file).then(cid => console.log("Use this CID in your smart contracts:", cid));
+```
+
+### 2. Retrieving a file
+
+```javascript
+async function getFileFromIPFS(cid) {
+  // Get credentials from your SettleMint dashboard
+  const username = "your-ipfs-id";
+  const password = "your-password";
+  const authString = btoa(`${username}:${password}`);
+  
+  const response = await fetch(`https://your-ipfs-name.gke-region.settlemint.com/api/v0/cat?arg=${cid}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Basic ${authString}`
+    }
+  });
+  
+  // For text files
+  const content = await response.text();
+  console.log("File content:", content);
+  return content;
+  
+  // For binary files (uncomment as needed)
+  // const blob = await response.blob();
+  // return blob;
+}
+```
+
+### 3. Pinning a file permanently
+
+```javascript
+async function pinFile(cid) {
+  // Get credentials from your SettleMint dashboard
+  const username = "your-ipfs-id";
+  const password = "your-password";
+  const authString = btoa(`${username}:${password}`);
+  
+  const response = await fetch(`https://your-ipfs-name.gke-region.settlemint.com/api/v0/pin/add?arg=${cid}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Basic ${authString}`
+    }
+  });
+  
+  const data = await response.json();
+  console.log("Pinned:", data.Pins);
+  return data;
+}
+```
+
+### 4. Using the Gateway for public access
+
+The IPFS gateway allows anyone to access content by CID through a standard web browser without authentication:
+
+```
+https://your-ipfs-name.gke-region.settlemint.com/gateway/ipfs/QmYourCidHere
+```
+
+This is useful for:
+- Sharing files publicly
+- Accessing IPFS content in web applications
+- Integrating IPFS content with smart contracts that need to read the data
+
+### 5. Using with remote pinning services 
+
+SettleMint's IPFS implements the IPFS Pinning Service API, allowing you to pin content from other IPFS nodes:
+
+```javascript
+async function remotePinFile(cid, name) {
+  // Get pinning JWT token from your SettleMint dashboard
+  const jwtToken = "your-pinning-jwt-token";
+  
+  const response = await fetch("https://your-ipfs-name.gke-region.settlemint.com/pinning/pins", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${jwtToken}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      cid: cid,
+      name: name
+    })
+  });
+  
+  const data = await response.json();
+  return data;
+}
+```
 
 # Interplanetary file system (ipfs)
 
@@ -427,7 +597,7 @@ online copies of important data. If no node pins a piece of content and no
   reference the **CID** in smart contracts.
 - Example: **Legal documents, digital agreements, audit records**.
 
-### 2. **Nft metadata & digital assets**
+### 2. **NFT metadata & digital assets**
 
 - Store **metadata, images, and media** for NFTs in a decentralized and
   tamper-proof manner.
@@ -446,6 +616,204 @@ online copies of important data. If no node pins a piece of content and no
 
 ---
 
+## Alternative Ways to Interact with IPFS
+Command
+
+<Tabs items={['File Manager GUI', 'JavaScript/TypeScript', 'Python', 'Go', 'Java']}>
+  <Tab value="File Manager GUI">
+    ### File Manager Interface
+
+    SettleMint provides a convenient **web-based File Manager** for your IPFS storage, allowing you to manage files without writing any code.
+
+    #### Key features of the file manager
+
+    - **Upload Files** – Drag-and-drop or select files to upload to your IPFS node
+    - **Browse Files** – View all files stored on your IPFS node
+    - **Search** – Find files using CID or filenames
+    - **Pin Management** – Pin/unpin files to control persistence
+    - **File Details** – View metadata including size, CID, and pin status
+    - **Copy CIDs** – Easily copy content identifiers for use in applications
+
+    #### To access the File Manager:
+
+    1. Navigate to your IPFS instance in the SettleMint dashboard
+    2. Click the **File Manager** tab
+    3. Use the **Import** button to add new files
+
+    The File Manager provides an easy-to-use interface for basic IPFS operations without requiring command-line tools or programming knowledge, making it ideal for testing and management tasks.
+  </Tab>
+
+  <Tab value="JavaScript/TypeScript">
+    ### JavaScript/TypeScript Integration
+
+    #### js-ipfs-http-client
+    The official JavaScript client library for IPFS HTTP API:
+
+    ```bash
+    # Install using npm
+    npm install ipfs-http-client
+    # or using yarn
+    yarn add ipfs-http-client
+    ```
+
+    ```javascript
+    import { create } from 'ipfs-http-client'
+
+    // Connect to your SettleMint IPFS node
+    const auth = 'Basic ' + Buffer.from('your-ipfs-id:your-password').toString('base64')
+    const client = create({
+      host: 'your-ipfs-name.gke-region.settlemint.com',
+      port: 443,
+      protocol: 'https',
+      apiPath: '/api/v0',
+      headers: {
+        authorization: auth
+      }
+    })
+
+    // Upload file example
+    const addFile = async (file) => {
+      const added = await client.add(file)
+      return added.cid.toString()
+    }
+
+    // Retrieve file example
+    const getFile = async (cid) => {
+      const chunks = []
+      for await (const chunk of client.cat(cid)) {
+        chunks.push(chunk)
+      }
+      return Buffer.concat(chunks)
+    }
+    ```
+  </Tab>
+
+  <Tab value="Python">
+    ### Python Integration
+
+    #### ipfshttpclient
+    Python client library for the IPFS HTTP API:
+
+    ```bash
+    pip install ipfshttpclient
+    ```
+
+    ```python
+    import ipfshttpclient
+    import base64
+
+    # Connect to your SettleMint IPFS node
+    auth = base64.b64encode(b"your-ipfs-id:your-password").decode("ascii")
+    client = ipfshttpclient.connect(
+        '/dns/your-ipfs-name.gke-region.settlemint.com/https',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+
+    # Upload file example
+    def add_file(file_path):
+        res = client.add(file_path)
+        return res['Hash']
+
+    # Retrieve file example
+    def get_file(cid):
+        return client.cat(cid)
+    ```
+  </Tab>
+
+  <Tab value="Go">
+    ### Go Integration
+
+    #### go-ipfs-api
+    Official Go client library for the IPFS HTTP API:
+
+    ```bash
+    go get github.com/ipfs/go-ipfs-api
+    ```
+
+    ```go
+    package main
+
+    import (
+        "fmt"
+        "os"
+        "encoding/base64"
+        
+        shell "github.com/ipfs/go-ipfs-api"
+    )
+
+    func main() {
+        // Connect to your SettleMint IPFS node
+        auth := base64.StdEncoding.EncodeToString([]byte("your-ipfs-id:your-password"))
+        sh := shell.NewShell("https://your-ipfs-name.gke-region.settlemint.com/api/v0")
+        sh.SetHeader("Authorization", "Basic "+auth)
+        
+        // Upload file example
+        cid, err := sh.Add(os.Stdin)
+        if err != nil {
+            fmt.Fprintf(os.Stderr, "error: %s", err)
+            os.Exit(1)
+        }
+        fmt.Printf("added %s\n", cid)
+        
+        // Retrieve file example
+        data, err := sh.Cat(cid)
+        if err != nil {
+            fmt.Fprintf(os.Stderr, "error: %s", err)
+            os.Exit(1)
+        }
+        
+        // Process data stream
+        // ...
+    }
+    ```
+  </Tab>
+
+  <Tab value="Java">
+    ### Java Integration
+
+    #### java-ipfs-http-client
+    Java implementation for the IPFS HTTP API:
+
+    ```groovy
+    dependencies {
+        implementation 'com.github.ipfs:java-ipfs-http-client:1.3.3'
+    }
+    ```
+
+    ```java
+    import io.ipfs.api.IPFS;
+    import io.ipfs.api.MerkleNode;
+    import io.ipfs.api.NamedStreamable;
+
+    import java.io.File;
+    import java.io.IOException;
+    import java.util.Base64;
+    import java.util.HashMap;
+    import java.util.Map;
+
+    public class IPFSExample {
+        public static void main(String[] args) throws IOException {
+            // Connect to your SettleMint IPFS node
+            String auth = Base64.getEncoder().encodeToString("your-ipfs-id:your-password".getBytes());
+            
+            IPFS ipfs = new IPFS("your-ipfs-name.gke-region.settlemint.com", 443, "/api/v0", "https");
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Authorization", "Basic " + auth);
+            ipfs.setRequestHeaders(headers);
+            
+            // Upload file example
+            NamedStreamable.FileWrapper file = new NamedStreamable.FileWrapper(new File("path/to/file"));
+            MerkleNode added = ipfs.add(file).get(0);
+            String cid = added.hash.toString();
+            
+            // Retrieve file example
+            byte[] fileContents = ipfs.cat(cid);
+        }
+    }
+    ```
+  </Tab>
+</Tabs>
+
 ## Best practices & considerations
 
 - **Pinning Important Files** – IPFS operates on a caching mechanism, meaning
@@ -461,7 +829,7 @@ online copies of important data. If no node pins a piece of content and no
 
 - **File Not Found?** – Ensure the file is **pinned** and accessible through an
   active IPFS node.
-- **Slow Retrieval?** – Use **SettleMint’s dedicated IPFS gateway** or public
+- **Slow Retrieval?** – Use **SettleMint's dedicated IPFS gateway** or public
   **IPFS gateways** for faster access.
 - **Storage Limitations?** – Consider using **external pinning services** to
   maintain long-term file availability.
