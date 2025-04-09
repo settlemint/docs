@@ -6,7 +6,7 @@ description: Development setup and deployment
 Login to SettleMint platform and create an organzation. For more details refer -
 '[Account setup guide](/building-with-settlemint/setup-account-and-billing)'
 
-Go to add organization, and select "Asset tokenization kit".
+Select "Add application" option and select "Asset tokenization kit".
 
 ![Deploy asset tokenization kit](../../../img/application-kits/add-kit-ui.png)
 
@@ -16,6 +16,97 @@ studio to get access to smart contract and front end UI IDE within the platform
 UI.
 
 ![Select asset kit resources](../../../img/application-kits/select-kit-resources.png)
+
+You can choose between development and production environments based on the
+stage and requirements of your application.
+
+<br></br>
+The development environment operates on a shared infrastructure within
+SettleMint’s managed SaaS offering. It is provisioned with a small resource
+pack, suitable for prototyping, testing, and early-stage development. This
+environment includes one validator node and one non-validator node, sufficient
+for basic functionality validation and integration testing.
+<br></br>
+The production environment, on the other hand, is deployed on a dedicated
+cluster and is provisioned with a medium resource pack by default. It is
+designed to support high availability, performance, and scalability for
+enterprise-grade deployments. The production setup includes four validator nodes
+and two non-validator nodes, ensuring fault tolerance and improved network
+consensus performance.
+<br></br>
+Both environments support dynamic resource scaling, allowing resource packs to
+be scaled up or down at any point based on application demand or usage patterns.
+<br></br>
+
+## Custom deployment module for front end deployment
+
+The **Asset Tokenization Kit (ATK) Frontend UI** is a containerized web
+application that provides a user interface for interacting with tokenized assets
+on the SettleMint platform. This guide covers the configuration and deployment
+of the frontend UI as a **custom deployment** within SettleMint.
+
+### **Container Image Setup**
+
+The ATK Frontend UI is deployed using a prebuilt container image. Configure the
+following:
+
+| Field                                 | Description                                                 | Example Value                                      |
+| ------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------- |
+| **Container Image**                   | The Docker image containing the frontend UI.                | `ghcr.io/settlemint/asset-tokenization-kit:0.3.14` |
+| **Exposed Port**                      | The port on which the frontend serves HTTP traffic.         | `3000`                                             |
+| **Registry Credentials** (if private) | Username and access token for private container registries. | (Provided by DevOps)                               |
+
+### **Access Control**
+
+Define who can access the deployed frontend:
+
+- **Anyone with the link** – Public access (suitable for demos).
+- **Members of the organization** – Restricted to authenticated users within the
+  SettleMint organization.
+
+### **Environment Variables**
+
+The frontend requires the following environment variables to connect to backend
+services:
+
+| Variable                                  | Purpose                                         |
+| ----------------------------------------- | ----------------------------------------------- |
+| `SETTLEMINT_INSTANCE`                     | Internal SettleMint instance identifier.        |
+| `SETTLEMINT_ACCESS_TOKEN`                 | Authentication token for SettleMint APIs.       |
+| `SETTLEMINT_HD_PRIVATE_KEY`               | Private key for blockchain transaction signing. |
+| `SETTLEMINT_BLOCKSCOUT_UI_ENDPOINT`       | URL for the blockchain explorer (Blockscout).   |
+| `SETTLEMINT_HASURA_ENDPOINT`              | Hasura GraphQL engine endpoint.                 |
+| `SETTLEMINT_HASURA_DATABASE_URL`          | Database connection URL (internal).             |
+| `SETTLEMINT_HASURA_ADMIN_SECRET`          | Admin secret for Hasura access.                 |
+| `SETTLEMINT_PORTAL_GRAPHQL_ENDPOINT`      | SettleMint Portal GraphQL API endpoint.         |
+| `SETTLEMINT_THEGRAPH_SUBGRAPHS_ENDPOINTS` | The Graph indexing service endpoints.           |
+
+**Security Note:**
+
+- Sensitive values (e.g., `HD_PRIVATE_KEY`, `HASURA_ADMIN_SECRET`) are masked in
+  the UI.
+- Rotate credentials periodically following security best practices.
+
+### **Custom Domains (Optional)**
+
+For production or client-facing deployments, bind a custom domain: e.g.
+https://demo.tokenmint.be/ This ensures a branded URL for end users.
+
+<br></br>
+
+The **Asset Tokenization Kit Frontend UI** can be deployed as a standalone
+service while maintaining integration with SettleMint's blockchain and backend
+infrastructure. Key benefits include:
+
+- **Independent frontend management** – Deploy UI updates without affecting
+  other components.
+- **Flexible access control** – Configure visibility for internal testing or
+  public demos.
+- **Secure environment injection** – Sensitive keys and endpoints are securely
+  passed at runtime.
+- **Custom domain support** – Use branded URLs for professional deployments.
+
+## Local development
 
 For local development, please go to our
 [GitHub repository](https://github.com/settlemint/asset-tokenization-kit) and
