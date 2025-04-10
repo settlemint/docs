@@ -8,9 +8,9 @@ icon: House
 SettleMint is a full-stack blockchain infrastructure and application development
 platform designed to accelerate the creation, deployment, and management of
 enterprise-grade decentralized applications. It streamlines blockchain adoption
-by combining essential infrastructure services—such as network setup, node
+by combining essential infrastructure services, such as network setup, node
 configuration, smart contract development, middleware, off-chain integrations,
-and front-end deployments—into a unified environment. SettleMint supports both
+and front-end deployments, into a unified environment. SettleMint supports both
 **permissioned networks** (Hyperledger Besu, Quorum, and Hyperledger Fabric) and
 **public networks** (Ethereum, Polygon, Optimism, Arbitrum, Fantom, Soneium and
 Hedera Hashgraph), significantly reducing complexity and accelerating your
@@ -29,6 +29,7 @@ enterprise-grade decentralized applications.
 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem', width: '70%', margin: '0 auto' }}>
   ![SettleMint Platform Model](../../img/about-settlemint/platformModel.png)
 </div>
+
 
 ---
 
@@ -212,10 +213,13 @@ networks:
   quick dependency management. Because it's fully hosted in SettleMint, you
   don't need a local environment—resulting in a frictionless dev experience.
 
+
 ## **Smart contract api portal**
 
 After deployment, the **Smart Contract API Portal** translates your contract
+
 ABIs into **REST** and **GraphQL** endpoints—often termed "write middleware"
+
 because they allow writing data on-chain through these automatically generated
 APIs. It includes:
 
@@ -264,8 +268,10 @@ orchestrating cross-system workflows:
 
 ## **Hasura graphql engine**
 
+
 **Hasura** seamlessly manages **off-chain** data—often user details,
 authentication, or large volumes of records that don't need to reside on-chain.
+
 Paired with a PostgreSQL database, Hasura automatically generates a **real-time
 GraphQL schema**, offering:
 
@@ -278,8 +284,8 @@ GraphQL schema**, offering:
 
 ## **S3 storage (minio)**
 
-For storing large files—such as logs, digital certificates, transaction
-receipts—SettleMint offers an **S3-compatible MinIO** service. You can:
+For storing large files, such as logs, digital certificates, transaction
+receipts, SettleMint offers an **S3-compatible MinIO** service. You can:
 
 - **Upload & Retrieve Files via Standard S3 APIs**
 - **Control Access Permissions**
@@ -328,8 +334,8 @@ Two forms of token-based authentication and authorization:
 
 ## **Custom deployments**
 
-SettleMint enables developers to containerize custom applications—front-end
-dashboards, specialized microservices, or custom oracles—and host them within
+SettleMint enables developers to containerize custom applications, front-end
+dashboards, specialized microservices, or custom oracles, and host them within
 the platform. You can:
 
 - **Define Container Images & Environments**

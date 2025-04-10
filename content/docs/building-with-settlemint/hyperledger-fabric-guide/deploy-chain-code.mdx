@@ -23,12 +23,12 @@ import { Card } from "fumadocs-ui/components/card";
   Summary
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
     The process starts by defining a clean and structured chaincode using
-    TypeScript. Transaction functions are added to handle common
-    operations—creating new entries, reading existing ones, updating data, and
-    deleting records. These functions follow familiar CRUD patterns but are
-    designed to work within the immutable environment of a blockchain. Events
-    are emitted during each transaction to make state changes observable by
-    off-chain systems or external services.
+    TypeScript. Transaction functions are added to handle common operations,
+    creating new entries, reading existing ones, updating data, and deleting
+    records. These functions follow familiar CRUD patterns but are designed to
+    work within the immutable environment of a blockchain. Events are emitted
+    during each transaction to make state changes observable by off-chain
+    systems or external services.
     <br> </br>
     Once the code is ready, it's compiled and packaged into a deployable
     archive. The chaincode is then installed on peers, approved by
@@ -37,8 +37,8 @@ import { Card } from "fumadocs-ui/components/card";
     default data or configure initial state.
     <br> </br>
     After deployment, functions can be tested directly by invoking or querying
-    them through the provided CLI. This end-to-end workflow—from writing the
-    chaincode to interacting with it on-chain—follows a consistent and
+    them through the provided CLI. This end-to-end workflow, from writing the
+    chaincode to interacting with it on-chain, follows a consistent and
     repeatable pattern, making it easier to manage chaincode across different
     stages of development and deployment.
     <br> </br>
@@ -70,7 +70,7 @@ develop and deploy chaincodes on SettleMint platform.
 
 A **chaincode** is a self-executing smart contract deployed on the Hyperledger
 Fabric network. It defines the business logic that governs how assets are
-created, modified, or queried on the ledger — all in a trusted, peer-to-peer
+created, modified, or queried on the ledger , all in a trusted, peer-to-peer
 environment without intermediaries. In this tutorial, we will write our
 chaincode using **TypeScript**, a statically typed superset of JavaScript that
 is well-suited for building secure, modular, and maintainable Fabric chaincode.
@@ -102,7 +102,7 @@ you validate the generated logic against Fabric’s lifecycle and endorsement
 policies before using it in production environments.
 
 With TypeScript, you get the benefits of modern tooling, better type safety, and
-an easier development experience — especially if you're coming from a web or
+an easier development experience , especially if you're coming from a web or
 full-stack background.
 
 ### Example asset transfer chaincode typescript code
@@ -342,9 +342,9 @@ export class AssetTransferContract extends Contract {
 
 In this Hyperledger Fabric chaincode, we define a clear set of events and
 transaction functions that manage the lifecycle of assets. These components
-provide a complete interface for interacting with on-chain asset data—supporting
-creation, updates, transfers, deletions, and querying—while also ensuring
-visibility through event emissions.
+provide a complete interface for interacting with on-chain asset data,
+supporting creation, updates, transfers, deletions, and querying, while also
+ensuring visibility through event emissions.
 
 Events play a crucial role in enabling off-chain services to listen for changes
 in the blockchain state, while the transaction functions serve as the core API

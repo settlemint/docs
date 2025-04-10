@@ -1,13 +1,19 @@
 ---
-title:
-  "GDPR Compliance"
+title: "GDPR Compliance"
 ---
 
-
-The General Data Protection Regulation (GDPR) is a comprehensive privacy regulation that governs the collection, processing, and storage of personal data within the European Union (EU) and the European Economic Area (EEA). As a European company building a blockchain application, it is essential to ensure your application complies with GDPR regulations. This documentation will outline key considerations and provide guidance for achieving compliance.
+The General Data Protection Regulation (GDPR) is a comprehensive privacy
+regulation that governs the collection, processing, and storage of personal data
+within the European Union (EU) and the European Economic Area (EEA). As a
+European company building a blockchain application, it is essential to ensure
+your application complies with GDPR regulations. This documentation will outline
+key considerations and provide guidance for achieving compliance.
 
 <br></br>
-To support our clients in aligning with GDPR requirements, SettleMint provides platform-level features and architectural best practices that help ensure privacy, security, and regulatory alignment while building decentralized applications.
+To support our clients in aligning with GDPR requirements, SettleMint provides
+platform-level features and architectural best practices that help ensure
+privacy, security, and regulatory alignment while building decentralized
+applications.
 
 ---
 
@@ -15,12 +21,16 @@ To support our clients in aligning with GDPR requirements, SettleMint provides p
 
 ### 1. Data minimization
 
-Under GDPR, companies must practice data minimization—collecting and processing only what is necessary for a specific, declared purpose. Blockchain’s inherent immutability introduces challenges here.
+Under GDPR, companies must practice data minimization, collecting and processing
+only what is necessary for a specific, declared purpose. Blockchain’s inherent
+immutability introduces challenges here.
 
 SettleMint supports this principle by:
 
-- Providing integrated off-chain storage modules where sensitive user data can be stored securely, keeping only cryptographic references or hashes on-chain.
-- Allowing developers to configure smart contracts to avoid direct storage of personally identifiable information (PII).
+- Providing integrated off-chain storage modules where sensitive user data can
+  be stored securely, keeping only cryptographic references or hashes on-chain.
+- Allowing developers to configure smart contracts to avoid direct storage of
+  personally identifiable information (PII).
 
 **Best practices suggested:**
 
@@ -31,42 +41,54 @@ SettleMint supports this principle by:
 
 ### 2. Identifying data controllers and data processors
 
-GDPR requires clear distinction between **data controllers** (who determine the purpose and means of processing) and **data processors** (who act on behalf of controllers).
+GDPR requires clear distinction between **data controllers** (who determine the
+purpose and means of processing) and **data processors** (who act on behalf of
+controllers).
 
 On the SettleMint platform:
 
-- Access roles and data flows can be clearly modeled using permissioned blockchain channels.
-- Organizations on a blockchain network can be mapped to controller/processor roles via Membership Service Provider (MSP) structures.
+- Access roles and data flows can be clearly modeled using permissioned
+  blockchain channels.
+- Organizations on a blockchain network can be mapped to controller/processor
+  roles via Membership Service Provider (MSP) structures.
 
 **Best practices suggested:**
 
-- Maintain a registry of actors and their responsibilities in your governance model.
+- Maintain a registry of actors and their responsibilities in your governance
+  model.
 - Document data processing agreements between consortium members.
 
 ---
 
 ### 3. Right to erasure (Right to be Forgotten)
 
-The immutability of blockchain makes deletion of personal data difficult or impossible.
+The immutability of blockchain makes deletion of personal data difficult or
+impossible.
 
 SettleMint addresses this challenge through:
 
-- Off-chain personal data storage, enabling full erasure of user data without breaking blockchain references.
-- Support for advanced cryptographic patterns such as zero-knowledge proofs and hashed identifiers to make data unlinkable.
+- Off-chain personal data storage, enabling full erasure of user data without
+  breaking blockchain references.
+- Support for advanced cryptographic patterns such as zero-knowledge proofs and
+  hashed identifiers to make data unlinkable.
 
 **Best practices suggested:**
 
 - Never store raw PII on-chain.
-- Design smart contracts to support revocation and pointer invalidation mechanisms.
+- Design smart contracts to support revocation and pointer invalidation
+  mechanisms.
 
 ---
 
 ### 4. Pseudonymization and anonymization
 
-SettleMint enables privacy-by-design through data transformation tools that support:
+SettleMint enables privacy-by-design through data transformation tools that
+support:
 
-- **Pseudonymization**: Replacing user identifiers with random tokens or blockchain addresses.
-- **Anonymization**: Removing or irreversibly altering PII such that it cannot be re-linked.
+- **Pseudonymization**: Replacing user identifiers with random tokens or
+  blockchain addresses.
+- **Anonymization**: Removing or irreversibly altering PII such that it cannot
+  be re-linked.
 
 **Best practices suggested:**
 
@@ -77,17 +99,21 @@ SettleMint enables privacy-by-design through data transformation tools that supp
 
 ### 5. Consent management
 
-GDPR mandates that users provide clear and revocable consent for processing their personal data.
+GDPR mandates that users provide clear and revocable consent for processing
+their personal data.
 
 SettleMint provides application kits and templates for:
 
-- Building smart contract-based consent registries that are transparent and auditable.
-- Logging and timestamping user consent and withdrawals immutably, while storing detailed consent data off-chain.
+- Building smart contract-based consent registries that are transparent and
+  auditable.
+- Logging and timestamping user consent and withdrawals immutably, while storing
+  detailed consent data off-chain.
 
 **Best practices suggested:**
 
 - Design explicit consent flows in the application UI.
-- Allow users to view and manage consent history via self-sovereign identity interfaces.
+- Allow users to view and manage consent history via self-sovereign identity
+  interfaces.
 
 ---
 
@@ -97,44 +123,60 @@ A DPIA is essential to proactively assess and mitigate privacy risks.
 
 SettleMint supports DPIA efforts by:
 
-- Providing visual workflows and configuration templates that help document data flows, access levels, and risk areas.
-- Enabling rapid prototyping and simulation of data processing within your decentralized architecture.
+- Providing visual workflows and configuration templates that help document data
+  flows, access levels, and risk areas.
+- Enabling rapid prototyping and simulation of data processing within your
+  decentralized architecture.
 
 **Best practices suggested:**
 
 - Use DPIA templates early in the design phase.
-- Update DPIA documentation with each chaincode upgrade or network policy change.
+- Update DPIA documentation with each chaincode upgrade or network policy
+  change.
 
 ---
 
 ### 7. Cross-border transfers
 
-Transfers of personal data outside the EU/EEA require appropriate safeguards such as Standard Contractual Clauses (SCCs) or Binding Corporate Rules (BCRs).
+Transfers of personal data outside the EU/EEA require appropriate safeguards
+such as Standard Contractual Clauses (SCCs) or Binding Corporate Rules (BCRs).
 
 For permissioned blockchains built with SettleMint:
 
-- Data residency policies can be enforced through organization-specific data nodes and localized off-chain storage.
-- Data access policies can be enforced through Fabric/Quorum consortium rules and smart contract-level whitelisting.
+- Data residency policies can be enforced through organization-specific data
+  nodes and localized off-chain storage.
+- Data access policies can be enforced through Fabric/Quorum consortium rules
+  and smart contract-level whitelisting.
 
 **Best practices suggested:**
 
 - Ensure all network participants agree to and implement SCCs where applicable.
-- Architect the network with geographic boundaries in mind when dealing with sensitive user data.
+- Architect the network with geographic boundaries in mind when dealing with
+  sensitive user data.
 
 ---
 
 ## SettleMint’s GDPR-aligned features
 
-SettleMint is committed to privacy-first blockchain development and offers the following GDPR-supportive features:
+SettleMint is committed to privacy-first blockchain development and offers the
+following GDPR-supportive features:
 
-- **Off-chain Secure Data Vaults**: Integration with IPFS, cloud, and database connectors for compliant data storage.
-- **Zero-knowledge Pattern Support**: Capability to implement zk-proofs, Merkle proofs, and hashed pointers to minimize on-chain data exposure.
-- **Granular Access Controls**: Role-based access, smart contract permissions, and organization-level policies enforce strict data governance.
-- **Audit Logging and Consent Trails**: Tamper-proof registries to track user consent and system actions in accordance with GDPR transparency requirements.
-- **Chaincode Lifecycle Management**: Ensures that every upgrade or change in data logic is reviewed, versioned, and auditable.
+- **Off-chain Secure Data Vaults**: Integration with IPFS, cloud, and database
+  connectors for compliant data storage.
+- **Zero-knowledge Pattern Support**: Capability to implement zk-proofs, Merkle
+  proofs, and hashed pointers to minimize on-chain data exposure.
+- **Granular Access Controls**: Role-based access, smart contract permissions,
+  and organization-level policies enforce strict data governance.
+- **Audit Logging and Consent Trails**: Tamper-proof registries to track user
+  consent and system actions in accordance with GDPR transparency requirements.
+- **Chaincode Lifecycle Management**: Ensures that every upgrade or change in
+  data logic is reviewed, versioned, and auditable.
 
 ---
 
-
-Achieving GDPR compliance for blockchain applications requires thoughtful design, clear governance, and secure implementation practices. SettleMint simplifies this journey by embedding privacy-focused capabilities directly into its blockchain development platform. 
-Whether you're building enterprise applications or public-facing dApps, SettleMint provides the tools, architecture, and support to meet your data protection obligations under GDPR.
+Achieving GDPR compliance for blockchain applications requires thoughtful
+design, clear governance, and secure implementation practices. SettleMint
+simplifies this journey by embedding privacy-focused capabilities directly into
+its blockchain development platform. Whether you're building enterprise
+applications or public-facing dApps, SettleMint provides the tools,
+architecture, and support to meet your data protection obligations under GDPR.

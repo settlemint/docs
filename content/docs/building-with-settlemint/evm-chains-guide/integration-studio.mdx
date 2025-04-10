@@ -25,7 +25,7 @@ The Integration Studio is a dedicated low-code environment that enables
 developers and business users to build backend workflows, API endpoints, and
 custom logic using a visual interface. Powered by Node-RED, it offers an
 intuitive drag-and-drop experience for orchestrating flows between smart
-contracts, external APIs, databases, and storage systems—all within the
+contracts, external APIs, databases, and storage systems, all within the
 SettleMint ecosystem.
 
 <br> </br>
@@ -36,7 +36,7 @@ timed executions. Under the hood, each Integration Studio is deployed as an
 isolated and scalable container that supports JavaScript-based execution,
 environment configuration, and secure API access.
 <br> </br>
-Each node in the flow is designed to perform a specific task—such as receiving
+Each node in the flow is designed to perform a specific task, such as receiving
 HTTP input, transforming payloads, calling external APIs, or executing custom
 JavaScript functions. These nodes are connected inside a flow, which represents
 a unit of logic or an end-to-end integration path. You can create multiple flows
@@ -54,7 +54,7 @@ settings.
 A common scenario might involve triggering a flow via an HTTP request, fetching
 on-chain data from a smart contract using ethers.js, formatting the result, and
 returning it as a JSON response. These kinds of flows can be designed in
-minutes—providing API endpoints that are automatically hosted and secured by
+minutes, providing API endpoints that are automatically hosted and secured by
 SettleMint infrastructure.
 <br> </br>
 Developers can configure API Keys to restrict access to these endpoints and
@@ -169,7 +169,8 @@ Before we show you how to set up your own flow, we recommend reading this
 Now let's set up an example flow together and build an endpoint to get the
 latest block number of the Polygon Mumbai Testnet using the Integration Studio.
 If you do not have a Polygon Mumbai Node, you can easily
-[deploy a node](/platform-components/blockchain-infrastructure/blockchain-nodes) first.
+[deploy a node](/platform-components/blockchain-infrastructure/blockchain-nodes)
+first.
 
 <Steps>
 ### Add http input node
@@ -191,7 +192,8 @@ Under the **Connect tab** of your Polygon Mumbai node, you will find its RPC url
 
 `accessToken` - You will need an access token for your application. If you do
 not have one, you can easily
-[create an access token](/platform-components/security-and-authentication/application-access-tokens) first.
+[create an access token](/platform-components/security-and-authentication/application-access-tokens)
+first.
 
 </Callout>
 

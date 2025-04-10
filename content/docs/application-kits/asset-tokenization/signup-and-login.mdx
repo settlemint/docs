@@ -7,11 +7,26 @@ Find the connection endpoint on the connect tab of the custom deployment Section
 
 ![Deploy asset tokenization kit](../../../img/application-kits/access-endpoint.png)
 
-Go to issuer portal, sign up to create the admin or the issuer account. The first user to signup gets the admin rights to the application.
+Go to issuer portal, sign up to create the admin or the issuer account. The
+first user to signup gets the admin rights to the application.
 ![Sign Up](../../../img/application-kits/sign-up.png)
 
-You may also setup sign-in via a passkey. 
+The user is required to create a secure 6-digit PIN. This PIN is used to
+authorize all wallet-related transactions and ensures that only the legitimate
+wallet holder can perform actions such as transferring assets or interacting
+with contracts.
 
-Post login you will see the dashboard and will get access to various modules and services related to asset tokenization. 
+After setting the PIN, the system generates a list of one-time-use recovery
+codes. These codes allow the user to verify transactions or recover wallet
+access in case of credential loss. The interface prompts the user to store these
+codes securely, such as in a password manager or offline backup. These codes are
+not retrievable after this step.
 
-![dashboard](../../../img/application-kits/dashboard-issuer.png)
+![Secure wallet](../../../img/application-kits/secure-wallet.png)
+
+You may also setup sign-in via a passkey.
+
+Post login you will see the dashboard and will get access to various modules and
+services related to asset tokenization.
+
+![dashboard](../../../img/application-kits/atk-dashboard.png)

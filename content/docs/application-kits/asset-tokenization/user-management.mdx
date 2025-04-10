@@ -1,0 +1,89 @@
+---
+title: "User management"
+description: Getting started with Application Kit
+---
+
+![Users list](../../../img/application-kits/user-list.png)
+
+The user profile section within the asset tokenization kit serves as a
+centralized and dynamic control panel for managing individual user accounts,
+identities, and on-chain activities. It is designed to give platform
+administrators full visibility into each user’s lifecycle, from account creation
+and wallet assignment to asset ownership and blockchain interactions enabling
+efficient user governance, compliance enforcement, and operational insight.
+
+<br></br>
+
+## User creation
+
+User creation happens via the signup form on the login page. 
+<br></br>
+Upon user onboarding, the system automatically generates and assigns a unique
+blockchain wallet address to the user. This wallet becomes the user’s on-chain
+identity and is securely linked to their profile for executing token-related
+operations such as asset issuance, transfers, minting, and participation in
+permissioned flows. The wallet address is displayed in truncated format for
+readability and includes quick copy functionality for administrative
+convenience.
+
+<br></br>
+
+The profile interface is divided into multiple functional tabs such as Details,
+Holdings, Latest Events, and Permissions, each providing focused data views and
+administrative controls.
+
+## User details
+
+The Details tab displays a comprehensive snapshot of the user’s identity and
+account state. It includes the user’s display name, email address, wallet
+address, account status (e.g., active or banned), and KYC verification status.
+It also logs platform activity details such as the date of account creation,
+last login timestamp, and most recent interaction. Administrators can view
+real-time operational metrics, including the number of tokenized assets supplied
+by the user and the total number of transactions performed. This data is
+critical for tracking user engagement, identifying high-value users, and
+ensuring active participation in the tokenization ecosystem.
+<br></br>
+To complement the raw data, the interface incorporates data visualizations that
+provide meaningful insights into user activity and asset allocation. The Asset
+Distribution chart displays a visual breakdown of the user’s holdings by asset
+class such as bonds and deposits, offering a portfolio-level perspective. The
+Transactions Volume per Day graph highlights daily activity over the past month,
+capturing transaction spikes and behavioral trends, while the Transactions
+Volume per Month chart offers a longitudinal view of user interaction across the
+year. These charts assist in behavioral analysis and help identify users with
+consistent platform engagement versus those with sporadic activity.
+
+## Role management and KYC
+
+Administrative controls are accessible through the Edit User dropdown. This
+includes the ability to update the user’s role via a dedicated interface where
+platform roles User, Issuer, or Admin, can be reassigned based on functional
+requirements or access privileges. A separate confirmation dialog allows KYC
+verification to be completed manually, typically after the necessary identity
+documents have been reviewed by the compliance team. These capabilities ensure
+the platform adheres to both role-based access control and regulatory compliance
+mandates.
+
+## User holdings
+
+![Users list](../../../img/application-kits/user-holding.png)
+
+The Holdings tab provides a ledger-like view of all assets linked to the user’s
+wallet. It lists each asset’s name, token symbol, asset type (bond, deposit,
+etc.), balance, holder type (creator/owner), operational status, and the last
+recorded activity. This section is especially important for financial
+administrators or asset managers who need to assess the user’s exposure, asset
+diversity, and the lifecycle stage of each instrument under their control.
+
+## Events audit trail
+
+![Users events](../../../img/application-kits/user-event-logs.png)
+
+The Latest Events tab functions as a real-time audit trail of all blockchain
+events associated with the user. Each entry is timestamped and includes the
+asset name, event type (such as minting, creation, or permission grants), and
+the sender identity. This detailed ledger helps in tracking operational changes,
+validating ownership claims, monitoring permission shifts, and performing
+forensic analysis in the event of disputes or compliance inquiries.
+

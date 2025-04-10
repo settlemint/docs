@@ -2,13 +2,16 @@
 title: "CBDC Chaincode"
 ---
 
+## Disclaimer
 
-## Disclaimer 
-
-This chaincode is provided solely for educational and prototyping purposes.
-	-	It must not be used in live financial environments without thorough auditing, testing, and tailoring for legal, regulatory, and security requirements.
-	-	CBDC systems involve complex central banking policies, cryptographic controls, compliance audits, and jurisdictional regulations that this simplified implementation does not cover.
-	-	Any real-world deployment of such a contract must go through a complete security audit, formal verification, and regulatory alignment in the context of the target financial system.
+This chaincode is provided solely for educational and prototyping purposes. - It
+must not be used in live financial environments without thorough auditing,
+testing, and tailoring for legal, regulatory, and security requirements. - CBDC
+systems involve complex central banking policies, cryptographic controls,
+compliance audits, and jurisdictional regulations that this simplified
+implementation does not cover. - Any real-world deployment of such a contract
+must go through a complete security audit, formal verification, and regulatory
+alignment in the context of the target financial system.
 
 ```go
 package main
@@ -328,26 +331,85 @@ func main() {
 
 ```
 
+This CBDC (Central Bank Digital Currency) chaincode is written for Hyperledger
+Fabric and is intended strictly for educational and prototyping purposes. It is
+not production-ready and must not be deployed in a live financial system without
+substantial auditing, rigorous testing, and tailoring to specific regulatory and
+operational requirements. Real-world CBDC implementations are complex, involving
+monetary policy, central banking rules, and advanced security mechanisms, none
+of which are fully captured in this simplified contract. The contract does not
+include protections against replay attacks, does not implement cryptographic
+signature verification, lacks privacy guarantees, and omits enforcement for
+multisignature approvals or advanced compliance policies.
 
-This CBDC (Central Bank Digital Currency) chaincode is written for Hyperledger Fabric and is intended strictly for educational and prototyping purposes. It is not production-ready and must not be deployed in a live financial system without substantial auditing, rigorous testing, and tailoring to specific regulatory and operational requirements. Real-world CBDC implementations are complex, involving monetary policy, central banking rules, and advanced security mechanisms—none of which are fully captured in this simplified contract. The contract does not include protections against replay attacks, does not implement cryptographic signature verification, lacks privacy guarantees, and omits enforcement for multisignature approvals or advanced compliance policies.
 <br> </br>
-Conceptually, this chaincode simulates a basic CBDC management system deployed on a permissioned Hyperledger Fabric network. It provides core features that a central bank might need to issue and manage digital fiat currency. These features include the ability to issue or burn currency, freeze or unfreeze accounts, set metadata tags on accounts, enforce role-based access, and maintain an account-level audit trail. Additionally, it includes a mechanism to apply transaction limits for retail banks. The contract uses Go and the Fabric Contract API and relies on standard transaction context interfaces to interact with the ledger state.
+Conceptually, this chaincode simulates a basic CBDC management system deployed
+on a permissioned Hyperledger Fabric network. It provides core features that a
+central bank might need to issue and manage digital fiat currency. These
+features include the ability to issue or burn currency, freeze or unfreeze
+accounts, set metadata tags on accounts, enforce role-based access, and maintain
+an account-level audit trail. Additionally, it includes a mechanism to apply
+transaction limits for retail banks. The contract uses Go and the Fabric
+Contract API and relies on standard transaction context interfaces to interact
+with the ledger state.
 <br> </br>
-The system recognizes three roles based on the MSP ID of the organization invoking a transaction. The central bank has full administrative control, allowing it to issue and burn tokens, freeze or unfreeze accounts, and add tags. Retail banks are permitted to interact with the system under certain constraints, such as a transfer cap. Auditors are not yet integrated but are envisioned as read-only participants. These roles are determined by mapping the MSP ID to predefined role labels, and permissions are enforced using a utility method that checks if the invoker’s role is among those allowed for a specific operation.
+The system recognizes three roles based on the MSP ID of the organization
+invoking a transaction. The central bank has full administrative control,
+allowing it to issue and burn tokens, freeze or unfreeze accounts, and add tags.
+Retail banks are permitted to interact with the system under certain
+constraints, such as a transfer cap. Auditors are not yet integrated but are
+envisioned as read-only participants. These roles are determined by mapping the
+MSP ID to predefined role labels, and permissions are enforced using a utility
+method that checks if the invoker’s role is among those allowed for a specific
+operation.
 <br> </br>
-Data in the system is centered around the concept of an account. Each account includes an owner ID, token balance, creation and last active timestamps, a frozen flag, a tag map for metadata, and a list of transaction logs that serve as the audit trail. When an account is created, it is initialized with default values, and every transaction affecting the account updates its state and appends a corresponding entry to its history. Account state is stored in the ledger as a serialized JSON object.
+Data in the system is centered around the concept of an account. Each account
+includes an owner ID, token balance, creation and last active timestamps, a
+frozen flag, a tag map for metadata, and a list of transaction logs that serve
+as the audit trail. When an account is created, it is initialized with default
+values, and every transaction affecting the account updates its state and
+appends a corresponding entry to its history. Account state is stored in the
+ledger as a serialized JSON object.
 <br> </br>
-The chaincode allows the central bank to issue tokens to any valid account. Before issuing, it checks that the recipient ID is properly formatted, that the amount is positive, and that the target account is not frozen. It then updates the account balance, sets the last active timestamp, and logs the issuance event. The burning of tokens follows a similar logic but deducts from the account balance and ensures that the balance is sufficient to cover the burn request. Both actions emit chaincode events for external observability.
+The chaincode allows the central bank to issue tokens to any valid account.
+Before issuing, it checks that the recipient ID is properly formatted, that the
+amount is positive, and that the target account is not frozen. It then updates
+the account balance, sets the last active timestamp, and logs the issuance
+event. The burning of tokens follows a similar logic but deducts from the
+account balance and ensures that the balance is sufficient to cover the burn
+request. Both actions emit chaincode events for external observability.
 <br> </br>
-Accounts can be frozen or unfrozen by the central bank. When an account is frozen, it becomes ineligible for token issuance or burning. This provides a simple control mechanism for suspending suspicious or non-compliant actors in the system. In addition to these lifecycle operations, the chaincode supports tagging, allowing the central bank to attach short metadata entries to accounts. This could be used for tagging accounts as KYC-verified, associating them with a branch ID, or any other administrative classification.
+Accounts can be frozen or unfrozen by the central bank. When an account is
+frozen, it becomes ineligible for token issuance or burning. This provides a
+simple control mechanism for suspending suspicious or non-compliant actors in
+the system. In addition to these lifecycle operations, the chaincode supports
+tagging, allowing the central bank to attach short metadata entries to accounts.
+This could be used for tagging accounts as KYC-verified, associating them with a
+branch ID, or any other administrative classification.
 <br> </br>
-Several querying functions are exposed, including the ability to read an account’s balance, view its transaction history, or retrieve its metadata tags. Currently, these functions are unrestricted, meaning that any network participant can query any account’s data. In a real-world deployment, this would need to be restricted to protect financial privacy and enforce access policies, potentially using Fabric’s private data collections or attribute-based access control.
+Several querying functions are exposed, including the ability to read an
+account’s balance, view its transaction history, or retrieve its metadata tags.
+Currently, these functions are unrestricted, meaning that any network
+participant can query any account’s data. In a real-world deployment, this would
+need to be restricted to protect financial privacy and enforce access policies,
+potentially using Fabric’s private data collections or attribute-based access
+control.
 <br> </br>
-The chaincode also introduces a concept of transaction caps for retail banks. A configurable threshold ensures that retail banks cannot process high-value operations beyond a specified amount. However, these caps do not apply to the central bank, which retains full authority over token issuance and burning. Additionally, there is a placeholder mechanism for enforcing multisignature approvals on high-value transactions. While the code identifies when such an approval would be required, it does not currently implement any logic to validate multiple approvals or signatures. This remains a stub for future enhancement.
+The chaincode also introduces a concept of transaction caps for retail banks. A
+configurable threshold ensures that retail banks cannot process high-value
+operations beyond a specified amount. However, these caps do not apply to the
+central bank, which retains full authority over token issuance and burning.
+Additionally, there is a placeholder mechanism for enforcing multisignature
+approvals on high-value transactions. While the code identifies when such an
+approval would be required, it does not currently implement any logic to
+validate multiple approvals or signatures. This remains a stub for future
+enhancement.
 <br> </br>
 
-
-This chaincode implements a simplified CBDC (Central Bank Digital Currency) logic using the Hyperledger Fabric framework. It demonstrates the key responsibilities of a central bank in managing digital token issuance and enforcement controls.
+This chaincode implements a simplified CBDC (Central Bank Digital Currency)
+logic using the Hyperledger Fabric framework. It demonstrates the key
+responsibilities of a central bank in managing digital token issuance and
+enforcement controls.
 
 ---
 
@@ -407,7 +469,8 @@ type Account struct {
 }
 ```
 
-Each account maintains metadata, balance, timestamps, and a full transaction log.
+Each account maintains metadata, balance, timestamps, and a full transaction
+log.
 
 ---
 
@@ -490,7 +553,8 @@ func (c *CBDCContract) GetTags(ctx, account string) (map[string]string, error)
 
 ## Transfer Cap for Retail Banks
 
-Retail banks are restricted from performing operations above a defined threshold:
+Retail banks are restricted from performing operations above a defined
+threshold:
 
 ```go
 const RetailTransferCap = 100000
@@ -503,4 +567,3 @@ func (c *CBDCContract) enforceTransactionCap(ctx contractapi.TransactionContextI
 ```
 
 ---
-

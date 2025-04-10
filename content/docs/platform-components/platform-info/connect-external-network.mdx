@@ -28,7 +28,8 @@ resource scaling, an intuitive JSON-RPC UI, and reliable uptime management.
    If a bootnode is specified in the genesis file, it will be added
    automatically as an external node, allowing you to skip this step.
 7. Choose the deployment plan for the node. For more information about
-   deployment plans, [see here](/launching-the-platform/managed-cloud-saas/deployment-plans).
+   deployment plans,
+   [see here](/launching-the-platform/managed-cloud-saas/deployment-plans).
 
 This process will create a new non-validator node in your existing network.
 
@@ -36,9 +37,7 @@ This process will create a new non-validator node in your existing network.
 
 To add more nodes to your network:
 
-1. Navigate to the create node form (see
-   [Adding a Node to a Network](/building-with-settlemint/add-a-node-to-a-network)
-   for detailed instructions).
+1. Navigate to the create node form.
 2. Choose between creating the node as a validator or non-validator.
 3. Note: To deploy nodes as validators, a majority (66%) of validators must be
    running on the SettleMint platform.
@@ -105,3 +104,85 @@ To resolve this, you can either:
 
 The platform will automatically resolve the node type conflict warning shortly
 after the necessary changes are made.
+
+## Migrating existing networks to SettleMint platform
+
+Migrating an existing Hyperledger Besu or Quorum (using OBFT or IBFT2 consensus)
+network to the SettleMint platform enables organizations to move from
+self-managed infrastructure to a robust, cloud-native blockchain operations
+environment. The platform provides an intuitive and secure environment for node
+management, validator orchestration, and real-time monitoring while ensuring
+compatibility with existing private networks. This process begins with ensuring
+that a few key prerequisites are in place: access to the current network’s
+genesis file, at least one `enode://` address of an active node for
+synchronization, and the contract ABIs and addresses of any deployed smart
+contracts.
+
+## Joining the existing network
+
+To initiate the migration, the organization will log into the SettleMint
+platform and navigate to the "Create Network" form. From there, they will choose
+the "Join permissioned network" option and select either Hyperledger Besu or
+Quorum as the client, depending on their existing setup. They will assign a name
+to the network and the joining node and then upload the `genesis.json` file. If
+the genesis file includes bootnodes, the platform automatically identifies and
+configures these as external peers. If not, at least one enode address must be
+manually added. The organization will then choose a deployment plan based on
+performance requirements, and SettleMint will spin up a non-validator node that
+connects to the external network.
+
+## Syncing data and smart contracts
+
+Once the node joins the network, it will begin full synchronization using the
+Ethereum protocol. This includes downloading block headers, transaction bodies,
+receipts, and reconstructing the entire state trie up to the current block. This
+process ensures that all smart contracts deployed on the existing network are
+immediately accessible from the SettleMint node without requiring redeployment.
+The platform uses standard syncing algorithms such as snap sync or full sync to
+ensure the node reconstructs the full world state, including account balances,
+contract bytecode, and storage variables. As a result, all transaction history,
+event logs, and deployed contract states will be visible and accessible via the
+SettleMint platform’s JSON-RPC explorer or API endpoints.
+
+## Migrating validators
+
+To migrate validator nodes, organizations can use SettleMint to deploy
+additional nodes and vote them in as validators from the currently running
+validator nodes. This involves retrieving the enode of the SettleMint node from
+the platform’s dashboard and issuing a validator proposal on each legacy
+validator node. For Besu networks, this is done using the
+`qbft_proposeValidatorVote` RPC method, while for Quorum, it involves calling
+`istanbul_propose`. Once the validator vote is reflected in the consensus state,
+the platform node must be restarted. This process can be repeated for each node
+until a majority (66% or more) of the validators are hosted on SettleMint. At
+that point, further changes to validator sets can be handled exclusively within
+the platform, streamlining validator governance.
+
+## Dismantling external infrastructure
+
+After all SettleMint nodes are synced and operating correctly, and once
+validator roles have been transitioned, the organization may proceed to
+decommission their old infrastructure. This includes shutting down legacy
+non-validator nodes and removing any remaining external validators by proposing
+removal votes (`qbft_proposeValidatorVote` or `istanbul_propose` with `false`).
+It is also important to update all dependent applications—dApps, API services,
+and frontends—to point to the new SettleMint-managed JSON-RPC or HTTP endpoints.
+
+## Using SettleMint platform features
+
+Following the migration, the organization will gain access to the full suite of
+SettleMint platform tools. These include live node health dashboards, block
+explorers, logs, a contract management interface, metrics and alerts via Grafana
+and Prometheus, and scalable infrastructure for increasing throughput and fault
+tolerance. In the event of a node type conflict—where a node’s role (validator
+or non-validator) differs between the network and platform—the platform will
+flag this discrepancy and guide the user to either update the node type in the
+platform or modify the node’s role on the network. Once the correction is made
+and the node is restarted, the conflict will automatically resolve.
+<br></br>
+
+The migration process is designed to be non-disruptive and reversible until the
+point of final infrastructure decommissioning. The platform allows organizations
+to run SettleMint nodes alongside their existing infrastructure, enabling a
+phased and secure migration path that aligns with operational and governance
+policies.

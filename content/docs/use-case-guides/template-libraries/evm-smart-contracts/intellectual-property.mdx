@@ -2,11 +2,21 @@
 title: "Intellectual Property"
 ---
 
-The intellectual property management system is designed to streamline the registration, verification, and dispute resolution processes for IP assets in a decentralized environment. It addresses the challenges faced by creators and organizations in protecting their intellectual property by providing a secure and transparent platform for asset registration. 
-This solution integrates with the Ethereum Attestation Service to generate immutable proofs of ownership and asset details, thereby reducing administrative overhead and improving trust among stakeholders. It is particularly useful for industries where the protection and transfer of intellectual property rights are critical, such as technology, media, and pharmaceuticals.
-<br></br>
-The smart contract is built using Solidity and leverages OpenZeppelin’s secure libraries for role-based access control, reentrancy protection, and pausing capabilities, ensuring robust security for production deployment. 
+The intellectual property management system is designed to streamline the
+registration, verification, and dispute resolution processes for IP assets in a
+decentralized environment. It addresses the challenges faced by creators and
+organizations in protecting their intellectual property by providing a secure
+and transparent platform for asset registration. This solution integrates with
+the Ethereum Attestation Service to generate immutable proofs of ownership and
+asset details, thereby reducing administrative overhead and improving trust
+among stakeholders. It is particularly useful for industries where the
+protection and transfer of intellectual property rights are critical, such as
+technology, media, and pharmaceuticals.
 
+<br></br>
+The smart contract is built using Solidity and leverages OpenZeppelin’s secure
+libraries for role-based access control, reentrancy protection, and pausing
+capabilities, ensuring robust security for production deployment.
 
 ## Disclaimer
 
@@ -16,9 +26,10 @@ Intellectual Property management system.
 
 Key considerations before any production use:
 
-- **Legal Compliance**: Intellectual property registrations are highly regulated and vary
-  significantly by jurisdiction. This implementation would require substantial
-  modification to meet specific legal requirements in any given location.
+- **Legal Compliance**: Intellectual property registrations are highly regulated
+  and vary significantly by jurisdiction. This implementation would require
+  substantial modification to meet specific legal requirements in any given
+  location.
 
 - **Security Review**: The contract should undergo comprehensive security
   auditing by qualified blockchain security professionals before handling real
@@ -31,7 +42,6 @@ Key considerations before any production use:
 - **Consultation Required**: Any organization considering using this template
   should obtain advice from qualified legal counsel, and blockchain security
   experts before deployment.
-
 
 ```solidity
 
@@ -199,15 +209,15 @@ contract IntellectualPropertyManagement is AccessControl, Pausable, ReentrancyGu
 
         // Encode the attestation data per the defined schema.
         bytes memory attestationData = abi.encode(
-            assetId, 
-            title, 
-            description, 
-            ipfsHash, 
-            registrationTime, 
+            assetId,
+            title,
+            description,
+            ipfsHash,
+            registrationTime,
             msg.sender
         );
 
-        // Create an attestation via the EAS. 
+        // Create an attestation via the EAS.
         // Parameters: schema, recipient, expiration (0 means non-expiring), revocable flag, and data.
         uint256 attestationId = eas.attest(IP_ASSET_SCHEMA, msg.sender, 0, true, attestationData);
         asset.attestationId = attestationId;
@@ -347,11 +357,11 @@ contract IntellectualPropertyManagement is AccessControl, Pausable, ReentrancyGu
         asset.registrationTime = block.timestamp;
         // Re-encode attestation data.
         bytes memory attestationData = abi.encode(
-            assetId, 
-            asset.title, 
-            asset.description, 
-            asset.ipfsHash, 
-            asset.registrationTime, 
+            assetId,
+            asset.title,
+            asset.description,
+            asset.ipfsHash,
+            asset.registrationTime,
             asset.owner
         );
         // Create a new attestation.
@@ -394,82 +404,132 @@ contract IntellectualPropertyManagement is AccessControl, Pausable, ReentrancyGu
 }
 ```
 
-
 ## Contract overview
 
-The contract leverages OpenZeppelin libraries—such as AccessControl, Pausable, ReentrancyGuard, and Counters—to implement secure role management, emergency stops, reentrancy protection, and unique ID generation for IP assets. It also integrates with an external EAS via a defined interface, allowing the creation and revocation of immutable attestations that certify IP asset registration.
+The contract leverages OpenZeppelin libraries, such as AccessControl, Pausable,
+ReentrancyGuard, and Counters, to implement secure role management, emergency
+stops, reentrancy protection, and unique ID generation for IP assets. It also
+integrates with an external EAS via a defined interface, allowing the creation
+and revocation of immutable attestations that certify IP asset registration.
 
 ## Role management and access control
 
 Several roles are defined to segregate duties and protect sensitive operations:
-- **Default admin role**: Holds ultimate control to perform administrative tasks like updating the EAS address and pausing or unpausing the contract.
-- **Registrar role**: Authorized to register new IP assets. Only accounts with this role can call the registration function.
-- **Verifier role**: Permitted to verify the authenticity of IP assets. Accounts with this role can update an asset’s verification status.
-- **Dispute resolver role**: Empowered to resolve disputes related to IP assets. Only these accounts can resolve disputes and, if needed, revoke attestations.
 
-Access to each function is restricted by modifiers that check the caller’s role, ensuring that only authorized addresses can perform sensitive operations.
+- **Default admin role**: Holds ultimate control to perform administrative tasks
+  like updating the EAS address and pausing or unpausing the contract.
+- **Registrar role**: Authorized to register new IP assets. Only accounts with
+  this role can call the registration function.
+- **Verifier role**: Permitted to verify the authenticity of IP assets. Accounts
+  with this role can update an asset’s verification status.
+- **Dispute resolver role**: Empowered to resolve disputes related to IP assets.
+  Only these accounts can resolve disputes and, if needed, revoke attestations.
+
+Access to each function is restricted by modifiers that check the caller’s role,
+ensuring that only authorized addresses can perform sensitive operations.
 
 ## EAS integration and attestation schema
 
-The contract interacts with the Ethereum Attestation Service (EAS) using the defined `IEAS` interface. Two main functions are used:
-- **attest**: Creates an attestation for an IP asset using a predefined schema that includes the asset ID, title, description, IPFS hash, registration time, and owner address.
-- **revoke**: Revokes an existing attestation, typically used during dispute resolution or asset re-attestation.
+The contract interacts with the Ethereum Attestation Service (EAS) using the
+defined `IEAS` interface. Two main functions are used:
 
-The attestation schema is stored as a constant (`IP_ASSET_SCHEMA`), ensuring that each attestation follows a consistent structure.
+- **attest**: Creates an attestation for an IP asset using a predefined schema
+  that includes the asset ID, title, description, IPFS hash, registration time,
+  and owner address.
+- **revoke**: Revokes an existing attestation, typically used during dispute
+  resolution or asset re-attestation.
+
+The attestation schema is stored as a constant (`IP_ASSET_SCHEMA`), ensuring
+that each attestation follows a consistent structure.
 
 ## Asset registration with EAS attestation
 
-The `registerAsset` function allows an account with the `REGISTRAR_ROLE` to register a new IP asset. Key steps include:
+The `registerAsset` function allows an account with the `REGISTRAR_ROLE` to
+register a new IP asset. Key steps include:
+
 - Validating that the title and IPFS hash are non-empty.
 - Generating a unique asset ID using a counter.
-- Storing asset details such as title, description, IPFS hash, and the registration timestamp.
-- Encoding the asset data as per the attestation schema and calling the EAS `attest` function.
+- Storing asset details such as title, description, IPFS hash, and the
+  registration timestamp.
+- Encoding the asset data as per the attestation schema and calling the EAS
+  `attest` function.
 - Storing the returned attestation ID in the asset record.
 - Emitting an event to log the registration and attestation details.
 
-This process creates an immutable on-chain record that is backed by an off-chain attestation.
+This process creates an immutable on-chain record that is backed by an off-chain
+attestation.
 
 ## Asset verification and update
 
-The `verifyAsset` function enables an account with the `VERIFIER_ROLE` to update an asset’s verification status. This function sets the asset’s `verified` flag and logs the verification result along with any comments. This verification step is crucial for ensuring that only validated IP assets are recognized by the system.
+The `verifyAsset` function enables an account with the `VERIFIER_ROLE` to update
+an asset’s verification status. This function sets the asset’s `verified` flag
+and logs the verification result along with any comments. This verification step
+is crucial for ensuring that only validated IP assets are recognized by the
+system.
 
 ## Dispute resolution and attestation revocation
 
-Disputes can be filed by the asset owner using the `fileDispute` function. This function:
+Disputes can be filed by the asset owner using the `fileDispute` function. This
+function:
+
 - Ensures that only the asset owner can file a dispute.
 - Checks that no dispute has been filed already.
 - Records dispute details and updates the asset’s dispute status.
 - Emits an event to log the dispute filing.
 
-To resolve a dispute, an account with the `DISPUTE_RESOLVER_ROLE` calls the `resolveDispute` function. This function:
-- Updates the asset’s dispute resolution status and records the resolution outcome.
-- Optionally revokes the asset’s attestation via the EAS if the resolution deems the asset registration invalid.
+To resolve a dispute, an account with the `DISPUTE_RESOLVER_ROLE` calls the
+`resolveDispute` function. This function:
+
+- Updates the asset’s dispute resolution status and records the resolution
+  outcome.
+- Optionally revokes the asset’s attestation via the EAS if the resolution deems
+  the asset registration invalid.
 - Emits an event to log the dispute resolution and any attestation revocation.
 
 ## Asset ownership transfer and re-attestation
 
-Ownership transfer is handled by the `transferAsset` function, which allows the current owner to transfer an asset to a new owner. It verifies that:
+Ownership transfer is handled by the `transferAsset` function, which allows the
+current owner to transfer an asset to a new owner. It verifies that:
+
 - The caller is the current asset owner.
 - The new owner address is valid.
 
-Although the ownership change is recorded on-chain, the original attestation remains unless an update is required. For updating the attestation, the `reattestAsset` function can be called by the current asset owner. This function:
-- Revokes the old attestation (if one exists) by calling the EAS `revoke` function.
+Although the ownership change is recorded on-chain, the original attestation
+remains unless an update is required. For updating the attestation, the
+`reattestAsset` function can be called by the current asset owner. This
+function:
+
+- Revokes the old attestation (if one exists) by calling the EAS `revoke`
+  function.
 - Updates the registration time.
 - Encodes new attestation data and creates a new attestation via the EAS.
-- Stores the new attestation ID in the asset record and emits an event to log the re-attestation.
+- Stores the new attestation ID in the asset record and emits an event to log
+  the re-attestation.
 
 ## Administrative functions
 
-Critical administrative functions are restricted to accounts with the default admin role:
-- **Updating the EAS address**: The `updateEASAddress` function lets the admin update the EAS contract address, which is vital if the EAS implementation changes.
-- **Pausing and unpausing the contract**: The `pause` and `unpause` functions allow an emergency stop of all contract operations, safeguarding against unexpected issues.
+Critical administrative functions are restricted to accounts with the default
+admin role:
+
+- **Updating the EAS address**: The `updateEASAddress` function lets the admin
+  update the EAS contract address, which is vital if the EAS implementation
+  changes.
+- **Pausing and unpausing the contract**: The `pause` and `unpause` functions
+  allow an emergency stop of all contract operations, safeguarding against
+  unexpected issues.
 
 ## Security enhancements and production-grade features
 
 To ensure robust security and production readiness, the contract includes:
-- **Reentrancy protection**: All external state-changing functions use the `nonReentrant` modifier to prevent reentrancy attacks.
-- **Pausability**: The `whenNotPaused` modifier is applied to critical functions, allowing the contract to be paused during emergencies.
-- **Role-based access control**: Functions are strictly restricted by roles, ensuring proper separation of duties.
-- **Detailed event logging**: Every critical operation emits events to create an audit trail, facilitating off-chain monitoring and accountability.
-- **Attestation management**: Integration with EAS provides immutable attestations of asset registration, with options for revocation and re-attestation in case of disputes or ownership changes.
 
+- **Reentrancy protection**: All external state-changing functions use the
+  `nonReentrant` modifier to prevent reentrancy attacks.
+- **Pausability**: The `whenNotPaused` modifier is applied to critical
+  functions, allowing the contract to be paused during emergencies.
+- **Role-based access control**: Functions are strictly restricted by roles,
+  ensuring proper separation of duties.
+- **Detailed event logging**: Every critical operation emits events to create an
+  audit trail, facilitating off-chain monitoring and accountability.
+- **Attestation management**: Integration with EAS provides immutable
+  attestations of asset registration, with options for revocation and
+  re-attestation in case of disputes or ownership changes.
