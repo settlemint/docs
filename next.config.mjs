@@ -22,6 +22,24 @@ const config = {
     inlineCss: true,
     reactCompiler: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: "/documentation/ingest/static/:path*",
+        destination: "https://eu-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/documentation/ingest/:path*",
+        destination: "https://eu.i.posthog.com/:path*",
+      },
+      {
+        source: "/documentation/ingest/decide",
+        destination: "https://eu.i.posthog.com/decide",
+      },
+    ];
+  },
+  // This is required to support PostHog trailing slash API requests
+  skipTrailingSlashRedirect: true,
 };
 
 export default withMDX(config);

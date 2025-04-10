@@ -1,17 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1440" height="900" viewBox="0 0 1440 900">
-  <defs>
-    <linearGradient id="linear-gradient" x1="0.5" y1="0.515" x2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0" stop-color="#346eee"/>
-      <stop offset="1" stop-color="#89d6a2"/>
-    </linearGradient>
-    <clipPath id="clip-path">
-      <rect id="Rectangle" width="1440" height="900" fill="url(#linear-gradient)"/>
-    </clipPath>
-    <linearGradient id="linear-gradient-3" x1="0.491" y1="0.496" x2="0.499" y2="0.005" xlink:href="#linear-gradient"/>
-  </defs>
-  <g id="Mask_Group_4" data-name="Mask Group 4" clip-path="url(#clip-path)">
-    <rect id="Rectangle-2" data-name="Rectangle" width="1440" height="900" fill="url(#linear-gradient)"/>
-    <path id="Polygon_Copy" data-name="Polygon Copy" d="M460.292,0,920.585,265.75v531.5L460.293,1063,0,797.25V265.75Z" transform="matrix(-0.966, -0.259, 0.259, -0.966, 444.875, 1018.522)" fill="url(#linear-gradient-3)"/>
-    <path id="Polygon_Copy-2" data-name="Polygon Copy" d="M531.5,0,991.792,265.75v531.5L531.5,1063,71.207,797.25V265.75Z" transform="matrix(0.966, 0.259, -0.259, 0.966, 926.344, 33.04)" fill="url(#linear-gradient-3)"/>
-  </g>
-</svg>
+<svg height="900" viewBox="0 0 1440 900" width="1440" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><linearGradient id="a" gradientUnits="objectBoundingBox" x1=".5" x2="1" y1=".515"><stop offset="0" stop-color="#346eee"/><stop offset="1" stop-color="#89d6a2"/></linearGradient><clipPath id="b"><path d="m0 0h1440v900h-1440z"/></clipPath><linearGradient id="c" x1=".491" x2=".499" xlink:href="#a" y1=".496" y2=".005"/><g clip-path="url(#b)"><path d="m0 0h1440v900h-1440z" fill="url(#a)"/><g fill="url(#c)"><path d="m460.292 0 460.293 265.75v531.5l-460.292 265.75-460.293-265.75v-531.5z" transform="matrix(-.966 -.259 .259 -.966 444.875 1018.522)"/><path d="m531.5 0 460.292 265.75v531.5l-460.292 265.75-460.293-265.75v-531.5z" transform="matrix(.966 .259 -.259 .966 926.344 33.04)"/></g></g></svg>

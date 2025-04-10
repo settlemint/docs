@@ -5,6 +5,7 @@ import type { Viewport } from "next";
 import { Figtree } from "next/font/google";
 import type { ReactNode } from "react";
 import "./global.css";
+import { PostHogProvider } from "@/components/PostHogProvider";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -23,17 +24,19 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={figtree.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col" suppressHydrationWarning>
-        <RootProvider
-          search={{
-            options: {
-              api: "/documentation/api/search",
-            },
-          }}
-        >
-          {children}
-        </RootProvider>
-        <GoogleAnalytics gaId="G-N1MMHFDVZZ" />
-        <PlainChat />
+        <PostHogProvider>
+          <RootProvider
+            search={{
+              options: {
+                api: "/documentation/api/search",
+              },
+            }}
+          >
+            {children}
+          </RootProvider>
+          <GoogleAnalytics gaId="G-N1MMHFDVZZ" />
+          <PlainChat />
+        </PostHogProvider>
       </body>
     </html>
   );
