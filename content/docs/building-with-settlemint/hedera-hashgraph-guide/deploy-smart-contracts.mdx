@@ -309,12 +309,12 @@ contract UserData {
 > Please ensure that smart contract emits all required paramters in every event,
 > otherwise, while indexing we will not get the parameters which are not emited.
 
-## Smart contract — events & functions overview
+## Smart contract , events & functions overview
 
 In a smart contract, we define a clear set of events and functions to manage the
 lifecycle of user profiles. These building blocks enable seamless interaction
-with the contract—supporting profile creation, updates, retrieval, and soft
-deletion—while ensuring all changes are traceable through emitted events.
+with the contract, supporting profile creation, updates, retrieval, and soft
+deletion, while ensuring all changes are traceable through emitted events.
 
 Events play a crucial role in allowing off-chain services like The Graph to
 listen for and respond to changes in contract state, whereas functions provide
@@ -344,7 +344,7 @@ Solidity functions in the smart contract:
 | **CRUD**   | **Solidity Function** | **Explanation**                                                                                                                                                                                                                                                                                                |
 | ---------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Create** | `createProfile()`     | Adds a new user profile to the blockchain using a unique `userId`. This simulates an `INSERT` operation in databases. It checks that the profile does not already exist (unless soft-deleted) and stores the user's details. Emits `ProfileCreated` with full data for off-chain indexing.                     |
-| **Read**   | `getProfile()`        | Retrieves an existing profile by its `userId` — similar to a `SELECT` query in SQL. It returns the user's profile only if it hasn't been soft-deleted. This function is marked `view`, meaning it does not modify blockchain state and can be called without gas.                                              |
+| **Read**   | `getProfile()`        | Retrieves an existing profile by its `userId` , similar to a `SELECT` query in SQL. It returns the user's profile only if it hasn't been soft-deleted. This function is marked `view`, meaning it does not modify blockchain state and can be called without gas.                                              |
 | **Update** | `updateProfile()`     | Modifies all fields of an existing user profile. Acts like an `UPDATE` in Web2 databases. It ensures the profile exists and is not deleted, then updates it with the provided values. Emits `ProfileUpdated` with full details for off-chain use.                                                              |
 | **Delete** | `deleteProfile()`     | Performs a **soft delete** by setting the `isDeleted` flag to `true`, without removing the actual data from storage. This is similar to a logical delete used in many enterprise databases. The data remains on-chain (for auditability), but `getProfile()` will no longer return it. Emits `ProfileDeleted`. |
 
@@ -806,7 +806,7 @@ This test script leverages Hardhat's modern support for viem, a lightweight and
 fast alternative to Ethers.js, designed for more efficient interaction with
 Ethereum contracts. The test uses loadFixture from
 hardhat-toolbox-viem/network-helpers to ensure test isolation and efficient
-deployments—each test gets a clean contract instance to work with.
+deployments, each test gets a clean contract instance to work with.
 
 Inside the script, we define a fixture function (deployUserFixture) to deploy
 the User contract and provide access to the publicClient. The tests cover all

@@ -130,15 +130,15 @@ Fabric-CA documentation website.
 ## **Identities**
 
 The different actors in a blockchain network include peers, orderers, client
-applications, administrators and more. Each of these actors — active elements
-inside or outside a network able to consume services — has a digital identity
+applications, administrators and more. Each of these actors , active elements
+inside or outside a network able to consume services , has a digital identity
 encapsulated in an X.509 digital certificate. These identities really matter
 because they determine the exact permissions over resources and access to
 information that actors have in a blockchain network.
 
 A digital identity furthermore has some additional attributes that Fabric uses
 to determine permissions, and it gives the union of an identity and the
-associated attributes a special name — principal. Principals are just like
+associated attributes a special name , principal. Principals are just like
 userIDs or groupIDs, but a little more flexible because they can include a wide
 range of properties of an actor's identity, such as the actor's organization,
 organizational unit, role or even the actor's specific identity. When we talk
@@ -325,7 +325,6 @@ protocols:
 - **WebSocket (JSON-WS) Endpoint** – Enables real-time event streaming.
 - **GraphQL Endpoint** – Allows structured data querying.
 
-
 For a software application to interact with a blockchain (e.g. by sending
 transactions/data to the network, or even just by reading data), it must connect
 to a node.
@@ -438,6 +437,7 @@ const provider = new ethers.providers.JsonRpcProvider();
 // For this, we need the account signer...
 const signer = provider.getSigner();
 ```
+
 ---
 
 ### 1.3 JSON-rpc

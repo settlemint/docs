@@ -1,0 +1,213 @@
+---
+title: "UI customization"
+description:
+  How to rebrand and enhance the front-end interface of the application
+---
+
+The **SettleMint asset tokenization kit (ATK)** is a modular open-source
+platform that enables fast deployment of asset tokenization solutions. While it
+includes infrastructure and smart contract templates, the frontend DApp—built
+with **Next.js and Tailwind CSS**—serves as the primary interface for users and
+clients.
+
+![Application Code](../../../img/application-kits/atk-ui-github.png)
+
+Smart contract templates (under `kit/contracts/`) and Helm-based infrastructure
+charts (under `kit/charts/`) are available, but this document will focus on the
+frontend (`kit/dapp/`) only.
+<br></br>
+
+The APIs exposed by the SettleMint Asset Tokenization Kit are designed to be
+developer-friendly, REST-compliant, and suitable for seamless integration with
+both modern web applications and legacy enterprise systems. These endpoints
+cover a wide range of functionality including asset issuance, role management,
+token transfers, transaction monitoring, yield scheduling, and user account
+control. Each API is authenticated via an x-api-key header, using the
+application-level access token, which ensures secure and controlled access to
+the backend services.
+<br></br>
+
+Developers can use these APIs to extend the current frontend or create entirely
+new modules and views. These APIs are also ideal for external integrations with third-party systems.
+Whether you’re connecting the platform to an ERP system, investor onboarding
+portal, custodial wallet service, or regulatory reporting system, the exposed
+endpoints provide the necessary flexibility. Legacy frontends or enterprise
+tools can call these APIs directly to query asset metadata, initiate token
+actions (e.g., mint, redeem, burn), or enforce access control based on
+organizational workflows.
+<br></br>
+
+In UI-driven customizations, you can build new React components in the
+src/components/ directory that consume these APIs to render data-rich views such
+as investor summaries, issuance pipelines, fund performance breakdowns, or
+compliance logs. With consistent schema definitions available through the
+/api/swagger endpoint, developers can easily generate client libraries or use
+tools like Postman and Swagger UI for rapid prototyping.
+
+
+---
+
+## Project structure overview
+
+The frontend application is located inside the following path:
+
+kit/dapp/
+
+The core source files reside in the `src/` directory, which is organized as
+follows:
+
+| Folder            | Purpose                                                          |
+| ----------------- | ---------------------------------------------------------------- |
+| `src/app/`        | Route-based pages and views                                      |
+| `src/components/` | Reusable UI blocks like asset displays, login cards, and widgets |
+| `src/hooks/`      | React hooks for business logic (wallets, data fetching, etc.)    |
+| `src/lib/`        | Shared libraries and service clients                             |
+| `src/utils/`      | Utility functions used across the app                            |
+| `src/types/`      | TypeScript types and interfaces                                  |
+| `src/i18n/`       | Translatable message files for multi-language support            |
+| `public/`         | Static assets, logos, and background images                      |
+
+---
+
+## Understanding the frontend stack
+
+The frontend stack is built using modern JavaScript tools:
+
+- **Next.js** for routing, page rendering, and performance optimization
+- **Tailwind CSS** for styling and theming
+- **TypeScript** for strong typing across components and logic
+- **React hooks** to abstract state management and user flows
+- **Headless modular architecture** that makes the kit adaptable to new use
+  cases
+
+---
+
+## Component-based UI customization
+
+The core of the customization effort will revolve around modifying or replacing
+components located in:
+
+kit/dapp/src/components/
+
+### Example components:
+
+- `asset-info`: Displays asset metadata like class, valuation, issuer
+- `asset-status-pill`: Shows colored status labels for active, expired, or
+  upcoming assets
+- `auth`: Handles wallet login and user authentication flows
+- `layout`: Base page layout including navigation, theming, and background
+  visuals
+
+### How to customize:
+
+- Replace text labels or buttons with domain-specific terminology (e.g., "Carbon
+  credits" instead of "Assets")
+- Modify visual hierarchy using Tailwind utility classes (`text-lg`,
+  `bg-blue-200`, etc.)
+- Replace logos and color palettes using your organization's design tokens
+- Introduce new UI elements like KPI cards, charts, or asset filtering widgets
+
+You can also **introduce new components** by following the same conventions and
+placing them in the same directory with self-contained logic and style.
+
+---
+
+## Routing and views
+
+All page-level routes and user workflows are managed inside:
+
+kit/dapp/src/app/
+
+This is where you'll add or update views for actions like:
+
+- Viewing asset lists
+- Tokenizing new assets
+- Dashboard analytics
+- User KYC status or permission management
+
+Each folder in `app/` represents a route and includes components and logic
+specific to that page. For example, to create a new route `/reports`, you would
+create a folder `src/app/reports/` and define the page structure using standard
+Next.js conventions.
+
+---
+
+## Logic and hooks
+
+Hooks abstract key logic into reusable functions and live in:
+
+kit/dapp/src/hooks/
+
+These include:
+
+- `useWallet()`: Connect and manage wallet state
+- `useAssets()`: Fetch and format asset metadata
+- `usePermissions()`: Handle access roles and conditional UI behavior
+
+You may add your own hooks to encapsulate logic like integrating third-party
+APIs (e.g., for KYC, ESG scoring, legal docs, etc.).
+
+---
+
+## Theming and branding
+
+You can change the **visual branding** of the app by modifying:
+
+### Global styles:
+
+- Tailwind config in `tailwind.config.ts`
+- Colors, font sizes, border radius, spacing
+
+### Backgrounds and logos:
+
+- Replace files in:
+
+kit/dapp/public/backgrounds/ kit/dapp/public/logo.svg
+
+- Update layout components to reference your assets
+
+### Dark/light themes:
+
+- Theming is handled by Tailwind and can be adjusted using conditional CSS
+  classes (`dark:bg-gray-800`, `light:text-black`, etc.)
+
+---
+
+## Language & text customization
+
+Multi-language support is implemented using message files in:
+
+kit/dapp/src/i18n/
+
+Each locale file (e.g., `en.json`, `fr.json`) contains key-value pairs for
+interface text. This makes it easy to:
+
+- Translate the platform for different regions
+- Customize the tone of language (corporate vs. casual)
+- Handle jurisdiction-specific legal disclaimers
+
+---
+
+## Utilities, types, and libraries
+
+Supporting folders for maintaining consistent and scalable architecture:
+
+- `src/utils/`: Reusable utility functions (e.g., formatting, validators)
+- `src/types/`: TypeScript types for API responses, asset metadata, user models
+- `src/lib/`: External service clients (e.g., subgraph queries, REST API
+  fetchers)
+
+These folders help keep business logic clean and reusable across your
+customizations.
+
+---
+
+## Running locally
+
+To preview and test your changes:
+
+```bash
+cd kit/dapp
+bun install
+bun dev
+```

@@ -112,7 +112,7 @@ alwaysApply: false
 - **Authorization:**
   - Do not use `tx.origin` for authorization; always rely on `msg.sender`.
 - **External Calls:**
-  - Whitelist or handle external calls carefully—treat them as untrusted.
+  - Whitelist or handle external calls carefully, treat them as untrusted.
 - **Secret Management:**
   - Avoid secret variables on-chain; assume all data is public.
 - **Fallback/Receive:**

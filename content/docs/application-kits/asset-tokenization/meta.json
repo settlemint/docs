@@ -7,7 +7,10 @@
     "signup-and-login",
     "user-management",
     "asset-designer",
-    "usecases",
-    "contracts"
+    "asset-classes",
+    "asset-manager",
+    "portfolio-manager",
+    "api-portal",
+    "ui-customization"
   ]
 }

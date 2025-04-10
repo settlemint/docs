@@ -8,30 +8,35 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
 
-<div style={{
-  backgroundColor: "#e1eafd", 
-  color: "#356fee", 
-  padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
-  fontWeight: "bold",
-  lineHeight: "1.5",
-  textAlign: "left"
-}}>
-  Summary  
+<div
+  style={{
+    backgroundColor: "#e1eafd",
+    color: "#356fee",
+    padding: "0.5px 10px 10px 10px",
+    borderRadius: "10px",
+    fontSize: "18px",
+    fontWeight: "bold",
+    lineHeight: "1.5",
+    textAlign: "left",
+  }}
+>
+  Summary
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
-To send transactions on a blockchain, you need a private key (with enough funds for gas for networks with a fee). You can create and manage private keys directly within SettleMint using ECDSA, HD ECDSA, or HSM key types.
-<br></br>
-After creating a key, it must be attached to at least one node to enable
-transaction signing—this is critical for smart contract deployment. Without it,
-the deployment will fail.
-<br></br>
-SettleMint also offers user wallets, a scalable solution that generates wallets
-from a single HD ECDSA 256 key. Each user gets a unique address for privacy and
-parallel transaction support. You can create user wallets once your HD key is
-deployed and running, and fund them as needed for gas-based transactions.
-<br></br>
-</div>
+    To send transactions on a blockchain, you need a private key (with enough
+    funds for gas for networks with a fee). You can create and manage private
+    keys directly within SettleMint using ECDSA, HD ECDSA, or HSM key types.
+    <br></br>
+    After creating a key, it must be attached to at least one node to enable
+    transaction signing, this is critical for smart contract deployment. Without
+    it, the deployment will fail.
+    <br></br>
+    SettleMint also offers user wallets, a scalable solution that generates
+    wallets from a single HD ECDSA 256 key. Each user gets a unique address for
+    privacy and parallel transaction support. You can create user wallets once
+    your HD key is deployed and running, and fund them as needed for gas-based
+    transactions.
+    <br></br>
+  </div>
 </div>
 
 ## How to add private keys and user wallets in SettleMint platform
@@ -63,7 +68,7 @@ RPC](https://hardhat.org/config/#json-rpc-based-networks)) configured to use the
 
 To add a private key in the SettleMint platform, navigate to the private keys
 section and click create a private key. You'll be prompted to select the type of
-private key—ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
+private key, ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
 ![Add private key](../../../img/building-with-settlemint/add-private-key.png)
 
 <Tabs items={['SDK CLI', 'Platform UI','SDK JS']}>
@@ -225,7 +230,8 @@ contain enough funds to cover the gas price.
 
 1. Click the **private key** in the overview to see detailed information
 2. Open the **balances tab**
-3. Use the public address of the wallet which you want to fund for sending tokens/currency to it.
+3. Use the public address of the wallet which you want to fund for sending
+   tokens/currency to it.
 
 <Callout type="info">
   Ensure your private key has sufficient funds before attempting transactions on
@@ -255,14 +261,28 @@ deployment. You can also select the nodes or load balancers on which you want to
 enable the user wallets. You can change this later if you want to use your user
 wallets on a different node. Click **confirm** to deploy the wallet.
 
-## Difference between ECDSA and HD ECDSA key and why we do not see user wallets in simple ECDSA keys. 
+## Difference between ECDSA and HD ECDSA key and why we do not see user wallets in simple ECDSA keys.
 
-A simple ECDSA key is just one key pair — a private key and its corresponding public key. It can be used to sign transactions and control a blockchain address, but it’s standalone. There’s no built-in mechanism to derive more keys from it. If you want multiple accounts, you’d need to manually generate and store each key separately.
-An HD (Hierarchical Deterministic) wallet, on the other hand, starts from a single master seed. From this seed, it can generate an entire tree of ECDSA key pairs in a structured and repeatable way. This system follows the BIP-32 standard and includes concepts like key derivation paths and chain codes.
+A simple ECDSA key is just one key pair , a private key and its corresponding
+public key. It can be used to sign transactions and control a blockchain
+address, but it’s standalone. There’s no built-in mechanism to derive more keys
+from it. If you want multiple accounts, you’d need to manually generate and
+store each key separately. An HD (Hierarchical Deterministic) wallet, on the
+other hand, starts from a single master seed. From this seed, it can generate an
+entire tree of ECDSA key pairs in a structured and repeatable way. This system
+follows the BIP-32 standard and includes concepts like key derivation paths and
+chain codes.
+
 <br></br>
-The reason HD wallets are suitable for managing wallets is that they support deterministic key generation. You can recreate the full wallet from just the seed phrase. Each new account or address is simply a derived key from a known path. This is efficient and secure, and it also simplifies backup and recovery. Simple ECDSA keys lack this structure. They are isolated, and generating multiple keys would require managing each one individually. This doesn’t scale for wallets, especially those that require many accounts, addresses, or identities. That’s why HD ECDSA key systems are preferred in wallet implementation.
-
-
+The reason HD wallets are suitable for managing wallets is that they support
+deterministic key generation. You can recreate the full wallet from just the
+seed phrase. Each new account or address is simply a derived key from a known
+path. This is efficient and secure, and it also simplifies backup and recovery.
+Simple ECDSA keys lack this structure. They are isolated, and generating
+multiple keys would require managing each one individually. This doesn’t scale
+for wallets, especially those that require many accounts, addresses, or
+identities. That’s why HD ECDSA key systems are preferred in wallet
+implementation.
 
 When your deployment status is **running**, you can click on it to check the
 details. You can see the mnemonic from which the user wallets are generated
@@ -274,6 +294,7 @@ To create your first user wallet, click on **create a user wallet**.
 Remember that for networks that require gas to perform a transaction, the user
 wallet should contain enough funds to cover the gas price. You can fund it using
 the address displayed in the list.
+
 <br></br>
 
 <br></br>

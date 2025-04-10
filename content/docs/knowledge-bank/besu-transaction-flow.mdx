@@ -123,7 +123,7 @@ Address:     0xd8cD4DAfD4e581dE9e69fB9588b6E547C206Efd1
 
 Layman Explanation: Your Ethereum identity is just a pair of cryptographic keys.
 The private key is like your password. The address is like your bank account
-number — derived from the public key using a hashing function.
+number , derived from the public key using a hashing function.
 
 ---
 
@@ -157,8 +157,8 @@ later update it.
 
 We compile the contract using solc and extract:
 
-- ABI — a JSON description of the contract interface
-- Bytecode — the raw EVM machine code
+- ABI , a JSON description of the contract interface
+- Bytecode , the raw EVM machine code
 
 ABI:
 
@@ -556,7 +556,7 @@ Value (RLP encoded string):
 
 Explanation:
 
-- RLP prefix 0x83 means string length is 3 bytes more than 32 — due to prefix
+- RLP prefix 0x83 means string length is 3 bytes more than 32 , due to prefix
 - The value is a string, padded and hashed into the trie
 
 Layman Explanation: The new message replaces the old one in a secure data
@@ -587,7 +587,7 @@ Example Receipt:
 
 Layman Explanation: This receipt is like a receipt you get from a store: it
 proves the transaction happened. The Bloom filter is a searchable fingerprint of
-all logs in the block — so you can find your transaction without scanning
+all logs in the block , so you can find your transaction without scanning
 everything.
 
 ---
@@ -645,7 +645,7 @@ Example Leaf Node:
 
 Layman Explanation: The Ethereum state is like a massive tree of keys and
 values. To prove something exists in it, you can walk the exact path and show
-only the parts needed — no need to reveal the entire tree. This enables
+only the parts needed , no need to reveal the entire tree. This enables
 efficient proof of data inclusion.
 
 ---
@@ -705,7 +705,7 @@ Compatible With:
 Layman Explanation: Instead of making every Ethereum node re-execute your
 transaction, zkEVM rollups do it once, then prove mathematically to everyone
 else that the result is valid. The proof is posted to Ethereum, and no one needs
-to trust the prover — the math guarantees correctness.
+to trust the prover , the math guarantees correctness.
 
 ---
 

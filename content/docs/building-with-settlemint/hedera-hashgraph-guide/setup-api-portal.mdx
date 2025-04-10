@@ -63,8 +63,8 @@ reads.
 The application binary interface (ABI) is an essential artifact in Ethereum and
 other EVM-based blockchain ecosystems that defines how smart contracts
 communicate with the outside world. It acts as a formal agreement between a
-deployed smart contract and any external entity—such as web applications,
-backend servers, wallets, or command-line tools—about how to encode and decode
+deployed smart contract and any external entity, such as web applications,
+backend servers, wallets, or command-line tools, about how to encode and decode
 data for function calls, returns, and events. The ABI describes, in a structured
 JSON format, each function's name, inputs, outputs, type (e.g., function,
 constructor, event), and visibility (view, pure, payable, etc.).
@@ -75,7 +75,7 @@ compiler (solc), or through development frameworks like Hardhat or Truffle, the
 output includes several artifacts, one of which is the ABI. This ABI is derived
 by analyzing the contract's function signatures, input and output types, event
 declarations, and constructor. For each function, the compiler calculates a
-unique function selector—a 4-byte identifier based on the first 4 bytes of the
+unique function selector, a 4-byte identifier based on the first 4 bytes of the
 keccak256 hash of the function's signature (e.g., transfer(address,uint256)).
 The ABI then maps these selectors to their corresponding human-readable
 definitions in JSON form.
@@ -665,7 +665,7 @@ instance on-chain.
 Once the address is entered, you can choose the function or field you want to
 query. For example, selecting the `profiles` field and providing a `uint256` ID
 (such as `"101"`) will retrieve the user profile associated with that ID. You
-can then pick which fields of the profile you want to fetch—like `name`,
+can then pick which fields of the profile you want to fetch, like `name`,
 `email`, `age`, `country`, `isKYCApproved`, and `isDeleted`.
 
 After you've built your query, hit the play button to execute it. If successful,

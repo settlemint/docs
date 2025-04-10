@@ -109,14 +109,16 @@ settlemint login
     Create a middleware:
     ```bash
     # Get the list of available middleware types
+
 settlemint platform create middleware --help
 
     # Create a middleware
+
 settlemint platform create middleware <type> <name>
 
     # Get information about the command and all available options
-settlemint platform create middleware <type> --help
-    ```
+
+settlemint platform create middleware <type> --help ```
 
   </Tab>
 
@@ -261,7 +263,7 @@ specific smart contract on-chain. It defines the contract's ABI, address, the
 events to listen to, and the mapping logic that should be triggered for each
 event.
 
-The structure must follow a strict YAML format—wrong indentation or a missing
+The structure must follow a strict YAML format, wrong indentation or a missing
 property can break the subgraph. Under the source section, you provide the
 contract's address, the ABI name, and the block from which indexing should
 begin.

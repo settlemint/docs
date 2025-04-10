@@ -24,14 +24,14 @@ import { Card } from "fumadocs-ui/components/card";
 To integrate off-chain file storage into your blockchain application, you can
 configure either IPFS (for decentralized content addressing) or MinIO (an
 S3-compatible private storage layer) through the SettleMint platform. Both
-options serve different use cases—IPFS excels in immutability and decentralized
+options serve different use cases, IPFS excels in immutability and decentralized
 access, while S3-style storage is better for secure, private, and
 high-performance file delivery.
 
 <br> </br>
 To get started, navigate to the relevant application in your SettleMint
 workspace and open the Storage section from the left-hand menu. Click Add
-Storage, which opens a configuration form. Choose the storage type—either IPFS
+Storage, which opens a configuration form. Choose the storage type, either IPFS
 for decentralized or MinIO for private object storage. Assign a name and
 configure your deployment settings like region, provider, and resource pack.
 Once confirmed, the storage service will be deployed and available for use.
@@ -50,10 +50,10 @@ using CIDs. Similarly, @settlemint/sdk-minio wraps around common S3 operations
 like uploading files, generating expirable download URLs, and managing buckets.
 <br> </br>
 Depending on your use case, both IPFS and MinIO can serve as complementary
-layers. For public-facing and immutable content—such as NFT metadata, DAO
-governance artifacts, or verifiable documents—IPFS is well suited. For private,
-regulated, or access-controlled files—like KYC documents, user uploads, admin
-reports, and internal metadata—MinIO offers a robust alternative with access
+layers. For public-facing and immutable content, such as NFT metadata, DAO
+governance artifacts, or verifiable documents, IPFS is well suited. For private,
+regulated, or access-controlled files, like KYC documents, user uploads, admin
+reports, and internal metadata, MinIO offers a robust alternative with access
 control and performance guarantees.
 <br> </br>
 In practice, a dApp may use both systems in tandem: the file is stored in
