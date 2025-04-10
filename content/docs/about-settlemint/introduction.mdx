@@ -22,17 +22,20 @@ development journey. The platform includes built-in IDEs for smart contract
 development, automatically generated REST and GraphQL APIs, real-time data
 indexing middleware, enterprise-grade integrations, and secure off-chain storage
 and database options. Whether deploying applications via a Managed SaaS or
-Self-Managed (on-premises) model, SettleMint’s integrated approach ensures
+Self-Managed (on-premises) model, SettleMint's integrated approach ensures
 robust security, seamless scalability, and simplified operational management for
 enterprise-grade decentralized applications.
 
-![SettleMint Platform](../../img/platform.png)
+<div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem', width: '70%', margin: '0 auto' }}>
+  ![SettleMint Platform Model](../../img/about-settlemint/platformModel.png)
+</div>
+
 
 ---
 
 # Settlemint components
 
-SettleMint’s platform encompasses a **comprehensive ecosystem** of services that
+SettleMint's platform encompasses a **comprehensive ecosystem** of services that
 can be configured for diverse blockchain scenarios. Below is a **high-level
 summary table**, followed by **detailed component descriptions** (including
 specifics about private permissioned networks, Layer 1 and Layer 2 public
@@ -58,7 +61,7 @@ off-chain integrations, and more).
 |                                           | **Blockchain Explorer API**      | Grants programmatic access to the data shown in the Explorer, which is useful for automated monitoring, scripting, or custom analytics integrations.                                                                                                                                      | [Blockchain Explorer API](/platform-components/blockchain-infrastructure/insights)                   |
 |                                           | **Integration Studio**           | A drag-and-drop interface for building workflows that connect on-chain events to external systems (e.g., ERP, CRM, HR). Reduces custom coding for routine integrations.                                                                                                                   | [Integration Studio](/platform-components/middleware-and-api-layer/integration-studio)               |
 |                                           | **Firefly Fabconnect**           | FireFly FabConnect is an API middleware that enables seamless integration between enterprise systems and Fabric networks for secure and scalable digital asset and workflow automation.                                                                                                   | [Firefly Fabconnect](/platform-components/middleware-and-api-layer/fabconnect)                       |
-| **4. Database, Storage & App Deployment** | **S3 Storage (MinIO)**           | An S3-compatible object storage ideal for large files and logs that don’t require on-chain immutability. Can be used for user-generated content or enterprise documents.                                                                                                                  | [S3 Storage](/platform-components/database-and-storage/s3-storage)                                   |
+| **4. Database, Storage & App Deployment** | **S3 Storage (MinIO)**           | An S3-compatible object storage ideal for large files and logs that don't require on-chain immutability. Can be used for user-generated content or enterprise documents.                                                                                                                  | [S3 Storage](/platform-components/database-and-storage/s3-storage)                                   |
 |                                           | **IPFS Storage**                 | Decentralized and tamper-proof file storage for documents, certificates, and other sensitive data. Ideal for publicly verifiable artifacts like NFT metadata.                                                                                                                             | [IPFS Storage](/platform-components/database-and-storage/ipfs-storage)                               |
 |                                           | **Hasura GraphQL Engine**        | A real-time GraphQL API atop a PostgreSQL database for off-chain data. Simplifies data handling by providing instant schema-based queries and updates.                                                                                                                                    | [Hasura GraphQL](/platform-components/database-and-storage/hasura-backend-as-a-service)              |
 |                                           | **Custom Deployments**           | Containerize and deploy both front-end and back-end components. This approach makes it straightforward to scale each component independently and roll out updates efficiently.                                                                                                            | [Custom Deployments](/platform-components/custom-deployments/custom-deployment)                      |
@@ -118,7 +121,7 @@ integrating additional participants.
   Lachesis.
 
 By selecting an L1 network within the **Network Manager**, you can deploy and
-manage nodes, handle load balancing, and integrate with SettleMint’s transaction
+manage nodes, handle load balancing, and integrate with SettleMint's transaction
 signing, making it easier to develop or migrate dApps onto top-tier public
 blockchains.
 
@@ -127,24 +130,24 @@ blockchains.
 - **Polygon PoS** A sidechain for Ethereum that offers faster transactions and
   lower fees, connected to mainnet for added security.
 - **Polygon zkEVM** A zero-knowledge rollup solution providing even greater
-  efficiency, bundling transactions off-chain while preserving Ethereum’s
+  efficiency, bundling transactions off-chain while preserving Ethereum's
   security.
 - **Optimism** Uses optimistic rollups to group off-chain transactions into
   batches verified on Ethereum.
 - **Arbitrum** Another leading optimistic rollup-based approach to improve
-  Ethereum’s scalability and reduce fees.
+  Ethereum's scalability and reduce fees.
 - **Soneium** Soneium operates as a layer 2 solution built atop Ethereum,
   emphasizing high throughput, and seamless cross-chain connectivity..
 
 Layer 2s are favored for high-volume applications, as they ease congestion on
 mainnet Ethereum while retaining EVM compatibility. Through SettleMint, you can
-deploy or connect to these networks, benefiting from the platform’s end-to-end
+deploy or connect to these networks, benefiting from the platform's end-to-end
 infrastructure and dev tooling.
 
 ## **Blockchain nodes**
 
-The **Nodes** panel in SettleMint’s Network Manager provides a holistic view of
-the network, whether it’s private or public. You can:
+The **Nodes** panel in SettleMint's Network Manager provides a holistic view of
+the network, whether it's private or public. You can:
 
 - **Add Validating Nodes:** Nodes that participate in consensus, securing the
   network.
@@ -187,7 +190,7 @@ transaction volumes.
 
 The **Blockchain Explorer** offers real-time insights into:
 
-- **Transactions:** See if they’ve been mined or validated.
+- **Transactions:** See if they've been mined or validated.
 - **Blocks:** Examine block production, verifying chain integrity.
 - **Smart Contracts:** Inspect states, method calls, and event logs.
 - **Network Participants:** Track node identities and governance roles in
@@ -207,13 +210,16 @@ networks:
 - **Templates & Custom Libraries:** Jump-start new projects or adapt existing
   ERC20, ERC721 and ERC1155 standards easily.
 - **Terminal & GitHub Integration:** Enables collaboration, version control, and
-  quick dependency management. Because it’s fully hosted in SettleMint, you
-  don’t need a local environment, resulting in a frictionless dev experience.
+  quick dependency management. Because it's fully hosted in SettleMint, you
+  don't need a local environment—resulting in a frictionless dev experience.
+
 
 ## **Smart contract api portal**
 
 After deployment, the **Smart Contract API Portal** translates your contract
-ABIs into **REST** and **GraphQL** endpoints, often termed “write middleware”
+
+ABIs into **REST** and **GraphQL** endpoints—often termed "write middleware"
+
 because they allow writing data on-chain through these automatically generated
 APIs. It includes:
 
@@ -262,8 +268,10 @@ orchestrating cross-system workflows:
 
 ## **Hasura graphql engine**
 
-**Hasura** seamlessly manages **off-chain** data, often user details,
-authentication, or large volumes of records that don’t need to reside on-chain.
+
+**Hasura** seamlessly manages **off-chain** data—often user details,
+authentication, or large volumes of records that don't need to reside on-chain.
+
 Paired with a PostgreSQL database, Hasura automatically generates a **real-time
 GraphQL schema**, offering:
 
@@ -281,8 +289,8 @@ receipts, SettleMint offers an **S3-compatible MinIO** service. You can:
 
 - **Upload & Retrieve Files via Standard S3 APIs**
 - **Control Access Permissions**
-- **Benefit from High-Performance Object Storage** It’s ideal for data that
-  doesn’t require on-chain immutability or public distribution (unlike IPFS).
+- **Benefit from High-Performance Object Storage** It's ideal for data that
+  doesn't require on-chain immutability or public distribution (unlike IPFS).
   Typical use cases include operational logs, user-generated content, and
   archives that must remain accessible and secure.
 
@@ -291,7 +299,7 @@ receipts, SettleMint offers an **S3-compatible MinIO** service. You can:
 SettleMint integrates **IPFS** for **decentralized**, **tamper-proof** file
 storage. A unique hash (CID) identifies each file, enabling:
 
-- **Verified Authenticity:** Hash-based references confirm file content hasn’t
+- **Verified Authenticity:** Hash-based references confirm file content hasn't
   changed.
 - **Permanent Distribution:** Files remain online as long as peers host them,
   removing dependency on a single provider.

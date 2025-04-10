@@ -1,5 +1,6 @@
 ---
-title: "Ethereum attestation indexer"
+title: " Ethereum attestation
+  service (EAS)"
 description:
   A comprehensive guide to implementing and using the Ethereum Attestation
   Service (EAS) for creating, managing, and verifying on-chain attestations
@@ -512,6 +513,32 @@ console.log("✅ Is the attestation valid?", isValid);
 
 ## 8. Using the attestation indexer
 
+### What is the attestation indexer?
+
+The SettleMint attestation indexer is a specialized middleware that indexes and provides API access to blockchain-based attestation data. Based on the [EAS Indexing Service](https://github.com/ethereum-attestation-service/eas-indexing-service), it serves as the critical bridge between your EAS smart contracts and applications, offering:
+
+- **Real-time indexing** of on-chain attestation events
+- **High-performance GraphQL API** for complex data queries
+- **Scalable architecture** designed for production workloads
+- **Seamless integration** with any EVM-compatible chain
+
+SettleMint's implementation provides a complete attestation solution with both the required smart contracts and optimized indexing service, eliminating the complexity of manually setting up and maintaining these components separately.
+
+### How the indexer works
+
+The attestation indexer continuously monitors your EAS contract deployments, capturing events like:
+
+- Schema registrations
+- Attestation creations
+- Attestation revocations
+
+It processes these events into a structured database and exposes them through a GraphQL API. This architectural approach delivers several key benefits:
+
+1. **Performance optimization**: Queries execute in milliseconds instead of requiring multiple on-chain RPC calls
+2. **Cost efficiency**: Eliminate expensive blockchain read operations
+3. **Enhanced functionality**: Complex filtering, sorting, and pagination capabilities
+4. **Simplified integration**: Standard GraphQL API familiar to developers
+
 ### Setup attestation indexer
 
 1. Go to your application's **Middleware** section
@@ -520,6 +547,8 @@ console.log("✅ Is the attestation valid?", isValid);
 4. Configure with your contract addresses:
    - EAS Contract: `EAS contract address`
    - Schema Registry: `Schema Registry contract address`
+
+Once deployed, the indexer automatically begins synchronizing with the blockchain, processing historical attestations and monitoring for new events in real-time.
 
 ### Querying attestations
 
@@ -532,15 +561,14 @@ After deployment:
 3. You'll find your GraphQL endpoint URL
 4. Create an Application Access Token (Settings → Application Access Tokens)
 
-#### Using the graphql ui
+#### Using the GraphQL UI
 
-The indexer provides a built-in GraphQL UI where you can test queries. Click
-"GraphQL UI" in your indexer to access it.
+The indexer provides a built-in GraphQL playground where you can interactively test queries. Click "GraphQL UI" in your indexer to access it.
 
 #### Example query implementation
 
 ```javascript
-// Example fetch request to query attestations
+// Example fetch request to query attestations by schema
 async function queryAttestations(schemaId) {
   const response = await fetch("YOUR_INDEXER_URL", {
     method: "POST",
@@ -556,11 +584,14 @@ async function queryAttestations(schemaId) {
               equals: "${schemaId}"
             }
           }
+          orderBy: { time: desc }
+          take: 10
         ) {
           id
           attester
           recipient
           revoked
+          time
           data
         }
       }`,
@@ -572,10 +603,66 @@ async function queryAttestations(schemaId) {
 }
 
 // Usage example:
-const schemaId = "YOUR_SCHEMA_ID"; // From the registration step
+const schemaId = "YOUR_SCHEMA_ID"; // From the schema registration step
 const attestations = await queryAttestations(schemaId);
 console.log("Attestations:", attestations);
 ```
+
+#### Advanced querying capabilities
+
+The EAS indexer supports sophisticated query patterns for complex use cases:
+
+```graphql
+{
+  # Find attestations by specific attester
+  attestations(
+    where: {
+      attester: { equals: "0x123..." }
+      revoked: { equals: false }
+    }
+  ) {
+    id
+    time
+    data
+  }
+  
+  # Get schema information with related attestations
+  schema(where: { id: { equals: "0xschema..." } }) {
+    id
+    schema
+    revocable
+    attestations(take: 5) {
+      id
+      attester
+    }
+  }
+  
+  # Filter attestations by timestamp range
+  attestations(
+    where: {
+      time: { 
+        gte: "2023-01-01T00:00:00Z",
+        lt: "2023-02-01T00:00:00Z"
+      }
+    }
+  ) {
+    id
+    time
+  }
+}
+```
+
+### Building applications with the indexer
+
+The attestation indexer enables powerful use cases including:
+
+- **Verifiable credentials** for KYC/identity solutions
+- **Reputation systems** based on on-chain attestations
+- **Trust frameworks** with customizable validation rules
+- **Certification management** for professional qualifications
+- **Claim verification** for insurance or compliance scenarios
+
+By combining SettleMint's EAS smart contracts with the attestation indexer, developers can rapidly implement robust attestation-based solutions while maintaining full control over their data models and business logic.
 
 ## 9. Integration studio implementation
 
