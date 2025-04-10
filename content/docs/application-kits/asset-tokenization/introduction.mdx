@@ -44,8 +44,24 @@ efforts.
 
 ---
 
+## Supported token classes
 
-## Supported Token Classes
+The Asset Tokenization Kit supports a diverse set of token classes, each built
+to represent real-world financial instruments on-chain. These include bonds,
+equities, funds, stablecoins, cryptocurrencies, and deposit-backed tokens,
+covering both asset ownership and capital instruments. Each class follows a
+standardized contract interface enriched with configurable parameters,
+role-based access control, and compliance mechanisms suited for enterprise or
+institutional deployment.
+
+<br> </br>
+
+Token classes are designed to be modular yet interoperable, allowing
+institutions to digitize traditional instruments, launch programmable assets,
+and meet regulatory obligations without reengineering core systems. Whether
+issuing tokenized debt, enabling digital equity programs, or piloting CBDC use
+cases, these templates serve as production-ready building blocks with built-in
+lifecycle, governance, and auditability features.
 
 ---
 
@@ -62,9 +78,11 @@ efforts.
       <td style={{width: "70%"}}>
 
       Bond tokens represent debt instruments issued on-chain, offering fixed or floating returns over a predefined maturity period. These can be structured to support traditional coupon-bearing bonds, zero-coupon notes, or tokenized commercial papers. Bonds enable capital raising with regulatory-grade access control and transparency for both issuers and investors.
-
+      <br> </br>
+      Bond tokens can integrate programmable yield schedules, automate redemption workflows, and support on-chain recordkeeping for audits and compliance. These instruments are suitable for both public market issuance and private placements across regulated jurisdictions.
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -90,6 +108,7 @@ efforts.
 
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -108,9 +127,11 @@ efforts.
       <td style={{width: "70%"}}>
 
       Equity tokens represent ownership in a company or asset, digitally mirroring shares or voting rights. These tokens can be embedded with compliance logic such as lock-in periods, vesting, or shareholder rights, making them suitable for fundraising, ESOPs, and investor governance in both private and public markets.
-
+      <br> </br>
+      Equity tokens support automated cap table management, enabling real-time updates to ownership records and seamless transferability under controlled conditions. They can also be integrated with governance modules to facilitate on-chain voting and shareholder resolutions.
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -136,6 +157,7 @@ efforts.
 
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -154,9 +176,11 @@ efforts.
       <td style={{width: "70%"}}>
 
       Fund tokens allow the creation and management of pooled investment vehicles where token holders share profits and risks. These tokens can support minting, redemption, NAV tracking, and enforce access controls as per fund structures like mutual funds, hedge funds, or DAOs managing diversified assets.
-
+      <br> </br>
+      Fund tokens enable dynamic portfolio management with real-time NAV adjustments and support for multi-asset backing or performance-linked issuance. They offer operational transparency and auditability, making them suitable for both retail-facing platforms and institutional fund structures.
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -182,6 +206,7 @@ efforts.
 
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -200,9 +225,11 @@ efforts.
       <td style={{width: "70%"}}>
 
       Stablecoins are blockchain-based representations of fiat currencies or other stable assets. These tokens aim to minimize volatility and serve as mediums of exchange or units of account within digital ecosystems. The framework supports collateral management, freezing, and pausing mechanisms for regulatory compliance and risk control.
-
+      <br></br>
+      Stablecoins also serve as a foundational layer for central bank digital currency (CBDC) prototypes and regulated digital cash systems. They can integrate with identity verification, transaction monitoring, and monetary policy controls, making them adaptable for both commercial applications and government-led digital currency pilots.
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -228,6 +255,7 @@ efforts.
 
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -246,9 +274,11 @@ efforts.
       <td style={{width: "70%"}}>
 
       Cryptocurrency tokens are fungible digital currencies that can be freely minted, transferred, or withdrawn. They may represent utility, governance, or native currencies of ecosystems, and the tokenization framework supports full lifecycle management with standard access control features for centralized issuance models.
-
+      <br></br>
+      Cryptocurrency tokens can power digital economies within platforms, enabling payments, staking, and access to gated services or features. The framework also allows seamless integration with EVM-compatible wallets, decentralized exchanges, and automated distribution mechanisms for ecosystem incentives.
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -274,6 +304,7 @@ efforts.
 
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -292,9 +323,11 @@ efforts.
       <td style={{width: "70%"}}>
 
       Deposit tokens represent tokenized claims against reserved assets, often used in custodial or institutional settings. These tokens allow fine-grained access control and account-level permissioning, suitable for asset-backed financing, digital guarantees, and central bank-backed pilot systems.
-
+      <br></br>
+      Deposit tokens can be tailored for use in interbank settlement networks, collateralized lending platforms, or programmable escrow arrangements. They support auditability, restricted transfer logic, and integration with core banking systems, making them ideal for regulated financial infrastructure and institutional-grade asset tokenization.
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -320,10 +353,9 @@ efforts.
 
       </td>
     </tr>
+
   </tbody>
 </table>
-
-
 
 ## Compliance and security
 
@@ -461,7 +493,8 @@ industry contexts with minimal configuration.
 
 To begin using the kit:
 
-1. **Clone the source code** from SettleMint's Git repository [SettleMint Asset Tokenization Kit on GitHub](https://github.com/settlemint/asset-tokenization-kit)
+1. **Clone the source code** from SettleMint's Git repository
+   [SettleMint Asset Tokenization Kit on GitHub](https://github.com/settlemint/asset-tokenization-kit)
 2. **Install the SDK and CLI** to scaffold a new project
 3. **Launch the Web IDE** or integrate into your local development environment
 4. **Review documentation and API references** to begin customizing the
