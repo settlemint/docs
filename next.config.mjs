@@ -25,15 +25,15 @@ const config = {
   async rewrites() {
     return [
       {
-        source: "/documentation/ingest/static/:path*",
+        source: "/ingest/static/:path*",
         destination: "https://eu-assets.i.posthog.com/static/:path*",
       },
       {
-        source: "/documentation/ingest/:path*",
+        source: "/ingest/:path*",
         destination: "https://eu.i.posthog.com/:path*",
       },
       {
-        source: "/documentation/ingest/decide",
+        source: "/ingest/decide",
         destination: "https://eu.i.posthog.com/decide",
       },
     ];
