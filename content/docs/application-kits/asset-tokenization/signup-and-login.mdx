@@ -24,7 +24,42 @@ not retrievable after this step.
 
 ![Secure wallet](../../../img/application-kits/secure-wallet.png)
 
-You may also setup sign-in via a passkey.
+## Passkey sign in
+
+As part of its secure authentication framework, the Asset Tokenization Kit
+supports sign-in via passkeys, offering users a passwordless and
+phishing-resistant login experience. Passkeys are based on public key
+cryptography and are stored securely on the user’s device or cloud identity
+provider (such as Apple iCloud Keychain, Google Password Manager, or Windows
+Hello). This ensures that private keys never leave the user’s device,
+significantly reducing the risk of credential theft or reuse.
+
+<br></br>
+
+During the sign-in process, users will be prompted to authenticate using their
+device’s biometric or PIN-based identity (e.g., fingerprint, Face ID, or system
+passcode). Upon successful verification, the device automatically signs a
+challenge issued by the platform using the previously registered passkey. The
+backend verifies the signature against the stored public key, granting access
+without requiring a username or password.
+
+<br></br>
+
+This approach improves both user convenience and security posture. It eliminates
+the need for password resets and prevents common attack vectors such as
+credential stuffing, phishing, and man-in-the-middle attacks. For enterprise
+users, passkeys can be linked to organizational identity systems or integrated
+with device-level access policies for compliance and centralized control.
+
+<br></br>
+
+Passkey sign-in can be used as a primary login method or combined with other
+mechanisms such as wallet authentication, OAuth providers, or multi-factor
+authentication (MFA), depending on the deployment’s security requirements. The
+implementation is fully compatible with modern browsers and mobile devices,
+providing a seamless experience across environments.
+
+<br></br>
 
 Post login you will see the dashboard and will get access to various modules and
 services related to asset tokenization.
