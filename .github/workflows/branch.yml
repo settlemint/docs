@@ -100,6 +100,8 @@ jobs:
       - name: Build
         run: |
           bun run build
+        env:
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
 
       - name: Build Docker container
         run: |
