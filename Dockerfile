@@ -1,4 +1,4 @@
-FROM oven/bun:1.2.9
+FROM node:22.14.0-alpine3.21
 
 LABEL org.opencontainers.image.source="https://github.com/settlemint/docs"
 
@@ -13,4 +13,4 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 ENV NODE_ENV=production
 
-CMD ["bun", "server.js"]
+CMD ["node", "server.js"]
