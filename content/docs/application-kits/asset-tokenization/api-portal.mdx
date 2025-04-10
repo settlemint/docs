@@ -11,6 +11,7 @@ programmatic access to your deployed instance, and it ensures that only
 authorized applications or developers can perform operations such as deploying
 assets, transferring tokens, updating access roles, or retrieving transaction
 and portfolio data.
+
 <br></br>
 
 From the API portal interface, navigate to the “API Keys” tab and click on the
@@ -27,6 +28,7 @@ Once the key is created, it will appear in the list of active keys along with
 its name, creation date, expiry (if set), and a masked view of the key value.
 You will use this key in your requests by adding it to the HTTP header as
 follows: x-api-key: YOUR_GENERATED_KEY_HERE
+
 <br></br>
 
 This key must be included in every API request to authenticate and authorize
@@ -35,6 +37,7 @@ Unauthorized error. Be sure to store this key securely and avoid hardcoding it
 into public repositories or frontend applications exposed to browsers. For web
 apps, it is recommended to proxy API requests through a backend or use
 serverless middleware that injects the key securely.
+
 <br></br>
 
 Each deployment has its own scoped API keys, meaning keys are only valid for the
@@ -43,12 +46,34 @@ URL and available endpoints are listed in the API Documentation tab, where you
 can also download the full OpenAPI (Swagger) schema for code generation or
 external API tooling.
 
+![API Portal](../../../img/application-kits/api-portal.png)
 
-### Bond APIs
-
-![Sign Up](../../../img/application-kits/api-portal.png)
+The API documentation portal is accessible through an interactive web interface
+that provides detailed specifications for each endpoint, including request
+formats, parameters, and response structures. Built on the Swagger framework,
+the portal also includes a “Try It Out” feature, allowing users to test API
+calls in real-time using sample or authorized credentials. This environment
+supports rapid integration, debugging, and validation of token operations
+directly from the browser.
 
 ![API Response](../../../img/application-kits/api-response.png)
+
+## Available APIs
+
+SettleMint’s Asset Tokenization Kit APIs provide a unified interface for
+creating, managing, and interacting with a wide range of tokenized financial
+instruments on blockchain. These APIs cover asset classes such as bonds,
+equities, cryptocurrencies, funds, stablecoins, and deposits—each with
+capabilities to deploy contracts, mint and transfer tokens, configure financial
+parameters, and enforce role-based access control. Additional endpoints support
+user identity lookup, transaction tracking, yield management, and portfolio
+analytics, offering full transparency and operational control. Built for modular
+integration, these APIs enable secure, compliant, and scalable deployment of
+digital assets across enterprise and institutional platforms, while supporting
+extensibility through customizable settings and real-time market data
+integrations.
+
+### Bond APIs
 
 | Method | Endpoint                                        | Description                                   |
 | ------ | ----------------------------------------------- | --------------------------------------------- |
