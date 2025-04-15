@@ -26,7 +26,7 @@
     "lucide-react": "0.488.0",
     "next": "15.3.0",
     "posthog-js": "1.235.6",
-    "posthog-node": "4.11.3",
+    "posthog-node": "4.11.5",
     "prettier": "3.5.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
