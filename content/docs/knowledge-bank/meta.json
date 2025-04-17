@@ -13,8 +13,11 @@
     "subgraphs",
     "chaincode",
     "keys-and-security",
-    "bfsi-usecases",
+    "bfsi-blockchain-usecases",
     "public-sector-usecases",
-    "industrial-usecases"
+    "industrial-usecases",
+    "supply-chain",
+    "art-gaming-usecases",
+    "blockchain-ai-usecases"
   ]
 }

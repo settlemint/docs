@@ -1,269 +1,631 @@
 ---
-title: "Understanding subgraphs"
-description: Guide to Subgraphs on SettleMint platform
+title: "Subgraphs"
+description: A complete guide to building, deploying, and querying subgraphs for blockchain data indexing using The Graph protocol
 ---
 
-# 🧾 subgraph project structure – deep dive for `mycontract.sol`
+## Introduction to subgraphs
 
-This document provides a complete, line-by-line breakdown of a subgraph project
-folder designed to index events from an Ethereum smart contract named
-`MyContract.sol`. It follows the conventions used by
-[The Graph Protocol](https://thegraph.com) and tooling like
-[SettleMint Subgraph Generator](https://settlemint.com).
+Subgraphs are the indexing and querying units used within The Graph protocol.
+They define how on-chain data should be extracted, processed, and served through
+a GraphQL API. Subgraphs are essential for building decentralized applications
+that require fast and reliable access to blockchain state and historical data.
 
----
+Rather than querying a blockchain node directly for each interaction, developers
+create subgraphs to transform raw events and calls into structured, queryable
+datasets. These subgraphs run on The Graph’s decentralized network or its hosted
+service and serve as the backend data layer for many of the most popular dApps.
 
-## 📁 folder structure
+Subgraphs are written in a declarative way. Developers specify which smart
+contract events to listen to, how to transform those events into entities, and
+what GraphQL schema the final API should expose. This model enables clean
+separation between data generation on-chain and data consumption off-chain.
 
-```plaintext
-subgraph/
-│
-├── subgraph.config.json                 # Global generator settings
-│
-├── datasources/
-│   ├── mycontract.gql.json              # GraphQL schema definition (JSON-based)
-│   ├── mycontract.ts                    # AssemblyScript event handlers for MyContract
-│   └── mycontract.yaml                  # Subgraph manifest (datasource-level config)
-│
-└── fetch/
-    └── mycontractdata.ts               # Utility functions for entity fetch/create
+## Understanding The Graph protocol
+
+The Graph protocol is an indexing infrastructure that allows querying blockchain
+data through GraphQL. It supports various EVM-compatible chains like Ethereum,
+Polygon, Avalanche, and others. The core components of the protocol include:
+
+Indexers, who run nodes that index data and serve queries
+
+Curators, who signal valuable subgraphs using GRT tokens
+
+Delegators, who stake GRT with indexers to secure the network
+
+Consumers, who query subgraphs using GraphQL
+
+Subgraph developers define the indexing logic and deploy it to the network. Once
+deployed, their subgraphs become accessible via GraphQL endpoints and are
+maintained by indexers without requiring centralized APIs.
+
+The protocol provides deterministic indexing through WASM-based mappings,
+scalability through sharding and modular design, and economic incentives to
+ensure data availability and integrity.
+
+## Anatomy of a subgraph
+
+A subgraph project is composed of a few critical files and directories. These
+define how The Graph will extract and structure the data:
+
+**subgraph.yaml** This is the manifest file. It defines the network, data
+sources (contracts), event handlers, and mappings. It instructs The Graph which
+chain to listen to, which contracts to monitor, and how to process specific
+events or function calls.
+
+**schema.graphql** This file defines the GraphQL schema for the subgraph. It
+declares entity types, their fields, relationships, and any indexing options.
+These types become the basis for how data can be queried later on.
+
+**AssemblyScript mappings** Mapping files are written in AssemblyScript, a
+TypeScript-like language that compiles to WebAssembly. These files include event
+handlers that transform blockchain data into entities. They run in a sandboxed
+environment and cannot make HTTP calls or access off-chain storage.
+
+**Generated types** Using the Graph CLI, developers generate TypeScript
+definitions for events, entities, and contract bindings. This allows safe and
+predictable manipulation of blockchain data within mapping functions.
+
+These elements combine to form a complete subgraph that listens to smart
+contract events, transforms them into structured data, and exposes them via a
+GraphQL API.
+
+## Sample subgraph structure
+
+A typical subgraph structure in the project directory might look like this:
+
+```
+├── subgraph.yaml
+├── schema.graphql
+├── src/
+│   └── mapping.ts
+├── generated/
+│   ├── schema.ts
+│   └── contract/
+│       └── Contract.ts
+├── abis/
+│   └── Contract.json
 ```
 
----
+Each file plays a specific role in defining how data flows from the blockchain
+into a queryable dataset.
 
-## 🔧 `subgraph.config.json`
+- `subgraph.yaml` specifies the smart contract and handlers
+- `schema.graphql` defines the API
+- `mapping.ts` transforms events into entities
+- `generated/` holds types used in the mappings
+- `abis/` contains the smart contract ABI required to decode events
 
-### ✅ purpose:
+This structure ensures the subgraph remains modular, readable, and easy to
+maintain.
 
-This file is consumed by SettleMint's CLI or The Graph CLI (`graph codegen`,
-`graph build`) to bootstrap subgraph code and configuration.
+## Defining the GraphQL schema
 
-### 🔍 breakdown:
+The schema file in a subgraph project is named `schema.graphql`. It defines the
+data model of the subgraph. Each data model is known as an entity and is
+represented using GraphQL type definitions.
 
-```json
-{
-  "output": "generated/scs.",
-  "chain": "localhost",
-  "datasources": [
-    {
-      "name": "MyContract",
-      "address": "0x0000000000000000000000000000000000000000",
-      "startBlock": 0,
-      "module": ["mycontract"]
-    }
-  ]
+Entities are stored in the subgraph's underlying database and can be queried via
+GraphQL. Each entity must have an `id` field of type `ID`, which serves as the
+unique identifier.
+
+Example schema:
+
+```graphql
+type Profile @entity {
+  id: ID!
+  owner: Bytes!
+  name: String!
+  createdAt: BigInt!
 }
 ```
 
-| Field         | Description                                                                                                                  |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `output`      | Directory for generated TypeScript types (`generated/` folder). Often linked to `schema.graphql`, `ABI`, and handler typing. |
-| `chain`       | Blockchain environment to index (e.g., `mainnet`, `localhost`, `polygon`, `arbitrum-one`).                                   |
-| `datasources` | Array of contract modules to be indexed. Each maps to a folder and .yaml config inside `datasources/`.                       |
-| `name`        | Logical name of this contract or module (used in code and schema).                                                           |
-| `address`     | On-chain deployed address of `MyContract.sol`. Must be accurate for indexing to work.                                        |
-| `startBlock`  | First block number to index from (skip historical blocks for faster sync).                                                   |
-| `module`      | Name of folder containing `*.yaml`, `*.ts`, and `*.gql.json` files for this contract.                                        |
+The schema supports scalar types like `String`, `Int`, `BigInt`, `Bytes`,
+`Boolean`, and `ID`. Entities can also reference other entities using one-to-one
+or one-to-many relationships, which are established by using `@derivedFrom` on
+the related side.
 
-> 💡 **Tip:** Use the block number where your contract was deployed to avoid
-> unnecessary indexing of irrelevant historical data.
-
----
-
-## 📄 `datasources/mycontract.gql.json`
-
-### ✅ purpose:
-
-This is a **JSON-encoded GraphQL schema**, which defines the shape of your
-indexed data. Each `type` here corresponds to an **entity** stored in the
-subgraph’s database.
-
-### 🧾 example:
-
-```json
-[
-  {
-    "name": "MyEntity",
-    "description": "Stores state emitted from MyContract events",
-    "fields": [
-      { "name": "id", "type": "ID!" },
-      { "name": "creator", "type": "Bytes!" },
-      { "name": "status", "type": "String!" },
-      { "name": "timestamp", "type": "BigInt!" }
-    ]
-  }
-]
+```graphql
+type User @entity {
+  id: ID!
+  profiles: [Profile!]! @derivedFrom(field: "owner")
+}
 ```
 
-### 🔍 field types:
+This schema describes a one-to-many relationship from `User` to `Profile`, where
+each profile is linked to a user via the `owner` field.
 
-- `ID!`: Required unique identifier (`string` format, often tx hash or entity
-  composite key).
-- `Bytes`: EVM-style address or 32-byte values.
-- `BigInt`: For uint256, block numbers, timestamps.
-- `String`, `Boolean`, `Int`: Basic GraphQL types.
-- `@derivedFrom`: Used for reverse relationships (foreign keys) but only in
-  `.graphql`, not `.gql.json`.
+The schema must be aligned with the data emitted by smart contract events. Each
+time an event is handled, new instances of these entities are created or updated
+through the mapping logic.
 
-> 💡 Use `id` as a combination of `transactionHash-logIndex` for uniqueness in
-> event-based entities.
+## Writing the subgraph manifest
 
----
+The manifest file `subgraph.yaml` tells The Graph which blockchain to connect
+to, which contracts to monitor, and which handlers to invoke. It also defines
+the schema and mapping files.
 
-## 📄 `datasources/mycontract.yaml`
-
-### ✅ purpose:
-
-This is the **manifest file** that connects your smart contract to its:
-
-- Deployed address
-- ABI definition
-- Events you want to index
-- GraphQL schema
-- Event handler functions
-
-### 🧾 example:
+A minimal example of a subgraph manifest:
 
 ```yaml
-specVersion: 0.0.2
+specVersion: 0.0.4
+description: Tracks profiles on-chain
+repository: https://github.com/example/profile-subgraph
 schema:
-  file: mycontract.gql.json
+  file: ./schema.graphql
 
 dataSources:
-  - kind: ethereum/contract
-    name: MyContract
-    network: localhost
+  - kind: ethereum
+    name: ProfileContract
+    network: mainnet
     source:
-      address: "0x0000000000000000000000000000000000000000"
-      abi: MyContract
-      startBlock: 0
+      address: "0x1234567890abcdef..."
+      abi: ProfileContract
+      startBlock: 15000000
     mapping:
       kind: ethereum/events
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
-      apiVersion: 0.0.5
       entities:
-        - MyEntity
+        - Profile
       abis:
-        - name: MyContract
-          file: "../../abis/MyContract.json"
+        - name: ProfileContract
+          file: ./abis/ProfileContract.json
       eventHandlers:
-        - event: MyEvent(indexed uint256,string)
-          handler: handleMyEvent
-      file: mycontract.ts
+        - event: ProfileCreated(indexed address,indexed bytes32,string,uint256)
+          handler: handleProfileCreated
+      file: ./src/mapping.ts
 ```
 
-### 🔍 key fields:
+This manifest tells The Graph to watch the `ProfileCreated` event emitted by a
+contract deployed at a specific address on Ethereum mainnet. The event will be
+handled by the `handleProfileCreated` function in the mapping file.
 
-| Section            | Field      | Description                                                        |
-| ------------------ | ---------- | ------------------------------------------------------------------ |
-| `dataSources`      | `name`     | Logical label for contract.                                        |
-| `source.address`   |            | Deployed contract address.                                         |
-| `source.abi`       |            | Refers to `name` under `abis:`.                                    |
-| `startBlock`       |            | Block number from which to start processing.                       |
-| `mapping.entities` |            | List of entities affected by this contract.                        |
-| `abis.file`        |            | Path to `.json` ABI file of contract (must match source).          |
-| `eventHandlers`    | `event:`   | Signature of the Solidity event being indexed.                     |
-|                    | `handler:` | Name of exported function from `.ts` file that handles this event. |
+The `startBlock` is used to optimize syncing by skipping historical blocks that
+do not contain relevant data. The ABI is needed to decode event parameters.
 
-> ⚠️ `event:` must **exactly match** the ABI event signature, including indexed
-> fields.
+## Creating the mapping logic
 
----
+Mapping logic is written in AssemblyScript and placed in the `src` folder. It
+contains functions that respond to smart contract events and generate or update
+entities based on event data.
 
-## 📄 `datasources/mycontract.ts`
-
-### ✅ purpose:
-
-This file contains **AssemblyScript handler functions** that transform on-chain
-events into **GraphQL entities**. These handlers are executed by the subgraph
-runtime when matching events appear on-chain.
-
-### 🧾 example:
+Example mapping for `ProfileCreated`:
 
 ```ts
-import { BigInt } from "@graphprotocol/graph-ts";
-import { MyEvent as MyEventType } from "../generated/MyContract/MyContract";
-import { MyEntity } from "../generated/schema";
-import { fetchMyEntity } from "../fetch/mycontractdata";
+import { ProfileCreated } from "../generated/ProfileContract/ProfileContract";
+import { Profile } from "../generated/schema";
 
-export function handleMyEvent(event: MyEventType): void {
-  let entity = fetchMyEntity(event.params.id);
-  entity.creator = event.transaction.from;
-  entity.status = event.params.status;
-  entity.timestamp = event.block.timestamp;
+export function handleProfileCreated(event: ProfileCreated): void {
+  let entity = new Profile(event.params.profileId.toHex());
+  entity.owner = event.params.owner;
+  entity.name = event.params.name;
+  entity.createdAt = event.block.timestamp;
   entity.save();
 }
 ```
 
-### 🔍 what's happening:
+The `event` object gives access to event parameters, transaction metadata, and
+block context. The handler creates a new `Profile` entity using the profile ID
+as the key, assigns values, and saves it to the store.
 
-- Event is imported from auto-generated `MyContract.ts` (compiled ABI).
-- A helper is called to load or create an entity (`fetchMyEntity`).
-- Event parameters and context (tx sender, timestamp) are assigned to fields.
-- Entity is stored using `.save()`.
+Handlers must always ensure that IDs are unique and types are compatible with
+the schema. Entities are saved using the `.save()` method and will be queryable
+via the GraphQL API after indexing.
 
-> 🧩 Best practice: use `fetch*` functions to reduce duplication and enforce
-> default values.
+## Generating types from the schema
 
----
+To safely work with entity types and contract events in the mapping file,
+developers use the Graph CLI to generate code from the schema and ABI.
 
-## 📄 `fetch/mycontractdata.ts`
+The command is:
 
-### ✅ purpose:
+```
+graph codegen
+```
 
-Contains utility functions to fetch an entity from the store **or create it if
-it doesn't exist**. Useful for enforcing schema defaults and ensuring consistent
-object initialization.
+This generates TypeScript files under the `generated/` directory. These include:
 
-### 🧾 example:
+- Type-safe classes for each entity in `schema.ts`
+- Smart contract bindings for each ABI in its respective folder
 
-```ts
-import { MyEntity } from "../../generated/schema";
-import { BigInt } from "@graphprotocol/graph-ts";
+These generated types eliminate common errors, offer autocompletion, and ensure
+consistency between the schema, mappings, and event definitions.
 
-export function fetchMyEntity(id: BigInt): MyEntity {
-  let key = id.toString();
-  let entity = MyEntity.load(key);
+Entities in the generated code extend the `Entity` class and expose getters and
+setters for each field, along with type casting and default value helpers.
 
-  if (!entity) {
-    entity = new MyEntity(key);
-    entity.creator = Bytes.empty();
-    entity.status = "PENDING";
-    entity.timestamp = BigInt.zero();
+## Deploying a subgraph
+
+The CLI packages the files, uploads the schema, manifest, mappings, and ABIs,
+and registers the subgraph with the indexing service. A deployment hash is
+generated, which serves as a reference to the current version.
+
+## Querying with GraphQL
+
+Once deployed and synced, subgraphs expose a GraphQL endpoint. This allows
+front-end applications, analytics tools, or external APIs to query the data.
+
+The GraphQL schema is derived directly from `schema.graphql`, and every entity
+becomes a queryable type. Developers can retrieve data with flexible queries
+such as:
+
+```graphql
+{
+  profiles(first: 5, orderBy: createdAt, orderDirection: desc) {
+    id
+    name
+    owner
+    createdAt
   }
-
-  return entity;
 }
 ```
 
-### 🔍 why it's important:
+Filters can be applied using `where` clauses to narrow down results.
 
-- Prevents null pointer errors in `.ts` handler files.
-- Centralizes logic for initializing new entities.
-- Keeps handler functions small and readable.
+```graphql
+{
+  profiles(where: { owner: "0xabc..." }) {
+    name
+    id
+  }
+}
+```
 
----
+Pagination is supported using `first` and `skip`, enabling efficient rendering
+of lists and infinite scroll interfaces.
 
-## ✅ summary
+Sorting can be applied using `orderBy` on indexed fields, with `asc` or `desc`
+directions.
 
-| File                   | Purpose                                                     |
-| ---------------------- | ----------------------------------------------------------- |
-| `subgraph.config.json` | Global configuration (network, modules, output path).       |
-| `mycontract.gql.json`  | GraphQL schema defining the structure of data to be stored. |
-| `mycontract.yaml`      | Contract address, ABI, events, and mapping file linkage.    |
-| `mycontract.ts`        | Event-to-entity transformation logic in AssemblyScript.     |
-| `mycontractdata.ts`    | Reusable logic to load or create GraphQL entities safely.   |
+Subgraphs enable complex data consumption with minimal performance cost, as all
+queries run against a pre-indexed store maintained by indexers.
 
----
+## Versioning and schema migration
 
-## 🛠️ best practices
+As smart contracts evolve or new requirements emerge, subgraphs need to be
+versioned. Developers can deploy multiple versions of a subgraph and mark one as
+the current production version.
 
-- 🧪 Always test your subgraph locally with a dev chain before deploying.
-- 🧱 Use composite IDs (`txHash-logIndex`) for events to avoid collisions.
-- ⚙️ Keep `fetch/` files modular to reduce logic in event handlers.
-- 📊 Use `BigInt`, `Bytes`, and `Boolean` types consistently with EVM data.
+Each version has a unique deployment ID, and changes to the schema, event
+handlers, or mappings require a new deployment.
 
----
+To support schema changes:
 
-> 🔁 This setup is modular, clean, and scalable for multi-contract projects,
-> cross-chain indexing, or advanced state machine tracking.
+- Update the `schema.graphql`
+- Regenerate types using `graph codegen`
+- Update mappings accordingly
+- Test and deploy as a new version
+
+The old version remains accessible but no longer receives new data. This allows
+safe rollouts, testing, and rollback if necessary.
+
+## Performance optimization and indexing
+
+Efficient indexing is crucial to ensure that subgraphs sync quickly and serve
+queries promptly. Developers can improve performance by:
+
+Reducing the number of entities created per event
+
+Avoiding heavy use of derived fields or reverse lookups
+
+Minimizing unnecessary state updates to entities
+
+Reducing large loops or repetitive logic in mappings
+
+Setting an appropriate `startBlock` to skip unnecessary historical data
+
+Avoiding cross-contract or recursive calls in mappings, which are unsupported
+
+Indexing speed depends on block density, event frequency, and mapping logic
+complexity. For high-volume subgraphs, batching and conditional logic can help
+reduce bottlenecks.
+
+Indexing logs can be monitored via the dashboard or CLI to debug issues such as
+failed events, missing ABI entries, or type mismatches.
+
+## Debugging and testing
+
+Subgraphs can be tested locally using a forked chain or mock events. The Graph
+CLI supports:
+
+- Code generation and validation
+- Manifest linting
+- Subgraph simulation
+
+For contract testing, frameworks like Hardhat or Foundry can emit events and
+verify the subgraph behavior using integration test setups.
+
+Event handlers should be designed to be deterministic and side-effect-free.
+Subgraphs do not persist intermediate state or allow external API calls, so all
+logic must be pure and repeatable.
+
+Logs and sync statuses provide real-time feedback on indexing progress, failed
+handlers, or schema violations.
+
+Proper testing reduces production errors and ensures reliable data for users and
+applications.
+
+## Using dynamic data sources
+
+In many decentralized applications, new smart contracts are deployed at runtime.
+These contracts are not known in advance, so they cannot be declared statically
+in the manifest file. To support this, subgraphs allow the use of dynamic data
+sources.
+
+Dynamic data sources are created at runtime through templates. When a subgraph
+encounters a specific event, it can instantiate a new data source to begin
+listening to events from a new contract.
+
+For example, a factory contract may emit a `ProfileDeployed` event each time a
+new profile contract is created. The subgraph listens to this factory and, upon
+detecting the event, dynamically spawns a new data source for the deployed
+profile contract.
+
+```ts
+import { ProfileTemplate } from "../generated/templates";
+import { ProfileDeployed } from "../generated/Factory/Factory";
+
+export function handleProfileDeployed(event: ProfileDeployed): void {
+  ProfileTemplate.create(event.params.newContract);
+}
+```
+
+The template must be defined in the `subgraph.yaml` file:
+
+```yaml
+templates:
+  - name: ProfileTemplate
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Profile
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Profile
+      abis:
+        - name: Profile
+          file: ./abis/Profile.json
+      eventHandlers:
+        - event: ProfileUpdated(indexed address,string)
+          handler: handleProfileUpdated
+      file: ./src/profile-mapping.ts
+```
+
+This pattern is commonly used in factory-based architectures such as token
+vaults, NFT launchpads, or DeFi protocols.
+
+## Indexing multiple contracts
+
+Subgraphs can index multiple contracts by declaring multiple data sources in the
+manifest. Each data source can monitor a different contract, respond to
+different events, and use distinct handlers.
+
+Example use case:
+
+- One contract manages token minting
+- Another manages metadata updates
+- A third handles permissions
+
+Each contract can be added with its own `dataSource` entry, ABI, and event
+handlers.
+
+```yaml
+dataSources:
+  - kind: ethereum
+    name: TokenContract
+    source:
+      address: "0x..."
+      abi: Token
+    mapping: ...
+  - kind: ethereum
+    name: MetadataContract
+    source:
+      address: "0x..."
+      abi: Metadata
+    mapping: ...
+```
+
+This approach allows modular indexing and accommodates complex systems where
+state is distributed across multiple contracts.
+
+## Subgraph templating and reuse
+
+Subgraph templates promote reuse across similar deployments. Developers can
+publish and share subgraph configurations for common contract standards like
+ERC20, ERC721, or governance protocols.
+
+Reusable subgraphs help accelerate development for ecosystems like:
+
+- NFT marketplaces
+- DAO voting systems
+- Liquidity pools
+
+These templates abstract the contract interactions and provide ready-made
+GraphQL APIs. Developers only need to supply addresses and optional
+configuration overrides.
+
+Templates can be versioned and imported using packages or remote includes via
+IPFS. This enables teams to collaborate and standardize data access across
+multiple dApps or sub-networks.
+
+## Use cases enabled by subgraphs
+
+Subgraphs are a critical backend component in many types of decentralized
+applications. Some common use cases include:
+
+Real-time token balances and holder snapshots
+
+Historical trade activity for decentralized exchanges
+
+NFT ownership and metadata browsing
+
+DAO governance participation, proposals, and vote history
+
+Streaming payments and claimable rewards tracking
+
+Cross-chain bridge activity and relay verification
+
+Portfolio analytics for wallet dashboards
+
+Decentralized identity registries and attestations
+
+Event-driven notification systems and protocol health monitors
+
+By exposing data through a flexible and reliable GraphQL API, subgraphs allow
+developers to build rich user experiences without overloading blockchain nodes
+or dealing with raw logs.
+
+Subgraphs also improve security and decentralization by removing the need for
+proprietary or centralized data APIs.
+
+## Community and ecosystem
+
+The Graph ecosystem includes developers, indexers, curators, and contributors
+building tools and maintaining subgraphs across major chains. Popular subgraphs
+are used by Uniswap, Aave, Balancer, ENS, and many other leading protocols.
+
+Developers can contribute by:
+
+- Publishing subgraphs to Graph Explorer or Subgraph Studio
+- Signaling high-quality subgraphs to support indexing on the network
+- Writing custom handlers for niche protocols or contract types
+- Sharing templates and tutorials for emerging standards
+
+The community maintains libraries, tutorials, and starter kits to help
+developers bootstrap new subgraphs quickly and follow best practices.
+
+## Best practices for subgraph development
+
+Subgraph development benefits from a consistent, modular, and testable approach.
+Following best practices ensures high performance, clarity, and reliability over
+time.
+
+- Use consistent entity naming and schema versioning. Entities should be named in
+singular form and grouped logically. Fields should be explicit, typed, and avoid
+ambiguous names.
+
+- Always define a unique and deterministic ID for each entity. Event parameters
+such as transaction hash, log index, or custom identifiers can be combined to
+avoid duplication.
+
+- Avoid using optional or nullable fields when not necessary. A well-defined
+schema allows for cleaner queries and better indexing performance.
+
+- Batch updates and reduce redundant writes to the store. Saving an entity after
+each minor change can increase load and indexing time. Perform calculations in
+memory before saving.
+
+- Use event-level filtering logic in mappings to avoid unnecessary processing.
+Only create or update entities when specific conditions are met.
+
+- Comment your mapping logic to explain transformations. AssemblyScript is not
+always familiar to all developers, and clarity in logic helps with
+collaboration.
+
+- Keep mapping logic pure and deterministic. Avoid side effects or state-dependent
+behavior that relies on prior events. Subgraphs must be replayable and
+idempotent.
+
+- Regenerate types with `graph codegen` after every schema or ABI change. This
+prevents runtime errors and ensures that mappings are aligned with the current
+data model.
+
+- Use `@derivedFrom` carefully. Derived fields must not be relied on for event
+handling, as they are computed post-indexing and cannot trigger side effects.
+
+- Test subgraphs locally using Ganache or Hardhat with a forked mainnet. Emit
+sample events and ensure that the Graph node indexes the subgraph correctly and
+returns accurate results.
+
+## Known limitations and constraints
+
+While powerful, subgraphs come with design limitations developers must account
+for.
+
+- Subgraphs are read-only and cannot write to the blockchain or trigger
+transactions. They cannot send messages or invoke contract methods.
+
+- Mappings are sandboxed and cannot perform asynchronous operations, call external
+APIs, or access off-chain state.
+
+- Cross-contract reads are not supported. Mappings only receive event data and
+cannot query blockchain state beyond what is emitted in the event.
+
+- There is no native support for joins in GraphQL queries. Relationships must be
+explicitly defined in the schema and managed through entity linking.
+
+- Historical contract state prior to deployment of the subgraph is not available
+unless explicitly emitted and indexed.
+
+- Block-by-block tracking is only supported using block handlers, which can be
+computationally expensive and should be used sparingly.
+
+- There is no persistent cache between handler calls. All context must be passed
+through the event or reconstructed from existing entities.
+
+- Debugging AssemblyScript may lack advanced IDE support. Logging and replaying
+test events is often necessary to trace logic issues.
+
+## Performance tuning and scaling
+
+Subgraphs can be optimized for speed and scalability through a series of
+techniques.
+
+- Set a meaningful `startBlock` to avoid indexing irrelevant history. Use the
+  deployment block of the contract or the earliest event of interest.
+
+- Avoid storing large text strings or unnecessary data. Use IPFS hashes for
+  content and load media off-chain when needed.
+
+- Use indexed fields for `orderBy` and `where` filters. This makes queries more
+  efficient and improves response time.
+
+- Handle large event volumes by minimizing computations in each handler. Avoid
+  loops over arrays when working with block or transaction metadata.
+
+- Group entity updates together and reduce entity cardinality when possible.
+  Instead of creating a new entity per interaction, consider updating an
+  aggregate counter or history record.
+
+- Use Graph Studio and Explorer tools to monitor indexing speed, handler
+  runtimes, and potential performance bottlenecks.
+
+- Use dynamic data sources only when necessary. Static indexing is faster and
+  simpler when contract addresses are known.
+
+## Future of subgraphs and The Graph protocol
+
+The Graph protocol is evolving to support more chains, richer indexing features,
+and increased decentralization. The Graph Network is live and continues to
+expand its capabilities.
+
+Support for more non-EVM chains such as Solana, NEAR, and Cosmos is under
+development. This will enable cross-chain indexing and unified data layers
+across ecosystems. Improvements to GraphQL querying, pagination, and derived
+field performance are underway. This will make front-end development faster and
+more flexible.
+
+Zero-knowledge proofs and cryptographic verification of data integrity are being
+explored to ensure trustless querying at scale. Custom indexers and modular
+handlers are being developed to allow alternative indexing logic and
+chain-specific plugins. Subgraph Studio is expected to offer improved debugging,
+real-time monitoring, and better multi-environment management tools for
+developers.
+
+The subgraph ecosystem will continue to grow as more protocols adopt The Graph
+as their indexing standard. Curated registries, version control, and marketplace
+discovery will be enhanced to make data services more accessible and
+sustainable. Subgraphs are a powerful abstraction that bridge on-chain data with
+off-chain usability. They allow developers to expose rich, queryable APIs from
+blockchain events with minimal overhead and maximum flexibility.
+
+By defining clear schemas, mapping contract events, and deploying to a
+decentralized network of indexers, developers create robust backends that scale
+with their applications. Subgraphs are an essential part of Web3 infrastructure,
+enabling wallets, dashboards, marketplaces, and governance platforms to deliver
+fast and reliable data to users. Mastering their architecture and development
+process will remain a vital skill for anyone building the decentralized
+internet.
