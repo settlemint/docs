@@ -1,0 +1,12 @@
+{
+  "label": "Use cases",
+  "title": "Use cases",
+  "pages": [
+    "bond-tokenization",
+    "cryptocurrency",
+    "equity-tokenization",
+    "fund-tokenization",
+    "stablecoin",
+    "tokenized-deposits"
+  ]
+}

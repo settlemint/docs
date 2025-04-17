@@ -17,9 +17,15 @@ export const source = loader({
       return createElement(icons[icon as keyof typeof icons]);
     }
   },
+  searchOptions: {
+    batchSize: 100,
+  },
 });
 
 export const blog = loader({
   baseUrl: "/release-notes",
   source: createMDXSource(blogPosts),
+  searchOptions: {
+    batchSize: 100,
+  },
 });

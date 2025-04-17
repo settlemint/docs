@@ -11,6 +11,7 @@
     "asset-manager",
     "portfolio-manager",
     "api-portal",
-    "ui-customization"
+    "ui-customization",
+    "use-cases"
   ]
 }
