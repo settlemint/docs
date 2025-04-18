@@ -14,7 +14,7 @@
     "generate-sitemap": "bun scripts/generate-sitemap.ts"
   },
   "dependencies": {
-    "@next/third-parties": "15.3.0",
+    "@next/third-parties": "15.3.1",
     "@theguild/remark-mermaid": "0.3.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
@@ -24,7 +24,7 @@
     "fumadocs-twoslash": "3.1.1",
     "fumadocs-ui": "15.2.8",
     "lucide-react": "0.488.0",
-    "next": "15.3.0",
+    "next": "15.3.1",
     "posthog-js": "1.236.2",
     "posthog-node": "4.12.0",
     "prettier": "3.5.3",
@@ -46,7 +46,7 @@
     "tailwindcss": "4.1.4",
     "typescript": "5.8.3",
     "eslint": "9.24.0",
-    "eslint-config-next": "15.3.0",
+    "eslint-config-next": "15.3.1",
     "@eslint/eslintrc": "3.3.1",
     "@eslint/js": "9.24.0"
   }
