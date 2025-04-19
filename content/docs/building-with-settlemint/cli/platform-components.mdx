@@ -1,0 +1,1351 @@
+---
+title: "SettleMint CLI usage"
+description:
+  "Command-line interface for managing SettleMint blockchain applications"
+---
+
+## Overview
+
+The SettleMint CLI is a powerful command-line tool that provides developers with
+direct access to the SettleMint platform's capabilities. It streamlines the
+process of creating, managing, and deploying blockchain applications without
+requiring expertise in underlying infrastructure. The SettleMint CLI can be
+utilized in various ways depending on your workflow preferences and project
+requirements. You can install it as a dependency in your project, globally on
+your system, or use it through GitHub Actions for CI/CD pipelines.
+
+## As a dependency in your package.json
+
+Installing the SettleMint CLI as a project dependency ensures that everyone
+working on your project uses the same version of the CLI, maintaining
+consistency across development environments.
+
+```bash
+# npm
+npm install @settlemint/sdk-cli
+npx settlemint --version
+
+# bun
+bun add @settlemint/sdk-cli
+bunx settlemint --version
+
+# pnpm
+pnpm add @settlemint/sdk-cli
+pnpm dlx settlemint --version
+
+# yarn
+yarn add @settlemint/sdk-cli
+yarn create settlemint --version
+```
+
+## Globally install the CLI
+
+Installing the CLI globally provides convenient access from any directory on
+your system, making it ideal for developers who work on multiple SettleMint
+projects or need to quickly access CLI commands without project-specific
+configuration.
+
+```bash
+# npm
+npm install -g @settlemint/sdk-cli
+
+# bun
+bun install -g @settlemint/sdk-cli
+
+# pnpm
+pnpm add -g @settlemint/sdk-cli
+
+# yarn
+yarn global add @settlemint/sdk-cli
+```
+
+You can access the CLI globally by running settlemint in your terminal.
+
+## GitHub Action
+
+The SettleMint GitHub Action enables seamless integration of platform operations
+within your CI/CD workflows. This allows you to automate blockchain deployments,
+testing, and infrastructure management as part of your development pipeline.
+
+Basic example
+
+```yaml
+steps:
+  - name: Get SettleMint CLI version
+    uses: settlemint/settlemint-action@main
+    with:
+      access-token: ${{ secrets.SETTLEMINT_ACCESS_TOKEN }}
+      command: "--version"
+```
+
+For detailed setup instructions, refer to SettleMint GitHub Action Docs
+
+## Examples
+
+Here are some basic examples to help you get started with the SettleMint CLI.
+These commands demonstrate how to check the CLI version and access help
+documentation for different commands.
+
+```bash
+# Get the version of the CLI
+settlemint --version
+
+# View help for any command
+settlemint --help
+settlemint platform --help
+settlemint platform create --help
+```
+
+## Authentication
+
+Authentication is required before using the SettleMint CLI to interact with your
+platform environment. This ensures secure access to your resources and prevents
+unauthorized operations.
+
+Before using any CLI commands that interact with your SettleMint environment,
+you must authenticate using a Personal Access Token (PAT). You can create a PAT
+from your user profile in the SettleMint console.
+
+## Login
+
+The login command authenticates your CLI session with the SettleMint platform,
+establishing a secure connection that allows you to execute commands on your
+account's resources.
+
+```bash
+settlemint login
+```
+
+To login using a token passed through STDIN:
+
+```bash
+cat ~/my_token.txt | settlemint login --token-stdin --accept-defaults
+```
+
+Options
+
+```bash
+-a, --accept-defaults      Accept the default and previously set values
+--token-stdin              Provide a token using STDIN
+-i, --instance <instance>  The instance to login to (defaults to the instance in the .env file)
+-h, --help                 display help for command
+```
+
+## Logout
+
+The logout command terminates your authenticated session with the SettleMint
+platform, ensuring your credentials are securely removed from the local
+environment.
+
+```bash
+settlemint logout
+```
+
+Options
+
+```bash
+--all       Logout from all instances
+-h, --help  display help for command
+```
+
+## Project connection
+
+The connect command links your local development environment to a specific
+SettleMint application, allowing the CLI to execute commands in the context of
+that application. This simplifies workflows by automatically targeting the right
+application for your operations.
+
+```bash
+# Connect
+settlemint connect
+```
+
+Options
+
+```bash
+--prod                     Connect to your production environment
+-a, --accept-defaults      Accept the default and previously set values
+-i, --instance <instance>  The instance to connect to (defaults to the instance in the .env file)
+-h, --help                 display help for command
+```
+
+## Blockchain utilities
+
+The CLI provides specialized utilities for blockchain operations that help
+developers interact with blockchain nodes and perform common tasks related to
+blockchain development.
+
+The CLI also provides features for blockchain node management, including pincode
+verification response retrieval.
+
+```bash
+# Pincode verification response
+settlemint pincode-verification-response
+
+# You can also use the alias pvr.
+```
+
+Options
+
+```bash
+--wallet-address <walletAddress>    The wallet address to get pincode verification response for
+-i, --instance <instance>           The instance to connect to (defaults to the .env file)
+--blockchain-node <blockchainNode>  Blockchain Node unique name to get pincode verification response for
+-h, --help                          display help for command
+```
+
+---
+
+## Create Command
+
+The Create Command provides a streamlined way to bootstrap new SettleMint
+projects from templates. This enables you to quickly set up projects with best
+practices and common configurations already in place.
+
+```bash
+Usage: settlemint create [options] Bootstrap your SettleMint project
+
+Options:
+-n, --project-name <name> The name for your SettleMint project
+-t, --template <template> The template for your SettleMint project (run
+`settlemint platform config` to see available templates)
+-v, --version <version> Specify the template version to use (defaults to latest stable
+version)
+-i, --instance <instance> The instance to connect to
+-h, --help display help for command
+```
+
+## Platform Commands
+
+Platform Commands form the core of the SettleMint CLI, enabling comprehensive
+management of all resources within the SettleMint platform. These commands allow
+you to create, update, delete, restart, and list different types of platform
+resources.
+
+```bash
+Usage: settlemint platform [options] [command] Manage SettleMint platform
+resources
+
+Options:
+-h, --help display help for command
+
+Commands:
+config|cfg [options] Get platform configuration
+create|c Create a resource in the SettleMint platform
+update|u Update a resource in the SettleMint platform
+delete|d Delete a resource in the SettleMint platform
+restart Restart a resource in the SettleMint platform
+list|ls List resources in the SettleMint platform
+help [command] display help for command
+```
+
+## Platform Config
+
+The Platform Config command retrieves the current configuration of your
+SettleMint platform environment. This includes available regions, providers,
+templates, and other settings that affect how resources are created and managed.
+
+```bash
+Usage: settlemint platform config|cfg [options] Get platform configuration
+
+Options:
+--prod Connect to your production environment
+-i, --instance <instance> The instance to connect to (defaults to the instance in the
+.env file)
+-o, --output <output> The output format (choices: "json", "yaml")
+-h, --help display help for command
+```
+
+## Platform Create
+
+The Platform Create command family allows you to provision various resources
+within the SettleMint platform. This includes workspaces, applications,
+blockchain networks, middleware services, and more, enabling you to build out
+your blockchain infrastructure.
+
+```bash
+Usage: settlemint platform create|c [options] [command] Create a resource in
+the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+workspace|w [options] <name> Create a new workspace in the SettleMint platform.
+application|a [options] <name> Create a new application in the SettleMint platform.
+blockchain-network|bnw Create a blockchain network in the SettleMint platform
+blockchain-node|bn Create a blockchain node in the SettleMint platform
+private-key|pk Create a private key in the SettleMint platform
+middleware|mw Create a middleware service in the SettleMint platform
+storage|st Create a storage service in the SettleMint platform
+integration-tool|it Create a new integration tool
+insights|in Create a new insights
+application-access-token|aat [options] <name> Create a new application access token in the SettleMint platform.
+help [command] display help for command
+```
+
+### Create Workspace
+
+The Create Workspace command provisions a new workspace in the SettleMint
+platform. Workspaces are organizational units that contain applications and
+their associated resources, allowing you to manage access controls and billing
+at a high level.
+
+```bash
+Usage: settlemint platform create workspace|w
+
+Examples:
+# Create a workspace with company details
+$ settlemint platform create workspace my-workspace --name "SettleMint" --tax-id-type eu_vat --tax-id-value BE0661674810
+
+# Create a workspace with address details
+$ settlemint platform create workspace my-workspace --line1 "123 Main St" --city "Brussels" --postal-code "1000" --country BE
+
+# Create a workspace and save as default
+$ settlemint platform create workspace my-workspace -d
+
+Arguments:
+name The workspace name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default workspace
+--prod Connect to production environment
+--company-name <companyName> Company name
+--address-line-1 <addressLine1> Address line 1
+--address-line-2 <addressLine2> Address line 2
+--city <city> City
+--postal-code <code> Postal code
+--country <country> Country
+--tax-id-value <value> Tax ID value
+--tax-id-type <type> Tax ID type (e.g. 'eu_vat' for European VAT number like 'ATU12345678', 'us_ein' for US EIN like '12-3456789')
+--payment-method-id <paymentMethodId> Payment method ID
+--parent-id <parentId> Parent workspace ID
+-h, --help display help for command
+```
+
+### Create Application
+
+The Create Application command provisions a new application within a workspace.
+An application is a container for related blockchain resources such as networks,
+nodes, and services that together form a cohesive blockchain solution.
+
+```bash
+Usage: settlemint platform create application|a
+
+Examples:
+# Create an application in a workspace
+$ settlemint platform create application my-app --accept-defaults
+
+# Create an application and save as default
+$ settlemint platform create application my-app -d
+
+# Create an application in a specific workspace
+$ settlemint platform create application my-app --workspace my-workspace
+
+Arguments:
+name The application name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default application
+--prod Connect to production environment
+-w, --workspace <workspace> The workspace unique name to create the application in (defaults to workspace from env)
+-h, --help display help for command
+```
+
+### Create Blockchain Network
+
+The Create Blockchain Network command provisions a new blockchain network in
+your SettleMint application. This network serves as the foundation for
+blockchain operations, providing the consensus mechanism, transaction
+processing, and state management capabilities.
+
+```bash
+Usage: settlemint platform create blockchain-network|bnw [options] [command]
+Create a blockchain network in the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+besu|b [options] <name> Create a new Besu blockchain network in the SettleMint platform.
+help [command] display help for command
+```
+
+#### Create Besu Blockchain Network
+
+The Create Besu Blockchain Network command provisions a new Hyperledger Besu
+blockchain network. Besu is an enterprise-grade Ethereum client that supports
+both public and private network configurations, providing features like privacy,
+permissioning, and high performance.
+
+```bash
+Usage: settlemint platform create blockchain-network besu|b
+
+Examples:
+# Create a Besu blockchain network and save as default
+$ settlemint platform create blockchain-network besu my-network --node-name validator-1 --accept-defaults -d
+
+# Create a Besu blockchain network in a different application
+$ settlemint platform create blockchain-network besu my-network --application app-123 --node-name validator-1 --chain-id 12345 --gas-limit 10000000 --seconds-per-block 5
+
+Arguments:
+name The Besu blockchain network name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default blockchain network
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--provider <provider> Network provider (run `settlemint platform config` to see available providers)
+--region <region> Deployment region (run `settlemint platform config` to see available regions)
+--size <size> Network size (choices: "LARGE", "MEDIUM", "SMALL", default: "SMALL")
+--type <type> Network type (choices: "DEDICATED", "SHARED", default: "SHARED")
+--app, --application <application> The unique name of the application to create the network in (defaults to application from env)
+--node-name <name> Name of the node
+--chain-id <chainId> The chain ID for the network
+--contract-size-limit <limit> Maximum contract size limit
+--evm-stack-size <size> EVM stack size
+--gas-limit <limit> Block gas limit
+--gas-price <price> Gas price in wei
+--seconds-per-block <seconds> Block time in seconds
+-h, --help display help for command
+```
+
+### Create Blockchain Node
+
+The Create Blockchain Node command provisions additional nodes for an existing
+blockchain network. Adding nodes to your network can increase its resilience,
+distribution, and throughput capacity.
+
+```bash
+Usage: settlemint platform create blockchain-node|bn [options] [command]
+Create a blockchain node in the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+besu|b [options] <name> Create a new Besu blockchain node in the SettleMint platform.
+help [command] display help for command
+```
+
+#### Create Besu Blockchain Node
+
+The Create Besu Blockchain Node command provisions a new Hyperledger Besu node
+and connects it to an existing Besu network. You can create validator nodes that
+participate in consensus or non-validator nodes that provide additional access
+points to the network.
+
+```bash
+Usage: settlemint platform create blockchain-node besu|b
+
+Examples:
+# Create a Besu blockchain node and save as default
+$ settlemint platform create blockchain-node besu my-node --node-type VALIDATOR --accept-defaults -d
+
+# Create a Besu blockchain node in a different network
+$ settlemint platform create blockchain-node besu my-node --blockchain-network-id 12345 --node-type NON_VALIDATOR --accept-defaults
+
+# Create a Besu blockchain node in a different application
+$ settlemint platform create blockchain-node besu my-node --application-id 123456789 --node-type NON_VALIDATOR --accept-defaults
+
+Arguments:
+name The Besu blockchain node name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default blockchain node
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--provider <provider> Network provider (run `settlemint platform config` to see available providers)
+--region <region> Deployment region (run `settlemint platform config` to see available regions)
+--size <size> Network size (choices: "LARGE", "MEDIUM", "SMALL", default: "SMALL")
+--type <type> Network type (choices: "DEDICATED", "SHARED", default: "SHARED")
+--app, --application <application> The application unique name to create the node in (defaults to application from env)
+--blockchain-network <blockchainNetwork> Blockchain network unique name to add this node to
+--node-identity <nodeIdentity> EC DSA P256 private key to use as the node identity
+--node-type <nodeType> Type of the node (choices: "VALIDATOR", "NON_VALIDATOR")
+-h, --help display help for command
+```
+
+### Create Private Key
+
+The Create Private Key command generates and securely stores cryptographic keys
+that can be used for blockchain transactions, smart contract deployment, and
+other operations requiring digital signatures. The SettleMint platform offers
+multiple key storage options with varying security levels.
+
+```bash
+Usage: settlemint platform create private-key|pk [options] [command] Create a
+private key in the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+hd-ecdsa-p256|hd [options] <name> Create a new HD-ECDSA-P256 private key in the SettleMint platform.
+hsm-ecdsa-p256|hsm [options] <name> Create a new HSM-ECDSA-P256 private key in the SettleMint platform.
+accessible-ecdsa-p256|acc [options] <name> Create a new ACCESSIBLE-ECDSA-P256 private key in the SettleMint platform.
+help [command] display help for command
+```
+
+#### HD ECDSA P256 Private Key
+
+The HD ECDSA P256 Private Key option creates a hierarchical deterministic key
+using the ECDSA P256 algorithm. HD keys allow for the generation of multiple
+derived keys from a single master key, providing flexibility for key management
+while maintaining security.
+
+```bash
+Usage: settlemint platform create private-key hd-ecdsa-p256|hd
+
+Examples:
+# Create a private key and save as default
+$ settlemint platform create private-key hd-ecdsa-p256 my-key --accept-defaults -d
+
+# Create a private key in a different application
+$ settlemint platform create private-key hd-ecdsa-p256 my-key --application my-app
+
+# Create a private key linked to a blockchain node
+$ settlemint platform create private-key hd-ecdsa-p256 my-key --blockchain-node node-123
+
+Arguments:
+name The HD-ECDSA-P256 private key name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default private key
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--application <application> Application unique name
+--blockchain-node <blockchainNode> Blockchain Node unique name
+-h, --help display help for command
+```
+
+#### HSM ECDSA P256 Private Key
+
+The HSM ECDSA P256 Private Key option creates a key stored in a Hardware
+Security Module (HSM). HSMs provide the highest level of security by performing
+cryptographic operations within a tamper-resistant hardware device, preventing
+the key from ever being exposed in memory.
+
+```bash
+Usage: settlemint platform create private-key hsm-ecdsa-p256|hsm
+
+Examples:
+# Create a private key and save as default
+$ settlemint platform create private-key hsm-ecdsa-p256 my-key --accept-defaults -d
+
+# Create a private key in a different application
+$ settlemint platform create private-key hsm-ecdsa-p256 my-key --application 123456789
+
+# Create a private key linked to a blockchain node
+$ settlemint platform create private-key hsm-ecdsa-p256 my-key --blockchain-node node-123
+
+Arguments:
+name The HSM-ECDSA-P256 private key name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default private key
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--application <application> Application unique name
+--blockchain-node <blockchainNode> Blockchain Node unique name
+-h, --help display help for command
+```
+
+#### Accessible ECDSA P256 Private Key
+
+The Accessible ECDSA P256 Private Key option creates a key that can be exported
+and accessed directly by applications. This provides more flexibility for
+integrations but with lower security compared to HSM keys, as the private key
+material can be exposed to the application.
+
+```bash
+Usage: settlemint platform create private-key accessible-ecdsa-p256|acc
+
+Examples:
+# Create a private key and save as default
+$ settlemint platform create private-key accessible-ecdsa-p256 my-key --accept-defaults -d
+
+# Create a private key in a different application
+$ settlemint platform create private-key accessible-ecdsa-p256 my-key --application my-app
+
+# Create a private key linked to a blockchain node
+$ settlemint platform create private-key accessible-ecdsa-p256 my-key --blockchain-node node-123
+
+Arguments:
+name The ACCESSIBLE-ECDSA-P256 private key name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default private key
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--application <application> Application unique name
+--blockchain-node <blockchainNode> Blockchain Node unique name
+-h, --help display help for command
+```
+
+### Create Middleware
+
+The Create Middleware command provisions middleware services that enhance
+blockchain functionality. Middleware components provide additional capabilities
+like indexing, querying, and simplified smart contract interactions that aren't
+available in the base blockchain protocol.
+
+```bash
+Usage: settlemint platform create middleware|mw [options] [command] Create a
+middleware service in the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+graph|gr [options] <name> Create a new The Graph middleware in the SettleMint platform.
+smart-contract-portal|scp [options] <name> Create a new Smart Contract Portal middleware in the SettleMint platform.
+help [command] display help for command
+```
+
+#### Create Graph Middleware
+
+The Create Graph Middleware command provisions an instance of The Graph
+protocol. The Graph is a decentralized indexing protocol that enables efficient
+querying of blockchain data through GraphQL APIs, making it easier to build
+responsive dApps that access blockchain data.
+
+```bash
+Usage: settlemint platform create middleware graph|gr
+
+Examples:
+# Create a graph middleware and save as default
+$ settlemint platform create middleware graph my-graph --accept-defaults -d
+
+# Create a graph middleware in a different application
+$ settlemint platform create middleware graph my-graph --application my-app --blockchain-node node-123
+
+Arguments:
+name The The Graph middleware name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default middleware
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--provider <provider> Network provider (run `settlemint platform config` to see available providers)
+--region <region> Deployment region (run `settlemint platform config` to see available regions)
+--size <size> Network size (choices: "LARGE", "MEDIUM", "SMALL", default: "SMALL")
+--type <type> Network type (choices: "DEDICATED", "SHARED", default: "SHARED")
+--application <application> Application unique name
+--blockchain-node <blockchainNode> Blockchain Node unique name
+-h, --help display help for command
+```
+
+#### Create Smart Contract Portal Middleware
+
+The Create Smart Contract Portal Middleware command provisions a Smart Contract
+Portal service. This portal provides a user-friendly interface for interacting
+with smart contracts, including functions for deploying, calling methods, and
+monitoring events without requiring direct blockchain interaction knowledge.
+
+```bash
+Usage: settlemint platform create middleware smart-contract-portal|scp
+
+Examples:
+# Create a smart contract portal middleware and save as default
+$ settlemint platform create middleware smart-contract-portal my-portal --accept-defaults -d
+
+# Create a smart contract portal middleware in a different application
+$ settlemint platform create middleware smart-contract-portal my-portal --application my-app --blockchain-node node-123
+
+Arguments:
+name The Smart Contract Portal middleware name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default middleware
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--provider <provider> Network provider (run `settlemint platform config` to see available providers)
+--region <region> Deployment region (run `settlemint platform config` to see available regions)
+--size <size> Network size (choices: "LARGE", "MEDIUM", "SMALL", default: "SMALL")
+--type <type> Network type (choices: "DEDICATED", "SHARED", default: "SHARED")
+--application <application> Application unique name
+--load-balancer <loadBalancer> Load Balancer unique name (mutually exclusive with blockchain-node)
+--blockchain-node <blockchainNode> Blockchain Node unique name (mutually exclusive with load-balancer)
+--abis <abis...> Path to abi file(s)
+--include-predeployed-abis <includePredeployedAbis...> Include pre-deployed abis (run `settlemint platform config` to see available pre-deployed abis)
+-h, --help display help for command
+```
+
+### Create Storage
+
+The Create Storage command provisions decentralized storage services for your
+blockchain application. These services allow you to store files, documents, and
+other digital assets that are too large to be placed directly on the blockchain,
+while maintaining references to them within your smart contracts.
+
+```bash
+Usage: settlemint platform create storage|st [options] [command] Create a
+storage service in the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+ipfs|ip [options] <name> Create a new IPFS storage in the SettleMint platform.
+minio|m [options] <name> Create a new MinIO storage in the SettleMint platform.
+help [command] display help for command
+```
+
+#### Create IPFS Storage
+
+The Create IPFS Storage command provisions an InterPlanetary File System (IPFS)
+node. IPFS is a distributed file system that enables decentralized storage of
+content-addressed files, making it ideal for storing assets like images, videos,
+and documents referenced by blockchain applications.
+
+```bash
+Usage: settlemint platform create storage ipfs|ip
+
+Examples:
+# Create an IPFS storage and save as default
+$ settlemint platform create storage ipfs my-storage --accept-defaults -d
+
+# Create an IPFS storage in a different application
+$ settlemint platform create storage ipfs my-storage --application app-123
+
+Arguments:
+name The IPFS storage name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default storage
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--provider <provider> Network provider (run `settlemint platform config` to see available providers)
+--region <region> Deployment region (run `settlemint platform config` to see available regions)
+--size <size> Network size (choices: "LARGE", "MEDIUM", "SMALL", default: "SMALL")
+--type <type> Network type (choices: "DEDICATED", "SHARED", default: "SHARED")
+--application <application> Application unique name
+-h, --help display help for command
+```
+
+#### Create MinIO Storage
+
+The Create MinIO Storage command provisions a MinIO object storage service.
+MinIO provides high-performance, S3-compatible object storage, making it ideal
+for applications that require cloud-like storage capabilities while maintaining
+compatibility with existing S3 APIs and tools.
+
+```bash
+Usage: settlemint platform create storage minio|m
+
+Examples:
+# Create a MinIO storage and save as default
+$ settlemint platform create storage minio my-storage --accept-defaults -d
+
+# Create a MinIO storage in a different application
+$ settlemint platform create storage minio my-storage --application app-123
+
+Arguments:
+name The MinIO storage name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default storage
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--provider <provider> Network provider (run `settlemint platform config` to see available providers)
+--region <region> Deployment region (run `settlemint platform config` to see available regions)
+--size <size> Network size (choices: "LARGE", "MEDIUM", "SMALL", default: "SMALL")
+--type <type> Network type (choices: "DEDICATED", "SHARED", default: "SHARED")
+--application <application> Application unique name
+-h, --help display help for command
+```
+
+### Create Integration Tool
+
+The Create Integration Tool command provisions services that facilitate
+integration between blockchain data and traditional systems. These tools help
+bridge the gap between on-chain and off-chain data, enabling comprehensive data
+access and manipulation.
+
+```bash
+Usage: settlemint platform create integration-tool|it [options] [command]
+Create a new integration tool
+
+Options:
+-h, --help display help for command
+
+Commands:
+hasura|ha [options] <name> Create a new Hasura integration tool in the SettleMint platform.
+help [command] display help for command
+```
+
+#### Create Hasura Integration Tool
+
+The Create Hasura Integration Tool command provisions a Hasura GraphQL Engine
+instance. Hasura provides instant GraphQL APIs on your blockchain data, enabling
+easy data querying, filtering, and integration with other systems through a
+unified GraphQL interface.
+
+```bash
+Usage: settlemint platform create integration-tool hasura|ha
+
+Examples:
+# Create a Hasura integration and save as default
+$ settlemint platform create integration-tool hasura my-hasura --accept-defaults -d
+
+# Create a Hasura integration in a different application
+$ settlemint platform create integration-tool hasura my-hasura --application app-123
+
+Arguments:
+name The Hasura integration tool name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default integration tool
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--provider <provider> Network provider (run `settlemint platform config` to see available providers)
+--region <region> Deployment region (run `settlemint platform config` to see available regions)
+--size <size> Network size (choices: "LARGE", "MEDIUM", "SMALL", default: "SMALL")
+--type <type> Network type (choices: "DEDICATED", "SHARED", default: "SHARED")
+--application <application> Application unique name
+-h, --help display help for command
+```
+
+### Create Insights
+
+The Create Insights command provisions blockchain analytics services. These
+services provide visibility into blockchain activities, helping developers and
+users monitor transactions, track contract interactions, and analyze on-chain
+data.
+
+```bash
+Usage: settlemint platform create insights|in [options] [command] Create a new
+insights
+
+Options:
+-h, --help display help for command
+
+Commands:
+blockscout|bs [options] <name> Create a new Blockscout insights in the SettleMint platform.
+help [command] display help for command
+```
+
+#### Create Blockscout Insights
+
+The Create Blockscout Insights command provisions a Blockscout blockchain
+explorer. Blockscout provides comprehensive blockchain data visualization and
+exploration capabilities, allowing users to search transactions, view smart
+contracts, and monitor blockchain activity through an intuitive web interface.
+
+```bash
+Usage: settlemint platform create insights blockscout|bs
+
+Examples:
+# Create a Blockscout insights service and save as default
+$ settlemint platform create insights blockscout my-blockscout --accept-defaults -d
+
+# Create a Blockscout insights service in a different application
+$ settlemint platform create insights blockscout my-blockscout --application app-123
+
+Arguments:
+name The Blockscout insights name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default insights
+--prod Connect to production environment
+-w, --wait Wait until deployed
+-r, --restart-if-timeout Restart if wait time is exceeded
+--provider <provider> Network provider (run `settlemint platform config` to see available providers)
+--region <region> Deployment region (run `settlemint platform config` to see available regions)
+--size <size> Network size (choices: "LARGE", "MEDIUM", "SMALL", default: "SMALL")
+--type <type> Network type (choices: "DEDICATED", "SHARED", default: "SHARED")
+--application <application> Application unique name
+--load-balancer <loadBalancer> Load Balancer unique name (mutually exclusive with blockchain-node)
+--blockchain-node <blockchainNode> Blockchain Node unique name (mutually exclusive with load-balancer)
+-h, --help display help for command
+```
+
+### Create Application Access Token
+
+The Create Application Access Token command generates authentication tokens for
+programmatic access to your SettleMint application resources. These tokens
+enable secure integration between your applications and the SettleMint platform
+without requiring user credentials.
+
+```bash
+Usage: settlemint platform create application-access-token|aat
+
+Examples:
+# Create an application access token and save as default
+$ settlemint platform create application-access-token my-token --accept-defaults -d
+
+# Create an application access token with custom validity period
+$ settlemint platform create application-access-token my-token --validity-period ONE_DAY -a -d
+
+# Create an application access token (shorthand)
+$ settlemint platform create aat my-token
+
+Arguments:
+name The application access token name
+
+Options:
+-a, --accept-defaults Accept the default values
+-d, --default Save as default application access token
+--prod Connect to production environment
+--app, --application <application> The application unique name to create the application access token for (defaults to application from env)
+-v, --validity-period <period> The validity period for the token (choices: "DAYS_7", "DAYS_30", "DAYS_60", "DAYS_90", "NONE", default: "DAYS_7")
+-h, --help display help for command
+```
+
+## Platform Delete Commands
+
+The Platform Delete Commands enable you to remove resources from your SettleMint
+platform environment. These commands should be used with caution as they
+permanently delete resources and their associated data.
+
+```bash
+Usage: settlemint platform delete|d [options] [command] Delete a resource in
+the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+workspace|w [options] <unique-name> Delete a workspace in the SettleMint platform. Provide the workspace unique name or use 'default' to delete the default workspace from your .env file.
+application|a [options] <unique-name> Delete a application in the SettleMint platform. Provide the application unique name or use 'default' to delete the default application from your .env file.
+help [command] display help for command
+```
+
+#### Delete Workspace
+
+The Delete Workspace command removes a workspace and all its contained resources
+from your SettleMint platform environment. This operation is irreversible and
+will delete all applications, networks, and other resources within the
+workspace.
+
+```bash
+Usage: settlemint platform delete workspace|w
+
+Examples:
+# Deletes the specified workspace by unique name
+$ settlemint platform delete workspace <workspace-unique-name>
+
+# Deletes the default workspace in the production environment
+$ settlemint platform delete workspace default --prod
+
+# Force deletes the specified workspace without confirmation
+$ settlemint platform delete workspace <workspace-unique-name> --force
+
+Arguments:
+unique-name The unique name of the workspace, use 'default' to delete the default one from your .env file
+
+Options:
+-a, --accept-defaults Accept the default and previously set values
+--prod Connect to your production environment
+-f, --force Force delete the workspace without confirmation
+-h, --help display help for command
+```
+
+#### Delete Application
+
+The Delete Application command removes an application and all its resources from
+your SettleMint platform environment. This operation is irreversible and will
+delete all blockchain networks, nodes, middleware, and other services within the
+application.
+
+```bash
+Usage: settlemint platform delete application|a
+
+Examples:
+# Deletes the specified application by unique name
+$ settlemint platform delete application <application-unique-name>
+
+# Deletes the default application in the production environment
+$ settlemint platform delete application default --prod
+
+# Force deletes the specified application without confirmation
+$ settlemint platform delete application <application-unique-name> --force
+
+Arguments:
+unique-name The unique name of the application, use 'default' to delete the default one from your .env file
+
+Options:
+-a, --accept-defaults Accept the default and previously set values
+--prod Connect to your production environment
+-f, --force Force delete the application without confirmation
+-h, --help display help for command
+```
+
+## Platform List Commands
+
+The Platform List Commands provide visibility into your SettleMint platform
+resources. These commands allow you to view and explore the various components
+deployed in your environment, helping with management and troubleshooting.
+
+```bash
+Usage: settlemint platform list|ls [options] [command] List resources in the
+SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+services|s [options] List the application services
+workspaces|w [options] List workspaces
+applications|a [options] List applications
+help [command] display help for command
+```
+
+#### List Services
+
+The List Services command displays all services deployed within an application.
+This provides a comprehensive view of your blockchain infrastructure, including
+networks, nodes, middleware, and other components, with options to filter by
+service type and output in various formats.
+
+```bash
+Usage: settlemint platform list services|s
+
+Examples:
+# List the application services
+$ settlemint platform list services
+
+# List the application services in wide format with more information (such as console url)
+$ settlemint platform list services -o wide
+
+# List the application services in JSON format
+$ settlemint platform list services -o json > services.json
+
+# List the application services in YAML format
+$ settlemint platform list services -o yaml > services.yaml
+
+# List the application services for a specific application
+$ settlemint platform list services --application my-app
+
+# List the application services for a specific application and type
+$ settlemint platform list services --application my-app --type middleware
+
+# List the application services for multiple types
+$ settlemint platform list services --type blockchain-network blockchain-node middleware
+
+Options:
+--app, --application <application> The application unique name to list the services in (defaults to application from env)
+-t, --type <type...> The type(s) of service to list (choices: "blockchain-network", "blockchain-node", "custom-deployment", "insights", "integration-tool", "middleware", "private-key", "storage")
+-o, --output <output> The output format (choices: "wide", "json", "yaml")
+-h, --help display help for command
+```
+
+#### List Workspaces
+
+The List Workspaces command displays all workspaces in your SettleMint platform
+account. This helps you maintain an overview of your organizational structure
+and quickly access workspace details for management tasks.
+
+```bash
+Usage: settlemint platform list workspaces|w
+
+Examples:
+# List workspaces
+$ settlemint platform list workspaces
+
+# List workspaces in wide format with more information
+$ settlemint platform list workspaces -o wide
+
+# List workspaces in JSON format
+$ settlemint platform list workspaces -o json > workspaces.json
+
+# List workspaces in YAML format
+$ settlemint platform list workspaces -o yaml > workspaces.yaml
+
+Options:
+-o, --output <output> The output format (choices: "wide", "json", "yaml")
+-h, --help display help for command
+```
+
+#### List Applications
+
+The List Applications command displays all applications within a workspace. This
+provides visibility into your application portfolio and helps manage
+multi-application environments within a workspace.
+
+```bash
+Usage: settlemint platform list applications|a
+
+Examples:
+# List applications
+$ settlemint platform list applications
+
+# List applications in wide format with more information
+$ settlemint platform list applications -o wide
+
+# List applications in JSON format
+$ settlemint platform list applications -o json > applications.json
+
+# List applications in YAML format
+$ settlemint platform list applications -o yaml > applications.yaml
+
+Options:
+-w, --workspace <workspace> The workspace unique name to list applications for (defaults to workspace from env)
+-o, --output <output> The output format (choices: "wide", "json", "yaml")
+-h, --help display help for command
+```
+
+## Platform Restart Commands
+
+The Platform Restart Commands allow you to restart various services in your
+SettleMint platform environment. Restarting services can help resolve issues,
+apply configuration changes, or recover from error states.
+
+```bash
+Usage: settlemint platform restart [options] [command] Restart a resource in
+the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+blockchain-network|bn [options] <unique-name> Restart a blockchain network in the SettleMint platform. Provide the blockchain network unique name or use 'default' to restart the default blockchain network from your .env file.
+custom-deployment|cd [options] <unique-name> Restart a custom deployment in the SettleMint platform. Provide the custom deployment unique name or use 'default' to restart the default custom deployment from your .env file.
+insights|in Restart an insights service in the SettleMint platform
+integration-tool|it Restart an integration tool service in the SettleMint platform
+middleware|mw Restart a middleware service in the SettleMint platform
+storage|st Restart a storage service in the SettleMint platform
+help [command] display help for command
+```
+
+#### Restart Blockchain Network
+
+The Restart Blockchain Network command restarts all nodes and services
+associated with a blockchain network. This can be useful for applying
+network-wide configuration changes or recovering from network-wide issues.
+
+```bash
+Usage: settlemint platform restart blockchain-network|bn
+
+Examples:
+# Restarts the specified blockchain network by id
+$ settlemint platform restart blockchain-network <blockchain network-id>
+
+# Restarts the default blockchain network in the production environment
+$ settlemint platform restart blockchain-network default --prod
+
+Arguments:
+unique-name The unique name of the blockchain network, use 'default' to restart the default one from your .env file
+
+Options:
+-a, --accept-defaults Accept the default and previously set values
+--prod Connect to your production environment
+-w, --wait Wait until restarted
+-h, --help display help for command
+```
+
+#### Restart Custom Deployment
+
+The Restart Custom Deployment command restarts a custom service deployed in your
+SettleMint platform environment. Custom deployments can include specialized
+services or applications that are integrated with your blockchain
+infrastructure.
+
+```bash
+Usage: settlemint platform restart custom-deployment|cd
+
+Examples:
+# Restarts the specified custom deployment by id
+$ settlemint platform restart custom-deployment <custom deployment-id>
+
+# Restarts the default custom deployment in the production environment
+$ settlemint platform restart custom-deployment default --prod
+
+Arguments:
+unique-name The unique name of the custom deployment, use 'default' to restart the default one from your .env file
+
+Options:
+-a, --accept-defaults Accept the default and previously set values
+--prod Connect to your production environment
+-w, --wait Wait until restarted
+-h, --help display help for command
+```
+
+#### Restart Insights
+
+The Restart Insights command restarts analytics and monitoring services in your
+SettleMint platform environment. This can help refresh data streams or resolve
+issues with blockchain data visualization and analysis.
+
+```bash
+Usage: settlemint platform restart insights|in [options] [command] Restart an
+insights service in the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+blockscout|bs [options] <unique-name> Restart a insights in the SettleMint platform. Provide the insights unique name or use 'default' to restart the default insights from your .env file.
+help [command] display help for command
+```
+
+##### Restart Blockscout Insights
+
+The Restart Blockscout Insights command specifically restarts a Blockscout
+blockchain explorer instance. Restarting Blockscout can help refresh blockchain
+data indexing, resolve explorer interface issues, or apply configuration changes
+to the explorer service.
+
+```bash
+Usage: settlemint platform restart insights blockscout|bs
+
+Examples:
+# Restarts the specified insights by id
+$ settlemint platform restart blockscout blockscout <insights-id>
+
+# Restarts the default insights in the production environment
+$ settlemint platform restart blockscout blockscout default --prod
+
+Arguments:
+unique-name The unique name of the insights, use 'default' to restart the default one from your .env file
+
+Options:
+-a, --accept-defaults Accept the default and previously set values
+--prod Connect to your production environment
+-w, --wait Wait until restarted
+-h, --help display help for command
+```
+
+#### Restart Integration Tool
+
+The Restart Integration Tool command restarts data integration services in your
+SettleMint platform environment. Restarting these tools can help refresh data
+connections, resolve synchronization issues, or apply configuration changes to
+integration services.
+
+```bash
+Usage: settlemint platform restart integration-tool|it [options] [command]
+Restart an integration tool service in the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+hasura|ha [options] <unique-name> Restart a integration tool in the SettleMint platform. Provide the integration tool unique name or use 'default' to restart the default integration tool from your .env file.
+help [command] display help for command
+```
+
+##### Restart Hasura Integration Tool
+
+The Restart Hasura Integration Tool command specifically restarts a Hasura
+GraphQL Engine instance. Restarting Hasura can help refresh API endpoints,
+resolve query performance issues, or apply schema changes to the GraphQL
+interface.
+
+```bash
+Usage: settlemint platform restart integration-tool hasura|ha
+
+Examples:
+# Restarts the specified integration tool by id
+$ settlemint platform restart hasura hasura <integration tool-id>
+
+# Restarts the default integration tool in the production environment
+$ settlemint platform restart hasura hasura default --prod
+
+Arguments:
+unique-name The unique name of the integration tool, use 'default' to restart the default one from your .env file
+
+Options:
+-a, --accept-defaults Accept the default and previously set values
+--prod Connect to your production environment
+-w, --wait Wait until restarted
+-h, --help display help for command
+```
+
+#### Restart Middleware
+
+The Restart Middleware command restarts middleware services in your SettleMint
+platform environment. Restarting middleware can help refresh data indexing,
+resolve service issues, or apply configuration changes to enhance blockchain
+functionality.
+
+```bash
+Usage: settlemint platform restart middleware|mw [options] [command] Restart a
+middleware service in the SettleMint platform
+
+Options:
+-h, --help display help for command
+
+Commands:
+graph|gr [options] <unique-name> Restart a middleware in the SettleMint platform. Provide the middleware unique name or use 'default' to restart the default middleware from your .env file.
+smart-contract-portal|scp [options] <unique-name> Restart a middleware in the SettleMint platform. Provide the middleware unique name or use 'default' to restart the default middleware from your .env file.
+help [command] display help for command
+```
+
+##### Restart Graph Middleware
+
+The Restart Graph Middleware command specifically restarts a The Graph protocol
+instance. Restarting The Graph service can help refresh subgraph indexing,
+resolve query issues, or apply indexing configuration changes to improve data
+access performance.
+
+```bash
+Usage: settlemint platform restart middleware graph|gr
+
+Examples:
+# Restarts the specified middleware by id
+$ settlemint platform restart graph graph <middleware-id>
+
+# Restarts the default middleware in the production environment
+$ settlemint platform restart graph graph default --prod
+
+Arguments:
+unique-name The unique name of the middleware, use 'default' to restart the default one from your .env file
+
+Options:
+-a, --accept-defaults Accept the default and previously set values
+--prod Connect to your production environment
+-w, --wait Wait until restarted
+-h, --help display help for command
+```
+
+##### Restart Smart Contract Portal Middleware
+
+The Restart Smart Contract Portal Middleware command specifically restarts a
+Smart Contract Portal service. Restarting the portal can help refresh contract
+interfaces, resolve interaction issues, or apply ABI changes to improve smart
+contract accessibility and functionality.
+
+```bash
+Usage: settlemint platform restart middleware smart-contract-portal|scp
+
+Examples:
+# Restarts the specified middleware by id
+$ settlemint platform restart smart-contract-portal smart-contract-portal <middleware-id>
+
+# Restarts the default middleware in the production environment
+$ settlemint platform restart smart-contract-portal smart-contract-portal default --prod
+
+Arguments:
+unique-name The unique name of the middleware, use 'default' to restart the default one from your .env file
+
+Options:
+-a, --accept-defaults Accept the default and previously set values
+--prod Connect to your production environment
+-w, --wait Wait until restarted
+-h, --help display help for command
+```
