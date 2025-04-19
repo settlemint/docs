@@ -45,9 +45,9 @@
     "postcss": "8.5.3",
     "tailwindcss": "4.1.4",
     "typescript": "5.8.3",
-    "eslint": "9.24.0",
+    "eslint": "9.25.0",
     "eslint-config-next": "15.3.1",
     "@eslint/eslintrc": "3.3.1",
-    "@eslint/js": "9.24.0"
+    "@eslint/js": "9.25.0"
   }
 }
