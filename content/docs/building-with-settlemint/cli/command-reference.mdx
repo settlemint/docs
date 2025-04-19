@@ -1,0 +1,1018 @@
+---
+title: "Command reference"
+description: CLI command reference for SettleMint platform
+---
+
+## Comprehensive Command Reference
+
+This reference provides detailed explanations of all SettleMint CLI commands,
+their options, use cases, and examples.
+
+### Authentication Commands
+
+#### `settlemint login`
+
+This command authenticates your CLI session with the SettleMint platform. It is
+the first command you should run before using any platform-specific
+functionality.
+
+**Options:**
+
+- `--token-stdin`: Read the token from standard input instead of prompting.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (interactive prompt)
+  - **Usage guidance**: Use when automating deployments or in CI/CD pipelines.
+
+- `--accept-defaults`: Automatically accept default values without prompting.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (interactive prompts for confirmation)
+  - **Usage guidance**: Use in non-interactive scripts or to speed up login
+    process.
+
+- `--instance <instance>`: Specify which SettleMint instance to authenticate
+  with.
+  - **Valid values**: URL of your SettleMint instance
+  - **Default**: Value from .env file or the main SettleMint instance
+  - **Usage guidance**: Specify when logging into non-standard instances.
+
+**Example Usage:**
+
+```bash
+# Interactive login
+settlemint login
+
+# Non-interactive login with token from file
+cat ~/my_token.txt | settlemint login --token-stdin --accept-defaults
+```
+
+#### `settlemint logout`
+
+This command terminates your authenticated session with the platform, removing
+stored credentials and token information from your local environment.
+
+**Options:**
+
+- `--all`: Log out from all SettleMint instances you're currently authenticated
+  with.
+  - **Valid values**: None (flag option)
+  - **Default**: Off (logs out from the current/active instance only)
+  - **Usage guidance**: Use when switching between projects or instances, or
+    when you want to ensure all authentication tokens are removed from your
+    system.
+
+**Example Usage:**
+
+```bash
+# Logout from current instance
+settlemint logout
+
+# Logout from all instances
+settlemint logout --all
+```
+
+### Project Setup Commands
+
+#### `settlemint connect`
+
+Links your local development environment to a specific SettleMint application,
+enabling commands to target that application by default.
+
+**Options:**
+
+- `--prod`: Connect to production environment instead of development.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (connects to development environment)
+  - **Usage guidance**: Use when deploying to production or accessing production
+    resources.
+
+- `--accept-defaults`: Automatically accept default values without prompting.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (interactive prompts for confirmation)
+  - **Usage guidance**: Use in scripts or to speed up connection process.
+
+- `--instance <instance>`: Specify which SettleMint instance to connect to.
+  - **Valid values**: URL of your SettleMint instance
+  - **Default**: Value from .env file or the main SettleMint instance
+  - **Usage guidance**: Specify when connecting to non-standard instances.
+
+**Example Usage:**
+
+```bash
+# Connect interactively
+settlemint connect
+
+# Connect to production with defaults
+settlemint connect --prod --accept-defaults
+```
+
+#### `settlemint create`
+
+Bootstraps a new project using SettleMint project templates, providing
+pre-configured setups for various blockchain application types.
+
+**Options:**
+
+- `--project-name <name>`: Name for the new project.
+
+  - **Valid values**: Alphanumeric string (kebab-case recommended)
+  - **Default**: Interactive prompt
+  - **Usage guidance**: Choose a descriptive name that reflects your project's
+    purpose.
+
+- `--template <template>`: Template to use for project structure.
+
+  - **Valid values**: Available templates from `settlemint platform config`
+    (e.g., "ethereum-dapp", "besu-network")
+  - **Default**: Interactive selection
+  - **Usage guidance**: Select the template closest to your project
+    requirements.
+
+- `--version <version>`: Specific template version to use.
+
+  - **Valid values**: Version number (e.g., "1.0.0") or "latest"
+  - **Default**: "latest" stable version
+  - **Usage guidance**: Specify a version when you need a specific feature set
+    or compatibility.
+
+- `--instance <instance>`: SettleMint instance to use for template retrieval.
+  - **Valid values**: URL of your SettleMint instance
+  - **Default**: Value from .env file
+  - **Usage guidance**: Only needed when templates are stored in a specific
+    instance.
+
+**Example Usage:**
+
+```bash
+# Create a project interactively
+settlemint create
+
+# Create with specific template
+settlemint create --project-name my-dapp --template ethereum-dapp
+
+# Create with specific template version
+settlemint create --project-name my-dapp --template ethereum-dapp --version 2.1.0
+```
+
+#### `settlemint pincode-verification-response`
+
+Retrieves pincode verification response for a wallet address, used for secure
+verification workflows.
+
+**Options:**
+
+- `--wallet-address <address>`: The wallet address to get verification for.
+
+  - **Valid values**: Valid Ethereum address (0x format)
+  - **Default**: None (required parameter)
+  - **Usage guidance**: Must be a valid address that you control or have
+    permission to verify.
+
+- `--instance <instance>`: The instance to connect to for verification.
+
+  - **Valid values**: URL of your SettleMint instance
+  - **Default**: Value from .env file
+  - **Usage guidance**: Specify only when verifying against a non-default
+    instance.
+
+- `--blockchain-node <node>`: The blockchain node to use for verification.
+  - **Valid values**: Unique name of a deployed blockchain node
+  - **Default**: Default node from environment
+  - **Usage guidance**: Specify when verifying against a specific blockchain
+    node.
+
+**Example Usage:**
+
+```bash
+# Get verification response for a specific wallet
+settlemint pincode-verification-response --wallet-address 0x1234567890abcdef1234567890abcdef12345678
+
+# Get verification from specific node
+settlemint pincode-verification-response --wallet-address 0x1234567890abcdef1234567890abcdef12345678 --blockchain-node validator-1
+```
+
+### Workspace Management
+
+#### `settlemint platform create workspace`
+
+Creates a new workspace, which is an organizational container for applications
+and other resources.
+
+**Options:**
+
+- `--accept-defaults`: Accept default values without prompting.
+- `--default`: Save as default workspace for future commands.
+- `--prod`: Create in production environment.
+- `--company-name <name>`: Company name for billing.
+- `--address-line-1/2 <address>`: Company address.
+- `--city <city>`, `--postal-code <code>`, `--country <country>`: Location
+  information.
+- `--tax-id-value <value>`, `--tax-id-type <type>`: Tax information for billing.
+- `--payment-method-id <id>`: ID of payment method to use.
+- `--parent-id <id>`: ID of parent workspace for hierarchical organization.
+
+**Example Usage:**
+
+```bash
+# Create workspace with company details
+settlemint platform create workspace my-workspace --company-name "SettleMint" --tax-id-type eu_vat --tax-id-value BE0661674810
+
+# Create workspace with address
+settlemint platform create workspace my-workspace --address-line-1 "123 Main St" --city "Brussels" --postal-code "1000" --country BE
+```
+
+#### `settlemint platform delete workspace`
+
+Permanently removes a workspace and all its contained resources.
+
+**Options:**
+
+- `--accept-defaults`: Accept default confirmation values.
+- `--prod`: Delete from production environment.
+- `--force`: Skip confirmation prompts (dangerous).
+
+**Example Usage:**
+
+```bash
+# Delete with confirmation
+settlemint platform delete workspace my-workspace
+
+# Force delete without confirmation
+settlemint platform delete workspace my-workspace --force
+```
+
+#### `settlemint platform list workspaces`
+
+Lists all workspaces available to your account.
+
+**Options:**
+
+- `--output <format>`: Output format (wide, json, yaml).
+
+**Example Usage:**
+
+```bash
+# List workspaces in default format
+settlemint platform list workspaces
+
+# List workspaces in JSON format
+settlemint platform list workspaces --output json
+```
+
+### Application Management
+
+#### `settlemint platform create application`
+
+Creates a new application within a workspace, which serves as a container for
+blockchain resources.
+
+**Options:**
+
+- `--accept-defaults`: Accept default values without prompting.
+- `--default`: Save as default application for future commands.
+- `--prod`: Create in production environment.
+- `--workspace <workspace>`: Workspace to create the application in.
+
+**Example Usage:**
+
+```bash
+# Create application with defaults
+settlemint platform create application my-app --accept-defaults
+
+# Create application in specific workspace
+settlemint platform create application my-app --workspace enterprise-workspace
+```
+
+#### `settlemint platform delete application`
+
+Permanently removes an application and all its contained resources.
+
+**Options:**
+
+- `--accept-defaults`: Accept default confirmation values.
+- `--prod`: Delete from production environment.
+- `--force`: Skip confirmation prompts (dangerous).
+
+**Example Usage:**
+
+```bash
+# Delete with confirmation
+settlemint platform delete application my-app
+
+# Force delete without confirmation
+settlemint platform delete application my-app --force
+```
+
+#### `settlemint platform list applications`
+
+Lists all applications within a workspace.
+
+**Options:**
+
+- `--workspace <workspace>`: Workspace to list applications for.
+- `--output <format>`: Output format (wide, json, yaml).
+
+**Example Usage:**
+
+```bash
+# List applications in default workspace
+settlemint platform list applications
+
+# List applications in specific workspace with detailed output
+settlemint platform list applications --workspace enterprise-workspace --output wide
+```
+
+### Blockchain Network Commands
+
+#### `settlemint platform create blockchain-network besu`
+
+Creates a new Hyperledger Besu blockchain network, which provides an
+Ethereum-compatible environment with enterprise features.
+
+**Options:**
+
+- `--accept-defaults`: Accept default values without prompting.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (interactive prompts)
+  - **Usage guidance**: Use in scripts or to speed up creation with standard
+    values.
+
+- `--default`: Save as default network for future commands.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (not set as default)
+  - **Usage guidance**: Enable when this will be your primary working network.
+
+- `--prod`: Create in production environment.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (creates in development)
+  - **Usage guidance**: Use only for production-ready deployments.
+
+- `--wait`: Wait for deployment to complete before exiting.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (CLI returns immediately)
+  - **Usage guidance**: Enable to ensure creation completes successfully.
+
+- `--restart-if-timeout`: Automatically restart if deployment times out.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (fails on timeout)
+  - **Usage guidance**: Use for long-running creations or unreliable
+    connections.
+
+- `--provider <provider>`: Infrastructure provider for deployment.
+
+  - **Valid values**: Available providers from `settlemint platform config`
+    (e.g., "aws", "azure", "google")
+  - **Default**: Default provider from platform config
+  - **Usage guidance**: Select based on your organization's cloud provider
+    preferences.
+
+- `--region <region>`: Geographical region for deployment.
+
+  - **Valid values**: Available regions from `settlemint platform config` (e.g.,
+    "us-east-1", "eu-west-1")
+  - **Default**: Default region from platform config
+  - **Usage guidance**: Choose a region geographically close to your users.
+
+- `--size <size>`: Resource allocation size for the network.
+
+  - **Valid values**: "SMALL", "MEDIUM", "LARGE"
+  - **Default**: "SMALL"
+  - **Usage guidance**: Choose based on expected transaction volume and
+    performance needs. SMALL for testing, MEDIUM for moderate workloads, LARGE
+    for production with high transaction volume.
+
+- `--type <type>`: Network deployment type.
+
+  - **Valid values**: "DEDICATED", "SHARED"
+  - **Default**: "SHARED"
+  - **Usage guidance**: Use DEDICATED for production workloads requiring
+    guaranteed resources, SHARED for development and testing to save costs.
+
+- `--application <application>`: Application to create the network in.
+
+  - **Valid values**: Unique name or ID of an existing application
+  - **Default**: Application from environment (.env file)
+  - **Usage guidance**: Specify when creating in a non-default application.
+
+- `--node-name <name>`: Name for the first validator node.
+
+  - **Valid values**: Alphanumeric string (kebab-case recommended)
+  - **Default**: "validator-1"
+  - **Usage guidance**: Choose a descriptive name if managing multiple
+    validators.
+
+- `--chain-id <id>`: Ethereum chain ID for the network.
+
+  - **Valid values**: Integer (1-4294967295)
+  - **Default**: Random unique ID
+  - **Usage guidance**: Must be unique across all networks. Use ranges >1000 to
+    avoid collision with public networks.
+
+- `--contract-size-limit <limit>`: Maximum smart contract size limit.
+
+  - **Valid values**: Integer (bytes)
+  - **Default**: 24576 (Ethereum standard)
+  - **Usage guidance**: Increase for complex contracts, but be aware of gas
+    implications.
+
+- `--evm-stack-size <size>`: EVM stack size for complex operations.
+
+  - **Valid values**: Integer (typically 512-2048)
+  - **Default**: 1024
+  - **Usage guidance**: Increase for smart contracts with deep call stacks or
+    complex logic.
+
+- `--gas-limit <limit>`: Block gas limit (transaction capacity).
+
+  - **Valid values**: Integer (typically 8000000-30000000)
+  - **Default**: 8000000 (8 million)
+  - **Usage guidance**: Higher values allow more transactions per block but
+    require more node resources.
+
+- `--gas-price <price>`: Default gas price in wei.
+
+  - **Valid values**: Integer (wei)
+  - **Default**: 0 for private networks
+  - **Usage guidance**: Use 0 for free transactions in private networks, or set
+    minimum values to prevent spam.
+
+- `--seconds-per-block <seconds>`: Target block time in seconds.
+  - **Valid values**: Integer (typically 2-15)
+  - **Default**: 2
+  - **Usage guidance**: Lower values mean faster transactions but more overhead.
+    2-5 is recommended for private networks.
+
+**Example Usage:**
+
+```bash
+# Create network with default settings
+settlemint platform create blockchain-network besu my-network --node-name validator-1 --accept-defaults
+
+# Create high-performance production network
+settlemint platform create blockchain-network besu production-network --prod --size LARGE --type DEDICATED --node-name primary-validator --chain-id 12345 --gas-limit 30000000 --seconds-per-block 2 --wait
+```
+
+#### `settlemint platform create blockchain-node besu`
+
+Adds a node to an existing Besu blockchain network, increasing resilience and
+capacity.
+
+**Options:**
+
+- Common options: `--accept-defaults`, `--default`, `--prod`, `--wait`,
+  `--restart-if-timeout`, `--provider`, `--region`, `--size`, `--type`,
+  `--application`
+
+  - These work the same as for the blockchain network creation command.
+
+- `--blockchain-network <network>`: Network to add this node to.
+
+  - **Valid values**: Unique name or ID of an existing blockchain network
+  - **Default**: None (required parameter)
+  - **Usage guidance**: Must specify the network this node will join.
+
+- `--node-identity <identity>`: ECDSA P256 private key for node identity.
+
+  - **Valid values**: Valid ECDSA P256 private key string
+  - **Default**: Automatically generated
+  - **Usage guidance**: Only specify when node identity needs to be preserved or
+    imported.
+
+- `--node-type <type>`: Node role in the network.
+  - **Valid values**: "VALIDATOR", "NON_VALIDATOR"
+  - **Default**: "NON_VALIDATOR"
+  - **Usage guidance**: Use VALIDATOR for nodes that participate in consensus,
+    NON_VALIDATOR for read-only or API access nodes.
+
+**Example Usage:**
+
+```bash
+# Create validator node
+settlemint platform create blockchain-node besu my-validator --node-type VALIDATOR --accept-defaults
+
+# Create read-only node for API access
+settlemint platform create blockchain-node besu api-node --blockchain-network main-network --node-type NON_VALIDATOR --size LARGE
+```
+
+#### `settlemint platform restart blockchain-network`
+
+Restarts all nodes in a blockchain network, useful for applying network-wide
+changes.
+
+**Options:**
+
+- `--accept-defaults`: Accept default confirmation values.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (interactive confirmation)
+  - **Usage guidance**: Use in scripts or for unattended restarts.
+
+- `--prod`: Target production environment.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (targets development)
+  - **Usage guidance**: Specify when restarting production networks.
+
+- `--wait`: Wait for restart to complete before exiting.
+  - **Valid values**: None (flag option)
+  - **Default**: Off (CLI returns immediately)
+  - **Usage guidance**: Enable to ensure restart completes successfully before
+    proceeding.
+
+**Example Usage:**
+
+```bash
+# Restart network with confirmation
+settlemint platform restart blockchain-network my-network
+
+# Restart production network and wait for completion
+settlemint platform restart blockchain-network my-network --prod --wait --accept-defaults
+```
+
+### Private Key Management
+
+#### `settlemint platform create private-key hd-ecdsa-p256`
+
+Creates a hierarchical deterministic key for blockchain transactions, allowing
+derived keys from a master.
+
+**Options:**
+
+- `--accept-defaults`: Accept default values without prompting.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (interactive prompts)
+  - **Usage guidance**: Use in scripts or to speed up creation with standard
+    values.
+
+- `--default`: Save as default key for future commands.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (not set as default)
+  - **Usage guidance**: Enable when this will be your primary signing key.
+
+- `--prod`: Create in production environment.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (creates in development)
+  - **Usage guidance**: Use only for production-ready applications.
+
+- `--wait`: Wait for creation to complete before exiting.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (CLI returns immediately)
+  - **Usage guidance**: Enable to ensure creation completes successfully.
+
+- `--restart-if-timeout`: Automatically restart if creation times out.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (fails on timeout)
+  - **Usage guidance**: Useful when creating keys in environments with
+    connectivity issues.
+
+- `--application <application>`: Application to create the key in.
+
+  - **Valid values**: Unique name or ID of an existing application
+  - **Default**: Application from environment (.env file)
+  - **Usage guidance**: Specify when creating in a non-default application.
+
+- `--blockchain-node <node>`: Blockchain node to link this key to.
+  - **Valid values**: Unique name or ID of an existing blockchain node
+  - **Default**: None (not linked to any specific node)
+  - **Usage guidance**: Link to a specific node when the key will be used
+    exclusively with that node for transactions.
+
+**Example Usage:**
+
+```bash
+# Create HD key with defaults
+settlemint platform create private-key hd-ecdsa-p256 my-key --accept-defaults
+
+# Create HD key for production linked to specific node
+settlemint platform create private-key hd-ecdsa-p256 prod-signing-key --prod --blockchain-node validator-1 --wait
+```
+
+#### `settlemint platform create private-key hsm-ecdsa-p256`
+
+Creates a Hardware Security Module backed key for maximum security (key never
+leaves secure hardware).
+
+**Options:**
+
+- Common options: `--accept-defaults`, `--default`, `--prod`, `--wait`,
+  `--restart-if-timeout`
+
+  - These work the same as for the HD key creation command.
+
+- `--application <application>`: Application to create the key in.
+
+  - **Valid values**: Unique name or ID of an existing application
+  - **Default**: Application from environment (.env file)
+  - **Usage guidance**: Specify when creating in a non-default application.
+
+- `--blockchain-node <node>`: Blockchain node to link this key to.
+  - **Valid values**: Unique name or ID of an existing blockchain node
+  - **Default**: None (not linked to any specific node)
+  - **Usage guidance**: Link to a specific node when the key will be used
+    exclusively with that node for high-security operations.
+
+**Example Usage:**
+
+```bash
+# Create HSM key with defaults
+settlemint platform create private-key hsm-ecdsa-p256 my-secure-key --accept-defaults
+
+# Create HSM key for production environment
+settlemint platform create private-key hsm-ecdsa-p256 prod-hsm-key --prod --application finance-app --wait
+```
+
+#### `settlemint platform create private-key accessible-ecdsa-p256`
+
+Creates an exportable private key that applications can directly access for
+signing operations.
+
+**Options:**
+
+- Common options: `--accept-defaults`, `--default`, `--prod`, `--wait`,
+  `--restart-if-timeout`
+
+  - These work the same as for the HD key creation command.
+
+- `--application <application>`: Application to create the key in.
+
+  - **Valid values**: Unique name or ID of an existing application
+  - **Default**: Application from environment (.env file)
+  - **Usage guidance**: Specify when creating in a non-default application.
+
+- `--blockchain-node <node>`: Blockchain node to link this key to.
+  - **Valid values**: Unique name or ID of an existing blockchain node
+  - **Default**: None (not linked to any specific node)
+  - **Usage guidance**: Link to a specific node when the key will be used
+    exclusively with that node. Note that accessible keys pose higher security
+    risks than HSM or HD keys because the private key material can be extracted.
+
+**Example Usage:**
+
+```bash
+# Create accessible key
+settlemint platform create private-key accessible-ecdsa-p256 api-key --accept-defaults
+
+# Create accessible key for specific application
+settlemint platform create private-key accessible-ecdsa-p256 integration-key --application integration-app --wait
+```
+
+### Middleware Management
+
+#### `settlemint platform create middleware graph`
+
+Creates a Graph Protocol indexing service for efficiently querying blockchain
+data through GraphQL.
+
+**Options:**
+
+- `--accept-defaults`: Automatically accepts default middleware configuration.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (interactive prompts)
+  - **Usage guidance**: Use in scripts or for quick deployments with standard
+    settings.
+
+- `--default`: Sets this middleware as your default for future operations.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (not set as default)
+  - **Usage guidance**: Enable when this will be your primary Graph instance.
+
+- `--prod`: Creates the middleware in production environment.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (creates in development)
+  - **Usage guidance**: Use only when deploying for production use.
+
+- `--wait`: Waits for deployment to complete before exiting.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (CLI returns immediately)
+  - **Usage guidance**: Enable to ensure deployment completes successfully.
+
+- `--restart-if-timeout`: Automatically restarts deployment if it times out.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (fails on timeout)
+  - **Usage guidance**: Use for long-running deployments or unreliable
+    connections.
+
+- `--provider <provider>`: Specifies the infrastructure provider for deployment.
+
+  - **Valid values**: Available providers from `settlemint platform config`
+  - **Default**: Default provider from platform config
+  - **Usage guidance**: Select based on your organization's cloud provider
+    preferences.
+
+- `--region <region>`: Sets the geographical region for deployment.
+
+  - **Valid values**: Available regions from `settlemint platform config`
+  - **Default**: Default region from platform config
+  - **Usage guidance**: Choose a region close to your users or blockchain nodes.
+
+- `--size <size>`: Determines the resource allocation for the middleware.
+
+  - **Valid values**: "SMALL", "MEDIUM", "LARGE"
+  - **Default**: "SMALL"
+  - **Usage guidance**: Choose based on expected query volume and indexing
+    needs. SMALL for testing, MEDIUM for moderate workloads, LARGE for
+    high-volume production use with many complex subgraphs.
+
+- `--type <type>`: Sets whether the middleware is dedicated or shared.
+
+  - **Valid values**: "DEDICATED", "SHARED"
+  - **Default**: "SHARED"
+  - **Usage guidance**: Use DEDICATED for production workloads needing
+    guaranteed resources, SHARED for development to save costs.
+
+- `--application <application>`: Specifies which application to create the
+  middleware in.
+
+  - **Valid values**: Unique name or ID of an existing application
+  - **Default**: Application from environment (.env file)
+  - **Usage guidance**: Specify when creating in a non-default application.
+
+- `--blockchain-node <node>`: Links the middleware to a specific blockchain
+  node.
+  - **Valid values**: Unique name or ID of an existing blockchain node
+  - **Default**: None (must be specified)
+  - **Usage guidance**: Select the node that the Graph service will connect to
+    for indexing data.
+
+**Example Usage:**
+
+```bash
+# Create Graph middleware with defaults
+settlemint platform create middleware graph my-graph --accept-defaults --blockchain-node main-node
+
+# Create production-ready Graph middleware with high resources
+settlemint platform create middleware graph analytics-graph --prod --size LARGE --type DEDICATED --blockchain-node validator-1 --wait
+```
+
+#### `settlemint platform create middleware smart-contract-portal`
+
+Creates a user interface for interacting with smart contracts without requiring
+coding knowledge.
+
+**Options:**
+
+- Common options: `--accept-defaults`, `--default`, `--prod`, `--wait`,
+  `--restart-if-timeout`, `--provider`, `--region`, `--size`, `--type`,
+  `--application`
+
+  - These work the same as for the Graph middleware command.
+
+- `--load-balancer <balancer>`: Links the portal to a load balancer for handling
+  multiple blockchain nodes.
+
+  - **Valid values**: Unique name or ID of an existing load balancer
+  - **Default**: None (not linked to a load balancer)
+  - **Usage guidance**: Use when you need the portal to connect to multiple
+    blockchain nodes through a load balancer. Cannot be used together with
+    `--blockchain-node`.
+
+- `--blockchain-node <node>`: Links the portal to a specific blockchain node.
+
+  - **Valid values**: Unique name or ID of an existing blockchain node
+  - **Default**: None (must specify either this or load-balancer)
+  - **Usage guidance**: Use when you want the portal to connect to a single
+    blockchain node. Cannot be used together with `--load-balancer`.
+
+- `--abis <abis...>`: Specifies paths to ABI files for contract interfaces.
+
+  - **Valid values**: File paths to valid JSON ABI files
+  - **Default**: None (no ABIs loaded)
+  - **Usage guidance**: Provide the ABI files for smart contracts you want to
+    interact with through the portal. Multiple files can be specified separated
+    by spaces.
+
+- `--include-predeployed-abis <abis...>`: Includes pre-deployed ABIs from the
+  platform.
+  - **Valid values**: Names of pre-deployed ABIs available in the platform
+  - **Default**: None (no pre-deployed ABIs included)
+  - **Usage guidance**: Include common contract ABIs like ERC20, ERC721 without
+    needing to provide your own files.
+
+**Example Usage:**
+
+```bash
+# Create portal with defaults connected to a specific node
+settlemint platform create middleware smart-contract-portal my-portal --accept-defaults --blockchain-node main-node
+
+# Create production portal with custom ABIs and pre-deployed ABIs
+settlemint platform create middleware smart-contract-portal contract-ui --prod --blockchain-node validator-1 --abis ./contracts/Token.json ./contracts/Marketplace.json --include-predeployed-abis ERC20 ERC721 --wait
+```
+
+#### `settlemint platform restart middleware graph`
+
+Restarts a Graph protocol indexing service, useful for refreshing subgraph
+indexing or resolving query issues.
+
+**Options:**
+
+- `--accept-defaults`: Accept default confirmation values.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (interactive confirmation)
+  - **Usage guidance**: Use in scripts or for unattended restarts.
+
+- `--prod`: Target production environment.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (targets development)
+  - **Usage guidance**: Specify when restarting production services.
+
+- `--wait`: Wait for restart to complete before exiting.
+  - **Valid values**: None (flag option)
+  - **Default**: Off (CLI returns immediately)
+  - **Usage guidance**: Enable to verify restart completes successfully.
+
+**Example Usage:**
+
+```bash
+# Restart Graph middleware
+settlemint platform restart middleware graph my-graph
+
+# Restart production Graph middleware and wait for completion
+settlemint platform restart middleware graph analytics-graph --prod --wait --accept-defaults
+```
+
+#### `settlemint platform restart middleware smart-contract-portal`
+
+Restarts a Smart Contract Portal service, useful for refreshing contract
+interfaces or applying ABI updates.
+
+**Options:**
+
+- `--accept-defaults`, `--prod`, `--wait`: These work the same as for the Graph
+  restart command.
+
+**Example Usage:**
+
+```bash
+# Restart Smart Contract Portal
+settlemint platform restart middleware smart-contract-portal my-portal
+
+# Restart production Smart Contract Portal and wait for completion
+settlemint platform restart middleware smart-contract-portal contract-ui --prod --wait
+```
+
+### Storage Management
+
+#### `settlemint platform create storage ipfs`
+
+Creates an IPFS node for decentralized file storage.
+
+**Options:**
+
+- Standard resource options: Similar to middleware options (accept-defaults,
+  default, prod, etc.).
+- `--application <application>`: Specifies which application to create the
+  storage in.
+
+**Example Usage:**
+
+```bash
+# Create IPFS storage
+settlemint platform create storage ipfs my-ipfs --accept-defaults
+
+# Create IPFS in specific application
+settlemint platform create storage ipfs my-ipfs --application media-app
+```
+
+#### `settlemint platform create storage minio`
+
+Creates a MinIO S3-compatible object storage service.
+
+**Options:**
+
+- Similar to IPFS storage: Options function the same as for IPFS storage.
+
+**Example Usage:**
+
+```bash
+# Create MinIO storage
+settlemint platform create storage minio my-minio --accept-defaults
+
+# Create MinIO in production
+settlemint platform create storage minio my-minio --prod
+```
+
+### Integration Tool Management
+
+#### `settlemint platform create integration-tool hasura`
+
+Creates a Hasura GraphQL Engine for database access and integration.
+
+**Options:**
+
+- Standard resource options: Similar to middleware options.
+
+**Example Usage:**
+
+```bash
+# Create Hasura integration
+settlemint platform create integration-tool hasura my-hasura --accept-defaults
+
+# Create Hasura with specific size
+settlemint platform create integration-tool hasura my-hasura --size MEDIUM
+```
+
+### Insights Management
+
+#### `settlemint platform create insights blockscout`
+
+Creates a Blockscout blockchain explorer for monitoring blockchain activity.
+
+**Options:**
+
+- Standard resource options: Similar to middleware options.
+- `--load-balancer <balancer>`: Links explorer to a load balancer.
+- `--blockchain-node <node>`: Links explorer to a specific blockchain node.
+
+**Example Usage:**
+
+```bash
+# Create Blockscout explorer
+settlemint platform create insights blockscout my-explorer --accept-defaults
+
+# Create explorer for specific node
+settlemint platform create insights blockscout my-explorer --blockchain-node main-node
+```
+
+#### `settlemint platform create application-access-token`
+
+Creates an access token for programmatic API access to an application.
+
+**Options:**
+
+- `--accept-defaults`: Automatically accepts default token configuration.
+- `--default`: Sets this token as your default.
+- `--prod`: Creates the token in production environment.
+- `--application <application>`: Specifies which application to create the token
+  for.
+- `--validity-period <period>`: Sets how long the token remains valid (DAYS_7,
+  DAYS_30, DAYS_60, DAYS_90, NONE).
+
+**Example Usage:**
+
+```bash
+# Create token with defaults
+settlemint platform create application-access-token my-token --accept-defaults
+
+# Create short-lived token
+settlemint platform create application-access-token my-token --validity-period ONE_DAY
+```
+
+### Platform Configuration
+
+#### `settlemint platform config`
+
+Retrieves configuration information about the SettleMint platform, including
+available providers, regions, templates, and other platform settings.
+
+**Options:**
+
+- `--prod`: Retrieves configuration for production environment.
+
+  - **Valid values**: None (flag option)
+  - **Default**: Off (retrieves development environment configuration)
+  - **Usage guidance**: Use when planning deployments to production or checking
+    production-specific settings.
+
+- `--instance <instance>`: Specifies which SettleMint instance to get
+  configuration from.
+
+  - **Valid values**: URL of your SettleMint instance
+  - **Default**: Value from .env file
+  - **Usage guidance**: Specify when retrieving configuration from a non-default
+    instance.
+
+- `--output <format>`: Sets the output format for machine-readable results.
+  - **Valid values**: "json", "yaml"
+  - **Default**: Human-readable console output
+  - **Usage guidance**: Use JSON or YAML when processing the results
+    programmatically.
+
+**Example Usage:**
+
+```bash
+# Get config in default format
+settlemint platform config
+
+# Get config for production in JSON format
+settlemint platform config --prod --output json > production-config.json
+```

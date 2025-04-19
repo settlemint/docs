@@ -7,6 +7,7 @@
     "setup-account-and-billing",
     "evm-chains-guide",
     "hedera-hashgraph-guide",
-    "hyperledger-fabric-guide"
+    "hyperledger-fabric-guide",
+    "cli"
   ]
 }
