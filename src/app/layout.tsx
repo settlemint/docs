@@ -1,11 +1,11 @@
 import { PlainChat } from "@/components/PlainChat";
+import { PostHogProvider } from "@/components/PostHogProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { RootProvider } from "fumadocs-ui/provider";
 import type { Viewport } from "next";
 import { Figtree } from "next/font/google";
 import type { ReactNode } from "react";
 import "./global.css";
-import { PostHogProvider } from "@/components/PostHogProvider";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           >
             {children}
           </RootProvider>
-          <GoogleAnalytics gaId="G-N1MMHFDVZZ" />
+          <GoogleAnalytics gaId="G-4WNKFB6Q0V" />
           <PlainChat />
         </PostHogProvider>
       </body>
