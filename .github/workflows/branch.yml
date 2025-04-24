@@ -39,7 +39,7 @@ jobs:
     runs-on: namespace-profile-btp-docs
     steps:
       - name: Checkout
-        uses: namespacelabs/nscloud-checkout-action@v6
+        uses: namespacelabs/nscloud-checkout-action@v7
         with:
           fetch-depth: 2
 
