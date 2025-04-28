@@ -8,7 +8,6 @@ import {
   defineCollections,
   defineConfig,
   defineDocs,
-  frontmatterSchema,
 } from "fumadocs-mdx/config";
 import { transformerTwoslash } from "fumadocs-twoslash";
 import { z } from "zod";
@@ -35,7 +34,12 @@ export default defineConfig({
 export const blogPosts = defineCollections({
   type: "doc",
   dir: "content/release-notes",
-  schema: frontmatterSchema.extend({
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    icon: z.string().optional(),
+    full: z.boolean().optional(),
+    _openapi: z.object({}).passthrough().optional(),
     author: z.string(),
     date: z.string().date().or(z.date()),
   }),
