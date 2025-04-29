@@ -1,0 +1,72 @@
+---
+title: Create middleware
+---
+
+<Tabs items={['SDK CLI', 'Platform UI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    <Steps>
+      **Navigate to application**
+      Navigate to the **application** where you want to add middleware.
+
+      **Access middleware section**
+      Click **middleware** in the left navigation, and then click **add a middleware**. This opens a form.
+
+      **Configure middleware**
+      1. Choose middleware type (graph or portal)
+      2. Choose a **middleware name**
+      3. Select the **blockchain node** (prefered option for portal) or **load balancer** (prefered option for the graph)
+      4. Configure deployment settings
+      5. Click **confirm**
+    </Steps>
+
+  </Tab>
+
+  <Tab value="SDK CLI">
+    First ensure you're authenticated:
+    ```bash
+    settlemint login
+    ```
+
+    Create a middleware:
+    ```bash
+    # Get the list of available middleware types
+    settlemint platform create middleware --help
+
+    # Create a middleware
+    settlemint platform create middleware <type> <n>
+
+    # Get information about the command and all available options
+    settlemint platform create middleware <type> --help
+    ```
+
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    import { createSettleMintClient } from '@settlemint/sdk-js';
+
+    const client = createSettleMintClient({
+      accessToken: 'your_access_token',
+      instance: 'https://console.settlemint.com'
+    });
+
+    // Create middleware
+    const result = await client.middleware.create({
+      applicationUniqueName: "your-app-unique-name",
+      name: "my-middleware",
+      type: "SHARED",
+      interface: "HA_GRAPH", // Valid options: "HA_GRAPH" | "SMART_CONTRACT_PORTAL"
+      blockchainNodeUniqueName: "your-node-unique-name",
+      region: "EUROPE",  // Required
+      provider: "GKE",   // Required
+      size: "SMALL"      // Valid options: "SMALL" | "MEDIUM" | "LARGE"
+    });
+    console.log('Middleware created:', result);
+    ```
+
+    <Callout type="tip">
+      Get your access token from the Platform UI under User Settings → API Tokens.
+    </Callout>
+
+  </Tab>
+</Tabs>

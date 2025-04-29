@@ -13,17 +13,17 @@ providing essential services like data indexing, API access, and event
 monitoring. Before adding middleware, ensure you have an application and
 blockchain node in place.
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 mb-8">
   <Card>
-    ### Available Options
+    ## Available Options
     - **Graph Middleware** - For EVM chains, providing subgraph-based indexing with GraphQL API
-    - **Smart Contract Portal** - For EVM chains, offering REST & GraphQL APIs with webhooks
+    - **Smart contract portal** - For EVM chains, offering REST & GraphQL APIs with webhooks
     - **FabConnect** - For Hyperledger Fabric, providing RESTful API
     - **Attestation Indexer** - Specialized indexer for attestations with GraphQL API
   </Card>
 
   <Card>
-    ### Key Features
+    ## Key Features
     - Data indexing
     - API access
     - Event monitoring
@@ -33,116 +33,11 @@ blockchain node in place.
 
 ## How to add middleware
 
-<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
-  <Tab value="Platform UI">
-    <Steps>
-      ### Navigate to Application
-      Navigate to the **application** where you want to add middleware.
-
-      ### Access Middleware Section
-      Click **Middleware** in the left navigation, and then click **Add a middleware**. This opens a form.
-
-      ### Configure Middleware
-      1. Choose middleware type (Graph or Portal)
-      2. Choose a **Middleware name**
-      3. Select the **blockchain node**
-      4. Configure deployment settings
-      5. Click **Confirm**
-    </Steps>
-
-  </Tab>
-
-  <Tab value="SDK CLI">
-    First ensure you're authenticated:
-    ```bash
-    settlemint login
-    ```
-
-    Create a middleware:
-    ```bash
-    # Get the list of available middleware types
-    settlemint platform create middleware --help
-
-    # Create a middleware
-    settlemint platform create middleware <type> <name>
-
-    # Get information about the command and all available options
-    settlemint platform create middleware <type> --help
-    ```
-
-  </Tab>
-
-  <Tab value="SDK JS">
-    ```typescript
-    import { createSettleMintClient } from '@settlemint/sdk-js';
-
-    const client = createSettleMintClient({
-      accessToken: 'your_access_token',
-      instance: 'https://console.settlemint.com'
-    });
-
-    // Create middleware
-    const createMiddleware = async () => {
-      const result = await client.middleware.create({
-        applicationUniqueName: "your-app-unique-name",
-        name: "my-middleware",
-        type: "SHARED",
-        interface: "GRAPH",
-        blockchainNodeUniqueName: "your-node-unique-name",
-        region: "EUROPE",  // Required
-        provider: "GKE",   // Required
-        size: "SMALL"      // Valid options: "SMALL" | "MEDIUM" | "LARGE"
-      });
-      console.log('Middleware created:', result);
-    };
-    ```
-
-    <Callout type="tip">
-    Get your access token from the Platform UI under User Settings → API Tokens.
-    </Callout>
-
-  </Tab>
-</Tabs>
+<include>../../../snippets/create-middleware.mdx</include>
 
 ## Manage middleware
 
-<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
-  <Tab value="Platform UI">
-    Navigate to your middleware and click **Manage middleware** to:
-    - View middleware details and status
-    - Update configurations
-    - Monitor health
-    - Access endpoints
-  </Tab>
-
-  <Tab value="SDK CLI">
-    ```bash
-    # List middlewares
-    settlemint platform list middlewares --application <app-name>
-
-    # Get middleware details
-    settlemint platform read middleware <middleware-name>
-
-    # Delete middleware
-    settlemint platform delete middleware <middleware-name>
-    ```
-
-  </Tab>
-
-  <Tab value="SDK JS">
-    ```typescript
-    // List middlewares
-    await client.middleware.list("your-app");
-
-    // Get middleware details
-    await client.middleware.read("middleware-unique-name");
-
-    // Delete middleware
-    await client.middleware.delete("middleware-unique-name");
-    ```
-
-  </Tab>
-</Tabs>
+<include>../../../snippets/manage-middleware.mdx</include>
 
 ## The graph middleware
 
@@ -271,21 +166,24 @@ Follow these steps to create a custom indexing module:
 [To learn more, check it out on Github.](https://github.com/OpenZeppelin/openzeppelin-subgraphs)
 
 <Callout type="info">
-  For detailed step-by-step guides on setting up custom Graph Middleware, refer to:
-  - [EVM Chains Guide: Setting up Graph Middleware](/building-with-settlemint/evm-chains-guide/setup-graph-middleware)
-  - [Hedera Hashgraph Guide: Setting up Graph Middleware](/building-with-settlemint/hedera-hashgraph-guide/setup-graph-middleware)
+For detailed step-by-step guides on setting up custom Graph Middleware, refer
+to:
+
+- [EVM Chains Guide:g Setting up Graph Middleware](/building-with-settlemint/evm-chains-guide/setup-graph-middleware)
+- [Hedera Hashgraph Guide: Setting up Graph Middleware](/building-with-settlemint/hedera-hashgraph-guide/setup-graph-middleware)
+
 </Callout>
 
 #### Start your subgraph
 
 The following tasks need to be run in this sequence:
 
-- `bunx settlemint scs subgraph codegen` - Generates the AssemblyScript types for your
-  contracts ABI.
-- `bunx settlemint scs subgraph build` - Compiles the WASM files based on the outputs
-  generated by `bunx settlemint scs subgraph codegen`.
-- `bunx settlemint scs subgraph deploy` - Deploys the WASM files to IPFS and updates the
-  middleware to start or update the indexing.
+- `bunx settlemint scs subgraph codegen` - Generates the AssemblyScript types
+  for your contracts ABI.
+- `bunx settlemint scs subgraph build` - Compiles the WASM files based on the
+  outputs generated by `bunx settlemint scs subgraph codegen`.
+- `bunx settlemint scs subgraph deploy` - Deploys the WASM files to IPFS and
+  updates the middleware to start or update the indexing.
 
 The indexing of your smart contracts has now started. This can take a while, but
 once done you can query the middleware for your data in seconds using the

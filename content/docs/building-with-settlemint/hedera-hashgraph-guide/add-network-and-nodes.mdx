@@ -55,8 +55,8 @@ To build your application on **Hedera**, go to the **network manager** in
 SettleMint and **select "Hedera"** from the list of supported public networks.
 
 SettleMint will automatically connect your app to the Hedera network by
-deploying an archive node.  
-You can choose between mainnet or testnet depending on your use case.
+deploying an archive node. You can choose between mainnet or testnet depending
+on your use case.
 
 For reference, see the full list of supported networks
 [here](/platform-components/blockchain-infrastructure/network-manager#supported-blockchain-network-protocols).
@@ -135,12 +135,6 @@ You can perform the same action via the SettleMint SDK CLI as well -
       const network = await client.blockchainNetwork.read("network-unique-name");
       console.log('Network details:', network);
     };
-
-    // Delete network
-    const deleteNetwork = async () => {
-      await client.blockchainNetwork.delete("network-unique-name");
-    };
-
     // Restart network
     const restartNetwork = async () => {
       await client.blockchainNetwork.restart("network-unique-name");
@@ -183,9 +177,6 @@ Network management can be done via SettleMint SDK CLI using these commands -
     # Get network details
     settlemint platform read blockchain-network <network-name>
 
-    # Delete network
-    settlemint platform delete blockchain-network <network-name>
-
     # Restart network
     settlemint platform restart blockchain-network <network-name>
     ```
@@ -208,9 +199,6 @@ Network management can be done via SettleMint SDK CLI using these commands -
 
     // Get network details
     await client.blockchainNetwork.read("network-unique-name");
-
-    // Delete network
-    await client.blockchainNetwork.delete("network-unique-name");
 
     // Restart network
     await client.blockchainNetwork.restart("network-unique-name");
@@ -395,11 +383,11 @@ network.
 
 <br></br>
 <div style={{
-  backgroundColor: "#D1E5E8", 
-  color: "#000000", 
+  backgroundColor: "#D1E5E8",
+  color: "#000000",
   padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
+  borderRadius: "10px",
+  fontSize: "18px",
   fontWeight: "light",
   lineHeight: "1.5",
   textAlign: "left"
