@@ -4,17 +4,18 @@
   "private": true,
   "scripts": {
     "clean": "git clean -fdX -e '.env' -e '.env.*' -e '!.env' -e '!.env.*' && find . -type f \\( -name 'pnpm-lock.yaml' -o -name 'package-lock.json' -o -name 'yarn.lock' -o -name 'bun.lockb' -o -name 'bun.lock' \\) -exec rm -f {} + && bun install",
-    "build": "next build",
-    "dev": "next dev",
-    "start": "next start",
-    "lint": "next lint",
+    "build": "bun generate-sdk-docs && next build",
+    "dev": "bun generate-sdk-docs && next dev",
+    "start": "bun generate-sdk-docs && next start",
+    "lint": "bun generate-sdk-docs && next lint",
     "format": "prettier --write .",
     "postinstall": "fumadocs-mdx",
     "docker": "bash -c \"docker buildx build . --provenance true --sbom true --platform=linux/amd64,linux/arm64 -t ghcr.io/settlemint/btp-docs:${VERSION:-7.0.0-dev.$(date +%s)} --push --progress=plain\"",
-    "generate-sitemap": "bun scripts/generate-sitemap.ts"
+    "generate-sdk-docs": "bun scripts/generate-sdk-docs.ts"
   },
   "dependencies": {
     "@next/third-parties": "15.3.1",
+    "@settlemint/sdk-cli": "2.2.0",
     "@theguild/remark-mermaid": "0.3.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",

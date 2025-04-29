@@ -30,3 +30,6 @@ bun.lockb
 .vercel
 next-env.d.ts
 .env.local
+
+# generated docs
+content/snippets/dev-tools/cli.mdx
