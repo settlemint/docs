@@ -19,11 +19,17 @@ export async function GET() {
     const fileContent = await fs.readFile(file);
     const { content, data } = matter(fileContent.toString());
 
-    const processed = await processContent(content);
-    return `file: ${file}
+    try {
+      const processed = await processContent(content, file);
+      return `file: ${file}
 meta: ${JSON.stringify(data, null, 2)}
 
 ${processed}`;
+    } catch (err) {
+      const error = err as Error;
+      console.error(`Failed to process ${file}: ${error.message}`);
+      throw err;
+    }
   });
 
   const scanned = await Promise.all(scan);
@@ -31,7 +37,7 @@ ${processed}`;
   return new Response(scanned.join("\n\n"));
 }
 
-async function processContent(content: string): Promise<string> {
+async function processContent(content: string, path: string): Promise<string> {
   const file = await remark()
     .use(remarkMdx)
     // https://fumadocs.vercel.app/docs/mdx/include
@@ -43,7 +49,10 @@ async function processContent(content: string): Promise<string> {
     .use(remarkAdmonition)
     // to string
     .use(remarkStringify)
-    .process(content);
+    .process({
+      value: content,
+      path,
+    });
 
   return String(file);
 }
