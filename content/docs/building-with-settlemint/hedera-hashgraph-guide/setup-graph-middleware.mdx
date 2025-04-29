@@ -478,21 +478,24 @@ queries by default:
 - **Multi-Entity Query:** `userProfiles(...): [UserProfile]` _Fetches a list of
   `UserProfile` entities, with optional filters to refine the results._
   <br />
-  Why This Duplication Exists - **Flexibility in Data Access:** By offering both
-  single-entity and multi-entity queries, The Graph allows you to choose the
-  most efficient way to access your data. If you know the exact ID, you can use
-  the single query for a quick lookup. If you need to display or analyze a
-  collection of records, the multi-entity query is available. - **Optimized
-  Performance:** Retrieving a specific record via the single-entity query avoids
-  unnecessary overhead that comes with filtering through a list, ensuring more
-  efficient data access when the unique identifier is known. - **Catering to
-  Different Use Cases:** Different parts of your application may require
-  different query types. Detailed views might need a single record (using
-  userProfile), while list views benefit from the filtering and pagination
-  offered by userProfiles. - **Consistency Across the Schema:** Generating both
-  queries for every entity ensures a consistent API design, which simplifies
-  development by providing a predictable pattern for data access regardless of
-  the entity.
+
+Why This Duplication Exists
+
+- **Flexibility in Data Access:** By offering both single-entity and
+  multi-entity queries, The Graph allows you to choose the most efficient way to
+  access your data. If you know the exact ID, you can use the single query for a
+  quick lookup. If you need to display or analyze a collection of records, the
+  multi-entity query is available.
+- **Optimized Performance:** Retrieving a specific record via the single-entity
+  query avoids unnecessary overhead that comes with filtering through a list,
+  ensuring more efficient data access when the unique identifier is known.
+- **Catering to Different Use Cases:** Different parts of your application may
+  require different query types. Detailed views might need a single record
+  (using userProfile), while list views benefit from the filtering and
+  pagination offered by userProfiles.
+- **Consistency Across the Schema:** Generating both queries for every entity
+  ensures a consistent API design, which simplifies development by providing a
+  predictable pattern for data access regardless of the entity.
 
 ### Graph middleware - querying data
 
