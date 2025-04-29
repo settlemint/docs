@@ -435,10 +435,6 @@ pre {
   max-height: unset !important;
 }
 
-.cli-command pre > * {
-  display: inline;
-}
-
 p {
   margin-top: 2px;
   margin-bottom: 2px;

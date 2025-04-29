@@ -25,7 +25,12 @@ await mkdir(targetDir, { recursive: true });
 
 const outputPath = join(targetDir, "cli.mdx");
 console.log(`[Generate SDK Docs] Writing content to: ${outputPath}`);
-await writeFile(outputPath, escapeContent(content));
+// replace 'https://github.com/settlemint/sdk/tree/v2.2.0/sdk/cli/docs/settlemint.md)' with '/building-with-settlemint/cli/command-reference'
+const updatedContent = content.replace(
+  /https:\/\/github\.com\/settlemint\/sdk\/tree\/.*?\/sdk\/cli\/docs\/settlemint\.md/,
+  "/building-with-settlemint/cli/command-reference"
+);
+await writeFile(outputPath, escapeContent(updatedContent));
 
 console.log(
   "[Generate SDK Docs] SDK documentation generation completed successfully!"
@@ -190,6 +195,8 @@ function escapeContent(content: string): string {
     content
       .replace(/^# (.*)/, "")
       .replace(/<h1.*?>(.*?)<\/h1>/, "")
+      .replace(/<h2.*?>(.*?)<\/h2>/g, "## $1")
+      .replace(/href="#home"/g, 'href="#"')
       .replace(/<a href="([^"]+)\.md"/g, '<a href="$1"')
       .replace(/<p>/g, "{<p>")
       .replace(/<\/p>/g, "</p>}")
