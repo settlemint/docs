@@ -25,17 +25,17 @@ import { Card } from "fumadocs-ui/components/card";
     To send transactions on a blockchain, you need a private key (with enough
     funds for gas for networks with a fee). You can create and manage private
     keys directly within SettleMint using ECDSA, HD ECDSA, or HSM key types.
-    <br> </br>
+    <br></br>
     After creating a key, it must be attached to at least one node to enable
     transaction signing, this is critical for smart contract deployment. Without
     it, the deployment will fail.
-    <br> </br>
+    <br></br>
     SettleMint also offers user wallets, a scalable solution that generates
     wallets from a single HD ECDSA 256 key. Each user gets a unique address for
     privacy and parallel transaction support. You can create user wallets once
     your HD key is deployed and running, and fund them as needed for gas-based
     transactions.
-    <br> </br>
+    <br></br>
   </div>
 </div>
 
@@ -43,29 +43,33 @@ import { Card } from "fumadocs-ui/components/card";
 
 # Private keys
 
-To send transactions to a blockchain network, you need a private key to sign
-these transactions, and the private key should contain enough funds to cover the
-gas price for the transaction.
+Sending transactions on a blockchain network requires two essential components:
+a private key to cryptographically sign your transactions, and sufficient funds
+in your wallet to cover the associated gas fees. Without either element,
+transaction execution will fail.
 
-You can sign transactions with private keys you created outside SettleMint with
-e.g. MetaMask or other wallet solutions. SettleMint however provides an option
-to **create and manage private keys within the platform**.
-
-When you deploy a blockchain node it contains a signing proxy that captures the
+<br> </br>
+While you can use external private keys created with tools like MetaMask or
+other wallet solutions, **SettleMint offers a more integrated approach**. The
+platform provides built-in functionality to **create and manage private keys
+directly within your environment**, eliminating the need for external wallet
+management.
+<br> </br>
+When you deploy a blockchain node, it contains a signing proxy that captures the
 eth_sendTransaction call, uses the appropriate key from the private key section
 to sign it, and sends it onwards to the blockchain node. You can use this proxy
-directly via the nodes JSON-RPC endpoints
-([JSON RPC](https://ethereum.org/en/developers/docs/apis/json-rpc/)) and via
-tools like Hardhat
-([HardHat RPC](https://hardhat.org/config/#json-rpc-based-networks)) configured
-to use the "remote" default option for signing.
+directly via the node's JSON-RPC endpoints
+([JSON-RPC](https://ethereum.org/en/developers/docs/apis/json-rpc/)) and via
+tools like Hardhat ([HardHat
+RPC](https://hardhat.org/config/#json-rpc-based-networks)) configured to use the
+"remote" default option for signing.
 
 ## Create a private key
 
 To add a private key in the SettleMint platform, navigate to the private keys
-section and click Create a private key. You'll be prompted to select the type of
+section and click create a private key. You'll be prompted to select the type of
 private key, ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
-![Add Private Key](../../../img/building-with-settlemint/add-private-key.png)
+![Add private key](../../../img/building-with-settlemint/add-private-key.png)
 
 <Tabs items={['SDK CLI', 'Platform UI','SDK JS']}>
   <Tab value="Platform UI">
@@ -83,7 +87,7 @@ private key, ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
     4. Click **confirm** to create the key
 
   </Tab>
-  
+
   <Tab value="SDK CLI">
     ```bash
     # Create Accessible ECDSA P256 key
@@ -101,7 +105,7 @@ private key, ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
     ```
 
   </Tab>
-  
+
   <Tab value="SDK JS">
     ```typescript
     import { createSettleMintClient } from '@settlemint/sdk-js';
@@ -128,7 +132,7 @@ private key, ECDSA P256, HD ECDSA P256, or HSM ECDSA P256.
 
 ## Attaching private keys to blockchain nodes (transaction signer)
 
-![Attach Private Key to Node](../../../img/building-with-settlemint/add-key-to-node.png)
+![Attach private key to node](../../../img/building-with-settlemint/add-key-to-node.png)
 
 Every smart contract deployment involves a transaction that must be signed by an
 authorized account. This signature proves that the transaction came from a valid
@@ -183,7 +187,7 @@ transaction.
        - Check balances
        - Fund the key
   </Tab>
-  
+
   <Tab value="SDK CLI">
     ```bash
     # List all private keys
@@ -197,7 +201,7 @@ transaction.
     ```
 
   </Tab>
-  
+
   <Tab value="SDK JS">
     ```typescript
     // List private keys
@@ -225,7 +229,7 @@ For networks that require gas to perform a transaction, your private key should
 contain enough funds to cover the gas price.
 
 <Callout type="info">
-For Hedera Testnet, you can get free test HBAR from the [Hedera Portal](https://portal.hedera.com). 
+For Hedera Testnet, you can get free test HBAR from the [Hedera Portal](https://portal.hedera.com).
 This will provide you with enough test HBAR to cover transaction fees during development and testing.
 
 1. Visit [portal.hedera.com](https://portal.hedera.com)
@@ -303,19 +307,19 @@ details. You can see the mnemonic from which the user wallets are generated
 under **key material**. Upon initialization, the user wallets section is empty.
 To create your first user wallet, click on **create a user wallet**.
 
-![Create User Wallet](../../../img/building-with-settlemint/user-wallet.png)
+![Create user wallet](../../../img/building-with-settlemint/user-wallet.png)
 
 Remember that for networks that require gas to perform a transaction, the user
 wallet should contain enough funds to cover the gas price. You can fund it using
 the address displayed in the list.
 
-<br></br>
+<br /></br />
 <div style={{
-  backgroundColor: "#D1E5E8", 
-  color: "#000000", 
+  backgroundColor: "#D1E5E8",
+  color: "#000000",
   padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
+  borderRadius: "10px",
+  fontSize: "18px",
   fontWeight: "light",
   lineHeight: "1.5",
   textAlign: "left"
