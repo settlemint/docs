@@ -2,5 +2,5 @@
   "label": "SettleMint CLI",
   "title": "SettleMint CLI",
   "icon": "Square-code",
-  "pages": ["platform-components", "command-reference", "settlemint"]
+  "pages": ["command-reference", "settlemint"]
 }
