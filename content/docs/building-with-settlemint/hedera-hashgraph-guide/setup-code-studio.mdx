@@ -11,16 +11,16 @@ import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
 
 <div style={{
-  backgroundColor: "#e1eafd", 
-  color: "#356fee", 
+  backgroundColor: "#e1eafd",
+  color: "#356fee",
   padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
+  borderRadius: "10px",
+  fontSize: "18px",
   fontWeight: "bold",
   lineHeight: "1.5",
   textAlign: "left"
 }}>
-  Summary  
+  Summary
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
 
 To start developing and deploying smart contracts on the SettleMint platform,
@@ -308,12 +308,6 @@ retrieve addresses later for interactions, frontend integrations, or upgrades.
       const details = await client.smartContractSet.read("smart-contract-set-unique-name");
       console.log('Smart Contract Set details:', details);
     };
-
-    // Delete a Smart Contract Set
-    const deleteSmartContractSet = async () => {
-      await client.smartContractSet.delete("smart-contract-set-unique-name");
-      console.log('Smart Contract Set deleted');
-    };
     ```
 
     <Callout type="tip">
@@ -383,11 +377,11 @@ To get started, visit:
 
 <br></br>
 <div style={{
-  backgroundColor: "#D1E5E8", 
-  color: "#000000", 
+  backgroundColor: "#D1E5E8",
+  color: "#000000",
   padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
+  borderRadius: "10px",
+  fontSize: "18px",
   fontWeight: "light",
   lineHeight: "1.5",
   textAlign: "left"

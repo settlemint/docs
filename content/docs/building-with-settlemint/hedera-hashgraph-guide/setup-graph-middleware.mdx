@@ -7,18 +7,20 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
+import ManageMiddlewareSnippet from "../../snippets/manage-middleware.mdx";
+import CreateMiddlewareSnippet from "../../snippets/create-middleware.mdx";
 
 <div style={{
-  backgroundColor: "#e1eafd", 
-  color: "#356fee", 
+  backgroundColor: "#e1eafd",
+  color: "#356fee",
   padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
+  borderRadius: "10px",
+  fontSize: "18px",
   fontWeight: "bold",
   lineHeight: "1.5",
   textAlign: "left"
 }}>
-  Summary  
+  Summary
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
 
 To set up a graph middleware in SettleMint, you'll begin by ensuring that your
@@ -77,126 +79,19 @@ providing essential services like data indexing, API access, and event
 monitoring. Before adding middleware, ensure you have an application and
 blockchain node in place.
 
-## How to add middleware
+### How to add middleware
 
 ![Add Graph Middleware](../../../img/building-with-settlemint/add-graph-middleware.png)
 
-<Tabs items={['SDK CLI', 'Platform UI', 'SDK JS']}>
-  <Tab value="Platform UI">
-    <Steps>
-      ### Navigate to application
-      Navigate to the **application** where you want to add middleware.
+<CreateMiddlewareSnippet />
 
-      ### Access middleware section
-      Click **middleware** in the left navigation, and then click **add a middleware**. This opens a form.
+### Manage middleware
 
-      ### Configure middleware
-      1. Choose middleware type (graph or portal)
-      2. Choose a **middleware name**
-      3. Select the **blockchain node**
-      4. Configure deployment settings
-      5. Click **confirm**
-    </Steps>
-
-  </Tab>
-
-  <Tab value="SDK CLI">
-    First ensure you're authenticated:
-    ```bash
-settlemint login
-    ```
-
-    Create a middleware:
-    ```bash
-    # Get the list of available middleware types
-
-settlemint platform create middleware --help
-
-    # Create a middleware
-
-settlemint platform create middleware <type> <name>
-
-    # Get information about the command and all available options
-
-settlemint platform create middleware <type> --help ```
-
-  </Tab>
-
-  <Tab value="SDK JS">
-    ```typescript
-    import { createSettleMintClient } from '@settlemint/sdk-js';
-
-    const client = createSettleMintClient({
-      accessToken: 'your_access_token',
-      instance: 'https://console.settlemint.com'
-    });
-
-    // Create middleware
-    const createMiddleware = async () => {
-      const result = await client.middleware.create({
-        applicationUniqueName: "your-app-unique-name",
-        name: "my-middleware",
-        type: "SHARED",
-        interface: "GRAPH",
-        blockchainNodeUniqueName: "your-node-unique-name",
-        region: "EUROPE",  // Required
-        provider: "GKE",   // Required
-        size: "SMALL"      // Valid options: "SMALL" | "MEDIUM" | "LARGE"
-      });
-      console.log('Middleware created:', result);
-    };
-    ```
-
-    <Callout type="tip">
-    Get your access token from the platform UI under **user settings → API tokens**.
-    </Callout>
-
-  </Tab>
-</Tabs>
-
-## Manage middleware
-
-<Tabs items={['SDK CLI', 'Platform UI', 'SDK JS']}>
-  <Tab value="Platform UI">
-    Navigate to your middleware and click **manage middleware** to:
-    - View middleware details and status
-    - Update configurations
-    - Monitor health
-    - Access endpoints
-  </Tab>
-
-  <Tab value="SDK CLI">
-    ```bash
-    # List middlewares
-    settlemint platform list middlewares --application <app-name>
-
-    # Get middleware details
-    settlemint platform read middleware <middleware-name>
-
-    # Delete middleware
-    settlemint platform delete middleware <middleware-name>
-    ```
-
-  </Tab>
-
-  <Tab value="SDK JS">
-    ```typescript
-    // List middlewares
-    await client.middleware.list("your-app");
-
-    // Get middleware details
-    await client.middleware.read("middleware-unique-name");
-
-    // Delete middleware
-    await client.middleware.delete("middleware-unique-name");
-    ```
-
-  </Tab>
-</Tabs>
+<ManageMiddlewareSnippet />
 
 ## Subgraph folder structure in code studio ide
 
-```
+```bash
 subgraph/
 │
 ├── subgraph.config.json
@@ -218,6 +113,7 @@ Find the chain ID of the network from igntition>deployments folder name
 (chain-ID) or from the platform UI at blockchain networks > selcted network >
 details page, it will be something like **47440**.
 
+<br />
 Locate the contract address, deployed contract address is stored in
 deployed_addresses.json file located in igntition>deployments folder.
 
@@ -230,12 +126,13 @@ understand what contracts to index, where to start indexing from (which block),
 and which folder contains the relevant configurations (e.g., YAML manifest,
 mappings, schema, etc.).
 
+<br />
 Each object in the datasources array represents a separate contract. You specify
 the contract's name, address, the block number at which the indexer should begin
 listening, and the path to the module folder (which holds the YAML manifest and
 mapping logic). This file is essential when working with Graph CLI or SDKs for
 compiling and deploying subgraphs.
-
+<br />
 When writing this file from scratch, you will need to gather the deployed
 contract address, decide the indexing start block (can be 0 or a specific block
 to save resources), and organize contract-related files in a logical module
@@ -263,11 +160,12 @@ specific smart contract on-chain. It defines the contract's ABI, address, the
 events to listen to, and the mapping logic that should be triggered for each
 event.
 
+<br />
 The structure must follow a strict YAML format, wrong indentation or a missing
 property can break the subgraph. Under the source section, you provide the
 contract's address, the ABI name, and the block from which indexing should
 begin.
-
+<br />
 The mapping section details how the subgraph handles events. It specifies the
 API version, programming language (AssemblyScript), the entities it will touch,
 and the path to the mapping file. Each eventHandler entry pairs an event
@@ -313,18 +211,19 @@ structure. It outlines the shape of your data, which entities will be stored in
 the Graph Node's underlying database, and the fields each entity will expose to
 users via GraphQL queries.
 
+<br />
 Every event-based entity (like ProfileCreated, ProfileUpdated, ProfileDeleted)
 is linked to the main entity (here, UserProfile) to maintain a historical audit
 trail. Each entity must have an id field of type ID!, which serves as the
 primary key.
-
+<br />
 You then define all other fields with their data types and nullability. When
 writing this schema, think in terms of how data will be queried: What
 information will consumers of the subgraph want to retrieve? The names and types
 must exactly reflect the logic in your mapping files. For reuse across projects,
 just align this schema with the domain model of your contract.
 
-```
+```json
 [
   {
     "name": "UserProfile",
@@ -378,6 +277,7 @@ YAML manifest. Inside each function, the handler builds a unique ID for the
 event (usually combining the transaction hash and log index), processes the
 event payload, and updates or creates the relevant entity (here, UserProfile).
 
+<br />
 The logic can include custom processing like formatting values, filtering, or
 even transforming data types. This file is where your business logic resides,
 similar to an event-driven backend microservice. You should keep this file
@@ -462,10 +362,11 @@ This is a helper utility designed to avoid redundancy in your mapping file. It
 abstracts the logic of either loading an existing entity or creating a new one
 if it doesn't exist.
 
+<br />
 It enhances reusability and reduces boilerplate in each handler function. The
 naming convention of this file usually mirrors the module or entity it's
 associated with (e.g., fetch/userdata.ts).
-
+<br />
 The logic inside the function uses the userId (or other unique identifier) as a
 string key and ensures that all required fields have a default value. When
 writing this from scratch, ensure every field in your GraphQL schema has an
@@ -573,29 +474,27 @@ classDef tooling fill:#F0F9FF,stroke:#0284C7,stroke-width:1px
 In The Graph's autogenerated schema, each entity is provided with two types of
 queries by default:
 
-- **Single-Entity Query:**  
-  `userProfile(id: ID!): UserProfile`  
-  _Fetches a single `UserProfile` by its unique ID._
+- **Single-Entity Query:** `userProfile(id: ID!): UserProfile` _Fetches a single
+  `UserProfile` by its unique ID._
 
-- **Multi-Entity Query:**  
-  `userProfiles(...): [UserProfile]`  
-  _Fetches a list of `UserProfile` entities, with optional filters to refine the
-  results._
-
-Why This Duplication Exists - **Flexibility in Data Access:** By offering both
-single-entity and multi-entity queries, The Graph allows you to choose the most
-efficient way to access your data. If you know the exact ID, you can use the
-single query for a quick lookup. If you need to display or analyze a collection
-of records, the multi-entity query is available. - **Optimized Performance:**
-Retrieving a specific record via the single-entity query avoids unnecessary
-overhead that comes with filtering through a list, ensuring more efficient data
-access when the unique identifier is known. - **Catering to Different Use
-Cases:** Different parts of your application may require different query types.
-Detailed views might need a single record (using userProfile), while list views
-benefit from the filtering and pagination offered by userProfiles. -
-**Consistency Across the Schema:** Generating both queries for every entity
-ensures a consistent API design, which simplifies development by providing a
-predictable pattern for data access regardless of the entity.
+- **Multi-Entity Query:** `userProfiles(...): [UserProfile]` _Fetches a list of
+  `UserProfile` entities, with optional filters to refine the results._
+  <br />
+  Why This Duplication Exists - **Flexibility in Data Access:** By offering both
+  single-entity and multi-entity queries, The Graph allows you to choose the
+  most efficient way to access your data. If you know the exact ID, you can use
+  the single query for a quick lookup. If you need to display or analyze a
+  collection of records, the multi-entity query is available. - **Optimized
+  Performance:** Retrieving a specific record via the single-entity query avoids
+  unnecessary overhead that comes with filtering through a list, ensuring more
+  efficient data access when the unique identifier is known. - **Catering to
+  Different Use Cases:** Different parts of your application may require
+  different query types. Detailed views might need a single record (using
+  userProfile), while list views benefit from the filtering and pagination
+  offered by userProfiles. - **Consistency Across the Schema:** Generating both
+  queries for every entity ensures a consistent API design, which simplifies
+  development by providing a predictable pattern for data access regardless of
+  the entity.
 
 ### Graph middleware - querying data
 
@@ -607,21 +506,21 @@ Or we can query to return all entries
 
 <br></br>
 <div style={{
-  backgroundColor: "#D1E5E8", 
-  color: "#000000", 
+  backgroundColor: "#D1E5E8",
+  color: "#000000",
   padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
+  borderRadius: "10px",
+  fontSize: "18px",
   fontWeight: "light",
   lineHeight: "1.5",
   textAlign: "left"
 }}>
 Congratulations.!!
-
+<br />
 You have succesfully configured graph middleware and deployed subgraphs to
 enable smart contract indexing. With this you have both read and write
 middleware for your smart contracts.
-
+<br />
 This marks the end of the core Web3 development, from here we will proceed to
 adding off-chain database and storage options to enable us to have a holistic
 backend and storage layer for our application.

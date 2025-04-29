@@ -9,16 +9,16 @@ import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
 
 <div style={{
-  backgroundColor: "#e1eafd", 
-  color: "#356fee", 
+  backgroundColor: "#e1eafd",
+  color: "#356fee",
   padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
+  borderRadius: "10px",
+  fontSize: "18px",
   fontWeight: "bold",
   lineHeight: "1.5",
   textAlign: "left"
 }}>
-  Summary  
+  Summary
   <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
 
 To integrate off-chain file storage into your blockchain application, you can
@@ -216,9 +216,6 @@ decentralization.
 
     # Get storage details
     settlemint platform read storage <name>
-
-    # Delete storage
-    settlemint platform delete storage <name>
     ```
 
   </Tab>
@@ -236,11 +233,6 @@ decentralization.
       const storage = await client.storage.read("storage-unique-name");
       console.log('Storage details:', storage);
     };
-
-    // Delete storage
-    const deleteStorage = async () => {
-      await client.storage.delete("storage-unique-name");
-    };
     ```
 
   </Tab>
@@ -248,11 +240,11 @@ decentralization.
 
 <br></br>
 <div style={{
-  backgroundColor: "#D1E5E8", 
-  color: "#000000", 
+  backgroundColor: "#D1E5E8",
+  color: "#000000",
   padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
+  borderRadius: "10px",
+  fontSize: "18px",
   fontWeight: "light",
   lineHeight: "1.5",
   textAlign: "left"
