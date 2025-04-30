@@ -143,9 +143,8 @@ async function generateMetaJsonFiles(
     const metaPath = join(cliReferenceTargetDir, dir, "meta.json");
     const dirBasename = basename(dir);
 
-    // Format the label and title with first letter capitalized
-    const formattedName =
-      dirBasename.charAt(0).toUpperCase() + dirBasename.slice(1);
+    // Format the label and title
+    const formattedName = escapeTitle(dirBasename);
 
     const metaContent = {
       label: dir === "settlemint" ? "Commands" : formattedName,
@@ -295,10 +294,14 @@ description: CLI command reference for SettleMint platform
 ${content}`;
   }
   return `---
-title: ${title.charAt(0).toUpperCase() + title.slice(1)}
+title: ${escapeTitle(title)}
 ---
 
 ${content}`;
+}
+
+function escapeTitle(title: string): string {
+  return title.charAt(0).toUpperCase() + title.slice(1).replace(/-/g, " ");
 }
 
 // Execute the functions
