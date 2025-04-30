@@ -154,7 +154,8 @@ async function generateMetaJsonFiles(
       pages: Array.from(processedFiles)
         .filter((file) => dirname(file) === dir)
         .map((file) => basename(file).replace(/\.md$/, ""))
-        .filter((name) => name !== dirBasename), // Filter out files with same name as directory
+        .filter((name) => name !== dirBasename) // Filter out files with same name as directory
+        .sort((a, b) => a.localeCompare(b)), // Sort the files alphabetically
     };
 
     await writeFile(metaPath, JSON.stringify(metaContent, null, 2));
@@ -241,7 +242,28 @@ function escapeContent(content: string): string {
     content
       .replace(/^# (.*)/, "")
       .replace(/<h1.*?>(.*?)<\/h1>/, "")
-      .replace(/<h2.*?>(.*?)<\/h2>/g, "## $1")
+      // Remove preceding content from command paths like "Hardhat > Deploy > Remote" to keep only the last part
+      .replace(/<h2.*?>(.*?)<\/h2>/g, (match) => {
+        const parts = match.match(/<h2.*?>(.*?)<\/h2>/)?.[1].split(" > ");
+        if (!parts) {
+          return match;
+        }
+        return `## ${parts[parts.length - 1]}`;
+      })
+      .replace(/<h3.*?>(.*?)<\/h3>/g, (match) => {
+        const parts = match.match(/<h3.*?>(.*?)<\/h3>/)?.[1].split(" > ");
+        if (!parts) {
+          return match;
+        }
+        return `### ${parts[parts.length - 1]}`;
+      })
+      .replace(/<h4.*?>(.*?)<\/h4>/g, (match) => {
+        const parts = match.match(/<h4.*?>(.*?)<\/h4>/)?.[1].split(" > ");
+        if (!parts) {
+          return match;
+        }
+        return `#### ${parts[parts.length - 1]}`;
+      })
       .replace(/href="#home"/g, 'href="#"')
       .replace(/<a href="([^"]+)\.md"/g, '<a href="$1"')
       .replace(/<p>/g, "{<p>")
