@@ -320,4 +320,20 @@ await generateSnippet(
   "./node_modules/@settlemint/sdk-portal/README.md",
   "portal.mdx"
 );
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-hasura/README.md",
+  "hasura.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-blockscout/README.md",
+  "blockscout.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-ipfs/README.md",
+  "ipfs.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-thegraph/README.md",
+  "the-graph.mdx"
+);
 await generateCliCommandDocs();

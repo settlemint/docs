@@ -8,6 +8,7 @@
     "evm-chains-guide",
     "hedera-hashgraph-guide",
     "hyperledger-fabric-guide",
+    "building-with-sdk",
     "cli"
   ]
 }
