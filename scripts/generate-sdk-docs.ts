@@ -235,14 +235,12 @@ async function generateCliCommandDocs() {
 }
 
 function escapeContent(content: string): string {
-  // Remove all ".md" extensions in a href tags
-  // Remove heading 1 (# and <h1>) from the content
-  // Escape all <p> and <pre> tags ({<p>...</p> and {<pre>...</pre>})
   return (
     content
+      // Remove heading 1 (# and <h1>) from the content
       .replace(/^# (.*)/, "")
       .replace(/<h1.*?>(.*?)<\/h1>/, "")
-      // Remove preceding content from command paths like "Hardhat > Deploy > Remote" to keep only the last part
+      // Cleanup heading 2, 3, 4 tags to keep only the last part
       .replace(/<h2.*?>(.*?)<\/h2>/g, (match) => {
         const parts = match.match(/<h2.*?>(.*?)<\/h2>/)?.[1].split(" > ");
         if (!parts) {
@@ -265,7 +263,11 @@ function escapeContent(content: string): string {
         return `#### ${parts[parts.length - 1]}`;
       })
       .replace(/href="#home"/g, 'href="#"')
+      // Remove all ".md" extensions in a href tags
       .replace(/<a href="([^"]+)\.md"/g, '<a href="$1"')
+      // Remove all anchor links (toc of the docs handles this automatically)
+      .replace(/<a href="#.*?">(.*?)<\/a>/g, "$1")
+      // Escape all <p> and <pre> tags ({<p>...</p> and {<pre>...</pre>})
       .replace(/<p>/g, "{<p>")
       .replace(/<\/p>/g, "</p>}")
       .replace(/<pre>/g, "<div className='cli-command'>{<pre>")
