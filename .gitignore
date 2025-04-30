@@ -30,3 +30,10 @@ bun.lockb
 .vercel
 next-env.d.ts
 .env.local
+
+# generated docs
+content/docs/building-with-settlemint/cli/command-reference.mdx
+content/docs/building-with-settlemint/cli/settlemint/**/*.mdx
+content/docs/building-with-settlemint/cli/settlemint/**/meta.json
+content/snippets/dev-tools/cli.mdx
+content/snippets/dev-tools/settlemint-*.tmp

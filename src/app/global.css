@@ -425,6 +425,14 @@ button[data-search-full] {
 pre {
   max-height: 24rem !important;
   overflow-y: auto;
+
+  a {
+    color: var(--color-fd-primary);
+  }
+}
+
+.cli-command pre {
+  max-height: unset !important;
 }
 
 p {
