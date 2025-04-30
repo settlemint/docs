@@ -4,10 +4,9 @@ import { dependencies } from "../package.json";
 
 const version = dependencies["@settlemint/sdk-cli"];
 
-async function generateCliDocs() {
+async function generateSnippet(sdkDocsPath: string, outputFilename: string) {
   console.log("[Generate SDK Docs] Starting SDK documentation generation...");
 
-  const sdkDocsPath = "./node_modules/@settlemint/sdk-cli/README.md";
   console.log(
     `[Generate SDK Docs] Reading SDK documentation from: ${sdkDocsPath}`
   );
@@ -24,7 +23,7 @@ async function generateCliDocs() {
   console.log(`[Generate SDK Docs] Creating target directory: ${targetDir}`);
   await mkdir(targetDir, { recursive: true });
 
-  const outputPath = join(targetDir, "cli.mdx");
+  const outputPath = join(targetDir, outputFilename);
   console.log(`[Generate SDK Docs] Writing content to: ${outputPath}`);
   // replace 'https://github.com/settlemint/sdk/tree/v2.2.0/sdk/cli/docs/settlemint.md)' with '/building-with-settlemint/cli/command-reference'
   const updatedContent = content.replace(
@@ -305,5 +304,20 @@ function escapeTitle(title: string): string {
 }
 
 // Execute the functions
-await generateCliDocs();
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-cli/README.md",
+  "cli.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-viem/README.md",
+  "viem.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-minio/README.md",
+  "minio.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-portal/README.md",
+  "portal.mdx"
+);
 await generateCliCommandDocs();
