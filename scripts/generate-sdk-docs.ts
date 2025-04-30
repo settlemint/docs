@@ -4,43 +4,41 @@ import { dependencies } from "../package.json";
 
 const version = dependencies["@settlemint/sdk-cli"];
 
-console.log("[Generate SDK Docs] Starting SDK documentation generation...");
+async function generateCliDocs() {
+  console.log("[Generate SDK Docs] Starting SDK documentation generation...");
 
-const sdkDocsPath = "./node_modules/@settlemint/sdk-cli/README.md";
-console.log(
-  `[Generate SDK Docs] Reading SDK documentation from: ${sdkDocsPath}`
-);
-const sdkDocs = await readFile(sdkDocsPath, "utf-8");
+  const sdkDocsPath = "./node_modules/@settlemint/sdk-cli/README.md";
+  console.log(
+    `[Generate SDK Docs] Reading SDK documentation from: ${sdkDocsPath}`
+  );
+  const sdkDocs = await readFile(sdkDocsPath, "utf-8");
 
-const lines = sdkDocs.split("\n");
-const aboutIndex = lines.indexOf("## About");
-console.log(
-  `[Generate SDK Docs] Found "## About" section at line: ${aboutIndex}`
-);
-const content = lines.slice(aboutIndex).join("\n");
+  const lines = sdkDocs.split("\n");
+  const aboutIndex = lines.indexOf("## About");
+  console.log(
+    `[Generate SDK Docs] Found "## About" section at line: ${aboutIndex}`
+  );
+  const content = lines.slice(aboutIndex).join("\n");
 
-const targetDir = join(__dirname, "..", "content", "snippets", "dev-tools");
-console.log(`[Generate SDK Docs] Creating target directory: ${targetDir}`);
-await mkdir(targetDir, { recursive: true });
+  const targetDir = join(__dirname, "..", "content", "snippets", "dev-tools");
+  console.log(`[Generate SDK Docs] Creating target directory: ${targetDir}`);
+  await mkdir(targetDir, { recursive: true });
 
-const outputPath = join(targetDir, "cli.mdx");
-console.log(`[Generate SDK Docs] Writing content to: ${outputPath}`);
-// replace 'https://github.com/settlemint/sdk/tree/v2.2.0/sdk/cli/docs/settlemint.md)' with '/building-with-settlemint/cli/command-reference'
-const updatedContent = content.replace(
-  /https:\/\/github\.com\/settlemint\/sdk\/tree\/.*?\/sdk\/cli\/docs\/settlemint\.md/,
-  "/building-with-settlemint/cli/command-reference"
-);
-await writeFile(outputPath, escapeContent(updatedContent));
+  const outputPath = join(targetDir, "cli.mdx");
+  console.log(`[Generate SDK Docs] Writing content to: ${outputPath}`);
+  // replace 'https://github.com/settlemint/sdk/tree/v2.2.0/sdk/cli/docs/settlemint.md)' with '/building-with-settlemint/cli/command-reference'
+  const updatedContent = content.replace(
+    /https:\/\/github\.com\/settlemint\/sdk\/tree\/.*?\/sdk\/cli\/docs\/settlemint\.md/,
+    "/building-with-settlemint/cli/command-reference"
+  );
+  await writeFile(outputPath, escapeContent(updatedContent));
 
-console.log(
-  "[Generate SDK Docs] SDK documentation generation completed successfully!"
-);
+  console.log(
+    "[Generate SDK Docs] SDK documentation generation completed successfully!"
+  );
+}
 
-// https://github.com/settlemint/sdk/blob/v2.2.0/sdk/cli/docs/settlemint.md
-// Download CLI command reference documentation
-async function downloadCliDocs() {
-  console.log("[Generate SDK Docs] Starting CLI command reference download...");
-
+async function shouldSkipCliDocsDownload(targetDir: string) {
   const previousUpload = join(targetDir, `settlemint-${version}.tmp`);
   // Skip if the file already exists
   try {
@@ -48,108 +46,89 @@ async function downloadCliDocs() {
     console.log(
       `[Generate SDK Docs] CLI command reference already generated, skipping`
     );
-    return;
+    return { skip: true, previousUpload };
   } catch {
     // File doesn't exist, continue with download
+    return { skip: false, previousUpload };
+  }
+}
+
+async function downloadFile(
+  baseUrl: string,
+  currentFile: string,
+  retryOptions = { maxRetries: 5 }
+) {
+  let content = "";
+  let retries = 0;
+  const { maxRetries } = retryOptions;
+
+  while (retries < maxRetries) {
+    const response = await fetch(`${baseUrl}/${currentFile}`);
+
+    if (response.status === 429) {
+      retries++;
+      console.log(
+        `[Generate SDK Docs] Rate limited (429), retrying ${retries}/${maxRetries}...`
+      );
+      // Exponential backoff with jitter
+      const delay = Math.floor(
+        1000 * Math.pow(2, retries) + Math.random() * 1000
+      );
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    } else {
+      if (!response.ok) {
+        console.error(
+          `[Generate SDK Docs] Failed to download ${currentFile}: ${response.status} ${response.statusText}`
+        );
+        process.exit(1);
+      }
+      content = await response.text();
+      break;
+    }
   }
 
-  // Base URL for the CLI documentation
-  const baseUrl = `https://raw.githubusercontent.com/settlemint/sdk/v${version}/sdk/cli/docs`;
+  return content;
+}
 
-  // Initial file to download
-  const initialFile = "settlemint.md";
-  const processedFiles = new Set<string>();
-  const filesToProcess = [initialFile];
-  const cliReferenceTargetDir = join(
-    __dirname,
-    "..",
-    "content/docs/building-with-settlemint/cli"
+function extractLinkedFiles(content: string, currentFile: string) {
+  const linkedFiles = [];
+  const aHrefRegex = /<a href="(.*?\.md)".*?>/g;
+  let match;
+
+  while ((match = aHrefRegex.exec(content)) !== null) {
+    const linkedFile = match[1];
+
+    // Handle relative paths
+    const normalizedPath = linkedFile.replace(/^\.\//, "");
+    const basePath = dirname(currentFile);
+    const fullPath = join(basePath, normalizedPath);
+    linkedFiles.push(fullPath);
+  }
+
+  return linkedFiles;
+}
+
+async function saveContentToFile(
+  outputPath: string,
+  currentFile: string,
+  content: string
+) {
+  // Ensure the directory exists
+  const outputDir = dirname(outputPath);
+  await mkdir(outputDir, { recursive: true });
+  // Change the extension to .mdx for the output file
+  const mdxOutputPath = outputPath.replace(/\.md$/, ".mdx");
+  await writeFile(
+    mdxOutputPath,
+    addFrontmatter(currentFile, escapeContent(content))
   );
+  console.log(`[Generate SDK Docs] Saved: ${mdxOutputPath}`);
+}
 
-  while (filesToProcess.length > 0) {
-    const currentFile = filesToProcess.shift();
-    if (!currentFile || processedFiles.has(currentFile)) {
-      continue;
-    }
-
-    console.log(`[Generate SDK Docs] Downloading: ${currentFile}`);
-
-    let content: string = "";
-    try {
-      const outputPath = join(
-        cliReferenceTargetDir,
-        currentFile === "settlemint.md" ? "command-reference.mdx" : currentFile
-      );
-      let retries = 0;
-      const maxRetries = 5;
-
-      while (retries < maxRetries) {
-        const response = await fetch(`${baseUrl}/${currentFile}`);
-
-        if (response.status === 429) {
-          retries++;
-          console.log(
-            `[Generate SDK Docs] Rate limited (429), retrying ${retries}/${maxRetries}...`
-          );
-          // Exponential backoff with jitter
-          const delay = Math.floor(
-            1000 * Math.pow(2, retries) + Math.random() * 1000
-          );
-          await new Promise((resolve) => setTimeout(resolve, delay));
-        } else {
-          if (!response.ok) {
-            console.error(
-              `[Generate SDK Docs] Failed to download ${currentFile}: ${response.status} ${response.statusText}`
-            );
-            process.exit(1);
-          }
-          content = await response.text();
-          break;
-        }
-      }
-
-      // Ensure the directory exists
-      const outputDir = dirname(outputPath);
-      await mkdir(outputDir, { recursive: true });
-      // Change the extension to .mdx for the output file
-      const mdxOutputPath = outputPath.replace(/\.md$/, ".mdx");
-      await writeFile(
-        mdxOutputPath,
-        addFrontmatter(currentFile, escapeContent(content))
-      );
-      console.log(`[Generate SDK Docs] Saved: ${mdxOutputPath}`);
-
-      // Find links to other .md files
-      const aHrefRegex = /<a href="(.*?\.md)".*?>/g;
-      let match;
-
-      while ((match = aHrefRegex.exec(content)) !== null) {
-        const linkedFile = match[1];
-
-        // Handle relative paths
-        const normalizedPath = linkedFile.replace(/^\.\//, "");
-        const basePath = dirname(currentFile);
-        const fullPath = join(basePath, normalizedPath);
-        if (
-          !processedFiles.has(fullPath) &&
-          !filesToProcess.includes(fullPath)
-        ) {
-          filesToProcess.push(fullPath);
-        }
-      }
-
-      processedFiles.add(currentFile);
-    } catch (error) {
-      console.error(
-        `[Generate SDK Docs] Error processing ${currentFile}:`,
-        error
-      );
-    }
-  }
-
-  await writeFile(previousUpload, version);
-
-  // Generate meta.json files for CLI command directories
+async function generateMetaJsonFiles(
+  processedFiles: Set<string>,
+  cliReferenceTargetDir: string
+) {
   console.log("[Generate SDK Docs] Generating meta.json files");
 
   // Get all directories from processed files
@@ -181,6 +160,73 @@ async function downloadCliDocs() {
     await writeFile(metaPath, JSON.stringify(metaContent, null, 2));
     console.log(`[Generate SDK Docs] Created: ${metaPath}`);
   }
+}
+
+// https://github.com/settlemint/sdk/blob/v2.2.0/sdk/cli/docs/settlemint.md
+// Download CLI command reference documentation
+async function generateCliCommandDocs() {
+  console.log("[Generate SDK Docs] Starting CLI command reference download...");
+
+  const targetDir = join(__dirname, "..", "content", "snippets", "dev-tools");
+  const { skip, previousUpload } = await shouldSkipCliDocsDownload(targetDir);
+
+  if (skip) {
+    return;
+  }
+
+  // Base URL for the CLI documentation
+  const baseUrl = `https://raw.githubusercontent.com/settlemint/sdk/v${version}/sdk/cli/docs`;
+
+  // Initial file to download
+  const initialFile = "settlemint.md";
+  const processedFiles = new Set<string>();
+  const filesToProcess = [initialFile];
+  const cliReferenceTargetDir = join(
+    __dirname,
+    "..",
+    "content/docs/building-with-settlemint/cli"
+  );
+
+  while (filesToProcess.length > 0) {
+    const currentFile = filesToProcess.shift();
+    if (!currentFile || processedFiles.has(currentFile)) {
+      continue;
+    }
+
+    console.log(`[Generate SDK Docs] Downloading: ${currentFile}`);
+
+    try {
+      const outputPath = join(
+        cliReferenceTargetDir,
+        currentFile === "settlemint.md" ? "command-reference.mdx" : currentFile
+      );
+
+      const content = await downloadFile(baseUrl, currentFile);
+      await saveContentToFile(outputPath, currentFile, content);
+
+      // Find links to other .md files
+      const linkedFiles = extractLinkedFiles(content, currentFile);
+
+      for (const fullPath of linkedFiles) {
+        if (
+          !processedFiles.has(fullPath) &&
+          !filesToProcess.includes(fullPath)
+        ) {
+          filesToProcess.push(fullPath);
+        }
+      }
+
+      processedFiles.add(currentFile);
+    } catch (error) {
+      console.error(
+        `[Generate SDK Docs] Error processing ${currentFile}:`,
+        error
+      );
+    }
+  }
+
+  await writeFile(previousUpload, version);
+  await generateMetaJsonFiles(processedFiles, cliReferenceTargetDir);
 
   console.log(
     `[Generate SDK Docs] Downloaded ${processedFiles.size} documentation files`
@@ -231,5 +277,6 @@ title: ${title.charAt(0).toUpperCase() + title.slice(1)}
 ${content}`;
 }
 
-// Execute the download function
-await downloadCliDocs();
+// Execute the functions
+await generateCliDocs();
+await generateCliCommandDocs();
