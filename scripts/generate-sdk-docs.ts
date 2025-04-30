@@ -4,10 +4,9 @@ import { dependencies } from "../package.json";
 
 const version = dependencies["@settlemint/sdk-cli"];
 
-async function generateCliDocs() {
+async function generateSnippet(sdkDocsPath: string, outputFilename: string) {
   console.log("[Generate SDK Docs] Starting SDK documentation generation...");
 
-  const sdkDocsPath = "./node_modules/@settlemint/sdk-cli/README.md";
   console.log(
     `[Generate SDK Docs] Reading SDK documentation from: ${sdkDocsPath}`
   );
@@ -24,7 +23,7 @@ async function generateCliDocs() {
   console.log(`[Generate SDK Docs] Creating target directory: ${targetDir}`);
   await mkdir(targetDir, { recursive: true });
 
-  const outputPath = join(targetDir, "cli.mdx");
+  const outputPath = join(targetDir, outputFilename);
   console.log(`[Generate SDK Docs] Writing content to: ${outputPath}`);
   // replace 'https://github.com/settlemint/sdk/tree/v2.2.0/sdk/cli/docs/settlemint.md)' with '/building-with-settlemint/cli/command-reference'
   const updatedContent = content.replace(
@@ -143,9 +142,8 @@ async function generateMetaJsonFiles(
     const metaPath = join(cliReferenceTargetDir, dir, "meta.json");
     const dirBasename = basename(dir);
 
-    // Format the label and title with first letter capitalized
-    const formattedName =
-      dirBasename.charAt(0).toUpperCase() + dirBasename.slice(1);
+    // Format the label and title
+    const formattedName = escapeTitle(dirBasename);
 
     const metaContent = {
       label: dir === "settlemint" ? "Commands" : formattedName,
@@ -295,12 +293,47 @@ description: CLI command reference for SettleMint platform
 ${content}`;
   }
   return `---
-title: ${title.charAt(0).toUpperCase() + title.slice(1)}
+title: ${escapeTitle(title)}
 ---
 
 ${content}`;
 }
 
+function escapeTitle(title: string): string {
+  return title.charAt(0).toUpperCase() + title.slice(1).replace(/-/g, " ");
+}
+
 // Execute the functions
-await generateCliDocs();
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-cli/README.md",
+  "cli.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-viem/README.md",
+  "viem.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-minio/README.md",
+  "minio.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-portal/README.md",
+  "portal.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-hasura/README.md",
+  "hasura.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-blockscout/README.md",
+  "blockscout.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-ipfs/README.md",
+  "ipfs.mdx"
+);
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-thegraph/README.md",
+  "the-graph.mdx"
+);
 await generateCliCommandDocs();

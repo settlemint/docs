@@ -1,0 +1,13 @@
+{
+  "title": "SDK Developer Guide",
+  "description": "Building with the SettleMint SDK",
+  "pages": [
+    "portal",
+    "hasura",
+    "the-graph",
+    "minio",
+    "ipfs",
+    "blockscout",
+    "viem"
+  ]
+}
