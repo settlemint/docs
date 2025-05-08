@@ -23,7 +23,7 @@
     "@settlemint/sdk-minio": "2.2.2",
     "@settlemint/sdk-portal": "2.2.2",
     "@settlemint/sdk-thegraph": "2.2.3",
-    "@settlemint/sdk-viem": "2.2.2",
+    "@settlemint/sdk-viem": "2.2.3",
     "@theguild/remark-mermaid": "0.3.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
