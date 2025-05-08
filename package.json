@@ -17,7 +17,7 @@
   "dependencies": {
     "@next/third-parties": "15.3.2",
     "@settlemint/sdk-blockscout": "2.2.3",
-    "@settlemint/sdk-cli": "2.2.2",
+    "@settlemint/sdk-cli": "2.2.3",
     "@settlemint/sdk-hasura": "2.2.2",
     "@settlemint/sdk-ipfs": "2.2.2",
     "@settlemint/sdk-minio": "2.2.2",
