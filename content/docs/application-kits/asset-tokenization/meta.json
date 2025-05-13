@@ -10,6 +10,7 @@
     "asset-classes",
     "asset-manager",
     "portfolio-manager",
+    "xvp-settlement",
     "api-portal",
     "ui-customization",
     "use-cases"
