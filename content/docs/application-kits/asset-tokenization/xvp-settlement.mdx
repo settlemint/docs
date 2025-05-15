@@ -25,6 +25,8 @@ settlements of digital assets between parties. This feature provides a mechanism
 for executing delivery-versus-payment (DvP), payment-versus-payment (PvP), or
 any asset-versus-asset exchange in a single, indivisible transaction.
 
+![XvP Settlement list](../../../img/xvp-settlement/list.png)
+
 ### Key benefits
 
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
@@ -69,13 +71,25 @@ section and click "Create new XvP Settlement." The creation interface allows you
 to configure:
 
 1. **Settlement flows**: Configure two or more flows, where each flow specifies:
+
    - **From**: The sending party's wallet address
    - **To**: The receiving party's wallet address
    - **Asset**: The digital asset to be transferred
    - **Amount**: The quantity of the asset to be transferred
+
+   ![XvP Settlement flows](../../../img/xvp-settlement/flows.png)
+
 2. **Expiry date**: The date after until which the settlement can be executed
+
 3. **Auto-execute**: Whether to automatically execute the settlement on final
    approval
+
+   ![XvP Settlement configuration](../../../img/xvp-settlement/configuration.png)
+
+Lastly, review the settlement details and submit the transaction to deploy a new
+XvP Settlement contract.
+
+![XvP Settlement summary](../../../img/xvp-settlement/summary.png)
 
 Compliance conditions for digital assets can be configured through the SMART
 protocol (coming soon) directly on the assets themselves.
@@ -95,6 +109,8 @@ to approve it before it can be executed. The approval process includes:
 Once all involved parties have sent their approval, the settlement is ready to
 be executed.
 
+![XvP Settlement approve](../../../img/xvp-settlement/approve.png)
+
 You can set up workflows for execution at a certain time or on other events.
 
 ## Execution phase of an X versus Payment Settlement
@@ -110,6 +126,8 @@ If auto-execution is enabled during creation, the settlement contract will
 automatically execute when the final party approves it. In this case, the last
 approver pays the gas fees for the execution transaction.
 
+![XvP Settlement execute](../../../img/xvp-settlement/execute.png)
+
 ## Cancelling an X versus Payment Settlement
 
 Any involved party can cancel an X versus Payment Settlement before it has been
@@ -120,6 +138,8 @@ executed. This provides a safety mechanism if:
 - A party needs to withdraw from the agreement
 
 Once a settlement is cancelled, it cannot be reactivated or executed.
+
+![XvP Settlement cancel](../../../img/xvp-settlement/cancel.png)
 
 ## Settlement states
 
