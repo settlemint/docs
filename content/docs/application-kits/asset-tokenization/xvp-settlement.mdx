@@ -1,106 +1,129 @@
 ---
-title: "Atomic Exchange"
-description: Enable atomic asset exchanges between parties with XvP Settlement
+title: "Atomic settlement (X versus Payment Settlement)"
+description:
+  Enable atomic settlements between parties with X versus Payment (XvP)
+  Settlements
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import {
+  Clock,
+  LayoutGrid,
+  Workflow,
+  ShieldCheck,
+  FormInput,
+  MonitorCheck,
+  CalendarClock,
+  FileCheck,
+} from "lucide-react";
 
-## SettleMint XvP Settlement
+## What is X versus Payment Settlement?
 
-The XvP (Anything-versus-Payment) Settlement module enables atomic, trustless
-exchanges of digital assets between parties. This feature provides a secure
-mechanism for executing delivery-versus-payment (DvP), payment-versus-payment
-(PvP), or any asset-versus-asset exchange in a single, indivisible transaction.
-
-## What is XvP Settlement?
-
-XvP Settlement is a smart contract-based solution that ensures all parties in a
-transaction either receive their expected assets simultaneously or the
-transaction does not execute at all. This eliminates counterparty risk and
-settlement failures common in traditional exchanges.
+The X versus Payment (XvP) Settlement is a solution enables atomic, trustless
+settlements of digital assets between parties. This feature provides a mechanism
+for executing delivery-versus-payment (DvP), payment-versus-payment (PvP), or
+any asset-versus-asset exchange in a single, indivisible transaction.
 
 ### Key benefits
 
-- **Atomic execution**: All transfers succeed or fail together, eliminating
-  partial settlement risk
-- **Trustless operation**: No need for intermediaries or escrow services
-- **Programmable settlement**: Configure expiration dates and auto-execution
-  parameters
-- **Multi-party capability**: Support for complex settlement flows involving
-  multiple assets and participants
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+<Card
+  icon={<LayoutGrid />}
+  title="Multi-party transfers"
+>
+  Enable multiple participants to exchange various assets in a single atomic
+  transaction.
+</Card>
 
-## Creating an XvP Settlement
+<Card icon={<Clock />} title="Conditional triggering">
+  Execute settlements automatically when predefined conditions or time
+  thresholds are met.
+</Card>
 
-To create a new XvP Settlement, navigate to the XvP Settlement section and click
-"Create New Settlement." The creation interface allows you to configure:
+<Card icon={<MonitorCheck />} title="Settlement monitoring">
+  Track approvals, execution status, and transaction progress in real-time.
+</Card>
 
-1. **Settlement party**: The counterparty wallet address for the exchange
-2. **Assets**: Select the assets and amounts you wish to exchange
-3. **Expiry date**: The date after which the settlement cannot be executed
-4. **Auto-execute**: Toggle to automatically execute the settlement upon final
+<Card icon={<FileCheck />} title="Compliance integration">
+  Enforce regulatory compliance across settlements through the upcoming SMART
+  protocol.
+</Card>
+
+<Card icon={<CalendarClock />} title="Programmable settlement">
+  Configure expiration dates and custom parameters to control settlement
+  behavior.
+</Card>
+
+<Card icon={<Workflow />} title="Post-settlement actions">
+  Configure automated notifications, emails, or workflows triggered upon
+  settlement execution.
+</Card>
+
+</div>
+
+## Creating an X versus Payment Settlement
+
+To create a new X versus Payment Settlement, navigate to the XvP Settlement
+section and click "Create new XvP Settlement." The creation interface allows you
+to configure:
+
+1. **Settlement flows**: Configure two or more flows, where each flow specifies:
+   - **From**: The sending party's wallet address
+   - **To**: The receiving party's wallet address
+   - **Asset**: The digital asset to be transferred
+   - **Amount**: The quantity of the asset to be transferred
+2. **Expiry date**: The date after until which the settlement can be executed
+3. **Auto-execute**: Whether to automatically execute the settlement on final
    approval
 
-<Callout type="info">
-  While the underlying smart contract supports complex multi-party flows, the
-  current UI implements a simplified version allowing for exchanges between two
-  parties.
-</Callout>
+Compliance conditions for digital assets can be configured through the SMART
+protocol (coming soon) directly on the assets themselves.
 
 Once configured, submit the transaction to deploy a new XvP Settlement contract.
-The newly created settlement will appear in your settlement list for monitoring.
+The newly created contract will appear in your settlement list for monitoring.
 
-## Approving an XvP Settlement
+## Approving an X versus Payment Settlement
 
-When you're involved in an XvP Settlement (either as initiator or counterparty),
-you'll need to approve it before execution. The approval process includes:
+When you're involved in an X versus Payment Settlement as a sender, you'll need
+to approve it before it can be executed. The approval process includes:
 
-1. **Review settlement details**: Verify the assets, amounts, and expiry date
-2. **Grant asset allowances**: Approve the settlement contract to transfer your
-   assets
-3. **Submit approval**: Confirm your participation in the settlement
+1. Granting the settlement contract an allowance to transfer the specified
+   assets from your wallet
+2. Then, sending your approval to the settlement contract itself
 
-When you approve a settlement, two transactions occur:
+Once all involved parties have sent their approval, the settlement is ready to
+be executed.
 
-- First, you grant the XvP contract allowance to transfer the specified assets
-  from your wallet
-- Second, you mark your approval on the settlement contract itself
+You can set up workflows for execution at a certain time or on other events.
 
-Once all involved parties have approved the settlement, it becomes eligible for
-execution.
+## Execution phase of an X versus Payment Settlement
 
-## Executing an XvP Settlement
+The execution phase is where the X versus Payment Settlement demonstrates its
+value. During execution:
 
-The execution phase is where the XvP Settlement demonstrates its value. During
-execution:
-
-1. The contract verifies all required approvals are in place
+1. The settlement contract verifies all required approvals are in place
 2. It checks that the settlement hasn't expired or been cancelled
 3. It atomically transfers all assets between parties in a single transaction
 
-If auto-execution is enabled during creation, the settlement will automatically
-execute when the final party approves it. In this case, the last approver pays
-the gas fees for the execution transaction.
+If auto-execution is enabled during creation, the settlement contract will
+automatically execute when the final party approves it. In this case, the last
+approver pays the gas fees for the execution transaction.
 
-<Callout type="warning">
-  If auto-execution is disabled, the settlement requires manual execution after
-  approvals. Any wallet can execute by paying the gas fees.
-</Callout>
+## Cancelling an X versus Payment Settlement
 
-## Cancelling an XvP Settlement
-
-Any involved party can cancel an XvP Settlement before it has been executed.
-This provides a safety mechanism if:
+Any involved party can cancel an X versus Payment Settlement before it has been
+executed. This provides a safety mechanism if:
 
 - Settlement parameters were incorrectly configured
-- Market conditions change before settlement execution
-- One party needs to withdraw from the agreement
-- The settlement is no longer needed
+- Market conditions changed before execution
+- A party needs to withdraw from the agreement
 
 Once a settlement is cancelled, it cannot be reactivated or executed.
 
 ## Settlement states
 
-An XvP Settlement can exist in one of several states:
+An X versus Payment Settlement can exist in one of the following states:
 
 - **Pending**: Created but not yet fully approved by all parties
 - **Ready**: Fully approved and ready for execution
@@ -113,8 +136,8 @@ its current status.
 
 ## Technical implementation
 
-The XvP Settlement is powered by a secure smart contract that follows best
-practices for atomic exchanges. The contract:
+The X versus Payment Settlement is powered by a secure smart contract that
+follows best practices for atomic exchanges. The contract:
 
 - Utilizes OpenZeppelin's security libraries
 - Implements reentrancy protection
