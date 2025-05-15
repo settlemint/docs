@@ -8,6 +8,7 @@
     "minio",
     "ipfs",
     "blockscout",
-    "viem"
+    "viem",
+    "eas"
   ]
 }
