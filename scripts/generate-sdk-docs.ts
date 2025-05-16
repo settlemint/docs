@@ -336,4 +336,8 @@ await generateSnippet(
   "./node_modules/@settlemint/sdk-thegraph/README.md",
   "the-graph.mdx"
 );
+await generateSnippet(
+  "./node_modules/@settlemint/sdk-eas/README.md",
+  "eas.mdx"
+);
 await generateCliCommandDocs();

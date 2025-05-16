@@ -22,6 +22,11 @@
     {
       "groupName": "fumadocs packages",
       "matchPackageNames": ["/^fumadocs-.*/"]
+    },
+    {
+      "groupName": "SettleMint SDK",
+      "groupSlug": "settlemint",
+      "matchPackageNames": ["/^@settlemint//"]
     }
   ],
   "hostRules": [
