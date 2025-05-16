@@ -34,7 +34,7 @@
     "fumadocs-ui": "15.3.1",
     "lucide-react": "0.510.0",
     "next": "15.3.2",
-    "posthog-js": "1.242.1",
+    "posthog-js": "1.242.2",
     "posthog-node": "4.17.1",
     "prettier": "3.5.3",
     "react": "19.1.0",
