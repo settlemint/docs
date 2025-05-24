@@ -21,6 +21,11 @@ Benefits of using the smart contract portal:
    retrieve only the necessary data in a single request, reducing network load
    and improving performance.
 4. Stack agnostic: Teams are free to choose their own technology stack.
+5. Transaction Monitoring & Alerting: Monitor blockchain transactions in
+   real-time, filter by parameters like sender, receiver, block number, function
+   name, and contract address. Set up custom alerts to trigger actions such as
+   email notifications, webhooks, or automated processes when specific
+   conditions are met.
 
 <Callout type="warning">
   Before you start, make sure you are running an EVM-compatible network
@@ -157,12 +162,45 @@ async function webhookConsumerBootstrap(secret: string) {
 }
 ```
 
+### Transaction Monitoring & Alerting
+
+The smart contract portal provides powerful on-chain monitoring capabilities
+that enable you to track, filter, and respond to blockchain transactions in
+real-time.
+
+On-chain monitoring is critical for:
+
+- Security: Detect and respond to suspicious activities instantly
+- Compliance: Track transactions for regulatory reporting
+- Operations: Ensure critical transactions are processed correctly
+- Business Intelligence: Gain insights from transaction patterns
+
+Common monitoring scenarios include:
+
+- High-value transfers exceeding threshold amounts
+- Contract interactions from specific addresses
+- Contract events signaling state changes
+- Failed transactions that require attention
+
+With the portal, you can set up customized alerting rules that trigger actions
+when specified conditions are met. These actions can include:
+
+- Sending email notifications to stakeholders
+- Triggering webhooks to external systems
+- Logging events for audit purposes
+- Executing automated workflows in response
+
+The combination of real-time monitoring and flexible alerting provides a
+powerful foundation for building robust dApps that can respond dynamically to
+on-chain activities.
+
 ## Further reading
 
 - [The Graph Middleware](/platform-components/middleware-and-api-layer/graph-middleware)
 - [The Smart contract portal Middleware](/platform-components/middleware-and-api-layer/smart-contract-api-portal)
 - [Attestation Indexer](/platform-components/middleware-and-api-layer/attestation-indexer)
 - [Firefly FabConnect](/platform-components/middleware-and-api-layer/fabconnect)
+- [Configure transaction monitoring & alerting](/building-with-settlemint/building-with-sdk/portal#examples)
 
 <Callout type="info">
   All operations require appropriate permissions in your workspace.
