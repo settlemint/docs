@@ -173,33 +173,33 @@ contract (parameter order and types must be accurate), and align them with the
 corresponding handler function names.
 
 ```yaml
-- kind: ethereum/contract
-  name: { id }
-  network: { chain }
-  source:
-    address: "{address}"
-    abi: UserData
-    startBlock: { startBlock }
-  mapping:
-    kind: ethereum/events
-    apiVersion: 0.0.5
-    language: wasm/assemblyscript
-    entities:
-      - UserProfile
-      - ProfileCreated
-      - ProfileUpdated
-      - ProfileDeleted
-    abis:
-      - name: UserData
-        file: "{root}/out/UserData.sol/UserData.json"
-    eventHandlers:
-      - event: ProfileCreated(indexed uint256,string,string,uint8,string,bool)
-        handler: handleProfileCreated
-      - event: ProfileUpdated(indexed uint256,string,string,uint8,string,bool)
-        handler: handleProfileUpdated
-      - event: ProfileDeleted(indexed uint256)
-        handler: handleProfileDeleted
-    file: { file }
+  - kind: ethereum/contract
+    name: {id}
+    network: {chain}
+    source:
+      address: "{address}"
+      abi: UserData
+      startBlock: {startBlock}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - UserProfile
+        - ProfileCreated
+        - ProfileUpdated
+        - ProfileDeleted
+      abis:
+        - name: UserData
+          file: "{root}/out/UserData.sol/UserData.json"
+      eventHandlers:
+        - event: ProfileCreated(indexed uint256,string,string,uint8,string,bool)
+          handler: handleProfileCreated
+        - event: ProfileUpdated(indexed uint256,string,string,uint8,string,bool)
+          handler: handleProfileUpdated
+        - event: ProfileDeleted(indexed uint256)
+          handler: handleProfileDeleted
+      file: {file}
 ```
 
 ### 4. Create userdata.gql.json file
@@ -290,13 +290,13 @@ import {
   ProfileCreated as ProfileCreatedEvent,
   ProfileUpdated as ProfileUpdatedEvent,
   ProfileDeleted as ProfileDeletedEvent,
-} from "../../generated/userdata/UserData";
+} from "../../generated/generated/userdata/UserData";
 import {
   UserProfile,
   ProfileCreated,
   ProfileUpdated,
   ProfileDeleted,
-} from "../../generated/schema";
+} from "../../generated/generated/schema";
 import { fetchUserProfile } from "../fetch/userdata";
 
 export function handleProfileCreated(event: ProfileCreatedEvent): void {
@@ -372,7 +372,7 @@ initialized value to prevent errors during Graph Node processing.
 
 ```ts
 import { BigInt } from "@graphprotocol/graph-ts";
-import { UserProfile } from "../../generated/schema";
+import { UserProfile } from "../../generated/generated/schema";
 
 /**
  * Fetches a UserProfile entity using the given userId.
