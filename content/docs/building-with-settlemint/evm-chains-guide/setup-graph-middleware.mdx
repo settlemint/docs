@@ -3,7 +3,6 @@ title: "Setup graph middleware"
 description: Setup read middleware
 ---
 
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
@@ -103,6 +102,46 @@ subgraph/
 └── mycontract.ts
 ```
 
+For multiple smart contracts - MyContractOne and MyContractTwo, the folder
+structure will look like -
+
+```bash
+subgraph/
+│
+├── subgraph.config.json
+│
+├── datasources/
+│   ├── mycontractone.gql.json
+│   ├── mycontractone.ts
+│   ├── mycontractone.yaml
+│   ├── mycontracttwo.gql.json
+│   ├── mycontracttwo.ts
+│   └── mycontracttwo.yaml
+│
+└── fetch/
+    ├── mycontractone.ts
+    └── mycontracttwo.ts
+```
+
+You can keep all the names in small case and have one set each for each smart
+contract.
+
+Example setup for UserData smart contrat-
+
+```bash
+subgraph/
+│
+├── subgraph.config.json
+│
+├── datasources/
+│   ├── userdata.gql.json
+│   ├── userdata.ts
+│   └── userdata.yaml
+│
+└── fetch/
+└── userdata.ts
+```
+
 ## Subgraph deployment process
 
 ### 1. Collect constants needed
@@ -151,6 +190,29 @@ folder.
 }
 ```
 
+For multiple smart contracts, this will look like -
+
+```json
+{
+  "output": "generated/scs.",
+  "chain": "44819",
+  "datasources": [
+    {
+      "name": "MyContractOne",
+      "address": "0x1111111111111111111111111111111111111111",
+      "startBlock": 0,
+      "module": ["mycontractone"]
+    },
+    {
+      "name": "MyContractTwo",
+      "address": "0x2222222222222222222222222222222222222222",
+      "startBlock": 500,
+      "module": ["mycontracttwo"]
+    }
+  ]
+}
+```
+
 ### 3. Create userdata.yaml file
 
 This is the YAML manifest file that tells the subgraph how to interact with a
@@ -173,33 +235,33 @@ contract (parameter order and types must be accurate), and align them with the
 corresponding handler function names.
 
 ```yaml
-  - kind: ethereum/contract
-    name: {id}
-    network: {chain}
-    source:
-      address: "{address}"
-      abi: UserData
-      startBlock: {startBlock}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - UserProfile
-        - ProfileCreated
-        - ProfileUpdated
-        - ProfileDeleted
-      abis:
-        - name: UserData
-          file: "{root}/out/UserData.sol/UserData.json"
-      eventHandlers:
-        - event: ProfileCreated(indexed uint256,string,string,uint8,string,bool)
-          handler: handleProfileCreated
-        - event: ProfileUpdated(indexed uint256,string,string,uint8,string,bool)
-          handler: handleProfileUpdated
-        - event: ProfileDeleted(indexed uint256)
-          handler: handleProfileDeleted
-      file: {file}
+- kind: ethereum/contract
+  name: { id }
+  network: { chain }
+  source:
+    address: "{address}"
+    abi: UserData
+    startBlock: { startBlock }
+  mapping:
+    kind: ethereum/events
+    apiVersion: 0.0.5
+    language: wasm/assemblyscript
+    entities:
+      - UserProfile
+      - ProfileCreated
+      - ProfileUpdated
+      - ProfileDeleted
+    abis:
+      - name: UserData
+        file: "{root}/out/UserData.sol/UserData.json"
+    eventHandlers:
+      - event: ProfileCreated(indexed uint256,string,string,uint8,string,bool)
+        handler: handleProfileCreated
+      - event: ProfileUpdated(indexed uint256,string,string,uint8,string,bool)
+        handler: handleProfileUpdated
+      - event: ProfileDeleted(indexed uint256)
+        handler: handleProfileDeleted
+    file: { file }
 ```
 
 ### 4. Create userdata.gql.json file

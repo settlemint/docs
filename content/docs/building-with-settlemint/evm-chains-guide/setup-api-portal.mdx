@@ -505,10 +505,10 @@ Here's an example JSON body for a smart contract function like `createProfile`:
 
 #### Field descriptions
 
-- **`from`**: Public key of the wallet that will initiate the transaction.
-  Typically, this is the deployer's address. For advanced scenarios, this can be
+- **`from`**: Address of the wallet that will initiate the transaction.
+  Typically, this is the deployer private key's address e.g. 0x03739d74f28817826936F671e9C59777cb1E7b07 which you used while deploying the smart contract. For advanced scenarios, this can be
   a specific user's public address, depending on roles.
-- **`gasLimit`**: Use a reasonably high value for zero-gas private networks. For
+- **`gasLimit`**: Use a reasonably high value for zero-gas private networks e.g. 100,000,000,000. For
   others, determine a realistic value through trial and error. You can fine-tune
   this based on actual gas usage from previous transactions.
 - **`gasPrice`**: Set to `0` for zero-gas networks, or specify an appropriate
