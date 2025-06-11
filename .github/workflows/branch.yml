@@ -106,3 +106,68 @@ jobs:
       - name: Build Docker container
         run: |
           bun run docker
+
+  pr-labels:
+    name: PR Labels
+    if: github.event_name == 'pull_request'
+    permissions:
+      checks: write
+      issues: write
+      pull-requests: write
+      statuses: write
+      contents: read
+    uses: settlemint/asset-tokenization-kit/.github/workflows/reusable-pr-labels.yml@main
+
+  secret-scanning:
+    name: Secret Scanning
+    permissions:
+      security-events: write
+      contents: read
+    uses: settlemint/asset-tokenization-kit/.github/workflows/reusable-secret-scanning.yml@main
+    with:
+      trivy-config: trivy-secret.yaml
+      severity: "HIGH,CRITICAL"
+
+  codeql:
+    name: CodeQL
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+      packages: read
+    uses: settlemint/asset-tokenization-kit/.github/workflows/reusable-codeql.yml@main
+    with:
+      language: "javascript-typescript"
+      build-mode: "none"
+
+  slack-notification-start:
+    name: Slack Notification (Start)
+    if: github.event_name == 'pull_request'
+    permissions:
+      actions: read
+      issues: write
+      pull-requests: write
+      contents: read
+    uses: settlemint/asset-tokenization-kit/.github/workflows/reusable-slack-notification.yml@main
+    with:
+      workflow_conclusion: "running"
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+
+  slack-notification-end:
+    name: Slack Notification (End)
+    needs: [build, secret-scanning, codeql, pr-labels]
+    if: always() && github.event_name == 'pull_request'
+    permissions:
+      actions: read
+      issues: write
+      pull-requests: write
+      contents: read
+    uses: settlemint/asset-tokenization-kit/.github/workflows/reusable-slack-notification.yml@main
+    with:
+      workflow_conclusion:
+        ${{ needs.build.result == 'success' && needs.secret-scanning.result !=
+        'failure' && needs.codeql.result != 'failure' && needs.pr-labels.result
+        != 'failure' && 'success' || 'failure' }}
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
