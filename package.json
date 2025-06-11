@@ -12,7 +12,10 @@
     "postinstall": "fumadocs-mdx",
     "docker": "bash -c \"docker buildx build . --provenance true --sbom true --platform=linux/amd64,linux/arm64 -t ghcr.io/settlemint/btp-docs:${VERSION:-7.0.0-dev.$(date +%s)} --push --progress=plain\"",
     "generate-sitemap": "bun scripts/generate-sitemap.ts",
-    "generate-sdk-docs": "bun scripts/generate-sdk-docs.ts"
+    "generate-sdk-docs": "bun scripts/generate-sdk-docs.ts",
+    "analyze": "bun scripts/analyze-bundle.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
   },
   "dependencies": {
     "@next/third-parties": "15.3.3",
@@ -58,6 +61,9 @@
     "eslint": "9.28.0",
     "eslint-config-next": "15.3.3",
     "@eslint/eslintrc": "3.3.1",
-    "@eslint/js": "9.28.0"
+    "@eslint/js": "9.28.0",
+    "@next/bundle-analyzer": "^15.3.3",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0"
   }
 }

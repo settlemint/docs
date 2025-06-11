@@ -37,3 +37,4 @@ content/docs/building-with-settlemint/cli/settlemint/**/*.mdx
 content/docs/building-with-settlemint/cli/settlemint/**/meta.json
 content/snippets/dev-tools/*.mdx
 content/snippets/dev-tools/settlemint-*.tmp
+.claude
