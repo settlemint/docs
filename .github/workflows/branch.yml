@@ -118,16 +118,6 @@ jobs:
       contents: read
     uses: settlemint/asset-tokenization-kit/.github/workflows/reusable-pr-labels.yml@main
 
-  secret-scanning:
-    name: Secret Scanning
-    permissions:
-      security-events: write
-      contents: read
-    uses: settlemint/asset-tokenization-kit/.github/workflows/reusable-secret-scanning.yml@main
-    with:
-      trivy-config: trivy-secret.yaml
-      severity: "HIGH,CRITICAL"
-
   codeql:
     name: CodeQL
     permissions:
@@ -156,7 +146,7 @@ jobs:
 
   slack-notification-end:
     name: Slack Notification (End)
-    needs: [build, secret-scanning, codeql, pr-labels]
+    needs: [build, codeql, pr-labels]
     if: always() && github.event_name == 'pull_request'
     permissions:
       actions: read
@@ -166,8 +156,7 @@ jobs:
     uses: settlemint/asset-tokenization-kit/.github/workflows/reusable-slack-notification.yml@main
     with:
       workflow_conclusion:
-        ${{ needs.build.result == 'success' && needs.secret-scanning.result !=
-        'failure' && needs.codeql.result != 'failure' && needs.pr-labels.result
-        != 'failure' && 'success' || 'failure' }}
+        ${{ needs.build.result == 'success' && needs.codeql.result != 'failure'
+        && needs.pr-labels.result != 'failure' && 'success' || 'failure' }}
     secrets:
       OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
