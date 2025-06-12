@@ -52,7 +52,7 @@
     "@types/react": "19.1.7",
     "@types/react-dom": "19.1.6",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
-    "postcss": "8.5.4",
+    "postcss": "8.5.5",
     "tailwindcss": "4.1.8",
     "typescript": "5.8.3",
     "eslint": "9.28.0",
