@@ -5,7 +5,7 @@ alwaysApply: true
 ---
 # Commit Messages and Pull Request Titles
 
-When creating commits or pull requests in this repository, you MUST follow the conventional commit format defined in `.github/labeler.yml`.
+When creating commits or pull requests in this repository, you MUST follow the conventional commit format defined in `.github/release.yml`.
 
 ## Format
 
