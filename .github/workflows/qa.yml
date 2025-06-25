@@ -161,7 +161,7 @@ jobs:
           always() &&
           github.event_name == 'pull_request' &&
           steps.qa-tests.conclusion != 'skipped'
-        uses: ./.github/actions/build-status-labeler
+        uses: settlemint/asset-tokenization-kit/.github/actions/build-status-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           workflow_status:
@@ -175,7 +175,7 @@ jobs:
         if: |
           github.event_name == 'pull_request' &&
           (github.event.action == 'opened' || github.event.action == 'synchronize')
-        uses: ./.github/actions/pr-labeler
+        uses: settlemint/asset-tokenization-kit/.github/actions/pr-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           pr_title: ${{ github.event.pull_request.title }}
@@ -187,7 +187,7 @@ jobs:
       - name: Run secret scanning
         id: secret-scan
         if: github.event_name == 'pull_request'
-        uses: ./.github/actions/secret-scanner
+        uses: settlemint/asset-tokenization-kit/.github/actions/secret-scanner@main
         continue-on-error: true
 
       # Label secret scanning results (PR only)
@@ -196,7 +196,7 @@ jobs:
           always() &&
           github.event_name == 'pull_request' &&
           steps.secret-scan.conclusion != 'skipped'
-        uses: ./.github/actions/build-status-labeler
+        uses: settlemint/asset-tokenization-kit/.github/actions/build-status-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           workflow_status:
