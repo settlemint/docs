@@ -145,6 +145,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build
+        if: github.event_name == 'pull_request'
         id: qa-tests
         run: |
           bun run build
@@ -152,6 +153,7 @@ jobs:
           NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
 
       - name: Build Docker container
+        if: github.event_name == 'pull_request'
         run: |
           bun run docker
 
@@ -196,7 +198,7 @@ jobs:
           always() &&
           github.event_name == 'pull_request' &&
           steps.secret-scan.conclusion != 'skipped'
-        uses: settlemint/asset-tokenization-kit/.github/actions/build-status-labeler@main
+        uses: ./.github/actions/build-status-labeler
         with:
           pr_number: ${{ github.event.pull_request.number }}
           workflow_status:
