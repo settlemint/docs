@@ -148,6 +148,7 @@ jobs:
         if: github.event_name == 'pull_request'
         id: qa-tests
         run: |
+          bun run check-types
           bun run build
         env:
           NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
