@@ -37,7 +37,7 @@ jobs:
       github.event_name == 'push' ||
       (github.event_name == 'pull_request' && github.event.action != 'closed') ||
       github.event_name == 'pull_request_review'
-    runs-on: namespace-profile-atk
+    runs-on: namespace-profile-docs
     timeout-minutes: 30
     permissions:
       contents: read
@@ -277,7 +277,7 @@ jobs:
       github.event_name == 'pull_request' &&
       github.event.action == 'closed' &&
       github.event.pull_request.merged == true
-    runs-on: namespace-profile-atk
+    runs-on: namespace-profile-docs
     permissions:
       contents: read
       pull-requests: write
