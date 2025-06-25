@@ -199,7 +199,7 @@ jobs:
           always() &&
           github.event_name == 'pull_request' &&
           steps.secret-scan.conclusion != 'skipped'
-        uses: ./.github/actions/build-status-labeler
+        uses: settlemint/asset-tokenization-kit/.github/actions/build-status-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           workflow_status:
