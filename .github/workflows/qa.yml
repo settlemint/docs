@@ -1,0 +1,375 @@
+name: QA
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  pull_request:
+    types:
+      [
+        opened,
+        synchronize,
+        reopened,
+        ready_for_review,
+        converted_to_draft,
+        closed,
+      ]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+permissions:
+  contents: read
+  pull-requests: write
+  packages: write
+
+concurrency:
+  group:
+    ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref
+    }}-${{ github.event_name }}-${{ github.event.action || 'default' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  qa:
+    name: QA
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.action != 'closed') ||
+      github.event_name == 'pull_request_review'
+    runs-on: namespace-profile-atk
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      security-events: write
+      actions: read
+      packages: write
+    env:
+      SLACK_BOT_TOKEN: ""
+      SLACK_CHANNEL_ID: ""
+      HARBOR_USER: ""
+      HARBOR_PASS: ""
+      PAT_TOKEN: ""
+      NPM_TOKEN: ""
+    steps:
+      - name: Checkout repository
+        uses: namespacelabs/nscloud-checkout-action@v7
+        with:
+          fetch-depth: ${{ github.event_name == 'push' && 2 || 0 }}
+
+      - name: Setup 1Password
+        uses: 1password/load-secrets-action/configure@v2
+        with:
+          service-account-token: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+
+      - name: Load all secrets
+        id: secrets
+        uses: 1password/load-secrets-action@v2
+        env:
+          SLACK_BOT_TOKEN: op://platform/slack-bot/SLACK_BOT_TOKEN
+          SLACK_CHANNEL_ID: op://platform/slack-bot/SLACK_CHANNEL_ID
+          HARBOR_USER: op://platform/harbor/username
+          HARBOR_PASS: op://platform/harbor/password
+          PAT_TOKEN: op://platform/github-commit-pat/credential
+          NPM_TOKEN: op://platform/npmjs/credential
+
+      # Label QA as running and notify Slack (only for non-draft PRs)
+      - name: Label QA as running
+        if: |
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.draft == false
+        uses: settlemint/asset-tokenization-kit/.github/actions/build-status-labeler@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          workflow_status: "running"
+
+      # Initial Slack notification - creates or updates message
+      - name: Send Slack notification for QA starting
+        if: |
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.draft == false
+        uses: settlemint/asset-tokenization-kit/.github/actions/slack-pr-notifier@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          pr_title: ${{ github.event.pull_request.title }}
+          pr_url: ${{ github.event.pull_request.html_url }}
+          pr_author: ${{ github.event.pull_request.user.login }}
+          pr_author_type: ${{ github.event.pull_request.user.type }}
+          pr_author_avatar: ${{ github.event.pull_request.user.avatar_url }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          slack_channel_id: ${{ env.SLACK_CHANNEL_ID }}
+
+      # Setup dependencies for QA (skip for draft PRs)
+      - name: Setup dependencies
+        if: |
+          github.event_name == 'push' ||
+          (github.event_name == 'pull_request' && github.event.pull_request.draft == false) ||
+          github.event_name == 'pull_request_review'
+        uses: settlemint/asset-tokenization-kit/.github/actions/setup-dependencies@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          npm_token: ${{ env.NPM_TOKEN }}
+
+      # Login to Docker registries (only when running QA)
+      - name: Login to GitHub Container Registry
+        if: |
+          github.event_name == 'push' ||
+          (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to Harbor
+        if: |
+          github.event_name == 'push' ||
+          (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
+        uses: docker/login-action@v3
+        with:
+          registry: harbor.settlemint.com
+          username: ${{ env.HARBOR_USER }}
+          password: ${{ env.HARBOR_PASS }}
+
+      - name: Version
+        id: version
+        shell: bash
+        run: |
+          if [[ $GITHUB_REF_SLUG =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            VERSION=$GITHUB_REF_SLUG
+          else
+            VERSION="7.0.0-${GITHUB_REF_SLUG}.${{ github.run_id }}"
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Build
+        if: github.event_name == 'pull_request'
+        id: qa-tests
+        run: |
+          bun run build
+        env:
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
+
+      - name: Build Docker container
+        if: github.event_name == 'pull_request'
+        run: |
+          bun run docker
+
+      # Label QA results (PR only)
+      - name: Label QA build status
+        if: |
+          always() &&
+          github.event_name == 'pull_request' &&
+          steps.qa-tests.conclusion != 'skipped'
+        uses: settlemint/asset-tokenization-kit/.github/actions/build-status-labeler@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          workflow_status:
+            ${{ steps.qa-tests.outcome == 'success' && 'success' || 'failure' }}
+
+      # Skip redundant notification - handled by consolidated step at the end
+
+      # Label PR based on title/branch (PR only)
+      - name: Label PR based on convention
+        id: label-pr
+        if: |
+          github.event_name == 'pull_request' &&
+          (github.event.action == 'opened' || github.event.action == 'synchronize')
+        uses: settlemint/asset-tokenization-kit/.github/actions/pr-labeler@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          pr_title: ${{ github.event.pull_request.title }}
+          pr_body: ${{ github.event.pull_request.body || '' }}
+
+      # Skip redundant notification - handled by consolidated step at the end
+
+      # Run secret scanning (PR only)
+      - name: Run secret scanning
+        id: secret-scan
+        if: github.event_name == 'pull_request'
+        uses: settlemint/asset-tokenization-kit/.github/actions/secret-scanner@main
+        continue-on-error: true
+
+      # Label secret scanning results (PR only)
+      - name: Label secret scanning status
+        if: |
+          always() &&
+          github.event_name == 'pull_request' &&
+          steps.secret-scan.conclusion != 'skipped'
+        uses: ./.github/actions/build-status-labeler
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          workflow_status:
+            ${{ steps.secret-scan.outcome == 'success' && 'success' || 'failure'
+            }}
+
+      # Skip redundant notification - handled by consolidated step at the end
+
+      # Check PR review status (PR and PR review events only)
+      - name: Check PR review status
+        id: pr-review-check
+        if: |
+          always() &&
+          (github.event_name == 'pull_request' || github.event_name == 'pull_request_review')
+        uses: settlemint/asset-tokenization-kit/.github/actions/pr-review-check@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          pr_author: ${{ github.event.pull_request.user.login }}
+          event_name: ${{ github.event_name }}
+          qa_result: ${{ steps.qa-tests.outcome }}
+          secret_scanning_result: ${{ steps.secret-scan.outcome }}
+
+      # Apply final PR status label (PR and PR review events only)
+      - name: Label PR final status
+        id: label-final-status
+        if: |
+          always() &&
+          (github.event_name == 'pull_request' || github.event_name == 'pull_request_review')
+        uses: settlemint/asset-tokenization-kit/.github/actions/pr-status-labeler@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          is_draft: ${{ github.event.pull_request.draft }}
+          has_approval:
+            ${{ steps.pr-review-check.outputs.has_approval == 'true' }}
+          qa_status: ${{ steps.pr-review-check.outputs.qa_status }}
+
+      # Consolidated Slack notification - updates existing message or creates one if needed
+      - name: Update Slack notification with final status
+        if: |
+          always() &&
+          steps.label-final-status.conclusion == 'success' &&
+          (github.event_name == 'pull_request' || github.event_name == 'pull_request_review') &&
+          github.event.pull_request.draft == false
+        uses: settlemint/asset-tokenization-kit/.github/actions/slack-pr-notifier@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          pr_title: ${{ github.event.pull_request.title }}
+          pr_url: ${{ github.event.pull_request.html_url }}
+          pr_author: ${{ github.event.pull_request.user.login }}
+          pr_author_type: ${{ github.event.pull_request.user.type }}
+          pr_author_avatar: ${{ github.event.pull_request.user.avatar_url }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          slack_channel_id: ${{ env.SLACK_CHANNEL_ID }}
+
+      # Manage auto-merge (PR and PR review events only)
+      - name: Manage auto-merge
+        if: |
+          always() &&
+          (github.event_name == 'pull_request' || github.event_name == 'pull_request_review')
+        uses: settlemint/asset-tokenization-kit/.github/actions/auto-merge@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          pr_author: ${{ github.event.pull_request.user.login }}
+          pr_author_type: ${{ github.event.pull_request.user.type }}
+          has_approval:
+            ${{ steps.pr-review-check.outputs.has_approval == 'true' }}
+          qa_status: ${{ steps.pr-review-check.outputs.qa_status }}
+          is_draft: ${{ github.event.pull_request.draft }}
+          merge_method: "squash"
+
+  # Handle merged PR notifications
+  merged:
+    name: Handle Merged PR
+    if: |
+      github.event_name == 'pull_request' &&
+      github.event.action == 'closed' &&
+      github.event.pull_request.merged == true
+    runs-on: namespace-profile-atk
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    env:
+      SLACK_BOT_TOKEN: ""
+      SLACK_CHANNEL_ID: ""
+    steps:
+      - name: Checkout repository
+        uses: namespacelabs/nscloud-checkout-action@v7
+        with:
+          fetch-depth: ${{ github.event_name == 'push' && 2 || 0 }}
+
+      - name: Setup 1Password
+        uses: 1password/load-secrets-action/configure@v2
+        with:
+          service-account-token: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+
+      - name: Load Slack secrets
+        uses: 1password/load-secrets-action@v2
+        env:
+          SLACK_BOT_TOKEN: op://platform/slack-bot/SLACK_BOT_TOKEN
+          SLACK_CHANNEL_ID: op://platform/slack-bot/SLACK_CHANNEL_ID
+
+      - name: Label PR as merged
+        uses: settlemint/asset-tokenization-kit/.github/actions/pr-status-labeler@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          is_draft: false
+          is_merged: true
+
+      - name: Update Slack notification for merged PR
+        uses: settlemint/asset-tokenization-kit/.github/actions/slack-pr-notifier@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          pr_title: ${{ github.event.pull_request.title }}
+          pr_url: ${{ github.event.pull_request.html_url }}
+          pr_author: ${{ github.event.pull_request.user.login }}
+          pr_author_type: ${{ github.event.pull_request.user.type }}
+          pr_author_avatar: ${{ github.event.pull_request.user.avatar_url }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          slack_channel_id: ${{ env.SLACK_CHANNEL_ID }}
+          wait_time: "15000"
+
+  # Handle abandoned (closed but not merged) PR notifications
+  abandoned:
+    name: Handle Abandoned PR
+    if: |
+      github.event_name == 'pull_request' &&
+      github.event.action == 'closed' &&
+      github.event.pull_request.merged == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    env:
+      SLACK_BOT_TOKEN: ""
+      SLACK_CHANNEL_ID: ""
+    steps:
+      - name: Checkout repository
+        uses: namespacelabs/nscloud-checkout-action@v7
+        with:
+          fetch-depth: ${{ github.event_name == 'push' && 2 || 0 }}
+
+      - name: Setup 1Password
+        uses: 1password/load-secrets-action/configure@v2
+        with:
+          service-account-token: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+
+      - name: Load Slack secrets
+        uses: 1password/load-secrets-action@v2
+        env:
+          SLACK_BOT_TOKEN: op://platform/slack-bot/SLACK_BOT_TOKEN
+          SLACK_CHANNEL_ID: op://platform/slack-bot/SLACK_CHANNEL_ID
+
+      - name: Label PR as abandoned
+        uses: settlemint/asset-tokenization-kit/.github/actions/pr-status-labeler@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          is_draft: false
+          is_abandoned: true
+
+      - name: Update Slack notification for abandoned PR
+        uses: settlemint/asset-tokenization-kit/.github/actions/slack-pr-notifier@main
+        with:
+          pr_number: ${{ github.event.pull_request.number }}
+          pr_title: ${{ github.event.pull_request.title }}
+          pr_url: ${{ github.event.pull_request.html_url }}
+          pr_author: ${{ github.event.pull_request.user.login }}
+          pr_author_type: ${{ github.event.pull_request.user.type }}
+          pr_author_avatar: ${{ github.event.pull_request.user.avatar_url }}
+          slack_bot_token: ${{ env.SLACK_BOT_TOKEN }}
+          slack_channel_id: ${{ env.SLACK_CHANNEL_ID }}
+          is_abandoned: true
+          wait_time: "15000"

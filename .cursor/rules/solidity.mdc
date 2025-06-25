@@ -1,131 +1,197 @@
----
-description: Rules for Solidity
-globs: *.sol
-alwaysApply: false
----
-# Solidity Best Practices (Hardhat Ignition + Foundry)
+# Solidity Development Guidelines for Asset Tokenization Kit
 
-1. **Visibility & NatSpec**
-   - Always mark functions as `public`, `external`, `internal`, or `private`.
-   - Use NatSpec (`@param`, `@return`, etc.) for all external/public calls.
-2. **Function Modifiers**
-   - Create common checks like `onlyOwner` or `whenNotPaused` to keep code DRY and readable.
-3. **Naming Conventions**
-   - Use CamelCase for contracts (e.g., `MyToken`), PascalCase for interfaces (e.g., `IMyToken`), and camelCase for variables.
-4. **Interface Segregation**
-   - Split large interfaces into smaller ones for maintainable code.
-5. **Upgradeable Contracts**
-   - Use proven proxy patterns (Transparent/UUPS) if needed.
-   - Handle the initializer carefully to prevent repeated calls.
-6. **Events**
-   - Emit events on major state changes (ownership, token mint/burn, etc.).
-7. **Checks-Effects-Interactions**
-   - Validate inputs, modify state, then interact externally to prevent reentrancy risks.
-8. **Static Analysis**
-   - Integrate tools like Slither, Mythril, or Foundry’s built-in checks into your CI.
-9. **Timelocks & Multisig**
-   - Require time delays and multiple signatures on critical operations in production.
-10. **Gas Optimization**
-    - Use `immutable` for constructor-set variables.
-    - Pack storage to save on SSTORE costs.
-    - Offload data queries to indexing solutions if possible.
-11. **Role-Based Access**
-    - Use OpenZeppelin’s AccessControl or a custom role system for fine-grained permissions.
-12. **Solidity 0.8+**
-    - Leverage built-in overflow/underflow checks; no need for older SafeMath patterns.
-13. **Circuit Breakers**
-    - Include pausable logic to halt risky operations in emergencies.
-14. **Pull Payments**
-    - Let users withdraw funds instead of pushing them to avoid reentrancy loops.
-15. **Rate Limiting**
-    - Throttle or space out calls where it makes sense (e.g., governance functions).
-16. **SafeERC20**
-    - Use SafeERC20 for external token interactions to handle non-standard ERC20s.
-17. **Randomness**
-    - Use Chainlink VRF or a similar trusted oracle for critical randomness; don’t rely on block variables.
-18. **Assembly**
-    - Use only for tight loops or heavy math; document thoroughly.
-19. **State Machine Approach**
-    - Define transitions carefully for complex flows (e.g., auctions, multi-stage sales).
-20. **ReentrancyGuard**
-    - Add it if your logic includes external calls or token transfers.
-21. **Access Control for Initializers**
-    - Ensure only the deployer can call the initializer once in upgradeable setups.
-22. **Snapshottable Tokens**
-    - Use ERC20Snapshot for historical queries.
-23. **TimelockController**
-    - Combine with multisig for especially sensitive system tasks.
-24. **Gasless Approvals**
-    - Implement ERC20Permit if user experience demands it.
-25. **Slippage Protection**
-    - For DEX-like trades, require a user-defined minimum output or revert.
-26. **ERC20Votes**
-    - Automatically handle snapshots for voting power in on-chain governance tokens.
-27. **Storage Layout Optimization**
-    - Group same-type variables together, especially in upgradeable contracts.
-28. **Libraries**
-    - Factor out repeated logic into libraries for clarity and reduced contract size.
-29. **Self-Destruct**
-    - Use rarely; if used, restrict behind strong admin checks.
-30. **Address Library**
-    - Use OpenZeppelin’s Address library for safer low-level calls.
-31. **Custom Errors**
-    - Use custom errors for efficiency (e.g., `error NotOwner(address caller);`).
-32. **View/Pure**
-    - Mark functions as `view` or `pure` appropriately.
-33. **Decimals & Math**
-    - Be cautious with decimal precision; use fixed-point libraries if necessary.
-34. **Fallback & Receive**
-    - Document clearly; keep them minimal or set to revert by default.
-35. **Error Propagation**
-    - Return or revert with custom errors in internal flows for clarity.
+## General Principles
 
----
+- **Think first, code second**: Minimize the number of lines changed and consider ripple effects across the codebase.
+- **Prefer simplicity**: Fewer moving parts → fewer bugs and lower audit overhead.
 
-# Testing & QA (Foundry)
+## Assembly Usage
 
-- Write unit and integration tests in `.t.sol` files.
-- Use fuzz testing (`forge test --fuzz`) to catch edge cases.
-- Expect reverts with `vm.expectRevert`.
-- Aim for high coverage on critical paths.
-- Combine with Hardhat for additional static analysis if desired.
+| Rule | Rationale |
+|------|-----------|
+| Use assembly only when essential. | Keeps code readable and auditable. |
+| Assembly is mandatory for low-level external calls. | Gives full control over call parameters & return data, and saves gas. |
+| Precede every assembly block with: • A brief justification (1-2 lines). • Equivalent Solidity pseudocode. | Documents intent for reviewers. |
+| Mark assembly blocks memory-safe when the Solidity docs' criteria are met. | Enables compiler optimizations. |
 
----
+## Gas Optimization
 
-# Deployment (Hardhat Ignition)
+- Keep a dedicated **Gas Optimization** section in the PR description; justify any measurable gas deltas.
+- Prefer `calldata` over `memory`.
+- Limit storage (`sstore`, `sload`) operations; cache in memory wherever possible.
+- Use forge snapshot and benchmarks:
+  ```bash
+  forge snapshot                # Create gas snapshot
+  forge test --gas-report       # Gas report for tests
+  forge test --match-test bench # Run benchmarks
+  ```
+- Large regressions must be explained.
 
-- Keep ignition scripts in `ignition/` directories.
-- Use one script per environment or module.
-- Manage network configurations for testnets, mainnet, etc.
+## Handling "Stack Too Deep"
 
----
+- **Struct hack (tests only)**: Bundle local variables into a temporary struct declared above the test.
+- **Scoped blocks**: Wrap code in `{ ... }` to drop unused vars from the stack.
+- **Internal helper functions**: Encapsulate logic to shorten call frames.
+- **Refactor / delete unnecessary variables before other tricks**.
 
-# Documentation
+## Security Checklist
 
-- Use NatSpec for external/public functions.
-- Include summaries in a README for each module.
+- Review every change with an adversarial mindset.
+- Favor the simplest design that meets requirements.
+- After coding, ask: "What new attack surface did I introduce?"
+- Reject any change that raises security risk without strong justification.
+- Follow SMART protocol security patterns for ERC-3643 compliance.
 
----
+## Error Handling Style
 
-# Security
+Always use custom errors with the revert pattern instead of require statements:
 
-- **Authorization:**
-  - Do not use `tx.origin` for authorization; always rely on `msg.sender`.
-- **External Calls:**
-  - Whitelist or handle external calls carefully, treat them as untrusted.
-- **Secret Management:**
-  - Avoid secret variables on-chain; assume all data is public.
-- **Fallback/Receive:**
-  - Keep them minimal or set to revert if not needed; document clearly.
-- **Verified Libraries:**
-  - Use verified libraries (e.g., OpenZeppelin); avoid random copy-paste.
-- **Arithmetic:**
-  - Even with Solidity 0.8.x checks, validate logic in loops or subtractions.
-- **Block & Timestamp:**
-  - For randomness, do not rely solely on `block.timestamp` or `blockhash`; use oracles or VRF.
-- **Phishing & Social Engineering:**
-  - Protect against leaking private data or secrets in logs.
-- **Upgradeable Storage:**
-  - Ensure consistent storage layout in proxies; avoid shifting variable slots.
-- **Access Patterns:**
-  - Stick to one approach (role-based or Ownable); do not mix them haphazardly.
+```solidity
+// ❌ Don't use require with string messages
+require(amount > 0, "Amount must be positive");
+require(to != address(0), "Cannot transfer to zero address");
+
+// ✅ Do use custom errors with if/revert pattern
+error AmountMustBePositive();
+error CannotTransferToZeroAddress();
+
+if (amount == 0) revert AmountMustBePositive();
+if (to == address(0)) revert CannotTransferToZeroAddress();
+```
+
+**Benefits of custom errors**:
+- More gas efficient than require strings
+- Better error identification in tests and debugging
+- Cleaner, more professional code
+- Consistent with modern Solidity best practices
+
+## Testing Guidelines
+
+### Core Testing Principles
+
+**Every feature or change MUST have comprehensive tests before creating a PR**. This is non-negotiable for maintaining code quality and preventing regressions.
+
+### When to Write Tests
+
+- **New Features**: Write tests that demonstrate the complete flow and all edge cases
+- **Bug Fixes**: Add tests that reproduce the bug and verify the fix
+- **Refactoring**: Ensure existing tests still pass; add new ones if behavior changes
+- **Gas Optimizations**: Include benchmark tests showing before/after comparisons
+
+### Types of Required Tests
+
+**Unit Tests**:
+- Write clear unit tests that demonstrate the general flow of your feature/change
+- Test both happy paths and failure cases
+- Include edge cases and boundary conditions
+- Test revert conditions with specific error messages
+
+**Fuzz Tests**:
+- **Fuzz tests are highly encouraged** for all new functionality
+- Use Foundry's built-in fuzzing capabilities
+- Apply random arguments to thoroughly test your implementation
+
+Example fuzz test pattern:
+```solidity
+function testFuzz_myFeature(uint256 amount, address user) public {
+    // Bound inputs to reasonable ranges
+    amount = bound(amount, 1, type(uint128).max);
+    vm.assume(user != address(0));
+    
+    // Test your feature with random inputs
+    myContract.myFeature(amount, user);
+    
+    // Assert expected outcomes
+    assertEq(myContract.balanceOf(user), amount);
+}
+```
+
+### Testing Checklist Before PR
+
+Before opening any PR, ensure:
+- [ ] All new functions have unit tests
+- [ ] Critical paths have fuzz tests with random inputs
+- [ ] Edge cases and revert scenarios are tested
+- [ ] Gas benchmarks are included for optimizations
+- [ ] All tests pass: `forge test`
+- [ ] No test coverage regression: `forge coverage`
+
+## Verification Workflow
+
+```bash
+forge build                    # compile
+forge test                     # full test suite
+forge snapshot                 # gas snapshot
+forge test --match-test bench  # run benchmarks
+forge test --gas-report        # gas usage report
+forge coverage                 # code coverage
+```
+
+## Asset Tokenization Kit Specific Guidelines
+
+### Contract Structure
+- Follow the SMART protocol patterns for all asset implementations
+- Use the established factory pattern (`ATKBondFactory`, `ATKEquityFactory`, etc.)
+- Implement proper ERC-3643 compliance for all tokenized assets
+- Utilize the extension system (`SMARTBurnable`, `SMARTCapped`, etc.) for modularity
+
+### Testing Assets
+When testing tokenized assets:
+- Test compliance features (identity registry, claim topics)
+- Test factory deployment patterns
+- Test proxy upgradeability
+- Test all extensions used by the asset
+- Include integration tests with the compliance system
+
+### Common Patterns
+- Use `AccessControl` for role-based permissions
+- Implement `Pausable` for emergency stops
+- Follow ERC-3643 for identity and compliance
+- Use proxy patterns for upgradeability
+
+### Available Tools
+
+The Asset Tokenization Kit includes:
+- Foundry for contract compilation and testing
+- OpenZeppelin contracts for base implementations
+- SMART protocol contracts for compliance
+- Hardhat for additional tooling support
+
+### Project Structure
+
+- `contracts/`: Smart contract source files
+  - `assets/`: Asset factories and implementations
+  - `smart/`: SMART protocol base contracts and extensions
+  - `system/`: Compliance and registry contracts
+  - `test/`: Test contracts and utilities
+- `test/`: Foundry tests
+- `scripts/`: Deployment and utility scripts
+
+## Critical Reminders
+
+### DO NOT
+
+- Use require() statements - always use custom errors
+- Create contracts without comprehensive tests
+- Make gas-intensive changes without benchmarks
+- Skip security considerations for any change
+- Use inline strings for errors
+
+### ALWAYS
+
+- Follow SMART protocol patterns
+- Test all compliance features
+- Measure gas impact of changes
+- Consider upgradeability implications
+- Use established factory patterns
+- Document assembly blocks
+- Run full test suite before PR
+
+## Continuous Learning
+
+- Consult SMART protocol documentation
+- Review OpenZeppelin best practices
+- Study ERC-3643 compliance requirements
+- Learn from audited tokenization projects
+
+Apply these rules rigorously when working with Solidity files in the Asset Tokenization Kit.
