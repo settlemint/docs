@@ -1,0 +1,698 @@
+---
+title: Account Abstraction (ERC-4337)
+description: Next-generation wallet infrastructure enabling gasless transactions and improved user experience through smart contract wallets
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Steps } from 'fumadocs-ui/components/steps';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Account Abstraction (ERC-4337)
+
+## Overview
+
+Account Abstraction (AA) is a groundbreaking approach to wallet infrastructure that transforms how users interact with blockchain applications. By implementing the ERC-4337 standard, SettleMint enables next-generation wallet capabilities including gasless transactions, social recovery, and enhanced security features.
+
+<Callout type="info">
+Account Abstraction represents a paradigm shift from traditional Externally Owned Accounts (EOAs) to programmable smart contract wallets, enabling unprecedented flexibility and user experience improvements.
+</Callout>
+
+### Key Benefits
+
+- **Gasless Transactions**: Users can interact with dApps without holding native tokens for gas fees
+- **Enhanced Security**: Multi-signature support, spending limits, and social recovery mechanisms
+- **Improved UX**: Batch transactions, session keys, and automated operations
+- **Flexible Authentication**: Support for biometrics, social logins, and custom authentication methods
+- **Developer Friendly**: Simplified onboarding and reduced complexity for end users
+
+## Core Components
+
+### 1. EntryPoint Contract
+
+The EntryPoint serves as the central hub for all Account Abstraction operations. It's a singleton contract that handles the verification and execution of UserOperations.
+
+```solidity
+// EntryPoint contract interface
+interface IEntryPoint {
+    function handleOps(
+        UserOperation[] calldata ops,
+        address payable beneficiary
+    ) external;
+    
+    function getUserOpHash(
+        UserOperation calldata userOp
+    ) external view returns (bytes32);
+    
+    function simulateValidation(
+        UserOperation calldata userOp
+    ) external;
+}
+```
+
+Key features:
+- Validates UserOperation signatures
+- Manages account deployment
+- Handles bundler compensation
+- Enforces gas limits and validation rules
+
+### 2. AccountFactory Contract
+
+The AccountFactory is responsible for deploying smart contract wallets using CREATE2 for deterministic addresses.
+
+```solidity
+// Example AccountFactory implementation
+contract SimpleAccountFactory {
+    IEntryPoint public immutable entryPoint;
+    
+    constructor(IEntryPoint _entryPoint) {
+        entryPoint = _entryPoint;
+    }
+    
+    function createAccount(
+        address owner,
+        uint256 salt
+    ) public returns (SimpleAccount) {
+        address addr = getAddress(owner, salt);
+        uint256 codeSize = addr.code.length;
+        if (codeSize > 0) {
+            return SimpleAccount(payable(addr));
+        }
+        return new SimpleAccount{salt: bytes32(salt)}(
+            entryPoint,
+            owner
+        );
+    }
+    
+    function getAddress(
+        address owner,
+        uint256 salt
+    ) public view returns (address) {
+        return Create2.computeAddress(
+            bytes32(salt),
+            keccak256(
+                abi.encodePacked(
+                    type(SimpleAccount).creationCode,
+                    abi.encode(entryPoint, owner)
+                )
+            ),
+            address(this)
+        );
+    }
+}
+```
+
+### 3. Smart Contract Wallet
+
+The actual wallet implementation that holds user funds and executes transactions.
+
+```solidity
+// Example smart contract wallet
+contract SimpleAccount is BaseAccount {
+    IEntryPoint private immutable _entryPoint;
+    address public owner;
+    
+    modifier onlyOwner() {
+        require(msg.sender == owner || msg.sender == address(this), "only owner");
+        _;
+    }
+    
+    function execute(
+        address dest,
+        uint256 value,
+        bytes calldata func
+    ) external onlyOwner {
+        _call(dest, value, func);
+    }
+    
+    function executeBatch(
+        address[] calldata dest,
+        bytes[] calldata func
+    ) external onlyOwner {
+        require(dest.length == func.length, "wrong array lengths");
+        for (uint256 i = 0; i < dest.length; i++) {
+            _call(dest[i], 0, func[i]);
+        }
+    }
+    
+    function _validateSignature(
+        UserOperation calldata userOp,
+        bytes32 userOpHash
+    ) internal override virtual returns (uint256 validationData) {
+        bytes32 hash = userOpHash.toEthSignedMessageHash();
+        if (owner != hash.recover(userOp.signature))
+            return SIG_VALIDATION_FAILED;
+        return 0;
+    }
+}
+```
+
+### 4. Paymaster Integration
+
+Paymasters enable gasless transactions by sponsoring gas fees on behalf of users.
+
+```solidity
+// Example Paymaster implementation
+contract VerifyingPaymaster is BasePaymaster {
+    mapping(address => uint256) public deposits;
+    address public verifyingSigner;
+    
+    function validatePaymasterUserOp(
+        UserOperation calldata userOp,
+        bytes32 userOpHash,
+        uint256 maxCost
+    ) external override returns (bytes memory context, uint256 validationData) {
+        (bytes memory paymasterData, bytes memory signature) = 
+            parsePaymasterAndData(userOp.paymasterAndData);
+            
+        // Verify signature from authorized signer
+        bytes32 hash = keccak256(
+            abi.encodePacked(userOp.sender, userOp.nonce, maxCost)
+        );
+        
+        require(
+            verifyingSigner == hash.toEthSignedMessageHash().recover(signature),
+            "invalid signature"
+        );
+        
+        // Check deposit
+        require(deposits[userOp.sender] >= maxCost, "insufficient deposit");
+        
+        return (abi.encode(userOp.sender), 0);
+    }
+    
+    function postOp(
+        PostOpMode mode,
+        bytes calldata context,
+        uint256 actualGasCost
+    ) external override {
+        if (mode != PostOpMode.postOpReverted) {
+            address sender = abi.decode(context, (address));
+            deposits[sender] -= actualGasCost;
+        }
+    }
+}
+```
+
+## Step-by-Step Setup Guide
+
+<Steps>
+
+### Deploy Core Infrastructure
+
+First, deploy the EntryPoint contract (or use an existing deployment):
+
+```bash
+# Using SettleMint CLI
+settlemint deploy --contract EntryPoint --network polygon-mumbai
+```
+
+### Deploy AccountFactory
+
+Deploy your AccountFactory contract with the EntryPoint address:
+
+```javascript
+// deployment script
+const entryPointAddress = "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789";
+const accountFactory = await deploy("SimpleAccountFactory", {
+  args: [entryPointAddress],
+  log: true,
+});
+```
+
+### Create Smart Contract Wallet
+
+Generate a new smart contract wallet for a user:
+
+```javascript
+const factory = await ethers.getContractAt("SimpleAccountFactory", factoryAddress);
+const owner = "0x..."; // User's EOA or initial owner
+const salt = 0; // Can be any number for different addresses
+
+const accountAddress = await factory.getAddress(owner, salt);
+console.log("Account address:", accountAddress);
+
+// Deploy the account (only needed on first transaction)
+const tx = await factory.createAccount(owner, salt);
+await tx.wait();
+```
+
+### Set Up Paymaster (Optional)
+
+Deploy and configure a Paymaster for gasless transactions:
+
+```javascript
+const paymaster = await deploy("VerifyingPaymaster", {
+  args: [entryPointAddress, verifyingSignerAddress],
+  log: true,
+});
+
+// Fund the paymaster
+await paymaster.deposit({ value: ethers.parseEther("10") });
+
+// Add user deposits
+await paymaster.addDeposit(userAddress, { value: ethers.parseEther("1") });
+```
+
+### Send UserOperations
+
+Create and send UserOperations through the EntryPoint:
+
+```javascript
+// Build UserOperation
+const userOp = {
+  sender: accountAddress,
+  nonce: await entryPoint.getNonce(accountAddress, 0),
+  initCode: isDeployed ? "0x" : getInitCode(factory, owner, salt),
+  callData: account.interface.encodeFunctionData("execute", [
+    targetAddress,
+    value,
+    data
+  ]),
+  callGasLimit: 100000,
+  verificationGasLimit: 200000,
+  preVerificationGas: 50000,
+  maxFeePerGas: await provider.getGasPrice(),
+  maxPriorityFeePerGas: await provider.getGasPrice(),
+  paymasterAndData: paymasterAddress ? getPaymasterData() : "0x",
+  signature: "0x" // Will be filled after signing
+};
+
+// Sign UserOperation
+const userOpHash = await entryPoint.getUserOpHash(userOp);
+const signature = await owner.signMessage(ethers.getBytes(userOpHash));
+userOp.signature = signature;
+
+// Send through bundler
+await bundler.sendUserOperation(userOp);
+```
+
+</Steps>
+
+## Implementation Examples
+
+### Gasless Transaction Flow
+
+<Tabs items={['Frontend', 'Backend', 'Smart Contract']}>
+
+<Tab value="Frontend">
+```typescript
+// Frontend implementation using ethers.js
+import { ethers } from 'ethers';
+import { Client } from '@settlemint/sdk';
+
+class GaslessWallet {
+  private client: Client;
+  private accountAddress: string;
+  
+  async sendGaslessTransaction(
+    to: string,
+    value: string,
+    data: string
+  ) {
+    // Build UserOperation
+    const userOp = await this.client.buildUserOperation({
+      sender: this.accountAddress,
+      target: to,
+      value: ethers.parseEther(value),
+      data: data,
+      paymaster: true // Enable gasless
+    });
+    
+    // Sign with user's key
+    const signature = await this.signUserOperation(userOp);
+    userOp.signature = signature;
+    
+    // Send through bundler
+    const response = await this.client.sendUserOperation(userOp);
+    return response.hash;
+  }
+  
+  async batchTransactions(calls: CallData[]) {
+    const userOp = await this.client.buildUserOperation({
+      sender: this.accountAddress,
+      calls: calls, // Multiple transactions
+      paymaster: true
+    });
+    
+    const signature = await this.signUserOperation(userOp);
+    userOp.signature = signature;
+    
+    return await this.client.sendUserOperation(userOp);
+  }
+}
+```
+</Tab>
+
+<Tab value="Backend">
+```javascript
+// Backend bundler service
+const express = require('express');
+const { ethers } = require('ethers');
+
+class BundlerService {
+  constructor(entryPoint, provider) {
+    this.entryPoint = entryPoint;
+    this.provider = provider;
+    this.mempool = [];
+  }
+  
+  async handleUserOperation(userOp) {
+    // Validate UserOperation
+    try {
+      await this.entryPoint.simulateValidation(userOp);
+    } catch (error) {
+      throw new Error(`Validation failed: ${error.message}`);
+    }
+    
+    // Add to mempool
+    this.mempool.push(userOp);
+    
+    // Try to bundle
+    if (this.mempool.length >= MIN_BUNDLE_SIZE) {
+      await this.createBundle();
+    }
+    
+    return { status: 'pending', userOpHash: getUserOpHash(userOp) };
+  }
+  
+  async createBundle() {
+    const ops = this.mempool.splice(0, MAX_BUNDLE_SIZE);
+    
+    // Send bundle to EntryPoint
+    const tx = await this.entryPoint.handleOps(
+      ops,
+      this.beneficiary
+    );
+    
+    await tx.wait();
+    
+    // Notify clients
+    ops.forEach(op => {
+      this.notifyClient(op, tx.hash);
+    });
+  }
+}
+
+// API endpoints
+app.post('/api/sendUserOperation', async (req, res) => {
+  const { userOp } = req.body;
+  
+  try {
+    const result = await bundler.handleUserOperation(userOp);
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+```
+</Tab>
+
+<Tab value="Smart Contract">
+```solidity
+// Advanced Account with modules
+contract ModularAccount is BaseAccount {
+    mapping(address => bool) public modules;
+    
+    modifier onlyModule() {
+        require(modules[msg.sender], "not a module");
+        _;
+    }
+    
+    function addModule(address module) external onlyOwner {
+        modules[module] = true;
+        emit ModuleAdded(module);
+    }
+    
+    function removeModule(address module) external onlyOwner {
+        modules[module] = false;
+        emit ModuleRemoved(module);
+    }
+    
+    // Session key module example
+    function executeWithSessionKey(
+        address dest,
+        uint256 value,
+        bytes calldata func,
+        bytes calldata sessionKeySignature
+    ) external {
+        require(
+            ISessionKeyModule(sessionKeyModule).validateSessionKey(
+                dest,
+                value,
+                func,
+                sessionKeySignature
+            ),
+            "invalid session key"
+        );
+        
+        _call(dest, value, func);
+    }
+}
+
+// Recovery module
+contract SocialRecoveryModule {
+    mapping(address => Guardian[]) public guardians;
+    mapping(address => RecoveryRequest) public recoveryRequests;
+    
+    struct Guardian {
+        address guardian;
+        uint256 threshold;
+    }
+    
+    struct RecoveryRequest {
+        address newOwner;
+        uint256 votes;
+        mapping(address => bool) hasVoted;
+        uint256 timestamp;
+    }
+    
+    function initiateRecovery(
+        address account,
+        address newOwner
+    ) external {
+        require(isGuardian(account, msg.sender), "not a guardian");
+        
+        RecoveryRequest storage request = recoveryRequests[account];
+        request.newOwner = newOwner;
+        request.votes = 1;
+        request.hasVoted[msg.sender] = true;
+        request.timestamp = block.timestamp;
+        
+        emit RecoveryInitiated(account, newOwner);
+    }
+}
+```
+</Tab>
+
+</Tabs>
+
+## Best Practices
+
+### Security Considerations
+
+1. **Signature Validation**
+   - Always validate signatures in the account contract
+   - Use EIP-1271 for contract signature validation
+   - Implement replay protection with proper nonce management
+
+2. **Gas Estimation**
+   - Accurately estimate gas limits to prevent failures
+   - Account for account deployment costs on first transaction
+   - Monitor gas price fluctuations for paymaster policies
+
+3. **Access Control**
+   - Implement proper owner verification
+   - Use time locks for sensitive operations
+   - Enable guardian-based recovery mechanisms
+
+4. **Paymaster Security**
+   - Implement strict validation for sponsored transactions
+   - Set spending limits per user/application
+   - Monitor for abuse and implement rate limiting
+
+### Performance Optimization
+
+```solidity
+// Optimized validation with caching
+contract OptimizedAccount is BaseAccount {
+    mapping(bytes32 => uint256) private validationCache;
+    
+    function _validateSignature(
+        UserOperation calldata userOp,
+        bytes32 userOpHash
+    ) internal override returns (uint256 validationData) {
+        // Check cache first
+        bytes32 cacheKey = keccak256(abi.encode(userOpHash, userOp.signature));
+        uint256 cached = validationCache[cacheKey];
+        if (cached != 0) {
+            return cached == 1 ? 0 : SIG_VALIDATION_FAILED;
+        }
+        
+        // Perform validation
+        bytes32 hash = userOpHash.toEthSignedMessageHash();
+        bool valid = owner == hash.recover(userOp.signature);
+        
+        // Cache result
+        validationCache[cacheKey] = valid ? 1 : 2;
+        
+        return valid ? 0 : SIG_VALIDATION_FAILED;
+    }
+}
+```
+
+## Use Cases
+
+### 1. Gasless NFT Marketplace
+
+Enable users to buy, sell, and trade NFTs without holding native tokens:
+
+```javascript
+// Gasless NFT purchase
+async function purchaseNFT(tokenId, price) {
+  const marketplace = new ethers.Contract(MARKETPLACE_ADDRESS, MARKETPLACE_ABI);
+  
+  const callData = marketplace.interface.encodeFunctionData('buyNFT', [
+    tokenId,
+    price
+  ]);
+  
+  // Create gasless transaction
+  const userOp = await wallet.createUserOperation({
+    target: MARKETPLACE_ADDRESS,
+    data: callData,
+    value: price,
+    paymaster: PAYMASTER_ADDRESS
+  });
+  
+  return await wallet.sendUserOperation(userOp);
+}
+```
+
+### 2. Social Recovery Wallet
+
+Implement guardian-based recovery for lost access:
+
+```solidity
+contract SocialRecoveryWallet is ModularAccount {
+    uint256 public recoveryThreshold = 3;
+    address[] public guardians;
+    
+    mapping(address => mapping(address => bool)) public recoveryVotes;
+    mapping(address => uint256) public recoveryVoteCount;
+    
+    function voteForRecovery(address newOwner) external {
+        require(isGuardian(msg.sender), "not a guardian");
+        require(!recoveryVotes[newOwner][msg.sender], "already voted");
+        
+        recoveryVotes[newOwner][msg.sender] = true;
+        recoveryVoteCount[newOwner]++;
+        
+        if (recoveryVoteCount[newOwner] >= recoveryThreshold) {
+            owner = newOwner;
+            _resetRecovery(newOwner);
+            emit OwnerChanged(newOwner);
+        }
+    }
+}
+```
+
+### 3. Automated DeFi Strategies
+
+Enable automated trading and yield farming without manual intervention:
+
+```javascript
+// Automated DeFi strategy module
+class DeFiAutomation {
+  async setupAutomatedStrategy(params) {
+    const strategy = await this.deployStrategy({
+      wallet: params.walletAddress,
+      protocol: params.protocol,
+      conditions: params.conditions,
+      actions: params.actions
+    });
+    
+    // Grant execution permission
+    await this.wallet.addModule(strategy.address);
+    
+    // Fund strategy for gas (if using paymaster)
+    await this.paymaster.addDeposit(
+      params.walletAddress,
+      { value: params.gasDeposit }
+    );
+    
+    return strategy;
+  }
+}
+```
+
+## Integration with SettleMint
+
+SettleMint provides comprehensive support for Account Abstraction:
+
+<Callout type="success">
+SettleMint's platform includes pre-deployed EntryPoint contracts, bundler infrastructure, and SDK support for easy Account Abstraction integration.
+</Callout>
+
+### Using SettleMint SDK
+
+```javascript
+import { AccountAbstraction } from '@settlemint/sdk';
+
+// Initialize AA client
+const aaClient = new AccountAbstraction({
+  entryPoint: '0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789',
+  bundlerUrl: 'https://bundler.settlemint.com',
+  paymasterUrl: 'https://paymaster.settlemint.com'
+});
+
+// Create smart wallet
+const smartWallet = await aaClient.createWallet({
+  owner: signer.address,
+  salt: BigInt(Date.now())
+});
+
+// Send gasless transaction
+const response = await smartWallet.sendTransaction({
+  to: recipientAddress,
+  value: ethers.parseEther('0.1'),
+  data: '0x',
+  sponsored: true // Enable paymaster
+});
+```
+
+### Monitoring and Analytics
+
+Track Account Abstraction metrics through SettleMint's dashboard:
+
+- UserOperation success rates
+- Gas savings from batching
+- Paymaster sponsorship costs
+- Wallet deployment statistics
+- Module usage analytics
+
+## Resources
+
+### Further Reading
+
+- [EIP-4337 Specification](https://eips.ethereum.org/EIPS/eip-4337)
+- [Account Abstraction Documentation](https://docs.settlemint.com/account-abstraction)
+- [Bundler API Reference](https://docs.settlemint.com/api/bundler)
+- [Paymaster Integration Guide](https://docs.settlemint.com/guides/paymaster)
+
+### Example Repositories
+
+- [Simple Account Implementation](https://github.com/settlemint/simple-account)
+- [Paymaster Examples](https://github.com/settlemint/paymaster-examples)
+- [AA SDK Integration](https://github.com/settlemint/aa-sdk-examples)
+
+### Support
+
+For assistance with Account Abstraction implementation:
+
+- Join our [Discord community](https://discord.gg/settlemint)
+- Contact [support@settlemint.com](mailto:support@settlemint.com)
+- Schedule a [technical consultation](https://settlemint.com/consultation)
+
+<Callout type="tip">
+Account Abstraction is rapidly evolving. Stay updated with the latest developments by following our blog and joining our developer community.
+</Callout>

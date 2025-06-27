@@ -4,6 +4,7 @@
   "pages": [
     "private-keys",
     "user-wallets",
+    "account-abstraction",
     "personal-access-tokens",
     "application-access-tokens"
   ]
