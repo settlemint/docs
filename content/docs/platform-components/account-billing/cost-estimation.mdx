@@ -21,7 +21,26 @@ The Cost Estimation feature enables you to:
 
 ## Pre-deployment Cost Estimation
 
-### Accessing the Cost Estimator
+### Quick Cost Checks with CLI
+
+Before deploying any infrastructure, use the SettleMint CLI to get instant cost estimates:
+
+```bash
+# Quick estimate for a basic deployment
+settlemint cost quick --network ethereum --nodes 2
+
+# Estimate from your existing configuration files
+settlemint cost estimate --from-config ./docker-compose.yml
+settlemint cost estimate --from-terraform ./infrastructure/
+
+# Interactive cost estimation wizard
+settlemint cost wizard
+
+# Validate cost against budget before deployment
+settlemint deploy --dry-run --max-budget 5000
+```
+
+### Accessing the Web-based Cost Estimator
 
 1. Navigate to your organization's dashboard
 2. Click on **Billing** in the sidebar
@@ -191,12 +210,50 @@ Monthly Storage Cost = 1.825 GB × $0.10/GB = $0.18
    - Adjust based on budget constraints
    - Balance performance vs cost
 
-### Cost Estimation API
+### Cost Estimation SDK & CLI
+
+#### Using the CLI
+
+Get cost estimates directly from your terminal:
+
+```bash
+# Basic cost estimation
+settlemint cost estimate \
+  --network ethereum \
+  --nodes 3 \
+  --node-tier standard \
+  --region us-east-1 \
+  --storage-blockchain 500GB \
+  --storage-ipfs 1TB \
+  --services graph-node,monitoring,api-portal
+
+# Output format options
+settlemint cost estimate --config ./infrastructure.yaml --format json
+settlemint cost estimate --config ./infrastructure.yaml --format table
+settlemint cost estimate --config ./infrastructure.yaml --format detailed
+
+# Compare multiple configurations
+settlemint cost compare \
+  --config-1 ./small-deployment.yaml \
+  --config-2 ./large-deployment.yaml
+
+# Export estimate to file
+settlemint cost estimate --config ./infrastructure.yaml --export ./cost-estimate.pdf
+```
+
+#### Using the SDK
 
 For programmatic access to cost estimates:
 
 ```javascript
-const estimate = await settlemint.billing.estimateCosts({
+import { SettleMint } from '@settlemint/sdk';
+
+const client = new SettleMint({
+  apiKey: process.env.SETTLEMINT_API_KEY
+});
+
+// Basic estimation
+const estimate = await client.billing.estimateCosts({
   network: 'ethereum',
   nodes: {
     count: 3,
@@ -213,6 +270,78 @@ const estimate = await settlemint.billing.estimateCosts({
 console.log(`Monthly estimate: $${estimate.monthly}`);
 console.log(`Annual estimate: $${estimate.annual}`);
 console.log(`Cost per transaction: $${estimate.perTransaction}`);
+
+// Advanced estimation with optimization suggestions
+const detailedEstimate = await client.billing.getDetailedEstimate({
+  configuration: {
+    network: 'polygon',
+    deployment: {
+      type: 'multi-region',
+      regions: ['us-east-1', 'eu-west-1', 'ap-southeast-1']
+    },
+    nodes: {
+      validator: { count: 3, tier: 'premium' },
+      rpc: { count: 6, tier: 'standard', autoScaling: true }
+    },
+    storage: {
+      blockchain: 1000, // GB
+      ipfs: 5000, // GB
+      database: 500 // GB
+    },
+    services: ['graph-node', 'monitoring', 'api-portal', 'cdn', 'waf']
+  },
+  optimizationPreferences: {
+    priority: 'cost', // 'cost' | 'performance' | 'balanced'
+    acceptableDowntime: 0.1, // percentage
+    growthProjection: {
+      months: 12,
+      expectedGrowth: 2.5 // 2.5x growth
+    }
+  }
+});
+
+// Access detailed breakdown
+console.log('Cost Breakdown:', detailedEstimate.breakdown);
+console.log('Optimization Suggestions:', detailedEstimate.optimizations);
+console.log('Growth Projections:', detailedEstimate.projections);
+
+// Python SDK example
+```
+
+```python
+from settlemint import SettleMint
+
+client = SettleMint(api_key=os.environ['SETTLEMINT_API_KEY'])
+
+# Get cost estimate
+estimate = client.billing.estimate_costs(
+    network='ethereum',
+    nodes={
+        'count': 3,
+        'tier': 'standard',
+        'region': 'us-east-1'
+    },
+    storage={
+        'blockchain': 500,  # GB
+        'ipfs': 1000  # GB
+    },
+    services=['graph-node', 'monitoring', 'api-portal']
+)
+
+print(f"Monthly estimate: ${estimate.monthly}")
+print(f"Annual estimate: ${estimate.annual}")
+print(f"Cost per transaction: ${estimate.per_transaction}")
+
+# Batch estimation for multiple scenarios
+scenarios = [
+    {'name': 'minimal', 'nodes': {'count': 1, 'tier': 'basic'}},
+    {'name': 'standard', 'nodes': {'count': 3, 'tier': 'standard'}},
+    {'name': 'premium', 'nodes': {'count': 5, 'tier': 'premium'}}
+]
+
+comparisons = client.billing.compare_scenarios(scenarios)
+for scenario in comparisons:
+    print(f"{scenario.name}: ${scenario.monthly}/month")
 ```
 
 ## Budget Planning Best Practices
@@ -249,53 +378,209 @@ Consider future growth scenarios:
 
 ### Small DeFi Application
 
-```
-Configuration:
-- Network: Polygon
-- Nodes: 2 standard nodes
-- Storage: 100GB blockchain, 500GB IPFS
-- Services: Basic monitoring
+```bash
+# CLI command to estimate this configuration
+settlemint cost estimate \
+  --network polygon \
+  --nodes 2 \
+  --node-tier standard \
+  --storage-blockchain 100GB \
+  --storage-ipfs 500GB \
+  --services monitoring-basic
 
-Monthly Breakdown:
-- Compute: $800 (2 × $400)
-- Storage: $60
-- Network: $50
-- Monitoring: $100
-- Total: ~$1,010/month
+# Output:
+# Configuration:
+# - Network: Polygon
+# - Nodes: 2 standard nodes
+# - Storage: 100GB blockchain, 500GB IPFS
+# - Services: Basic monitoring
+#
+# Monthly Breakdown:
+# - Compute: $800 (2 × $400)
+# - Storage: $60
+# - Network: $50
+# - Monitoring: $100
+# - Total: ~$1,010/month
 ```
 
 ### Enterprise Supply Chain
 
+```yaml
+# infrastructure.yaml for enterprise deployment
+network: besu-private
+deployment:
+  type: multi-region
+  regions: [us-east-1, eu-west-1, ap-southeast-1]
+nodes:
+  validator:
+    count: 5
+    tier: premium
+storage:
+  blockchain: 1TB
+  s3: 5TB
+services:
+  - monitoring-full
+  - high-availability
+  - disaster-recovery
 ```
-Configuration:
-- Network: Private Besu
-- Nodes: 5 premium nodes across 3 regions
-- Storage: 1TB blockchain, 5TB S3
-- Services: Full monitoring, HA setup
 
-Monthly Breakdown:
-- Compute: $5,000 (5 × $1,000)
-- Storage: $600
-- Network: $500
-- Services: $1,500
-- Total: ~$7,600/month
+```bash
+# Estimate using config file
+settlemint cost estimate --config ./infrastructure.yaml
+
+# Output:
+# Configuration:
+# - Network: Private Besu
+# - Nodes: 5 premium nodes across 3 regions
+# - Storage: 1TB blockchain, 5TB S3
+# - Services: Full monitoring, HA setup
+#
+# Monthly Breakdown:
+# - Compute: $5,000 (5 × $1,000)
+# - Storage: $600
+# - Network: $500
+# - Services: $1,500
+# - Total: ~$7,600/month
 ```
 
 ### NFT Marketplace
 
-```
-Configuration:
-- Network: Ethereum + IPFS
-- Nodes: 3 standard nodes
-- Storage: 200GB blockchain, 10TB IPFS
-- Services: Graph indexing, CDN
+```javascript
+// SDK estimation for NFT marketplace
+const nftMarketplaceEstimate = await client.billing.estimateCosts({
+  network: 'ethereum',
+  nodes: {
+    count: 3,
+    tier: 'standard',
+    features: ['websocket', 'archive']
+  },
+  storage: {
+    blockchain: 200, // GB
+    ipfs: 10000 // GB (10TB)
+  },
+  services: ['graph-node', 'cdn', 'ipfs-gateway'],
+  expectedLoad: {
+    dailyUsers: 50000,
+    dailyTransactions: 10000,
+    averageAssetSize: 5 // MB
+  }
+});
 
-Monthly Breakdown:
-- Compute: $1,200 (3 × $400)
-- Storage: $1,200
-- Network: $300
-- Services: $800
-- Total: ~$3,500/month
+// Get recommendations
+const recommendations = await client.billing.getOptimizations(
+  nftMarketplaceEstimate
+);
+
+console.log('Base estimate:', nftMarketplaceEstimate.monthly);
+console.log('With optimizations:', recommendations.optimizedCost);
+console.log('Savings:', recommendations.potentialSavings);
+
+// Output:
+// Configuration:
+// - Network: Ethereum + IPFS
+// - Nodes: 3 standard nodes
+// - Storage: 200GB blockchain, 10TB IPFS
+// - Services: Graph indexing, CDN
+//
+// Monthly Breakdown:
+// - Compute: $1,200 (3 × $400)
+// - Storage: $1,200
+// - Network: $300
+// - Services: $800
+// - Total: ~$3,500/month
+```
+
+## CI/CD Integration
+
+### Automated Cost Checks
+
+Integrate cost estimation into your deployment pipeline to prevent budget overruns:
+
+```yaml
+# GitHub Actions example
+name: Deploy with Cost Check
+on: [push]
+
+jobs:
+  cost-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install SettleMint CLI
+        run: npm install -g @settlemint/cli
+      
+      - name: Check deployment cost
+        env:
+          SETTLEMINT_API_KEY: ${{ secrets.SETTLEMINT_API_KEY }}
+        run: |
+          ESTIMATE=$(settlemint cost estimate --config ./infrastructure.yaml --format json)
+          MONTHLY_COST=$(echo $ESTIMATE | jq -r '.monthly')
+          
+          if (( $(echo "$MONTHLY_COST > 5000" | bc -l) )); then
+            echo "ERROR: Estimated cost ($MONTHLY_COST) exceeds budget limit ($5000)"
+            exit 1
+          fi
+          
+      - name: Deploy if within budget
+        run: settlemint deploy --config ./infrastructure.yaml
+```
+
+```javascript
+// Node.js deployment script with cost validation
+import { SettleMint } from '@settlemint/sdk';
+
+const client = new SettleMint({
+  apiKey: process.env.SETTLEMINT_API_KEY
+});
+
+async function deployWithCostCheck(config, maxBudget) {
+  // Get cost estimate
+  const estimate = await client.billing.estimateCosts(config);
+  
+  console.log(`Estimated monthly cost: $${estimate.monthly}`);
+  
+  // Check against budget
+  if (estimate.monthly > maxBudget) {
+    throw new Error(
+      `Deployment cancelled: Estimated cost ($${estimate.monthly}) ` +
+      `exceeds budget ($${maxBudget})`
+    );
+  }
+  
+  // Get approval for high-cost deployments
+  if (estimate.monthly > maxBudget * 0.8) {
+    const approval = await client.approvals.request({
+      type: 'high-cost-deployment',
+      estimate: estimate,
+      reason: 'Monthly cost exceeds 80% of budget'
+    });
+    
+    if (!approval.approved) {
+      throw new Error('Deployment not approved');
+    }
+  }
+  
+  // Proceed with deployment
+  const deployment = await client.deploy(config);
+  
+  // Tag deployment with cost estimate for tracking
+  await client.deployments.tag(deployment.id, {
+    estimatedMonthlyCost: estimate.monthly,
+    estimatedAnnualCost: estimate.annual,
+    costPerTransaction: estimate.perTransaction
+  });
+  
+  return deployment;
+}
+
+// Usage
+try {
+  await deployWithCostCheck(infrastructureConfig, 5000);
+} catch (error) {
+  console.error('Deployment failed:', error.message);
+  process.exit(1);
+}
 ```
 
 ## Integration with Billing
