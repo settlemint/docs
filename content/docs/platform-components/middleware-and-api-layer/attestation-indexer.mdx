@@ -131,9 +131,33 @@ For detailed instructions, visit the
 ### Deploying the contracts
 
 Once the contract set is ready, you can deploy it using either the **Task Menu**
-in the SettleMint IDE or via the **Terminal**.
+in the SettleMint IDE, via the **Terminal**, or using the **SettleMint CLI**.
 
 <Tabs>
+<Tab value="cli" label="SettleMint CLI">
+
+#### Deploy using the SettleMint CLI
+
+1. **Install the SettleMint SDK**:
+   ```bash
+   npm install -g @settlemint/sdk
+   ```
+
+2. **Deploy the attestation service**:
+   ```bash
+   # Deploy EAS contracts to your SettleMint application
+   settlemint deploy attestation-service \
+     --app-id YOUR_APP_ID \
+     --network YOUR_NETWORK
+   ```
+
+3. **Get deployment information**:
+   ```bash
+   # Retrieve deployed contract addresses
+   settlemint contracts list --app-id YOUR_APP_ID
+   ```
+
+</Tab>
 <Tab value="task-menu" label="Task Menu">
 
 #### Deploy using the task menu
@@ -200,54 +224,70 @@ profiles. The schema might include:
 - **Platform**: The social media platform name (e.g., Twitter).
 - **Handle**: The user's handle on that platform (e.g., `@coolcoder123`).
 
-### Example
+### Example using the SettleMint SDK
 
 ```javascript
-const { ethers } = require("ethers");
+import { SettleMintSDK } from '@settlemint/sdk';
+import { EAS } from '@settlemint/sdk-eas';
 
-// Configuration object for network and contract details
-const config = {
-  rpcUrl: "YOUR_RPC_URL_HERE", // The network endpoint (e.g., Ethereum mainnet/testnet)
-  registryAddress: "YOUR_SCHEMA_REGISTRY_ADDRESS_HERE", // Where the SchemaRegistry contract lives
-  privateKey: "YOUR_PRIVATE_KEY_HERE", // Your wallet's private key (keep this secret!)
-};
+// Initialize the SDK
+const sdk = new SettleMintSDK({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY'
+});
 
-// Create connection to blockchain and setup contract interaction
-const provider = new ethers.JsonRpcProvider(config.rpcUrl);
-const signer = new ethers.Wallet(config.privateKey, provider);
-const schemaRegistry = new ethers.Contract(
-  config.registryAddress,
-  [
-    // This event helps us track when new schemas are registered
-    "event Registered(bytes32 indexed uid, address indexed owner, string schema, address resolver, bool revocable)",
-    // This function lets us register new schemas
-    "function register(string calldata schema, address resolver, bool revocable) external returns (bytes32)",
-  ],
-  signer
-);
+// Get EAS instance for your application
+const eas = sdk.getEAS();
 
 async function registerSchema() {
   try {
-    // Define what data fields our attestations will contain
-    const schema = "string username, string platform, string handle";
-    const resolverAddress = ethers.ZeroAddress; // No special validation needed
-    const revocable = true; // Attestations can be revoked if needed
+    // Define schema for social media ownership attestations
+    const schema = {
+      fields: [
+        { name: 'username', type: 'string' },
+        { name: 'platform', type: 'string' },
+        { name: 'handle', type: 'string' }
+      ],
+      revocable: true,
+      resolver: null // No custom resolver needed
+    };
 
-    console.log("🚀 Registering schema for social media ownership...");
-    // Send the transaction to create our schema
-    const tx = await schemaRegistry.register(
-      schema,
-      resolverAddress,
-      revocable
-    );
-    const receipt = await tx.wait(); // Wait for blockchain confirmation
-
-    // Get our schema's unique ID from the transaction
-    const schemaUID = receipt.logs[0].topics[1];
-    console.log("✅ Schema registered successfully! UID:", schemaUID);
+    console.log('🚀 Registering schema for social media ownership...');
+    
+    // Register the schema using the SDK
+    const schemaUID = await eas.registerSchema(schema);
+    
+    console.log('✅ Schema registered successfully! UID:', schemaUID);
+    return schemaUID;
   } catch (error) {
-    console.error("❌ Error registering schema:", error.message);
+    console.error('❌ Error registering schema:', error.message);
   }
+}
+
+// Alternative: Using direct contract interaction
+async function registerSchemaDirectly() {
+  const { ethers } = require("ethers");
+  
+  // Get contract instances from SDK
+  const contracts = await sdk.getContracts();
+  const schemaRegistry = contracts.schemaRegistry;
+  
+  // Define schema string
+  const schemaString = "string username, string platform, string handle";
+  const resolverAddress = ethers.ZeroAddress;
+  const revocable = true;
+  
+  // Register using contract directly
+  const tx = await schemaRegistry.register(
+    schemaString,
+    resolverAddress,
+    revocable
+  );
+  const receipt = await tx.wait();
+  
+  const schemaUID = receipt.logs[0].topics[1];
+  console.log("✅ Schema registered! UID:", schemaUID);
+  return schemaUID;
 }
 
 registerSchema();
@@ -268,61 +308,88 @@ Let's create an attestation that proves:
 ### Example
 
 ```javascript
-const { EAS, SchemaEncoder } = require("@ethereum-attestation-service/eas-sdk");
-const { ethers } = require("ethers");
+import { SettleMintSDK } from '@settlemint/sdk';
+import { EAS } from '@settlemint/sdk-eas';
 
-// Setup our connection details
-const config = {
-  rpcUrl: "YOUR_RPC_URL_HERE", // Network endpoint
-  easAddress: "YOUR_EAS_CONTRACT_ADDRESS_HERE", // Main EAS contract address
-  privateKey: "YOUR_PRIVATE_KEY_HERE", // Your wallet's private key
-  schemaUID: "YOUR_SCHEMA_UID_HERE", // The UID from when we registered our schema
-};
+// Initialize the SDK
+const sdk = new SettleMintSDK({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY'
+});
 
-// Connect to the blockchain
-const provider = new ethers.JsonRpcProvider(config.rpcUrl);
-const signer = new ethers.Wallet(config.privateKey, provider);
-const EAS = new EAS(config.easAddress);
-eas.connect(signer);
+// Get EAS instance
+const eas = sdk.getEAS();
 
-// Create an encoder that matches our schema structure
-const schemaEncoder = new SchemaEncoder(
-  "string username, string platform, string handle"
-);
-
-// The actual data we want to attest to
-const attestationData = [
-  { name: "username", value: "awesome_developer", type: "string" },
-  { name: "platform", value: "GitHub", type: "string" },
-  { name: "handle", value: "@devmaster", type: "string" },
-];
-
-async function createAttestation() {
+async function createAttestation(schemaUID) {
   try {
-    // Convert our data into the format EAS expects
-    const encodedData = schemaEncoder.encodeData(attestationData);
+    // Define the attestation data
+    const attestationData = {
+      username: 'awesome_developer',
+      platform: 'GitHub',
+      handle: '@devmaster'
+    };
 
-    // Create the attestation
-    const tx = await eas.attest({
-      schema: config.schemaUID,
-      data: {
-        recipient: ethers.ZeroAddress, // Public attestation (no specific recipient)
-        expirationTime: 0, // Never expires
-        revocable: true, // Can be revoked later if needed
-        data: encodedData, // Our encoded attestation data
-      },
+    // Create attestation using the SDK
+    const attestationUID = await eas.createAttestation({
+      schemaUID: schemaUID,
+      data: attestationData,
+      recipient: null, // Public attestation
+      expirationTime: 0, // Never expires
+      revocable: true
     });
 
-    // Wait for confirmation and get the result
-    const receipt = await tx.wait();
-    console.log(
-      "✅ Attestation created successfully! UID:",
-      receipt.attestationUID
-    );
+    console.log('✅ Attestation created successfully! UID:', attestationUID);
+    return attestationUID;
   } catch (error) {
-    console.error("❌ Error creating attestation:", error.message);
+    console.error('❌ Error creating attestation:', error.message);
   }
 }
+
+// Alternative: Using the EAS SDK directly with SettleMint connection
+async function createAttestationWithEASSdk() {
+  const { EAS, SchemaEncoder } = require("@ethereum-attestation-service/eas-sdk");
+  
+  // Get connection details from SettleMint SDK
+  const connection = await sdk.getConnection();
+  const contracts = await sdk.getContracts();
+  
+  // Initialize EAS with SettleMint connection
+  const easInstance = new EAS(contracts.eas.address);
+  await easInstance.connect(connection.signer);
+  
+  // Create schema encoder
+  const schemaEncoder = new SchemaEncoder(
+    "string username, string platform, string handle"
+  );
+  
+  // Encode the data
+  const encodedData = schemaEncoder.encodeData([
+    { name: "username", value: "awesome_developer", type: "string" },
+    { name: "platform", value: "GitHub", type: "string" },
+    { name: "handle", value: "@devmaster", type: "string" }
+  ]);
+  
+  // Create the attestation
+  const tx = await easInstance.attest({
+    schema: schemaUID,
+    data: {
+      recipient: "0x0000000000000000000000000000000000000000",
+      expirationTime: 0,
+      revocable: true,
+      data: encodedData
+    }
+  });
+  
+  const receipt = await tx.wait();
+  console.log("✅ Attestation created! UID:", receipt.attestationUID);
+  return receipt.attestationUID;
+}
+
+// CLI usage example
+// settlemint eas create-attestation \
+//   --app-id YOUR_APP_ID \
+//   --schema-uid YOUR_SCHEMA_UID \
+//   --data '{"username":"awesome_developer","platform":"GitHub","handle":"@devmaster"}'
 
 createAttestation();
 ```
@@ -347,44 +414,82 @@ attestations. You can verify attestations using one of the following methods:
 The EAS SDK provides an easy way to verify attestations programmatically, making
 it ideal for off-chain use cases.
 
-##### Example
+##### Example using the SettleMint SDK
 
 ```javascript
-const { ethers } = require("ethers");
-const { EAS } = require("@ethereum-attestation-service/eas-sdk");
+import { SettleMintSDK } from '@settlemint/sdk';
+import { EAS } from '@settlemint/sdk-eas';
 
-// Basic configuration for connecting to the network
-const config = {
-  rpcUrl: "YOUR_RPC_URL_HERE", // Network endpoint
-  easAddress: "YOUR_EAS_CONTRACT_ADDRESS_HERE", // Main EAS contract
-};
+// Initialize the SDK
+const sdk = new SettleMintSDK({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY'
+});
+
+// Get EAS instance
+const eas = sdk.getEAS();
 
 async function verifyAttestation(attestationUID) {
-  // Setup our blockchain connection
-  const provider = new ethers.JsonRpcProvider(config.rpcUrl);
-  const EAS = new EAS(config.easAddress);
-  eas.connect(provider);
-
-  console.log("🔍 Verifying attestation:", attestationUID);
-
-  // Try to find the attestation on the blockchain
-  const attestation = await eas.getAttestation(attestationUID);
-
-  // Check if we found anything
-  if (!attestation) {
-    console.error("❌ Attestation not found");
-    return;
+  console.log('🔍 Verifying attestation:', attestationUID);
+  
+  try {
+    // Get attestation details using the SDK
+    const attestation = await eas.getAttestation(attestationUID);
+    
+    if (!attestation) {
+      console.error('❌ Attestation not found');
+      return;
+    }
+    
+    // Decode the attestation data
+    const decodedData = await eas.decodeAttestation(attestation);
+    
+    console.log('✅ Attestation Details:');
+    console.log('Attester:', attestation.attester);
+    console.log('Recipient:', attestation.recipient);
+    console.log('Revoked:', attestation.revoked ? 'Yes' : 'No');
+    console.log('Created:', new Date(attestation.time * 1000).toLocaleString());
+    console.log('Data:', decodedData);
+    
+    // Verify the attestation is valid
+    const isValid = await eas.verifyAttestation(attestationUID);
+    console.log('Valid:', isValid ? 'Yes' : 'No');
+    
+    return attestation;
+  } catch (error) {
+    console.error('❌ Error verifying attestation:', error.message);
   }
-
-  // Show the attestation details
-  console.log("✅ Attestation Details:");
-  console.log("Attester:", attestation.attester); // Who created this attestation
-  console.log("Data:", attestation.data); // The actual attested data
-  console.log("Revoked:", attestation.revoked ? "Yes" : "No"); // Is it still valid?
 }
 
-// Replace with your attestation UID
-verifyAttestation("YOUR_ATTESTATION_UID_HERE");
+// CLI usage example
+// settlemint eas verify-attestation \
+//   --app-id YOUR_APP_ID \
+//   --attestation-uid YOUR_ATTESTATION_UID
+
+// Alternative: Direct EAS SDK usage with SettleMint connection
+async function verifyWithEASSdk(attestationUID) {
+  const { EAS } = require("@ethereum-attestation-service/eas-sdk");
+  
+  // Get connection from SettleMint SDK
+  const connection = await sdk.getConnection();
+  const contracts = await sdk.getContracts();
+  
+  // Initialize EAS
+  const easInstance = new EAS(contracts.eas.address);
+  await easInstance.connect(connection.provider);
+  
+  // Get attestation
+  const attestation = await easInstance.getAttestation(attestationUID);
+  
+  if (attestation) {
+    console.log("✅ Attestation found:");
+    console.log("Attester:", attestation.attester);
+    console.log("Data:", attestation.data);
+    console.log("Revoked:", attestation.revoked ? "Yes" : "No");
+  }
+  
+  return attestation;
+}
 ```
 
 ##### Key points
@@ -566,47 +671,104 @@ After deployment:
 
 The indexer provides a built-in GraphQL playground where you can interactively test queries. Click "GraphQL UI" in your indexer to access it.
 
-#### Example query implementation
+#### Example query implementation using the SettleMint SDK
 
 ```javascript
-// Example fetch request to query attestations by schema
-async function queryAttestations(schemaId) {
-  const response = await fetch("YOUR_INDEXER_URL", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer YOUR_APP_TOKEN",
-    },
-    body: JSON.stringify({
-      query: `{
-        attestations(
-          where: {
-            schemaId: {
-              equals: "${schemaId}"
-            }
-          }
-          orderBy: { time: desc }
-          take: 10
-        ) {
-          id
-          attester
-          recipient
-          revoked
-          time
-          data
-        }
-      }`,
-    }),
-  });
+import { SettleMintSDK } from '@settlemint/sdk';
+import { EAS } from '@settlemint/sdk-eas';
 
-  const data = await response.json();
-  return data.data.attestations;
+// Initialize the SDK
+const sdk = new SettleMintSDK({
+  appId: 'YOUR_APP_ID',
+  apiKey: 'YOUR_API_KEY'
+});
+
+// Get EAS instance with indexer
+const eas = sdk.getEAS();
+
+// Query attestations using the SDK
+async function queryAttestations(schemaUID) {
+  try {
+    // Query using the SDK's built-in indexer integration
+    const attestations = await eas.queryAttestations({
+      where: {
+        schemaId: schemaUID,
+        revoked: false
+      },
+      orderBy: 'time_DESC',
+      limit: 10
+    });
+    
+    console.log(`Found ${attestations.length} attestations`);
+    
+    // Process each attestation
+    for (const attestation of attestations) {
+      const decodedData = await eas.decodeAttestation(attestation);
+      console.log('Attestation:', {
+        id: attestation.id,
+        attester: attestation.attester,
+        data: decodedData,
+        time: new Date(attestation.time * 1000).toLocaleString()
+      });
+    }
+    
+    return attestations;
+  } catch (error) {
+    console.error('Error querying attestations:', error);
+  }
 }
 
-// Usage example:
-const schemaId = "YOUR_SCHEMA_ID"; // From the schema registration step
-const attestations = await queryAttestations(schemaId);
-console.log("Attestations:", attestations);
+// Advanced query with multiple filters
+async function advancedQuery() {
+  const attestations = await eas.queryAttestations({
+    where: {
+      AND: [
+        { schemaId: 'YOUR_SCHEMA_UID' },
+        { attester: '0x123...' },
+        { time_gte: Math.floor(Date.now() / 1000) - 86400 } // Last 24 hours
+      ]
+    },
+    orderBy: 'time_DESC',
+    limit: 20
+  });
+  
+  return attestations;
+}
+
+// Direct GraphQL query using SDK connection
+async function queryViaGraphQL(schemaId) {
+  const indexer = await sdk.getIndexer('attestation');
+  
+  const query = `
+    query GetAttestations($schemaId: String!) {
+      attestations(
+        where: { schemaId: { equals: $schemaId } }
+        orderBy: { time: desc }
+        take: 10
+      ) {
+        id
+        attester
+        recipient
+        revoked
+        time
+        data
+      }
+    }
+  `;
+  
+  const result = await indexer.query({
+    query,
+    variables: { schemaId }
+  });
+  
+  return result.data.attestations;
+}
+
+// CLI usage example
+// settlemint eas query-attestations \
+//   --app-id YOUR_APP_ID \
+//   --schema-uid YOUR_SCHEMA_UID \
+//   --limit 10
 ```
 
 #### Advanced querying capabilities
