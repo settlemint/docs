@@ -1,6 +1,6 @@
 ---
 title: "Application access tokens"
-description: Guide to managing application access tokens in SettleMint
+description: Secure, granular API authentication for production applications with scoped permissions and automated token management
 ---
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
@@ -8,71 +8,534 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
 
-Application access tokens let you connect your SettleMint services with other
-apps securely. They represent your application, not individual users, and can be
-created by both admins and users. They can be used to connect to all or selected
-services of an application.
+Application access tokens provide granular API security for production applications in SettleMint. Unlike personal access tokens which represent individual users, application access tokens represent your applications and services, enabling secure machine-to-machine authentication with fine-grained permission control.
+
+## Overview
+
+Application access tokens are designed for production environments where you need:
+
+- **Service-specific access control** - Grant access only to the specific services your application needs
+- **Automated token rotation** - Implement security best practices with programmatic token management
+- **Audit compliance** - Track all API usage at the application level for security and compliance
+- **Zero-trust security** - Follow the principle of least privilege with scoped permissions
+
+### Key benefits
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+  <Card title="Granular permissions" description="Control access at the service level, ensuring applications only access what they need" />
+  <Card title="Production-ready" description="Built for high-availability production environments with robust error handling" />
+  <Card title="Compliance-friendly" description="Full audit trails and access logs for regulatory compliance" />
+  <Card title="Flexible integration" description="Multiple authentication methods to fit your architecture" />
+</div>
+
+## Application tokens vs Personal tokens
+
+Understanding when to use application access tokens versus personal access tokens is crucial for security:
+
+| Feature | Application Access Tokens | Personal Access Tokens |
+|---------|--------------------------|----------------------|
+| **Purpose** | Machine-to-machine authentication | User-specific authentication |
+| **Scope** | Service-level permissions | User-level permissions |
+| **Rotation** | Programmatic rotation supported | Manual rotation required |
+| **Audit trail** | Application-level tracking | User-level tracking |
+| **Use case** | Production applications, CI/CD | Development, testing, personal scripts |
+
+<Callout type="info">
+  **Best practice**: Always use application access tokens for production workloads and automated systems. Personal access tokens should only be used for development and testing.
+</Callout>
+
+## Scoped permissions system
+
+SettleMint's scoped permissions system allows you to implement the principle of least privilege by granting tokens access only to the specific services they need.
+
+### Scope types
+
+<Tabs items={["All services", "Specific services"]}>
+  <Tab value="All services">
+    **Use case**: Applications that need comprehensive access to all current and future services
+    
+    - Grants access to all services within the application
+    - Automatically includes new services added to the application
+    - Ideal for administrative tools or comprehensive monitoring systems
+    - Reduces management overhead but increases security exposure
+  </Tab>
+  
+  <Tab value="Specific services">
+    **Use case**: Production applications with well-defined service requirements
+    
+    - Grants access only to explicitly selected services
+    - Requires manual updates when new services are needed
+    - Follows security best practices for production environments
+    - Enables fine-grained access control and audit trails
+  </Tab>
+</Tabs>
+
+### Service-specific access control
+
+Each service type in SettleMint has specific access patterns:
+
+- **Blockchain nodes**: Full JSON-RPC access to the selected nodes
+- **Smart contract APIs**: RESTful and GraphQL access to deployed contracts
+- **IPFS storage**: Read/write access to distributed storage
+- **Graph indexers**: Query access to indexed blockchain data
+- **Integration services**: Access to custom middleware and integrations
 
 ## Create an application access token
 
-Go to your application's dashboard and click on "App access tokens" in the left
-navigation.
+<Steps>
+  <step>
+    ### Navigate to application tokens
+    
+    Go to your application's dashboard and click on "App access tokens" in the left navigation.
+  </step>
+  
+  <step>
+    ### Configure token settings
+    
+    Click "Add an application access token" and configure:
+    
+    - **Name**: A descriptive identifier for the token (e.g., `production-api-client`)
+    - **Expiration**: Set an appropriate lifetime based on your security policy
+    - **Description**: Document the token's purpose for future reference
+  </step>
+  
+  <step>
+    ### Set permissions scope
+    
+    Choose between:
+    
+    - **All services**: For administrative or development use
+    - **Specific services**: For production applications (recommended)
+    
+    If selecting specific services, carefully choose only the services your application requires.
+  </step>
+  
+  <step>
+    ### Generate and secure the token
+    
+    Click **Confirm** to generate the token. 
+    
+    <Callout type="error">
+      **Critical**: Copy and securely store your token immediately. For security reasons, it will never be displayed again. If lost, you must create a new token.
+    </Callout>
+  </step>
+</Steps>
 
-Click on the "Add an application access token" button. This opens a form where
-you can create your application access token.
+### Token naming conventions
 
-1. Choose a **name** for your application access token.
-2. Select an **expiration date**. You cannot update this later.
-3. Select a scope type. There are two types of scope: **All** or **Specific**.
-   1. If you selected **All**, you grant access to all services of the
-      application. If you add more services to the application later, this
-      access token will grant access to these new services as well.
-   2. If you selected **Specific**, you can choose which specific services this
-      access token will grant access to.
-   3. You can also update the scopes of your application access token later.
-4. Click **Confirm** to create your application access token.
+Follow these naming conventions for better token management:
 
-<Callout type="warning">
-  Copy and save your token securely - you won't see it again. Treat it like a
-  password and keep it secret.
-</Callout>
+```
+<environment>-<application>-<purpose>
+```
+
+Examples:
+- `prod-webapp-api-access`
+- `staging-etl-pipeline-reader`
+- `dev-integration-tests`
+
+## Token rotation procedures
+
+Regular token rotation is a critical security practice for production environments. SettleMint supports zero-downtime token rotation.
+
+### Rotation strategy
+
+<Steps>
+  <step>
+    ### Create new token
+    
+    Create a new application access token with the same permissions as the existing token. Use a naming convention that includes version numbers:
+    - `prod-api-v2-2024-01`
+  </step>
+  
+  <step>
+    ### Deploy in parallel
+    
+    Update your application configuration to support multiple tokens during the transition period. This ensures zero downtime.
+  </step>
+  
+  <step>
+    ### Verify new token
+    
+    Test the new token in your staging environment before production deployment.
+  </step>
+  
+  <step>
+    ### Decommission old token
+    
+    Once all systems are using the new token, delete the old token through the SettleMint dashboard.
+  </step>
+</Steps>
+
+### Automated rotation
+
+For enhanced security, implement automated token rotation:
+
+```javascript
+// Token rotation scheduler example
+const rotateApplicationToken = async () => {
+  // 1. Create new token via SettleMint API
+  const newToken = await createApplicationToken({
+    name: `prod-api-v${Date.now()}`,
+    scope: 'specific',
+    services: ['node-1', 'ipfs-storage', 'graph-indexer']
+  });
+  
+  // 2. Update application configuration
+  await updateEnvironmentVariable('SETTLEMINT_TOKEN', newToken);
+  
+  // 3. Verify new token is working
+  await verifyTokenAccess(newToken);
+  
+  // 4. Schedule old token deletion
+  setTimeout(() => deleteOldToken(currentToken), 3600000); // 1 hour grace period
+};
+```
 
 ## Update an application access token
 
-Navigate to the **application** whose token you want to update.
+You can modify the scope of existing tokens without regenerating them, maintaining service continuity.
 
-1. Click **App Access Tokens** in the left navigation, you will see a list of
-   all application access tokens for this application.
-2. Click on **View scopes** of the token you wish to update. This will first
-   open a list where you can view the current scopes of the token.
-3. Click on **Update** in the bottom right corner to open a form where you can
-   update your application access token.
-4. Choose the new scopes for your application access token.
-5. Click **Confirm** to update your application access token.
+<Steps>
+  <step>
+    Navigate to your application dashboard and click **App Access Tokens** in the left navigation.
+  </step>
+  
+  <step>
+    Click **View scopes** next to the token you want to modify to review current permissions.
+  </step>
+  
+  <step>
+    Click **Update** to modify the token's scope. Add or remove services as needed.
+  </step>
+  
+  <step>
+    Click **Confirm** to apply the changes. The update takes effect immediately.
+  </step>
+</Steps>
+
+<Callout type="info">
+  **Note**: You cannot change a token's expiration date after creation. To extend a token's lifetime, create a new token and implement rotation.
+</Callout>
 
 ## Delete an application access token
 
-If you are worried that an application access token has been compromised, or you
-no longer use the integration for which you had generated a particular
-application access token, you can delete that application access token.
+Immediate token revocation is essential when dealing with potential security incidents.
 
-1. Navigate to the application dashboard whose application access tokens you
-   wish to delete.
-2. Click **App Access Tokens** in the left navigation.
-3. Click **Delete** next to the application access token you want to delete.
-4. Type **DELETE** to confirm. The application access token will no longer be
-   usable.
+<Steps>
+  <step>
+    Navigate to the application dashboard and click **App Access Tokens**.
+  </step>
+  
+  <step>
+    Locate the compromised or unused token and click **Delete**.
+  </step>
+  
+  <step>
+    Type **DELETE** to confirm. The token is immediately invalidated across all services.
+  </step>
+</Steps>
 
-## Use an application access token
+<Callout type="warning">
+  **Security incident response**: If you suspect a token has been compromised, delete it immediately and review your audit logs for any unauthorized access.
+</Callout>
 
-You can use these application access tokens in three ways depending on what
-works for your use case.
+## Using application access tokens
 
-- As a header, you can use the header `x-auth-token: TOKEN`.
-- As a query parameter using `https://myservice.settlemint.com/?token=TOKEN`
-  appended to any URL.
-- As the last part of the URL `https://myservice.settlemint.com/TOKEN`.
-  - For IPFS nodes build your uri so it becomes
-    `https://myservice.settlemint.com/TOKEN/api/v0/...`
-  - For Avalanche and Fuji build your uri so they look like
-    `https://myservice.settlemint.com/ext/bc/C/rpc/TOKEN`
+SettleMint supports multiple authentication methods to accommodate different architectural patterns and security requirements.
+
+### Authentication methods
+
+<Tabs items={["Header authentication", "Query parameter", "URL path"]}>
+  <Tab value="Header authentication">
+    **Recommended for production use**
+    
+    ```javascript
+    // Using fetch API
+    const response = await fetch('https://node-1.settlemint.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': 'your-application-token'
+      },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        method: 'eth_blockNumber',
+        params: [],
+        id: 1
+      })
+    });
+    
+    // Using axios
+    const axios = require('axios');
+    const client = axios.create({
+      headers: {
+        'x-auth-token': 'your-application-token'
+      }
+    });
+    ```
+    
+    **Advantages**:
+    - Tokens are not exposed in logs or URLs
+    - Works with all HTTP methods
+    - Industry-standard approach
+  </Tab>
+  
+  <Tab value="Query parameter">
+    **Use for webhooks and third-party integrations**
+    
+    ```javascript
+    // Query parameter authentication
+    const url = 'https://api.settlemint.com/graphql?token=your-application-token';
+    
+    // Example with webhook configuration
+    const webhookConfig = {
+      url: 'https://ipfs.settlemint.com/api/v0/add?token=your-application-token',
+      method: 'POST'
+    };
+    ```
+    
+    **Advantages**:
+    - Works with services that don't support custom headers
+    - Easy integration with third-party webhook systems
+    
+    **Cautions**:
+    - Tokens may appear in server logs
+    - Use only when header authentication is not possible
+  </Tab>
+  
+  <Tab value="URL path">
+    **Legacy compatibility mode**
+    
+    ```javascript
+    // URL path authentication
+    const ipfsUrl = 'https://ipfs.settlemint.com/your-application-token/api/v0/cat';
+    const avalancheUrl = 'https://avalanche.settlemint.com/ext/bc/C/rpc/your-application-token';
+    
+    // Web3 provider example
+    const Web3 = require('web3');
+    const web3 = new Web3('https://node.settlemint.com/your-application-token');
+    ```
+    
+    **Special cases**:
+    - IPFS: `https://service.settlemint.com/TOKEN/api/v0/...`
+    - Avalanche: `https://service.settlemint.com/ext/bc/C/rpc/TOKEN`
+    
+    **Cautions**:
+    - Consider migrating to header-based authentication
+    - May not be supported in future versions
+  </Tab>
+</Tabs>
+
+### Code examples by service type
+
+#### Blockchain node access
+
+```javascript
+// Ethereum/EVM node connection
+const { createPublicClient, http } = require('viem');
+
+const client = createPublicClient({
+  transport: http('https://node.settlemint.com', {
+    fetchOptions: {
+      headers: {
+        'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
+      }
+    }
+  })
+});
+
+// Get latest block
+const block = await client.getBlock();
+```
+
+#### Smart Contract API Portal
+
+```javascript
+// GraphQL query example
+const query = `
+  query GetTokenBalance($address: String!) {
+    tokenBalance(address: $address) {
+      balance
+      symbol
+      decimals
+    }
+  }
+`;
+
+const response = await fetch('https://api-portal.settlemint.com/graphql', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
+  },
+  body: JSON.stringify({
+    query,
+    variables: { address: '0x...' }
+  })
+});
+```
+
+#### IPFS storage
+
+```javascript
+// Upload file to IPFS
+const FormData = require('form-data');
+const fs = require('fs');
+
+const form = new FormData();
+form.append('file', fs.createReadStream('document.pdf'));
+
+const response = await fetch('https://ipfs.settlemint.com/api/v0/add', {
+  method: 'POST',
+  headers: {
+    'x-auth-token': process.env.SETTLEMINT_APP_TOKEN,
+    ...form.getHeaders()
+  },
+  body: form
+});
+
+const { Hash } = await response.json();
+console.log(`File uploaded: https://ipfs.settlemint.com/ipfs/${Hash}`);
+```
+
+## Security best practices
+
+### Token storage
+
+<Callout type="error">
+  **Never** commit tokens to version control or expose them in client-side code.
+</Callout>
+
+**Secure storage options**:
+
+1. **Environment variables** (recommended for most applications)
+   ```bash
+   # .env file (add to .gitignore)
+   SETTLEMINT_APP_TOKEN=your-token-here
+   ```
+
+2. **Secret management systems** (recommended for production)
+   ```javascript
+   // AWS Secrets Manager example
+   const { SecretsManagerClient, GetSecretValueCommand } = require("@aws-sdk/client-secrets-manager");
+   
+   const client = new SecretsManagerClient();
+   const command = new GetSecretValueCommand({
+     SecretId: "settlemint/app-token"
+   });
+   const { SecretString } = await client.send(command);
+   ```
+
+3. **CI/CD secret variables**
+   ```yaml
+   # GitHub Actions example
+   - name: Deploy to SettleMint
+     env:
+       SETTLEMINT_TOKEN: ${{ secrets.SETTLEMINT_APP_TOKEN }}
+   ```
+
+### Access patterns
+
+Implement these security patterns in your applications:
+
+1. **Token validation on startup**
+   ```javascript
+   async function validateToken() {
+     try {
+       const response = await fetch('https://api.settlemint.com/health', {
+         headers: { 'x-auth-token': process.env.SETTLEMINT_APP_TOKEN }
+       });
+       if (!response.ok) throw new Error('Invalid token');
+     } catch (error) {
+       console.error('Token validation failed:', error);
+       process.exit(1);
+     }
+   }
+   ```
+
+2. **Rate limiting and retry logic**
+   ```javascript
+   const rateLimiter = {
+     attempts: 0,
+     maxAttempts: 3,
+     backoffMs: 1000,
+     
+     async execute(fn) {
+       try {
+         return await fn();
+       } catch (error) {
+         if (this.attempts < this.maxAttempts && error.status === 429) {
+           this.attempts++;
+           await new Promise(resolve => setTimeout(resolve, this.backoffMs * this.attempts));
+           return this.execute(fn);
+         }
+         throw error;
+       }
+     }
+   };
+   ```
+
+3. **Audit logging**
+   ```javascript
+   // Log all API interactions for compliance
+   const auditLog = (method, endpoint, status) => {
+     console.log(JSON.stringify({
+       timestamp: new Date().toISOString(),
+       method,
+       endpoint,
+       status,
+       tokenId: process.env.SETTLEMINT_TOKEN_ID // Store token ID, not the token itself
+     }));
+   };
+   ```
+
+### Compliance considerations
+
+- **PCI DSS**: Treat application tokens as sensitive authentication data
+- **SOC 2**: Implement token rotation and access logging
+- **GDPR**: Ensure tokens don't contain personal data
+- **ISO 27001**: Follow documented token management procedures
+
+## Monitoring and troubleshooting
+
+### Common issues
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| 401 Unauthorized | Invalid or expired token | Verify token in dashboard, create new if expired |
+| 403 Forbidden | Insufficient permissions | Check token scope includes required service |
+| 429 Too Many Requests | Rate limit exceeded | Implement exponential backoff |
+| 500 Internal Server Error | Service issue | Check SettleMint status page |
+
+### Debug authentication issues
+
+```javascript
+// Debug helper for token issues
+const debugAuth = async (token, service) => {
+  console.log('Testing token for service:', service);
+  
+  try {
+    const response = await fetch(`https://${service}.settlemint.com/health`, {
+      headers: { 'x-auth-token': token }
+    });
+    
+    console.log('Status:', response.status);
+    console.log('Headers:', Object.fromEntries(response.headers));
+    
+    if (!response.ok) {
+      const error = await response.text();
+      console.log('Error:', error);
+    }
+  } catch (error) {
+    console.error('Connection failed:', error);
+  }
+};
+```
+
+## Next steps
+
+- Review our [security policies](/docs/security) for comprehensive security guidelines
+- Set up [audit logs](/docs/platform-components/usage-and-logs/audit-logs) to track token usage
+- Explore [personal access tokens](/docs/platform-components/security-and-authentication/personal-access-tokens) for development use
+- Configure [monitoring tools](/docs/platform-components/usage-and-logs/monitoring-tools) for production deployments
