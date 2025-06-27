@@ -217,25 +217,293 @@ async function pinFile(cid) {
 
 ### 4. Using the Gateway for public access
 
-The IPFS gateway allows anyone to access content by CID through a standard web browser without authentication:
+#### Gateway Configuration and Optimization
 
+SettleMint IPFS gateways provide flexible configuration options for optimal content delivery:
+
+##### Basic Gateway Access
 ```
-https://your-ipfs-name.gke-region.settlemint.com/gateway/ipfs/QmYourCidHere
+# Standard gateway URL format
+https://your-ipfs-name.gke-region.settlemint.com/gateway/ipfs/{cid}
+https://your-ipfs-name.gke-region.settlemint.com/gateway/ipns/{ipns-name}
 ```
 
-This is useful for:
-- Sharing files publicly
-- Accessing IPFS content in web applications
-- Integrating IPFS content with smart contracts that need to read the data
-
-### 5. Using with remote pinning services 
-
-SettleMint's IPFS implements the IPFS Pinning Service API, allowing you to pin content from other IPFS nodes:
+##### Advanced Gateway Configuration
 
 ```javascript
-async function remotePinFile(cid, name) {
-  // Get pinning JWT token from your SettleMint dashboard
+// Gateway configuration class
+class IPFSGatewayConfig {
+  constructor(baseUrl, options = {}) {
+    this.baseUrl = baseUrl;
+    this.options = {
+      // Cache configuration
+      cacheControl: options.cacheControl || 'public, max-age=3600',
+      // CORS settings
+      corsOrigins: options.corsOrigins || ['*'],
+      // Response timeout
+      timeout: options.timeout || 30000,
+      // Content type restrictions
+      allowedContentTypes: options.allowedContentTypes || [],
+      // Bandwidth limits
+      rateLimiting: {
+        enabled: options.rateLimiting?.enabled || false,
+        requestsPerMinute: options.rateLimiting?.requestsPerMinute || 60,
+        bandwidthMBPerHour: options.rateLimiting?.bandwidthMBPerHour || 1000
+      },
+      // Security headers
+      securityHeaders: {
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY',
+        'Content-Security-Policy': "default-src 'self'",
+        ...options.securityHeaders
+      }
+    };
+  }
+  
+  // Generate optimized gateway URL
+  getOptimizedUrl(cid, options = {}) {
+    const params = new URLSearchParams();
+    
+    // Add optimization parameters
+    if (options.filename) params.append('filename', options.filename);
+    if (options.download) params.append('download', 'true');
+    if (options.format) params.append('format', options.format);
+    if (options.timeout) params.append('timeout', options.timeout);
+    
+    // CAR export options
+    if (options.car) {
+      params.append('format', 'car');
+      if (options.carVersion) params.append('car-version', options.carVersion);
+    }
+    
+    // Subdomain isolation for security
+    if (options.useSubdomain) {
+      return `https://${cid}.ipfs.${this.baseUrl}/ipfs/${cid}?${params}`;
+    }
+    
+    return `${this.baseUrl}/gateway/ipfs/${cid}?${params}`;
+  }
+  
+  // Configure gateway caching
+  async configureCache(cid, cacheOptions) {
+    const headers = {
+      'Cache-Control': cacheOptions.cacheControl || 'public, max-age=31536000, immutable',
+      'CDN-Cache-Control': cacheOptions.cdnCacheControl || 'max-age=31536000',
+      'Surrogate-Control': cacheOptions.surrogateControl || 'max-age=31536000'
+    };
+    
+    // Store cache configuration
+    await this.storeCacheConfig(cid, headers);
+    return headers;
+  }
+}
+
+// Usage examples
+const gateway = new IPFSGatewayConfig('your-ipfs-name.gke-region.settlemint.com');
+
+// Get download URL
+const downloadUrl = gateway.getOptimizedUrl('QmXxx...', {
+  download: true,
+  filename: 'document.pdf'
+});
+
+// Get image with format conversion
+const imageUrl = gateway.getOptimizedUrl('QmXxx...', {
+  format: 'webp',
+  useSubdomain: true
+});
+```
+
+##### Gateway Performance Optimization
+
+```javascript
+// Implement gateway request with retry and fallback
+async function fetchFromGateway(cid, options = {}) {
+  const gateways = [
+    'https://your-ipfs-name.gke-region.settlemint.com/gateway',
+    'https://gateway.ipfs.io',  // Public fallback
+    'https://cloudflare-ipfs.com'  // Alternative fallback
+  ];
+  
+  const fetchWithTimeout = (url, timeout = 10000) => {
+    return Promise.race([
+      fetch(url),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Gateway timeout')), timeout)
+      )
+    ]);
+  };
+  
+  // Try gateways in order with exponential backoff
+  for (let i = 0; i < gateways.length; i++) {
+    try {
+      const url = `${gateways[i]}/ipfs/${cid}`;
+      const response = await fetchWithTimeout(url, options.timeout || 10000);
+      
+      if (response.ok) {
+        // Cache successful gateway for future requests
+        localStorage.setItem('preferred-gateway', gateways[i]);
+        return response;
+      }
+    } catch (error) {
+      console.warn(`Gateway ${gateways[i]} failed:`, error);
+      
+      // Exponential backoff before trying next gateway
+      if (i < gateways.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+      }
+    }
+  }
+  
+  throw new Error('All gateways failed');
+}
+
+// Preload content for better performance
+function preloadContent(cids) {
+  cids.forEach(cid => {
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = `https://your-ipfs-name.gke-region.settlemint.com/gateway/ipfs/${cid}`;
+    document.head.appendChild(link);
+  });
+}
+```
+
+##### Gateway Access Control
+
+```javascript
+// Implement token-based gateway access
+class SecureGateway {
+  constructor(gatewayUrl, authToken) {
+    this.gatewayUrl = gatewayUrl;
+    this.authToken = authToken;
+  }
+  
+  async getSecureUrl(cid, expiresIn = 3600) {
+    // Generate time-limited access token
+    const token = await this.generateAccessToken(cid, expiresIn);
+    
+    return `${this.gatewayUrl}/ipfs/${cid}?token=${token}`;
+  }
+  
+  async generateAccessToken(cid, expiresIn) {
+    const payload = {
+      cid: cid,
+      exp: Date.now() + (expiresIn * 1000),
+      permissions: ['read']
+    };
+    
+    // Sign token with your auth service
+    const response = await fetch('/api/generate-ipfs-token', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${this.authToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    
+    const { token } = await response.json();
+    return token;
+  }
+}
+```
+
+This configuration enables:
+- **Performance Optimization** through caching and CDN integration
+- **Security** with access control and content validation
+- **Reliability** with fallback gateways and retry logic
+- **Flexibility** with format conversion and download options
+
+### 5. Advanced Pinning Services Configuration
+
+SettleMint's IPFS provides comprehensive pinning capabilities including local pinning, remote pinning services, and cluster pinning:
+
+#### Local Pinning Management
+
+```javascript
+// Advanced local pinning with metadata
+async function advancedPinFile(cid, options = {}) {
+  const username = "your-ipfs-id";
+  const password = "your-password";
+  const authString = btoa(`${username}:${password}`);
+  
+  // Pin with metadata
+  const pinData = {
+    cid: cid,
+    recursive: options.recursive ?? true,
+    metadata: {
+      name: options.name || "Unnamed",
+      description: options.description || "",
+      tags: options.tags || [],
+      project: options.project || "default",
+      pinned_at: new Date().toISOString()
+    }
+  };
+  
+  // Store metadata separately for enhanced management
+  await storeMetadata(cid, pinData.metadata);
+  
+  // Execute pin operation
+  const response = await fetch(`https://your-ipfs-name.gke-region.settlemint.com/api/v0/pin/add?arg=${cid}&recursive=${pinData.recursive}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Basic ${authString}`
+    }
+  });
+  
+  return response.json();
+}
+```
+
+#### Remote Pinning Service Integration
+
+SettleMint IPFS supports the standard IPFS Pinning Service API, enabling integration with external pinning services:
+
+```javascript
+// Configure remote pinning service
+async function configureRemotePinning(serviceName, endpoint, accessToken) {
   const jwtToken = "your-pinning-jwt-token";
+  
+  const config = {
+    name: serviceName,
+    endpoint: endpoint,
+    accessToken: accessToken,
+    // Optional: Configure redundancy across multiple regions
+    regions: ["us-east", "eu-west", "asia-pacific"],
+    replicationFactor: 3
+  };
+  
+  const response = await fetch("https://your-ipfs-name.gke-region.settlemint.com/pinning/remote/service/add", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${jwtToken}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(config)
+  });
+  
+  return response.json();
+}
+
+// Pin to remote service with advanced options
+async function remotePinWithOptions(cid, options = {}) {
+  const jwtToken = "your-pinning-jwt-token";
+  
+  const pinRequest = {
+    cid: cid,
+    name: options.name || `Pin-${Date.now()}`,
+    origins: options.origins || [],
+    meta: {
+      description: options.description,
+      tags: options.tags || [],
+      app: "settlemint-ipfs"
+    },
+    // Pin expiration (optional)
+    expires: options.expires || null,
+    // Pin delegates (who can manage this pin)
+    delegates: options.delegates || []
+  };
   
   const response = await fetch("https://your-ipfs-name.gke-region.settlemint.com/pinning/pins", {
     method: "POST",
@@ -243,14 +511,98 @@ async function remotePinFile(cid, name) {
       "Authorization": `Bearer ${jwtToken}`,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      cid: cid,
-      name: name
-    })
+    body: JSON.stringify(pinRequest)
   });
   
-  const data = await response.json();
-  return data;
+  const result = await response.json();
+  
+  // Monitor pin status
+  return monitorPinStatus(result.requestid);
+}
+
+// Monitor pinning progress
+async function monitorPinStatus(requestId) {
+  const jwtToken = "your-pinning-jwt-token";
+  
+  const checkStatus = async () => {
+    const response = await fetch(`https://your-ipfs-name.gke-region.settlemint.com/pinning/pins/${requestId}`, {
+      headers: {
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    });
+    
+    const status = await response.json();
+    
+    if (status.status === "pinned") {
+      return status;
+    } else if (status.status === "failed") {
+      throw new Error(`Pinning failed: ${status.error}`);
+    }
+    
+    // Continue monitoring
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    return checkStatus();
+  };
+  
+  return checkStatus();
+}
+```
+
+#### Cluster Pinning Configuration
+
+For high availability and redundancy, use IPFS cluster pinning:
+
+```javascript
+// Cluster pin with replication
+async function clusterPin(cid, options = {}) {
+  const username = "your-ipfs-id";
+  const password = "your-password";
+  const authString = btoa(`${username}:${password}`);
+  
+  const clusterOptions = {
+    replication_factor_min: options.minReplicas || 2,
+    replication_factor_max: options.maxReplicas || 3,
+    name: options.name || "",
+    user_allocations: options.preferredNodes || [],
+    expire_at: options.expiresAt || null,
+    metadata: {
+      application: "settlemint",
+      ...options.metadata
+    },
+    pin_update: options.updateExisting || false
+  };
+  
+  const response = await fetch(`https://your-ipfs-name.gke-region.settlemint.com/cluster/pins/${cid}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Basic ${authString}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(clusterOptions)
+  });
+  
+  return response.json();
+}
+
+// Get cluster pin status
+async function getClusterPinStatus(cid) {
+  const username = "your-ipfs-id";
+  const password = "your-password";
+  const authString = btoa(`${username}:${password}`);
+  
+  const response = await fetch(`https://your-ipfs-name.gke-region.settlemint.com/cluster/pins/${cid}`, {
+    headers: {
+      "Authorization": `Basic ${authString}`
+    }
+  });
+  
+  const status = await response.json();
+  
+  // Returns detailed status including:
+  // - peer_map: which peers have the content
+  // - replication_factor: current replication count
+  // - allocations: where content is allocated
+  return status;
 }
 ```
 
@@ -589,6 +941,225 @@ additional services to distribute copies. Many decentralized storage setups use
 multiple IPFS nodes (or pinning services) to ensure there are always several
 online copies of important data. If no node pins a piece of content and no
 
+## SDK Usage: @settlemint/sdk-ipfs
+
+The SettleMint IPFS SDK provides a high-level, TypeScript-first interface for interacting with IPFS:
+
+### Installation
+
+```bash
+npm install @settlemint/sdk-ipfs
+# or
+yarn add @settlemint/sdk-ipfs
+```
+
+### SDK Initialization
+
+```typescript
+import { SettleMintIPFS, IPFSConfig } from '@settlemint/sdk-ipfs';
+
+// Initialize with your SettleMint credentials
+const config: IPFSConfig = {
+  endpoint: 'https://your-ipfs-name.gke-region.settlemint.com',
+  auth: {
+    username: 'your-ipfs-id',
+    password: 'your-password'
+  },
+  // Optional advanced configuration
+  options: {
+    timeout: 30000,
+    retries: 3,
+    gateway: {
+      preferLocal: true,
+      fallbackPublic: true
+    }
+  }
+};
+
+const ipfs = new SettleMintIPFS(config);
+```
+
+### File Operations with SDK
+
+```typescript
+// Upload file with advanced options
+const uploadResult = await ipfs.add(file, {
+  pin: true,
+  wrapWithDirectory: true,
+  progress: (bytes) => console.log(`Uploaded: ${bytes}`),
+  metadata: {
+    name: 'Important Document',
+    tags: ['legal', 'contract'],
+    project: 'smart-contract-123'
+  }
+});
+
+console.log('File CID:', uploadResult.cid);
+console.log('Directory CID:', uploadResult.directoryCid);
+
+// Batch upload
+const files = [
+  { path: 'folder/file1.txt', content: 'Content 1' },
+  { path: 'folder/file2.txt', content: 'Content 2' }
+];
+
+const batchResult = await ipfs.addAll(files, {
+  wrapWithDirectory: true,
+  onFileAdded: (file) => console.log(`Added: ${file.path}`)
+});
+
+// Retrieve with caching
+const content = await ipfs.cat(cid, {
+  cache: true,
+  cacheTTL: 3600  // 1 hour
+});
+
+// Stream large files
+const stream = await ipfs.catStream(cid);
+stream.pipe(fs.createWriteStream('output.file'));
+```
+
+### Pin Management with SDK
+
+```typescript
+// Pin with metadata and tracking
+const pinResult = await ipfs.pin.add(cid, {
+  recursive: true,
+  metadata: {
+    name: 'Critical Data',
+    description: 'Smart contract state backup',
+    tags: ['backup', 'critical'],
+    expiresAt: new Date('2025-12-31')
+  }
+});
+
+// Advanced pin queries
+const pins = await ipfs.pin.ls({
+  type: 'recursive',
+  filter: {
+    tags: ['critical'],
+    beforeDate: new Date(),
+    minSize: 1000000  // 1MB+
+  },
+  sort: 'size_desc',
+  limit: 100
+});
+
+// Pin health monitoring
+const health = await ipfs.pin.verify(cid);
+console.log('Pin health:', health.status);  // 'healthy', 'corrupted', 'partial'
+
+// Remote pinning with monitoring
+const remotePinJob = await ipfs.pin.remote.add(cid, {
+  service: 'pinata',
+  name: 'Cross-region backup',
+  regions: ['us-east', 'eu-west'],
+  onProgress: (progress) => {
+    console.log(`Pinning progress: ${progress.percentage}%`);
+  }
+});
+
+// Wait for completion
+await remotePinJob.waitForCompletion();
+```
+
+### IPNS Publishing with SDK
+
+```typescript
+// Publish to IPNS with key management
+const key = await ipfs.key.gen('my-app-key', {
+  type: 'rsa',
+  size: 2048
+});
+
+const published = await ipfs.name.publish(cid, {
+  key: 'my-app-key',
+  lifetime: '24h',
+  ttl: '10m',
+  resolve: false
+});
+
+console.log('IPNS Name:', published.name);
+console.log('Access at:', `https://your-gateway/ipns/${published.name}`);
+
+// Update IPNS record
+const updated = await ipfs.name.publish(newCid, {
+  key: 'my-app-key',
+  lifetime: '24h'
+});
+```
+
+### Smart Contract Integration
+
+```typescript
+// Helper for smart contract integration
+class IPFSContractHelper {
+  constructor(private ipfs: SettleMintIPFS) {}
+  
+  // Upload and prepare for smart contract
+  async uploadForContract(file: File, contractAddress: string) {
+    // Upload with contract metadata
+    const result = await this.ipfs.add(file, {
+      pin: true,
+      metadata: {
+        contractAddress,
+        uploadedAt: Date.now(),
+        fileHash: await this.calculateHash(file)
+      }
+    });
+    
+    // Generate proof of existence
+    const proof = await this.generateProof(result.cid, file);
+    
+    return {
+      cid: result.cid,
+      cidBytes32: this.cidToBytes32(result.cid),
+      proof,
+      gatewayUrl: this.ipfs.gateway.url(result.cid)
+    };
+  }
+  
+  // Convert CID to bytes32 for Solidity
+  cidToBytes32(cid: string): string {
+    const bytes = this.ipfs.utils.cidToBytes(cid);
+    return '0x' + bytes.toString('hex').padEnd(64, '0');
+  }
+  
+  // Verify on-chain reference
+  async verifyOnChain(cid: string, contractData: string): Promise<boolean> {
+    const content = await this.ipfs.cat(cid);
+    const contentHash = await this.calculateHash(content);
+    return contentHash === contractData;
+  }
+}
+```
+
+### Error Handling and Resilience
+
+```typescript
+// Implement retry logic and fallbacks
+const resilientIPFS = ipfs.withResilience({
+  retries: 3,
+  retryDelay: 1000,
+  fallbackGateways: [
+    'https://ipfs.io',
+    'https://cloudflare-ipfs.com'
+  ],
+  onError: (error, attempt) => {
+    console.error(`Attempt ${attempt} failed:`, error);
+  }
+});
+
+// Use with automatic retry
+try {
+  const content = await resilientIPFS.cat(cid);
+} catch (error) {
+  if (error.code === 'TIMEOUT') {
+    console.error('All retries exhausted');
+  }
+}
+```
+
 ## Use cases for ipfs in blockchain applications
 
 ### 1. **Smart contract data storage**
@@ -617,30 +1188,66 @@ online copies of important data. If no node pins a piece of content and no
 ---
 
 ## Alternative Ways to Interact with IPFS
-Command
 
-<Tabs items={['File Manager GUI', 'JavaScript/TypeScript', 'Python', 'Go', 'Java']}>
+<Tabs items={['File Manager GUI', 'JavaScript/TypeScript', 'Python', 'Go', 'Java', 'CLI']}>
   <Tab value="File Manager GUI">
-    ### File Manager Interface
+    ### IPFS File Manager Interface
 
-    SettleMint provides a convenient **web-based File Manager** for your IPFS storage, allowing you to manage files without writing any code.
+    SettleMint provides a comprehensive **web-based File Manager** for your IPFS storage, offering advanced file management capabilities without writing code.
 
-    #### Key features of the file manager
+    #### Advanced File Manager Features
 
-    - **Upload Files** – Drag-and-drop or select files to upload to your IPFS node
-    - **Browse Files** – View all files stored on your IPFS node
-    - **Search** – Find files using CID or filenames
-    - **Pin Management** – Pin/unpin files to control persistence
-    - **File Details** – View metadata including size, CID, and pin status
-    - **Copy CIDs** – Easily copy content identifiers for use in applications
+    ##### File Operations
+    - **Multi-file Upload** – Upload multiple files simultaneously with drag-and-drop or file selection
+    - **Folder Upload** – Upload entire directory structures while preserving hierarchy
+    - **Batch Operations** – Select multiple files for bulk pinning, unpinning, or deletion
+    - **File Preview** – Preview images, videos, and text files directly in the interface
+    - **Download Management** – Download individual files or export multiple files as archives
 
-    #### To access the File Manager:
+    ##### Content Management
+    - **Advanced Search** – Search by CID, filename, file type, size, or upload date
+    - **Filtering & Sorting** – Filter by pin status, file type, or size; sort by name, size, or date
+    - **Metadata Viewer** – View detailed metadata including hash algorithm, chunk size, and DAG structure
+    - **Version History** – Track different versions of files with their respective CIDs
+    - **Tag Management** – Add custom tags to files for better organization
 
-    1. Navigate to your IPFS instance in the SettleMint dashboard
-    2. Click the **File Manager** tab
-    3. Use the **Import** button to add new files
+    ##### Pin Management Dashboard
+    - **Pin Status Overview** – Visual indicators showing pin status across all files
+    - **Pin Queue Management** – Monitor ongoing pinning operations and their progress
+    - **Remote Pinning** – Configure and manage remote pinning services
+    - **Pin Analytics** – View statistics on pinned content size and distribution
+    - **Auto-pinning Rules** – Set rules to automatically pin files based on criteria
 
-    The File Manager provides an easy-to-use interface for basic IPFS operations without requiring command-line tools or programming knowledge, making it ideal for testing and management tasks.
+    ##### Integration Features
+    - **Smart Contract Integration** – Generate code snippets for referencing CIDs in smart contracts
+    - **IPNS Publishing** – Publish mutable references to content using IPNS
+    - **Gateway Preview** – Test content accessibility through different gateway configurations
+    - **API Key Management** – Generate and manage API keys for programmatic access
+    - **Webhook Configuration** – Set up webhooks for file events (upload, pin, unpin)
+
+    #### Accessing the Enhanced File Manager
+
+    <Steps>
+      <Step>Navigate to your IPFS instance in the SettleMint dashboard</Step>
+      <Step>Click the **File Manager** tab</Step>
+      <Step>Use the toolbar for quick actions:
+        - **Import** – Add new files or folders
+        - **Create Folder** – Organize files in directories
+        - **Pin Manager** – Access pinning configuration
+        - **Settings** – Configure file manager preferences
+      </Step>
+    </Steps>
+
+    #### File Manager Best Practices
+
+    <Callout type="info">
+      **Pro Tips:**
+      - Use folders to organize related files (e.g., `/nft-collections/collection-1/`)
+      - Tag files with project names for easy filtering
+      - Set up auto-pinning rules for critical content
+      - Monitor pin queue during large uploads
+      - Use batch operations to manage multiple files efficiently
+    </Callout>
   </Tab>
 
   <Tab value="JavaScript/TypeScript">
@@ -812,16 +1419,522 @@ Command
     }
     ```
   </Tab>
+
+  <Tab value="CLI">
+    ### IPFS CLI Commands
+
+    The IPFS CLI provides powerful command-line access to all IPFS functionality. Here are essential commands for managing your SettleMint IPFS instance:
+
+    #### Installation & Configuration
+
+    ```bash
+    # Install IPFS CLI
+    curl -O https://dist.ipfs.tech/kubo/v0.24.0/kubo_v0.24.0_linux-amd64.tar.gz
+    tar -xvzf kubo_v0.24.0_linux-amd64.tar.gz
+    cd kubo && sudo bash install.sh
+
+    # Configure to use SettleMint IPFS endpoint
+    export IPFS_API="https://your-ipfs-name.gke-region.settlemint.com/api/v0"
+    export IPFS_AUTH="Basic $(echo -n 'your-ipfs-id:your-password' | base64)"
+    ```
+
+    #### File Operations
+
+    ```bash
+    # Add files
+    ipfs add file.txt                          # Add single file
+    ipfs add -r folder/                        # Add directory recursively
+    ipfs add --pin=false file.txt              # Add without pinning
+    ipfs add --chunker=size-262144 large.file  # Custom chunk size
+    ipfs add --hash=sha3-256 file.txt          # Use different hash algorithm
+
+    # Retrieve files
+    ipfs cat QmXxx...                          # Display file content
+    ipfs get QmXxx...                          # Download file
+    ipfs get -o output.txt QmXxx...            # Save to specific filename
+    ipfs ls QmXxx...                           # List directory contents
+    ```
+
+    #### Pin Management
+
+    ```bash
+    # Pinning operations
+    ipfs pin add QmXxx...                      # Pin content
+    ipfs pin rm QmXxx...                       # Unpin content
+    ipfs pin ls                                # List all pins
+    ipfs pin ls --type=recursive               # List recursive pins
+    ipfs pin ls --type=direct                  # List direct pins
+    ipfs pin verify                            # Verify all pinned content
+
+    # Remote pinning
+    ipfs pin remote service add mysvc https://pinning-service.com key1234
+    ipfs pin remote add --service=mysvc --name="Important File" QmXxx...
+    ipfs pin remote ls --service=mysvc
+    ```
+
+    #### Advanced Operations
+
+    ```bash
+    # IPNS publishing
+    ipfs name publish QmXxx...                 # Publish to IPNS
+    ipfs name publish --key=mykey QmXxx...     # Use specific key
+    ipfs name resolve <peer-id>                # Resolve IPNS name
+
+    # DAG operations
+    ipfs dag get QmXxx...                      # Get DAG node
+    ipfs dag put object.json                   # Create DAG node
+    ipfs dag stat QmXxx...                     # Get DAG statistics
+
+    # Repository management
+    ipfs repo stat                             # Show repo statistics
+    ipfs repo gc                               # Garbage collect unpinned blocks
+    ipfs repo verify                           # Verify repo integrity
+
+    # Network diagnostics
+    ipfs swarm peers                           # List connected peers
+    ipfs swarm connect /p2p/peer-id            # Connect to specific peer
+    ipfs dht findprovs QmXxx...                # Find content providers
+    ipfs stats bw                              # Show bandwidth usage
+    ```
+
+    #### Batch Operations Script
+
+    ```bash
+    #!/bin/bash
+    # Batch upload with pinning
+    
+    for file in *.jpg; do
+      CID=$(ipfs add -q "$file")
+      echo "Uploaded $file: $CID"
+      ipfs pin add "$CID"
+      echo "$file,$CID" >> uploaded_files.csv
+    done
+    ```
+
+    #### CLI Best Practices
+
+    <Callout type="warning">
+      **Important CLI Tips:**
+      - Always verify CIDs after upload using `ipfs pin ls`
+      - Use `--progress` flag for large file uploads
+      - Set appropriate chunk sizes for your use case
+      - Regularly run `ipfs repo gc` to clean up space
+      - Use `ipfs add --only-hash` to preview CID without uploading
+    </Callout>
+  </Tab>
 </Tabs>
 
-## Best practices & considerations
+## Best Practices for Decentralized Storage
 
-- **Pinning Important Files** – IPFS operates on a caching mechanism, meaning
-  files may be garbage-collected if not pinned.
-- **CID Management** – Since CIDs are content-based hashes, file updates result
-  in new CIDs. Maintain proper reference tracking.
-- **Security & Privacy** – IPFS is **public by default**. For sensitive data,
-  consider **encryption before storing files**.
+### Content Organization
+
+<Card>
+  <h4>Directory Structure Best Practices</h4>
+  
+  ```
+  /project-name/
+    ├── contracts/          # Smart contract related files
+    │   ├── metadata/       # Contract metadata
+    │   └── verification/   # Verification documents
+    ├── nfts/              # NFT assets
+    │   ├── images/        # Visual assets
+    │   ├── metadata/      # NFT metadata files
+    │   └── attributes/    # Trait definitions
+    ├── documents/         # Legal/compliance docs
+    │   ├── encrypted/     # Encrypted sensitive files
+    │   └── public/        # Public documents
+    └── backups/          # Data backups
+        └── snapshots/     # State snapshots
+  ```
+</Card>
+
+### Security Best Practices
+
+#### 1. **Encryption for Sensitive Data**
+
+```javascript
+import { createCipher, createDecipher } from 'crypto';
+
+// Encrypt before uploading to IPFS
+class SecureIPFS {
+  constructor(ipfs, encryptionKey) {
+    this.ipfs = ipfs;
+    this.encryptionKey = encryptionKey;
+  }
+  
+  async addEncrypted(content, filename) {
+    // Encrypt content
+    const cipher = createCipher('aes-256-cbc', this.encryptionKey);
+    let encrypted = cipher.update(content, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    
+    // Add metadata about encryption
+    const metadata = {
+      filename,
+      encrypted: true,
+      algorithm: 'aes-256-cbc',
+      timestamp: Date.now()
+    };
+    
+    // Upload encrypted content
+    const result = await this.ipfs.add({
+      content: encrypted,
+      metadata
+    });
+    
+    return {
+      cid: result.cid,
+      encrypted: true,
+      metadata
+    };
+  }
+  
+  async getDecrypted(cid) {
+    const encrypted = await this.ipfs.cat(cid);
+    
+    // Decrypt content
+    const decipher = createDecipher('aes-256-cbc', this.encryptionKey);
+    let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    
+    return decrypted;
+  }
+}
+```
+
+#### 2. **Access Control Implementation**
+
+```javascript
+// Implement role-based access control
+class IPFSAccessControl {
+  constructor(ipfs, accessControlContract) {
+    this.ipfs = ipfs;
+    this.contract = accessControlContract;
+  }
+  
+  async addWithAccess(content, allowedAddresses) {
+    // Upload content
+    const result = await this.ipfs.add(content);
+    
+    // Register access permissions on-chain
+    await this.contract.setAccess(
+      result.cid,
+      allowedAddresses,
+      { gasLimit: 200000 }
+    );
+    
+    return result.cid;
+  }
+  
+  async getWithPermission(cid, userAddress) {
+    // Check on-chain permissions
+    const hasAccess = await this.contract.hasAccess(cid, userAddress);
+    
+    if (!hasAccess) {
+      throw new Error('Access denied');
+    }
+    
+    return this.ipfs.cat(cid);
+  }
+}
+```
+
+### Performance Optimization
+
+#### 1. **Chunking Strategy**
+
+```javascript
+// Optimal chunking for different file types
+const chunkingStrategy = {
+  // Small files (< 1MB): Single chunk
+  small: { chunker: 'size-262144' },  // 256KB chunks
+  
+  // Medium files (1MB - 100MB): Balanced chunking
+  medium: { chunker: 'rabin-avg-262144' },  // Rabin chunking
+  
+  // Large files (> 100MB): Aggressive chunking
+  large: { 
+    chunker: 'size-1048576',  // 1MB chunks
+    rawLeaves: true,
+    cidVersion: 1
+  }
+};
+
+// Auto-select strategy based on file size
+function getChunkingOptions(fileSize) {
+  if (fileSize < 1024 * 1024) return chunkingStrategy.small;
+  if (fileSize < 100 * 1024 * 1024) return chunkingStrategy.medium;
+  return chunkingStrategy.large;
+}
+```
+
+#### 2. **Caching Strategy**
+
+```javascript
+// Implement intelligent caching
+class IPFSCache {
+  constructor(ipfs, cacheSize = 100 * 1024 * 1024) {  // 100MB cache
+    this.ipfs = ipfs;
+    this.cache = new Map();
+    this.cacheSize = cacheSize;
+    this.currentSize = 0;
+  }
+  
+  async get(cid) {
+    // Check cache first
+    if (this.cache.has(cid)) {
+      const entry = this.cache.get(cid);
+      entry.lastAccessed = Date.now();
+      return entry.content;
+    }
+    
+    // Fetch from IPFS
+    const content = await this.ipfs.cat(cid);
+    
+    // Add to cache with LRU eviction
+    this.addToCache(cid, content);
+    
+    return content;
+  }
+  
+  addToCache(cid, content) {
+    const size = content.length;
+    
+    // Evict old entries if needed
+    while (this.currentSize + size > this.cacheSize && this.cache.size > 0) {
+      const oldestKey = this.findOldestEntry();
+      const oldestEntry = this.cache.get(oldestKey);
+      this.currentSize -= oldestEntry.content.length;
+      this.cache.delete(oldestKey);
+    }
+    
+    // Add new entry
+    this.cache.set(cid, {
+      content,
+      lastAccessed: Date.now()
+    });
+    this.currentSize += size;
+  }
+  
+  findOldestEntry() {
+    let oldestKey = null;
+    let oldestTime = Infinity;
+    
+    for (const [key, entry] of this.cache.entries()) {
+      if (entry.lastAccessed < oldestTime) {
+        oldestTime = entry.lastAccessed;
+        oldestKey = key;
+      }
+    }
+    
+    return oldestKey;
+  }
+}
+```
+
+### Data Persistence Strategy
+
+#### 1. **Multi-Provider Pinning**
+
+```javascript
+// Ensure data persistence across multiple providers
+class MultiProviderPinning {
+  constructor(providers) {
+    this.providers = providers;  // Array of IPFS providers
+  }
+  
+  async pinAcrossProviders(cid, metadata) {
+    const results = await Promise.allSettled(
+      this.providers.map(provider => 
+        this.pinToProvider(provider, cid, metadata)
+      )
+    );
+    
+    const successful = results.filter(r => r.status === 'fulfilled');
+    const failed = results.filter(r => r.status === 'rejected');
+    
+    if (successful.length === 0) {
+      throw new Error('Failed to pin to any provider');
+    }
+    
+    return {
+      cid,
+      pinned: successful.length,
+      failed: failed.length,
+      providers: successful.map(r => r.value.provider)
+    };
+  }
+  
+  async pinToProvider(provider, cid, metadata) {
+    try {
+      const result = await provider.pin.add(cid, metadata);
+      return { provider: provider.name, result };
+    } catch (error) {
+      console.error(`Failed to pin to ${provider.name}:`, error);
+      throw error;
+    }
+  }
+  
+  // Verify pin health across providers
+  async verifyPinHealth(cid) {
+    const healthChecks = await Promise.allSettled(
+      this.providers.map(async provider => ({
+        provider: provider.name,
+        healthy: await provider.pin.isPinned(cid)
+      }))
+    );
+    
+    return healthChecks
+      .filter(r => r.status === 'fulfilled')
+      .map(r => r.value);
+  }
+}
+```
+
+#### 2. **Automated Backup Strategy**
+
+```javascript
+// Implement automated backups
+class IPFSBackupManager {
+  constructor(ipfs, backupSchedule = '0 0 * * *') {  // Daily at midnight
+    this.ipfs = ipfs;
+    this.schedule = backupSchedule;
+  }
+  
+  async createBackup(dataSelector) {
+    const timestamp = new Date().toISOString();
+    const backupData = await this.collectData(dataSelector);
+    
+    // Create backup manifest
+    const manifest = {
+      timestamp,
+      version: '1.0',
+      items: []
+    };
+    
+    // Add all data to backup
+    for (const item of backupData) {
+      const result = await this.ipfs.add(item.content);
+      manifest.items.push({
+        name: item.name,
+        cid: result.cid,
+        size: item.content.length,
+        type: item.type
+      });
+    }
+    
+    // Store manifest
+    const manifestResult = await this.ipfs.add(
+      JSON.stringify(manifest, null, 2)
+    );
+    
+    // Pin everything
+    await this.pinBackup(manifestResult.cid, manifest);
+    
+    return {
+      backupCid: manifestResult.cid,
+      timestamp,
+      itemCount: manifest.items.length
+    };
+  }
+  
+  async restoreBackup(backupCid) {
+    // Retrieve manifest
+    const manifestData = await this.ipfs.cat(backupCid);
+    const manifest = JSON.parse(manifestData);
+    
+    // Restore all items
+    const restored = [];
+    for (const item of manifest.items) {
+      const content = await this.ipfs.cat(item.cid);
+      restored.push({
+        name: item.name,
+        content,
+        cid: item.cid
+      });
+    }
+    
+    return {
+      timestamp: manifest.timestamp,
+      items: restored
+    };
+  }
+}
+```
+
+### Monitoring and Analytics
+
+```javascript
+// IPFS usage monitoring
+class IPFSMonitor {
+  constructor(ipfs) {
+    this.ipfs = ipfs;
+    this.metrics = {
+      uploads: [],
+      downloads: [],
+      pins: [],
+      errors: []
+    };
+  }
+  
+  async trackOperation(type, operation) {
+    const startTime = Date.now();
+    
+    try {
+      const result = await operation();
+      
+      this.metrics[type].push({
+        timestamp: new Date(),
+        duration: Date.now() - startTime,
+        success: true,
+        size: result.size || 0
+      });
+      
+      return result;
+    } catch (error) {
+      this.metrics.errors.push({
+        timestamp: new Date(),
+        type,
+        error: error.message
+      });
+      
+      throw error;
+    }
+  }
+  
+  getAnalytics() {
+    return {
+      totalUploads: this.metrics.uploads.length,
+      totalDownloads: this.metrics.downloads.length,
+      totalPins: this.metrics.pins.length,
+      errorRate: this.metrics.errors.length / 
+        (this.metrics.uploads.length + this.metrics.downloads.length),
+      averageUploadTime: this.calculateAverage(this.metrics.uploads, 'duration'),
+      averageDownloadTime: this.calculateAverage(this.metrics.downloads, 'duration'),
+      totalDataTransferred: this.calculateTotal([...this.metrics.uploads, ...this.metrics.downloads], 'size')
+    };
+  }
+  
+  calculateAverage(items, field) {
+    if (items.length === 0) return 0;
+    return items.reduce((sum, item) => sum + item[field], 0) / items.length;
+  }
+  
+  calculateTotal(items, field) {
+    return items.reduce((sum, item) => sum + (item[field] || 0), 0);
+  }
+}
+```
+
+<Callout type="warning">
+  **Critical Considerations:**
+  - Always pin important files across multiple nodes
+  - Implement proper access control for sensitive data
+  - Monitor storage usage and implement cleanup policies
+  - Use IPNS for mutable references when needed
+  - Test disaster recovery procedures regularly
+  - Keep encryption keys secure and separate from IPFS
+</Callout>
 
 ---
 
