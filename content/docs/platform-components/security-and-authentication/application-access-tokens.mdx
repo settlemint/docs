@@ -80,7 +80,331 @@ Each service type in SettleMint has specific access patterns:
 - **Graph indexers**: Query access to indexed blockchain data
 - **Integration services**: Access to custom middleware and integrations
 
+## CLI setup
+
+Before creating tokens via CLI, ensure you have the SettleMint CLI installed and configured:
+
+```bash
+# Install the SettleMint CLI
+curl -sSL https://cli.settlemint.com/install.sh | sh
+
+# Add to PATH (if not done automatically)
+export PATH="$HOME/.settlemint/bin:$PATH"
+
+# Authenticate with your SettleMint account
+settlemint auth login
+
+# Verify installation
+settlemint --version
+```
+
+<Callout type="info">
+  **Pro tip**: Add the SettleMint CLI to your CI/CD environment for automated token management. Store your API key as a secret variable.
+</Callout>
+
 ## Create an application access token
+
+You can create application access tokens using the SettleMint CLI or the web interface. The CLI is recommended for automation and production deployments.
+
+### Using the CLI
+
+The SettleMint CLI provides powerful commands for creating and managing application access tokens programmatically:
+
+<Tabs items={["Basic token", "Scoped token", "Advanced options"]}>
+  <Tab value="Basic token">
+    Create a basic application token with access to all services:
+    
+    ```bash
+    # Create a token with access to all services
+    settlemint token create \
+      --application "my-app-id" \
+      --name "prod-api-client" \
+      --description "Production API client token"
+    
+    # The token will be displayed once - save it securely!
+    # Example output:
+    # ✓ Token created successfully
+    # Token: settlemint_app_k3y_abcd1234...
+    # Token ID: tok_1234567890
+    ```
+  </Tab>
+  
+  <Tab value="Scoped token">
+    Create a token with specific service permissions:
+    
+    ```bash
+    # Create a token with specific service access
+    settlemint token create \
+      --application "my-app-id" \
+      --name "prod-indexer-client" \
+      --description "Production indexer access only" \
+      --scope specific \
+      --services "node-ethereum-mainnet,graph-indexer-prod"
+    
+    # List available services for scoping
+    settlemint services list --application "my-app-id"
+    ```
+  </Tab>
+  
+  <Tab value="Advanced options">
+    Create tokens with advanced configuration:
+    
+    ```bash
+    # Create a token with custom expiration
+    settlemint token create \
+      --application "my-app-id" \
+      --name "temporary-migration-token" \
+      --description "Token for data migration" \
+      --expires "2024-12-31T23:59:59Z" \
+      --scope specific \
+      --services "ipfs-storage,node-polygon"
+    
+    # Create a token and save to environment file
+    settlemint token create \
+      --application "my-app-id" \
+      --name "dev-environment" \
+      --output env > .env
+    
+    # Create a token and save to secret manager
+    settlemint token create \
+      --application "my-app-id" \
+      --name "prod-token" \
+      --output json | jq -r '.token' | \
+      aws secretsmanager create-secret \
+        --name settlemint/prod-token \
+        --secret-string file:///dev/stdin
+    ```
+  </Tab>
+</Tabs>
+
+### CLI token management commands
+
+```bash
+# List all tokens for an application
+settlemint token list --application "my-app-id"
+
+# View token details (without exposing the token value)
+settlemint token describe --token-id "tok_1234567890"
+
+# Update token scope
+settlemint token update \
+  --token-id "tok_1234567890" \
+  --add-services "new-service-1,new-service-2" \
+  --remove-services "old-service"
+
+# Delete a token
+settlemint token delete --token-id "tok_1234567890" --confirm
+
+# Rotate a token (creates new, schedules old for deletion)
+settlemint token rotate \
+  --token-id "tok_1234567890" \
+  --grace-period "1h"
+```
+
+### CLI automation examples
+
+<Tabs items={["CI/CD integration", "Kubernetes secrets", "Docker compose"]}>
+  <Tab value="CI/CD integration">
+    **GitHub Actions example:**
+    
+    ```yaml
+    name: Deploy to Production
+    on:
+      push:
+        branches: [main]
+    
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          
+          - name: Install SettleMint CLI
+            run: |
+              curl -sSL https://cli.settlemint.com/install.sh | sh
+              echo "$HOME/.settlemint/bin" >> $GITHUB_PATH
+          
+          - name: Create deployment token
+            env:
+              SETTLEMINT_API_KEY: ${{ secrets.SETTLEMINT_API_KEY }}
+            run: |
+              # Create a new token for this deployment
+              TOKEN=$(settlemint token create \
+                --application "${{ vars.APP_ID }}" \
+                --name "deploy-${{ github.run_number }}" \
+                --description "Automated deployment token" \
+                --scope specific \
+                --services "${{ vars.REQUIRED_SERVICES }}" \
+                --output json | jq -r '.token')
+              
+              # Save token as masked output
+              echo "::add-mask::$TOKEN"
+              echo "SETTLEMINT_TOKEN=$TOKEN" >> $GITHUB_ENV
+          
+          - name: Deploy application
+            run: |
+              # Your deployment commands here
+              ./deploy.sh
+          
+          - name: Cleanup old tokens
+            if: always()
+            run: |
+              # Remove tokens older than 7 days
+              settlemint token list \
+                --application "${{ vars.APP_ID }}" \
+                --format json | \
+              jq -r '.[] | select(.created_at < (now - 604800)) | .id' | \
+              xargs -I {} settlemint token delete --token-id {} --confirm
+    ```
+  </Tab>
+  
+  <Tab value="Kubernetes secrets">
+    **Create and store tokens in Kubernetes:**
+    
+    ```bash
+    #!/bin/bash
+    # create-k8s-token.sh
+    
+    # Set variables
+    APP_ID="my-app-id"
+    NAMESPACE="production"
+    SECRET_NAME="settlemint-token"
+    
+    # Create token with specific services
+    echo "Creating SettleMint application token..."
+    TOKEN_JSON=$(settlemint token create \
+      --application "$APP_ID" \
+      --name "k8s-prod-$(date +%Y%m%d)" \
+      --description "Kubernetes production token" \
+      --scope specific \
+      --services "node-ethereum,ipfs-storage,graph-indexer" \
+      --output json)
+    
+    # Extract token value
+    TOKEN=$(echo "$TOKEN_JSON" | jq -r '.token')
+    TOKEN_ID=$(echo "$TOKEN_JSON" | jq -r '.id')
+    
+    # Create Kubernetes secret
+    kubectl create secret generic $SECRET_NAME \
+      --from-literal=token="$TOKEN" \
+      --from-literal=token_id="$TOKEN_ID" \
+      --namespace=$NAMESPACE \
+      --dry-run=client -o yaml | kubectl apply -f -
+    
+    # Label the secret for easy management
+    kubectl label secret $SECRET_NAME \
+      app=settlemint \
+      token-id="$TOKEN_ID" \
+      created="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+      --namespace=$NAMESPACE
+    
+    echo "Token created and stored in Kubernetes secret: $SECRET_NAME"
+    ```
+    
+    **Use in deployment:**
+    
+    ```yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: blockchain-api
+    spec:
+      template:
+        spec:
+          containers:
+          - name: api
+            image: myapp:latest
+            env:
+            - name: SETTLEMINT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: settlemint-token
+                  key: token
+    ```
+  </Tab>
+  
+  <Tab value="Docker compose">
+    **Automated token management for Docker:**
+    
+    ```bash
+    #!/bin/bash
+    # setup-docker-tokens.sh
+    
+    # Check if .env file exists
+    if [ -f .env ]; then
+      source .env
+    fi
+    
+    # Create token if not exists or expired
+    if [ -z "$SETTLEMINT_TOKEN" ] || ! settlemint token describe --token-id "$SETTLEMINT_TOKEN_ID" &>/dev/null; then
+      echo "Creating new SettleMint token..."
+      
+      # Create token
+      TOKEN_OUTPUT=$(settlemint token create \
+        --application "$SETTLEMINT_APP_ID" \
+        --name "docker-$(hostname)-$(date +%Y%m%d)" \
+        --description "Docker compose token for $(hostname)" \
+        --scope specific \
+        --services "$(cat .settlemint-services)" \
+        --output json)
+      
+      # Update .env file
+      {
+        echo "# Generated by setup-docker-tokens.sh on $(date)"
+        echo "SETTLEMINT_TOKEN=$(echo $TOKEN_OUTPUT | jq -r '.token')"
+        echo "SETTLEMINT_TOKEN_ID=$(echo $TOKEN_OUTPUT | jq -r '.id')"
+        echo "SETTLEMINT_TOKEN_CREATED=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+      } > .env.settlemint
+      
+      # Merge with existing .env
+      grep -v "^SETTLEMINT_" .env > .env.tmp || true
+      cat .env.tmp .env.settlemint > .env
+      rm .env.tmp .env.settlemint
+      
+      echo "✓ Token created and saved to .env"
+    else
+      echo "✓ Existing token is valid"
+    fi
+    
+    # Start services
+    docker-compose up -d
+    ```
+    
+    **docker-compose.yml:**
+    
+    ```yaml
+    version: '3.8'
+    services:
+      blockchain-indexer:
+        image: myapp/indexer:latest
+        env_file: .env
+        environment:
+          - NODE_URL=https://node.settlemint.com
+          - IPFS_URL=https://ipfs.settlemint.com
+        deploy:
+          restart_policy:
+            condition: any
+            delay: 5s
+    ```
+  </Tab>
+</Tabs>
+
+### Token naming conventions
+
+Follow these naming conventions for better token management:
+
+```
+<environment>-<application>-<purpose>
+```
+
+Examples:
+- `prod-webapp-api-access`
+- `staging-etl-pipeline-reader`
+- `dev-integration-tests`
+
+### Using the web interface
+
+While the CLI is recommended for automation, you can also create tokens through the web interface:
 
 <Steps>
   <step>
@@ -120,19 +444,6 @@ Each service type in SettleMint has specific access patterns:
     </Callout>
   </step>
 </Steps>
-
-### Token naming conventions
-
-Follow these naming conventions for better token management:
-
-```
-<environment>-<application>-<purpose>
-```
-
-Examples:
-- `prod-webapp-api-access`
-- `staging-etl-pipeline-reader`
-- `dev-integration-tests`
 
 ## Token rotation procedures
 
@@ -329,75 +640,374 @@ SettleMint supports multiple authentication methods to accommodate different arc
 
 ### Code examples by service type
 
-#### Blockchain node access
-
-```javascript
-// Ethereum/EVM node connection
-const { createPublicClient, http } = require('viem');
-
-const client = createPublicClient({
-  transport: http('https://node.settlemint.com', {
-    fetchOptions: {
+<Tabs items={["Blockchain nodes", "Smart contracts", "IPFS storage", "Graph indexers"]}>
+  <Tab value="Blockchain nodes">
+    **Web3.js example:**
+    
+    ```javascript
+    const Web3 = require('web3');
+    
+    // Initialize Web3 with authentication header
+    const web3 = new Web3(new Web3.providers.HttpProvider('https://node.settlemint.com', {
+      headers: [
+        { name: 'x-auth-token', value: process.env.SETTLEMINT_APP_TOKEN }
+      ]
+    }));
+    
+    // Get current block number
+    const blockNumber = await web3.eth.getBlockNumber();
+    
+    // Get account balance
+    const balance = await web3.eth.getBalance('0x742d35Cc6634C0532925a3b844Bc9e7595f2bD40');
+    console.log('Balance:', web3.utils.fromWei(balance, 'ether'), 'ETH');
+    
+    // Send transaction
+    const tx = {
+      from: '0xYourAddress',
+      to: '0xRecipientAddress',
+      value: web3.utils.toWei('0.1', 'ether'),
+      gas: 21000
+    };
+    const receipt = await web3.eth.sendTransaction(tx);
+    ```
+    
+    **Ethers.js v6 example:**
+    
+    ```javascript
+    const { ethers } = require('ethers');
+    
+    // Create custom fetcher with auth header
+    const customFetchRequest = new ethers.FetchRequest('https://node.settlemint.com');
+    customFetchRequest.setHeader('x-auth-token', process.env.SETTLEMINT_APP_TOKEN);
+    
+    // Initialize provider
+    const provider = new ethers.JsonRpcProvider(customFetchRequest);
+    
+    // Query blockchain
+    const blockNumber = await provider.getBlockNumber();
+    const balance = await provider.getBalance('0x742d35Cc6634C0532925a3b844Bc9e7595f2bD40');
+    
+    // Create wallet for transactions
+    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+    const tx = await wallet.sendTransaction({
+      to: '0xRecipientAddress',
+      value: ethers.parseEther('0.1')
+    });
+    await tx.wait();
+    ```
+    
+    **Viem example:**
+    
+    ```javascript
+    const { createPublicClient, createWalletClient, http } = require('viem');
+    const { mainnet } = require('viem/chains');
+    
+    // Public client for reading
+    const publicClient = createPublicClient({
+      chain: mainnet,
+      transport: http('https://node.settlemint.com', {
+        fetchOptions: {
+          headers: {
+            'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
+          }
+        }
+      })
+    });
+    
+    // Get block number
+    const blockNumber = await publicClient.getBlockNumber();
+    
+    // Read contract
+    const balance = await publicClient.readContract({
+      address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+      abi: erc20ABI,
+      functionName: 'balanceOf',
+      args: ['0x742d35Cc6634C0532925a3b844Bc9e7595f2bD40']
+    });
+    ```
+  </Tab>
+  
+  <Tab value="Smart contracts">
+    **GraphQL API example:**
+    
+    ```javascript
+    const { GraphQLClient } = require('graphql-request');
+    
+    // Initialize GraphQL client
+    const client = new GraphQLClient('https://api-portal.settlemint.com/graphql', {
       headers: {
         'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
       }
+    });
+    
+    // Query token balances
+    const query = `
+      query GetTokenInfo($address: String!, $tokenAddress: String!) {
+        tokenBalance(address: $address, tokenAddress: $tokenAddress) {
+          balance
+          symbol
+          decimals
+          formattedBalance
+        }
+        tokenMetadata(address: $tokenAddress) {
+          name
+          totalSupply
+          owner
+        }
+      }
+    `;
+    
+    const data = await client.request(query, {
+      address: '0xYourWalletAddress',
+      tokenAddress: '0xTokenContractAddress'
+    });
+    
+    // Execute mutations
+    const mutation = `
+      mutation TransferToken($to: String!, $amount: String!) {
+        transfer(to: $to, amount: $amount) {
+          transactionHash
+          status
+          gasUsed
+        }
+      }
+    `;
+    
+    const result = await client.request(mutation, {
+      to: '0xRecipientAddress',
+      amount: '1000000000000000000' // 1 token with 18 decimals
+    });
+    ```
+    
+    **REST API example:**
+    
+    ```javascript
+    // Call smart contract function via REST
+    const response = await fetch('https://api-portal.settlemint.com/contracts/erc20/balanceOf', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
+      },
+      body: JSON.stringify({
+        contractAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+        address: '0x742d35Cc6634C0532925a3b844Bc9e7595f2bD40'
+      })
+    });
+    
+    const { balance, formatted } = await response.json();
+    console.log(`Balance: ${formatted}`);
+    
+    // Batch operations
+    const batchResponse = await fetch('https://api-portal.settlemint.com/batch', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
+      },
+      body: JSON.stringify({
+        requests: [
+          { method: 'balanceOf', params: { address: '0xAddress1' } },
+          { method: 'balanceOf', params: { address: '0xAddress2' } },
+          { method: 'totalSupply', params: {} }
+        ]
+      })
+    });
+    ```
+  </Tab>
+  
+  <Tab value="IPFS storage">
+    **File upload example:**
+    
+    ```javascript
+    const FormData = require('form-data');
+    const fs = require('fs');
+    const axios = require('axios');
+    
+    // Upload single file
+    async function uploadFile(filePath) {
+      const form = new FormData();
+      form.append('file', fs.createReadStream(filePath));
+      
+      const response = await axios.post('https://ipfs.settlemint.com/api/v0/add', form, {
+        headers: {
+          'x-auth-token': process.env.SETTLEMINT_APP_TOKEN,
+          ...form.getHeaders()
+        }
+      });
+      
+      return response.data.Hash;
     }
-  })
-});
-
-// Get latest block
-const block = await client.getBlock();
-```
-
-#### Smart Contract API Portal
-
-```javascript
-// GraphQL query example
-const query = `
-  query GetTokenBalance($address: String!) {
-    tokenBalance(address: $address) {
-      balance
-      symbol
-      decimals
+    
+    // Upload directory
+    async function uploadDirectory(dirPath) {
+      const form = new FormData();
+      
+      // Add all files in directory
+      const files = fs.readdirSync(dirPath);
+      files.forEach(file => {
+        form.append('file', fs.createReadStream(`${dirPath}/${file}`), {
+          filepath: file
+        });
+      });
+      
+      const response = await axios.post('https://ipfs.settlemint.com/api/v0/add?wrap-with-directory=true', form, {
+        headers: {
+          'x-auth-token': process.env.SETTLEMINT_APP_TOKEN,
+          ...form.getHeaders()
+        }
+      });
+      
+      return response.data;
     }
-  }
-`;
-
-const response = await fetch('https://api-portal.settlemint.com/graphql', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
-  },
-  body: JSON.stringify({
-    query,
-    variables: { address: '0x...' }
-  })
-});
-```
-
-#### IPFS storage
-
-```javascript
-// Upload file to IPFS
-const FormData = require('form-data');
-const fs = require('fs');
-
-const form = new FormData();
-form.append('file', fs.createReadStream('document.pdf'));
-
-const response = await fetch('https://ipfs.settlemint.com/api/v0/add', {
-  method: 'POST',
-  headers: {
-    'x-auth-token': process.env.SETTLEMINT_APP_TOKEN,
-    ...form.getHeaders()
-  },
-  body: form
-});
-
-const { Hash } = await response.json();
-console.log(`File uploaded: https://ipfs.settlemint.com/ipfs/${Hash}`);
-```
+    
+    // Pin management
+    async function pinHash(hash) {
+      const response = await axios.post('https://ipfs.settlemint.com/api/v0/pin/add', null, {
+        params: { arg: hash },
+        headers: {
+          'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
+        }
+      });
+      
+      return response.data;
+    }
+    ```
+    
+    **Content retrieval:**
+    
+    ```javascript
+    // Get file content
+    async function getIPFSContent(hash) {
+      const response = await fetch(`https://ipfs.settlemint.com/api/v0/cat?arg=${hash}`, {
+        headers: {
+          'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
+        }
+      });
+      
+      return response.text();
+    }
+    
+    // Get file metadata
+    async function getIPFSMetadata(hash) {
+      const response = await fetch(`https://ipfs.settlemint.com/api/v0/object/stat?arg=${hash}`, {
+        headers: {
+          'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
+        }
+      });
+      
+      return response.json();
+    }
+    
+    // Stream large files
+    async function streamIPFSFile(hash, outputPath) {
+      const response = await fetch(`https://ipfs.settlemint.com/api/v0/get?arg=${hash}`, {
+        headers: {
+          'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
+        }
+      });
+      
+      const fileStream = fs.createWriteStream(outputPath);
+      response.body.pipe(fileStream);
+      
+      return new Promise((resolve, reject) => {
+        fileStream.on('finish', resolve);
+        fileStream.on('error', reject);
+      });
+    }
+    ```
+  </Tab>
+  
+  <Tab value="Graph indexers">
+    **Query indexed data:**
+    
+    ```javascript
+    const { gql, GraphQLClient } = require('graphql-request');
+    
+    // Initialize client for The Graph indexer
+    const client = new GraphQLClient('https://graph.settlemint.com/subgraphs/name/your-subgraph', {
+      headers: {
+        'x-auth-token': process.env.SETTLEMINT_APP_TOKEN
+      }
+    });
+    
+    // Query token transfers
+    const transfersQuery = gql`
+      query GetTransfers($first: Int!, $where: Transfer_filter) {
+        transfers(first: $first, where: $where, orderBy: timestamp, orderDirection: desc) {
+          id
+          from
+          to
+          value
+          timestamp
+          transaction {
+            id
+            gasUsed
+            gasPrice
+          }
+        }
+      }
+    `;
+    
+    const transfers = await client.request(transfersQuery, {
+      first: 100,
+      where: {
+        value_gte: '1000000000000000000' // Transfers >= 1 token
+      }
+    });
+    
+    // Query with pagination
+    async function getAllTransfers(address) {
+      let allTransfers = [];
+      let lastId = '';
+      
+      while (true) {
+        const query = gql`
+          query GetTransfers($address: String!, $lastId: ID!) {
+            transfers(
+              first: 1000,
+              where: { 
+                or: [
+                  { from: $address },
+                  { to: $address }
+                ],
+                id_gt: $lastId
+              }
+            ) {
+              id
+              from
+              to
+              value
+              timestamp
+            }
+          }
+        `;
+        
+        const { transfers } = await client.request(query, { address, lastId });
+        
+        if (transfers.length === 0) break;
+        
+        allTransfers = [...allTransfers, ...transfers];
+        lastId = transfers[transfers.length - 1].id;
+      }
+      
+      return allTransfers;
+    }
+    
+    // Subscribe to real-time updates (if supported)
+    const subscription = gql`
+      subscription OnTransfer($address: String!) {
+        transfers(where: { to: $address }) {
+          id
+          from
+          value
+          timestamp
+        }
+      }
+    `;
+    ```
+  </Tab>
+</Tabs>
 
 ## Security best practices
 
