@@ -62,6 +62,29 @@ Before setting up BSC nodes, ensure you have:
 - A SettleMint account with appropriate permissions
 - Understanding of blockchain node basics
 - Sufficient resources allocated for node deployment
+- SettleMint CLI installed (`npm install -g @settlemint/cli`)
+
+### Creating BSC nodes via CLI
+
+You can quickly create BSC nodes using the SettleMint CLI:
+
+```bash
+# Create a BSC mainnet node
+settlemint node create --blockchain bsc --network mainnet --name my-bsc-node
+
+# Create a BSC testnet node
+settlemint node create --blockchain bsc --network testnet --name my-bsc-testnet
+
+# Create an archive node with custom resources
+settlemint node create \
+  --blockchain bsc \
+  --network mainnet \
+  --name my-bsc-archive \
+  --type archive \
+  --cpu 16 \
+  --memory 32 \
+  --storage 4000
+```
 
 ### Step-by-step setup guide
 
@@ -114,6 +137,171 @@ Configure network settings for your BSC node:
 - **Database Backend**: Choose between LevelDB or PebbleDB
 - **Concurrent Downloads**: Set parallel block download limits
 - **Transaction Pool Size**: Configure mempool capacity
+
+## Using the SettleMint SDK with BSC
+
+### Installation
+
+Install the SettleMint SDK with viem support:
+
+```bash
+npm install @settlemint/sdk-viem viem
+```
+
+### Connecting to BSC nodes
+
+```typescript
+import { createSettleMintClient } from '@settlemint/sdk-viem';
+import { bsc, bscTestnet } from 'viem/chains';
+
+// Connect to BSC Mainnet
+const mainnetClient = createSettleMintClient({
+  chain: bsc,
+  transport: 'https://your-bsc-node-url.settlemint.io',
+  apiKey: 'your-api-key'
+});
+
+// Connect to BSC Testnet
+const testnetClient = createSettleMintClient({
+  chain: bscTestnet,
+  transport: 'https://your-bsc-testnet-url.settlemint.io',
+  apiKey: 'your-api-key'
+});
+```
+
+### Common BSC operations
+
+#### Reading blockchain data
+
+```typescript
+// Get current block number
+const blockNumber = await mainnetClient.getBlockNumber();
+console.log('Current block:', blockNumber);
+
+// Get BNB balance
+const balance = await mainnetClient.getBalance({
+  address: '0x742d35Cc6634C0532925a3b844Bc9e7595f89c0d'
+});
+console.log('Balance:', balance, 'wei');
+
+// Get transaction details
+const transaction = await mainnetClient.getTransaction({
+  hash: '0x...'
+});
+
+// Watch for new blocks
+const unwatch = mainnetClient.watchBlockNumber({
+  onBlockNumber: (blockNumber) => {
+    console.log('New block:', blockNumber);
+  }
+});
+```
+
+#### Interacting with smart contracts
+
+```typescript
+// Read from a contract
+const result = await mainnetClient.readContract({
+  address: '0x...',
+  abi: contractABI,
+  functionName: 'balanceOf',
+  args: ['0x742d35Cc6634C0532925a3b844Bc9e7595f89c0d']
+});
+
+// Write to a contract (requires wallet)
+import { privateKeyToAccount } from 'viem/accounts';
+
+const account = privateKeyToAccount('0x...');
+
+const hash = await mainnetClient.writeContract({
+  address: '0x...',
+  abi: contractABI,
+  functionName: 'transfer',
+  args: ['0xrecipient...', BigInt(1000000000000000000)], // 1 BNB
+  account
+});
+
+// Wait for confirmation
+const receipt = await mainnetClient.waitForTransactionReceipt({ hash });
+```
+
+#### Event monitoring
+
+```typescript
+// Watch contract events
+const unwatch = mainnetClient.watchContractEvent({
+  address: '0x...',
+  abi: contractABI,
+  eventName: 'Transfer',
+  onLogs: (logs) => {
+    logs.forEach(log => {
+      console.log('Transfer event:', log.args);
+    });
+  }
+});
+
+// Get historical events
+const events = await mainnetClient.getContractEvents({
+  address: '0x...',
+  abi: contractABI,
+  eventName: 'Transfer',
+  fromBlock: BigInt(25000000),
+  toBlock: 'latest'
+});
+```
+
+#### Working with BEP-20 tokens
+
+```typescript
+// BEP-20 is the same as ERC-20 on BSC
+const tokenABI = [
+  'function balanceOf(address) view returns (uint256)',
+  'function transfer(address to, uint256 amount) returns (bool)',
+  'function approve(address spender, uint256 amount) returns (bool)',
+  'function allowance(address owner, address spender) view returns (uint256)'
+];
+
+// Get token balance
+const tokenBalance = await mainnetClient.readContract({
+  address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56', // BUSD
+  abi: tokenABI,
+  functionName: 'balanceOf',
+  args: [userAddress]
+});
+
+// Transfer tokens
+const transferHash = await mainnetClient.writeContract({
+  address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
+  abi: tokenABI,
+  functionName: 'transfer',
+  args: [recipientAddress, amount],
+  account
+});
+```
+
+### Gas estimation and optimization
+
+```typescript
+// Estimate gas for a transaction
+const gasEstimate = await mainnetClient.estimateGas({
+  to: '0x...',
+  value: BigInt(1000000000000000000), // 1 BNB
+  data: '0x...'
+});
+
+// Get current gas price
+const gasPrice = await mainnetClient.getGasPrice();
+console.log('Current gas price:', gasPrice, 'wei');
+
+// Send transaction with custom gas settings
+const txHash = await mainnetClient.sendTransaction({
+  to: '0x...',
+  value: BigInt(1000000000000000000),
+  gas: gasEstimate,
+  gasPrice: gasPrice * BigInt(110) / BigInt(100), // 10% higher
+  account
+});
+```
 
 ## Best practices
 
@@ -184,7 +372,33 @@ For production environments, consider:
 1. Verify RPC is enabled in node configuration
 2. Check firewall rules and security groups
 3. Confirm correct endpoint URL and port
-4. Test with curl: `curl -X POST https://your-node-url -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'`
+4. Test connection with the SDK:
+
+```typescript
+import { createSettleMintClient } from '@settlemint/sdk-viem';
+import { bsc } from 'viem/chains';
+
+async function testConnection() {
+  try {
+    const client = createSettleMintClient({
+      chain: bsc,
+      transport: 'https://your-node-url.settlemint.io',
+      apiKey: 'your-api-key'
+    });
+    
+    const blockNumber = await client.getBlockNumber();
+    console.log('✅ Connection successful! Block:', blockNumber);
+  } catch (error) {
+    console.error('❌ Connection failed:', error.message);
+    
+    // Common issues:
+    // - Invalid API key
+    // - Incorrect URL
+    // - Network restrictions
+    // - Node not fully synced
+  }
+}
+```
 
 #### Peers not connecting
 
@@ -198,27 +412,76 @@ For production environments, consider:
 
 ### Debug commands
 
-Useful commands for troubleshooting:
+Useful SDK methods for troubleshooting:
 
-```bash
-# Check sync status
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}' http://localhost:8545
+```typescript
+import { createSettleMintClient } from '@settlemint/sdk-viem';
+import { bsc } from 'viem/chains';
 
-# Get peer count
-curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":1}' http://localhost:8545
+const client = createSettleMintClient({
+  chain: bsc,
+  transport: 'https://your-bsc-node-url.settlemint.io',
+  apiKey: 'your-api-key'
+});
 
-# Check latest block
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest", false],"id":1}' http://localhost:8545
+// Check sync status
+const syncStatus = await client.request({
+  method: 'eth_syncing'
+});
+console.log('Sync status:', syncStatus);
+
+// Get peer count
+const peerCount = await client.request({
+  method: 'net_peerCount'
+});
+console.log('Connected peers:', parseInt(peerCount, 16));
+
+// Check latest block
+const latestBlock = await client.getBlock({
+  blockTag: 'latest'
+});
+console.log('Latest block:', latestBlock.number);
+
+// Get node info
+const nodeInfo = await client.request({
+  method: 'web3_clientVersion'
+});
+console.log('Node version:', nodeInfo);
+
+// Check chain ID
+const chainId = await client.getChainId();
+console.log('Chain ID:', chainId); // Should be 56 for mainnet, 97 for testnet
+
+// Monitor node health
+async function checkNodeHealth() {
+  try {
+    const [blockNumber, peerCount, syncStatus] = await Promise.all([
+      client.getBlockNumber(),
+      client.request({ method: 'net_peerCount' }),
+      client.request({ method: 'eth_syncing' })
+    ]);
+    
+    return {
+      blockNumber,
+      peers: parseInt(peerCount, 16),
+      syncing: syncStatus !== false,
+      healthy: true
+    };
+  } catch (error) {
+    return { healthy: false, error: error.message };
+  }
+}
 ```
 
 ## Related resources
 
 ### API/SDK references
 
-- **Web3.js**: Full support for BSC with Web3.js library
-- **Ethers.js**: Compatible with all Ethers.js features
-- **BSC SDK**: Specialized SDK for BSC-specific features
-- **SettleMint SDK**: Integrated support for BSC nodes
+- **[@settlemint/sdk-viem](https://www.npmjs.com/package/@settlemint/sdk-viem)**: Official SettleMint SDK with full BSC support
+- **[viem](https://viem.sh)**: Modern TypeScript library for Ethereum and EVM chains
+- **Web3.js**: Traditional JavaScript library for Web3 development
+- **Ethers.js**: Lightweight alternative to Web3.js
+- **[BSC JavaScript SDK](https://github.com/bnb-chain/javascript-sdk)**: BSC-specific SDK for advanced features
 
 ### Additional documentation
 
