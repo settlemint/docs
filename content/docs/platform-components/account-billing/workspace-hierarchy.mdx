@@ -1,0 +1,350 @@
+---
+title: Workspace Hierarchy
+description: Enterprise multi-tenant management with hierarchical workspace organization
+---
+
+# Workspace Hierarchy
+
+Workspace Hierarchy is an enterprise-grade feature in SettleMint that enables organizations to create and manage complex, multi-tenant structures through parent-child workspace relationships. This powerful capability is designed for enterprises, consortiums, and large organizations that need to maintain clear boundaries between different teams, projects, or subsidiaries while leveraging shared resources and centralized management.
+
+## Overview
+
+The Workspace Hierarchy feature transforms how organizations structure their blockchain initiatives by introducing a parent-child relationship model between workspaces. This hierarchical approach provides the flexibility and control needed for enterprise-scale deployments while maintaining security and isolation where required.
+
+### Key Benefits
+
+- **Organizational Clarity**: Mirror your company's structure with nested workspaces that reflect real-world relationships
+- **Resource Efficiency**: Share common resources across child workspaces while maintaining isolation
+- **Centralized Management**: Manage billing, permissions, and resources from parent workspaces
+- **Scalable Architecture**: Grow your blockchain infrastructure as your organization expands
+- **Enhanced Security**: Maintain strict boundaries between different teams or projects
+
+## Parent-Child Workspace Structure
+
+### Understanding the Hierarchy
+
+In SettleMint's workspace hierarchy:
+
+- **Parent Workspaces** act as organizational hubs that can contain multiple child workspaces
+- **Child Workspaces** inherit certain properties from their parents while maintaining independence
+- **Multiple Levels** of hierarchy are supported, allowing for complex organizational structures
+
+```
+Organization (Parent)
+├── Development Team (Child)
+│   ├── Project Alpha (Grandchild)
+│   └── Project Beta (Grandchild)
+├── Production Environment (Child)
+│   ├── Region US (Grandchild)
+│   └── Region EU (Grandchild)
+└── Partner Ecosystem (Child)
+    ├── Partner A (Grandchild)
+    └── Partner B (Grandchild)
+```
+
+### Workspace Relationships
+
+Each workspace in the hierarchy maintains:
+
+- **Unique Identity**: Every workspace has its own ID, settings, and configurations
+- **Inheritance Model**: Child workspaces can inherit certain configurations from parents
+- **Access Boundaries**: Clear permission boundaries between workspaces
+- **Resource Isolation**: Option to isolate or share resources based on requirements
+
+## Hierarchical Organization Benefits
+
+### 1. Enterprise Structure Alignment
+
+Workspace hierarchies allow you to:
+- Map your organizational chart directly to your blockchain infrastructure
+- Create dedicated spaces for different departments, teams, or projects
+- Maintain clear separation of concerns while enabling collaboration
+
+### 2. Governance and Compliance
+
+- **Audit Trails**: Track activities across the entire hierarchy from parent workspaces
+- **Policy Enforcement**: Apply organization-wide policies from parent levels
+- **Compliance Management**: Ensure regulatory requirements are met across all child workspaces
+
+### 3. Development Lifecycle Management
+
+- **Environment Separation**: Maintain distinct development, staging, and production workspaces
+- **Progressive Deployment**: Test changes in child workspaces before promoting to parents
+- **Version Control**: Manage different versions of applications across the hierarchy
+
+## Resource Sharing Across Workspaces
+
+### Shared Resources
+
+Parent workspaces can share the following resources with their children:
+
+1. **Network Configurations**
+   - Blockchain network settings
+   - Node configurations
+   - Network templates
+
+2. **Security Policies**
+   - Access control templates
+   - Security configurations
+   - Compliance settings
+
+3. **Integration Templates**
+   - API configurations
+   - Middleware settings
+   - External service connections
+
+4. **Development Resources**
+   - Smart contract libraries
+   - Code templates
+   - Development tools
+
+### Resource Isolation
+
+While sharing is powerful, workspace hierarchy also ensures:
+- **Data Isolation**: Each workspace maintains its own data boundaries
+- **Permission Isolation**: Access controls are workspace-specific
+- **Network Isolation**: Option to isolate network resources when needed
+
+## Centralized Billing
+
+### Parent Workspace Billing
+
+One of the most powerful features of workspace hierarchy is centralized billing:
+
+- **Single Invoice**: Receive consolidated billing for all child workspaces
+- **Cost Allocation**: Track costs per child workspace for internal chargebacks
+- **Budget Management**: Set and monitor budgets across the hierarchy
+- **Usage Analytics**: Comprehensive usage reports across all workspaces
+
+### Billing Benefits
+
+1. **Financial Control**
+   - Centralized cost management
+   - Predictable budgeting
+   - Clear cost attribution
+
+2. **Administrative Efficiency**
+   - Single point of payment
+   - Simplified vendor management
+   - Reduced administrative overhead
+
+3. **Cost Optimization**
+   - Volume discounts across workspaces
+   - Resource pooling benefits
+   - Efficient resource allocation
+
+## Setting Up Workspace Hierarchies
+
+### Prerequisites
+
+Before setting up a workspace hierarchy:
+- Ensure you have administrative access to the parent workspace
+- Plan your organizational structure
+- Define resource sharing requirements
+- Establish governance policies
+
+### Step-by-Step Setup
+
+1. **Create Parent Workspace**
+   ```
+   1. Navigate to the SettleMint dashboard
+   2. Click "Create Workspace"
+   3. Select "Parent Workspace" option
+   4. Configure workspace settings
+   5. Enable hierarchy features
+   ```
+
+2. **Add Child Workspaces**
+   ```
+   1. From the parent workspace dashboard
+   2. Click "Add Child Workspace"
+   3. Define child workspace properties
+   4. Set inheritance rules
+   5. Configure resource sharing
+   ```
+
+3. **Configure Relationships**
+   - Define which resources are shared
+   - Set permission inheritance rules
+   - Configure billing relationships
+   - Establish communication channels
+
+4. **Manage Access Controls**
+   - Assign workspace administrators
+   - Define cross-workspace permissions
+   - Set up authentication methods
+   - Configure SSO if required
+
+## Permission Inheritance
+
+### Inheritance Model
+
+Permissions in workspace hierarchies follow a sophisticated inheritance model:
+
+1. **Default Inheritance**
+   - Child workspaces inherit base permissions from parents
+   - Administrators can override inherited permissions
+   - Granular control at each level
+
+2. **Permission Types**
+   - **Administrative**: Full control over workspace
+   - **Developer**: Create and manage resources
+   - **Viewer**: Read-only access
+   - **Custom**: Define specific permission sets
+
+3. **Cross-Workspace Permissions**
+   - Users can have different roles in different workspaces
+   - Parent administrators can manage child workspace permissions
+   - Audit trail for all permission changes
+
+### Managing Permissions
+
+```yaml
+Parent Workspace:
+  Admin: 
+    - Full control
+    - Manage child workspaces
+    - Set organization policies
+  
+Child Workspace:
+  Inherited Admin:
+    - Parent workspace admins
+  Local Admin:
+    - Workspace-specific administrators
+  Developer:
+    - Create and deploy resources
+  Viewer:
+    - Read-only access
+```
+
+## Best Practices for Enterprise Multi-Tenant Management
+
+### 1. Organizational Design
+
+- **Plan Before Implementation**: Design your hierarchy based on long-term organizational needs
+- **Keep It Simple**: Start with a simple structure and expand as needed
+- **Document Everything**: Maintain clear documentation of your hierarchy
+
+### 2. Security Considerations
+
+- **Principle of Least Privilege**: Grant minimum necessary permissions
+- **Regular Audits**: Review permissions and access regularly
+- **Isolation Strategy**: Clearly define what should be shared vs. isolated
+
+### 3. Resource Management
+
+- **Standardize Configurations**: Use parent workspaces to enforce standards
+- **Monitor Usage**: Regular monitoring of resource consumption
+- **Optimize Costs**: Leverage shared resources for cost efficiency
+
+### 4. Governance Framework
+
+- **Clear Policies**: Establish and document governance policies
+- **Change Management**: Implement proper change control processes
+- **Compliance Tracking**: Ensure all workspaces meet compliance requirements
+
+## Example Workspace Structures
+
+### 1. Multi-National Corporation
+
+```
+Global HQ (Parent)
+├── Americas Division (Child)
+│   ├── USA Operations (Grandchild)
+│   ├── Canada Operations (Grandchild)
+│   └── LATAM Operations (Grandchild)
+├── EMEA Division (Child)
+│   ├── UK Operations (Grandchild)
+│   ├── Germany Operations (Grandchild)
+│   └── Middle East Operations (Grandchild)
+└── APAC Division (Child)
+    ├── Japan Operations (Grandchild)
+    ├── Singapore Operations (Grandchild)
+    └── Australia Operations (Grandchild)
+```
+
+### 2. Blockchain Consortium
+
+```
+Consortium Management (Parent)
+├── Founding Members (Child)
+│   ├── Member A Workspace (Grandchild)
+│   ├── Member B Workspace (Grandchild)
+│   └── Member C Workspace (Grandchild)
+├── Associate Members (Child)
+│   ├── Partner X Workspace (Grandchild)
+│   └── Partner Y Workspace (Grandchild)
+└── Shared Infrastructure (Child)
+    ├── Common Networks (Grandchild)
+    └── Shared Services (Grandchild)
+```
+
+### 3. Software Development Organization
+
+```
+Engineering Organization (Parent)
+├── Development Environments (Child)
+│   ├── Dev Team A (Grandchild)
+│   ├── Dev Team B (Grandchild)
+│   └── Innovation Lab (Grandchild)
+├── Testing Environments (Child)
+│   ├── QA Environment (Grandchild)
+│   ├── UAT Environment (Grandchild)
+│   └── Performance Testing (Grandchild)
+└── Production Systems (Child)
+    ├── Production US (Grandchild)
+    ├── Production EU (Grandchild)
+    └── DR Environment (Grandchild)
+```
+
+## Advanced Features
+
+### Dynamic Resource Allocation
+
+- Automatically allocate resources based on usage patterns
+- Scale resources up or down across the hierarchy
+- Optimize resource distribution for cost efficiency
+
+### Cross-Workspace Collaboration
+
+- Enable secure data sharing between workspaces
+- Implement cross-workspace workflows
+- Maintain audit trails for all interactions
+
+### Hierarchical Reporting
+
+- Generate reports at any level of the hierarchy
+- Aggregate metrics from child workspaces
+- Custom dashboards for different organizational levels
+
+## Troubleshooting Common Issues
+
+### Permission Conflicts
+
+If users experience permission issues:
+1. Check inheritance settings
+2. Verify local workspace permissions
+3. Review audit logs for recent changes
+4. Contact parent workspace administrator
+
+### Resource Access Problems
+
+For resource sharing issues:
+1. Confirm resource sharing is enabled
+2. Check network connectivity between workspaces
+3. Verify resource permissions
+4. Review resource allocation limits
+
+### Billing Discrepancies
+
+To resolve billing questions:
+1. Review child workspace usage reports
+2. Check billing configuration in parent workspace
+3. Verify cost allocation settings
+4. Contact SettleMint support for clarification
+
+## Conclusion
+
+Workspace Hierarchy in SettleMint provides the foundation for enterprise-grade blockchain deployments. By enabling sophisticated organizational structures, resource sharing, and centralized management, it empowers organizations to scale their blockchain initiatives while maintaining control, security, and efficiency.
+
+Whether you're managing a global enterprise, coordinating a multi-party consortium, or overseeing complex development workflows, workspace hierarchies provide the flexibility and control needed for success in enterprise blockchain adoption.
