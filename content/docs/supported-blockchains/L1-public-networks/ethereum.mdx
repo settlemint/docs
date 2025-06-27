@@ -19,20 +19,42 @@ on the Ethereum blockchain.
   </div>
 </div>
 
-## Mainnet and testnet
+## Mainnet and testnets
 
-cle SettleMint supports, the Ethereum **Mainnet**, the **Sepolia Testnet** and
+SettleMint supports the Ethereum **Mainnet**, the **Sepolia Testnet**, and
 the **Holesky Testnet**.
 
 The Mainnet is the primary public Ethereum production blockchain, where
 actual-value transactions take place. Each transaction requires payment of a
-transaction fee, payable in the native coin ETH. The Testnet is an instance of
+transaction fee, payable in the native coin ETH. The Testnets are instances of
 the blockchain to be used for testing and experimentation. There are also coins
-used in the Testnet but they have no value, so there is no risk of real fund.
+used in the Testnets but they have no value, so there is no risk of real funds.
 
-You can consider the Testnet as a prototype and the Mainnet as the official
+You can consider the Testnets as prototypes and the Mainnet as the official
 production blockchain. Or think of this as an analog to production versus
 staging servers.
+
+### Supported Testnets
+
+#### Holesky Testnet
+Holesky is the new long-term testnet for Ethereum, designed to replace Goerli. 
+It was launched in September 2023 and is intended to be a stable, long-running 
+testnet for protocol development, staking tests, and infrastructure testing.
+
+- **Chain ID**: 17000
+- **Purpose**: Long-term testnet for protocol-level testing, staking, and infrastructure
+- **Features**: 
+  - Larger validator set compared to other testnets
+  - More closely mimics mainnet conditions
+  - Designed for long-term stability and support
+
+#### Sepolia Testnet
+Sepolia is a proof-of-stake testnet for application developers. It uses a 
+permissioned validator set and is relatively new, making it quick to sync.
+
+- **Chain ID**: 11155111
+- **Purpose**: Application development and testing
+- **Features**: Quick sync times, stable environment for dApp testing
 
 ## Geth client
 
@@ -63,8 +85,8 @@ This makes the PoS consensus mechanism more energy-efficient than PoW.
 Validators are chosen to participate in block validation based on a randomized
 algorithm that takes into account their staked Ether. This collateral can be
 slashed if they misbehave or act maliciously. The PoS consensus mechanism is
-currently being implemented on the Ethereum mainnet chain as well as Goereli
-testnet.
+implemented on the Ethereum mainnet chain as well as the Sepolia and Holesky
+testnets.
 
 More information on the consensus mechanism can be found on the
 [official Ethereum website](https://ethereum.org/en/developers/docs/consensus-mechanisms/).
