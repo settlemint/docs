@@ -16,7 +16,7 @@ blockchain node in place.
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 mb-8">
   <Card>
     ## Available Options
-    - **Graph Middleware** - For EVM chains, providing subgraph-based indexing with GraphQL API
+    - **Graph Middleware** - For EVM chains, providing subgraph-based indexing with GraphQL API (available in HA configuration)
     - **Smart contract portal** - For EVM chains, offering REST & GraphQL APIs with webhooks
     - **FabConnect** - For Hyperledger Fabric, providing RESTful API
     - **Attestation Indexer** - Specialized indexer for attestations with GraphQL API
@@ -28,6 +28,7 @@ blockchain node in place.
     - API access
     - Event monitoring
     - Webhook support
+    - High availability options
   </Card>
 </div>
 
@@ -47,6 +48,7 @@ subgraphs. Use this middleware when you need:
 - Custom indexing logic through subgraph manifests
 - Complex GraphQL queries
 - Real-time data updates
+- High availability for enterprise-grade reliability
 
 ### Using the graph sdk
 
@@ -74,6 +76,11 @@ const { client: graphClient, graphql } = createTheGraphClient({
 blockchain data from networks. It can be used with all EVM-compatible chains
 like Ethereum, Hyperledger Besu, Polygon, Avalanche, etc. You can run it on your
 own blockchain nodes (both public and permissioned).
+
+SettleMint's implementation supports **HA Graph** configurations for enterprise deployments, 
+providing redundancy and failover capabilities to ensure continuous data availability. For 
+production workloads requiring maximum uptime, HA Graph with HA Graph Postgres ensures 
+both the indexing service and its database backend remain highly available.
 
 Using the Graph protocol, you can create **subgraphs** that define which
 blockchain data will be indexed. The middleware will then use these subgraphs to

@@ -76,11 +76,32 @@ providing essential services like data indexing, API access, and event
 monitoring. Before adding middleware, ensure you have an application and
 blockchain node in place.
 
+For production environments requiring high availability, SettleMint offers **HA Graph** 
+configurations that provide redundancy and automatic failover. HA Graph deployments 
+include multiple indexing nodes and **HA Graph Postgres** for database redundancy, 
+ensuring your subgraph queries remain available even during maintenance or unexpected 
+outages.
+
 ### How to add middleware
 
 ![Add Graph Middleware](../../../img/building-with-settlemint/add-graph-middleware.png)
 
 <include>../../../snippets/create-middleware.mdx</include>
+
+#### Choosing between standard and HA deployment
+
+When adding Graph middleware, consider these factors:
+
+**Standard Graph deployment** is suitable for:
+- Development and testing environments
+- Applications with flexible uptime requirements
+- Cost-conscious deployments
+
+**HA Graph deployment** is recommended for:
+- Production applications requiring 99.9%+ uptime
+- Mission-critical indexing services
+- Applications with zero-tolerance for query downtime
+- Enterprise deployments with SLA requirements
 
 ### Manage middleware
 

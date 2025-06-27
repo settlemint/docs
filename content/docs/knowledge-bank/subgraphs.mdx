@@ -38,6 +38,11 @@ Subgraph developers define the indexing logic and deploy it to the network. Once
 deployed, their subgraphs become accessible via GraphQL endpoints and are
 maintained by indexers without requiring centralized APIs.
 
+In enterprise deployments, SettleMint provides **HA Graph** configurations that ensure 
+subgraph availability through redundant indexing nodes and **HA Graph Postgres** for 
+database failover. This architecture is essential for production applications where 
+continuous data access is critical.
+
 The protocol provides deterministic indexing through WASM-based mappings,
 scalability through sharding and modular design, and economic incentives to
 ensure data availability and integrity.
