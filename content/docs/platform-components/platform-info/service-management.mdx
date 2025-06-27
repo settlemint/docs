@@ -1,0 +1,407 @@
+---
+title: Service Management
+description: Enterprise-grade service management capabilities for production blockchain operations on SettleMint
+---
+
+# Service Management
+
+SettleMint provides comprehensive service management capabilities designed for production-grade blockchain operations. These features enable DevOps teams and platform administrators to efficiently manage, monitor, and maintain services across their blockchain infrastructure.
+
+## Overview
+
+The Service Management suite in SettleMint offers:
+
+- **Granular service control** with pause/resume capabilities
+- **Dependency tracking** for safe operations
+- **Batch operations** for efficient management
+- **Auto-retry mechanisms** for resilient operations
+- **Service restart procedures** with minimal disruption
+
+These capabilities are essential for maintaining high availability and reliability in enterprise blockchain deployments.
+
+## Core Features
+
+### Pause/Resume Services
+
+The pause/resume functionality allows administrators to temporarily halt services without terminating them, preserving state and configuration while reducing resource consumption.
+
+#### When to Use Service Pausing
+
+- **Maintenance windows**: Pause non-critical services during infrastructure updates
+- **Resource optimization**: Temporarily pause development or staging services
+- **Cost management**: Pause services during off-hours to reduce cloud costs
+- **Debugging**: Isolate services for troubleshooting
+
+#### Pausing a Service
+
+```bash
+# Via SettleMint CLI
+settlemint service pause <service-id>
+
+# Via Platform UI
+1. Navigate to Services dashboard
+2. Select the service
+3. Click "Pause Service" button
+4. Confirm the action
+```
+
+#### Resuming a Service
+
+```bash
+# Via SettleMint CLI
+settlemint service resume <service-id>
+
+# Via Platform UI
+1. Navigate to Services dashboard
+2. Select the paused service
+3. Click "Resume Service" button
+```
+
+### Service Dependencies Tracking
+
+SettleMint automatically tracks service dependencies to ensure safe operations and prevent cascading failures.
+
+#### Dependency Types
+
+1. **Hard Dependencies**: Services that must be running
+   - Blockchain nodes for middleware services
+   - Database services for application backends
+   - Storage services for IPFS gateways
+
+2. **Soft Dependencies**: Services that enhance functionality
+   - Monitoring services
+   - Caching layers
+   - Load balancers
+
+#### Viewing Dependencies
+
+```bash
+# CLI command to view dependencies
+settlemint service dependencies <service-id>
+
+# Example output:
+Service: graph-middleware-prod
+├── Hard Dependencies:
+│   ├── ethereum-node-1 (RUNNING)
+│   └── postgres-db-1 (RUNNING)
+└── Soft Dependencies:
+    ├── redis-cache-1 (RUNNING)
+    └── monitoring-agent (PAUSED)
+```
+
+### Dependants Tree Visualization
+
+The dependants tree provides a visual representation of which services rely on a particular service, enabling impact analysis before maintenance operations.
+
+#### Understanding the Dependants Tree
+
+```
+ethereum-node-1
+├── graph-middleware-prod
+│   ├── api-gateway-1
+│   └── api-gateway-2
+├── smart-contract-portal
+└── transaction-signer
+    └── dapp-frontend
+```
+
+This visualization helps:
+- **Impact assessment**: Understand which services will be affected
+- **Maintenance planning**: Schedule downtime appropriately
+- **Risk mitigation**: Identify critical paths in your infrastructure
+
+#### Accessing Dependants Tree
+
+Via the Platform UI:
+1. Navigate to the service details page
+2. Click on "View Dependants" tab
+3. Explore the interactive tree visualization
+
+Via CLI:
+```bash
+settlemint service dependants <service-id> --tree
+```
+
+### Batch Operations
+
+Batch operations enable efficient management of multiple services simultaneously, crucial for large-scale deployments.
+
+#### Available Batch Operations
+
+1. **Batch Pause/Resume**
+   ```bash
+   # Pause multiple services
+   settlemint service pause --batch service1,service2,service3
+   
+   # Resume all paused services in an application
+   settlemint service resume --app <app-id> --all-paused
+   ```
+
+2. **Batch Restart**
+   ```bash
+   # Restart all services matching a pattern
+   settlemint service restart --pattern "api-*"
+   ```
+
+3. **Delete All Services**
+   
+   ⚠️ **Warning**: This is a destructive operation. Use with extreme caution.
+   
+   ```bash
+   # Delete all services in a specific environment
+   settlemint service delete-all --env staging --confirm
+   
+   # With safety checks
+   settlemint service delete-all --env staging --dry-run
+   ```
+
+#### Batch Operation Best Practices
+
+1. **Always perform dry runs** before executing batch operations
+2. **Use filters** to target specific service groups
+3. **Monitor logs** during batch operations
+4. **Have rollback plans** ready
+
+### Auto-retry on Failure
+
+SettleMint's auto-retry mechanism ensures service resilience by automatically attempting to recover from transient failures.
+
+#### Configuration Options
+
+```yaml
+# service-config.yaml
+autoRetry:
+  enabled: true
+  maxAttempts: 3
+  backoffStrategy: exponential
+  initialDelay: 30s
+  maxDelay: 5m
+  retryableErrors:
+    - CONNECTION_TIMEOUT
+    - RESOURCE_TEMPORARILY_UNAVAILABLE
+    - RATE_LIMIT_EXCEEDED
+```
+
+#### Retry Strategies
+
+1. **Fixed Delay**: Retry after a constant interval
+2. **Exponential Backoff**: Increasing delays between retries
+3. **Jittered Backoff**: Randomized delays to prevent thundering herd
+
+#### Monitoring Auto-retry
+
+```bash
+# View retry statistics
+settlemint service retry-stats <service-id>
+
+# Example output:
+Service: blockchain-indexer
+Total Retries: 12
+Success Rate: 91.7%
+Average Recovery Time: 2m 34s
+Last Retry: 2024-01-15 10:23:45 UTC
+```
+
+### Service Restart Procedures
+
+Proper service restart procedures ensure minimal disruption and data integrity.
+
+#### Standard Restart Procedure
+
+1. **Pre-restart checks**
+   ```bash
+   settlemint service health-check <service-id>
+   settlemint service dependencies <service-id>
+   ```
+
+2. **Graceful restart**
+   ```bash
+   settlemint service restart <service-id> --graceful --timeout 300
+   ```
+
+3. **Post-restart validation**
+   ```bash
+   settlemint service validate <service-id>
+   ```
+
+#### Rolling Restart for High Availability
+
+For services with multiple instances:
+
+```bash
+# Perform rolling restart with 30s delay between instances
+settlemint service rolling-restart <service-id> \
+  --delay 30s \
+  --health-check-interval 10s \
+  --max-unavailable 1
+```
+
+## Production-Grade Best Practices
+
+### 1. Service Lifecycle Management
+
+- **Development**: Liberal use of pause/resume for cost optimization
+- **Staging**: Test all maintenance procedures before production
+- **Production**: Use rolling restarts and maintenance windows
+
+### 2. Monitoring and Alerting
+
+Set up comprehensive monitoring:
+
+```yaml
+# monitoring-config.yaml
+alerts:
+  - name: service-restart-frequency
+    condition: restart_count > 5 in 1h
+    severity: warning
+    
+  - name: dependency-failure
+    condition: hard_dependency_down > 0
+    severity: critical
+    
+  - name: batch-operation-failure
+    condition: batch_success_rate < 0.95
+    severity: error
+```
+
+### 3. Maintenance Windows
+
+Plan maintenance windows with dependency awareness:
+
+```bash
+# Generate maintenance plan
+settlemint maintenance plan \
+  --services ethereum-node-1,graph-middleware \
+  --window "2024-01-20 02:00-04:00 UTC" \
+  --impact-analysis
+```
+
+### 4. Disaster Recovery
+
+Implement service recovery procedures:
+
+```bash
+# Backup service configurations
+settlemint service backup --all --dest s3://backup-bucket/services/
+
+# Restore services from backup
+settlemint service restore --from s3://backup-bucket/services/latest/
+```
+
+## Use Cases and Examples
+
+### Use Case 1: Scheduled Maintenance
+
+**Scenario**: Upgrading blockchain node software with zero downtime
+
+```bash
+# 1. Deploy new version alongside existing
+settlemint service deploy ethereum-node-2 --version 2.0
+
+# 2. Sync new node
+settlemint service wait-for-sync ethereum-node-2
+
+# 3. Update load balancer
+settlemint lb update --add ethereum-node-2 --weight 10
+
+# 4. Gradually shift traffic
+for weight in 25 50 75 100; do
+  settlemint lb update --service ethereum-node-2 --weight $weight
+  sleep 300
+  settlemint service health-check ethereum-node-2
+done
+
+# 5. Pause and remove old node
+settlemint service pause ethereum-node-1
+settlemint service delete ethereum-node-1 --after 24h
+```
+
+### Use Case 2: Cost Optimization
+
+**Scenario**: Pausing non-production services during off-hours
+
+```bash
+# Create a scheduled job
+cat > pause-dev-services.sh << EOF
+#!/bin/bash
+# Pause all development services at 8 PM
+settlemint service pause --env development --all
+
+# Resume at 8 AM (separate cron job)
+EOF
+
+# Add to crontab
+0 20 * * * /path/to/pause-dev-services.sh
+```
+
+### Use Case 3: Emergency Response
+
+**Scenario**: Rapid response to security incident
+
+```bash
+# 1. Isolate affected services
+settlemint service pause --tag affected-services --immediate
+
+# 2. Analyze dependencies
+settlemint service dependants --tag affected-services --export affected-deps.json
+
+# 3. Apply security patches
+settlemint service update --tag affected-services --image security-patched:latest
+
+# 4. Gradual service restoration
+settlemint service resume --tag affected-services --staged --delay 5m
+```
+
+## Troubleshooting
+
+### Common Issues and Solutions
+
+1. **Service fails to pause**
+   - Check for active transactions
+   - Verify no critical operations in progress
+   - Review service logs for errors
+
+2. **Dependency conflicts**
+   - Use `--force` flag with caution
+   - Update dependency configurations
+   - Consider service decoupling
+
+3. **Batch operation partial failure**
+   - Review operation logs
+   - Retry failed services individually
+   - Adjust timeout and retry settings
+
+### Debug Commands
+
+```bash
+# Detailed service state
+settlemint service debug <service-id>
+
+# Dependency resolution trace
+settlemint service deps --trace <service-id>
+
+# Event history
+settlemint service events <service-id> --last 50
+```
+
+## Integration with CI/CD
+
+Integrate service management into your deployment pipeline:
+
+```yaml
+# .gitlab-ci.yml example
+deploy:
+  script:
+    - settlemint service health-check --all --env production
+    - settlemint service backup --all --env production
+    - settlemint service deploy --manifest services.yaml
+    - settlemint service validate --all --env production
+  only:
+    - main
+```
+
+## Conclusion
+
+SettleMint's Service Management capabilities provide the robustness and flexibility required for enterprise blockchain operations. By leveraging these features, teams can maintain high availability, optimize costs, and respond quickly to operational needs while ensuring the integrity of their blockchain infrastructure.
+
+For additional support and advanced configurations, consult the [SettleMint Platform Documentation](/platform-components) or contact our enterprise support team.

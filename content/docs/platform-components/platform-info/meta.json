@@ -3,6 +3,7 @@
   "icon": "Info",
   "pages": [
     "performance",
+    "service-management",
     "connect-external-network",
     "connect-external-node"
   ]
