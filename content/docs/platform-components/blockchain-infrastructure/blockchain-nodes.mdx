@@ -264,19 +264,131 @@ much greater transaction throughput.
 
 **SettleMint's Enterprise Ethereum networks always use QBFT**
 
-In IBFT 2.0 networks, a group of nodes are selected to form the pool of
-validators. These nodes will be in charge of determining if a proposed block is
-suitable for addition to the chain. One of these validator nodes will be
-arbitrarily selected as the proposer. This single proposer, having received
-messages from the pool of validators, will decide what to add to the chain. This
-is presented as a proposed block to the other validators. Only if a majority
-(66% or more) of the validators deems the block valid will it be added to the
-ledger. At the end of each consensus round, the validators select a new proposer
-and the process is repeated. IBFT 2.0 has immediate finality. There are no forks
-and all valid blocks are included in the main chain.
+### IBFT v2 (Istanbul Byzantine Fault Tolerance v2)
 
-When you deploy a Hyperledger Besu blockchain network on SettleMint, it should
-be Byzantine fault tolerant.
+IBFT v2 is a Byzantine Fault Tolerant (BFT) consensus algorithm designed for private Ethereum networks. It provides immediate finality and is well-suited for consortium networks where validators are known and trusted.
+
+#### Key Characteristics of IBFT v2:
+
+- **Byzantine Fault Tolerance**: Can tolerate up to (n-1)/3 faulty nodes, where n is the total number of validators
+- **Immediate Finality**: Once a block is added to the chain, it cannot be reverted
+- **Deterministic Block Creation**: Validators take turns proposing blocks in a round-robin fashion
+- **No Forks**: The consensus mechanism prevents chain forks
+- **Fixed Block Times**: Blocks are produced at regular intervals
+
+#### How IBFT v2 Works:
+
+1. **Validator Selection**: A fixed set of validators is defined in the genesis file or can be added/removed through voting
+2. **Block Proposal**: In each round, one validator is selected as the proposer based on a deterministic algorithm
+3. **Prepare Phase**: The proposer broadcasts a proposed block to all validators
+4. **Commit Phase**: Validators exchange prepare and commit messages
+5. **Block Finalization**: When 2/3+ validators agree, the block is finalized and added to the chain
+
+#### IBFT v2 Configuration Example:
+
+```json
+{
+  "genesis": {
+    "config": {
+      "chainId": 1337,
+      "ibft2": {
+        "blockperiodseconds": 2,
+        "epochlength": 30000,
+        "requesttimeoutseconds": 10
+      }
+    },
+    "extraData": "0x[encoded validator addresses]"
+  }
+}
+```
+
+### QBFT (Quorum Byzantine Fault Tolerance)
+
+QBFT is an enhanced version of IBFT v2, offering improved performance and additional features for enterprise use cases. It maintains the core BFT properties while adding optimizations for production environments.
+
+#### Key Advantages of QBFT over IBFT v2:
+
+- **Better Performance**: Optimized message passing reduces latency
+- **Enhanced Liveness**: Improved round change mechanism prevents network stalls
+- **Validator Reputation**: Tracks validator performance for better proposer selection
+- **Production-Ready**: Battle-tested in enterprise deployments
+- **Backward Compatible**: Easy migration from IBFT v2
+
+#### QBFT-Specific Features:
+
+1. **Optimized Message Flow**: Reduces the number of messages exchanged between validators
+2. **Adaptive Timeout**: Dynamic timeout adjustment based on network conditions
+3. **Enhanced Validator Management**: More flexible validator set changes
+4. **Better Metrics**: Detailed consensus metrics for monitoring
+
+#### QBFT Configuration Example:
+
+```json
+{
+  "genesis": {
+    "config": {
+      "chainId": 1337,
+      "qbft": {
+        "blockperiodseconds": 5,
+        "epochlength": 30000,
+        "requesttimeoutseconds": 10,
+        "validatorcontractaddress": "0x0000000000000000000000000000000000007777"
+      }
+    }
+  }
+}
+```
+
+### Differences Between IBFT v2 and QBFT
+
+| Feature | IBFT v2 | QBFT |
+|---------|---------|------|
+| **Message Complexity** | Higher message overhead | Optimized message passing |
+| **Round Change** | Basic timeout mechanism | Adaptive timeout with better liveness |
+| **Validator Selection** | Simple round-robin | Reputation-based selection available |
+| **Production Maturity** | Stable but older | Enhanced for production use |
+| **Migration Path** | - | Easy migration from IBFT v2 |
+| **Monitoring** | Basic metrics | Comprehensive consensus metrics |
+| **Performance** | Good for small networks | Better for larger validator sets |
+
+### Use Cases for Each Consensus Mechanism
+
+#### When to Use IBFT v2:
+- Small consortium networks (< 10 validators)
+- Proof of concept implementations
+- Networks requiring simple, predictable behavior
+- Legacy systems already using IBFT v2
+
+#### When to Use QBFT:
+- Production enterprise networks
+- Larger validator sets (10+ validators)
+- Networks requiring high throughput
+- Systems needing detailed monitoring
+- New deployments on SettleMint platform
+
+### Performance Characteristics
+
+#### IBFT v2 Performance:
+- **Block Time**: Typically 1-5 seconds
+- **Throughput**: ~100-400 TPS depending on configuration
+- **Latency**: 2-3 seconds for finality
+- **Network Size**: Optimal for 4-10 validators
+
+#### QBFT Performance:
+- **Block Time**: Can be configured from 1-10 seconds
+- **Throughput**: ~400-1000 TPS with optimizations
+- **Latency**: 1-2 seconds for finality
+- **Network Size**: Efficient up to 30+ validators
+
+### Security Considerations
+
+Both IBFT v2 and QBFT provide:
+- **Byzantine Fault Tolerance**: Resistant to malicious nodes
+- **Immediate Finality**: No risk of chain reorganization
+- **Permissioned Access**: Only authorized validators can participate
+- **Cryptographic Security**: All messages are signed
+
+When you deploy a Hyperledger Besu blockchain network on SettleMint, it uses QBFT by default for optimal performance and reliability in enterprise environments.
 
 More information on Hyperledger Besu can be found in the official
 [Hyperledger Besu documentation](https://besu.hyperledger.org/en/stable/).
