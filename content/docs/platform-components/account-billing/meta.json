@@ -1,4 +1,10 @@
 {
   "title": "Account & Billing",
-  "icon": "Wallet"
+  "icon": "Wallet",
+  "pages": [
+    "workspace-hierarchy",
+    "billing",
+    "add-a-client",
+    "join-a-partner"
+  ]
 }
