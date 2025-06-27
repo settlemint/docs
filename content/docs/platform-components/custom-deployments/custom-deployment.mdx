@@ -1,6 +1,6 @@
 ---
 title: "Custom deployment"
-description: Guide to deploying custom Docker images on SettleMint
+description: Deploy any containerized application alongside blockchain infrastructure on SettleMint
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
@@ -8,10 +8,66 @@ import { Card } from "fumadocs-ui/components/card";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
-A Custom Deployment allows you to deploy your own Docker images, such as
-frontend applications, on the SettleMint platform. This feature provides
-flexibility for integrating custom solutions within your blockchain-based
-applications.
+Custom Deployments enable you to **deploy any containerized application alongside blockchain infrastructure** on the SettleMint platform. Whether you're deploying frontend applications, backend services, APIs, or custom tools, this feature provides the flexibility to integrate any Docker-based solution within your blockchain ecosystem.
+
+<Callout type="info">
+  Custom Deployments support both public and private container registries, making it easy to deploy proprietary applications securely.
+</Callout>
+
+## Custom Image Deployment
+
+Custom Deployments support a wide variety of container images from different sources:
+
+### Supported Container Registries
+
+- **Docker Hub**: Public and private repositories
+- **Google Container Registry (GCR)**: `gcr.io`, `us.gcr.io`, `eu.gcr.io`, `asia.gcr.io`
+- **Google Artifact Registry**: `[REGION]-docker.pkg.dev`
+- **Amazon Elastic Container Registry (ECR)**: `[ACCOUNT].dkr.ecr.[REGION].amazonaws.com`
+- **Azure Container Registry**: `[REGISTRY].azurecr.io`
+- **GitHub Container Registry**: `ghcr.io`
+- **GitLab Container Registry**: `registry.gitlab.com`
+- **Private Registries**: Any Docker-compatible registry with authentication
+
+### Image Requirements
+
+- **Architecture**: Images must be built for AMD64/x86_64 architecture
+- **Size**: Recommended maximum image size of 5GB for optimal deployment speed
+- **Base Images**: Any Linux-based images (Alpine, Ubuntu, Debian, etc.)
+- **Multi-stage Builds**: Supported and recommended for smaller image sizes
+
+### Example Use Cases
+
+<Card>
+  **Frontend Applications**
+  - React, Vue, Angular applications
+  - Static site generators (Next.js, Gatsby, Hugo)
+  - Progressive Web Apps (PWAs)
+</Card>
+
+<Card>
+  **Backend Services**
+  - REST APIs (Node.js, Python Flask/FastAPI, Go)
+  - GraphQL servers
+  - Microservices
+  - WebSocket servers
+</Card>
+
+<Card>
+  **Blockchain Tools**
+  - Block explorers
+  - Custom indexers
+  - Oracle services
+  - DApp interfaces
+</Card>
+
+<Card>
+  **Development Tools**
+  - Documentation sites
+  - Admin dashboards
+  - Monitoring tools
+  - Analytics platforms
+</Card>
 
 ## Create a custom deployment
 
@@ -146,6 +202,396 @@ subdomains. The main difference lies in the type of DNS record you create (ALIAS
 for top-level domains, CNAME for subdomains) and whether you need to remove
 existing records.
 
+## Environment Variable Configuration
+
+Environment variables allow you to configure your application without hardcoding values in your container image. This is essential for managing different configurations across environments.
+
+### Setting Environment Variables
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    1. Navigate to your Custom Deployment
+    2. Click on "Edit Deployment"
+    3. In the Environment Variables section, add key-value pairs
+    4. Click "Save Changes"
+    
+    Example variables:
+    ```
+    NODE_ENV=production
+    API_URL=https://api.example.com
+    DATABASE_URL=postgresql://user:pass@host:5432/db
+    FEATURE_FLAG_ENABLED=true
+    MAX_CONNECTIONS=100
+    ```
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Set environment variables during creation
+    settlemint platform create custom-deployment my-app \
+      --env-vars NODE_ENV=production,API_URL=https://api.example.com,DEBUG=false
+    
+    # Update environment variables
+    settlemint platform edit custom-deployment my-app \
+      --env-vars NODE_ENV=staging,NEW_VAR=value
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // Set environment variables during creation
+    const deployment = await client.customDeployment.create({
+      applicationId: "app-123",
+      name: "my-deployment",
+      environmentVariables: {
+        NODE_ENV: "production",
+        API_URL: "https://api.example.com",
+        DATABASE_URL: "postgresql://user:pass@host:5432/db",
+        FEATURE_FLAGS: JSON.stringify({
+          newFeature: true,
+          betaAccess: false
+        })
+      }
+    });
+    
+    // Update environment variables
+    await client.customDeployment.edit("my-deployment", {
+      environmentVariables: {
+        NODE_ENV: "staging",
+        DEBUG: "true"
+      }
+    });
+    ```
+  </Tab>
+</Tabs>
+
+### Best Practices for Environment Variables
+
+- **Sensitive Data**: Use environment variables for API keys, database credentials, and other sensitive information
+- **Configuration**: Store configuration that changes between environments (dev, staging, production)
+- **Feature Flags**: Control feature availability without redeploying
+- **Connection Strings**: Database URLs, API endpoints, and service URLs
+- **Application Settings**: Timeouts, limits, and other runtime configurations
+
+<Callout type="warning">
+  Never commit sensitive environment variables to your source code. Always use the platform's secure environment variable management.
+</Callout>
+
+## Port Configuration
+
+Custom Deployments support flexible port configuration to accommodate different application requirements.
+
+### Default Port Configuration
+
+By default, Custom Deployments expect your application to listen on port **8080**. However, you can configure any port between 1 and 65535.
+
+### Configuring Custom Ports
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    1. During deployment creation or editing
+    2. Specify the port your application listens on
+    3. The platform will automatically configure routing
+    
+    Common port configurations:
+    - Node.js apps: 3000, 8080
+    - Python Flask/Django: 5000, 8000
+    - Go applications: 8080, 9090
+    - Static sites (nginx): 80
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Specify port during creation
+    settlemint platform create custom-deployment my-app \
+      --port 3000 \
+      --image-repository docker.io \
+      --image-name myapp \
+      --image-tag latest
+    
+    # Update port configuration
+    settlemint platform edit custom-deployment my-app \
+      --port 5000
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // Specify port during creation
+    const deployment = await client.customDeployment.create({
+      applicationId: "app-123",
+      name: "my-deployment",
+      port: 3000, // Your application's listening port
+      imageRepository: "docker.io",
+      imageName: "myapp",
+      imageTag: "latest"
+    });
+    
+    // Update port configuration
+    await client.customDeployment.edit("my-deployment", {
+      port: 5000
+    });
+    ```
+  </Tab>
+</Tabs>
+
+### Port Configuration Examples
+
+```dockerfile
+# Node.js Express app
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN npm install
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+```dockerfile
+# Python Flask app
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 5000
+CMD ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=5000"]
+```
+
+```dockerfile
+# Static site with nginx
+FROM nginx:alpine
+COPY dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+<Callout type="info">
+  The EXPOSE instruction in your Dockerfile is documentation. Make sure your application actually listens on the configured port.
+</Callout>
+
+## Image Credentials Management
+
+When using private container registries, you need to provide authentication credentials for the platform to pull your images.
+
+### Supported Authentication Methods
+
+1. **Docker Hub**: Username and password or access token
+2. **Google Container Registry**: Service account JSON key
+3. **AWS ECR**: Access key ID and secret access key
+4. **Azure Container Registry**: Service principal or admin credentials
+5. **GitHub Container Registry**: Personal access token
+6. **GitLab Container Registry**: Deploy token or personal access token
+
+### Configuring Registry Credentials
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    1. In the deployment creation/edit form
+    2. Enable "Private Registry"
+    3. Select your registry type
+    4. Provide credentials:
+       - **Username/Password**: For Docker Hub, GitLab
+       - **Access Token**: For GitHub, GitLab
+       - **Service Account**: For GCR (paste JSON key)
+       - **AWS Credentials**: For ECR
+    5. Test connection (if available)
+    6. Save configuration
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Docker Hub with access token
+    settlemint platform create custom-deployment my-app \
+      --image-repository docker.io \
+      --image-name mycompany/myapp \
+      --image-tag latest \
+      --registry-username myusername \
+      --registry-password "${DOCKER_ACCESS_TOKEN}"
+    
+    # Google Container Registry
+    settlemint platform create custom-deployment my-app \
+      --image-repository gcr.io \
+      --image-name my-project/myapp \
+      --image-tag latest \
+      --registry-credentials-file ./service-account-key.json
+    
+    # GitHub Container Registry
+    settlemint platform create custom-deployment my-app \
+      --image-repository ghcr.io \
+      --image-name myorg/myapp \
+      --image-tag latest \
+      --registry-username USERNAME \
+      --registry-password "${GITHUB_TOKEN}"
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // Docker Hub with credentials
+    const deployment = await client.customDeployment.create({
+      applicationId: "app-123",
+      name: "my-deployment",
+      imageRepository: "docker.io",
+      imageName: "mycompany/myapp",
+      imageTag: "latest",
+      registryCredentials: {
+        username: "myusername",
+        password: process.env.DOCKER_ACCESS_TOKEN
+      }
+    });
+    
+    // Google Container Registry with service account
+    const gcpKey = fs.readFileSync('./service-account-key.json', 'utf8');
+    const deployment = await client.customDeployment.create({
+      applicationId: "app-123",
+      name: "my-deployment",
+      imageRepository: "gcr.io",
+      imageName: "my-project/myapp",
+      imageTag: "latest",
+      registryCredentials: {
+        username: "_json_key",
+        password: gcpKey
+      }
+    });
+    
+    // GitHub Container Registry
+    const deployment = await client.customDeployment.create({
+      applicationId: "app-123",
+      name: "my-deployment",
+      imageRepository: "ghcr.io",
+      imageName: "myorg/myapp",
+      imageTag: "latest",
+      registryCredentials: {
+        username: "USERNAME",
+        password: process.env.GITHUB_TOKEN
+      }
+    });
+    ```
+  </Tab>
+</Tabs>
+
+### Security Best Practices
+
+- **Use Access Tokens**: Prefer access tokens over passwords when available
+- **Least Privilege**: Create credentials with only pull permissions
+- **Rotate Regularly**: Update credentials periodically
+- **Service Accounts**: Use dedicated service accounts for GCP/AWS
+- **Scoped Tokens**: Use repository-scoped tokens for GitHub/GitLab
+
+<Callout type="warning">
+  Registry credentials are encrypted and stored securely. Never share or commit credentials to version control.
+</Callout>
+
+## Authentication Toggle
+
+Custom Deployments support built-in authentication to protect your applications from unauthorized access.
+
+### Enabling Authentication
+
+<Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
+  <Tab value="Platform UI">
+    1. Navigate to your Custom Deployment
+    2. Click "Edit Deployment"
+    3. Toggle "Enable Authentication"
+    4. Choose authentication method:
+       - **Basic Auth**: Username/password protection
+       - **OAuth**: Integration with identity providers
+       - **API Key**: Token-based authentication
+    5. Configure authentication settings
+    6. Save changes
+  </Tab>
+
+  <Tab value="SDK CLI">
+    ```bash
+    # Enable basic authentication
+    settlemint platform edit custom-deployment my-app \
+      --enable-auth \
+      --auth-type basic \
+      --auth-users admin:password123,user:pass456
+    
+    # Enable OAuth authentication
+    settlemint platform edit custom-deployment my-app \
+      --enable-auth \
+      --auth-type oauth \
+      --oauth-provider google \
+      --oauth-client-id "${CLIENT_ID}" \
+      --oauth-client-secret "${CLIENT_SECRET}"
+    
+    # Disable authentication
+    settlemint platform edit custom-deployment my-app \
+      --disable-auth
+    ```
+  </Tab>
+
+  <Tab value="SDK JS">
+    ```typescript
+    // Enable basic authentication
+    await client.customDeployment.edit("my-deployment", {
+      authentication: {
+        enabled: true,
+        type: "basic",
+        users: [
+          { username: "admin", password: "securepass123" },
+          { username: "viewer", password: "readonly456" }
+        ]
+      }
+    });
+    
+    // Enable OAuth authentication
+    await client.customDeployment.edit("my-deployment", {
+      authentication: {
+        enabled: true,
+        type: "oauth",
+        provider: "google",
+        clientId: process.env.OAUTH_CLIENT_ID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        allowedDomains: ["company.com"]
+      }
+    });
+    
+    // Disable authentication
+    await client.customDeployment.edit("my-deployment", {
+      authentication: {
+        enabled: false
+      }
+    });
+    ```
+  </Tab>
+</Tabs>
+
+### Authentication Methods
+
+#### Basic Authentication
+- Simple username/password protection
+- Suitable for internal tools and development
+- Multiple users supported
+- Passwords encrypted at rest
+
+#### OAuth Integration
+- Support for Google, GitHub, Microsoft, and custom providers
+- Domain restrictions for corporate environments
+- Role-based access control
+- Single Sign-On (SSO) capabilities
+
+#### API Key Authentication
+- Token-based access for programmatic access
+- Multiple keys with different permissions
+- Key rotation support
+- Rate limiting per key
+
+### When to Use Authentication
+
+- **Internal Tools**: Protect admin dashboards and monitoring tools
+- **Development Environments**: Secure staging and preview deployments
+- **Sensitive Data**: Applications handling confidential information
+- **Compliance**: Meet regulatory requirements for access control
+
+<Callout type="info">
+  Authentication is handled at the platform level, so you don't need to implement it in your application code.
+</Callout>
+
 ## Manage custom deployments
 
 <Tabs items={['Platform UI', 'SDK CLI', 'SDK JS']}>
@@ -227,6 +673,213 @@ When using Custom Deployment, keep the following limitations in mind:
 4. **Use AMD-based Images**: Currently, our platform supports AMD-based
    container images. Ensure your Docker images are built for AMD architecture to
    guarantee smooth compatibility with our infrastructure.
+
+## Practical Examples and Use Cases
+
+### Example 1: Deploy a React DApp Frontend
+
+Deploy a React application that interacts with your smart contracts:
+
+```dockerfile
+# Dockerfile
+FROM node:18-alpine as builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+ARG REACT_APP_CONTRACT_ADDRESS
+ARG REACT_APP_RPC_URL
+RUN npm run build
+
+FROM nginx:alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+```
+
+Deploy with environment variables:
+```bash
+settlemint platform create custom-deployment dapp-frontend \
+  --application my-blockchain-app \
+  --image-repository docker.io \
+  --image-name myorg/dapp-frontend \
+  --image-tag latest \
+  --port 80 \
+  --env-vars REACT_APP_CONTRACT_ADDRESS=0x123...,REACT_APP_RPC_URL=https://rpc.example.com
+```
+
+### Example 2: Deploy a Blockchain Indexer Service
+
+Deploy a custom indexer that processes blockchain events:
+
+```dockerfile
+# Dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 3000
+CMD ["node", "indexer.js"]
+```
+
+Deploy with database connection:
+```bash
+settlemint platform create custom-deployment blockchain-indexer \
+  --application my-blockchain-app \
+  --image-repository ghcr.io \
+  --image-name myorg/blockchain-indexer \
+  --image-tag latest \
+  --port 3000 \
+  --env-vars DATABASE_URL=postgresql://user:pass@hasura-db:5432/indexer,RPC_URL=wss://node.example.com,START_BLOCK=1000000 \
+  --registry-username USERNAME \
+  --registry-password "${GITHUB_TOKEN}"
+```
+
+### Example 3: Deploy an NFT Marketplace Backend
+
+Deploy a Python FastAPI backend for an NFT marketplace:
+
+```dockerfile
+# Dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+Deploy with authentication enabled:
+```typescript
+const deployment = await client.customDeployment.create({
+  applicationId: "nft-marketplace-app",
+  name: "marketplace-api",
+  imageRepository: "docker.io",
+  imageName: "mycompany/nft-marketplace-api",
+  imageTag: "v2.1.0",
+  port: 8000,
+  environmentVariables: {
+    DATABASE_URL: "postgresql://user:pass@db:5432/marketplace",
+    IPFS_GATEWAY: "https://ipfs.io/ipfs/",
+    CONTRACT_ADDRESS: "0xabc123...",
+    CHAIN_ID: "137",
+    API_RATE_LIMIT: "100"
+  },
+  authentication: {
+    enabled: true,
+    type: "oauth",
+    provider: "google",
+    allowedDomains: ["company.com"]
+  }
+});
+```
+
+### Example 4: Deploy a Block Explorer UI
+
+Deploy a custom block explorer interface:
+
+```bash
+# Using Platform UI approach with custom domain
+settlemint platform create custom-deployment block-explorer \
+  --application blockchain-tools \
+  --image-repository registry.gitlab.com \
+  --image-name myorg/block-explorer \
+  --image-tag stable \
+  --port 3000 \
+  --custom-domain explorer.mycompany.com \
+  --env-vars NETWORK_NAME="My Private Network",RPC_ENDPOINT=https://node.settlemint.com,EXPLORER_BRANDING=custom
+```
+
+### Example 5: Deploy a Multi-Service Application
+
+Deploy multiple interconnected services for a complete DeFi application:
+
+```typescript
+// Deploy Frontend
+const frontend = await client.customDeployment.create({
+  applicationId: "defi-app",
+  name: "defi-frontend",
+  imageRepository: "docker.io",
+  imageName: "mydefi/frontend",
+  imageTag: "latest",
+  port: 80,
+  environmentVariables: {
+    NEXT_PUBLIC_API_URL: "https://api.mydefi.com",
+    NEXT_PUBLIC_CHAIN_ID: "1"
+  }
+});
+
+// Deploy API Backend
+const api = await client.customDeployment.create({
+  applicationId: "defi-app",
+  name: "defi-api",
+  imageRepository: "docker.io",
+  imageName: "mydefi/api",
+  imageTag: "latest",
+  port: 8080,
+  environmentVariables: {
+    DATABASE_URL: process.env.DB_URL,
+    REDIS_URL: "redis://cache:6379",
+    JWT_SECRET: process.env.JWT_SECRET
+  },
+  authentication: {
+    enabled: true,
+    type: "api_key"
+  }
+});
+
+// Deploy Price Oracle Service
+const oracle = await client.customDeployment.create({
+  applicationId: "defi-app",
+  name: "price-oracle",
+  imageRepository: "docker.io",
+  imageName: "mydefi/oracle",
+  imageTag: "latest",
+  port: 9090,
+  environmentVariables: {
+    CHAINLINK_NODE_URL: "https://chainlink.example.com",
+    UPDATE_FREQUENCY: "60",
+    SUPPORTED_PAIRS: "ETH/USD,BTC/USD,LINK/USD"
+  }
+});
+```
+
+### Integration Patterns
+
+#### Connecting to Blockchain Nodes
+```javascript
+// In your application code
+const Web3 = require('web3');
+const web3 = new Web3(process.env.RPC_URL || 'https://your-node.settlemint.com');
+```
+
+#### Connecting to Hasura GraphQL
+```javascript
+// Connect to Hasura deployed in the same application
+const client = new GraphQLClient(process.env.HASURA_URL || 'https://hasura.myapp.settlemint.com/v1/graphql', {
+  headers: {
+    'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET
+  }
+});
+```
+
+#### Using Private NPM Packages
+```dockerfile
+# Dockerfile with private NPM registry
+FROM node:18-alpine
+WORKDIR /app
+# Configure NPM to use private registry
+ARG NPM_TOKEN
+RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+COPY package*.json ./
+RUN npm ci
+RUN rm -f .npmrc
+COPY . .
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
 
 ## Best practices
 
