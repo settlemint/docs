@@ -1,6 +1,320 @@
 ---
-title: "Smart Contract Portal"
-description: "Using the Smart Contract Portal in your SettleMint dApp"
+title: "Smart Contract Portal SDK"
+description: "Using the Smart Contract Portal SDK in your SettleMint dApp for enterprise blockchain API management"
 ---
 
-<include>../../../snippets/dev-tools/portal.mdx</include>
+# Smart Contract Portal SDK
+
+The Smart Contract Portal SDK (`@settlemint/sdk-portal`) provides a powerful interface for interacting with your smart contracts through the SettleMint Portal. It offers type-safe contract interactions, real-time event subscriptions, and enterprise-grade features for production deployments.
+
+## Quick Start
+
+### Installation
+
+```bash
+npm install @settlemint/sdk-portal
+```
+
+### Basic Usage
+
+```typescript
+import { createPortalClient } from "@settlemint/sdk-portal";
+
+// Initialize the Portal client
+const portal = createPortalClient({
+  instance: process.env.SETTLEMINT_PORTAL_ENDPOINT,
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN,
+});
+
+// Query contract state
+const balance = await portal.graphql.request(`
+  query GetBalance($address: String!) {
+    ERC20 {
+      balanceOf(account: $address) {
+        value
+        formatted
+      }
+    }
+  }
+`, {
+  address: "0x742d35Cc6634C0532925a3b844Bc9e7095931a3e"
+});
+
+console.log(`Balance: ${balance.ERC20.balanceOf.formatted}`);
+```
+
+## Core Features
+
+### GraphQL API
+
+The Portal automatically generates a GraphQL API from your smart contract ABIs, providing:
+
+- **Type-safe queries**: All contract methods are exposed with proper typing
+- **Batched operations**: Execute multiple queries in a single request
+- **Real-time subscriptions**: Subscribe to contract events as they happen
+- **Automatic decoding**: Return values are automatically decoded and formatted
+
+### REST API
+
+For teams preferring REST, the Portal also generates a complete REST API:
+
+```typescript
+// Using the REST client
+const restClient = portal.rest;
+
+// Get token balance
+const balance = await restClient.get('/contracts/ERC20/balanceOf', {
+  params: { account: '0x742d35Cc6634C0532925a3b844Bc9e7095931a3e' }
+});
+
+// Execute a transfer
+const tx = await restClient.post('/contracts/ERC20/transfer', {
+  to: '0x123...',
+  amount: '1000000000000000000'
+});
+```
+
+### Event Subscriptions
+
+Subscribe to blockchain events in real-time:
+
+```typescript
+// Subscribe to Transfer events
+const unsubscribe = portal.subscribeToEvents({
+  contract: 'ERC20',
+  event: 'Transfer',
+  filter: {
+    from: '0x742d35Cc6634C0532925a3b844Bc9e7095931a3e'
+  },
+  onEvent: (event) => {
+    console.log(`Transfer: ${event.from} -> ${event.to}: ${event.value}`);
+  }
+});
+
+// Unsubscribe when done
+unsubscribe();
+```
+
+### Webhook Integration
+
+Set up webhooks programmatically:
+
+```typescript
+// Create a webhook
+const webhook = await portal.webhooks.create({
+  url: 'https://api.example.com/webhook',
+  events: ['Transfer', 'Approval'],
+  filters: {
+    value: { gte: '1000000000000000000' } // Only transfers >= 1 token
+  },
+  headers: {
+    'Authorization': 'Bearer your-webhook-token'
+  }
+});
+
+// List webhooks
+const webhooks = await portal.webhooks.list();
+
+// Delete a webhook
+await portal.webhooks.delete(webhook.id);
+```
+
+## Advanced Features
+
+### Transaction Building
+
+Build complex transactions with the Portal SDK:
+
+```typescript
+// Build a multi-step transaction
+const txBuilder = portal.createTransactionBuilder();
+
+txBuilder
+  .addCall('ERC20', 'approve', {
+    spender: '0xDEX_CONTRACT',
+    amount: '1000000000000000000'
+  })
+  .addCall('DEX', 'swap', {
+    tokenIn: '0xTOKEN_A',
+    tokenOut: '0xTOKEN_B',
+    amountIn: '1000000000000000000',
+    minAmountOut: '950000000000000000'
+  });
+
+const result = await txBuilder.execute();
+```
+
+### Gas Estimation
+
+Accurately estimate gas costs before execution:
+
+```typescript
+const gasEstimate = await portal.estimateGas({
+  contract: 'ERC20',
+  method: 'transfer',
+  params: {
+    to: '0x123...',
+    amount: '1000000000000000000'
+  }
+});
+
+console.log(`Estimated gas: ${gasEstimate.gasLimit}`);
+console.log(`Estimated cost: ${gasEstimate.estimatedCost.usd} USD`);
+```
+
+### Contract State Monitoring
+
+Monitor contract state changes:
+
+```typescript
+// Watch for state changes
+const watcher = portal.createStateWatcher({
+  contract: 'ERC20',
+  method: 'totalSupply',
+  interval: 5000, // Check every 5 seconds
+  onChange: (newValue, oldValue) => {
+    console.log(`Total supply changed: ${oldValue} -> ${newValue}`);
+  }
+});
+
+// Stop watching
+watcher.stop();
+```
+
+## Error Handling
+
+The SDK provides comprehensive error handling:
+
+```typescript
+try {
+  const result = await portal.graphql.request(query, variables);
+} catch (error) {
+  if (error.code === 'CONTRACT_REVERTED') {
+    console.error('Contract reverted:', error.reason);
+  } else if (error.code === 'INSUFFICIENT_FUNDS') {
+    console.error('Insufficient funds for transaction');
+  } else if (error.code === 'RATE_LIMITED') {
+    console.error('Rate limited, retry after:', error.retryAfter);
+  }
+}
+```
+
+## Best Practices
+
+1. **Use environment variables** for sensitive configuration
+2. **Implement retry logic** for network failures
+3. **Cache query results** when appropriate
+4. **Monitor webhook delivery** for critical events
+5. **Use subscriptions sparingly** to avoid overwhelming your application
+
+## Examples
+
+### DeFi Integration Example
+
+```typescript
+import { createPortalClient } from '@settlemint/sdk-portal';
+
+class DeFiIntegration {
+  private portal = createPortalClient({
+    instance: process.env.PORTAL_ENDPOINT!,
+    accessToken: process.env.ACCESS_TOKEN!,
+  });
+
+  async getPoolInfo(poolAddress: string) {
+    return this.portal.graphql.request(`
+      query GetPoolInfo($pool: String!) {
+        UniswapV2Pair(address: $pool) {
+          token0
+          token1
+          reserve0
+          reserve1
+          totalSupply
+          kLast
+        }
+      }
+    `, { pool: poolAddress });
+  }
+
+  async addLiquidity(token0: string, token1: string, amount0: string, amount1: string) {
+    const mutation = `
+      mutation AddLiquidity($token0: String!, $token1: String!, $amount0: String!, $amount1: String!) {
+        UniswapV2Router {
+          addLiquidity(
+            tokenA: $token0,
+            tokenB: $token1,
+            amountADesired: $amount0,
+            amountBDesired: $amount1,
+            amountAMin: "0",
+            amountBMin: "0",
+            to: msg.sender,
+            deadline: "9999999999"
+          ) {
+            transactionHash
+            events {
+              Mint {
+                sender
+                amount0
+                amount1
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    return this.portal.graphql.request(mutation, {
+      token0, token1, amount0, amount1
+    });
+  }
+}
+```
+
+### NFT Marketplace Example
+
+```typescript
+class NFTMarketplace {
+  async listNFT(tokenId: string, price: string) {
+    const mutation = `
+      mutation ListNFT($tokenId: String!, $price: String!) {
+        Marketplace {
+          listItem(tokenId: $tokenId, price: $price) {
+            transactionHash
+            events {
+              ItemListed {
+                seller
+                tokenId
+                price
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    return this.portal.graphql.request(mutation, { tokenId, price });
+  }
+
+  subscribeToNewListings(callback: (listing: any) => void) {
+    return this.portal.graphql.subscribe({
+      query: `
+        subscription NewListings {
+          ItemListed {
+            seller
+            tokenId
+            price
+            timestamp
+          }
+        }
+      `,
+      onData: ({ data }) => callback(data.ItemListed)
+    });
+  }
+}
+```
+
+## Next Steps
+
+- [Advanced Portal SDK Usage](./portal-advanced)
+- [Portal REST API Reference](/docs/api/portal-rest)
+- [Portal GraphQL Schema](/docs/api/portal-graphql)
+- [Webhook Security Best Practices](/docs/security/webhooks)

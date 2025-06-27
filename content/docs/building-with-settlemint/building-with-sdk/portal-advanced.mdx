@@ -1,0 +1,548 @@
+---
+title: "Smart Contract Portal SDK - Advanced Usage"
+description: "Advanced patterns and best practices for using the @settlemint/sdk-portal package"
+---
+
+# Smart Contract Portal SDK - Advanced Usage
+
+The `@settlemint/sdk-portal` package provides comprehensive tools for integrating with SettleMint's Smart Contract Portal, enabling enterprise-grade blockchain API management.
+
+## Installation and Setup
+
+```bash
+npm install @settlemint/sdk-portal
+# or
+yarn add @settlemint/sdk-portal
+# or
+pnpm add @settlemint/sdk-portal
+```
+
+## Authentication
+
+The Portal SDK supports multiple authentication methods:
+
+### Personal Access Token (Recommended)
+
+```typescript
+import { createPortalClient } from "@settlemint/sdk-portal";
+
+const portal = createPortalClient({
+  instance: process.env.SETTLEMINT_PORTAL_ENDPOINT,
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN,
+});
+```
+
+### API Key Authentication
+
+```typescript
+const portal = createPortalClient({
+  instance: process.env.SETTLEMINT_PORTAL_ENDPOINT,
+  apiKey: process.env.SETTLEMINT_API_KEY,
+});
+```
+
+## Advanced Query Patterns
+
+### Batch Operations
+
+Execute multiple queries efficiently:
+
+```typescript
+const batchQuery = `
+  query BatchOperations($addresses: [String!]!) {
+    tokens: ERC20 {
+      totalSupply {
+        value
+        formatted
+      }
+    }
+    balances: ERC20 {
+      balanceOfMultiple(accounts: $addresses) {
+        account
+        balance {
+          value
+          formatted
+        }
+      }
+    }
+    metadata: NFTContract {
+      name
+      symbol
+      baseURI
+    }
+  }
+`;
+
+const results = await portal.graphql.request(batchQuery, {
+  addresses: [
+    "0x742d35Cc6634C0532925a3b844Bc9e7095931a3e",
+    "0x267be1C1D6847f7D01c506270C243e23999e6659"
+  ]
+});
+```
+
+### Pagination and Filtering
+
+Handle large datasets with cursor-based pagination:
+
+```typescript
+const paginatedQuery = `
+  query GetTransfers($first: Int!, $after: String, $filter: TransferFilter) {
+    ERC20 {
+      transfers(first: $first, after: $after, filter: $filter) {
+        edges {
+          node {
+            from
+            to
+            value
+            blockNumber
+            transactionHash
+          }
+          cursor
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+`;
+
+async function getAllTransfers() {
+  const transfers = [];
+  let hasNextPage = true;
+  let cursor = null;
+
+  while (hasNextPage) {
+    const result = await portal.graphql.request(paginatedQuery, {
+      first: 100,
+      after: cursor,
+      filter: {
+        from: "0x742d35Cc6634C0532925a3b844Bc9e7095931a3e",
+        minValue: "1000000000000000000" // 1 token
+      }
+    });
+
+    transfers.push(...result.ERC20.transfers.edges.map(e => e.node));
+    hasNextPage = result.ERC20.transfers.pageInfo.hasNextPage;
+    cursor = result.ERC20.transfers.pageInfo.endCursor;
+  }
+
+  return transfers;
+}
+```
+
+## Real-time Subscriptions
+
+### Event Streaming
+
+Subscribe to real-time blockchain events:
+
+```typescript
+// Subscribe to all transfer events
+const transferSub = portal.graphql.subscribe({
+  query: `
+    subscription TransferStream($minValue: String) {
+      ERC20 {
+        Transfer(where: { value_gte: $minValue }) {
+          from
+          to
+          value
+          blockNumber
+          transactionHash
+          timestamp
+        }
+      }
+    }
+  `,
+  variables: {
+    minValue: "1000000000000000000000" // 1000 tokens
+  }
+});
+
+// Handle events
+transferSub.subscribe({
+  next: (data) => {
+    console.log('Large transfer detected:', data);
+    // Trigger business logic
+  },
+  error: (err) => console.error('Subscription error:', err),
+  complete: () => console.log('Subscription ended')
+});
+```
+
+### Multi-Contract Subscriptions
+
+Monitor multiple contracts simultaneously:
+
+```typescript
+const multiContractSub = `
+  subscription MultiContractEvents {
+    TokenA: ERC20(contract: "0x123...") {
+      Transfer {
+        from
+        to
+        value
+      }
+    }
+    TokenB: ERC20(contract: "0x456...") {
+      Transfer {
+        from
+        to
+        value
+      }
+    }
+    NFT: ERC721(contract: "0x789...") {
+      Transfer {
+        from
+        to
+        tokenId
+      }
+    }
+  }
+`;
+```
+
+## Transaction Management
+
+### Gas Optimization
+
+```typescript
+// Estimate gas before sending transaction
+const estimateGas = async (to: string, amount: string) => {
+  const estimation = await portal.graphql.request(`
+    query EstimateGas($to: String!, $amount: String!) {
+      ERC20 {
+        estimateGas {
+          transfer(to: $to, amount: $amount) {
+            gasLimit
+            gasPrice
+            maxFeePerGas
+            maxPriorityFeePerGas
+            estimatedCost {
+              eth
+              usd
+            }
+          }
+        }
+      }
+    }
+  `, { to, amount });
+
+  return estimation.ERC20.estimateGas.transfer;
+};
+```
+
+### Transaction Lifecycle Management
+
+```typescript
+class TransactionManager {
+  private portal: ReturnType<typeof createPortalClient>;
+
+  constructor(portal: ReturnType<typeof createPortalClient>) {
+    this.portal = portal;
+  }
+
+  async executeTransaction(mutation: string, variables: any) {
+    // 1. Submit transaction
+    const result = await this.portal.graphql.request(mutation, variables);
+    const txHash = result.transactionHash;
+
+    // 2. Monitor transaction status
+    const subscription = this.portal.graphql.subscribe({
+      query: `
+        subscription TransactionStatus($hash: String!) {
+          transaction(hash: $hash) {
+            status
+            blockNumber
+            confirmations
+            gasUsed
+            effectiveGasPrice
+          }
+        }
+      `,
+      variables: { hash: txHash }
+    });
+
+    return new Promise((resolve, reject) => {
+      subscription.subscribe({
+        next: (data) => {
+          if (data.transaction.status === 'confirmed') {
+            resolve(data.transaction);
+          } else if (data.transaction.status === 'failed') {
+            reject(new Error('Transaction failed'));
+          }
+        },
+        error: reject
+      });
+    });
+  }
+}
+```
+
+## Error Handling and Retries
+
+### Automatic Retry Logic
+
+```typescript
+import { retry } from '@settlemint/sdk-portal/utils';
+
+const resilientPortalClient = {
+  ...portal,
+  graphql: {
+    request: retry(portal.graphql.request, {
+      retries: 3,
+      minTimeout: 1000,
+      maxTimeout: 10000,
+      randomize: true,
+      onRetry: (err, attempt) => {
+        console.log(`Retry attempt ${attempt} due to:`, err.message);
+      }
+    })
+  }
+};
+```
+
+### Custom Error Handling
+
+```typescript
+class PortalErrorHandler {
+  static async handleRequest(request: Promise<any>) {
+    try {
+      return await request;
+    } catch (error) {
+      if (error.code === 'RATE_LIMITED') {
+        // Handle rate limiting
+        await this.delay(error.retryAfter * 1000);
+        return this.handleRequest(request);
+      } else if (error.code === 'INSUFFICIENT_FUNDS') {
+        // Handle blockchain-specific errors
+        throw new InsufficientFundsError(error.message);
+      } else if (error.code === 'CONTRACT_REVERTED') {
+        // Handle smart contract reverts
+        const reason = await this.decodeRevertReason(error.data);
+        throw new ContractRevertError(reason);
+      }
+      throw error;
+    }
+  }
+
+  private static delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  private static async decodeRevertReason(data: string) {
+    // Decode revert reason from transaction data
+    return portal.utils.decodeRevertReason(data);
+  }
+}
+```
+
+## Performance Optimization
+
+### Query Caching
+
+```typescript
+import { LRUCache } from 'lru-cache';
+
+class CachedPortalClient {
+  private cache: LRUCache<string, any>;
+  private portal: ReturnType<typeof createPortalClient>;
+
+  constructor(portal: ReturnType<typeof createPortalClient>) {
+    this.portal = portal;
+    this.cache = new LRUCache({
+      max: 500,
+      ttl: 1000 * 60 * 5, // 5 minutes
+    });
+  }
+
+  async request(query: string, variables?: any) {
+    const key = JSON.stringify({ query, variables });
+    
+    if (this.cache.has(key)) {
+      return this.cache.get(key);
+    }
+
+    const result = await this.portal.graphql.request(query, variables);
+    this.cache.set(key, result);
+    
+    return result;
+  }
+
+  // Invalidate cache for specific queries
+  invalidate(pattern: string) {
+    for (const key of this.cache.keys()) {
+      if (key.includes(pattern)) {
+        this.cache.delete(key);
+      }
+    }
+  }
+}
+```
+
+### Connection Pooling
+
+```typescript
+import { createPortalPool } from '@settlemint/sdk-portal/pool';
+
+const portalPool = createPortalPool({
+  instances: [
+    process.env.PORTAL_ENDPOINT_1,
+    process.env.PORTAL_ENDPOINT_2,
+    process.env.PORTAL_ENDPOINT_3,
+  ],
+  accessToken: process.env.SETTLEMINT_ACCESS_TOKEN,
+  poolOptions: {
+    maxConnections: 10,
+    idleTimeout: 30000,
+    retryFailedEndpoints: true,
+  }
+});
+
+// Use the pool for load balancing
+const result = await portalPool.request(query, variables);
+```
+
+## Testing
+
+### Mock Portal Client
+
+```typescript
+import { createMockPortalClient } from '@settlemint/sdk-portal/testing';
+
+describe('MyDApp', () => {
+  let mockPortal: ReturnType<typeof createMockPortalClient>;
+
+  beforeEach(() => {
+    mockPortal = createMockPortalClient();
+  });
+
+  it('should handle transfers correctly', async () => {
+    // Set up mock response
+    mockPortal.mockResponse('ERC20.transfer', {
+      transactionHash: '0x123...',
+      blockNumber: 12345,
+      status: 'confirmed'
+    });
+
+    // Test your application
+    const result = await myApp.transfer('0x...', '1000');
+    
+    expect(result.transactionHash).toBe('0x123...');
+    expect(mockPortal.getCallCount('ERC20.transfer')).toBe(1);
+  });
+});
+```
+
+### Integration Testing
+
+```typescript
+import { createTestPortal } from '@settlemint/sdk-portal/testing';
+
+describe('Portal Integration', () => {
+  let testPortal: ReturnType<typeof createTestPortal>;
+
+  beforeAll(async () => {
+    testPortal = await createTestPortal({
+      network: 'localhost',
+      contracts: ['./artifacts/MyContract.json'],
+    });
+  });
+
+  afterAll(async () => {
+    await testPortal.cleanup();
+  });
+
+  it('should process real transactions', async () => {
+    const result = await testPortal.graphql.request(`
+      mutation {
+        MyContract {
+          myMethod(param: "test") {
+            transactionHash
+          }
+        }
+      }
+    `);
+
+    expect(result.MyContract.myMethod.transactionHash).toBeDefined();
+  });
+});
+```
+
+## Best Practices
+
+### 1. Environment Configuration
+
+```typescript
+// config/portal.ts
+export const portalConfig = {
+  endpoint: process.env.PORTAL_ENDPOINT!,
+  accessToken: process.env.PORTAL_ACCESS_TOKEN!,
+  options: {
+    timeout: 30000,
+    retries: 3,
+    cache: {
+      enabled: process.env.NODE_ENV === 'production',
+      ttl: 300000, // 5 minutes
+    }
+  }
+};
+```
+
+### 2. Type Safety
+
+```typescript
+// Generate types from your GraphQL schema
+import { CodegenConfig } from '@graphql-codegen/cli';
+
+const config: CodegenConfig = {
+  schema: process.env.PORTAL_GRAPHQL_ENDPOINT,
+  documents: ['src/**/*.ts'],
+  generates: {
+    'src/generated/portal-types.ts': {
+      plugins: ['typescript', 'typescript-operations']
+    }
+  }
+};
+
+export default config;
+```
+
+### 3. Monitoring and Logging
+
+```typescript
+import { createPortalClient } from '@settlemint/sdk-portal';
+import { Logger } from 'winston';
+
+const portal = createPortalClient({
+  instance: process.env.PORTAL_ENDPOINT,
+  accessToken: process.env.PORTAL_ACCESS_TOKEN,
+  middleware: [
+    {
+      pre: async (request) => {
+        logger.info('Portal request', {
+          query: request.query,
+          variables: request.variables,
+          timestamp: new Date().toISOString()
+        });
+      },
+      post: async (response, request) => {
+        logger.info('Portal response', {
+          query: request.query,
+          duration: response.duration,
+          success: !response.error
+        });
+      }
+    }
+  ]
+});
+```
+
+## Further Resources
+
+- [Portal SDK GitHub Repository](https://github.com/settlemint/sdk/tree/main/packages/sdk-portal)
+- [GraphQL Schema Documentation](/docs/api/portal-graphql-schema)
+- [Smart Contract Portal REST API](/docs/api/portal-rest)
+- [Webhook Integration Guide](/docs/building-with-settlemint/webhooks)

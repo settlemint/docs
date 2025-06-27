@@ -1,0 +1,612 @@
+---
+title: "CLI Portal Commands"
+description: "Complete reference for SettleMint CLI commands for Smart Contract Portal management"
+---
+
+# CLI Portal Commands
+
+The SettleMint CLI provides comprehensive commands for managing Smart Contract Portal instances, enabling you to automate portal operations and integrate them into your CI/CD pipelines.
+
+## Installation
+
+```bash
+npm install -g @settlemint/cli
+# or
+yarn global add @settlemint/cli
+# or
+pnpm add -g @settlemint/cli
+```
+
+## Authentication
+
+Before using portal commands, authenticate with your SettleMint account:
+
+```bash
+settlemint auth login
+# or use environment variable
+export SETTLEMINT_ACCESS_TOKEN=your-access-token
+```
+
+## Portal Management Commands
+
+### List Portals
+
+List all Smart Contract Portals in your workspace:
+
+```bash
+settlemint portal list
+
+# Output in JSON format
+settlemint portal list --json
+
+# Filter by network
+settlemint portal list --network polygon-mainnet
+
+# Filter by status
+settlemint portal list --status active
+```
+
+### Get Portal Details
+
+Retrieve detailed information about a specific portal:
+
+```bash
+settlemint portal get --portal-id <portal-id>
+
+# Include webhook configurations
+settlemint portal get --portal-id <portal-id> --include-webhooks
+
+# Include monitoring rules
+settlemint portal get --portal-id <portal-id> --include-monitors
+```
+
+### Create Portal
+
+Create a new Smart Contract Portal:
+
+```bash
+# Basic portal creation
+settlemint portal create \
+  --name "My DeFi Portal" \
+  --network "polygon-mainnet" \
+  --contracts "0x742d35Cc6634C0532925a3b844Bc9e7095931a3e"
+
+# Advanced portal creation with multiple contracts
+settlemint portal create \
+  --name "Enterprise Portal" \
+  --network "ethereum-mainnet" \
+  --contracts "0x123...,0x456...,0x789..." \
+  --description "Production portal for DeFi protocol" \
+  --enable-webhooks \
+  --enable-monitoring \
+  --rate-limit 1000 \
+  --cors-origins "https://app.example.com,https://api.example.com"
+```
+
+### Update Portal
+
+Update an existing portal configuration:
+
+```bash
+# Add a new contract
+settlemint portal update --portal-id <portal-id> \
+  --add-contract "0x123..."
+
+# Remove a contract
+settlemint portal update --portal-id <portal-id> \
+  --remove-contract "0x456..."
+
+# Update portal settings
+settlemint portal update --portal-id <portal-id> \
+  --name "Updated Portal Name" \
+  --rate-limit 2000 \
+  --enable-webhooks \
+  --enable-monitoring
+```
+
+### Delete Portal
+
+Delete a portal (requires confirmation):
+
+```bash
+settlemint portal delete --portal-id <portal-id>
+
+# Skip confirmation prompt
+settlemint portal delete --portal-id <portal-id> --yes
+```
+
+## ABI Management Commands
+
+### Upload ABI
+
+Upload ABI files to a portal:
+
+```bash
+# Single ABI upload
+settlemint portal abi upload \
+  --portal-id <portal-id> \
+  --file "./artifacts/MyContract.json" \
+  --contract-address "0x742d35Cc6634C0532925a3b844Bc9e7095931a3e"
+
+# Batch ABI upload with glob pattern
+settlemint portal abi upload \
+  --portal-id <portal-id> \
+  --files "./artifacts/contracts/**/*.json" \
+  --version "v2.0.0"
+
+# Upload with metadata
+settlemint portal abi upload \
+  --portal-id <portal-id> \
+  --file "./artifacts/ERC20.json" \
+  --contract-address "0x123..." \
+  --name "MyToken" \
+  --version "1.0.0" \
+  --tags "erc20,token,defi"
+```
+
+### List ABIs
+
+List all ABIs in a portal:
+
+```bash
+settlemint portal abi list --portal-id <portal-id>
+
+# Filter by contract address
+settlemint portal abi list --portal-id <portal-id> \
+  --contract "0x742d35Cc6634C0532925a3b844Bc9e7095931a3e"
+
+# Include ABI content
+settlemint portal abi list --portal-id <portal-id> --verbose
+```
+
+### Update ABI
+
+Update an existing ABI:
+
+```bash
+settlemint portal abi update \
+  --portal-id <portal-id> \
+  --abi-id <abi-id> \
+  --file "./artifacts/MyContractV2.json" \
+  --version "2.0.0"
+```
+
+### Delete ABI
+
+Remove an ABI from a portal:
+
+```bash
+settlemint portal abi delete \
+  --portal-id <portal-id> \
+  --abi-id <abi-id>
+```
+
+## Webhook Management Commands
+
+### Create Webhook
+
+Register a new webhook endpoint:
+
+```bash
+# Basic webhook
+settlemint portal webhook create \
+  --portal-id <portal-id> \
+  --url "https://api.example.com/webhook" \
+  --events "Transfer,Approval"
+
+# Advanced webhook with filters
+settlemint portal webhook create \
+  --portal-id <portal-id> \
+  --url "https://api.example.com/high-value-transfers" \
+  --events "Transfer" \
+  --filter-field "value" \
+  --filter-operator "gt" \
+  --filter-value "1000000000000000000000" \
+  --headers "Authorization: Bearer token123" \
+  --retry-count 3 \
+  --retry-delay 1000
+```
+
+### List Webhooks
+
+List all webhooks for a portal:
+
+```bash
+settlemint portal webhook list --portal-id <portal-id>
+
+# Include delivery statistics
+settlemint portal webhook list --portal-id <portal-id> --stats
+```
+
+### Test Webhook
+
+Send a test event to a webhook:
+
+```bash
+settlemint portal webhook test \
+  --portal-id <portal-id> \
+  --webhook-id <webhook-id>
+
+# Test with custom payload
+settlemint portal webhook test \
+  --portal-id <portal-id> \
+  --webhook-id <webhook-id> \
+  --payload '{"test": true}'
+```
+
+### View Webhook Logs
+
+View webhook delivery logs:
+
+```bash
+# Recent logs
+settlemint portal webhook logs \
+  --portal-id <portal-id> \
+  --webhook-id <webhook-id>
+
+# Tail logs in real-time
+settlemint portal webhook logs \
+  --portal-id <portal-id> \
+  --webhook-id <webhook-id> \
+  --tail
+
+# Filter by status
+settlemint portal webhook logs \
+  --portal-id <portal-id> \
+  --webhook-id <webhook-id> \
+  --status failed \
+  --limit 50
+```
+
+### Update Webhook
+
+Update webhook configuration:
+
+```bash
+settlemint portal webhook update \
+  --portal-id <portal-id> \
+  --webhook-id <webhook-id> \
+  --url "https://api.example.com/new-endpoint" \
+  --active false
+```
+
+### Delete Webhook
+
+Remove a webhook:
+
+```bash
+settlemint portal webhook delete \
+  --portal-id <portal-id> \
+  --webhook-id <webhook-id>
+```
+
+## Monitoring Commands
+
+### Create Monitoring Rule
+
+Set up transaction monitoring:
+
+```bash
+# Monitor high-value transfers
+settlemint portal monitor create \
+  --portal-id <portal-id> \
+  --name "High Value Transfers" \
+  --event "Transfer" \
+  --condition "value > 1000000000000000000000" \
+  --action webhook \
+  --webhook "https://api.example.com/alerts" \
+  --action email \
+  --email "security@example.com"
+
+# Monitor failed transactions
+settlemint portal monitor create \
+  --portal-id <portal-id> \
+  --name "Failed Transactions" \
+  --type "transaction" \
+  --condition "status = failed" \
+  --action webhook \
+  --webhook "https://api.example.com/tx-failures"
+```
+
+### List Monitoring Rules
+
+View all monitoring rules:
+
+```bash
+settlemint portal monitor list --portal-id <portal-id>
+
+# Filter by status
+settlemint portal monitor list --portal-id <portal-id> --active
+```
+
+### View Alerts
+
+View triggered monitoring alerts:
+
+```bash
+# Recent alerts
+settlemint portal monitor alerts \
+  --portal-id <portal-id>
+
+# Filter by date range
+settlemint portal monitor alerts \
+  --portal-id <portal-id> \
+  --since "2024-01-01" \
+  --until "2024-01-31"
+
+# Filter by rule
+settlemint portal monitor alerts \
+  --portal-id <portal-id> \
+  --rule-id <rule-id>
+```
+
+### Update Monitoring Rule
+
+Modify a monitoring rule:
+
+```bash
+settlemint portal monitor update \
+  --portal-id <portal-id> \
+  --rule-id <rule-id> \
+  --active false
+
+# Update conditions
+settlemint portal monitor update \
+  --portal-id <portal-id> \
+  --rule-id <rule-id> \
+  --condition "value > 5000000000000000000000"
+```
+
+### Delete Monitoring Rule
+
+Remove a monitoring rule:
+
+```bash
+settlemint portal monitor delete \
+  --portal-id <portal-id> \
+  --rule-id <rule-id>
+```
+
+## Sync Status Commands
+
+### Check Sync Status
+
+Monitor portal synchronization status:
+
+```bash
+# One-time check
+settlemint portal sync-status --portal-id <portal-id>
+
+# Watch in real-time
+settlemint portal sync-status --portal-id <portal-id> --watch
+
+# Output as JSON
+settlemint portal sync-status --portal-id <portal-id> --json
+```
+
+### Force Resync
+
+Force portal to resync from a specific block:
+
+```bash
+settlemint portal resync \
+  --portal-id <portal-id> \
+  --from-block 15000000
+
+# Resync last N blocks
+settlemint portal resync \
+  --portal-id <portal-id> \
+  --last-blocks 1000
+```
+
+## Utility Commands
+
+### Generate API Client
+
+Generate typed API client code:
+
+```bash
+# TypeScript client
+settlemint portal generate-client \
+  --portal-id <portal-id> \
+  --language typescript \
+  --output ./src/portal-client.ts
+
+# Python client
+settlemint portal generate-client \
+  --portal-id <portal-id> \
+  --language python \
+  --output ./portal_client.py
+
+# Go client
+settlemint portal generate-client \
+  --portal-id <portal-id> \
+  --language go \
+  --output ./portal/client.go
+```
+
+### Export Configuration
+
+Export portal configuration:
+
+```bash
+# Export as JSON
+settlemint portal export \
+  --portal-id <portal-id> \
+  --output ./portal-config.json
+
+# Export as Terraform
+settlemint portal export \
+  --portal-id <portal-id> \
+  --format terraform \
+  --output ./portal.tf
+```
+
+### Import Configuration
+
+Import portal configuration:
+
+```bash
+settlemint portal import \
+  --file ./portal-config.json \
+  --name "Imported Portal"
+```
+
+## CI/CD Integration
+
+### Example GitHub Actions Workflow
+
+```yaml
+name: Deploy Portal Configuration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'portal-config.json'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install SettleMint CLI
+        run: npm install -g @settlemint/cli
+      
+      - name: Authenticate
+        env:
+          SETTLEMINT_ACCESS_TOKEN: ${{ secrets.SETTLEMINT_ACCESS_TOKEN }}
+        run: settlemint auth verify
+      
+      - name: Update Portal
+        run: |
+          settlemint portal import \
+            --file ./portal-config.json \
+            --portal-id ${{ vars.PORTAL_ID }} \
+            --update-existing
+```
+
+### Example GitLab CI Pipeline
+
+```yaml
+stages:
+  - deploy
+
+deploy_portal:
+  stage: deploy
+  image: node:18
+  script:
+    - npm install -g @settlemint/cli
+    - settlemint portal abi upload
+        --portal-id $PORTAL_ID
+        --files "./artifacts/**/*.json"
+        --version $CI_COMMIT_TAG
+  only:
+    - tags
+  variables:
+    SETTLEMINT_ACCESS_TOKEN: $SETTLEMINT_TOKEN
+```
+
+## Environment Variables
+
+The CLI supports the following environment variables:
+
+```bash
+# Authentication
+export SETTLEMINT_ACCESS_TOKEN=your-access-token
+
+# Default workspace
+export SETTLEMINT_WORKSPACE_ID=your-workspace-id
+
+# API endpoint (for self-hosted installations)
+export SETTLEMINT_API_ENDPOINT=https://api.your-instance.com
+
+# Output format
+export SETTLEMINT_OUTPUT_FORMAT=json
+
+# Disable interactive prompts
+export SETTLEMINT_NON_INTERACTIVE=true
+```
+
+## Common Patterns
+
+### Automated ABI Updates
+
+```bash
+#!/bin/bash
+# Script to automatically update ABIs after deployment
+
+PORTAL_ID="your-portal-id"
+CONTRACTS_DIR="./artifacts/contracts"
+
+# Find all contract ABIs
+for abi_file in $(find $CONTRACTS_DIR -name "*.json"); do
+  contract_name=$(basename $abi_file .json)
+  
+  # Extract contract address from deployment info
+  address=$(cat deployments/$contract_name.address)
+  
+  # Upload ABI
+  settlemint portal abi upload \
+    --portal-id $PORTAL_ID \
+    --file $abi_file \
+    --contract-address $address \
+    --name $contract_name
+done
+```
+
+### Monitoring Setup Script
+
+```bash
+#!/bin/bash
+# Set up comprehensive monitoring for a DeFi protocol
+
+PORTAL_ID="your-portal-id"
+
+# Monitor large deposits
+settlemint portal monitor create \
+  --portal-id $PORTAL_ID \
+  --name "Large Deposits" \
+  --event "Deposit" \
+  --condition "amount > 1000000000000000000000" \
+  --action webhook \
+  --webhook "$ALERT_WEBHOOK"
+
+# Monitor withdrawals by blacklisted addresses
+settlemint portal monitor create \
+  --portal-id $PORTAL_ID \
+  --name "Blacklist Withdrawals" \
+  --event "Withdraw" \
+  --condition "user IN ($BLACKLIST_ADDRESSES)" \
+  --action email \
+  --email "security@defi.com" \
+  --action webhook \
+  --webhook "$SECURITY_WEBHOOK"
+```
+
+## Troubleshooting
+
+### Debug Mode
+
+Enable debug output for troubleshooting:
+
+```bash
+settlemint portal list --debug
+
+# Or set environment variable
+export SETTLEMINT_DEBUG=true
+```
+
+### Common Issues
+
+1. **Authentication failures**: Ensure your access token is valid
+2. **Rate limiting**: Add delays between batch operations
+3. **Network timeouts**: Use `--timeout` flag for long operations
+4. **Invalid ABI**: Validate ABI JSON before uploading
+
+## Further Resources
+
+- [Portal SDK Documentation](/docs/platform-components/dev-tools/sdk/portal)
+- [API Reference](https://api.settlemint.com/docs)
+- [CLI Source Code](https://github.com/settlemint/cli)
