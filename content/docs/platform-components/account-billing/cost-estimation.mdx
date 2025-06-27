@@ -1,0 +1,366 @@
+---
+title: Cost Estimation
+description: Pre-deployment cost estimation and budget planning tools for blockchain infrastructure
+icon: Calculator
+---
+
+# Cost Estimation
+
+SettleMint's Cost Estimation feature is a powerful budget planning tool that helps organizations predict and optimize their blockchain infrastructure costs before deployment. This comprehensive tool provides accurate cost projections, resource usage predictions, and optimization recommendations to ensure cost-effective blockchain operations.
+
+## Overview
+
+The Cost Estimation feature enables you to:
+
+- **Predict costs** before deploying blockchain infrastructure
+- **Analyze resource requirements** for different configurations
+- **Compare pricing** across different deployment plans
+- **Optimize configurations** for cost efficiency
+- **Plan budgets** with confidence
+- **Track estimated vs actual costs** post-deployment
+
+## Pre-deployment Cost Estimation
+
+### Accessing the Cost Estimator
+
+1. Navigate to your organization's dashboard
+2. Click on **Billing** in the sidebar
+3. Select **Cost Estimator** tab
+4. Choose your deployment type (Managed Cloud or Self-Hosted)
+
+### Configuration Options
+
+The cost estimator allows you to configure:
+
+- **Network Type**: Public (Ethereum, Polygon, etc.) or Private (Besu, Fabric)
+- **Node Configuration**: Number of nodes, node size, and performance tier
+- **Storage Requirements**: Data retention period and expected transaction volume
+- **Middleware Services**: Graph indexing, API gateways, monitoring tools
+- **High Availability**: Multi-region deployment and redundancy options
+
+### Understanding Cost Components
+
+<Cards>
+  <Card title="Compute Resources" icon="Cpu">
+    - CPU cores and memory allocation
+    - Node performance tiers (Basic, Standard, Premium)
+    - Auto-scaling configurations
+  </Card>
+  
+  <Card title="Storage Costs" icon="Database">
+    - Blockchain data storage
+    - IPFS/S3 object storage
+    - Database storage for off-chain data
+    - Backup and snapshot storage
+  </Card>
+  
+  <Card title="Network Transfer" icon="Network">
+    - Ingress/egress bandwidth
+    - Inter-region data transfer
+    - API request volumes
+  </Card>
+  
+  <Card title="Additional Services" icon="Layers">
+    - Monitoring and observability
+    - Security services
+    - Support tier costs
+  </Card>
+</Cards>
+
+## Resource Usage Predictions
+
+### Transaction Volume Estimation
+
+The cost estimator helps predict resource usage based on:
+
+```
+Daily Transactions × Average Transaction Size × Retention Period = Storage Requirements
+```
+
+#### Example Calculation
+
+For a DeFi application expecting:
+- 10,000 daily transactions
+- 250 bytes average transaction size
+- 2-year retention period
+
+```
+Storage = 10,000 × 250 bytes × 730 days = 1.825 GB
+Monthly Storage Cost = 1.825 GB × $0.10/GB = $0.18
+```
+
+### Node Performance Requirements
+
+<AccordionGroup>
+  <Accordion title="Basic Tier">
+    **Suitable for**: Development and testing environments
+    - 2 vCPUs, 4GB RAM
+    - Up to 100 transactions/second
+    - Single availability zone
+    - **Estimated Cost**: $150-250/month per node
+  </Accordion>
+  
+  <Accordion title="Standard Tier">
+    **Suitable for**: Production applications with moderate load
+    - 4 vCPUs, 16GB RAM
+    - Up to 500 transactions/second
+    - Multi-AZ deployment option
+    - **Estimated Cost**: $400-600/month per node
+  </Accordion>
+  
+  <Accordion title="Premium Tier">
+    **Suitable for**: High-volume production applications
+    - 8+ vCPUs, 32GB+ RAM
+    - 1000+ transactions/second
+    - Multi-region deployment
+    - **Estimated Cost**: $1000+/month per node
+  </Accordion>
+</AccordionGroup>
+
+## Cost Optimization Recommendations
+
+### Architecture Optimization
+
+1. **Right-sizing nodes**
+   - Start with smaller nodes and scale up based on actual usage
+   - Use auto-scaling for variable workloads
+   - Consider shared nodes for development environments
+
+2. **Storage optimization**
+   - Implement data archiving strategies
+   - Use IPFS for large file storage instead of on-chain storage
+   - Configure appropriate retention policies
+
+3. **Network optimization**
+   - Use regional deployments to minimize data transfer costs
+   - Implement caching strategies for frequently accessed data
+   - Optimize API calls to reduce bandwidth usage
+
+### Cost-Saving Strategies
+
+<Tabs>
+  <Tab title="Development">
+    - Use shared infrastructure for multiple dev environments
+    - Implement automated shutdown for non-business hours
+    - Leverage spot instances where available
+    - **Potential Savings**: 40-60%
+  </Tab>
+  
+  <Tab title="Staging">
+    - Mirror production at 50% capacity
+    - Use reserved instances for predictable workloads
+    - Share middleware services across environments
+    - **Potential Savings**: 30-40%
+  </Tab>
+  
+  <Tab title="Production">
+    - Commit to annual pricing for 20-30% discount
+    - Implement intelligent auto-scaling
+    - Use multi-year reserved instances
+    - **Potential Savings**: 20-35%
+  </Tab>
+</Tabs>
+
+## Using the Cost Estimation Tools
+
+### Step-by-Step Guide
+
+1. **Define Your Requirements**
+   ```yaml
+   application:
+     type: "DeFi Protocol"
+     expected_users: 10000
+     daily_transactions: 50000
+     data_retention: "2 years"
+     availability: "99.9%"
+   ```
+
+2. **Select Infrastructure Components**
+   - Choose blockchain network(s)
+   - Configure node specifications
+   - Add required middleware services
+   - Set storage requirements
+
+3. **Review Cost Breakdown**
+   - Monthly and annual projections
+   - Cost per transaction estimates
+   - Comparison with industry benchmarks
+
+4. **Apply Optimizations**
+   - Review recommended configurations
+   - Adjust based on budget constraints
+   - Balance performance vs cost
+
+### Cost Estimation API
+
+For programmatic access to cost estimates:
+
+```javascript
+const estimate = await settlemint.billing.estimateCosts({
+  network: 'ethereum',
+  nodes: {
+    count: 3,
+    tier: 'standard',
+    region: 'us-east-1'
+  },
+  storage: {
+    blockchain: 500, // GB
+    ipfs: 1000 // GB
+  },
+  services: ['graph-node', 'monitoring', 'api-portal']
+});
+
+console.log(`Monthly estimate: $${estimate.monthly}`);
+console.log(`Annual estimate: $${estimate.annual}`);
+console.log(`Cost per transaction: $${estimate.perTransaction}`);
+```
+
+## Budget Planning Best Practices
+
+### 1. Start with Conservative Estimates
+
+Always plan for 20-30% higher usage than initial projections to account for:
+- Unexpected growth
+- Development overhead
+- Testing and staging environments
+
+### 2. Implement Cost Monitoring
+
+Set up alerts and monitoring for:
+- Budget threshold warnings (75%, 90%, 100%)
+- Unusual usage spikes
+- Inefficient resource utilization
+
+### 3. Regular Cost Reviews
+
+Schedule monthly reviews to:
+- Compare estimated vs actual costs
+- Identify optimization opportunities
+- Adjust configurations based on usage patterns
+
+### 4. Plan for Scaling
+
+Consider future growth scenarios:
+- 2x current load: What infrastructure changes are needed?
+- 10x current load: When to consider architecture changes?
+- Geographic expansion: Multi-region deployment costs
+
+## Example Cost Calculations
+
+### Small DeFi Application
+
+```
+Configuration:
+- Network: Polygon
+- Nodes: 2 standard nodes
+- Storage: 100GB blockchain, 500GB IPFS
+- Services: Basic monitoring
+
+Monthly Breakdown:
+- Compute: $800 (2 × $400)
+- Storage: $60
+- Network: $50
+- Monitoring: $100
+- Total: ~$1,010/month
+```
+
+### Enterprise Supply Chain
+
+```
+Configuration:
+- Network: Private Besu
+- Nodes: 5 premium nodes across 3 regions
+- Storage: 1TB blockchain, 5TB S3
+- Services: Full monitoring, HA setup
+
+Monthly Breakdown:
+- Compute: $5,000 (5 × $1,000)
+- Storage: $600
+- Network: $500
+- Services: $1,500
+- Total: ~$7,600/month
+```
+
+### NFT Marketplace
+
+```
+Configuration:
+- Network: Ethereum + IPFS
+- Nodes: 3 standard nodes
+- Storage: 200GB blockchain, 10TB IPFS
+- Services: Graph indexing, CDN
+
+Monthly Breakdown:
+- Compute: $1,200 (3 × $400)
+- Storage: $1,200
+- Network: $300
+- Services: $800
+- Total: ~$3,500/month
+```
+
+## Integration with Billing
+
+The Cost Estimation tool integrates seamlessly with SettleMint's billing system:
+
+1. **Estimate to Invoice Tracking**
+   - Compare initial estimates with actual invoices
+   - Identify variances and their causes
+   - Refine future estimates based on historical data
+
+2. **Budget Alerts**
+   - Set budget limits based on estimates
+   - Receive notifications before exceeding budgets
+   - Automatic scaling restrictions when approaching limits
+
+3. **Cost Allocation**
+   - Tag resources by project or department
+   - Generate detailed cost reports
+   - Implement chargeback models
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="How accurate are the cost estimates?">
+    Our cost estimates are typically within 10-15% of actual costs for standard configurations. Accuracy depends on how well usage patterns are predicted. We continuously refine our models based on aggregated customer data.
+  </Accordion>
+  
+  <Accordion title="Can I get estimates for custom configurations?">
+    Yes, contact our solutions team for custom configuration estimates. This includes non-standard node sizes, specialized hardware requirements, or unique deployment architectures.
+  </Accordion>
+  
+  <Accordion title="Do estimates include all costs?">
+    Estimates include all SettleMint platform costs. Additional costs may include:
+    - Third-party service integrations
+    - External API calls
+    - Custom development resources
+    - Training and consultation services
+  </Accordion>
+  
+  <Accordion title="How often should I review my estimates?">
+    We recommend reviewing estimates:
+    - Monthly during initial deployment
+    - Quarterly for stable production systems
+    - Whenever significant architecture changes are planned
+    - Before major feature releases or marketing campaigns
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Request Custom Estimate" icon="Calculator" href="/contact-sales">
+    Get a detailed cost estimate for your specific use case
+  </Card>
+  
+  <Card title="View Pricing Plans" icon="DollarSign" href="/docs/platform-components/account-billing/billing">
+    Explore our different pricing tiers and options
+  </Card>
+  
+  <Card title="Optimization Guide" icon="TrendingDown" href="/docs/best-practices/cost-optimization">
+    Learn advanced techniques for reducing infrastructure costs
+  </Card>
+  
+  <Card title="Usage Monitoring" icon="ChartBar" href="/docs/platform-components/usage-and-logs/resource-usage">
+    Set up monitoring to track actual resource usage
+  </Card>
+</CardGroup>

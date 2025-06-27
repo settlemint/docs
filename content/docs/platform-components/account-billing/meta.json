@@ -1,4 +1,5 @@
 {
   "title": "Account & Billing",
-  "icon": "Wallet"
+  "icon": "Wallet",
+  "pages": ["billing", "cost-estimation", "add-a-client", "join-a-partner"]
 }
