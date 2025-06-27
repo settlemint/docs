@@ -1,0 +1,248 @@
+---
+title: "BSC (Binance Smart Chain)"
+---
+
+<div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
+  <div style={{ flex: '0 0 10%' }}>
+  ![BSC](../../../img/blockchain-logos/bnb-logo.png)
+  </div>
+  <div style={{ flex: '1', paddingLeft: '1rem' }}>
+    <ul>
+
+BSC (Binance Smart Chain), now known as BNB Chain, is a high-performance blockchain network that runs in parallel with Binance Chain. BSC is EVM-compatible, meaning developers can easily port their Ethereum-based applications to BSC with minimal modifications. With its low transaction fees and fast block times, BSC has become one of the most popular alternatives to Ethereum for DeFi applications, NFT projects, and GameFi platforms.
+
+    </ul>
+
+  </div>
+</div>
+
+## Overview and use cases
+
+BSC is designed to provide a programmable blockchain infrastructure with smart contract functionality while maintaining high throughput and low costs. Key characteristics include:
+
+- **EVM Compatibility**: Full compatibility with Ethereum Virtual Machine, allowing easy migration of Ethereum dApps
+- **Low Transaction Fees**: Significantly lower gas fees compared to Ethereum mainnet (typically less than $0.10 per transaction)
+- **Fast Block Times**: 3-second block time enabling quick transaction confirmations
+- **Large Ecosystem**: Extensive DeFi, NFT, and gaming ecosystem with thousands of active projects
+- **Cross-Chain Compatibility**: Native support for cross-chain transfers with Binance Chain
+
+### Common use cases
+
+- **DeFi Applications**: Decentralized exchanges, lending protocols, yield farming platforms
+- **NFT Marketplaces**: Lower minting and trading costs make it ideal for NFT projects
+- **GameFi**: Blockchain gaming applications benefit from fast and cheap transactions
+- **Payment Solutions**: Suitable for micropayments and everyday transactions
+- **Cross-Chain Bridges**: Hub for multi-chain applications and asset transfers
+
+## Mainnet and testnet
+
+SettleMint supports both the BSC **Mainnet** and the **BSC Testnet**.
+
+The Mainnet is the primary public BSC production blockchain, where actual-value transactions take place. Each transaction requires payment of a transaction fee, payable in the native coin BNB. The Testnet is an instance of the blockchain to be used for testing and experimentation. There are also coins used in the Testnet but they have no value, so there is no risk of real funds.
+
+You can consider the Testnet as a prototype and the Mainnet as the official production blockchain. Or think of this as an analog to production versus staging servers.
+
+### Network details
+
+**BSC Mainnet:**
+- Chain ID: 56
+- Currency: BNB
+- Block Explorer: [BscScan](https://bscscan.com)
+
+**BSC Testnet:**
+- Chain ID: 97
+- Currency: tBNB (Test BNB)
+- Block Explorer: [BscScan Testnet](https://testnet.bscscan.com)
+
+## Setting up BSC nodes in SettleMint
+
+### Prerequisites
+
+Before setting up BSC nodes, ensure you have:
+- A SettleMint account with appropriate permissions
+- Understanding of blockchain node basics
+- Sufficient resources allocated for node deployment
+
+### Step-by-step setup guide
+
+#### 1. Create a new BSC node
+
+1. Navigate to the **Blockchain Nodes** section in your SettleMint dashboard
+2. Click **"Add Node"** or **"Create New Node"**
+3. Select **"BSC (Binance Smart Chain)"** from the available blockchain options
+4. Choose between **Mainnet** or **Testnet** based on your requirements
+
+#### 2. Configure node settings
+
+Configure your BSC node with the following parameters:
+
+- **Node Name**: Provide a descriptive name for your node
+- **Node Type**: Select the appropriate node type:
+  - **Full Node**: Stores complete blockchain data
+  - **Archive Node**: Stores all historical states (requires more storage)
+- **Region**: Choose the deployment region closest to your users
+- **Resources**: Select appropriate CPU, memory, and storage based on your needs
+
+#### 3. Network configuration
+
+Configure network settings for your BSC node:
+
+- **RPC Endpoint**: Enable/disable public RPC access
+- **WebSocket Endpoint**: Enable for real-time event subscriptions
+- **API Rate Limiting**: Configure rate limits to prevent abuse
+- **Whitelisted IPs**: Restrict access to specific IP addresses (recommended for production)
+
+#### 4. Deploy and synchronize
+
+1. Review your configuration settings
+2. Click **"Deploy Node"** to begin the deployment process
+3. Monitor the deployment status in the dashboard
+4. Wait for the node to synchronize with the BSC network (this may take several hours for mainnet)
+
+### Configuration options
+
+#### Advanced settings
+
+- **State Pruning**: Enable to reduce storage requirements (not recommended for archive nodes)
+- **Snapshot Sync**: Use snapshots for faster initial synchronization
+- **Custom Genesis**: For private BSC-based networks
+- **Peering Configuration**: Manage peer connections and discovery
+
+#### Performance optimization
+
+- **Cache Size**: Adjust cache settings based on available memory
+- **Database Backend**: Choose between LevelDB or PebbleDB
+- **Concurrent Downloads**: Set parallel block download limits
+- **Transaction Pool Size**: Configure mempool capacity
+
+## Best practices
+
+### Security recommendations
+
+1. **Access Control**: Always use IP whitelisting for production nodes
+2. **HTTPS/WSS**: Enable SSL/TLS for all external connections
+3. **Private Keys**: Never store private keys on public nodes
+4. **Regular Updates**: Keep your nodes updated with the latest BSC client versions
+5. **Monitoring**: Set up alerts for node health and performance metrics
+
+### Performance optimization
+
+1. **Resource Allocation**: 
+   - Minimum: 4 CPU cores, 8GB RAM, 500GB SSD
+   - Recommended: 8 CPU cores, 16GB RAM, 1TB NVMe SSD
+   - Archive Node: 16 CPU cores, 32GB RAM, 4TB+ NVMe SSD
+
+2. **Network Optimization**:
+   - Use dedicated bandwidth for node synchronization
+   - Enable compression for peer connections
+   - Configure appropriate peer limits
+
+3. **Storage Management**:
+   - Use SSDs for blockchain data
+   - Regular cleanup of log files
+   - Monitor disk usage and plan for growth
+
+### High availability setup
+
+For production environments, consider:
+
+1. **Multiple Nodes**: Deploy multiple nodes across different regions
+2. **Load Balancing**: Distribute requests across nodes
+3. **Failover Configuration**: Automatic switching to backup nodes
+4. **Regular Backups**: Scheduled snapshots of node data
+
+## Troubleshooting
+
+### Common issues and solutions
+
+#### Node not syncing
+
+**Problem**: Node stuck at a specific block height
+
+**Solutions**:
+1. Check network connectivity and firewall rules
+2. Verify sufficient disk space
+3. Restart the node service
+4. Check for chain reorganizations
+5. Use `--syncmode snap` for faster synchronization
+
+#### High resource usage
+
+**Problem**: Excessive CPU or memory consumption
+
+**Solutions**:
+1. Adjust cache sizes in configuration
+2. Enable state pruning if running a full node
+3. Limit peer connections
+4. Check for memory leaks in logs
+
+#### RPC connection issues
+
+**Problem**: Cannot connect to RPC endpoint
+
+**Solutions**:
+1. Verify RPC is enabled in node configuration
+2. Check firewall rules and security groups
+3. Confirm correct endpoint URL and port
+4. Test with curl: `curl -X POST https://your-node-url -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'`
+
+#### Peers not connecting
+
+**Problem**: Low peer count or no peers
+
+**Solutions**:
+1. Check if node is accessible from the internet
+2. Verify bootnode configuration
+3. Ensure ports 30303 (TCP/UDP) are open
+4. Add static peers if needed
+
+### Debug commands
+
+Useful commands for troubleshooting:
+
+```bash
+# Check sync status
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}' http://localhost:8545
+
+# Get peer count
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":1}' http://localhost:8545
+
+# Check latest block
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest", false],"id":1}' http://localhost:8545
+```
+
+## Related resources
+
+### API/SDK references
+
+- **Web3.js**: Full support for BSC with Web3.js library
+- **Ethers.js**: Compatible with all Ethers.js features
+- **BSC SDK**: Specialized SDK for BSC-specific features
+- **SettleMint SDK**: Integrated support for BSC nodes
+
+### Additional documentation
+
+- [Official BSC Documentation](https://docs.bnbchain.org/)
+- [BSC GitHub Repository](https://github.com/bnb-chain/bsc)
+- [BscScan API Documentation](https://docs.bscscan.com/)
+- [BSC Developer Portal](https://www.bnbchain.org/en/developers)
+
+### Integration guides
+
+- [Connecting MetaMask to BSC](https://academy.binance.com/en/articles/connecting-metamask-to-binance-smart-chain)
+- [Deploying Smart Contracts on BSC](/docs/building-with-settlemint/evm-chains-guide)
+- [Cross-Chain Bridge Integration](/docs/platform-components/blockchain-infrastructure)
+
+## Consensus mechanism
+
+BSC uses a **Proof of Staked Authority (PoSA)** consensus mechanism, which combines elements of Proof of Authority (PoA) and Delegated Proof of Stake (DPoS). This hybrid approach provides:
+
+- **21 Validators**: A fixed set of validators elected by BNB stakers
+- **Block Time**: 3-second block time for fast confirmations
+- **Epoch System**: Validators rotate every 24 hours (epoch)
+- **Slashing**: Malicious validators can be slashed and lose their staked BNB
+- **Rewards**: Block rewards and transaction fees distributed to validators and delegators
+
+The PoSA consensus ensures high throughput while maintaining a reasonable level of decentralization through the staking mechanism.
+
+More information on BSC's consensus can be found on the [official BNB Chain documentation](https://docs.bnbchain.org/docs/learn/consensus).

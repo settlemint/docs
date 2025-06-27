@@ -1,5 +1,5 @@
 {
   "label": "L1 Public Networks",
   "title": "L1 Public Networks",
-  "pages": ["ethereum", "avalanche", "hedera", "sonic"]
+  "pages": ["ethereum", "avalanche", "bsc", "hedera", "sonic"]
 }
