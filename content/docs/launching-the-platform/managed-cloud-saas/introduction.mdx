@@ -1,7 +1,12 @@
 ---
-title: "Introduction"
-description: SaaS Platform
+title: "When should I choose SettleMint SaaS vs self-hosted deployment?"
+description: Complete comparison guide for choosing between SettleMint SaaS and self-hosted deployment based on enterprise requirements, compliance needs, and cost considerations
 ---
+
+import { Card } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 
 SettleMint’s SaaS delivery model is designed to be developer-friendly from day
 one. Developers gain instant access to pre-configured blockchain environments
@@ -9,6 +14,30 @@ via a simple web interface or APIs, removing the need to install, configure, or
 troubleshoot infrastructure components. Everything from network provisioning to
 smart contract deployment is abstracted into intuitive workflows, letting
 developers build, test, and iterate applications with minimal friction.
+
+## When should enterprises choose SaaS over self-hosted deployment?
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Choose SaaS When:
+    - **Speed to market** is critical for your blockchain initiative
+    - **Limited infrastructure expertise** in Kubernetes and blockchain
+    - **Development and prototyping** phases of blockchain projects
+    - **Variable workloads** that benefit from elastic scaling
+    - **Regulatory requirements** allow external hosting
+    - **Cost predictability** is more important than infrastructure control
+  </Card>
+
+  <Card>
+    ### Choose Self-Hosted When:
+    - **Data sovereignty** requires keeping data in specific locations
+    - **Compliance mandates** require air-gapped or private infrastructure
+    - **High-volume production** workloads justify infrastructure investment
+    - **Custom security policies** that can't be met by shared infrastructure
+    - **Integration requirements** with existing enterprise systems
+    - **Long-term cost optimization** for large-scale deployments
+  </Card>
+</div>
 
 <div style={{ width: "60%", margin: "0 auto", textAlign: "center" }}>
   ![SaaS Platform](../../../img/using-the-platform/saas-platform.webp)

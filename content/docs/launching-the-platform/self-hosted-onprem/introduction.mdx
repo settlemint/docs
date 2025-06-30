@@ -1,11 +1,13 @@
 ---
-title: "Introduction"
-description:
-  Getting started with the SettleMint Platform self-hosted installation
+title: "How do I deploy SettleMint on-premise for enterprise blockchain development?"
+description: Complete guide to self-hosted SettleMint deployment for enterprises requiring data sovereignty, compliance, and air-gapped infrastructure
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Card } from "fumadocs-ui/components/card";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 
 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
   <div style={{ flex: '0 0 40%' }}>
@@ -27,72 +29,107 @@ regions, supporting highly distributed, hybrid blockchain architectures.
   </div>
 </div>
 
-Welcome to the SettleMint Platform self-hosted installation guide. This
-comprehensive guide will walk you through deploying the SettleMint Platform in
-your own infrastructure.
+Welcome to the SettleMint Platform self-hosted installation guide. This comprehensive guide will walk you through deploying the SettleMint Platform in your own infrastructure for enterprises requiring maximum control, compliance, and security.
 
-<br></br>
-With centralized control through a unified dashboard, organizations can govern
-deployments across environments, assign role-based permissions, and enforce
-secure access policies. Integrated load balancing ensures high availability and
-scalability, while full ownership over hardware configurations allows teams to
-fine-tune compute, memory, and storage resources according to workload demands.
-This setup offers a highly secure, scalable, and customizable platform for
-enterprise-grade blockchain deployments.
+## When should enterprises choose self-hosted deployment?
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Data Sovereignty Requirements
+    - Complete control over data location
+    - Compliance with regional regulations (GDPR, SOX, HIPAA)
+    - Government and defense contractors
+    - Financial services with strict data residency
+  </Card>
+
+  <Card>
+    ### Security & Compliance Needs
+    - Air-gapped network requirements
+    - Zero external dependencies
+    - Custom security policies
+    - Internal audit and compliance frameworks
+  </Card>
+</div>
+
+With centralized control through a unified dashboard, organizations can govern deployments across environments, assign role-based permissions, and enforce secure access policies. Integrated load balancing ensures high availability and scalability, while full ownership over hardware configurations allows teams to fine-tune compute, memory, and storage resources according to workload demands.
+
+## Enterprise deployment benefits
+
+<Accordions>
+  <Accordion title="How does self-hosted deployment ensure data sovereignty?">
+    Self-hosted SettleMint keeps all blockchain data, smart contracts, and user information within your infrastructure boundaries. This is crucial for organizations in regulated industries like healthcare, finance, and government, where data must remain within specific geographic boundaries or security perimeters.
+  </Accordion>
+  
+  <Accordion title="What compliance frameworks does self-hosted deployment support?">
+    Our self-hosted solution supports major compliance frameworks including SOC 2, ISO 27001, GDPR, HIPAA, and FedRAMP. You maintain complete control over access logs, data encryption, and audit trails required for regulatory compliance.
+  </Accordion>
+  
+  <Accordion title="How does self-hosted compare to SaaS in terms of total cost of ownership?">
+    While self-hosted requires higher upfront infrastructure investment, it often provides better TCO for large enterprises through:
+    - Predictable costs without per-user licensing
+    - No data egress fees for high-volume operations
+    - Ability to leverage existing infrastructure investments
+    - Long-term cost control as usage scales
+  </Accordion>
+  
+  <Accordion title="What level of technical expertise is required for self-hosted deployment?">
+    Self-hosted deployment requires Kubernetes administration expertise, including cluster management, monitoring, backup procedures, and security hardening. We recommend having certified Kubernetes administrators or partnering with our certified implementation partners.
+  </Accordion>
+</Accordions>
 
 ## Self-hosted installation guide
 
 <Callout type="info">
-  **Installation Time**
+  **Enterprise Installation Timeline**
 
-Complete installation typically takes 2-4 hours, depending on your
-infrastructure setup and familiarity with the components.
+Complete installation typically takes 2-4 hours for experienced Kubernetes administrators. First-time enterprise deployments may require 1-2 days including prerequisite setup, security reviews, and testing procedures.
 
 </Callout>
 
-## Guide structure
+## How do I plan my enterprise blockchain infrastructure deployment?
 
-This installation guide is organized into three main sections. Select each tab
-below to learn more:
+This installation guide is organized into three main sections designed for enterprise IT teams. Select each tab below to learn more:
 
 <Tabs items={["1. Requirements", "2. Prerequisites", "3. Installation"]}>
   <Tab value="1. Requirements">
-    ### Requirements Section
+    ### Enterprise Infrastructure Requirements
 
-    Start here to ensure your infrastructure meets all necessary specifications before proceeding. This section covers:
+    Start here to ensure your infrastructure meets all necessary specifications for enterprise-grade blockchain deployment:
 
-    - Kubernetes cluster requirements
-    - Network and storage specifications
-    - Access and security requirements
+    - **Compute & Memory**: Detailed sizing for production workloads
+    - **Network Security**: Firewall rules, VPN requirements, air-gapped considerations
+    - **Storage Performance**: High-IOPS requirements for blockchain data
+    - **Compliance Infrastructure**: Audit logging, monitoring, backup requirements
 
-    👉 [View Requirements Guide](/launching-the-platform/self-hosted-onprem/infrastructure-requirements)
+    👉 [View Enterprise Requirements Guide](/launching-the-platform/self-hosted-onprem/infrastructure-requirements)
 
   </Tab>
 
   <Tab value="2. Prerequisites">
-    ### Prerequisites Section
+    ### Enterprise Prerequisites Setup
 
-    After confirming requirements, set up the required supporting services. This section provides:
+    Configure the required supporting services with enterprise-grade security and high availability:
 
-    - Step-by-step setup guides
-    - Multiple deployment options
-    - Configuration requirements
-    - Information collection checklists
+    - **Database Layer**: PostgreSQL with HA, backup, and compliance logging
+    - **Security Services**: HashiCorp Vault, OAuth integration, secret management
+    - **Infrastructure Services**: Load balancing, DNS, SSL/TLS certificates
+    - **Monitoring**: Prometheus, Grafana, log aggregation for compliance
 
-    👉 [View Prerequisites Guide](/launching-the-platform/self-hosted-onprem/prerequisites/overview)
+    👉 [View Enterprise Prerequisites Guide](/launching-the-platform/self-hosted-onprem/prerequisites/overview)
 
   </Tab>
 
   <Tab value="3. Installation">
-    ### Installation Section
+    ### Production Deployment
 
-    Finally, deploy the SettleMint Platform using Helm:
+    Deploy the SettleMint Platform using enterprise-ready Helm configurations:
 
-    - Standard Kubernetes deployment
-    - Flexible configuration options
-    - Production-ready setup
+    - **Multi-cluster deployment** across regions and environments
+    - **High-availability configuration** with load balancing
+    - **Security hardening** and compliance settings
+    - **Production monitoring** and alerting setup
 
-    👉 [View Installation Guide](/launching-the-platform/self-hosted-onprem/platform-installation)
+    👉 [View Production Installation Guide](/launching-the-platform/self-hosted-onprem/platform-installation)
 
   </Tab>
 </Tabs>
@@ -109,55 +146,100 @@ We recommend:
 
 </Callout>
 
-## Before you begin
+## What do I need before starting enterprise blockchain deployment?
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <div>
-    ### Required Access
+  <Card>
+    ### Enterprise Infrastructure Access
 
-    - Administrative access to your infrastructure
-    - Ability to create/modify DNS records
-    - Permission to deploy Kubernetes resources
-    - Access to cloud resources (if applicable)
+    - **Administrative access** to Kubernetes clusters and infrastructure
+    - **DNS management** capabilities for domain configuration
+    - **Certificate authority** access for SSL/TLS certificates
+    - **Firewall management** for security policy configuration
+    - **Storage provisioning** rights for persistent volume creation
 
-  </div>
+  </Card>
 
-  <div>
-    ### Technical Prerequisites
+  <Card>
+    ### Technical Team Requirements
 
-    - Kubernetes cluster (1.20+)
-    - `kubectl` CLI tool
-    - `helm` (required for installation)
-    - Basic understanding of container orchestration
+    - **Kubernetes expertise** (certified administrators recommended)
+    - **Security operations** knowledge for compliance setup
+    - **Database administration** skills for PostgreSQL management
+    - **Network administration** for ingress and load balancer setup
+    - **Monitoring expertise** for observability stack configuration
 
-  </div>
+  </Card>
 </div>
 
-## Partner support
+<Callout type="warning">
+  **Enterprise Security Consideration**
+  
+  Before beginning deployment, ensure your team has completed security reviews for:
+  - Network segmentation and firewall rules
+  - Identity and access management policies  
+  - Data encryption and key management procedures
+  - Backup and disaster recovery plans
+  - Compliance and audit logging requirements
+</Callout>
 
-A thorough understanding of Kubernetes concepts, architecture, and operation is
-essential for successfully deploying and managing the SettleMint Platform. This
-includes expertise in:
+## Enterprise implementation support
 
-- Kubernetes cluster management
-- Helm chart deployment and customization
-- Infrastructure maintenance and monitoring
-- Security best practices
+A thorough understanding of Kubernetes concepts, architecture, and operation is essential for successfully deploying and managing the SettleMint Platform in enterprise environments. This includes expertise in:
 
-If your team lacks the in-house expertise required for managing these
-deployments, we strongly recommend collaborating with one of our certified
-partners. Our partners are specifically trained to:
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Technical Expertise Required
+    - **Kubernetes cluster management** and orchestration
+    - **Helm chart deployment** and customization for enterprise requirements
+    - **Infrastructure maintenance** and monitoring at scale
+    - **Enterprise security** best practices and compliance
+    - **Disaster recovery** and business continuity planning
+  </Card>
 
-- Guide you through the installation process
-- Help with infrastructure setup and configuration
-- Provide ongoing maintenance and support
-- Assist with troubleshooting and optimizations
+  <Card>
+    ### Business Continuity Planning
+    - **High availability** architecture design
+    - **Backup and recovery** procedures
+    - **Monitoring and alerting** for production systems
+    - **Incident response** and escalation procedures
+    - **Performance optimization** for enterprise workloads
+  </Card>
+</div>
 
-Additionally, our blockchain technology experts are available to support you
-with any technical questions or challenges you might encounter.
+### When should enterprises consider professional services?
 
-To connect with a certified partner or for direct assistance, please contact us
-at support@settlemint.com.
+If your team lacks the in-house expertise required for managing enterprise blockchain infrastructure, we strongly recommend collaborating with one of our certified partners. Our partners are specifically trained to:
+
+<Steps>
+  ### Assessment and Planning
+  - Evaluate your enterprise requirements and compliance needs
+  - Design architecture for high availability and scalability
+  - Plan migration strategies for existing blockchain implementations
+
+  ### Implementation and Deployment
+  - Guide you through the complete installation process
+  - Configure enterprise-grade security and monitoring
+  - Implement backup and disaster recovery procedures
+
+  ### Ongoing Support and Optimization
+  - Provide 24/7 production support and monitoring
+  - Assist with troubleshooting and performance optimization
+  - Help with platform updates and security patching
+</Steps>
+
+Additionally, our blockchain technology experts are available to support you with any technical questions or challenges you might encounter during deployment or operation.
+
+<Callout type="info">
+  **Enterprise Support Options**
+  
+  - **Professional Services**: Full-service implementation and ongoing support
+  - **Technical Consulting**: Advisory services for architecture and best practices
+  - **Training Programs**: Kubernetes and blockchain platform administration
+  - **24/7 Support**: Production support with SLA guarantees
+  
+  To connect with a certified partner or discuss enterprise support options, please contact us at support@settlemint.com.
+</Callout>
 
 ## Information collection
 

@@ -1,17 +1,33 @@
 ---
-title: "Prerequisites overview"
-description:
-  Complete guide to setting up prerequisites for the SettleMint Platform
-  installation
+title: "What enterprise services do I need before deploying SettleMint Platform?"
+description: Complete enterprise architecture guide for setting up prerequisite services including databases, security, monitoring, and compliance infrastructure for SettleMint Platform
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Card } from "fumadocs-ui/components/card";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
-Before installing the SettleMint Platform, you'll need to set up several core
-services. This guide will walk you through each prerequisite and help you
-collect the necessary information for installation.
+Before installing the SettleMint Platform in enterprise environments, you'll need to set up several core services with enterprise-grade security, high availability, and compliance capabilities. This guide will walk you through each prerequisite and help you collect the necessary information for production installation.
+
+## Enterprise architecture considerations
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### High Availability Requirements
+    - Database clustering and failover
+    - Redis cluster or sentinel setup
+    - Load balancer redundancy
+    - Multi-zone deployments
+  </Card>
+
+  <Card>
+    ### Security & Compliance
+    - SSL/TLS encryption for all services
+    - Network segmentation and firewalls
+    - Audit logging and monitoring
+    - Secret management and key rotation
+  </Card>
+</div>
 
 <Callout type="info">
   Use the sidebar to navigate between different prerequisites. We recommend

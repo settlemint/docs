@@ -1,44 +1,131 @@
 ---
-title: "Platform installation"
+title: "How do I install SettleMint Platform for enterprise production deployment?"
+description: Step-by-step enterprise deployment guide for SettleMint Platform using Helm with production-ready configurations, security hardening, and multi-cluster support
 sidebar_position: 3
 ---
 
+import { Steps } from "fumadocs-ui/components/steps";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+
 ## Overview
 
-This guide walks you through installing the SettleMint Platform using Helm,
-providing a command-line based installation method with full control over the
-deployment process.
+This guide walks you through installing the SettleMint Platform using Helm for enterprise production environments, providing a command-line based installation method with full control over the deployment process, security hardening, and compliance configurations.
 
-## Prerequisites
+## What deployment approaches work best for enterprise environments?
 
-Before starting the installation, ensure you have:
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <Card>
+    ### Single Production Cluster
+    - Simplified management
+    - Lower operational overhead
+    - Suitable for smaller enterprises
+    - Cost-effective for moderate workloads
+  </Card>
 
-- Completed all [prerequisite services](prerequisites/overview) setup
-- Collected all required information from the prerequisite guides
-- Met all infrastructure requirements
-- Helm 3.x installed
-- kubectl access to your cluster
-- Admin permissions
+  <Card>
+    ### Multi-Cluster Enterprise
+    - Development, staging, production isolation
+    - Geographic distribution
+    - Enhanced disaster recovery
+    - Compliance boundary separation
+  </Card>
 
-## Installation steps
+  <Card>
+    ### Hybrid Multi-Cloud
+    - Cloud provider redundancy
+    - Regulatory compliance across regions
+    - Maximum availability and resilience
+    - Enterprise-grade disaster recovery
+  </Card>
+</div>
 
-### 1. Sign in to the SettleMint helm registry
+## Prerequisites checklist for enterprise deployment
+
+Before starting the installation, ensure you have completed enterprise-grade prerequisite setup:
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Infrastructure & Access
+    - ✅ Completed all [prerequisite services](prerequisites/overview) setup
+    - ✅ Validated infrastructure meets [enterprise requirements](/launching-the-platform/self-hosted-onprem/infrastructure-requirements)
+    - ✅ Helm 3.x installed and configured
+    - ✅ kubectl access with cluster-admin permissions
+    - ✅ Container registry access credentials
+  </Card>
+
+  <Card>
+    ### Security & Compliance
+    - ✅ SSL/TLS certificates configured and validated
+    - ✅ HashiCorp Vault or equivalent secret management setup
+    - ✅ OAuth provider integration configured
+    - ✅ Network security policies reviewed and approved
+    - ✅ Backup and disaster recovery procedures established
+  </Card>
+</div>
+
+<Callout type="warning">
+  **Enterprise Security Validation**
+  
+  Before proceeding with production deployment, ensure your security team has reviewed and approved:
+  - Network firewall rules and ingress configuration
+  - SSL/TLS certificate chain and rotation procedures
+  - Secret management and encryption key handling
+  - Access control policies and RBAC configuration
+  - Audit logging and monitoring setup
+</Callout>
+
+## Enterprise deployment workflow
+
+<Accordions>
+  <Accordion title="What is the recommended deployment workflow for enterprise environments?">
+    Enterprise deployments should follow a phased approach: 1) Deploy to development environment, 2) Security and compliance review, 3) Deploy to staging for user acceptance testing, 4) Production deployment with gradual rollout, 5) Post-deployment monitoring and validation.
+  </Accordion>
+  
+  <Accordion title="How do I ensure zero-downtime updates in production?">
+    Use Helm's rolling update capabilities with proper readiness probes, configure multiple replicas for all services, implement proper health checks, and use blue-green deployment strategies for critical updates.
+  </Accordion>
+  
+  <Accordion title="What monitoring should be in place before production deployment?">
+    Implement comprehensive monitoring including application metrics (Prometheus), centralized logging (Loki/ELK), distributed tracing, infrastructure monitoring, security event logging, and automated alerting for critical services.
+  </Accordion>
+</Accordions>
+
+## Production installation steps
+
+<Steps>
+
+### Sign in to the SettleMint helm registry
 
 ```bash
 helm registry login harbor.settlemint.com --username <username> --password <password>
 ```
 
-Replace `<username>` and `<password>` with your provided credentials.
+Replace `<username>` and `<password>` with your provided enterprise credentials.
 
-### 2. Review configuration options
+<Callout type="info">
+**Enterprise Registry Access**
 
-View all available configuration options:
+Enterprise customers receive dedicated registry credentials with access to enterprise-specific images and configurations. Contact your account manager if you need registry access.
+</Callout>
+
+### Review enterprise configuration options
+
+View all available configuration options for enterprise deployment:
 
 ```bash
 helm show values oci://registry.settlemint.com/settlemint-platform/SettleMint --version 7.0.0
 ```
 
-### 3. Install the platform
+<Callout type="warning">
+**Security Review**
+
+Before configuring production values, have your security team review all available configuration options, especially those related to network policies, RBAC, and data encryption.
+</Callout>
+
+### Prepare enterprise production configuration
 
 Create a values file (values.yaml) with your configuration:
 

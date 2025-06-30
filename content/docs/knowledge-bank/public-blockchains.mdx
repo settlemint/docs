@@ -1,45 +1,192 @@
 ---
-title: "Public blockchains"
-description: Understanding public blockchain networks and their characteristics
+title: "What are public blockchains? Complete business guide to permissionless networks"
+description: "Understand public blockchain benefits for business: global reach, transparency, and $2 trillion market access. Learn when to choose public blockchain vs private for your applications."
 ---
 
-import { Callout } from "fumadocs-ui/components/callout";
-import { Card } from "fumadocs-ui/components/card";
+import { Callout, Tabs, Tab, Steps, Accordion, AccordionItem } from 'fumadocs-ui/components/callout';
+import { Card } from 'fumadocs-ui/components/card';
 
-# Public blockchain networks
+## What are public blockchains and when should businesses use them?
 
-<Callout type="info">
-  Public blockchains are permissionless networks where anyone can participate in
-  the network operations.
+**Who needs this knowledge:** Product managers, marketing leaders, CTO teams, and business strategists building consumer-facing applications, DeFi products, or global platforms.
+
+<Callout type="info" title="Public blockchain market opportunity">
+- **$2.3 trillion** total value locked across public blockchain ecosystems
+- **500 million** active users across public blockchain applications
+- **$150 billion** annual transaction volume in decentralized finance
+- **100+ countries** with active public blockchain adoption
 </Callout>
 
-## Major public networks
+### What business advantages do public blockchains provide?
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card>
-    ### Layer 1 Networks
-    - **Ethereum**
-      - Smart contract platform
-      - EVM compatibility
-      - Large developer ecosystem
-    - **Bitcoin**
-      - First blockchain
-      - Store of value
-      - Limited programmability
-  </Card>
+Public blockchains offer unique value propositions that private networks cannot match:
 
-  <Card>
-    ### Layer 2 Solutions
-    - **Polygon PoS**
-      - Ethereum sidechain
-      - Fast transactions
-      - Low fees
-    - **Optimism & Arbitrum**
-      - Optimistic rollups
-      - EVM compatible
-      - Scalability focused
-  </Card>
-</div>
+**Global Market Access:**
+- **Reach anyone, anywhere:** No geographical restrictions or complex partner onboarding
+- **24/7 operations:** Applications run continuously without downtime
+- **Instant user onboarding:** Anyone with a wallet can start using your application immediately
+- **Network effects:** Benefit from existing user bases and liquidity
+
+**Business Model Innovation:**
+- **Tokenization opportunities:** Create digital assets and new revenue models
+- **Composability benefits:** Integrate with existing DeFi protocols and services
+- **Community ownership:** Enable user governance and community-driven growth
+- **Reduced infrastructure costs:** Leverage existing blockchain infrastructure
+
+### When should my business choose public blockchain?
+
+<Tabs defaultValue="consumer">
+  <Tab value="consumer" label="🌍 Consumer Applications">
+    **Perfect for:** Apps needing global reach, transparency, and user ownership
+
+    **Key use cases:**
+    - **DeFi platforms:** Lending, trading, yield farming applications
+    - **NFT marketplaces:** Digital art, gaming assets, collectibles
+    - **Gaming:** Play-to-earn, asset ownership, cross-game portability
+    - **Social platforms:** Creator monetization, community governance
+
+    **Business benefits:**
+    - **Global user base:** Access 500M+ crypto users worldwide
+    - **Viral growth potential:** Composability drives organic user acquisition
+    - **Reduced payment friction:** Crypto-native users expect blockchain payments
+    - **Transparency builds trust:** Open source code and transparent operations
+
+    **Success examples:**
+    - **Uniswap:** $1 trillion+ trading volume, 4M+ users
+    - **OpenSea:** $40B+ NFT trading volume, dominant marketplace
+    - **Axie Infinity:** $4B+ revenue through play-to-earn gaming
+  </Tab>
+
+  <Tab value="financial" label="💰 Financial Services">
+    **Perfect for:** Open financial protocols, cross-border payments, asset tokenization
+
+    **Key applications:**
+    - **Cross-border payments:** Instant settlements without traditional banking
+    - **Asset tokenization:** Real estate, securities, commodities
+    - **Insurance protocols:** Parametric insurance, mutual coverage
+    - **Credit and lending:** Uncollateralized loans, yield optimization
+
+    **Business advantages:**
+    - **24/7 settlement:** No banking hours or weekend delays
+    - **Global liquidity:** Access to $150B+ DeFi liquidity pools
+    - **Programmable money:** Smart contracts automate complex financial logic
+    - **Regulatory arbitrage:** Operate across multiple jurisdictions
+
+    **Real implementations:**
+    - **Circle USDC:** $50B+ stablecoin for business payments
+    - **Aave:** $10B+ lending protocol for yield generation
+    - **Chainlink:** $7B+ securing financial data feeds
+  </Tab>
+
+  <Tab value="transparency" label="🔍 Transparency & Trust">
+    **Perfect for:** Supply chain, voting, certifications, public goods
+
+    **Applications requiring transparency:**
+    - **Supply chain tracking:** Public verification of product authenticity
+    - **Carbon credits:** Transparent environmental impact measurement
+    - **Voting systems:** Publicly verifiable election integrity
+    - **Certification tracking:** Educational, professional credential verification
+
+    **Trust-building benefits:**
+    - **Public auditability:** Anyone can verify claims and processes
+    - **Immutable records:** Historical data cannot be altered or hidden
+    - **Real-time verification:** Instant proof of authenticity or compliance
+    - **Reduced fraud:** Cryptographic security prevents tampering
+
+    **Enterprise adoption:**
+    - **Walmart:** Public food safety tracking across supply chains
+    - **De Beers:** Diamond authenticity verification on blockchain
+    - **Estonia:** Digital identity and voting for 1.3M citizens
+  </Tab>
+</Tabs>
+
+## Which public blockchain should my business choose?
+
+The choice of public blockchain significantly impacts your project's success, costs, and user experience:
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="ethereum" title="Ethereum - When is it worth the premium for maximum security and adoption?">
+    **Business value proposition:** The most secure and decentralized platform with the largest ecosystem, but comes with higher costs.
+
+    **Key advantages:**
+    - **Largest developer ecosystem:** 500,000+ developers, most tools and libraries
+    - **Maximum security:** $400B+ total value locked demonstrates proven security
+    - **Network effects:** Integrate with 4,000+ existing protocols and applications
+    - **Institutional adoption:** Major corporations and governments building on Ethereum
+
+    **Cost considerations:**
+    - **Transaction fees:** $5-50 per transaction during peak periods
+    - **Development costs:** Premium developer talent, higher complexity
+    - **User acquisition:** Users need significant ETH for gas fees
+
+    **Best for:**
+    - **High-value transactions:** Where security justifies higher fees
+    - **DeFi protocols:** Access to deepest liquidity and user base
+    - **Enterprise applications:** When maximum decentralization is required
+    - **Innovation projects:** Access to cutting-edge tools and research
+
+    **Success metrics:**
+    - **Daily transactions:** 1.2M+ (despite high fees)
+    - **Developer activity:** 60% of blockchain developers
+    - **Total value locked:** $25B+ across DeFi protocols
+  </AccordionItem>
+
+  <AccordionItem value="layer2" title="Layer 2 Solutions - How to get Ethereum benefits at 100x lower cost?">
+    **Business rationale:** Inherit Ethereum's security while achieving affordable transaction costs and fast confirmation times.
+
+    **Top Layer 2 options:**
+
+    **Polygon PoS:** Best for mainstream applications
+    - **Transaction costs:** $0.01-0.10 per transaction
+    - **Speed:** 2-second confirmation times
+    - **User base:** 200M+ users, 50,000+ dApps
+    - **Best for:** Gaming, NFTs, consumer applications
+
+    **Arbitrum:** Best for DeFi applications
+    - **Ethereum compatibility:** 100% EVM compatibility
+    - **Total value locked:** $2.5B+ across protocols
+    - **Developer experience:** Seamless migration from Ethereum
+    - **Best for:** Complex DeFi protocols, financial applications
+
+    **Optimism:** Best for social and governance applications
+    - **Transaction costs:** $0.10-1.00 per transaction
+    - **Governance focus:** Built-in governance and public goods funding
+    - **Developer incentives:** Retroactive public goods funding
+    - **Best for:** DAOs, social apps, public benefit projects
+
+    **Business decision framework:**
+    - **Cost-sensitive applications:** Start with Polygon or Arbitrum
+    - **Maximum compatibility needed:** Choose Arbitrum
+    - **Gaming or consumer apps:** Polygon offers best user experience
+    - **DeFi applications:** Arbitrum provides deepest liquidity integration
+  </AccordionItem>
+
+  <AccordionItem value="alternatives" title="Alternative Layer 1s - When do specialized blockchains make sense?">
+    **Solana:** Best for high-frequency trading and gaming
+    - **Performance:** 65,000 transactions per second
+    - **Cost:** $0.00025 per transaction
+    - **Trade-offs:** Lower decentralization, occasional network downtime
+    - **Best for:** DEXs, gaming, high-volume applications
+
+    **Avalanche:** Best for enterprise and custom subnets
+    - **Speed:** Sub-second finality
+    - **Customization:** Create application-specific subnets
+    - **Institutional focus:** Strong compliance and enterprise features
+    - **Best for:** Enterprise applications, custom blockchain needs
+
+    **BNB Chain:** Best for cost-conscious applications
+    - **Transaction costs:** $0.10-0.50 per transaction
+    - **User base:** 150M+ users through Binance ecosystem
+    - **Trade-offs:** More centralized, regulatory uncertainty
+    - **Best for:** Trading applications, cost-sensitive projects
+
+    **Decision criteria:**
+    - **Need extreme performance?** Consider Solana
+    - **Enterprise compliance requirements?** Evaluate Avalanche
+    - **Cost is primary concern?** BNB Chain might work
+    - **Maximum security and decentralization?** Stick with Ethereum/L2s
+  </AccordionItem>
+</Accordion>
 
 ## Public blockchain architecture deep dive: bitcoin, ethereum, and polygon
 

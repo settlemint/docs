@@ -1,11 +1,21 @@
 ---
-title: "Chaincode development"
-description:
-  A complete guide to writing, deploying, and managing chaincode for Hyperledger
-  Fabric networks
+title: "Enterprise Hyperledger Fabric Chaincode Development: Complete Implementation Guide"
+description: "Master Hyperledger Fabric chaincode development with enterprise-grade patterns, security frameworks, and deployment strategies for production blockchain networks."
 ---
 
-## Introduction to chaincode
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Tabs, Tab } from "fumadocs-ui/components/ui/tabs";
+import { Steps, Step } from "fumadocs-ui/components/ui/steps";
+import { Accordion, Accordions } from "fumadocs-ui/components/ui/accordion";
+
+# Enterprise Hyperledger Fabric Chaincode Development
+
+<Callout type="info">
+  Enterprise chaincode development requires understanding of permissioned blockchain architecture, business logic implementation, and enterprise security requirements for production-ready Hyperledger Fabric networks.
+</Callout>
+
+## Introduction to Chaincode
 
 Chaincode is the smart contract implementation in Hyperledger Fabric. It defines
 the business logic that runs on a Fabric network and is responsible for reading
@@ -25,42 +35,102 @@ exchange, access control, regulatory checks, and other workflows using trusted
 code. It is executed deterministically and only changes the ledger when
 transaction endorsement policies are met.
 
-## Language support
+## Enterprise Language Support & Selection
 
-Chaincode can be written in several programming languages, each offering the
-same functionality through different SDKs.
+<Tabs>
+  <Tab value="go" title="Go Programming">
+    <Card title="Production-Grade Choice" description="Optimal for enterprise environments">
+      **Performance Benefits**:
+      - High concurrency support
+      - Efficient memory management
+      - Fast compilation times
+      - Native blockchain libraries
+      
+      **Enterprise Use Cases**:
+      - High-throughput financial systems
+      - Supply chain tracking
+      - Asset management platforms
+    </Card>
+  </Tab>
+  
+  <Tab value="javascript" title="JavaScript/Node.js">
+    <Card title="Rapid Development" description="Ideal for quick prototyping">
+      **Development Speed**:
+      - Familiar syntax for web developers
+      - Rich ecosystem of libraries
+      - JSON-native data handling
+      - Rapid iteration cycles
+      
+      **Best Applications**:
+      - Proof of concepts
+      - API integrations
+      - Web-based frontends
+    </Card>
+  </Tab>
+  
+  <Tab value="java" title="Java Enterprise">
+    <Card title="Enterprise Integration" description="Perfect for regulated industries">
+      **Enterprise Features**:
+      - Strong typing system
+      - Extensive object modeling
+      - Enterprise framework integration
+      - Robust error handling
+      
+      **Regulatory Compliance**:
+      - Banking and finance
+      - Healthcare systems
+      - Government applications
+    </Card>
+  </Tab>
+</Tabs>
 
-<br></br>
+## Enterprise Chaincode Lifecycle Management
 
-Currently supported languages include:
+<Steps>
+  <Step title="Development & Testing">
+    **Local Development Environment**
+    - Set up Hyperledger Fabric test network
+    - Implement business logic with security patterns
+    - Write comprehensive unit and integration tests
+    - Performance testing and optimization
+  </Step>
+  
+  <Step title="Packaging & Validation">
+    **Enterprise Packaging Standards**
+    - Code review and security audit
+    - Dependency vulnerability scanning
+    - Package with proper versioning
+    - Digital signature verification
+  </Step>
+  
+  <Step title="Multi-Organization Approval">
+    **Consensus-Based Deployment**
+    - Install on endorsing peers across organizations
+    - Coordinate approval process between consortium members
+    - Validate endorsement policies match business requirements
+    - Ensure compliance with organizational policies
+  </Step>
+  
+  <Step title="Production Deployment">
+    **Channel Commitment & Activation**
+    - Commit chaincode definition to production channel
+    - Initialize with production data if required
+    - Monitor deployment across all participating organizations
+    - Implement rollback procedures for critical issues
+  </Step>
+  
+  <Step title="Monitoring & Maintenance">
+    **Operational Excellence**
+    - Real-time performance monitoring
+    - Transaction throughput analysis
+    - Error tracking and alerting
+    - Upgrade planning and execution
+  </Step>
+</Steps>
 
-- Go
-- JavaScript (Node.js)
-- Java
-
-The Go language is most commonly used for production-grade chaincode due to its
-performance and concurrency features. Node.js is preferred for rapid prototyping
-or when integrating with existing JavaScript-based applications. Java is used in
-regulated environments where strict typing and object modeling are beneficial.
-
-## Chaincode lifecycle overview
-
-The chaincode lifecycle defines the steps required to install, approve, and
-commit chaincode to a Fabric channel.
-
-<br></br>
-
-The lifecycle process is decentralized and allows each organization to
-participate in chaincode governance. The high-level steps are:
-
-- Package the chaincode
-- Install the chaincode on peers
-- Approve the chaincode definition for the channel
-- Commit the chaincode definition to the channel
-- Initialize the chaincode (optional)
-
-Each of these steps is executed using the peer CLI or Fabric SDKs. All actions
-are recorded on the blockchain and can be audited by members of the consortium.
+<Callout type="tip">
+  **Enterprise Insight**: The decentralized lifecycle process ensures all consortium members participate in chaincode governance, providing transparency and shared accountability for production deployments.
+</Callout>
 
 ## Project structure
 

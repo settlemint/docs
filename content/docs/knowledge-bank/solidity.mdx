@@ -1,13 +1,21 @@
 ---
-title: "Solidity programming"
-description: "Guide to Solidity smart contract development"
+title: "Professional Solidity Development: Smart Contract Programming & Enterprise DApp Development"
+description: "Master Solidity programming for enterprise blockchain development with comprehensive smart contract patterns, security frameworks, and production deployment strategies."
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Card } from "fumadocs-ui/components/card";
 import { Tabs, Tab } from "fumadocs-ui/components/ui/tabs";
+import { Steps, Step } from "fumadocs-ui/components/ui/steps";
+import { Accordion, Accordions } from "fumadocs-ui/components/ui/accordion";
 
-## Introduction to Solidity
+# Professional Solidity Development: Smart Contract Programming & Enterprise DApp Development
+
+<Callout type="info">
+  Professional Solidity development requires mastering smart contract architecture, security patterns, gas optimization, and enterprise-grade development practices for production blockchain applications.
+</Callout>
+
+## Introduction to Enterprise Solidity Development
 
 Solidity is the primary programming language used for writing smart contracts on
 the Ethereum blockchain and other EVM-compatible platforms. It is a statically
@@ -66,38 +74,93 @@ This contract demonstrates core concepts such as constructor initialization,
 public state variables, and transaction-triggered updates. Once deployed, this
 contract can store and retrieve a message on-chain and allow users to update it.
 
-## Data Types in Solidity
+## Enterprise Solidity Data Types & Optimization
 
-Solidity offers a range of data types to handle values. These include primitive
-types such as integers, booleans, and addresses, as well as complex structures
-like arrays, mappings, structs, and enums. Memory and storage handling is
-critical since the location of data impacts gas usage and state persistence.
-
-The basic types include the following
-
-**Boolean** Used to store true or false values. It consumes minimal storage and
-is commonly used for conditions and flags.
-
-**Integer** Solidity provides signed and unsigned integers with widths ranging
-from 8 to 256 bits. Integer overflow was a critical issue prior to version
-0.8.x, which now has built-in overflow checks.
-
-**Address** The address type holds Ethereum addresses. It includes functions
-such as transfer, send, and call to interact with other accounts or contracts.
-
-**String and Bytes** Strings are dynamically sized UTF-8 sequences. Bytes can be
-fixed or dynamic in size and are used for efficient binary data storage.
-
-**Arrays** Arrays can be fixed or dynamic and support indexing. They can hold
-any type including other arrays or structs.
-
-**Mappings** Mappings are hash tables that associate keys with values. They are
-particularly efficient for lookups and are widely used for token balances or
-permissions.
-
-**Structs and Enums** Structs group multiple fields under a single type. Enums
-define a restricted set of named values and are useful for state machines and
-access modes.
+<Tabs>
+  <Tab value="primitive" title="Primitive Types">
+    <Accordions>
+      <Accordion title="Value Types for Enterprise Applications">
+        **Boolean Operations**:
+        - Gas-efficient conditional logic
+        - State machine implementations
+        - Access control flags
+        
+        **Integer Types (uint8 to uint256)**:
+        - Built-in overflow protection (Solidity 0.8+)
+        - Optimal gas usage with uint256
+        - Financial calculations with precision
+        
+        **Address Types**:
+        - EOA (Externally Owned Account) handling
+        - Smart contract interactions
+        - Multi-signature implementations
+      </Accordion>
+      
+      <Accordion title="String & Bytes Optimization">
+        **String Handling**:
+        - UTF-8 encoding for internationalization
+        - IPFS hash storage for large content
+        - Gas optimization strategies
+        
+        **Bytes Arrays**:
+        - Fixed-size bytes1 to bytes32
+        - Dynamic bytes for variable content
+        - Cryptographic hash storage
+      </Accordion>
+    </Accordions>
+  </Tab>
+  
+  <Tab value="complex" title="Complex Data Structures">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <Card title="Arrays & Collections" description="Efficient data organization">
+        **Dynamic Arrays**:
+        - Flexible storage for user data
+        - Gas considerations for large datasets
+        - Iteration patterns and limits
+        
+        **Fixed Arrays**:
+        - Predictable gas costs
+        - Optimal for known data sizes
+        - Memory vs storage allocation
+      </Card>
+      
+      <Card title="Mappings & State Management" description="Key-value storage">
+        **Hash Table Implementation**:
+        - O(1) lookup performance
+        - Token balance tracking
+        - Permission management systems
+        
+        **Nested Mappings**:
+        - Complex data relationships
+        - Multi-dimensional data storage
+        - Access pattern optimization
+      </Card>
+    </div>
+  </Tab>
+  
+  <Tab value="custom" title="Custom Types">
+    **Struct Design Patterns**:
+    ```solidity
+    struct EnterpriseUser {
+        address userAddress;
+        uint256 accessLevel;
+        uint256 lastActivity;
+        bool isActive;
+    }
+    ```
+    
+    **Enum State Machines**:
+    ```solidity
+    enum WorkflowStatus { 
+        Pending, 
+        InProgress, 
+        Approved, 
+        Rejected, 
+        Completed 
+    }
+    ```
+  </Tab>
+</Tabs>
 
 ```solidity
 struct Product {

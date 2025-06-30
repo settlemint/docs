@@ -1,35 +1,193 @@
 ---
-title: "Application security"
+title: "How do I implement secure blockchain application development?"
+description: "DevSecOps practices for blockchain application security including secure SDLC, smart contract auditing, and automated vulnerability testing."
+keywords: ["blockchain application security", "secure SDLC", "smart contract security", "DevSecOps", "blockchain penetration testing", "crypto application security"]
 ---
 
-Our development process integrates security at every stage. We follow best
-practices and employ advanced tools to ensure the security of our applications.
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 
-## Secure software development lifecycle (sdlc)
+# How do I implement secure blockchain application development?
 
-Our SDLC incorporates security activities at each stage of development, such as
-requirements gathering, design, coding, testing, and deployment.
+Enterprise blockchain applications require specialized security practices that address both traditional web application vulnerabilities and blockchain-specific threats. Our DevSecOps approach integrates security controls throughout the entire development lifecycle, from smart contract design to production deployment.
 
-- **Secure Coding Practices**: Promote secure coding practices within the
-  development team, including adhering to coding standards and conducting code
-  reviews.
-- **Threat Modeling**: Perform threat modeling exercises to identify potential
-  security threats and vulnerabilities at the design stage.
-- **Secure Dependencies**: Manage and update all dependencies and third-party
-  libraries used in the software to ensure they are free of vulnerabilities.
+<Callout type="info">
+**Security-First Development**: Every blockchain application undergoes automated vulnerability scanning, smart contract auditing, and penetration testing before production deployment.
+</Callout>
 
-## Regular security testing
+## What makes blockchain application security different?
 
-We conduct regular security testing throughout the development lifecycle to
-identify and address potential security weaknesses.
+Traditional application security focuses on server-side vulnerabilities, but blockchain applications introduce unique attack vectors:
 
-- **Vulnerability Scanning**: Automated vulnerability scanning tools are used to
-  identify common vulnerabilities.
-- **Penetration Testing**: Regular third-party penetration tests are conducted
-  to identify and remediate vulnerabilities. Our penetration testing includes
-  network, application, and infrastructure assessments to ensure comprehensive
-  coverage. SettleMint does not publicly share detailed results of network
-  penetration tests, but high-level summaries and compliance reports can be
-  provided to customers upon request.
-- **Code Analysis**: Automated and manual code analysis to ensure that security
-  flaws are identified and addressed.
+- **Smart Contract Vulnerabilities**: Immutable code with financial consequences
+- **Cryptographic Key Management**: Private key security and multi-signature schemes
+- **Consensus Mechanism Attacks**: MEV, front-running, and transaction ordering
+- **Oracle Security**: External data feed manipulation and validation
+- **Cross-Chain Interactions**: Bridge security and atomic swap protocols
+
+## Secure Software Development Lifecycle (SDLC)
+
+<Steps>
+
+### Security Requirements Analysis
+- Define security requirements specific to blockchain use cases
+- Identify regulatory compliance requirements (SOX, GDPR, PCI-DSS)
+- Establish threat model for smart contracts and off-chain components
+- Document security acceptance criteria for user stories
+
+### Secure Architecture Design
+- **Threat Modeling**: STRIDE analysis for blockchain components
+- **Security Architecture Review**: Multi-signature schemes and access controls
+- **Cryptographic Protocol Selection**: Choose appropriate consensus mechanisms
+- **Attack Surface Analysis**: Identify potential entry points and vulnerabilities
+
+### Secure Coding Implementation
+- **Smart Contract Security Patterns**: Reentrancy guards, access modifiers, input validation
+- **Cryptographic Best Practices**: Secure random number generation, key derivation
+- **Off-Chain Security**: API security, database encryption, secure communications
+- **Code Review Process**: Peer review with security focus and automated checks
+
+### Security Testing & Validation
+- **Automated Security Scanning**: SAST, DAST, and dependency vulnerability scanning
+- **Smart Contract Auditing**: Formal verification and symbolic execution
+- **Penetration Testing**: Network, application, and blockchain-specific assessments
+- **Fuzzing**: Input validation testing for smart contracts and APIs
+
+### Secure Deployment & Monitoring
+- **Secure CI/CD Pipeline**: Automated security gates and vulnerability scanning
+- **Infrastructure Security**: Container security and Kubernetes hardening
+- **Runtime Protection**: Web application firewalls and DDoS protection
+- **Security Monitoring**: Real-time threat detection and incident response
+
+</Steps>
+
+## What security testing methods do we use?
+
+<Tabs items={['Smart Contract Security', 'Application Security', 'Infrastructure Security']}>
+  <Tab value="Smart Contract Security">
+    **Automated Analysis Tools**
+    - **Slither**: Static analysis for Solidity smart contracts
+    - **Mythril**: Symbolic execution and vulnerability detection
+    - **Securify**: Formal verification of security properties
+    - **MythX**: Comprehensive smart contract security analysis platform
+
+    **Manual Security Review**
+    - **Code Review**: Line-by-line security analysis by blockchain experts
+    - **Logic Verification**: Business logic validation and edge case testing
+    - **Gas Optimization**: Prevention of denial-of-service through gas limit attacks
+    - **Upgrade Pattern Security**: Proxy contract security and admin key management
+
+    **Formal Verification**
+    - **Mathematical Proofs**: Prove correctness of critical contract functions
+    - **Invariant Checking**: Verify that contract properties hold under all conditions
+    - **Symbolic Execution**: Explore all possible execution paths
+    - **Model Checking**: Verify temporal logic properties
+  </Tab>
+  
+  <Tab value="Application Security">
+    **Static Application Security Testing (SAST)**
+    - **SonarQube**: Code quality and security vulnerability detection
+    - **Checkmarx**: Static code analysis with crypto-specific rules
+    - **Veracode**: Security testing platform with blockchain extensions
+    - **CodeQL**: Semantic code analysis for security vulnerabilities
+
+    **Dynamic Application Security Testing (DAST)**
+    - **OWASP ZAP**: Web application vulnerability scanning
+    - **Burp Suite**: Professional web application security testing
+    - **Acunetix**: Advanced web vulnerability scanner
+    - **Custom Blockchain Testing**: API security and transaction validation
+
+    **Interactive Application Security Testing (IAST)**
+    - **Contrast Security**: Runtime application security monitoring
+    - **Seeker**: Real-time vulnerability detection during testing
+    - **Runtime Protection**: Protection against zero-day vulnerabilities
+  </Tab>
+  
+  <Tab value="Infrastructure Security">
+    **Container Security**
+    - **Trivy**: Container image vulnerability scanning
+    - **Clair**: Static analysis of application containers
+    - **Twistlock**: Runtime container security monitoring
+    - **Aqua Security**: Cloud-native security platform
+
+    **Kubernetes Security**
+    - **Kube-bench**: CIS Kubernetes benchmark compliance
+    - **Falco**: Runtime security monitoring for containers
+    - **OPA Gatekeeper**: Policy enforcement for Kubernetes
+    - **Network Policies**: Micro-segmentation and traffic control
+
+    **Cloud Security**
+    - **Cloud Security Posture Management (CSPM)**: Multi-cloud security monitoring
+    - **Infrastructure as Code Security**: Terraform and CloudFormation scanning
+    - **Cloud Access Security Broker (CASB)**: Cloud application security
+  </Tab>
+</Tabs>
+
+## How do we ensure smart contract security?
+
+Smart contracts handle valuable assets and cannot be easily updated after deployment, making security critical:
+
+<Steps>
+
+### Pre-Development Security
+- **Security Requirements**: Define security properties and invariants
+- **Threat Modeling**: Identify potential attack vectors and vulnerabilities
+- **Architecture Review**: Design secure upgrade patterns and access controls
+- **Cryptographic Review**: Validate random number generation and signature schemes
+
+### Development Security
+- **Secure Coding Standards**: Follow established smart contract security patterns
+- **Automated Testing**: Unit tests, integration tests, and property-based testing
+- **Static Analysis**: Continuous security scanning during development
+- **Peer Review**: Security-focused code reviews by blockchain experts
+
+### Pre-Deployment Security
+- **Comprehensive Security Audit**: Third-party security assessment
+- **Formal Verification**: Mathematical proof of security properties
+- **Testnet Deployment**: Extensive testing on blockchain testnets
+- **Bug Bounty Program**: Community-driven vulnerability discovery
+
+### Post-Deployment Security
+- **Runtime Monitoring**: Real-time transaction analysis and anomaly detection
+- **Emergency Response**: Pause mechanisms and emergency withdrawal procedures
+- **Continuous Analysis**: Ongoing monitoring for new vulnerability patterns
+- **Upgrade Management**: Secure upgrade procedures with time-locks and multi-sig
+
+</Steps>
+
+<Callout type="warn">
+**Critical Security Requirement**: All smart contracts undergo mandatory third-party security audits before mainnet deployment. Internal security reviews are insufficient for production blockchain applications handling financial assets.
+</Callout>
+
+## What penetration testing do we perform?
+
+Our penetration testing covers both traditional application security and blockchain-specific attack vectors:
+
+**Network Penetration Testing**
+- External network reconnaissance and vulnerability assessment
+- Internal network segmentation and lateral movement testing
+- Wireless network security assessment
+- Cloud infrastructure penetration testing
+
+**Application Penetration Testing**
+- Web application security testing (OWASP Top 10)
+- API security testing and authentication bypass
+- Mobile application security assessment
+- Blockchain node security testing
+
+**Smart Contract Penetration Testing**
+- Reentrancy and integer overflow attacks
+- Access control bypass and privilege escalation
+- Economic attacks and MEV manipulation
+- Oracle manipulation and front-running attacks
+
+**Social Engineering Testing**
+- Phishing campaigns targeting employees and users
+- Physical security assessments
+- Social media intelligence gathering
+- Pretexting and vishing campaigns
+
+<Callout type="info">
+**Penetration Testing Reports**: High-level summaries and compliance reports are available to enterprise customers upon request. Detailed technical findings are provided under NDA for security remediation purposes.
+</Callout>
