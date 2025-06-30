@@ -3,7 +3,10 @@ title: "Platform overview"
 icon: House
 ---
 
-import { Callout, Tabs, Tab, Steps, Accordion, AccordionItem } from 'fumadocs-ui/components/callout';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Steps } from 'fumadocs-ui/components/steps';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 ## What is SettleMint? The complete blockchain development platform for enterprises
 
@@ -83,28 +86,28 @@ SettleMint's ecosystem provides **everything needed to build, deploy, and scale 
       - Need for participant control and governance
     </Callout>
 
-    <Accordion type="single" collapsible className="mt-4">
-      <AccordionItem value="besu" title="Hyperledger Besu - What's the best private Ethereum network?">
+    <Accordions>
+      <Accordion title="Hyperledger Besu - What's the best private Ethereum network?">
         - Enterprise Ethereum with built-in privacy features
         - QBFT consensus for high throughput (1000+ TPS)
         - EVM compatible - use existing Ethereum tools
         - Used by: Central banks, financial institutions
-      </AccordionItem>
+      </Accordion>
       
-      <AccordionItem value="quorum" title="Quorum - How do I build on JPMorgan's blockchain?">
+      <Accordion title="Quorum - How do I build on JPMorgan's blockchain?">
         - Created by JPMorgan for financial services
         - Private transactions and data segregation
         - Ethereum-compatible smart contracts
         - Used by: Banks, payment processors
-      </AccordionItem>
+      </Accordion>
       
-      <AccordionItem value="fabric" title="Hyperledger Fabric - What's the most flexible enterprise blockchain?">
+      <Accordion title="Hyperledger Fabric - What's the most flexible enterprise blockchain?">
         - Modular architecture with pluggable components
         - Channel-based privacy between organizations
         - Non-cryptocurrency focused
         - Used by: Supply chains, healthcare, government
-      </AccordionItem>
-    </Accordion>
+      </Accordion>
+    </Accordions>
   </Tab>
   
   <Tab value="l1" label="🌐 Layer 1 Public Networks">
@@ -116,35 +119,35 @@ SettleMint's ecosystem provides **everything needed to build, deploy, and scale 
       - NFTs and digital collectibles
     </Callout>
 
-    <Accordion type="single" collapsible className="mt-4">
-      <AccordionItem value="ethereum" title="Ethereum - Should I build on Ethereum mainnet?">
+    <Accordions>
+      <Accordion title="Ethereum - Should I build on Ethereum mainnet?">
         - Largest developer ecosystem (500,000+ developers)
         - Most secure and decentralized
         - $400B+ total value locked
         - Best for: High-value transactions, DeFi protocols
-      </AccordionItem>
+      </Accordion>
       
-      <AccordionItem value="avalanche" title="Avalanche - What's the fastest L1 blockchain?">
+      <Accordion title="Avalanche - What's the fastest L1 blockchain?">
         - Sub-second finality
         - 4,500+ TPS capability
         - Custom subnet creation
         - Best for: Gaming, high-frequency trading
-      </AccordionItem>
+      </Accordion>
       
-      <AccordionItem value="hedera" title="Hedera Hashgraph - Which blockchain do enterprises prefer?">
+      <Accordion title="Hedera Hashgraph - Which blockchain do enterprises prefer?">
         - Governing council includes Google, IBM, Boeing
         - 10,000+ TPS with instant finality
         - Fixed low fees ($0.0001 per transaction)
         - Best for: Supply chain, micropayments
-      </AccordionItem>
+      </Accordion>
       
-      <AccordionItem value="sonic" title="Sonic (formerly Fantom) - What's the best alternative to Ethereum?">
+      <Accordion title="Sonic (formerly Fantom) - What's the best alternative to Ethereum?">
         - 10,000+ TPS with 1-second finality
         - EVM compatible with lower fees
         - Lachesis consensus for speed
         - Best for: DeFi, gaming applications
-      </AccordionItem>
-    </Accordion>
+      </Accordion>
+    </Accordions>
   </Tab>
   
   <Tab value="l2" label="⚡ Layer 2 Public Networks">
@@ -156,42 +159,42 @@ SettleMint's ecosystem provides **everything needed to build, deploy, and scale 
       - Existing Ethereum applications seeking scale
     </Callout>
 
-    <Accordion type="single" collapsible className="mt-4">
-      <AccordionItem value="polygon" title="Polygon PoS - How do I scale Ethereum applications?">
+    <Accordions>
+      <Accordion title="Polygon PoS - How do I scale Ethereum applications?">
         - 65,000+ TPS capability
         - $0.01 average transaction cost
         - 7,000+ dApps deployed
         - Best for: Payments, gaming, NFT marketplaces
-      </AccordionItem>
+      </Accordion>
       
-      <AccordionItem value="polygon-zkevm" title="Polygon zkEVM - What's the best zero-knowledge rollup?">
+      <Accordion title="Polygon zkEVM - What's the best zero-knowledge rollup?">
         - True EVM equivalence
         - Inherits Ethereum security
         - Lower costs than Polygon PoS
         - Best for: DeFi, high-security applications
-      </AccordionItem>
+      </Accordion>
       
-      <AccordionItem value="optimism" title="Optimism - Which L2 has the best developer experience?">
+      <Accordion title="Optimism - Which L2 has the best developer experience?">
         - Simple deployment from Ethereum
         - Optimistic rollup technology
         - Growing ecosystem fund
         - Best for: Ethereum app migration
-      </AccordionItem>
+      </Accordion>
       
-      <AccordionItem value="arbitrum" title="Arbitrum - What's the most adopted L2?">
+      <Accordion title="Arbitrum - What's the most adopted L2?">
         - Largest L2 by TVL ($10B+)
         - Full Ethereum compatibility
         - Nitro upgrade for speed
         - Best for: DeFi protocols, DAOs
-      </AccordionItem>
+      </Accordion>
       
-      <AccordionItem value="soneium" title="Soneium - What's Sony's blockchain solution?">
+      <Accordion title="Soneium - What's Sony's blockchain solution?">
         - Built by Sony for entertainment use cases
         - High throughput for gaming
         - Cross-chain connectivity
         - Best for: Gaming, media, entertainment
-      </AccordionItem>
-    </Accordion>
+      </Accordion>
+    </Accordions>
   </Tab>
 </Tabs>
 
