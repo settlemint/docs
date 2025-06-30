@@ -1,60 +1,32 @@
 ---
-title: "Add network and nodes"
-description: Guide to adding a Blockchain Network to your application
+title: "How to Add Enterprise Hyperledger Fabric Networks and Nodes"
+description: Complete guide to deploying permissioned blockchain networks for enterprise consortiums with fault-tolerant node configurations
 ---
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import React from "react";
 
-<div style={{
-  backgroundColor: "#e1eafd", 
-  color: "#356fee", 
-  padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
-  fontWeight: "bold",
-  lineHeight: "1.5",
-  textAlign: "left"
-}}>
-  Summary  
-  <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
-To build a blockchain application, the first step is setting up a blockchain network with the correct number of validating and non-validating nodes. You can either deploy a permissioned network such as Hyperledger Besu or GoQuorum, or connect to an L1 or L2 Public Network like Ethereum, Polygon PoS, Hedera, Polygon zkEVM, Avalanche, Arbitrum, or Optimism. Both mainnet and testnet versions are available for public networks.
-<br> </br>
-When creating an application on SettleMint, you will be prompted to select a
-network and assign it a name. By default, a first validating node is deployed
-along with the network, and you must assign a name to it as well. You may
-optionally provide an EC DSA P256 private key to use as custom key material for
-the node identity. If no key is provided, SettleMint will generate one
-automatically and save it in your private keys.
-<br> </br>
-In SettleMint-managed (SaaS) mode, you will need to choose between a shared or
-dedicated cluster for deployment. You can also select a cloud provider and a
-data center of your choice. Additionally, you will have the option to select
-from small, medium, or large resource packs, which can be scaled up or down
-later as needed.
-<br> </br>
-Before deploying the network, you will have the option to configure network
-settings and customize the genesis file. For most use cases, it is recommended
-to keep the default settings. Once configured, you can proceed with deployment.
-After a few minutes, your network manager and first node will be fully
-operational.
-<br> </br>
-To enhance reliability, you should add more nodes to your network for fault
-tolerance. The best practice is to deploy four validator nodes and two
-non-validator nodes. Once the nodes are set up, adding a load balancer will help
-distribute network traffic efficiently and improve performance.
-<br> </br>
-Once your network, nodes, and load balancer are running, you can access the
-Insights tab to integrate monitoring tools. For permissioned networks, you can
-add Blockscout Blockchain Explorer to track transactions and network activity.
-If you are using public EVM networks, publicly available blockchain explorers
-can be used instead.
+<Callout type="info" title="Enterprise Blockchain Infrastructure Setup">
+Enterprise blockchain applications require permissioned networks with proper governance, compliance controls, and fault-tolerant infrastructure. Hyperledger Fabric provides the enterprise-grade features needed for regulated industries including healthcare, finance, supply chain, and government sectors.
+</Callout>
 
-</div>
-</div>
+## Why Do Enterprises Choose Hyperledger Fabric for Permissioned Networks?
+
+Enterprise organizations deploy Hyperledger Fabric when they need:
+
+- **Regulatory Compliance**: Built-in identity management and access controls for GDPR, SOX, and industry-specific regulations
+- **Consortium Governance**: Multi-organization networks with defined roles and permissions
+- **Data Privacy**: Channel-based isolation and private data collections for sensitive information
+- **Performance Requirements**: High-throughput transaction processing for business-critical applications
+- **Enterprise Integration**: Seamless integration with existing IT infrastructure and legacy systems
+
+<Card title="Deployment Timeline" icon="clock">
+**Typical enterprise deployment**: 15-30 minutes for initial network setup, with additional time for consortium member onboarding and compliance configurations.
+</Card>
 
 ## Prerequisites
 
@@ -65,62 +37,143 @@ haven't created an application yet, follow our
 [Create Application](/building-with-settlemint/evm-chains-guide/create-an-organization-and-application)
 guide first.
 
-## 1. Add blockchain network
+## How Do I Deploy a Permissioned Enterprise Network?
 
-For EVM Chains, SettleMint offers Hyperledger Besu and Quorum for permissioned
-networks and a bunch of public networks to choose from. For the list of
-supported networks please refer -
-[Supported Networks](/platform-components/blockchain-infrastructure/network-manager#supported-blockchain-network-protocols)
+<Steps>
+### Select Hyperledger Fabric Network Type
+
+Choose Hyperledger Fabric for enterprise permissioned networks that require:
+- Identity and access management
+- Channel-based data isolation
+- Consortium governance structures
+- Regulatory compliance features
+
+For comprehensive network options, refer to our [Supported Networks](/platform-components/blockchain-infrastructure/network-manager#supported-blockchain-network-protocols) guide.
+
+### Configure Initial Network Deployment
 
 ![Select Network](../../../img/building-with-settlemint/select-network-fabric.png)
 
-When we deploy a network, first node is automatically deployed with it and is an
-orderer node. Once you have deployed a permissioned network or joined a public
-network, you can add more nodes to it.
+When deploying a Fabric network, the first orderer node is automatically provisioned to establish the ordering service foundation for your consortium.
+</Steps>
 
-## 2. Add blockchain nodes
+## How Do I Add Nodes for Enterprise Fault Tolerance?
 
-To see and add nodes, please click on **Blockchain Nodes** tile on the dashboard
-or use the **Blockchain Nodes** link in the left menu.
+<Steps>
+### Access Node Management
+
+Navigate to **Blockchain Nodes** from your application dashboard or left menu to manage your network infrastructure.
 
 ![Add Node](../../../img/building-with-settlemint/add-fabric-node-ui.png)
 
-To bootstrap a functional and fault-tolerant Hyperledger Fabric network, certain
-minimum infrastructure elements are needed. These include peer nodes for each
-organization and orderer nodes for the consensus layer. While development or
-test networks can run on minimal nodes, production networks typically enforce
-fault-tolerant configurations using Raft consensus and multiple organizations.
+### Plan Your Consortium Architecture
 
-### Minimum recommended node setup for fabric
+Enterprise Fabric networks require careful planning for production deployments. Development networks can operate with minimal nodes, but production environments mandate fault-tolerant configurations using Raft consensus across multiple organizations.
+</Steps>
 
-| Component               | Minimum Nodes | Recommended Setup        | Notes                                                                 |
+<Callout type="warning" title="Enterprise Production Requirements">
+Production enterprise networks require redundant infrastructure to meet SLA requirements and regulatory compliance standards. Single points of failure can compromise business continuity and regulatory audit trails.
+</Callout>
+
+### What's the Recommended Node Setup for Enterprise Production?
+
+<Tabs items={['Production Setup', 'Development Setup', 'High-Availability Setup']}>
+<Tab value="Production Setup">
+
+| Component               | Minimum Nodes | Enterprise Recommended   | Business Justification                                                |
 | ----------------------- | ------------- | ------------------------ | --------------------------------------------------------------------- |
-| Peer Nodes              | 1 per org     | 2+ per org               | At least one anchor peer is needed per org; more for load balancing.  |
-| Orderer Nodes           | 3 (Raft)      | 5 (odd number preferred) | Raft requires a quorum (>50%) for consensus; use odd numbers.         |
-| Organizations           | 2             | 3+                       | More orgs simulate decentralized governance and endorsement policies. |
-| Certificate Authorities | 1 per org     | 1 per org + TLS CA       | Separate TLS and root CA improves security isolation.                 |
+| Peer Nodes              | 1 per org     | 2+ per org               | Load balancing, redundancy, and endorsement policy compliance         |
+| Orderer Nodes           | 3 (Raft)      | 5 (odd number preferred) | Raft consensus requires >50% quorum; odd numbers prevent split-brain  |
+| Organizations           | 2             | 3+                       | True consortium governance and distributed endorsement policies        |
+| Certificate Authorities | 1 per org     | 1 per org + TLS CA       | Security isolation and regulatory compliance separation                |
 
-- **Peer Nodes**: A network with a single organization and one peer node is
-  technically valid but does not reflect real consortium setups. For endorsement
-  policies and distributed state replication, at least two orgs with peers are
-  recommended.
-- **Orderers with Raft**: Raft ordering service requires **at least 3 nodes**
-  for high availability. Using 5 nodes allows for one node to go down without
-  losing quorum.
-- **CA Services**: Each org should operate its own CA for identity issuance. TLS
-  CAs are often split for better separation of concerns.
+</Tab>
+<Tab value="Development Setup">
+
+For development and testing environments:
+- **1 Peer per organization** (minimum viable)
+- **1 Orderer node** (development only)
+- **2 Organizations minimum** (to test consortium patterns)
+- **1 CA per organization**
+
+</Tab>
+<Tab value="High-Availability Setup">
+
+For mission-critical enterprise deployments:
+- **3+ Peers per organization** (active-active-standby)
+- **7 Orderer nodes** (can tolerate 3 node failures)
+- **Multiple geographic regions**
+- **Dedicated TLS and root CAs**
+- **24/7 monitoring and alerting**
+
+</Tab>
+</Tabs>
+
+<Accordions>
+<Accordion title="Why Do Enterprise Networks Need Multiple Peer Nodes?">
+Enterprise peer nodes provide:
+- **Load Distribution**: Handle concurrent transaction requests
+- **High Availability**: Continue operations if nodes fail
+- **Endorsement Compliance**: Meet complex endorsement policy requirements
+- **Geographic Distribution**: Support global consortium members
+</Accordion>
+
+<Accordion title="How Does Raft Consensus Support Enterprise Requirements?">
+Raft ordering service ensures:
+- **Byzantine Fault Tolerance**: Handles up to (n-1)/2 faulty nodes
+- **Consistent Ordering**: Maintains transaction order across the network
+- **Fast Recovery**: Quick leader election and catch-up mechanisms
+- **Audit Trail**: Complete transaction ordering history
+</Accordion>
+
+<Accordion title="What Are Certificate Authority Best Practices?">
+Enterprise CA management includes:
+- **Separate TLS CAs**: Isolate transport layer security
+- **Root CA Security**: Hardware security modules (HSMs) for root keys
+- **Certificate Lifecycle**: Automated renewal and revocation processes
+- **Compliance Integration**: Integration with enterprise PKI infrastructure
+</Accordion>
+</Accordions>
+
+## How Do I Configure Enterprise Network Parameters?
 
 ![Fabric Network Config](../../../img/platfrom-components/fabric-config.png)
-Users can configure the following settings before deploying a **Fabric
-network**:
 
-| Parameter                    | Description                                                                              |
-| ---------------------------- | ---------------------------------------------------------------------------------------- |
-| Endorsement Policy           | Defines transaction endorsement requirements ("By all peers" or "By majority of peers"). |
-| Batch Timeout                | Time before transactions are grouped into a block.                                       |
-| Max Messages in Batch        | Maximum number of messages in a batch.                                                   |
-| Absolute Max Bytes in Batch  | Upper limit on batch size in megabytes (MB).                                             |
-| Preferred Max Bytes in Batch | Preferred batch size in megabytes (MB).                                                  |
+<Callout type="info" title="Network Configuration Impact">
+These parameters directly affect transaction throughput, latency, and compliance requirements. Configure based on your enterprise SLA requirements and regulatory constraints.
+</Callout>
+
+<Tabs items={['Performance Tuning', 'Compliance Settings', 'Development Settings']}>
+<Tab value="Performance Tuning">
+
+| Parameter                    | Enterprise Recommended | Performance Impact                                      |
+| ---------------------------- | --------------------- | ------------------------------------------------------ |
+| Endorsement Policy           | "By majority of peers" | Balances security with transaction throughput           |
+| Batch Timeout                | 1-2 seconds           | Lower latency for real-time business processes         |
+| Max Messages in Batch        | 100-500              | Higher throughput for bulk operations                  |
+| Absolute Max Bytes in Batch  | 10-20 MB             | Prevents oversized blocks affecting network performance |
+| Preferred Max Bytes in Batch | 2-5 MB               | Optimal block size for enterprise workloads           |
+
+</Tab>
+<Tab value="Compliance Settings">
+
+For regulated industries (finance, healthcare, government):
+- **Endorsement Policy**: "By all peers" for maximum audit trail
+- **Batch Timeout**: 500ms for real-time compliance monitoring
+- **Message Limits**: Lower values for granular audit logs
+- **Strict Block Sizes**: Consistent sizing for regulatory reporting
+
+</Tab>
+<Tab value="Development Settings">
+
+For development and testing environments:
+- **Endorsement Policy**: "By majority of peers" for faster testing
+- **Batch Timeout**: 10 seconds for debugging convenience
+- **Higher Message Limits**: Reduce network overhead during testing
+- **Flexible Block Sizes**: Allow larger transactions for test data
+
+</Tab>
+</Tabs>
 
 #### Channel configuration and policies
 
@@ -302,22 +355,13 @@ A dedicated **Metrics Panel** delivers real-time statistics, such as:
 These visual analytics tools enhance user insights and ensure efficient
 blockchain monitoring.
 
-<br></br>
-<div style={{
-  backgroundColor: "#D1E5E8", 
-  color: "#000000", 
-  padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px", 
-  fontSize: "18px", 
-  fontWeight: "light",
-  lineHeight: "1.5",
-  textAlign: "left"
-}}>
-Congratulations.!!
+<Callout type="success" title="Enterprise Infrastructure Deployment Complete">
+🎉 **Congratulations!** You have successfully deployed enterprise-grade Hyperledger Fabric infrastructure for your consortium.
 
-You have succesfully built the blockchain infrastructure layer for you
-application.
+**Next Steps:**
+- [Deploy chaincode](/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code) for business logic implementation
+- [Set up FabConnect middleware](/building-with-settlemint/hyperledger-fabric-guide/setup-fabconnect-middleware) for API access
+- [Configure monitoring and compliance](/building-with-settlemint/hyperledger-fabric-guide/audit-logs) tools
 
-From here you can proceed for sevelopment and deploymnet of chaincodes.
-
-</div>
+Your network is now ready for enterprise development and production workloads.
+</Callout>
