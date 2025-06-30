@@ -176,27 +176,27 @@ FireFly FabConnect provides three main sets of API endpoints designed for enterp
 | ----------------------------- | ------ | ----------------------------------------------------------------------- |
 | /identities                   | GET    | Audit and compliance reporting for identity management                   |
 | /identities                   | POST   | Automated user provisioning for enterprise onboarding                   |
-| /identities/{id}              | GET    | Identity verification for access control systems                         |
-| /identities/{id}              | PUT    | Role-based permission updates for organizational changes                 |
-| /identities/{id}/enroll       | POST   | Certificate lifecycle management for security compliance                 |
-| /identities/{id}/reenroll     | POST   | Automated certificate renewal for operational continuity                 |
-| /identities/{id}/revoke       | POST   | Immediate access revocation for security incidents                       |
+| /identities/\{id\}              | GET    | Identity verification for access control systems                         |
+| /identities/\{id\}              | PUT    | Role-based permission updates for organizational changes                 |
+| /identities/\{id\}/enroll       | POST   | Certificate lifecycle management for security compliance                 |
+| /identities/\{id\}/reenroll     | POST   | Automated certificate renewal for operational continuity                 |
+| /identities/\{id\}/revoke       | POST   | Immediate access revocation for security incidents                       |
 | /chaininfo                    | GET    | Network health monitoring and operational dashboards                     |
-| /blocks/{blockNumberOrHash}   | GET    | Audit trail reconstruction for compliance reporting                       |
-| /blockByTxId/{txId}           | GET    | Transaction forensics for fraud investigation                            |
+| /blocks/\{blockNumberOrHash\}   | GET    | Audit trail reconstruction for compliance reporting                       |
+| /blockByTxId/\{txId\}           | GET    | Transaction forensics for fraud investigation                            |
 | /transactions                 | POST   | Business process automation with blockchain integration                   |
-| /transactions/{txId}          | GET    | Transaction status monitoring for real-time business operations          |
+| /transactions/\{txId\}          | GET    | Transaction status monitoring for real-time business operations          |
 | /query                        | POST   | Business intelligence queries for operational insights                    |
 | /receipts                     | GET    | Batch transaction processing status for enterprise workflows             |
-| /receipts/{receiptId}         | GET    | Individual transaction verification for audit requirements               |
+| /receipts/\{receiptId\}         | GET    | Individual transaction verification for audit requirements               |
 | /eventstreams                 | GET    | Event monitoring configuration for business process automation           |
 | /eventstreams                 | POST   | Custom event stream creation for specific business requirements          |
-| /eventstreams/{id}            | GET    | Event stream health monitoring for operational reliability               |
-| /eventstreams/{id}            | DELETE | Event stream lifecycle management for configuration changes              |
+| /eventstreams/\{id\}            | GET    | Event stream health monitoring for operational reliability               |
+| /eventstreams/\{id\}            | DELETE | Event stream lifecycle management for configuration changes              |
 | /subscriptions                | GET    | Event subscription management for business process integration           |
 | /subscriptions                | POST   | Real-time business event configuration for automated workflows           |
-| /subscriptions/{id}           | GET    | Subscription monitoring for operational visibility                       |
-| /subscriptions/{id}           | DELETE | Subscription lifecycle management for system maintenance                 |
+| /subscriptions/\{id\}           | GET    | Subscription monitoring for operational visibility                       |
+| /subscriptions/\{id\}           | DELETE | Subscription lifecycle management for system maintenance                 |
 
 <Callout type="tip" title="Enterprise Documentation">
 For complete API specifications including authentication, rate limiting, and error handling, refer to the [Swagger Documentation](https://github.com/hyperledger/firefly-fabconnect) with enterprise deployment examples.
