@@ -4,7 +4,11 @@ description: "Learn how to customize, rebrand, and extend the SettleMint Asset T
 keywords: ["asset tokenization UI", "blockchain frontend customization", "Next.js DApp development", "SettleMint ATK branding", "React tokenization interface", "Tailwind CSS blockchain", "enterprise DApp customization", "Web3 UI components", "tokenization platform frontend", "blockchain application branding"]
 ---
 
-import { Callout, Cards, Steps, Tabs, Tab, Accordion, AccordionItem } from 'fumadocs-ui/components/callout';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Cards, Card } from 'fumadocs-ui/components/card';
+import { Steps } from 'fumadocs-ui/components/steps';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { FileCode2, Palette, Component, Globe, Zap, Lock } from 'lucide-react';
 
 ## Who needs asset tokenization UI customization?
@@ -25,17 +29,17 @@ The modular open-source platform enables fast deployment of asset tokenization s
 ![Application Code](../../../img/application-kits/atk-ui-github.png)
 
 <Cards>
-  <Cards.Card
+  <Card
     icon={<FileCode2 />}
     title="Frontend Focus"
     description="This guide covers the Next.js DApp located in kit/dapp/"
   />
-  <Cards.Card
+  <Card
     icon={<Component />}
     title="Component Library"
     description="50+ pre-built React components for asset tokenization"
   />
-  <Cards.Card
+  <Card
     icon={<Globe />}
     title="REST APIs"
     description="Enterprise-grade APIs for seamless integration"
@@ -44,8 +48,8 @@ The modular open-source platform enables fast deployment of asset tokenization s
 
 ## API integration capabilities
 
-<Accordion>
-  <AccordionItem title="What APIs are available for frontend integration?">
+<Accordions>
+  <Accordion title="What APIs are available for frontend integration?">
     The ATK exposes **25+ REST endpoints** covering:
     - **Asset operations**: Mint, burn, transfer, freeze (avg. 200ms response)
     - **User management**: KYC verification, role assignment, permissions
@@ -54,9 +58,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
     - **Compliance controls**: Whitelist management, transfer restrictions
     
     All endpoints use **OAuth 2.0** authentication with rotating API keys.
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="How do I integrate with existing enterprise systems?">
+  <Accordion title="How do I integrate with existing enterprise systems?">
     Common integration patterns include:
     - **ERP systems** (SAP, Oracle): Asset metadata sync, automated reconciliation
     - **CRM platforms** (Salesforce, HubSpot): Investor onboarding, KYC workflows
@@ -64,16 +68,16 @@ The modular open-source platform enables fast deployment of asset tokenization s
     - **Reporting tools** (Tableau, PowerBI): Real-time analytics dashboards
     
     Use the `/api/swagger` endpoint to generate TypeScript clients automatically.
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="What are typical API response times?">
+  <Accordion title="What are typical API response times?">
     Performance benchmarks from production deployments:
     - **Read operations**: 50-200ms (cached)
     - **Write operations**: 200-500ms (blockchain confirmation)
     - **Bulk operations**: 1-5 seconds (batch processing)
-    - **WebSocket events**: <100ms latency
-  </AccordionItem>
-</Accordion>
+    - **WebSocket events**: &lt;100ms latency
+  </Accordion>
+</Accordions>
 
 ## Project structure deep dive
 
@@ -132,27 +136,27 @@ The modular open-source platform enables fast deployment of asset tokenization s
 ## Technology stack specifications
 
 <Cards>
-  <Cards.Card
+  <Card
     title="Next.js 15.3"
     description="Server-side rendering, 40% faster builds, React Server Components"
   />
-  <Cards.Card
+  <Card
     title="Tailwind CSS 3.4"
     description="JIT compilation, 200+ utility classes, dark mode support"
   />
-  <Cards.Card
+  <Card
     title="TypeScript 5.0"
     description="100% type coverage, strict mode, advanced generics"
   />
-  <Cards.Card
+  <Card
     title="React 19"
     description="Concurrent features, automatic batching, Suspense boundaries"
   />
-  <Cards.Card
+  <Card
     title="Wagmi 2.0"
     description="Ethereum interactions, wallet management, contract hooks"
   />
-  <Cards.Card
+  <Card
     title="TanStack Query"
     description="Data fetching, caching, real-time synchronization"
   />
@@ -238,8 +242,8 @@ The modular open-source platform enables fast deployment of asset tokenization s
 
 ## Creating custom routes and views
 
-<Accordion>
-  <AccordionItem title="How do I add a new page for investor analytics?">
+<Accordions>
+  <Accordion title="How do I add a new page for investor analytics?">
     Create a new route using Next.js App Router:
 
     ```tsx
@@ -262,9 +266,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
       description: 'Real-time portfolio analytics and performance metrics',
     };
     ```
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="What are common custom views for tokenization platforms?">
+  <Accordion title="What are common custom views for tokenization platforms?">
     Based on 50+ deployments, these are the most requested custom views:
 
     | View Type | Purpose | Typical Users |
@@ -274,9 +278,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
     | Compliance Center | KYC reviews, transaction monitoring | Compliance teams |
     | Secondary Market | P2P trading, order book | Active traders |
     | Yield Calculator | ROI projections, payment schedules | Prospective investors |
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="How do I implement role-based routing?">
+  <Accordion title="How do I implement role-based routing?">
     Use middleware for access control:
 
     ```tsx
@@ -300,8 +304,8 @@ The modular open-source platform enables fast deployment of asset tokenization s
       matcher: ['/admin/:path*', '/issuer/:path*'],
     };
     ```
-  </AccordionItem>
-</Accordion>
+  </Accordion>
+</Accordions>
 
 ## Custom hooks for blockchain logic
 
@@ -513,8 +517,8 @@ The modular open-source platform enables fast deployment of asset tokenization s
 
 ## Internationalization and localization
 
-<Accordion>
-  <AccordionItem title="Which languages are supported out of the box?">
+<Accordions>
+  <Accordion title="Which languages are supported out of the box?">
     The ATK includes translations for 12 languages:
     - **English** (en) - Default
     - **Spanish** (es) - Latin America & Spain variants
@@ -528,9 +532,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
     - **Chinese** (zh) - Simplified & Traditional
     - **Arabic** (ar) - RTL support
     - **Hindi** (hi)
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="How do I add custom translations?">
+  <Accordion title="How do I add custom translations?">
     ```json
     // src/i18n/locales/en.json
     {
@@ -560,9 +564,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
       }
     }
     ```
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="How do I handle legal disclaimers by jurisdiction?">
+  <Accordion title="How do I handle legal disclaimers by jurisdiction?">
     Implement jurisdiction-aware content:
 
     ```tsx
@@ -588,8 +592,8 @@ The modular open-source platform enables fast deployment of asset tokenization s
       return disclaimers[country] || disclaimers.US;
     }
     ```
-  </AccordionItem>
-</Accordion>
+  </Accordion>
+</Accordions>
 
 ## Utility functions and type safety
 
@@ -803,19 +807,19 @@ The modular open-source platform enables fast deployment of asset tokenization s
 ## Real-world customization examples
 
 <Cards>
-  <Cards.Card
+  <Card
     title="DBS Bank - Project Orchid"
     description="Customized for government bond tokenization with SGD stablecoin integration"
   />
-  <Cards.Card
+  <Card
     title="Santander - Digital Assets Platform"
     description="Adapted for corporate bond issuance with multi-currency support"
   />
-  <Cards.Card
+  <Card
     title="BlackRock - Private Markets"
     description="Modified for alternative investment funds with sophisticated compliance rules"
   />
-  <Cards.Card
+  <Card
     title="Société Générale - FORGE"
     description="Enhanced for security token offerings with regulatory reporting"
   />
