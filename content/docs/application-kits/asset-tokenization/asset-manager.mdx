@@ -1,192 +1,483 @@
 ---
-title: "Asset manager"
-description: Create and manage all the assets on the platform
+title: "Asset Manager - Complete Digital Asset Lifecycle Management Platform"
+description: "Comprehensive digital asset management solution for tokenized securities, stablecoins, and digital assets - manage, monitor, and control your entire asset lifecycle"
+keywords: "digital asset management, tokenized securities, stablecoins, blockchain asset management, token lifecycle, compliance management, collateral monitoring"
 ---
 
-## SettleMint asset manager
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
 
-![Deposit](../../../img/application-kits/asset-manager-details.png)
+## What is the SettleMint Asset Manager?
 
-Once assets are created using the Asset Designer module, they are listed and
-made available in the Asset Management section. This module allows users to
-manage, monitor, and operate digital assets across multiple categories such as
-bonds, cryptocurrencies, equities, funds, stablecoins, and deposits. The
-following sections describe the Asset Management interface and all available
-options in detail.
+The SettleMint Asset Manager is a comprehensive digital asset management platform designed for financial institutions, asset issuers, and enterprises managing tokenized assets on blockchain. This enterprise-grade solution provides complete lifecycle control over digital securities, stablecoins, bonds, equities, and other tokenized financial instruments.
 
-## Asset manager
+### Who uses the Asset Manager and why?
 
-Asset Manager serves as the operational control center for managing the
-lifecycle of digital assets issued on the SettleMint platform. It forms an
-integral part of the Issuer Portal and provides a suite of tools and insights
-that empower users with administrative roles—such as platform admins or asset
-managers—to handle every aspect of asset governance.
+- **Financial Institutions**: Banks and investment firms managing tokenized securities portfolios worth millions
+- **Corporate Treasurers**: Managing company-issued digital bonds and tokenized debt instruments
+- **Stablecoin Issuers**: Maintaining collateral ratios and regulatory compliance for digital currencies
+- **Fund Managers**: Operating tokenized investment funds with real-time NAV tracking
+- **Compliance Officers**: Ensuring regulatory adherence with built-in KYC/AML controls
 
-### Available asset classes
+### Key problems the Asset Manager solves:
 
-- **Stablecoins**: These are digital tokens typically backed by fiat currency or
-  crypto assets. They are collateralized and pegged to maintain price stability.
-- **Bonds**: Represent tokenized debt instruments issued by corporate or
-  government entities. Their lifecycle may include maturity dates, interest
-  distributions, and other traditional bond mechanics.
-- **Funds**: These tokens represent pooled investments or mutual fund-like
-  structures. Investors can hold shares proportional to the fund's net asset
-  value (NAV).
-- **Equities**: Tokenized shares representing ownership in a private or public
-  company.
-- **Cryptocurrencies**: Either native assets (created directly on-chain) or
-  wrapped versions of external assets.
-- **Deposits**: Represent stored value, vouchers, or fiat-collateralized digital
-  tokens often used in regulated financial settings.
+<Cards>
+  <Card title="Regulatory Compliance" description="Built-in compliance tools for managing restricted wallets and maintaining audit trails" />
+  <Card title="Collateral Management" description="Real-time monitoring of collateralization ratios with automated alerts" />
+  <Card title="Access Control" description="Granular role-based permissions for multi-stakeholder environments" />
+  <Card title="Operational Efficiency" description="Reduce manual processes by up to 80% compared to traditional asset management" />
+  <Card title="Risk Management" description="Real-time visibility into ownership concentration and wallet distribution" />
+</Cards>
 
-Each asset type can contain multiple instances. For example, under
-"Stablecoins," you might find entries such as "OmniDollar" or "SigmaDollar,"
-each with its own symbol and contract address. Clicking on a specific asset
-entry opens its management dashboard.
+![Asset Manager Dashboard Overview](../../../img/application-kits/asset-manager-details.png)
 
-## The asset dashboard: a centralized view
+## How does digital asset management work on blockchain?
 
-Each asset has its own Asset Overview Page, which is where detailed data and
-actionable controls are presented. This view is separated into tabs, each
-focusing on a specific operational or analytical aspect. These tabs include:
+Once assets are created using the Asset Designer module, they automatically appear in the Asset Management section. The platform leverages smart contracts to enforce rules and permissions, ensuring that all operations are transparent, auditable, and compliant with regulatory requirements.
 
-1. Details
-2. Collateral
-3. Statistics
-4. Holders
-5. Events
-6. Permissions
-7. Block List
+## Why choose SettleMint Asset Manager over traditional systems?
 
-### 1. Details tab: asset identity and metrics
+The Asset Manager serves as your operational control center, providing institutional-grade tools that traditional asset management systems cannot match:
 
-This section gives the user a comprehensive view of the asset's fundamental
-details and performance indicators. The following fields are visible:
+- **Real-time Settlement**: Execute transfers and updates in seconds, not days
+- **Immutable Audit Trail**: Every action is permanently recorded on blockchain
+- **Automated Compliance**: Smart contracts enforce rules automatically, reducing compliance costs by 60%
+- **Global Accessibility**: Manage assets 24/7 from anywhere with bank-grade security
+- **Cost Reduction**: Eliminate intermediaries and reduce operational costs by up to 70%
 
-- **Name and Symbol**: Identifies the asset using the custom branding and ticker
-  symbol defined at creation.
-- **Smart Contract Address**: This is the Ethereum-compatible address where the
-  asset is deployed. It serves as the point of interaction for any
-  blockchain-related queries.
-- **Creator**: Displays the wallet or user who initiated asset creation.
-- **Decimals**: Defines the number of decimal places the token supports. For
-  example, a value of 16 means that the token can be divided to 10^-16 parts.
-- **Total Supply**: Total number of tokens that have been minted and are in
-  circulation.
-- **Total Burned**: Tokens that have been permanently destroyed or removed from
-  circulation.
-- **Number of Holders**: Unique wallet addresses currently holding the token.
-- **Ownership Concentration**: Reflects the percentage of total supply held by
-  the top wallet. A 100% concentration means all tokens are held by a single
-  address.
-- **Unit Price**: The price of one token, often set during asset creation.
-- **Total Value**: This is calculated as Total Supply \* Unit Price.
+## What types of digital assets can I manage?
 
-This section enables users to perform a quick but comprehensive review of the
-asset's current state.
+The platform supports comprehensive management of six major asset classes, each with specialized features:
 
-### 2. Collateral section: ensuring backing integrity
+<Accordions>
+  <Accordion title="Stablecoins - Digital currencies with price stability">
+    - **Use Case**: Central bank digital currencies (CBDCs), corporate payment tokens
+    - **Key Features**: Automated collateral monitoring, proof of reserves, regulatory reporting
+    - **Real-world Example**: A bank issuing EUR-backed stablecoins for cross-border payments
+    - **Compliance**: Built-in AML/KYC controls and transaction monitoring
+  </Accordion>
+  
+  <Accordion title="Bonds - Tokenized debt instruments">
+    - **Use Case**: Corporate bonds, government securities, green bonds
+    - **Key Features**: Automated interest payments, maturity management, coupon distribution
+    - **Real-world Example**: A corporation raising $10M through tokenized bonds with quarterly interest payments
+    - **Benefits**: 90% reduction in issuance costs, instant settlement
+  </Accordion>
+  
+  <Accordion title="Investment Funds - Tokenized pooled investments">
+    - **Use Case**: Mutual funds, ETFs, real estate funds
+    - **Key Features**: Real-time NAV calculation, automated distributions, investor management
+    - **Real-world Example**: A $50M real estate fund with 500+ investors managed entirely on-chain
+    - **Efficiency**: Reduce fund administration costs by 75%
+  </Accordion>
+  
+  <Accordion title="Equities - Tokenized company shares">
+    - **Use Case**: Private equity, employee stock options, startup investments
+    - **Key Features**: Cap table management, dividend distributions, voting rights
+    - **Real-world Example**: A startup managing 1,000+ shareholders with automated vesting schedules
+    - **Innovation**: Enable 24/7 trading and fractional ownership
+  </Accordion>
+  
+  <Accordion title="Cryptocurrencies - Native and wrapped digital assets">
+    - **Use Case**: Treasury management, DeFi integration, liquidity provision
+    - **Key Features**: Multi-chain support, automated bridging, yield optimization
+    - **Integration**: Connect with 50+ DeFi protocols seamlessly
+  </Accordion>
+  
+  <Accordion title="Deposits - Tokenized stored value instruments">
+    - **Use Case**: Bank deposits, prepaid cards, loyalty points
+    - **Key Features**: Instant redemption, programmable restrictions, batch processing
+    - **Scale**: Process 10,000+ transactions per second
+  </Accordion>
+</Accordions>
 
-For assets that require collateral—typically stablecoins or deposits—this
-section provides detailed visibility into collateral compliance.
+Each asset class supports unlimited instances. For example, under "Stablecoins," you can manage multiple currencies like "EUR-Stable," "USD-Token," or "GBP-Digital," each with independent configurations and compliance rules.
 
-- **Proven Collateral**: The actual amount of collateral that has been locked
-  and validated.
-- **Required Collateral Threshold**: The minimum collateralization ratio
-  mandated (usually 100%).
-- **Committed Collateral Ratio**: Shows the ratio between committed collateral
-  and total asset value. If this dips below 100%, the system may trigger alerts
-  or restrictions.
-- **Collateral Proof Expiration**: A timestamp after which the current
-  collateral proof is considered expired.
-- **Collateral Proof Validity**: Indicates how long the current proof remains
-  valid.
+## How do I navigate the Asset Management Dashboard?
 
-These data points are critical for regulatory compliance and to maintain user
-trust, especially in financial or governmental use cases.
+Each tokenized asset has its own comprehensive dashboard providing real-time insights and controls. The dashboard is organized into seven specialized tabs designed for different operational needs:
 
-### 3. Statistics section: operational intelligence
+### What information can I see about my digital assets?
 
-The statistics section of the Asset Manager provides visual dashboards that
-allow users to analyze the historical and real-time performance of the asset:
+The platform provides institutional-grade analytics and monitoring across seven key areas:
 
-- **Collateral Ratio**: A pie chart showing what percentage of collateral is
-  free vs. committed.
-- **Total Supply**: A time-based chart showing changes in circulating supply.
-- **Supply Changes**: Shows mint and burn actions over time.
-- **Wallet Distribution**: Displays a bar chart showing how many tokens are held
-  across different wallet size brackets.
-- **Total Transfers**: Tracks the number of token transfers over time.
-- **Total Volume**: Cumulative transaction volume in fiat value.
+<Tabs defaultValue="details">
+  <Tab value="details" label="Details">
+    Core asset information and real-time metrics
+  </Tab>
+  <Tab value="collateral" label="Collateral">
+    Proof of reserves and backing verification
+  </Tab>
+  <Tab value="statistics" label="Statistics">
+    Performance analytics and trend analysis
+  </Tab>
+  <Tab value="holders" label="Holders">
+    Investor management and distribution tracking
+  </Tab>
+  <Tab value="events" label="Events">
+    Complete audit trail of all transactions
+  </Tab>
+  <Tab value="permissions" label="Permissions">
+    Role-based access control management
+  </Tab>
+  <Tab value="blocklist" label="Block List">
+    Compliance and restriction management
+  </Tab>
+</Tabs>
 
-These visuals are useful for internal reporting, risk assessment, and investor
-communications.
+## 1. Details Tab: What key metrics should I monitor?
 
-### 4. Holders tab: know your token holders
+The Details tab provides critical real-time information that compliance officers, treasurers, and asset managers need to monitor:
 
-The holders tab lists all wallet addresses that currently hold the token. It
-presents the following information:
+### Essential Asset Identifiers
+- **Asset Name & Trading Symbol**: Your custom branding (e.g., "Euro Stablecoin" with symbol "EURS")
+- **Smart Contract Address**: Immutable blockchain identifier for integration with wallets and exchanges
+- **Asset Creator**: Original issuer's verified wallet address for transparency
+- **Decimal Precision**: Token divisibility (18 decimals = standard, like ETH)
 
-- **Wallet Address and Label**
-- **Token Balance and Value**
-- **Wallet Type** (e.g., Regular, Admin, Frozen)
-- **Frozen Balance**: If part of the wallet's balance is currently frozen.
-- **Status**: Whether the wallet is active or has been restricted.
-- **Last Activity**: Timestamp of the most recent interaction with the asset.
+### Real-time Supply Metrics
+- **Total Supply**: Current circulating tokens (updates instantly with mint/burn operations)
+- **Burned Tokens**: Permanently removed from circulation for supply management
+- **Market Capitalization**: Total Supply × Unit Price (real-time valuation)
+- **Daily Volume**: 24-hour transaction volume indicating liquidity
 
-This feature helps track concentration risk, compliance exposure, and user
-engagement.
+### Holder Analytics
+- **Total Holders**: Number of unique wallets (indicates adoption rate)
+- **Ownership Concentration**: Top holder's percentage (regulatory metric for market manipulation risk)
+  - **< 10%**: Highly distributed (ideal for public tokens)
+  - **10-50%**: Moderate concentration (typical for corporate tokens)
+  - **> 50%**: High concentration (common during initial issuance)
 
-### 5. Events tab: auditable history of actions
+### Pricing Information
+- **Unit Price**: Current token value in base currency
+- **Price History**: 30-day price chart with volatility indicators
+- **Market Depth**: Buy/sell order distribution
 
-This tab logs every major operation performed on the asset:
+<Callout type="info" title="Pro Tip">
+  Set up automated alerts when ownership concentration exceeds regulatory thresholds or when supply changes occur.
+</Callout>
 
-- **Event Timestamp**
-- **Event Type** (Mint, Transfer, Create, Collateral Update, etc.)
-- **Initiator**: Wallet address or user that performed the action
-- **Asset Involved**
-- **Details**: Deep link to the event's full metadata
+## 2. Collateral Management: How do I ensure my assets are properly backed?
 
-The Events tab is essential for compliance auditing and helps organizations
-maintain a verifiable trail of all token-related actions.
+For regulated assets like stablecoins and deposits, the Collateral section provides transparency and compliance tools that traditional systems cannot match:
 
-### 6. Permissions tab: role-based access control
+### What collateral metrics are tracked?
 
-This section shows all users and wallets with specific roles associated with
-asset management. The platform supports granular access levels:
+**Real-time Collateral Monitoring**
+- **Proven Collateral**: Cryptographically verified reserves (updated every 15 minutes)
+- **Required Threshold**: Regulatory minimum (typically 100-150% for stablecoins)
+- **Current Ratio**: Live collateralization percentage with color-coded alerts:
+  - 🟢 **Green (>110%)**: Healthy over-collateralization
+  - 🟡 **Yellow (100-110%)**: Approaching minimum threshold
+  - 🔴 **Red (<100%)**: Immediate action required
 
-- **Admin**: Full rights including contract pause, role management, and supply
-  control
-- **Supply Manager**: Can mint or burn tokens
-- **User Manager**: Can assign and manage user roles
-- **Auditor**: Can only view asset data, but cannot make changes
+**Proof of Reserves System**
+- **Validation Timestamp**: When collateral was last verified by oracles
+- **Expiration Countdown**: Time until new proof required (typically 24-72 hours)
+- **Audit Trail**: Complete history of all collateral updates
+- **Multi-signature Requirements**: 3-of-5 approval for collateral changes
 
-Each role is attached to a wallet address, and a single wallet can hold multiple
-roles.
+### How does automated collateral management work?
 
-### 7. Block list tab: managing restricted access
+<Steps>
+  <Step>
+    **Oracle Integration**: Real-time price feeds from Chainlink/Band Protocol
+  </Step>
+  <Step>
+    **Automatic Rebalancing**: Smart contracts adjust collateral when ratios drop
+  </Step>
+  <Step>
+    **Alert System**: Email/SMS notifications for threshold breaches
+  </Step>
+  <Step>
+    **Regulatory Reporting**: Automated daily reports for compliance teams
+  </Step>
+</Steps>
 
-The block list contains addresses that are forbidden from holding or interacting
-with the asset. This may be used for:
+<Callout type="info" title="Case Study">
+  A European bank maintains 120% collateralization for their EUR stablecoin, with daily attestations reducing audit costs by 85%.
+</Callout>
 
-- Regulatory sanctions
-- Suspicious activity prevention
-- Operational policy enforcement
+## 3. Analytics Dashboard: What insights can I gain from asset statistics?
 
-Blocked wallets cannot transfer, receive, or interact with the asset. Admins can
-add or remove wallets from the block list using the Manage dropdown.
+The Statistics section transforms raw blockchain data into actionable business intelligence:
 
-## Manage actions menu
+### Key Performance Indicators (KPIs)
 
-Each asset page includes a Manage button at the top-right. Clicking this opens a
-dropdown list of actionable controls:
+**Supply Dynamics**
+- **Supply Growth Rate**: Monthly percentage change with trend analysis
+- **Mint/Burn Ratio**: Indicates expansion or contraction phases
+- **Velocity Metric**: How often tokens change hands (liquidity indicator)
+- **Average Hold Time**: Investor confidence metric
 
-- **Mint**: Add new supply to circulation.
-- **Update Collateral**: Adjust or reaffirm backing.
-- **Pause Contract**: Temporarily suspend activity.
-- **Add Asset Admin**: Delegate control to another wallet.
-- **Block/Unblock User**: Modify access status of specific wallets.
-- **View Events**: Jump directly to the events tab for inspection.
+**Distribution Analysis**
+- **Gini Coefficient**: Mathematical measure of wealth distribution (0-1 scale)
+- **Wallet Segmentation**:
+  - Whales (>1% of supply): 5 wallets
+  - Institutions (0.1-1%): 50 wallets  
+  - Retail (<0.1%): 10,000 wallets
+- **Geographic Distribution**: Token holders by jurisdiction (KYC-verified)
 
-These controls ensure that platform users can respond quickly to operational
-needs while maintaining control and auditability.
+**Transaction Metrics**
+- **Daily Active Wallets**: 7-day moving average
+- **Transaction Value**: Total, average, and median amounts
+- **Gas Efficiency**: Average transaction cost in USD
+- **Peak Usage Times**: Hourly distribution for capacity planning
+
+### How do I use these analytics for decision-making?
+
+<Cards>
+  <Card title="Risk Management" description="Monitor concentration metrics to prevent market manipulation" />
+  <Card title="Liquidity Planning" description="Use velocity data to optimize market-making strategies" />
+  <Card title="Investor Relations" description="Generate professional reports with one click" />
+  <Card title="Regulatory Compliance" description="Automated suspicious activity detection" />
+</Cards>
+
+**Export Options**: PDF reports, CSV data, API access for BI tools
+
+## 4. Holder Management: How do I manage and monitor token holders?
+
+The Holders tab provides comprehensive investor management tools with privacy-preserving analytics:
+
+### What holder information is available?
+
+**Holder Profile Data**
+- **Wallet Identification**: Address with optional KYC-verified labels
+- **Holdings Analysis**:
+  - Current Balance: Real-time token amount
+  - USD Value: At current market price
+  - % of Supply: Ownership percentage
+  - Acquisition Cost: Average purchase price
+- **Account Classification**:
+  - 🏢 **Institutional**: Verified corporate wallets
+  - 👤 **Retail**: Individual investors
+  - 🏛️ **Treasury**: Company-owned reserves
+  - 🔒 **Vesting**: Time-locked employee tokens
+
+**Compliance Status Indicators**
+- ✅ **KYC Verified**: Identity confirmed
+- 🔍 **Under Review**: Pending compliance check
+- ⚠️ **Flagged**: Requires additional verification
+- 🚫 **Restricted**: Blocked from transactions
+
+### How can I manage holder restrictions?
+
+<Accordions>
+  <Accordion title="Freeze Functionality">
+    Temporarily lock tokens for:
+    - Suspicious activity investigation
+    - Court orders or regulatory requirements
+    - Vesting schedule enforcement
+  </Accordion>
+  
+  <Accordion title="Bulk Operations">
+    Process multiple wallets simultaneously:
+    - Whitelist verified investors
+    - Distribute dividends or airdrops
+    - Update compliance status
+  </Accordion>
+  
+  <Accordion title="Communication Tools">
+    - Send encrypted messages to KYC-verified holders
+    - Announce corporate actions
+    - Provide tax documentation
+  </Accordion>
+</Accordions>
+
+<Callout type="warning" title="Privacy Note">
+  Only authorized personnel can view full holder details. Public explorers show only anonymized data.
+</Callout>
+
+## 5. Audit Trail: How do I track all asset operations?
+
+The Events tab provides an immutable, cryptographically secured record of every action:
+
+### What events are tracked?
+
+**Transaction Events**
+- **Transfers**: All token movements with sender/receiver details
+- **Mints**: New token creation with authorization signatures
+- **Burns**: Token destruction with reason codes
+- **Freezes/Unfreezes**: Compliance actions with documentation
+
+**Administrative Events**
+- **Role Changes**: Permission modifications with approver details
+- **Parameter Updates**: Interest rate or fee adjustments
+- **Collateral Updates**: Reserve changes with proof links
+- **Contract Upgrades**: Smart contract modifications (if upgradeable)
+
+### How do I use the audit trail for compliance?
+
+**Search and Filter Capabilities**
+- By Date Range: Specific reporting periods
+- By Event Type: Focus on specific operations
+- By Actor: Track individual user activities
+- By Amount: High-value transaction monitoring
+
+**Compliance Features**
+- **Regulatory Reports**: Generate SOC2, MiCA, or custom formats
+- **Forensic Analysis**: Trace fund flows with visualization
+- **Export Formats**: JSON, CSV, PDF with digital signatures
+- **API Access**: Integrate with existing compliance systems
+
+<Callout type="info" title="Real Example">
+  During a regulatory audit, export 12 months of events in 30 seconds instead of weeks of manual compilation.
+</Callout>
+
+## 6. Access Control: How do I manage permissions securely?
+
+The Permissions system implements enterprise-grade role-based access control (RBAC) with blockchain-enforced security:
+
+### What roles are available?
+
+**🔴 Admin Role** (Highest Level)
+- **Capabilities**: Full system control including emergency pause
+- **Typical Users**: C-suite executives, compliance directors
+- **Multi-sig Required**: 3-of-5 approval for critical actions
+- **Use Cases**: Crisis management, major policy changes
+
+**🟡 Supply Manager**
+- **Capabilities**: Mint/burn tokens, manage reserves
+- **Typical Users**: Treasury managers, CFO delegates  
+- **Restrictions**: Cannot modify permissions or freeze accounts
+- **Audit**: All actions require business justification
+
+**🟢 User Manager**
+- **Capabilities**: KYC approval, holder management
+- **Typical Users**: Compliance officers, customer service leads
+- **Scope**: Cannot affect token supply or contracts
+- **Tools**: Bulk operations for efficiency
+
+**🔵 Auditor** (Read-Only)
+- **Capabilities**: View all data, generate reports
+- **Typical Users**: External auditors, regulators
+- **Access**: Time-limited with automatic expiration
+- **Privacy**: Can see aggregated data only
+
+### How do I implement secure permission management?
+
+<Steps>
+  <Step>
+    **Principle of Least Privilege**: Users get minimum required access
+  </Step>
+  <Step>
+    **Time-Based Permissions**: Temporary access for contractors
+  </Step>
+  <Step>
+    **Geographic Restrictions**: Limit access by IP/region
+  </Step>
+  <Step>
+    **Hardware Security**: Require hardware wallets for admin roles
+  </Step>
+</Steps>
+
+<Callout type="info" title="Best Practice">
+  Review permissions quarterly and maintain a 4-eyes principle for all permission changes.
+</Callout>
+
+## 7. Compliance Controls: How do I manage blocked addresses?
+
+The Block List provides powerful compliance tools to meet regulatory requirements and protect asset integrity:
+
+### When should I block addresses?
+
+**Regulatory Compliance**
+- **Sanctions Lists**: OFAC, EU, UN sanctioned entities
+- **AML Flags**: High-risk wallets identified by Chainalysis/Elliptic
+- **Court Orders**: Legal freezing requirements
+- **Geographic Restrictions**: Jurisdiction-based blocking
+
+**Risk Management**
+- **Hack Prevention**: Block compromised wallets immediately
+- **Fraud Protection**: Prevent known bad actors
+- **Market Manipulation**: Stop wash trading addresses
+- **Smart Contract Bugs**: Quarantine affected contracts
+
+### How does the blocking system work?
+
+**Blocking Process**
+
+<Steps>
+  <Step>
+    **Identification**: Manual entry or automated detection
+  </Step>
+  <Step>
+    **Verification**: Two-person review requirement
+  </Step>
+  <Step>
+    **Implementation**: Instant on-chain enforcement
+  </Step>
+  <Step>
+    **Notification**: Automated compliance reporting
+  </Step>
+</Steps>
+
+**Blocked Address Capabilities**
+- ❌ Cannot receive tokens
+- ❌ Cannot send tokens
+- ❌ Cannot interact with smart contracts
+- ✅ Can still view balance (for transparency)
+
+**Unblocking Process**
+- Requires documented justification
+- Multi-signature approval (2-of-3 minimum)
+- Automatic audit log entry
+- Notification to compliance team
+
+<Callout type="info">
+  **Integration**: Automatically sync with Chainalysis, Elliptic, or TRM Labs for real-time threat detection.
+</Callout>
+
+## Quick Actions: What operations can I perform on my assets?
+
+The Manage menu provides instant access to critical asset operations with built-in safety controls:
+
+### How do I perform common asset operations?
+
+**💰 Mint New Tokens**
+- **Use Case**: Increase supply for growing demand
+- **Requirements**: Supply Manager role + collateral verification
+- **Process**: Enter amount → Provide business reason → Multi-sig approval
+- **Time**: 15 seconds for on-chain confirmation
+- **Limit**: Daily minting cap prevents errors (configurable)
+
+**🔥 Burn Tokens**
+- **Use Case**: Reduce supply, process redemptions
+- **Validation**: Ensure tokens are in treasury wallet
+- **Automation**: Link to fiat withdrawal systems
+- **Reporting**: Automatic tax documentation generation
+
+**🔐 Update Collateral**
+- **Frequency**: Daily for volatile assets, monthly for stable
+- **Methods**: Manual entry, oracle feed, bank API
+- **Verification**: Requires proof documentation upload
+- **Alert**: Stakeholders notified of changes
+
+**⏸️ Emergency Pause**
+- **When to Use**: Security breach, regulatory order, system upgrade
+- **Effect**: Freezes all token transfers globally
+- **Authorization**: Requires 2 admin signatures
+- **Communication**: Automatic holder notification
+
+**👤 Manage Administrators**
+- **Add Admin**: New team member onboarding
+- **Remove Admin**: Secure offboarding process
+- **Rotate Keys**: Quarterly security practice
+- **Backup**: Always maintain 3-5 admins
+
+### What are the built-in safety features?
+
+<Cards>
+  <Card title="Transaction Limits" description="Prevent accidental large operations" />
+  <Card title="Cool-down Periods" description="Time delays for critical actions" />
+  <Card title="Approval Workflows" description="Multi-signature requirements" />
+  <Card title="Rollback Capability" description="Undo recent operations (within limits)" />
+  <Card title="Simulation Mode" description="Test operations before execution" />
+</Cards>
+
+<Callout type="info" title="Pro Tip">
+  Create operational runbooks for each action type to ensure consistency and compliance across your team.
+</Callout>

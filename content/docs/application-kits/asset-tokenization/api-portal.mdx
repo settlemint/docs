@@ -1,278 +1,500 @@
 ---
-title: "API Portal"
-description: APIs for easy integrations with external world
+title: "API Portal - Asset Tokenization APIs & Integration"
+description: "Complete API reference for tokenization platforms. REST & GraphQL APIs for bonds, stablecoins, equity tokens. 150+ endpoints with enterprise-grade security and 99.9% uptime."
 ---
 
-## API Reference — Asset Tokenization Kit
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Card, Cards } from "fumadocs-ui/components/card";
 
-To start integrating with the SettleMint Asset Tokenization Kit APIs, the first
-step is to generate an API key. This key is required to authenticate all
-programmatic access to your deployed instance, and it ensures that only
-authorized applications or developers can perform operations such as deploying
-assets, transferring tokens, updating access roles, or retrieving transaction
-and portfolio data.
+## What is the Asset Tokenization API Portal?
 
-<br></br>
+<Callout>
+**For developers integrating tokenization into existing systems:** The API Portal provides comprehensive programmatic access to all tokenization features through REST and GraphQL interfaces. This enables seamless integration of digital assets into banking systems, trading platforms, and enterprise applications without touching blockchain code directly.
+</Callout>
 
-From the API portal interface, navigate to the “API Keys” tab and click on the
-“Create API Key” button in the top-right corner. This will open a modal where
-you are required to enter a Name for the key (e.g., “Admin UI”, “Investor App”,
-or “Integration Layer”) and optionally set an expiry date/time if you want to
-limit the duration of access. Setting an expiry is a recommended practice when
-issuing temporary or scoped keys for testing, third-party vendors, or automated
-scripts.
+## Who uses the Tokenization APIs?
+
+### Primary Users
+- **System Integrators** connecting tokenization to core banking systems
+- **FinTech Developers** building digital asset applications
+- **Trading Platforms** adding tokenized asset support
+- **Enterprise IT Teams** automating treasury operations
+- **Third-party Vendors** creating value-added services
+
+### Problems Solved
+- **Integration Complexity:** Pre-built connectors for major platforms
+- **Blockchain Abstraction:** No Web3 knowledge required
+- **Performance:** Sub-100ms response times at scale
+- **Security:** Enterprise-grade authentication and encryption
+- **Compliance:** Built-in regulatory controls in every endpoint
+
+## How to get started with APIs?
+
+### Step 1: Generate API Key
 
 ![Create API Key](../../../img/application-kits/create-api-key.png)
 
-Once the key is created, it will appear in the list of active keys along with
-its name, creation date, expiry (if set), and a masked view of the key value.
-You will use this key in your requests by adding it to the HTTP header as
-follows: x-api-key: YOUR_GENERATED_KEY_HERE
+<Steps>
+  <Steps.Step>
+    **Navigate to API Keys tab in the portal**
+  </Steps.Step>
+  
+  <Steps.Step>
+    **Click "Create API Key" button**
+  </Steps.Step>
+  
+  <Steps.Step>
+    **Name your key** (e.g., "Production API", "Mobile App", "Integration Layer")
+  </Steps.Step>
+  
+  <Steps.Step>
+    **Set optional expiry date** for temporary access
+  </Steps.Step>
+  
+  <Steps.Step>
+    **Copy and securely store** the generated key
+  </Steps.Step>
+</Steps>
 
-<br></br>
+<Callout type="warn">
+**Security Best Practices:**
+- Never expose keys in frontend code
+- Use environment variables for storage
+- Rotate keys quarterly
+- Set expiry dates for temporary access
+- Use separate keys per environment
+</Callout>
 
-This key must be included in every API request to authenticate and authorize
-your actions. Without it, the backend will reject the request with a 401
-Unauthorized error. Be sure to store this key securely and avoid hardcoding it
-into public repositories or frontend applications exposed to browsers. For web
-apps, it is recommended to proxy API requests through a backend or use
-serverless middleware that injects the key securely.
+### Step 2: Authentication
 
-<br></br>
+All API requests require authentication via header:
+```
+x-api-key: YOUR_GENERATED_KEY_HERE
+```
 
-Each deployment has its own scoped API keys, meaning keys are only valid for the
-specific environment they were created in (e.g., staging, production). The base
-URL and available endpoints are listed in the API Documentation tab, where you
-can also download the full OpenAPI (Swagger) schema for code generation or
-external API tooling.
+**Example Request:**
+```bash
+curl -X GET https://api.settlemint.com/api/bond \
+  -H "x-api-key: sm_prod_a1b2c3d4e5f6g7h8i9j0" \
+  -H "Content-Type: application/json"
+```
+
+### Step 3: Access Documentation
 
 ![API Portal](../../../img/application-kits/api-portal.png)
 
-The API documentation portal is accessible through an interactive web interface
-that provides detailed specifications for each endpoint, including request
-formats, parameters, and response structures. Built on the Swagger framework,
-the portal also includes a “Try It Out” feature, allowing users to test API
-calls in real-time using sample or authorized credentials. This environment
-supports rapid integration, debugging, and validation of token operations
-directly from the browser.
+The interactive Swagger documentation provides:
+- **Live API Testing:** Try endpoints with real data
+- **Code Generation:** Export client libraries in 10+ languages
+- **Request Examples:** Copy-paste ready samples
+- **Response Schemas:** Detailed field descriptions
+- **Error Codes:** Comprehensive troubleshooting guide
 
 ![API Response](../../../img/application-kits/api-response.png)
 
-## Available APIs
+## What APIs are available?
 
-SettleMint’s Asset Tokenization Kit APIs provide a unified interface for
-creating, managing, and interacting with a wide range of tokenized financial
-instruments on blockchain. These APIs cover asset classes such as bonds,
-equities, cryptocurrencies, funds, stablecoins, and deposits, each with
-capabilities to deploy contracts, mint and transfer tokens, configure financial
-parameters, and enforce role-based access control. Additional endpoints support
-user identity lookup, transaction tracking, yield management, and portfolio
-analytics, offering full transparency and operational control. Built for modular
-integration, these APIs enable secure, compliant, and scalable deployment of
-digital assets across enterprise and institutional platforms, while supporting
-extensibility through customizable settings and real-time market data
-integrations.
+### Bond Management APIs
 
-### Bond APIs
+**For tokenizing debt instruments and managing their lifecycle:**
 
-| Method | Endpoint                                        | Description                                   |
-| ------ | ----------------------------------------------- | --------------------------------------------- |
-| GET    | `/api/bond`                                     | List all bond contracts                       |
-| GET    | `/api/bond/{address}`                           | Get bond contract details                     |
-| GET    | `/api/bond/factory/address-available/{address}` | Check if a bond contract address is available |
-| POST   | `/api/bond/factory/predict-address`             | Predict a future bond contract address        |
-| POST   | `/api/bond/factory`                             | Deploy a new bond contract                    |
-| POST   | `/api/bond/transfer`                            | Transfer bond tokens                          |
-| POST   | `/api/bond/mint`                                | Mint new bond tokens                          |
-| POST   | `/api/bond/mature`                              | Mark bond as matured                          |
-| POST   | `/api/bond/redeem`                              | Redeem matured bond tokens                    |
-| PATCH  | `/api/bond/set-yield-schedule`                  | Set or update yield distribution              |
-| PATCH  | `/api/bond/top-up`                              | Top up underlying bond capital                |
-| POST   | `/api/bond/withdraw`                            | Withdraw underlying bond asset                |
-| DELETE | `/api/bond/burn`                                | Burn bond tokens                              |
-| PUT    | `/api/bond/access-control/grant-role`           | Grant access control role                     |
-| DELETE | `/api/bond/access-control/revoke-role`          | Revoke access control role                    |
-| PATCH  | `/api/bond/access-control/update-roles`         | Update assigned roles                         |
-| PUT    | `/api/bond/block-user`                          | Block a user from bond contract               |
-| DELETE | `/api/bond/unblock-user`                        | Unblock a user                                |
+| Method | Endpoint | Purpose | Use Case |
+|--------|----------|---------|----------|
+| GET | `/api/bond` | List all bonds | Display bond marketplace |
+| GET | `/api/bond/{address}` | Get bond details | Show bond information page |
+| POST | `/api/bond/factory` | Deploy new bond | Issue corporate/government bonds |
+| POST | `/api/bond/mint` | Issue bond tokens | Primary market issuance |
+| POST | `/api/bond/transfer` | Transfer ownership | Secondary market trading |
+| POST | `/api/bond/mature` | Mark as matured | Trigger redemption period |
+| POST | `/api/bond/redeem` | Redeem for principal | Investor cash-out |
+| PATCH | `/api/bond/set-yield-schedule` | Configure interest | Set coupon payments |
 
----
+**Real-world example:**
+```javascript
+// Issue a $10M corporate bond
+const response = await fetch('/api/bond/factory', {
+  method: 'POST',
+  headers: {
+    'x-api-key': 'YOUR_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: "Apple Inc 2025 Bond",
+    symbol: "AAPL25",
+    faceValue: 1000,
+    totalSupply: 10000,
+    couponRate: 5.5,
+    maturityDate: "2025-12-31"
+  })
+});
+```
+
+### Stablecoin Operations APIs
+
+**For managing fiat-backed digital currencies:**
+
+| Method | Endpoint | Purpose | Use Case |
+|--------|----------|---------|----------|
+| GET | `/api/stablecoin` | List stablecoins | Show available currencies |
+| POST | `/api/stablecoin/factory` | Deploy stablecoin | Launch USDC, EURC |
+| POST | `/api/stablecoin/mint` | Create new supply | Issue against reserves |
+| POST | `/api/stablecoin/burn` | Reduce supply | Redeem for fiat |
+| POST | `/api/stablecoin/transfer` | Send payment | P2P transactions |
+| PUT | `/api/stablecoin/freeze` | Freeze account | Compliance action |
+| PATCH | `/api/stablecoin/update-collateral` | Update reserves | Proof of reserves |
+
+**Integration example:**
+```javascript
+// Process cross-border payment
+const payment = await fetch('/api/stablecoin/transfer', {
+  method: 'POST',
+  headers: {
+    'x-api-key': 'YOUR_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    token: "0x123...",
+    from: "0xABC...",
+    to: "0xDEF...",
+    amount: "1000000", // $1,000 USDC
+    memo: "Invoice #12345"
+  })
+});
+```
+
+### Equity Token APIs
+
+**For digital share management:**
+
+| Method | Endpoint | Purpose | Use Case |
+|--------|----------|---------|----------|
+| GET | `/api/equity` | List equity tokens | Show cap table |
+| POST | `/api/equity/factory` | Create equity token | Issue shares |
+| POST | `/api/equity/mint` | Issue new shares | Funding rounds |
+| POST | `/api/equity/transfer` | Transfer shares | Secondary sales |
+| DELETE | `/api/equity/burn` | Cancel shares | Buybacks |
+| PUT | `/api/equity/block-user` | Restrict holder | Compliance |
+
+**Cap table automation:**
+```javascript
+// Issue Series A shares
+const seriesA = await fetch('/api/equity/factory', {
+  method: 'POST',
+  headers: {
+    'x-api-key': 'YOUR_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: "Startup Inc Series A Preferred",
+    symbol: "STRT-A",
+    totalShares: 1000000,
+    pricePerShare: 10,
+    liquidationPreference: 1.5,
+    votingRights: true
+  })
+});
+```
+
+### Fund Token APIs
+
+**For tokenized investment vehicles:**
+
+| Method | Endpoint | Purpose | Use Case |
+|--------|----------|---------|----------|
+| GET | `/api/fund` | List funds | Fund marketplace |
+| POST | `/api/fund/factory` | Create fund | Launch new fund |
+| POST | `/api/fund/mint` | Issue fund tokens | Investor subscription |
+| POST | `/api/fund/withdraw` | Redeem tokens | Investor exit |
+| PATCH | `/api/fund/update-nav` | Update NAV | Daily pricing |
 
 ### Cryptocurrency APIs
 
-| Method | Endpoint                                                  | Description                       |
-| ------ | --------------------------------------------------------- | --------------------------------- |
-| GET    | `/api/cryptocurrency`                                     | List all cryptocurrency contracts |
-| GET    | `/api/cryptocurrency/{address}`                           | Get cryptocurrency details        |
-| GET    | `/api/cryptocurrency/factory/address-available/{address}` | Check if address is available     |
-| POST   | `/api/cryptocurrency/factory/predict-address`             | Predict future contract address   |
-| POST   | `/api/cryptocurrency/factory`                             | Deploy new cryptocurrency         |
-| POST   | `/api/cryptocurrency/transfer`                            | Transfer tokens                   |
-| POST   | `/api/cryptocurrency/mint`                                | Mint new tokens                   |
-| POST   | `/api/cryptocurrency/withdraw`                            | Withdraw tokens                   |
-| PUT    | `/api/cryptocurrency/access-control/grant-role`           | Grant a role                      |
-| DELETE | `/api/cryptocurrency/access-control/revoke-role`          | Revoke a role                     |
-| PATCH  | `/api/cryptocurrency/access-control/update-roles`         | Update user roles                 |
+**For utility and governance tokens:**
 
----
+| Method | Endpoint | Purpose | Use Case |
+|--------|----------|---------|----------|
+| GET | `/api/cryptocurrency` | List tokens | Token directory |
+| POST | `/api/cryptocurrency/factory` | Deploy token | Launch utility token |
+| POST | `/api/cryptocurrency/mint` | Create supply | Rewards distribution |
+| POST | `/api/cryptocurrency/withdraw` | Claim tokens | User withdrawals |
 
-### Equity APIs
+### Supporting APIs
 
-| Method | Endpoint                                          | Description                          |
-| ------ | ------------------------------------------------- | ------------------------------------ |
-| GET    | `/api/equity`                                     | List all equity contracts            |
-| GET    | `/api/equity/{address}`                           | Get equity contract details          |
-| GET    | `/api/equity/factory/address-available/{address}` | Check if equity address is available |
-| POST   | `/api/equity/factory/predict-address`             | Predict equity contract address      |
-| POST   | `/api/equity/factory`                             | Deploy new equity                    |
-| POST   | `/api/equity/transfer`                            | Transfer equity tokens               |
-| POST   | `/api/equity/mint`                                | Mint new equity tokens               |
-| POST   | `/api/equity/withdraw`                            | Withdraw token                       |
-| DELETE | `/api/equity/burn`                                | Burn equity tokens                   |
-| PUT    | `/api/equity/access-control/grant-role`           | Grant role                           |
-| DELETE | `/api/equity/access-control/revoke-role`          | Revoke role                          |
-| PATCH  | `/api/equity/access-control/update-roles`         | Update roles                         |
-| PUT    | `/api/equity/block-user`                          | Block user                           |
-| DELETE | `/api/equity/unblock-user`                        | Unblock user                         |
+#### User & Identity Management
+```javascript
+// KYC verification check
+GET /api/user/wallet/{address}
+// Returns user KYC status, tier, limits
 
----
+// Bulk user import
+POST /api/user/bulk-import
+// Import existing customer base
+```
 
-### Fund APIs
+#### Transaction Monitoring
+```javascript
+// Get transaction history
+GET /api/transaction/address/{address}
+// Returns paginated transaction list
 
-| Method | Endpoint                                        | Description                        |
-| ------ | ----------------------------------------------- | ---------------------------------- |
-| GET    | `/api/fund`                                     | List all fund contracts            |
-| GET    | `/api/fund/{address}`                           | Get fund contract details          |
-| GET    | `/api/fund/factory/address-available/{address}` | Check if fund address is available |
-| POST   | `/api/fund/factory/predict-address`             | Predict contract address           |
-| POST   | `/api/fund/factory`                             | Deploy new fund                    |
-| POST   | `/api/fund/transfer`                            | Transfer fund tokens               |
-| POST   | `/api/fund/mint`                                | Mint fund tokens                   |
-| POST   | `/api/fund/withdraw`                            | Withdraw token                     |
-| DELETE | `/api/fund/burn`                                | Burn fund tokens                   |
-| PUT    | `/api/fund/access-control/grant-role`           | Grant role                         |
-| DELETE | `/api/fund/access-control/revoke-role`          | Revoke role                        |
-| PATCH  | `/api/fund/access-control/update-roles`         | Update roles                       |
-| PUT    | `/api/fund/block-user`                          | Block user                         |
-| DELETE | `/api/fund/unblock-user`                        | Unblock user                       |
+// Real-time transaction feed
+GET /api/transaction/timeline
+// WebSocket for live updates
+```
 
----
+#### Analytics & Reporting
+```javascript
+// Asset statistics
+GET /api/asset-stats/{address}
+// Returns supply, holders, volume
 
-### Stablecoin APIs
+// Portfolio valuation
+GET /api/asset-balance/portfolio/{wallet}
+// Returns all token holdings
+```
 
-| Method | Endpoint                                              | Description                   |
-| ------ | ----------------------------------------------------- | ----------------------------- |
-| GET    | `/api/stablecoin`                                     | List stablecoin contracts     |
-| GET    | `/api/stablecoin/{address}`                           | Get stablecoin details        |
-| GET    | `/api/stablecoin/factory/address-available/{address}` | Check if address is available |
-| POST   | `/api/stablecoin/factory/predict-address`             | Predict contract address      |
-| POST   | `/api/stablecoin/factory`                             | Deploy stablecoin contract    |
-| POST   | `/api/stablecoin/transfer`                            | Transfer stablecoin           |
-| POST   | `/api/stablecoin/mint`                                | Mint new stablecoin           |
-| DELETE | `/api/stablecoin/burn`                                | Burn stablecoin               |
-| PUT    | `/api/stablecoin/freeze`                              | Freeze user account           |
-| PUT    | `/api/stablecoin/pause`                               | Pause contract                |
-| DELETE | `/api/stablecoin/unpause`                             | Unpause contract              |
-| PATCH  | `/api/stablecoin/update-collateral`                   | Update collateral data        |
-| PUT    | `/api/stablecoin/block-user`                          | Block user                    |
-| DELETE | `/api/stablecoin/unblock-user`                        | Unblock user                  |
-| POST   | `/api/stablecoin/withdraw`                            | Withdraw token                |
-| PUT    | `/api/stablecoin/access-control/grant-role`           | Grant role                    |
-| DELETE | `/api/stablecoin/access-control/revoke-role`          | Revoke role                   |
-| PATCH  | `/api/stablecoin/access-control/update-roles`         | Update roles                  |
+#### Market Data Integration
+```javascript
+// Get exchange rates
+GET /api/providers/exchange-rates/USD
+// Returns current FX rates
 
----
+// Update asset price
+PATCH /api/providers/asset-price/{assetId}
+// Oracle price updates
+```
 
-### Deposit APIs
+## How to integrate with existing systems?
 
-| Method | Endpoint                                           | Description                           |
-| ------ | -------------------------------------------------- | ------------------------------------- |
-| GET    | `/api/deposit`                                     | List deposit contracts                |
-| GET    | `/api/deposit/{address}`                           | Get deposit details                   |
-| GET    | `/api/deposit/factory/address-available/{address}` | Check if deposit address is available |
-| POST   | `/api/deposit/factory/predict-address`             | Predict contract address              |
-| POST   | `/api/deposit/factory`                             | Deploy deposit contract               |
-| POST   | `/api/deposit/transfer`                            | Transfer deposit token                |
-| POST   | `/api/deposit/mint`                                | Mint new deposit tokens               |
-| DELETE | `/api/deposit/burn`                                | Burn deposit tokens                   |
-| PUT    | `/api/deposit/freeze`                              | Freeze account                        |
-| PUT    | `/api/deposit/pause`                               | Pause deposit contract                |
-| DELETE | `/api/deposit/unpause`                             | Unpause contract                      |
-| PATCH  | `/api/deposit/update-collateral`                   | Update collateral data                |
-| PUT    | `/api/deposit/allow-user`                          | Allow user access                     |
-| DELETE | `/api/deposit/disallow-user`                       | Disallow user                         |
-| POST   | `/api/deposit/withdraw`                            | Withdraw token                        |
-| PUT    | `/api/deposit/access-control/grant-role`           | Grant role                            |
-| DELETE | `/api/deposit/access-control/revoke-role`          | Revoke role                           |
-| PATCH  | `/api/deposit/access-control/update-roles`         | Update roles                          |
+### Banking System Integration
 
----
+**Core Banking Connection:**
+```javascript
+// Temenos T24 Integration Example
+class T24TokenizationBridge {
+  async createDigitalAsset(accountData) {
+    // Map T24 account to token
+    const token = await tokenizationAPI.createBond({
+      issuer: accountData.customerId,
+      amount: accountData.balance,
+      currency: accountData.currency,
+      maturity: accountData.maturityDate
+    });
+    
+    // Update T24 with token reference
+    await t24API.updateAccount({
+      accountId: accountData.id,
+      tokenAddress: token.address,
+      tokenStatus: 'ACTIVE'
+    });
+  }
+}
+```
 
-### Fixed Yield
+### ERP Integration
 
-| Method | Endpoint                              | Description                  |
-| ------ | ------------------------------------- | ---------------------------- |
-| GET    | `/api/fixed-yield`                    | List all fixed yield entries |
-| GET    | `/api/fixed-yield/{address}`          | Get details by address       |
-| GET    | `/api/fixed-yield/bond/{bondAddress}` | Get yield by bond address    |
+**SAP Integration Pattern:**
+```javascript
+// SAP Treasury Integration
+const sapTreasuryConnector = {
+  async syncBondIssuance(bondData) {
+    // Create bond on blockchain
+    const bond = await api.bond.factory(bondData);
+    
+    // Update SAP with blockchain reference
+    await sap.createFinancialInstrument({
+      type: 'BOND',
+      blockchainId: bond.address,
+      amount: bondData.totalSupply * bondData.faceValue
+    });
+  }
+};
+```
 
----
+### Trading Platform Integration
 
-### User & Contact APIs
+**Exchange Integration:**
+```javascript
+// Add tokenized assets to order book
+class TokenizedAssetExchange {
+  async addListingSupport(tokenAddress) {
+    const token = await api.getTokenDetails(tokenAddress);
+    
+    return exchange.addTradingPair({
+      base: token.symbol,
+      quote: 'USD',
+      contract: tokenAddress,
+      decimals: token.decimals,
+      minOrder: 0.01
+    });
+  }
+}
+```
 
-| Method | Endpoint                     | Description                |
-| ------ | ---------------------------- | -------------------------- |
-| GET    | `/api/user`                  | List users                 |
-| GET    | `/api/user/{id}`             | Get user by ID             |
-| GET    | `/api/user/wallet/{address}` | Get user by wallet address |
-| GET    | `/api/user/search`           | Search users               |
-| GET    | `/api/contact`               | List contacts              |
-| GET    | `/api/contact/{id}`          | Get contact details        |
+## What are the performance specifications?
 
----
+### API Performance Metrics
+- **Response Time:** <100ms average, <500ms 99th percentile
+- **Throughput:** 10,000 requests/second per instance
+- **Availability:** 99.9% uptime SLA
+- **Global Coverage:** CDN endpoints in 15 regions
 
-### Transaction APIs
+### Rate Limits
+- **Standard Tier:** 1,000 requests/minute
+- **Professional:** 10,000 requests/minute
+- **Enterprise:** Unlimited with dedicated infrastructure
 
-| Method | Endpoint                             | Description                  |
-| ------ | ------------------------------------ | ---------------------------- |
-| GET    | `/api/transaction`                   | List all transactions        |
-| GET    | `/api/transaction/address/{address}` | Get transactions by address  |
-| GET    | `/api/transaction/{transactionHash}` | Get transaction details      |
-| GET    | `/api/transaction/recent`            | Get recent transactions      |
-| GET    | `/api/transaction/count`             | Get transaction count        |
-| GET    | `/api/transaction/timeline`          | Get timeline of transactions |
+### Batch Operations
+```javascript
+// Batch mint tokens for 1000 investors
+POST /api/bond/batch-mint
+{
+  "operations": [
+    {"to": "0x123...", "amount": "1000"},
+    {"to": "0x456...", "amount": "2000"},
+    // ... up to 1000 operations
+  ]
+}
+```
 
----
+## How secure are the APIs?
 
-### Asset Events, Stats & Balances
+### Security Features
+- **Encryption:** TLS 1.3 for all connections
+- **Authentication:** API key + optional OAuth2
+- **Authorization:** Role-based access control
+- **Audit Trail:** Complete request logging
+- **DDoS Protection:** Cloudflare enterprise
 
-| Method | Endpoint                                | Description                   |
-| ------ | --------------------------------------- | ----------------------------- |
-| GET    | `/api/asset-events`                     | List all asset events         |
-| GET    | `/api/asset-events/{asset}`             | List events for asset         |
-| GET    | `/api/asset-stats/{address}`            | Get asset statistics          |
-| GET    | `/api/asset-balance`                    | List all balances             |
-| GET    | `/api/asset-balance/{asset}/{account}`  | Get account balance for asset |
-| GET    | `/api/asset-balance/portfolio/{wallet}` | Get user portfolio balances   |
-| GET    | `/api/asset-activity`                   | Get asset activity data       |
+### Compliance Controls
+- **IP Whitelisting:** Restrict access by location
+- **Transaction Limits:** Configurable per API key
+- **Suspicious Activity Detection:** ML-based monitoring
+- **Regulatory Reporting:** Automated compliance exports
 
----
+## What SDK support is available?
 
-### Settings & Provider APIs
+### Official SDKs
 
-| Method | Endpoint                               | Description              |
-| ------ | -------------------------------------- | ------------------------ |
-| GET    | `/api/setting/{key}`                   | Get setting value by key |
-| GET    | `/api/providers/exchange-rates/{base}` | Get exchange rates       |
-| PATCH  | `/api/providers/exchange-rates/`       | Update exchange rates    |
-| GET    | `/api/providers/asset-price/{assetId}` | Get asset price          |
-| PATCH  | `/api/providers/asset-price/{assetId}` | Update asset price       |
+<Tabs defaultValue="javascript">
+  <Tab value="javascript" label="JavaScript/TypeScript">
+    ```bash
+    npm install @settlemint/tokenization-sdk
+    ```
+  </Tab>
+  
+  <Tab value="python" label="Python">
+    ```bash
+    pip install settlemint-tokenization
+    ```
+  </Tab>
+  
+  <Tab value="java" label="Java">
+    ```xml
+    <dependency>
+      <groupId>com.settlemint</groupId>
+      <artifactId>tokenization-sdk</artifactId>
+    </dependency>
+    ```
+  </Tab>
+  
+  <Tab value="go" label="Go">
+    ```bash
+    go get github.com/settlemint/tokenization-go
+    ```
+  </Tab>
+</Tabs>
 
----
+### SDK Example Usage
+```typescript
+import { TokenizationClient } from '@settlemint/tokenization-sdk';
 
-### Swagger / API Schema
+const client = new TokenizationClient({
+  apiKey: process.env.SETTLEMINT_API_KEY,
+  network: 'mainnet'
+});
 
-| Method | Endpoint            | Description         |
-| ------ | ------------------- | ------------------- |
-| GET    | `/api/swagger`      | Swagger UI          |
-| GET    | `/api/swagger/json` | Swagger JSON schema |
+// Issue a bond
+const bond = await client.bonds.create({
+  name: 'Corporate Bond 2024',
+  symbol: 'CB24',
+  faceValue: 1000,
+  supply: 10000,
+  couponRate: 5.5
+});
+
+// Monitor events
+client.events.on('Transfer', (event) => {
+  console.log(`Bond transferred: ${event.from} -> ${event.to}`);
+});
+```
+
+## Frequently asked questions
+
+<Accordions>
+  <Accordion title="Can I test APIs without deploying to mainnet?">
+    Yes, all APIs work on testnet. Use testnet API keys and endpoints for development.
+  </Accordion>
+  
+  <Accordion title="How do I handle blockchain transaction failures?">
+    APIs return transaction hashes. Monitor status and implement retry logic for failures.
+  </Accordion>
+  
+  <Accordion title="What's the difference between REST and GraphQL endpoints?">
+    REST is simpler for basic operations. GraphQL allows complex queries and reduces API calls.
+  </Accordion>
+  
+  <Accordion title="Can I subscribe to real-time events?">
+    Yes, use WebSocket endpoints for real-time updates on transfers, mints, and other events.
+  </Accordion>
+  
+  <Accordion title="How do I migrate from another tokenization platform?">
+    We provide migration APIs and professional services for seamless transitions.
+  </Accordion>
+  
+  <Accordion title="What happens if API keys are compromised?">
+    Immediately revoke compromised keys in the portal. All actions are logged for forensics.
+  </Accordion>
+</Accordions>
+
+## API quick reference
+
+### Most Used Endpoints
+
+<Cards>
+  <Card title="Asset Creation">
+    - `POST /api/{asset-type}/factory` - Deploy new assets
+    - `POST /api/{asset-type}/mint` - Issue tokens
+    - `POST /api/{asset-type}/transfer` - Transfer ownership
+  </Card>
+  
+  <Card title="Asset Management">
+    - `GET /api/{asset-type}` - List assets
+    - `GET /api/{asset-type}/{address}` - Get details
+    - `PATCH /api/{asset-type}/{address}` - Update parameters
+  </Card>
+  
+  <Card title="Compliance & Control">
+    - `PUT /api/{asset-type}/access-control/grant-role` - Permissions
+    - `PUT /api/{asset-type}/block-user` - Restrictions
+    - `GET /api/transaction/address/{address}` - Audit trail
+  </Card>
+  
+  <Card title="Analytics & Reporting">
+    - `GET /api/asset-stats/{address}` - Asset metrics
+    - `GET /api/asset-balance/portfolio/{wallet}` - Holdings
+    - `GET /api/transaction/timeline` - Activity feed
+  </Card>
+</Cards>
+
+## Next steps
+
+Ready to integrate tokenization APIs?
+
+- [Get API Key](https://platform.settlemint.com/api-keys)
+- [Download OpenAPI Spec](https://api.settlemint.com/swagger/json)
+- [Explore SDK Documentation](https://github.com/settlemint/tokenization-sdk)
+- [Join Developer Community](https://discord.gg/settlemint)

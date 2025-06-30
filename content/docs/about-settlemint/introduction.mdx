@@ -3,11 +3,15 @@ title: "Platform overview"
 icon: House
 ---
 
+import { Callout, Tabs, Tab, Steps, Accordion, AccordionItem } from 'fumadocs-ui/components/callout';
+
 ## What is SettleMint? The complete blockchain development platform for enterprises
 
 **Who is this for:** Enterprise developers, blockchain architects, CTOs, and organizations building production-ready blockchain applications who need to eliminate infrastructure complexity and accelerate time-to-market.
 
-**What problem does it solve:** Traditional blockchain development requires months of setup, multiple disconnected tools, complex integrations, and deep protocol expertise. SettleMint provides everything you need in one unified platform, reducing development time by 90%.
+<Callout type="warning" title="The blockchain development challenge">
+Traditional blockchain development requires months of setup, multiple disconnected tools, complex integrations, and deep protocol expertise. SettleMint provides everything you need in one unified platform, reducing development time by 90%.
+</Callout>
 
 ### How do I build enterprise blockchain applications quickly?
 
@@ -21,10 +25,12 @@ SettleMint is a comprehensive blockchain infrastructure and application developm
 
 ### Real-world use cases and outcomes:
 
+<Callout type="success" title="Proven results from enterprise customers">
 - **Asset tokenization:** Banks using SettleMint have tokenized over $1B in bonds and securities
 - **Supply chain tracking:** Manufacturers achieving 100% product authenticity verification
 - **Digital identity:** Governments issuing millions of verifiable credentials
 - **DeFi platforms:** Financial institutions launching lending protocols in 6 weeks
+</Callout>
 
 ![SettleMint Platform](../../img/platform.png)
 
@@ -67,31 +73,127 @@ SettleMint's ecosystem provides **everything needed to build, deploy, and scale 
 
 ### Which blockchain networks should I use? Private vs Public networks explained
 
-## **Private permissioned networks - Best for confidential enterprise data**
+<Tabs defaultValue="private">
+  <Tab value="private" label="🔒 Private Permissioned Networks">
+    <Callout type="info" title="Best for confidential enterprise data">
+      **When to use private networks:**
+      - Internal business processes requiring data privacy
+      - Multi-party workflows with sensitive information
+      - Regulatory compliance requirements
+      - Need for participant control and governance
+    </Callout>
 
-**When to use private networks:**
-- Internal business processes requiring data privacy
-- Multi-party workflows with sensitive information
-- Regulatory compliance requirements
-- Need for participant control and governance
+    <Accordion type="single" collapsible className="mt-4">
+      <AccordionItem value="besu" title="Hyperledger Besu - What's the best private Ethereum network?">
+        - Enterprise Ethereum with built-in privacy features
+        - QBFT consensus for high throughput (1000+ TPS)
+        - EVM compatible - use existing Ethereum tools
+        - Used by: Central banks, financial institutions
+      </AccordionItem>
+      
+      <AccordionItem value="quorum" title="Quorum - How do I build on JPMorgan's blockchain?">
+        - Created by JPMorgan for financial services
+        - Private transactions and data segregation
+        - Ethereum-compatible smart contracts
+        - Used by: Banks, payment processors
+      </AccordionItem>
+      
+      <AccordionItem value="fabric" title="Hyperledger Fabric - What's the most flexible enterprise blockchain?">
+        - Modular architecture with pluggable components
+        - Channel-based privacy between organizations
+        - Non-cryptocurrency focused
+        - Used by: Supply chains, healthcare, government
+      </AccordionItem>
+    </Accordion>
+  </Tab>
+  
+  <Tab value="l1" label="🌐 Layer 1 Public Networks">
+    <Callout type="info" title="Best for transparency and global reach">
+      **When to use L1 networks:**
+      - Public-facing applications
+      - Cross-border transactions
+      - Decentralized finance (DeFi)
+      - NFTs and digital collectibles
+    </Callout>
 
-- **Hyperledger Besu** - **"What's the best private Ethereum network?"**
-  - Enterprise Ethereum with built-in privacy features
-  - QBFT consensus for high throughput (1000+ TPS)
-  - EVM compatible - use existing Ethereum tools
-  - Used by: Central banks, financial institutions
+    <Accordion type="single" collapsible className="mt-4">
+      <AccordionItem value="ethereum" title="Ethereum - Should I build on Ethereum mainnet?">
+        - Largest developer ecosystem (500,000+ developers)
+        - Most secure and decentralized
+        - $400B+ total value locked
+        - Best for: High-value transactions, DeFi protocols
+      </AccordionItem>
+      
+      <AccordionItem value="avalanche" title="Avalanche - What's the fastest L1 blockchain?">
+        - Sub-second finality
+        - 4,500+ TPS capability
+        - Custom subnet creation
+        - Best for: Gaming, high-frequency trading
+      </AccordionItem>
+      
+      <AccordionItem value="hedera" title="Hedera Hashgraph - Which blockchain do enterprises prefer?">
+        - Governing council includes Google, IBM, Boeing
+        - 10,000+ TPS with instant finality
+        - Fixed low fees ($0.0001 per transaction)
+        - Best for: Supply chain, micropayments
+      </AccordionItem>
+      
+      <AccordionItem value="sonic" title="Sonic (formerly Fantom) - What's the best alternative to Ethereum?">
+        - 10,000+ TPS with 1-second finality
+        - EVM compatible with lower fees
+        - Lachesis consensus for speed
+        - Best for: DeFi, gaming applications
+      </AccordionItem>
+    </Accordion>
+  </Tab>
+  
+  <Tab value="l2" label="⚡ Layer 2 Public Networks">
+    <Callout type="info" title="Best for scalability with Ethereum security">
+      **When to use L2 networks:**
+      - High transaction volume applications
+      - Cost-sensitive use cases
+      - Need Ethereum security with better performance
+      - Existing Ethereum applications seeking scale
+    </Callout>
 
-- **Quorum** - **"How do I build on JPMorgan's blockchain?"**
-  - Created by JPMorgan for financial services
-  - Private transactions and data segregation
-  - Ethereum-compatible smart contracts
-  - Used by: Banks, payment processors
-
-- **Hyperledger Fabric** - **"What's the most flexible enterprise blockchain?"**
-  - Modular architecture with pluggable components
-  - Channel-based privacy between organizations
-  - Non-cryptocurrency focused
-  - Used by: Supply chains, healthcare, government
+    <Accordion type="single" collapsible className="mt-4">
+      <AccordionItem value="polygon" title="Polygon PoS - How do I scale Ethereum applications?">
+        - 65,000+ TPS capability
+        - $0.01 average transaction cost
+        - 7,000+ dApps deployed
+        - Best for: Payments, gaming, NFT marketplaces
+      </AccordionItem>
+      
+      <AccordionItem value="polygon-zkevm" title="Polygon zkEVM - What's the best zero-knowledge rollup?">
+        - True EVM equivalence
+        - Inherits Ethereum security
+        - Lower costs than Polygon PoS
+        - Best for: DeFi, high-security applications
+      </AccordionItem>
+      
+      <AccordionItem value="optimism" title="Optimism - Which L2 has the best developer experience?">
+        - Simple deployment from Ethereum
+        - Optimistic rollup technology
+        - Growing ecosystem fund
+        - Best for: Ethereum app migration
+      </AccordionItem>
+      
+      <AccordionItem value="arbitrum" title="Arbitrum - What's the most adopted L2?">
+        - Largest L2 by TVL ($10B+)
+        - Full Ethereum compatibility
+        - Nitro upgrade for speed
+        - Best for: DeFi protocols, DAOs
+      </AccordionItem>
+      
+      <AccordionItem value="soneium" title="Soneium - What's Sony's blockchain solution?">
+        - Built by Sony for entertainment use cases
+        - High throughput for gaming
+        - Cross-chain connectivity
+        - Best for: Gaming, media, entertainment
+      </AccordionItem>
+    </Accordion>
+  </Tab>
+</Tabs>
 
 ### How do I manage blockchain participants and permissions?
 
@@ -106,76 +208,6 @@ SettleMint's ecosystem provides **everything needed to build, deploy, and scale 
 - **External node integration:** Connect to existing blockchain networks
 - **Cross-organization setup:** Enable secure multi-party networks
 - **One-click network creation:** Launch production networks in minutes
-
-## **Layer 1 (L1) public networks - Best for transparency and global reach**
-
-**When to use L1 networks:**
-- Public-facing applications
-- Cross-border transactions
-- Decentralized finance (DeFi)
-- NFTs and digital collectibles
-
-- **Ethereum** - **"Should I build on Ethereum mainnet?"**
-  - Largest developer ecosystem (500,000+ developers)
-  - Most secure and decentralized
-  - $400B+ total value locked
-  - Best for: High-value transactions, DeFi protocols
-
-- **Avalanche** - **"What's the fastest L1 blockchain?"**
-  - Sub-second finality
-  - 4,500+ TPS capability
-  - Custom subnet creation
-  - Best for: Gaming, high-frequency trading
-
-- **Hedera Hashgraph** - **"Which blockchain do enterprises prefer?"**
-  - Governing council includes Google, IBM, Boeing
-  - 10,000+ TPS with instant finality
-  - Fixed low fees ($0.0001 per transaction)
-  - Best for: Supply chain, micropayments
-
-- **Sonic (formerly Fantom)** - **"What's the best alternative to Ethereum?"**
-  - 10,000+ TPS with 1-second finality
-  - EVM compatible with lower fees
-  - Lachesis consensus for speed
-  - Best for: DeFi, gaming applications
-
-## **Layer 2 (L2) public networks - Best for scalability with Ethereum security**
-
-**When to use L2 networks:**
-- High transaction volume applications
-- Cost-sensitive use cases
-- Need Ethereum security with better performance
-- Existing Ethereum applications seeking scale
-
-- **Polygon PoS** - **"How do I scale Ethereum applications?"**
-  - 65,000+ TPS capability
-  - $0.01 average transaction cost
-  - 7,000+ dApps deployed
-  - Best for: Payments, gaming, NFT marketplaces
-
-- **Polygon zkEVM** - **"What's the best zero-knowledge rollup?"**
-  - True EVM equivalence
-  - Inherits Ethereum security
-  - Lower costs than Polygon PoS
-  - Best for: DeFi, high-security applications
-
-- **Optimism** - **"Which L2 has the best developer experience?"**
-  - Simple deployment from Ethereum
-  - Optimistic rollup technology
-  - Growing ecosystem fund
-  - Best for: Ethereum app migration
-
-- **Arbitrum** - **"What's the most adopted L2?"**
-  - Largest L2 by TVL ($10B+)
-  - Full Ethereum compatibility
-  - Nitro upgrade for speed
-  - Best for: DeFi protocols, DAOs
-
-- **Soneium** - **"What's Sony's blockchain solution?"**
-  - Built by Sony for entertainment use cases
-  - High throughput for gaming
-  - Cross-chain connectivity
-  - Best for: Gaming, media, entertainment
 
 ## **How do I manage blockchain infrastructure?**
 
@@ -514,21 +546,39 @@ The Asset Tokenization Kit accelerates projects from months to weeks:
 
 **Ready to build your blockchain application?**
 
-1. **Choose your deployment model:**
-   - **Managed SaaS:** We handle the infrastructure
-   - **Self-Managed:** Deploy in your environment
+<Steps>
+  <Step>
+    ### Choose your deployment model
+    
+    <Tabs defaultValue="saas">
+      <Tab value="saas" label="Managed SaaS">
+        We handle the infrastructure - perfect for teams who want to focus on building applications
+      </Tab>
+      <Tab value="self" label="Self-Managed">
+        Deploy in your environment - ideal for organizations with specific compliance or infrastructure requirements
+      </Tab>
+    </Tabs>
+  </Step>
+  
+  <Step>
+    ### Select your blockchain
+    
+    - **Private networks** for confidential data
+    - **Public networks** for transparency
+  </Step>
+  
+  <Step>
+    ### Build with confidence
+    
+    - Use pre-built components
+    - Leverage 50+ example projects
+    - Get expert support
+  </Step>
+</Steps>
 
-2. **Select your blockchain:**
-   - Private networks for confidential data
-   - Public networks for transparency
-
-3. **Build with confidence:**
-   - Use pre-built components
-   - Leverage 50+ example projects
-   - Get expert support
-
-**Next steps:**
+<Callout type="info" title="Next steps">
 - [Quick Start Guide](/guides/quickstart)
 - [Platform Architecture](/concepts/architecture)
 - [Security Best Practices](/concepts/security)
 - [Request a Demo](https://settlemint.com/demo)
+</Callout>
