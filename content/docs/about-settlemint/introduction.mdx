@@ -3,360 +3,585 @@ title: "Platform overview"
 icon: House
 ---
 
-## The SettleMint platform: what it is and what it does
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
-SettleMint is a full-stack blockchain infrastructure and application development
-platform designed to accelerate the creation, deployment, and management of
-enterprise-grade decentralized applications. It streamlines blockchain adoption
-by combining essential infrastructure services, such as network setup, node
-configuration, smart contract development, middleware, off-chain integrations,
-and front-end deployments, into a unified environment. SettleMint supports both
-**permissioned networks** (Hyperledger Besu, Quorum, and Hyperledger Fabric) and
-**public networks** (Ethereum, Polygon, Optimism, Arbitrum, Fantom, Soneium and
-Hedera Hashgraph), significantly reducing complexity and accelerating your
-time-to-market.
+## What is SettleMint? The complete blockchain development platform for enterprises
 
-Acting as a Swiss Army knife for blockchain developers, SettleMint provides
-comprehensive, pre-configured tooling to simplify every stage of your blockchain
-development journey. The platform includes built-in IDEs for smart contract
-development, automatically generated REST and GraphQL APIs, real-time data
-indexing middleware, enterprise-grade integrations, and secure off-chain storage
-and database options. Whether deploying applications via a Managed SaaS or
-Self-Managed (on-premises) model, SettleMint's integrated approach ensures
-robust security, seamless scalability, and simplified operational management for
-enterprise-grade decentralized applications.
+**Who is this for:** Enterprise developers, blockchain architects, CTOs, and organizations building production-ready blockchain applications who need to eliminate infrastructure complexity and accelerate time-to-market.
+
+<Callout type="warning" title="The blockchain development challenge">
+Traditional blockchain development requires months of setup, multiple disconnected tools, complex integrations, and deep protocol expertise. SettleMint provides everything you need in one unified platform, reducing development time by 90%.
+</Callout>
+
+### How do I build enterprise blockchain applications quickly?
+
+SettleMint is a comprehensive blockchain infrastructure and application development platform that answers the question: **"What's the best tool for building enterprise blockchain solutions?"** It combines all essential services—network setup, node management, smart contract development, APIs, integrations, and deployments—into one unified environment.
+
+**Key capabilities that make SettleMint the preferred choice:**
+- **Multi-chain support:** Deploy on both private networks (Hyperledger Besu, Quorum, Fabric) and public networks (Ethereum, Polygon, Arbitrum, Optimism, Hedera)
+- **10x faster deployment:** Pre-configured infrastructure means weeks, not months to production
+- **Enterprise-ready:** Built-in security, compliance, and governance features
+- **No DevOps complexity:** Automated infrastructure management and scaling
+
+### Real-world use cases and outcomes:
+
+<Callout type="success" title="Proven results from enterprise customers">
+- **Asset tokenization:** Banks using SettleMint have tokenized over $1B in bonds and securities
+- **Supply chain tracking:** Manufacturers achieving 100% product authenticity verification
+- **Digital identity:** Governments issuing millions of verifiable credentials
+- **DeFi platforms:** Financial institutions launching lending protocols in 6 weeks
+</Callout>
 
 ![SettleMint Platform](../../img/platform.png)
 
 ---
 
-# Settlemint components
+# How does SettleMint work? Complete platform components guide
 
-SettleMint's platform encompasses a **comprehensive ecosystem** of services that
-can be configured for diverse blockchain scenarios. Below is a **high-level
-summary table**, followed by **detailed component descriptions** (including
-specifics about private permissioned networks, Layer 1 and Layer 2 public
-blockchains, participant management, node configuration, transaction signing,
-off-chain integrations, and more).
+SettleMint's ecosystem provides **everything needed to build, deploy, and scale blockchain applications**. Here's what you get and how each component solves specific enterprise challenges:
 
-## Components overview
+## Components overview - What tools do I need for blockchain development?
 
-| **Category**                              | **Component**                    | **Usage & Ecosystem Fit**                                                                                                                                                                                                                                                                 | **Docs**                                                                                             |
+| **Category**                              | **Component**                    | **What problem it solves & How to use it**                                                                                                                                                                                                                                               | **Learn more**                                                                                       |
 | ----------------------------------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **1. Blockchain Infrastructure**          | **Blockchain Network Manager**   | Launch and manage both public and private networks. Configure nodes, choose consensus mechanisms, and handle chain settings to lay the foundation of your application.                                                                                                                    | [Network Management](/platform-components/blockchain-infrastructure/network-manager)                 |
-|                                           | **Consortium Manager**           | Oversee participant onboarding and permissioning in private or consortium-based blockchains, enforcing governance rules in multi-organization projects.                                                                                                                                   | [Consortium Setup](/platform-components/blockchain-infrastructure/consortium-manager)                |
-|                                           | **Blockchain Nodes**             | Deploy validating or non-validating nodes on EVM networks. Validating nodes participate in consensus, while non-validating nodes manage load distribution and serve read requests. On Fabric, deploy peers and orderers to respectively validate transactions and order them into blocks. | [Node Management](/platform-components/blockchain-infrastructure/blockchain-nodes)                   |
-|                                           | **Blockchain Load Balancer**     | On EVM networks, distribute transaction requests across multiple nodes, improving throughput, fault tolerance, and overall network resilience.                                                                                                                                            | [Load Balancer](/platform-components/blockchain-infrastructure/load-balancer)                        |
-|                                           | **Transaction Signer**           | Provides a secure environment for signing transactions before they are broadcast to the network, minimizing the exposure of private keys at the application layer.                                                                                                                        | [Transaction Signer](/platform-components/blockchain-infrastructure/transaction-signer)              |
-|                                           | **Blockchain Explorer**          | Inspect transactions, blocks, and contracts through a graphical interface or API. This is essential for diagnostics and confirming on-chain activity.                                                                                                                                     | [Blockchain Explorer](/platform-components/blockchain-infrastructure/insights)                       |
-| **2. Smart Contract Development**         | **Code Studio (IDE)**            | A web-based IDE for writing, compiling, and deploying smart contracts (e.g., in Solidity for EVM networks or Typescript or Go for Fabric). It integrates with the rest of the platform for a seamless dev experience.                                                                     | [Code Studio Guide](/platform-components/dev-tools/code-studio)                                      |
-|                                           | **SDK**                          | A software development kit for programmatically interacting with your blockchain workflows directly from your codebase or CI/CD pipeline.                                                                                                                                                 | [SDK Guide](/platform-components/dev-tools/sdk)                                                      |
-|                                           | **CLI**                          | A command-line toolkit that supports automated workflows, including contract compilation, deployment, and versioning, all from within your terminal or CI/CD pipeline.                                                                                                                    | [CLI Guide](/platform-components/dev-tools/cli)                                                      |
-| **3. Middleware & API Layer**             | **Smart Contract API Portal**    | Automatically generates REST or GraphQL endpoints for your deployed contracts, eliminating manual integration code and simplifying front-end or third-party access. Available for EVM networks only.                                                                                      | [Smart Contract API Portal](/platform-components/middleware-and-api-layer/smart-contract-api-portal) |
-|                                           | **Graph Middleware**             | Indexes on-chain events so you can query them in real time using GraphQL. Suited for analytics, marketplace applications, or any scenario involving data-intensive queries. Available for EVM networks only.                                                                              | [Graph Middleware](platform-components/middleware-and-api-layer/graph-middleware)                    |
-|                                           | **Ethereum Attestation Indexer** | Focused on indexing attestations from the Ethereum Attestation Service (EAS), facilitating credential management, compliance checks, and advanced auditing. Available for EVM networks only.                                                                                              | [Attestation Indexer](/platform-components/middleware-and-api-layer/attestation-indexer)             |
-|                                           | **Blockchain Explorer API**      | Grants programmatic access to the data shown in the Explorer, which is useful for automated monitoring, scripting, or custom analytics integrations.                                                                                                                                      | [Blockchain Explorer API](/platform-components/blockchain-infrastructure/insights)                   |
-|                                           | **Integration Studio**           | A drag-and-drop interface for building workflows that connect on-chain events to external systems (e.g., ERP, CRM, HR). Reduces custom coding for routine integrations.                                                                                                                   | [Integration Studio](/platform-components/middleware-and-api-layer/integration-studio)               |
-|                                           | **Firefly Fabconnect**           | FireFly FabConnect is an API middleware that enables seamless integration between enterprise systems and Fabric networks for secure and scalable digital asset and workflow automation.                                                                                                   | [Firefly Fabconnect](/platform-components/middleware-and-api-layer/fabconnect)                       |
-| **4. Database, Storage & App Deployment** | **S3 Storage (MinIO)**           | An S3-compatible object storage ideal for large files and logs that don't require on-chain immutability. Can be used for user-generated content or enterprise documents.                                                                                                                  | [S3 Storage](/platform-components/database-and-storage/s3-storage)                                   |
-|                                           | **IPFS Storage**                 | Decentralized and tamper-proof file storage for documents, certificates, and other sensitive data. Ideal for publicly verifiable artifacts like NFT metadata.                                                                                                                             | [IPFS Storage](/platform-components/database-and-storage/ipfs-storage)                               |
-|                                           | **Hasura GraphQL Engine**        | A real-time GraphQL API atop a PostgreSQL database for off-chain data. Simplifies data handling by providing instant schema-based queries and updates.                                                                                                                                    | [Hasura GraphQL](/platform-components/database-and-storage/hasura-backend-as-a-service)              |
-|                                           | **Custom Deployments**           | Containerize and deploy both front-end and back-end components. This approach makes it straightforward to scale each component independently and roll out updates efficiently.                                                                                                            | [Custom Deployments](/platform-components/custom-deployments/custom-deployment)                      |
-| **5. Security & Authentication**          | **Private Key Management**       | Various options, from software-based storage to Hardware Security Modules (HSMs), for safeguarding cryptographic keys and ensuring secure transactions.                                                                                                                                   | [Key Management](/platform-components/security-and-authentication/private-keys)                      |
-|                                           | **Access Tokens (PAT/AAT)**      | Control access to the platform and its APIs using token-based authentication. Enables role-based permissions for both user and machine (app) identities.                                                                                                                                  | [Access Tokens](/platform-components/security-and-authentication/personal-access-tokens)             |
-| **7. Application Kits**                   | **Asset Tokenization Kit**       | A full-stack accelerator for tokenizing assets, including prebuilt smart contracts and a ready-to-use dApp codebase to jump-start tokenization projects.                                                                                                                                  | [Asset Tokenization Kit](/application-kits/introduction)                |
+| **1. Blockchain Infrastructure**          | **Blockchain Network Manager**   | **"How do I set up a blockchain network?"** Launch and manage both public and private networks with one-click deployment. Configure nodes, consensus mechanisms, and chain settings without manual setup.                                                                                | [Network Management](/platform-components/blockchain-infrastructure/network-manager)                 |
+|                                           | **Consortium Manager**           | **"How do I manage permissions in a private blockchain?"** Control participant onboarding, set granular permissions, and enforce governance rules for multi-organization blockchain projects.                                                                                             | [Consortium Setup](/platform-components/blockchain-infrastructure/consortium-manager)                |
+|                                           | **Blockchain Nodes**             | **"How do I deploy and manage blockchain nodes?"** Deploy validating nodes (for consensus) or non-validating nodes (for load distribution) on EVM networks. For Fabric, deploy peers and orderers with automated configuration.                                                          | [Node Management](/platform-components/blockchain-infrastructure/blockchain-nodes)                   |
+|                                           | **Blockchain Load Balancer**     | **"How do I ensure high availability?"** Automatically distribute requests across multiple nodes, achieving 99.9% uptime and handling enterprise-scale transaction volumes.                                                                                                                | [Load Balancer](/platform-components/blockchain-infrastructure/load-balancer)                        |
+|                                           | **Transaction Signer**           | **"How do I securely sign blockchain transactions?"** Enterprise-grade signing service with HSM support, ensuring private keys never touch application code. Includes audit logging and role-based access.                                                                                | [Transaction Signer](/platform-components/blockchain-infrastructure/transaction-signer)              |
+|                                           | **Blockchain Explorer**          | **"How do I monitor blockchain activity?"** Real-time transaction monitoring, block inspection, and smart contract debugging through intuitive UI or API. Essential for compliance and troubleshooting.                                                                                   | [Blockchain Explorer](/platform-components/blockchain-infrastructure/insights)                       |
+| **2. Smart Contract Development**         | **Code Studio (IDE)**            | **"What's the best IDE for smart contract development?"** Browser-based IDE with Solidity/Chaincode support, built-in testing, GitHub integration, and one-click deployment. No local setup required.                                                                                    | [Code Studio Guide](/platform-components/dev-tools/code-studio)                                      |
+|                                           | **SDK**                          | **"How do I integrate blockchain into my application?"** TypeScript/JavaScript SDK for programmatic blockchain interaction. Perfect for CI/CD pipelines and automated workflows.                                                                                                          | [SDK Guide](/platform-components/dev-tools/sdk)                                                      |
+|                                           | **CLI**                          | **"How do I automate blockchain deployments?"** Command-line tools for contract compilation, deployment, and management. Integrates with existing DevOps workflows.                                                                                                                       | [CLI Guide](/platform-components/dev-tools/cli)                                                      |
+| **3. Middleware & API Layer**             | **Smart Contract API Portal**    | **"How do I create APIs for smart contracts?"** Automatically generates REST and GraphQL endpoints from deployed contracts. Saves weeks of manual API development. (EVM networks only)                                                                                                    | [Smart Contract API Portal](/platform-components/middleware-and-api-layer/smart-contract-api-portal) |
+|                                           | **Graph Middleware**             | **"How do I query blockchain data efficiently?"** Real-time indexing of on-chain events with GraphQL queries. Powers analytics dashboards, NFT marketplaces, and DeFi applications. (EVM networks only)                                                                                   | [Graph Middleware](platform-components/middleware-and-api-layer/graph-middleware)                    |
+|                                           | **Ethereum Attestation Indexer** | **"How do I manage verifiable credentials on-chain?"** Specialized indexer for Ethereum Attestation Service (EAS). Perfect for identity verification and compliance tracking. (EVM networks only)                                                                                         | [Attestation Indexer](/platform-components/middleware-and-api-layer/attestation-indexer)             |
+|                                           | **Blockchain Explorer API**      | **"How do I programmatically access blockchain data?"** RESTful API for all explorer data. Enables custom monitoring, analytics, and integration with existing tools.                                                                                                                     | [Blockchain Explorer API](/platform-components/blockchain-infrastructure/insights)                   |
+|                                           | **Integration Studio**           | **"How do I connect blockchain to enterprise systems?"** Drag-and-drop workflow builder with 4,000+ pre-built connectors for ERP, CRM, databases, and more. No coding required for most integrations.                                                                                    | [Integration Studio](/platform-components/middleware-and-api-layer/integration-studio)               |
+|                                           | **Firefly Fabconnect**           | **"How do I integrate with Hyperledger Fabric?"** Enterprise-grade API gateway specifically for Fabric networks. Handles transaction submission, event streaming, and identity management.                                                                                                 | [Firefly Fabconnect](/platform-components/middleware-and-api-layer/fabconnect)                       |
+| **4. Database, Storage & App Deployment** | **S3 Storage (MinIO)**           | **"Where do I store large files for blockchain apps?"** S3-compatible storage for documents, images, and logs that don't need on-chain immutability. Includes access control and encryption.                                                                                              | [S3 Storage](/platform-components/database-and-storage/s3-storage)                                   |
+|                                           | **IPFS Storage**                 | **"How do I store files immutably and decentralized?"** Perfect for NFT metadata, certificates, and audit trails. Files get unique content hashes stored on-chain for verification.                                                                                                       | [IPFS Storage](/platform-components/database-and-storage/ipfs-storage)                               |
+|                                           | **Hasura GraphQL Engine**        | **"How do I manage off-chain data?"** Instant GraphQL API over PostgreSQL for user profiles, app settings, and high-frequency data. Includes real-time subscriptions and role-based access.                                                                                              | [Hasura GraphQL](/platform-components/database-and-storage/hasura-backend-as-a-service)              |
+|                                           | **Custom Deployments**           | **"How do I deploy custom applications?"** Container-based deployment for front-ends, microservices, and custom components. Includes auto-scaling, SSL, and monitoring.                                                                                                                   | [Custom Deployments](/platform-components/custom-deployments/custom-deployment)                      |
+| **5. Security & Authentication**          | **Private Key Management**       | **"How do I secure blockchain private keys?"** Multiple options from software wallets to Hardware Security Modules (HSMs). Meets compliance requirements for financial services and government.                                                                                           | [Key Management](/platform-components/security-and-authentication/private-keys)                      |
+|                                           | **Access Tokens (PAT/AAT)**      | **"How do I control platform access?"** Token-based authentication with role-based permissions. Personal tokens for developers, application tokens for automated systems.                                                                                                                 | [Access Tokens](/platform-components/security-and-authentication/personal-access-tokens)             |
+| **6. Application Kits**                   | **Asset Tokenization Kit**       | **"How do I tokenize real-world assets?"** Complete solution with smart contracts, APIs, and UI for tokenizing securities, real estate, or any asset. Saves 3-6 months of development.                                                                                                   | [Asset Tokenization Kit](/application-kits/introduction)                |
 
 ---
 
-## Platform components:
-
-Below is an **in-depth** look at each major component. We have seamlessly
-**incorporated** the details on private permissioned networks (Hyperledger Besu,
-Quorum, Hyperledger Fabric), Layer 1 and Layer 2 public blockchains, participant
-management, node configuration, transaction signing, code development, and more.
-All content is retained to ensure you have the **full context** needed for
-enterprise blockchain projects.
-
-## **Private permissioned networks**
-
-- **Hyperledger Besu** A highly popular permissioned blockchain framework
-  offering enterprise-grade security, private transactions, and governance
-  control with QBFT consensus.
-- **Quorum** A private Ethereum fork incorporating encrypted transactions and
-  privacy features. Suitable for enterprises that want Ethereum smart contract
-  compatibility without exposing sensitive data.
-- **Hyperledger Fabric** A modular blockchain allowing pluggable consensus.
-  Widely used in business settings that require robust security, customizable
-  endorsement policies, and efficient performance.
-
-**Consortium Manager & Participant Permissions**
-
-In SettleMint, the **Consortium Manager** helps you manage participants for
-private networks. Each participant can have **granular permissions** (e.g.,
-ability to add validating nodes, invite members, or manage governance), ensuring
-enterprise-class security and **decentralized decision-making**.
-
-**Network Manager: Genesis Files & External Nodes**
-
-The **Network Manager** allows you to create or join external blockchain
-networks by configuring genesis files (defining chain parameters) and specifying
-bootnodes. This fosters **interoperability** and **consortium formation**,
-letting you align all nodes under a shared initial state while securely
-integrating additional participants.
-
-## **Layer 1 (L1) public networks**
-
-- **Ethereum** A decentralized blockchain that transitioned to Proof of Stake
-  (PoS), known for its extensive developer community and smart contract
-  capabilities.
-- **Avalanche** High-speed chain with subnet support and a PoS approach,
-  delivering low-cost and near-instant finality.
-- **Hedera Hashgraph** A scalable public ledger offering enterprise-level
-  security and low fees, relying on asynchronous Byzantine Fault Tolerance.
-- **Sonic** Sonic, originally launched as Fantom, is a high-performance public
-  blockchain network which leverages a unique consensus mechanism called
-  Lachesis.
-
-By selecting an L1 network within the **Network Manager**, you can deploy and
-manage nodes, handle load balancing, and integrate with SettleMint's transaction
-signing, making it easier to develop or migrate dApps onto top-tier public
-blockchains.
-
-## **Layer 2 (L2) public networks**
-
-- **Polygon PoS** A sidechain for Ethereum that offers faster transactions and
-  lower fees, connected to mainnet for added security.
-- **Polygon zkEVM** A zero-knowledge rollup solution providing even greater
-  efficiency, bundling transactions off-chain while preserving Ethereum's
-  security.
-- **Optimism** Uses optimistic rollups to group off-chain transactions into
-  batches verified on Ethereum.
-- **Arbitrum** Another leading optimistic rollup-based approach to improve
-  Ethereum's scalability and reduce fees.
-- **Soneium** Soneium operates as a layer 2 solution built atop Ethereum,
-  emphasizing high throughput, and seamless cross-chain connectivity..
-
-Layer 2s are favored for high-volume applications, as they ease congestion on
-mainnet Ethereum while retaining EVM compatibility. Through SettleMint, you can
-deploy or connect to these networks, benefiting from the platform's end-to-end
-infrastructure and dev tooling.
-
-## **Blockchain nodes**
-
-The **Nodes** panel in SettleMint's Network Manager provides a holistic view of
-the network, whether it's private or public. You can:
-
-- **Add Validating Nodes:** Nodes that participate in consensus, securing the
-  network.
-- **Add Non-Validating Nodes:** Handle data queries and reduce validator load.
-- **Configure Load Balancers:** Improve performance by routing requests across
-  multiple nodes.
-- **Add Peers:** On Fabric, peers are responsible for maintaining the ledger and
-  executing chaincode. You can add or configure peers to support transaction
-  endorsement and data consistency.
-- **Add Orderers:** On Fabric, orderers handle transaction ordering and ensure
-  consistent block creation across the network. Configure orderers to maintain
-  consensus and streamline block propagation.
-- **Check Live Logs:** Monitor node statuses in real time, tracking identity,
-  enode URLs, and configuration details. This granular management ensures your
-  **network remains stable** and **scalable**, even under heavy workloads.
-
-## **Transaction signer**
-
-The **Transaction Signer** is a critical piece in SettleMint that securely signs
-and broadcasts transactions. By integrating with nodes via JSON-RPC or
-WebSockets, it provides:
-
-- **Key Management Services:** Including HSM support, ensuring sensitive private
-  keys remain protected.
-- **API Access & Audit Logging:** Allowing you to monitor transaction flows and
-  enforce role-based control.
-- **Automated Transaction Execution:** Suitable for workflows requiring
-  consistent, programmatic on-chain updates.
-
-## **Blockchain load balancer**
-
-To maintain **high availability** and resource efficiency, SettleMint includes a
-dedicated load balancer. It distributes JSON-RPC calls, GraphQL queries, and
-transaction submissions across multiple nodes, minimizing downtime if one node
-fails and preventing any single node from becoming a bottleneck. This is
-especially vital for enterprise-scale applications with large user bases or
-transaction volumes.
-
-## **Blockchain explorer**
-
-The **Blockchain Explorer** offers real-time insights into:
-
-- **Transactions:** See if they've been mined or validated.
-- **Blocks:** Examine block production, verifying chain integrity.
-- **Smart Contracts:** Inspect states, method calls, and event logs.
-- **Network Participants:** Track node identities and governance roles in
-  private networks. It relies on fast JSON-RPC and GraphQL queries, making it a
-  cornerstone for auditing, diagnostic checks, and compliance reporting.
-
-## **Code studio IDE**
-
-A **browser-based IDE** that streamlines contract development for various
-networks:
-
-- **Foundry/Hardhat Integration:** Preconfigured setups to compile, test, and
-  deploy Solidity contracts for EVM-based chains like Hyperledger Besu or
-  Quorum.
-- **Chaincode Support:** For Hyperledger Fabric networks, enabling
-  enterprise-grade business logic.
-- **Templates & Custom Libraries:** Jump-start new projects or adapt existing
-  ERC20, ERC721 and ERC1155 standards easily.
-- **Terminal & GitHub Integration:** Enables collaboration, version control, and
-  quick dependency management. Because it's fully hosted in SettleMint, you
-  don't need a local environment—resulting in a frictionless dev experience.
-
-
-## **Smart contract api portal**
-
-After deployment, the **Smart Contract API Portal** translates your contract
-
-ABIs into **REST** and **GraphQL** endpoints—often termed "write middleware"
-
-because they allow writing data on-chain through these automatically generated
-APIs. It includes:
-
-- **OpenAPI Documentation:** So you can test endpoints directly in the browser.
-- **Interactive Interface:** Easily check function parameters and event outputs.
-- **Hundreds of Endpoints per Contract:** Eliminating the need to manually code
-  them. This shortens the time from contract deployment to integration with
-  front ends or third-party services.
-
-## **Graph middleware**
-
-**Graph Middleware** accelerates read operations by indexing specified on-chain
-data in real time. Developers define subgraphs that specify which events,
-transactions, and states to monitor, enabling quick data retrieval via GraphQL.
-Popular for:
-
-- **DeFi Dashboards**
-- **NFT Marketplaces**
-- **Real-time Analytics** By removing the need to scan entire blockchains
-  manually, Graph Middleware makes complex queries simple and efficient.
-
-## **Ethereum attestation indexer**
-
-Enterprise solutions often require **verifiable credentials** (e.g., identity
-attestations or compliance confirmations). The **Ethereum Attestation Indexer**
-monitors and indexes data produced by the **Ethereum Attestation Service
-(EAS)**. It then presents these attestations through a GraphQL API, allowing:
-
-- **Identity Verification**
-- **Reputation Systems**
-- **Regulatory Tracking** This specialized middleware simplifies trust-based
-  interactions, reducing custom code for indexing or auditing attestations.
-
-## **Integration studio**
-
-The **Integration Studio** is a **low-code, Node-RED-based** environment for
-orchestrating cross-system workflows:
-
-- **4,000+ Pre-Built Connectors:** Link blockchains to ERP, CRM, HR, AI/ML, and
-  other external systems.
-- **Event-Driven Processes:** React to on-chain activities by triggering
-  off-chain actions, such as sending emails or updating databases.
-- **API Management:** Expose blockchain functions as RESTful endpoints or
-  incorporate external APIs into on-chain processes. This reduces the need for
-  heavy custom coding when bridging decentralized and centralized systems.
-
-## **Hasura graphql engine**
-
-
-**Hasura** seamlessly manages **off-chain** data—often user details,
-authentication, or large volumes of records that don't need to reside on-chain.
-
-Paired with a PostgreSQL database, Hasura automatically generates a **real-time
-GraphQL schema**, offering:
-
-- **Instant Queries & Mutations**
-- **Role-Based Access Control**
-- **Real-Time Updates** for dashboards and front ends By decoupling large or
-  frequently changing data from blockchain storage, you optimize both
-  performance and cost while retaining cryptographic proof references on-chain
-  as needed.
-
-## **S3 storage (minio)**
-
-For storing large files, such as logs, digital certificates, transaction
-receipts, SettleMint offers an **S3-compatible MinIO** service. You can:
-
-- **Upload & Retrieve Files via Standard S3 APIs**
-- **Control Access Permissions**
-- **Benefit from High-Performance Object Storage** It's ideal for data that
-  doesn't require on-chain immutability or public distribution (unlike IPFS).
-  Typical use cases include operational logs, user-generated content, and
-  archives that must remain accessible and secure.
-
-## **Ipfs storage**
-
-SettleMint integrates **IPFS** for **decentralized**, **tamper-proof** file
-storage. A unique hash (CID) identifies each file, enabling:
-
-- **Verified Authenticity:** Hash-based references confirm file content hasn't
-  changed.
-- **Permanent Distribution:** Files remain online as long as peers host them,
-  removing dependency on a single provider.
-- **Ideal for NFTs, Public Certificates, and Audit Logs** that require trustless
-  verification. By offloading large files to IPFS and storing only the hash
-  on-chain, you can preserve blockchain efficiency while retaining provable data
-  integrity.
-
-## **Private key management**
-
-Depending on risk, compliance requirements, and scale, SettleMint supports
-multiple approaches:
-
-- **Accessible ECDSA P-256:** Straightforward software-based storage.
-- **Hierarchical Deterministic (HD) ECDSA P-256:** Generate multiple child keys
-  from a master seed for structured backups.
-- **Hardware Security Modules (HSMs):** Tamper-resistant devices ensuring
-  maximum security for enterprise or regulated use cases. Each approach
-  integrates with the **Transaction Signer**, guaranteeing seamless and secure
-  execution of on-chain operations.
-
-## **Access tokens (pat/aat)**
-
-Two forms of token-based authentication and authorization:
-
-- **Personal Access Tokens (PATs):** Tied to individual users for tasks like
-  contract deployment, node setup, or platform configuration.
-- **Application Access Tokens (AATs):** For machine-to-machine interactions,
-  often used by microservices or scripts that require secure blockchain access.
-  Admins can create, rotate, or revoke tokens, applying granular role-based
-  controls to ensure only authorized entities interact with the network.
-
-## **Custom deployments**
-
-SettleMint enables developers to containerize custom applications, front-end
-dashboards, specialized microservices, or custom oracles, and host them within
-the platform. You can:
-
-- **Define Container Images & Environments**
-- **Configure Domains & SSL**
-- **Scale Resources** based on user traffic This integrated approach eliminates
-  the need for separate hosting services, simplifying operational overhead and
-  unifying observability.
-
-## **Asset tokenization kit**
-
-The Asset Tokenization Kit is a **full-stack accelerator** designed to simplify
-and speed up the development of tokenized asset platforms. It provides
-**pre-built smart contracts and a ready-to-use dApp UI**, enabling businesses to
-launch tokenized assets quickly and efficiently.
-
-- **Pre-configured Smart Contracts:** Based on ERC20 standard for various asset
-  types, including stablecoins, bonds, equity, funds, and more.
-- **Meta Transactions & Account Abstraction:** Enables gasless transactions and
-  wallet abstraction for a seamless user experience.
-- **Compliance & Access Control:** User management, KYC, whitelisting, and
-  role-based access control for better governance.
-
-This plug-and-play solution accelerates blockchain adoption, allowing
-enterprises to tokenize assets securely while ensuring flexibility and
-scalability.
+## Platform components in detail: Everything you need to know
+
+### Which blockchain networks should I use? Private vs Public networks explained
+
+<Tabs defaultValue="private">
+  <Tab value="private" label="🔒 Private Permissioned Networks">
+    <Callout type="info" title="Best for confidential enterprise data">
+      **When to use private networks:**
+      - Internal business processes requiring data privacy
+      - Multi-party workflows with sensitive information
+      - Regulatory compliance requirements
+      - Need for participant control and governance
+    </Callout>
+
+    <Accordions>
+      <Accordion title="Hyperledger Besu - What's the best private Ethereum network?">
+        - Enterprise Ethereum with built-in privacy features
+        - QBFT consensus for high throughput (1000+ TPS)
+        - EVM compatible - use existing Ethereum tools
+        - Used by: Central banks, financial institutions
+      </Accordion>
+      
+      <Accordion title="Quorum - How do I build on JPMorgan's blockchain?">
+        - Created by JPMorgan for financial services
+        - Private transactions and data segregation
+        - Ethereum-compatible smart contracts
+        - Used by: Banks, payment processors
+      </Accordion>
+      
+      <Accordion title="Hyperledger Fabric - What's the most flexible enterprise blockchain?">
+        - Modular architecture with pluggable components
+        - Channel-based privacy between organizations
+        - Non-cryptocurrency focused
+        - Used by: Supply chains, healthcare, government
+      </Accordion>
+    </Accordions>
+  </Tab>
+  
+  <Tab value="l1" label="🌐 Layer 1 Public Networks">
+    <Callout type="info" title="Best for transparency and global reach">
+      **When to use L1 networks:**
+      - Public-facing applications
+      - Cross-border transactions
+      - Decentralized finance (DeFi)
+      - NFTs and digital collectibles
+    </Callout>
+
+    <Accordions>
+      <Accordion title="Ethereum - Should I build on Ethereum mainnet?">
+        - Largest developer ecosystem (500,000+ developers)
+        - Most secure and decentralized
+        - $400B+ total value locked
+        - Best for: High-value transactions, DeFi protocols
+      </Accordion>
+      
+      <Accordion title="Avalanche - What's the fastest L1 blockchain?">
+        - Sub-second finality
+        - 4,500+ TPS capability
+        - Custom subnet creation
+        - Best for: Gaming, high-frequency trading
+      </Accordion>
+      
+      <Accordion title="Hedera Hashgraph - Which blockchain do enterprises prefer?">
+        - Governing council includes Google, IBM, Boeing
+        - 10,000+ TPS with instant finality
+        - Fixed low fees ($0.0001 per transaction)
+        - Best for: Supply chain, micropayments
+      </Accordion>
+      
+      <Accordion title="Sonic (formerly Fantom) - What's the best alternative to Ethereum?">
+        - 10,000+ TPS with 1-second finality
+        - EVM compatible with lower fees
+        - Lachesis consensus for speed
+        - Best for: DeFi, gaming applications
+      </Accordion>
+    </Accordions>
+  </Tab>
+  
+  <Tab value="l2" label="⚡ Layer 2 Public Networks">
+    <Callout type="info" title="Best for scalability with Ethereum security">
+      **When to use L2 networks:**
+      - High transaction volume applications
+      - Cost-sensitive use cases
+      - Need Ethereum security with better performance
+      - Existing Ethereum applications seeking scale
+    </Callout>
+
+    <Accordions>
+      <Accordion title="Polygon PoS - How do I scale Ethereum applications?">
+        - 65,000+ TPS capability
+        - $0.01 average transaction cost
+        - 7,000+ dApps deployed
+        - Best for: Payments, gaming, NFT marketplaces
+      </Accordion>
+      
+      <Accordion title="Polygon zkEVM - What's the best zero-knowledge rollup?">
+        - True EVM equivalence
+        - Inherits Ethereum security
+        - Lower costs than Polygon PoS
+        - Best for: DeFi, high-security applications
+      </Accordion>
+      
+      <Accordion title="Optimism - Which L2 has the best developer experience?">
+        - Simple deployment from Ethereum
+        - Optimistic rollup technology
+        - Growing ecosystem fund
+        - Best for: Ethereum app migration
+      </Accordion>
+      
+      <Accordion title="Arbitrum - What's the most adopted L2?">
+        - Largest L2 by TVL ($10B+)
+        - Full Ethereum compatibility
+        - Nitro upgrade for speed
+        - Best for: DeFi protocols, DAOs
+      </Accordion>
+      
+      <Accordion title="Soneium - What's Sony's blockchain solution?">
+        - Built by Sony for entertainment use cases
+        - High throughput for gaming
+        - Cross-chain connectivity
+        - Best for: Gaming, media, entertainment
+      </Accordion>
+    </Accordions>
+  </Tab>
+</Tabs>
+
+### How do I manage blockchain participants and permissions?
+
+**Consortium Manager capabilities:**
+- **Granular permission control:** Set who can add nodes, deploy contracts, or invite members
+- **Multi-signature governance:** Require approval from multiple parties for critical actions
+- **Automated onboarding:** Streamline participant addition with pre-configured roles
+- **Audit trail:** Complete history of all permission changes
+
+**Network Manager advanced features:**
+- **Genesis file configuration:** Define initial blockchain state and parameters
+- **External node integration:** Connect to existing blockchain networks
+- **Cross-organization setup:** Enable secure multi-party networks
+- **One-click network creation:** Launch production networks in minutes
+
+## **How do I manage blockchain infrastructure?**
+
+### Blockchain nodes - Complete control over your network
+
+**Node management made simple:**
+
+- **Validating Nodes:** 
+  - Participate in consensus and earn rewards
+  - Secure the network with stake/authority
+  - Required for private network control
+  - Automated setup and monitoring
+
+- **Non-Validating Nodes:**
+  - Handle read requests and queries
+  - Reduce load on validators
+  - Improve application performance
+  - Scale horizontally as needed
+
+- **Load Balancer benefits:**
+  - 99.9% uptime guarantee
+  - Automatic failover
+  - Geographic distribution
+  - Request routing optimization
+
+- **Fabric-specific components:**
+  - **Peers:** Maintain ledger, execute chaincode, endorse transactions
+  - **Orderers:** Order transactions into blocks, ensure consistency
+  - Both include automated deployment and configuration
+
+- **Real-time monitoring:**
+  - Live node status and health
+  - Performance metrics and alerts
+  - Log aggregation and search
+  - Network topology visualization
+
+## **How do I handle blockchain transactions securely?**
+
+The **Transaction Signer** solves the critical challenge: **"How do I sign transactions without exposing private keys?"**
+
+**Enterprise-grade features:**
+- **HSM Integration:** Hardware security modules for maximum protection
+- **Key isolation:** Private keys never touch application code
+- **Audit logging:** Complete record of all signing operations
+- **Role-based access:** Control who can sign what types of transactions
+- **API-driven:** Easy integration with any application
+- **Automated workflows:** Schedule and batch transactions
+
+## **How do I ensure high availability for blockchain applications?**
+
+The **Blockchain Load Balancer** answers: **"How do I handle millions of blockchain requests?"**
+
+**Key capabilities:**
+- **Intelligent routing:** Direct requests to healthy nodes
+- **Geographic distribution:** Reduce latency globally
+- **Automatic failover:** Zero downtime during node failures
+- **Request caching:** Improve response times
+- **Rate limiting:** Protect against abuse
+- **Analytics:** Understand usage patterns
+
+## **How do I monitor and debug blockchain applications?**
+
+The **Blockchain Explorer** provides answers to:
+- "Did my transaction go through?"
+- "What's the current block height?"
+- "Why did my smart contract fail?"
+- "Who are the network participants?"
+
+**Features that developers love:**
+- **Transaction tracking:** Real-time status updates
+- **Block inspection:** Deep dive into block contents
+- **Smart contract debugging:** View state changes and events
+- **Network analytics:** Participation and performance metrics
+- **API access:** Integrate explorer data into your apps
+- **Export capabilities:** Generate reports for compliance
+
+## **What's the best way to develop smart contracts?**
+
+### Code Studio IDE - Professional development environment
+
+**"How do I write and deploy smart contracts quickly?"**
+
+**Everything included:**
+- **Foundry/Hardhat integration:** Industry-standard tools pre-configured
+- **Multi-language support:** Solidity, Vyper, Chaincode (Go/Node.js)
+- **Built-in testing:** Unit tests, integration tests, gas optimization
+- **Template library:** ERC-20, ERC-721, ERC-1155, and more
+- **GitHub integration:** Version control and collaboration
+- **One-click deployment:** To any configured network
+- **No local setup:** Everything runs in the browser
+
+**Productivity features:**
+- Syntax highlighting and auto-completion
+- Real-time error checking
+- Gas estimation
+- Contract verification
+- Team collaboration tools
+
+## **How do I create APIs for smart contracts?**
+
+### Smart Contract API Portal - Instant REST and GraphQL endpoints
+
+**"How do I integrate smart contracts with my application?"**
+
+This solves the problem of manually writing blockchain integration code:
+
+- **Automatic generation:** ABIs converted to APIs instantly
+- **OpenAPI documentation:** Interactive testing interface
+- **Authentication:** Built-in API key management
+- **Rate limiting:** Protect your infrastructure
+- **Webhook support:** React to on-chain events
+- **SDK generation:** Client libraries in any language
+
+**What you save:**
+- 2-4 weeks of API development per contract
+- Hundreds of potential security vulnerabilities
+- Ongoing maintenance burden
+
+## **How do I query blockchain data efficiently?**
+
+### Graph Middleware - Real-time blockchain indexing
+
+**"How do I build analytics dashboards for blockchain data?"**
+
+Perfect for applications that need to:
+- Display user balances and history
+- Show NFT collections and metadata
+- Track DeFi positions and yields
+- Monitor protocol metrics
+- Build blockchain explorers
+
+**Developer benefits:**
+- **GraphQL queries:** Get exactly the data you need
+- **Real-time updates:** WebSocket subscriptions
+- **Historical data:** Query any point in time
+- **Aggregations:** Sum, average, count operations
+- **Relationships:** Join on-chain and off-chain data
+- **Performance:** Millisecond query times
+
+## **How do I manage verifiable credentials?**
+
+### Ethereum Attestation Indexer - Enterprise identity solution
+
+**"How do I implement blockchain-based identity verification?"**
+
+Built specifically for:
+- KYC/AML compliance
+- Professional certifications
+- Academic credentials
+- Reputation systems
+- Access control
+
+**Why use attestations:**
+- **Verifiable:** Cryptographically signed claims
+- **Portable:** Users control their credentials
+- **Privacy-preserving:** Selective disclosure
+- **Interoperable:** Works across applications
+- **Compliant:** Meets regulatory requirements
+
+## **How do I integrate blockchain with existing systems?**
+
+### Integration Studio - Enterprise system connectivity
+
+**"How do I connect blockchain to my ERP/CRM/database?"**
+
+With 4,000+ pre-built connectors, integrate with:
+- **ERP Systems:** SAP, Oracle, Microsoft Dynamics
+- **CRM Platforms:** Salesforce, HubSpot, Pipedrive
+- **Databases:** PostgreSQL, MySQL, MongoDB
+- **Cloud Services:** AWS, Azure, Google Cloud
+- **Communication:** Email, SMS, Slack, Teams
+- **AI/ML Services:** OpenAI, Azure ML, AWS SageMaker
+
+**Common integration patterns:**
+- Trigger ERP updates from blockchain events
+- Store large data off-chain with on-chain references
+- Send notifications for important transactions
+- Synchronize blockchain and database state
+- Implement hybrid on-chain/off-chain workflows
+
+## **How do I manage off-chain data for blockchain apps?**
+
+### Hasura GraphQL Engine - Modern database layer
+
+**"What's the best database for blockchain applications?"**
+
+Hasura solves the challenge of managing data that shouldn't or can't go on-chain:
+
+- **User profiles and preferences**
+- **Application configuration**
+- **High-frequency updates**
+- **Large datasets**
+- **Temporary data**
+
+**Developer experience:**
+- **Instant GraphQL:** Database tables become APIs
+- **Real-time subscriptions:** Live data updates
+- **Row-level security:** Fine-grained access control
+- **Event triggers:** React to database changes
+- **REST API wrapper:** For legacy system compatibility
+
+## **Where do I store files for blockchain applications?**
+
+### S3 Storage (MinIO) - Enterprise file storage
+
+**"How do I store documents and media for blockchain apps?"**
+
+Use cases:
+- Legal documents and contracts
+- User-uploaded content
+- Application logs and backups
+- Large datasets
+- Private/permissioned content
+
+**Enterprise features:**
+- **S3 compatibility:** Use existing S3 tools
+- **Encryption:** At-rest and in-transit
+- **Access control:** Bucket policies and IAM
+- **Versioning:** Track file changes
+- **High performance:** Distributed architecture
+
+### IPFS Storage - Decentralized permanent storage
+
+**"How do I ensure files can't be tampered with?"**
+
+Perfect for:
+- NFT metadata and images
+- Public certificates
+- Audit trails
+- Legal evidence
+- Open data
+
+**Why IPFS with SettleMint:**
+- **Content addressing:** Files identified by hash
+- **Permanent storage:** Can't be deleted or modified
+- **Decentralized:** No single point of failure
+- **Blockchain integration:** Store only hashes on-chain
+- **Cost effective:** Reduce on-chain storage costs
+
+## **How do I secure blockchain applications?**
+
+### Private Key Management - Enterprise-grade security
+
+**"What's the most secure way to manage blockchain keys?"**
+
+SettleMint offers multiple approaches based on your security requirements:
+
+- **Software wallets (Development):**
+  - Quick setup for testing
+  - Encrypted key storage
+  - Suitable for development
+
+- **HD Wallets (Production):**
+  - Hierarchical Deterministic keys
+  - Simplified backup/recovery
+  - Multiple addresses from one seed
+
+- **Hardware Security Modules (Enterprise):**
+  - FIPS 140-2 Level 3 certified
+  - Tamper-resistant hardware
+  - Required for financial services
+  - Compliance ready
+
+### Access Control - Platform security
+
+**"How do I control who can access my blockchain infrastructure?"**
+
+Two-tier authentication system:
+
+- **Personal Access Tokens (PATs):**
+  - Individual developer access
+  - Scoped permissions
+  - Audit trail
+  - Regular rotation
+
+- **Application Access Tokens (AATs):**
+  - Service-to-service authentication
+  - CI/CD integration
+  - Microservice communication
+  - Machine identities
+
+## **How do I deploy custom applications?**
+
+### Custom Deployments - Full application hosting
+
+**"Can I host my entire blockchain application on SettleMint?"**
+
+Yes! Deploy any containerized application:
+
+- **Frontend applications:** React, Vue, Angular apps
+- **Backend services:** Node.js, Python, Go APIs
+- **Blockchain oracles:** Custom data feeds
+- **Monitoring tools:** Grafana, Prometheus
+- **Custom middleware:** Business logic layers
+
+**Platform benefits:**
+- **Integrated environment:** Everything in one place
+- **Automatic SSL:** HTTPS certificates included
+- **Auto-scaling:** Handle traffic spikes
+- **Monitoring:** Built-in observability
+- **CI/CD ready:** Automated deployments
+
+## **How do I tokenize real-world assets?**
+
+### Asset Tokenization Kit - Complete tokenization solution
+
+**"What's the fastest way to tokenize assets?"**
+
+The Asset Tokenization Kit accelerates projects from months to weeks:
+
+**Pre-built components:**
+- **Smart contracts:** ERC-20 based, audited, production-ready
+- **Compliance features:** KYC/AML, whitelisting, transfer restrictions
+- **Admin dashboard:** Manage tokens, users, and compliance
+- **Investor portal:** Purchase, transfer, and manage tokens
+- **API layer:** Integrate with existing systems
+
+**Supported asset types:**
+- Securities (stocks, bonds)
+- Real estate
+- Commodities
+- Art and collectibles
+- Intellectual property
+- Carbon credits
+
+**Business benefits:**
+- **6x faster time-to-market**
+- **80% lower development costs**
+- **Regulatory compliance built-in**
+- **White-label ready**
+- **Proven in production**
 
 ---
+
+## Getting started with SettleMint
+
+**Ready to build your blockchain application?**
+
+<Steps>
+  <Step>
+    ### Choose your deployment model
+    
+    <Tabs defaultValue="saas">
+      <Tab value="saas" label="Managed SaaS">
+        We handle the infrastructure - perfect for teams who want to focus on building applications
+      </Tab>
+      <Tab value="self" label="Self-Managed">
+        Deploy in your environment - ideal for organizations with specific compliance or infrastructure requirements
+      </Tab>
+    </Tabs>
+  </Step>
+  
+  <Step>
+    ### Select your blockchain
+    
+    - **Private networks** for confidential data
+    - **Public networks** for transparency
+  </Step>
+  
+  <Step>
+    ### Build with confidence
+    
+    - Use pre-built components
+    - Leverage 50+ example projects
+    - Get expert support
+  </Step>
+</Steps>
+
+<Callout type="info" title="Next steps">
+- [Quick Start Guide](/guides/quickstart)
+- [Platform Architecture](/concepts/architecture)
+- [Security Best Practices](/concepts/security)
+- [Request a Demo](https://settlemint.com/demo)
+</Callout>

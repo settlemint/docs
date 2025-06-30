@@ -1,85 +1,110 @@
 ---
-title: Add Network and nodes
-description: Guide to adding a blockchain network to your application
+title: "How to Set Up Your First Blockchain Network and Nodes in 5 Minutes"
+description: "Complete guide to deploying EVM blockchain networks on SettleMint. Learn how to add Ethereum, Polygon, and Arbitrum networks with validator nodes for enterprise dApps. Includes gas optimization, multi-chain deployment, and fault tolerance strategies."
 ---
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
-import { Steps } from "fumadocs-ui/components/steps";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Card } from "fumadocs-ui/components/card";
 import React from "react";
 
-<div
-  style={{
-    backgroundColor: "#e1eafd",
-    color: "#356fee",
-    padding: "0.5px 10px 10px 10px",
-    borderRadius: "10px",
-    fontSize: "18px",
-    fontWeight: "bold",
-    lineHeight: "1.5",
-    textAlign: "left",
-  }}
->
-  Summary
-  <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
-    To build a blockchain application, the first step is setting up a blockchain
-    network. You can either deploy a permissioned network such as Hyperledger
-    Besu or Quorum, or connect to an existing L1 or L2 public network like
-    Ethereum, Polygon PoS, Hedera, Polygon zkEVM, Avalanche, Arbitrum, or
-    Optimism. Both mainnet and testnet versions are available for public
-    networks.
-    <br> </br>
-    When creating an application on SettleMint, you will be prompted to select a
-    network type and assign it a name. For permissioned networks, you control
-    the entire network infrastructure, including validator nodes. A first
-    validating node is automatically deployed along with your permissioned
-    network. For public networks, the validators are already established by the
-    network's consensus participants, and SettleMint will deploy an archive node
-    that connects to the chosen public network.
-    <br> </br>
-    In SettleMint-managed (SaaS) mode, you will need to choose between a shared
-    or dedicated cluster for deployment. You can also select a cloud provider
-    and a data center of your choice. Additionally, you will have the option to
-    select from small, medium, or large resource packs, which can be scaled up
-    or down later as needed.
-    <br> </br>
-    For permissioned networks, you can configure network settings and customize
-    the genesis file before deployment. For most use cases, keeping the default
-    settings is recommended. After deployment, your network manager and first
-    node will be fully operational within minutes.
-    <br> </br>
-    To enhance reliability in permissioned networks, you should add more nodes
-    for fault tolerance. The best practice is to deploy four validator nodes and
-    two non-validator nodes to ensure Byzantine fault tolerance. For public
-    networks, you might want to deploy additional archive or full nodes to
-    improve reliability of your connection to the network.
-    <br> </br>
-    Once your network and nodes are running, adding a load balancer will help
-    distribute network traffic efficiently and improve performance. You can then
-    access the Insights tab to integrate monitoring tools. For permissioned
-    networks, you can add Blockscout blockchain explorer to track transactions
-    and network activity. If you are using public networks, you can use their
-    publicly available blockchain explorers instead.
-    <br> </br>
-  </div>
+<Callout type="info">
+**Quick Network Setup**: Deploy your first blockchain network in under 5 minutes. Choose from Ethereum mainnet/testnets, Polygon, Arbitrum, or private Hyperledger Besu networks. Perfect for enterprise dApps requiring gas optimization and multi-chain deployment.
+</Callout>
+
+<Callout type="question">
+**Common Question**: "Which blockchain network should I choose for my enterprise dApp? How do I optimize for gas costs and transaction speed?"
+</Callout>
+
+**Answer**: 
+- **Public networks** (Ethereum, Polygon, Arbitrum) = Lower setup cost, proven security, existing liquidity
+- **Private networks** (Hyperledger Besu/Quorum) = Full control, zero gas fees, enterprise compliance
+- **Hybrid approach** = Develop on private, deploy to public for maximum flexibility
+
+## Who needs blockchain network setup for EVM development?
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+  <Card className="p-4">
+    <h4 className="font-semibold mb-3">Enterprise Teams</h4>
+    <ul className="space-y-2 text-sm">
+      <li>• **Supply chain** - Asset tracking and provenance</li>
+      <li>• **Finance** - Payment rails and tokenization</li>
+      <li>• **Identity** - Credential verification systems</li>
+      <li>• **Real estate** - Property tokenization platforms</li>
+    </ul>
+  </Card>
+  <Card className="p-4">
+    <h4 className="font-semibold mb-3">Development Teams</h4>
+    <ul className="space-y-2 text-sm">
+      <li>• **dApp builders** - Frontend-to-blockchain integration</li>
+      <li>• **Protocol teams** - Custom consensus mechanisms</li>
+      <li>• **DeFi projects** - AMMs, lending, derivatives</li>
+      <li>• **NFT platforms** - Marketplaces and gaming</li>
+    </ul>
+  </Card>
 </div>
 
-## Prerequisites
+### Prerequisites
 
-Before setting up a blockchain network, you need to have an application created
-in your workspace. Applications provide the organizational context for all your
-blockchain resources including networks, nodes, and development tools. If you
-haven't created an application yet, follow our
-[create application](/building-with-settlemint/evm-chains-guide/create-an-application)
-guide first.
+Before setting up a blockchain network, you need an application created in your workspace. Applications provide organizational context for all blockchain resources including networks, nodes, and development tools.
 
-## 1. Add a blockchain network
+<Callout type="warning">
+**Required First Step**: Create an application before adding networks. Follow our [create application guide](/building-with-settlemint/evm-chains-guide/create-an-application) if you haven't done this yet.
+</Callout>
 
-For EVM Chains, SettleMint offers Hyperledger Besu and Quorum for permissioned
-networks and a bunch of public networks to choose from. For the list of
-supported networks please refer -
-[supported networks](/platform-components/blockchain-infrastructure/network-manager#supported-blockchain-network-protocols)
+## How do I choose the right blockchain network for my use case?
+
+<Tabs items={['Public Networks', 'Private Networks', 'Network Comparison']}>
+  <Tab value="Public Networks">
+    <div className="space-y-4">
+      <h4 className="font-semibold">Best for: DeFi, NFTs, public dApps</h4>
+      
+      **Ethereum Mainnet/Testnets**
+      - **Gas cost**: High ($5-50+ per transaction)
+      - **Speed**: 15 transactions/second
+      - **Best for**: High-value transactions, established DeFi
+      
+      **Polygon PoS**
+      - **Gas cost**: Low ($0.01-0.10 per transaction)
+      - **Speed**: 65+ transactions/second
+      - **Best for**: Gaming, NFTs, micro-payments
+      
+      **Arbitrum One**
+      - **Gas cost**: Medium ($0.50-2.00 per transaction)
+      - **Speed**: 40+ transactions/second
+      - **Best for**: DeFi with Ethereum compatibility
+    </div>
+  </Tab>
+  
+  <Tab value="Private Networks">
+    <div className="space-y-4">
+      <h4 className="font-semibold">Best for: Enterprise, compliance, testing</h4>
+      
+      **Hyperledger Besu**
+      - **Gas cost**: Zero (configurable)
+      - **Speed**: 1000+ transactions/second
+      - **Best for**: Supply chain, enterprise consortiums
+      
+      **GoQuorum**
+      - **Gas cost**: Zero (configurable)
+      - **Speed**: 500+ transactions/second
+      - **Best for**: Financial services, private contracts
+    </div>
+  </Tab>
+  
+  <Tab value="Network Comparison">
+    | Network | TPS | Gas Cost | Finality | Use Case |
+    |---------|-----|----------|----------|----------|
+    | Ethereum | 15 | High | 12-15 min | DeFi, governance |
+    | Polygon | 65+ | Low | 2-3 sec | Gaming, NFTs |
+    | Arbitrum | 40+ | Medium | 1-2 min | DeFi scaling |
+    | Besu Private | 1000+ | Zero | Instant | Enterprise |
+  </Tab>
+</Tabs>
+
+For the complete list of supported networks, see [supported networks](/platform-components/blockchain-infrastructure/network-manager#supported-blockchain-network-protocols).
 
 ![Select Network](../../../img/building-with-settlemint/select-network.png)
 
@@ -186,9 +211,38 @@ You can perform the same action via the SettleMint SDK CLI as well -
 The EVM stack size configures the stack depth for smart contract execution, and the Contract size limit sets the maximum contract code size to manage deployment constraints. Adjusting these settings allows for greater scalability, efficiency, and cost control based on your specific use case.
 For EVM Chains, SettleMint allows you to set key genesis file paramters for a custom network configuration.
 
-## Manage a network
+## How do I optimize my blockchain network for gas efficiency?
 
-Network management can be done via SettleMint SDK CLI using these commands -
+<Accordions>
+  <Accordion title="Gas Optimization Strategies">
+    **Network-Level Optimizations:**
+    - **Block time**: Shorter blocks = faster confirmation, higher overhead
+    - **Gas limit**: Higher limits = more complex transactions per block
+    - **Gas price**: Lower prices = cheaper transactions, slower processing
+    
+    **Development Optimizations:**
+    - Use Layer 2 networks (Polygon, Arbitrum) for 90%+ gas savings
+    - Batch multiple operations in single transactions
+    - Optimize smart contract code for minimal gas consumption
+    - Use events instead of storage for non-critical data
+  </Accordion>
+  
+  <Accordion title="Multi-Chain Deployment Strategy">
+    **Recommended Deployment Pattern:**
+    1. **Development**: Private Besu network (free, fast testing)
+    2. **Staging**: Public testnet (realistic gas estimation)
+    3. **Production**: Mainnet deployment (real user adoption)
+    
+    **Cross-Chain Considerations:**
+    - Use same smart contract addresses across networks
+    - Implement chain ID validation in frontend
+    - Test bridge functionality between L1/L2 networks
+  </Accordion>
+</Accordions>
+
+## How do I manage my blockchain network after deployment?
+
+Network management can be done via SettleMint SDK CLI using these commands:
 
 <Tabs items={['SDK CLI','Platform UI','SDK JS']}>
  <Tab value="SDK CLI">
@@ -233,21 +287,64 @@ When we deploy a network, first node is automatically deployed with it and is a
 validator node. Once you have deployed a permissioned network or joined a public
 network, you can add more nodes to it.
 
-## 2. Add blockchain nodes
+## How many blockchain nodes do I need for fault tolerance?
 
-To see and add nodes, please click on **Blockchain Nodes** tile on the dashboard
-or use the **Blockchain Nodes** link in the left menu.
+<Callout type="question">
+**Common Question**: "My blockchain network is running on a single node. How do I ensure it stays online and secure for production use?"
+</Callout>
 
-![Add Node](../../../img/building-with-settlemint/add-node-via-ui.png)
+**Answer**: Single nodes create single points of failure. For production systems, you need multiple nodes to ensure Byzantine Fault Tolerance (BFT) and high availability.
 
-We recommend the following number of nodes for each envrionment:
+<Steps>
+  ### Navigate to node management
+  Click the **Blockchain Nodes** tile on your dashboard or use the **Blockchain Nodes** link in the left menu.
+  
+  ![Add Node](../../../img/building-with-settlemint/add-node-via-ui.png)
+  
+  ### Understand node requirements
+  We recommend the following node configurations for enterprise-grade reliability:
+</Steps>
 
-| Blockchain Network   | Node Type           | Minimum Nodes for Fault Tolerance |
-| -------------------- | ------------------- | --------------------------------- |
-| **Hyperledger Besu** | Validator Nodes     | 4 (Byzantine Fault Tolerant BFT)  |
-| **Hyperledger Besu** | Non-Validator Nodes | 2 (for redundancy)                |
-| **GoQuorum**         | Validator Nodes     | 4 (Istanbul BFT)                  |
-| **GoQuorum**         | Non-Validator Nodes | 2 (for redundancy)                |
+<Tabs items={['Production Setup', 'Development Setup', 'High Availability']}>
+  <Tab value="Production Setup">
+    | Network | Validator Nodes | Non-Validator Nodes | Why? |
+    |---------|----------------|---------------------|------|
+    | **Hyperledger Besu** | 4 minimum | 2 minimum | BFT consensus requires 3f+1 nodes to tolerate f failures |
+    | **GoQuorum** | 4 minimum | 2 minimum | Istanbul BFT provides immediate finality with 4+ validators |
+    | **Public Networks** | N/A (external) | 2-3 archive nodes | Multiple nodes prevent single point of failure |
+    
+    <Callout type="info">
+    **Byzantine Fault Tolerance**: With 4 validator nodes, your network can continue operating even if 1 node fails or becomes malicious.
+    </Callout>
+  </Tab>
+  
+  <Tab value="Development Setup">
+    | Environment | Nodes Needed | Cost Optimization |
+    |-------------|--------------|-------------------|
+    | **Local Testing** | 1 validator | Use Hardhat network for fastest iteration |
+    | **Integration Testing** | 2 validators | Minimal setup for CI/CD pipelines |
+    | **Staging** | 3 validators | Close to production for final testing |
+    
+    <Callout type="tip">
+    **Development Tip**: Start with 1 node for rapid development, then scale to 4+ nodes before production deployment.
+    </Callout>
+  </Tab>
+  
+  <Tab value="High Availability">
+    **Enterprise High Availability Setup:**
+    
+    - **Geographic Distribution**: Deploy nodes across multiple regions
+    - **Load Balancing**: Distribute RPC calls across multiple non-validator nodes
+    - **Monitoring**: Set up alerts for node health and synchronization
+    - **Backup Strategy**: Regular snapshots and disaster recovery procedures
+    
+    **Recommended Architecture:**
+    ```
+    Region A: 2 Validators + 1 Non-Validator + Load Balancer
+    Region B: 2 Validators + 1 Non-Validator + Load Balancer
+    ```
+  </Tab>
+</Tabs>
 
 Nodes can also be added using SettleMint SDK CLI using the following commands-
 
@@ -366,60 +463,143 @@ restart, or upgrade the node via the SDK CLI or the Platform UI.
   All operations require appropriate permissions in your workspace.
 </Callout>
 
-## 3. Add load balancer
+## How do I scale my blockchain network for high transaction throughput?
 
-To add a load balancer, navigate to the **Blockchain nodes** section in the
-SettleMint platform and select your deployed network. Click "Add load balancer",
-choose the region, provider, and desired resource configuration. Once deployed,
-the load balancer helps distribute traffic efficiently, improving network
-reliability and performance.
+<Callout type="question">
+**Common Question**: "My dApp is getting 1000s of requests per minute. How do I prevent my blockchain nodes from becoming overwhelmed?"
+</Callout>
 
-When selecting nodes to connect to the load balancer, ensure you include at
-least two non-validator nodes for optimal redundancy. The load balancer can be
-configured to route requests to specific nodes based on workload distribution,
-ensuring high availability and fault tolerance in your blockchain network.
+**Answer**: Load balancers distribute incoming RPC requests across multiple nodes, preventing any single node from becoming a bottleneck.
+
+<Steps>
+  ### Add load balancer
+  Navigate to **Blockchain nodes** → Select your network → Click "Add load balancer"
+  
+  ### Configure distribution
+  Choose region, provider, and resource configuration based on your traffic patterns
+  
+  ### Connect nodes
+  Include **at least 2 non-validator nodes** for optimal redundancy and performance
+</Steps>
+
+<Card className="p-4 mt-4">
+  <h4 className="font-semibold mb-3">Load Balancer Benefits</h4>
+  <ul className="space-y-2 text-sm">
+    <li>• **Traffic Distribution**: Prevents node overload during high usage</li>
+    <li>• **Automatic Failover**: Routes around unhealthy nodes</li>
+    <li>• **Geographic Routing**: Connects users to nearest node for lower latency</li>
+    <li>• **Rate Limiting**: Protects against DDoS attacks and spam</li>
+  </ul>
+</Card>
 
 ![Add load balancer](../../../img/building-with-settlemint/evm-load-balancer.png)
 
-## 4. Add blockchain explorer
+![Add load balancer](../../../img/building-with-settlemint/evm-load-balancer.png)
 
-To add blockscout blockchain explorer for EVM based permissioned networks,
-navigate to **Insights** via the left menu or the dashboard tile. For public
-networks, you may use publicly available blockchain explorers for the respective
-network.
+## How do I monitor transactions and debug smart contract interactions?
+
+<Callout type="question">
+**Common Question**: "How can I see what's happening on my blockchain? I need to debug failed transactions and monitor contract interactions."
+</Callout>
+
+**Answer**: Blockchain explorers provide transaction monitoring, contract verification, and debugging capabilities essential for dApp development.
+
+<Tabs items={['Private Networks', 'Public Networks']}>
+  <Tab value="Private Networks">
+    **For Hyperledger Besu/Quorum Networks:**
+    
+    <Steps>
+      ### Add Blockscout explorer
+      Navigate to **Insights** → Click "Add blockchain explorer"
+      
+      ### Configure explorer
+      Choose deployment region and resource pack based on expected usage
+      
+      ### Access monitoring
+      Use the explorer to view transactions, verify contracts, and debug issues
+    </Steps>
+    
+    ![Add insights](../../../img/building-with-settlemint/add-insights.png)
+    ![Insight details](../../../img/building-with-settlemint/insight-details.png)
+    
+    **Blockscout Features:**
+    - Real-time transaction monitoring
+    - Smart contract verification and interaction
+    - Address balance tracking
+    - Network statistics and health metrics
+  </Tab>
+  
+  <Tab value="Public Networks">
+    **Use these established blockchain explorers:**
+  </Tab>
+</Tabs>
 
 ![Add insights](../../../img/building-with-settlemint/add-insights.png)
 ![Insight details](../../../img/building-with-settlemint/insight-details.png)
 
-### For public networks, please use the following blockchain explorers
+### Public Network Blockchain Explorers
 
-| **Network**          | **Mainnet Explorer**                                     | **Testnet Explorer**                                                                |
-| -------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| **Ethereum**         | [Etherscan](https://etherscan.io/)                       | [Sepolia](https://sepolia.etherscan.io/) / [Holesky](https://holesky.etherscan.io/) |
-| **Avalanche**        | [SnowTrace](https://snowtrace.io/)                       | [Fuji](https://testnet.snowtrace.io/)                                               |
-| **Hedera Hashgraph** | [HashScan](https://hashscan.io/mainnet)                  | [HashScan Testnet](https://hashscan.io/testnet)                                     |
-| **Polygon PoS**      | [PolygonScan](https://polygonscan.com/)                  | [Amoy](https://amoy.polygonscan.com//)                                              |
-| **Polygon zkEVM**    | [zkEVM Explorer](https://zkevm.polygonscan.com/)         | [zkEVM Testnet](https://testnet-zkevm.polygonscan.com/)                             |
-| **Optimism**         | [Optimistic Etherscan](https://optimistic.etherscan.io/) | [Optimism Goerli](https://goerli-optimism.etherscan.io/)                            |
-| **Arbitrum**         | [Arbiscan](https://arbiscan.io/)                         | [Arbitrum Goerli](https://goerli.arbiscan.io/)                                      |
-
-<br> </br>
-
-<br></br>
-<div style={{
-  backgroundColor: "#D1E5E8",
-  color: "#000000",
-  padding: "0.5px 10px 10px 10px",
-  borderRadius: "10px",
-  fontSize: "18px",
-  fontWeight: "light",
-  lineHeight: "1.5",
-  textAlign: "left"
-}}>
-Congratulations!
-
-You have succesfully built the blockchain infrastructure layer for you
-application. From here you can proceed for creating or setting up private keys
-for transaction signer and user wallets.
-
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <Card className="p-4">
+    <h4 className="font-semibold mb-3">Layer 1 Networks</h4>
+    
+    **Ethereum**
+    - Mainnet: [Etherscan](https://etherscan.io/)
+    - Testnets: [Sepolia](https://sepolia.etherscan.io/) / [Holesky](https://holesky.etherscan.io/)
+    
+    **Avalanche**
+    - Mainnet: [SnowTrace](https://snowtrace.io/)
+    - Testnet: [Fuji](https://testnet.snowtrace.io/)
+    
+    **Hedera Hashgraph**
+    - Mainnet: [HashScan](https://hashscan.io/mainnet)
+    - Testnet: [HashScan Testnet](https://hashscan.io/testnet)
+  </Card>
+  
+  <Card className="p-4">
+    <h4 className="font-semibold mb-3">Layer 2 Networks</h4>
+    
+    **Polygon PoS**
+    - Mainnet: [PolygonScan](https://polygonscan.com/)
+    - Testnet: [Amoy](https://amoy.polygonscan.com/)
+    
+    **Polygon zkEVM**
+    - Mainnet: [zkEVM Explorer](https://zkevm.polygonscan.com/)
+    - Testnet: [zkEVM Testnet](https://testnet-zkevm.polygonscan.com/)
+    
+    **Arbitrum**
+    - Mainnet: [Arbiscan](https://arbiscan.io/)
+    - Testnet: [Arbitrum Goerli](https://goerli.arbiscan.io/)
+    
+    **Optimism**
+    - Mainnet: [Optimistic Etherscan](https://optimistic.etherscan.io/)
+    - Testnet: [Optimism Goerli](https://goerli-optimism.etherscan.io/)
+  </Card>
 </div>
+
+## What's the typical timeline for blockchain network deployment?
+
+<Steps>
+  ### Network Creation (2-5 minutes)
+  Basic network deployment with first validator node
+  
+  ### Node Addition (5-10 minutes per node)
+  Adding additional validator and non-validator nodes for fault tolerance
+  
+  ### Load Balancer Setup (3-5 minutes)
+  Configuring traffic distribution across nodes
+  
+  ### Explorer Integration (5-10 minutes)
+  Setting up transaction monitoring and debugging tools
+</Steps>
+
+<Callout type="success">
+**🎉 Congratulations!**
+
+You have successfully built the blockchain infrastructure layer for your application. Your network is now ready for:
+- Smart contract deployment
+- dApp integration
+- Enterprise-grade transaction processing
+
+**Next Step**: Set up [private keys and wallets](/building-with-settlemint/evm-chains-guide/add-private-keys) for transaction signing and user management.
+</Callout>

@@ -1,27 +1,46 @@
 ---
-title: "Deployment plans"
-description: Guide to deployment plans and resource allocation in SettleMint
+title: "How do I choose the right deployment plan for enterprise blockchain workloads?"
+description: Complete guide to SettleMint deployment plans including infrastructure types, resource sizing, cost optimization, and enterprise decision framework
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Card } from "fumadocs-ui/components/card";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+
+## Enterprise deployment decision framework
+
+Choosing the right deployment plan for enterprise blockchain workloads requires careful consideration of performance requirements, compliance needs, cost constraints, and organizational capabilities.
+
+<Accordions>
+  <Accordion title="How do I determine if my workload needs dedicated vs shared infrastructure?">
+    Choose dedicated infrastructure for production workloads requiring guaranteed performance, compliance isolation, or predictable latency. Shared infrastructure works well for development, testing, and variable workloads where cost optimization is prioritized over guaranteed performance.
+  </Accordion>
+  
+  <Accordion title="What factors affect total cost of ownership for different deployment plans?">
+    TCO includes infrastructure costs, operational overhead, scaling requirements, data transfer costs, and compliance requirements. Dedicated plans have higher base costs but provide better predictability. Shared plans offer lower entry costs but may have variable performance and higher long-term costs for high-volume usage.
+  </Accordion>
+  
+  <Accordion title="How do I plan for scaling from development to production workloads?">
+    Start with shared infrastructure for development and proof-of-concept phases. Plan migration to dedicated infrastructure as workloads mature and require production-grade performance, security, and compliance capabilities.
+  </Accordion>
+</Accordions>
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
   <Card>
     ### Infrastructure Types
-    - **Shared** - Cost-effective, shared resources
-    - **Dedicated** - Exclusive infrastructure
-    - **On-premise** - Custom deployment
-    - **BYOC** - Bring Your Own Cloud
+    - **Shared** - Cost-effective, shared resources for development
+    - **Dedicated** - Exclusive infrastructure for production
+    - **On-premise** - Custom deployment for compliance
+    - **BYOC** - Bring Your Own Cloud for hybrid setups
   </Card>
 
   <Card>
     ### Resource Packs
-    - **Small** - Basic resources
-    - **Medium** - Standard resources
-    - **Large** - Enhanced resources
+    - **Small** - Development and testing workloads
+    - **Medium** - Production-ready applications
+    - **Large** - High-performance enterprise workloads
   </Card>
 </div>
 

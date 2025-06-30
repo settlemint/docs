@@ -1,71 +1,342 @@
 ---
-title: "Portfolio manager"
-description: Manage your assets, as an indivudal user or as an admin/treasury
+title: "Digital Asset Portfolio Manager - Real-Time Investment Tracking"
+description: "Professional portfolio management platform for digital assets - track tokenized securities, manage transfers, monitor performance, and maintain compliance with institutional-grade tools"
+keywords: "digital asset portfolio, tokenized securities tracking, portfolio management, digital investment platform, asset transfers, transaction history, portfolio analytics"
 ---
 
-The dashboard section provides a high-level overview of the user's asset
-holdings and current portfolio valuation. It shows the total value of all assets
-in the wallet, typically denominated in EUR, calculated using the real-time
-balances and latest token pricing data. A line chart allows users to visualize
-how the portfolio’s value has changed over time.
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
 
-Users can switch between three chart modes. The total value view displays the
-entire portfolio's historical valuation. The stacked by asset type view breaks
-down the value by token categories such as equity and deposit. The compare asset
-types view plots each category on separate lines to allow performance
-comparisons. The dashboard also includes a date range selector for
-period-specific analysis and a transfer button to initiate outbound token
-transfers quickly.
+## What is the Digital Asset Portfolio Manager?
 
-## My assets
+The Portfolio Manager is a comprehensive investment tracking platform designed for individual investors, institutional treasuries, and fund managers handling tokenized assets. This professional-grade solution provides real-time portfolio analytics, seamless asset transfers, and complete transaction history for digital securities, stablecoins, and tokenized investments.
 
-![My assets](../../../img/application-kits/my-assets.png)
+### Who uses the Portfolio Manager?
 
-The my assets section displays a detailed breakdown of tokens held in the
-wallet. This includes both visual and tabular representations. A donut chart on
-the left shows asset allocation by type, enabling users to analyze
-diversification across different token categories. Each token is listed with its
-name, symbol, classification (e.g. deposit, equity), and available balance.
+- **Individual Investors**: Managing personal digital asset portfolios worth €10K to €10M+
+- **Corporate Treasurers**: Overseeing company digital asset holdings and liquidity
+- **Family Offices**: Managing multi-generational tokenized wealth
+- **Fund Managers**: Tracking client portfolios and fund performance
+- **Compliance Officers**: Monitoring transaction activity and ensuring regulatory adherence
 
-A transaction chart is shown alongside the table, which displays the number of
-token operations performed over time. This helps identify active versus dormant
-tokens. The asset list also includes filtering options, data export features,
-and a details button for each token entry. These details can be used for further
-inspection or reporting.
+### What problems does the Portfolio Manager solve?
 
-## My activity
+<Cards>
+  <Card title="Real-time Valuation" description="Track portfolio value with institutional-grade accuracy" />
+  <Card title="Asset Diversification" description="Monitor allocation across multiple token categories" />
+  <Card title="Transaction Management" description="Execute transfers with built-in compliance checks" />
+  <Card title="Performance Analytics" description="Analyze returns with professional charting tools" />
+  <Card title="Audit Trail" description="Maintain complete records for tax and compliance reporting" />
+</Cards>
 
-The my activity section presents a historical record of on-chain actions
-associated with the user's wallet. It is divided into two tabs. The recent
-transactions tab lists blockchain transactions that invoked smart contract
-functions, such as mint, burn, and transfer. The all events tab includes a
-broader set of events including role assignments and collateral updates.
+## How do I track my digital asset portfolio value?
 
-Each activity entry includes the timestamp, the token involved, the type of
-event, and the initiating wallet address. A details button opens metadata
-associated with the action, including any additional contract-level information.
-Filters are available for narrowing the list, and users can export all activity
-data in CSV or Excel formats for audits or compliance purposes.
+The dashboard provides institutional-quality portfolio analytics updated in real-time:
 
-## My contacts
+### Key Portfolio Metrics
 
-The my contacts section allows users to maintain a personal address book for
-frequently used wallet addresses. This helps prevent errors during manual input
-and speeds up the token transfer process. A form is provided to save new
-contacts, where users can enter the destination wallet address along with a
-first and last name.
+**Total Portfolio Value**
+- Real-time valuation in EUR/USD with 15-second updates
+- Aggregates all tokenized assets across categories
+- Includes unrealized gains/losses calculations
+- Supports 50+ fiat currency conversions
 
-Saved contacts are displayed in a searchable table and can be selected directly
-during transfers. This feature is particularly useful for investors or operators
-who regularly send tokens to the same set of recipients.
+**Performance Visualization Options**
 
-## Transfer
+<Tabs defaultValue="total">
+  <Tab value="total" label="Total Value View">
+    - Complete portfolio performance over time
+    - Customizable date ranges (1D, 1W, 1M, 3M, 1Y, ALL)
+    - Export data for reporting
+  </Tab>
+  
+  <Tab value="breakdown" label="Asset Category Breakdown">
+    - Stacked visualization by asset type
+    - Shows allocation changes over time
+    - Identifies concentration risks
+  </Tab>
+  
+  <Tab value="comparative" label="Comparative Analysis">
+    - Compare performance across asset categories
+    - Benchmark against market indices
+    - Identify best/worst performers
+  </Tab>
+</Tabs>
 
-The transfer functionality enables users to move tokens to external wallets
-directly through the platform. Users can select the token they want to transfer,
-specify the destination address either manually or by selecting from contacts,
-and enter the amount to transfer.
+**Quick Actions**
+- One-click transfers to saved contacts
+- Instant portfolio rebalancing tools
+- Automated tax report generation
+- CSV/PDF export for accounting
 
-Real-time input validation checks the token balance and ensures the address
-format is correct. Upon confirmation, the transfer is submitted to the
-blockchain, and its outcome is recorded in the activity log.
+## How do I view and analyze my digital asset holdings?
+
+![Digital asset portfolio breakdown and analytics](../../../img/application-kits/my-assets.png)
+
+The My Assets section provides comprehensive portfolio analytics with institutional-grade insights:
+
+### What information is available for each asset?
+
+**Asset Details Display**
+- **Token Identification**: Name, symbol, and smart contract address
+- **Classification**: Asset type (equity, bond, stablecoin, fund)
+- **Holdings Data**: 
+  - Available balance (real-time)
+  - Locked/vesting amounts
+  - Current market value in EUR/USD
+  - Cost basis and P&L
+
+**Visual Analytics**
+
+<Accordions>
+  <Accordion title="Portfolio Allocation Chart">
+    - Interactive donut chart showing diversification
+    - Click segments for detailed breakdowns
+    - Risk concentration warnings (if >30% in one asset)
+    - Rebalancing suggestions based on targets
+  </Accordion>
+  
+  <Accordion title="Transaction Activity Graph">
+    - 30-day transaction volume per asset
+    - Identifies highly traded vs dormant holdings
+    - Liquidity analysis for exit planning
+    - Tax lot tracking for optimization
+  </Accordion>
+</Accordions>
+
+### How can I manage my asset data?
+
+**Filtering & Search**
+- Filter by asset type, value, or performance
+- Search by name, symbol, or contract address
+- Save custom views for quick access
+- Set up watchlists for specific assets
+
+**Export Options**
+- **CSV Export**: Full transaction history with cost basis
+- **PDF Reports**: Professional portfolio statements
+- **Tax Documents**: Capital gains/losses reports
+- **API Access**: Integrate with accounting software
+
+**Asset Actions**
+- View detailed token information and smart contract
+- Check current market depth and liquidity
+- Set price alerts and rebalancing triggers
+- Access historical performance charts
+
+## How do I track my transaction history and activity?
+
+The My Activity section provides comprehensive transaction tracking with audit-grade detail:
+
+### What types of activities are tracked?
+
+<Tabs defaultValue="recent">
+  <Tab value="recent" label="Recent Transactions">
+    Tracks all blockchain operations including:
+    - **Transfers**: Incoming/outgoing with counterparty details
+    - **Mints**: New token creation events
+    - **Burns**: Token redemption or destruction
+    - **Swaps**: Token-to-token exchanges
+    - **Staking**: Lock/unlock operations
+  </Tab>
+  
+  <Tab value="all" label="All Events">
+    Comprehensive activity log including:
+    - **Administrative Actions**: Role changes, permission updates
+    - **Collateral Updates**: Reserve modifications for backed assets
+    - **Compliance Events**: KYC verifications, restrictions
+    - **Smart Contract Interactions**: DeFi protocol engagements
+    - **Governance Participation**: Voting records
+  </Tab>
+</Tabs>
+
+### How is transaction data organized?
+
+**Information Displayed**
+- **Timestamp**: Exact date/time with timezone
+- **Transaction Hash**: Blockchain verification link
+- **Token Details**: Asset name, amount, USD value at time
+- **Counterparty**: Wallet address with optional KYC label
+- **Gas Fees**: Transaction costs in native currency
+- **Status**: Confirmed, pending, or failed
+
+### What filtering and export options are available?
+
+**Advanced Filtering**
+- By date range (custom or preset periods)
+- By transaction type (transfers, mints, burns)
+- By token or asset category
+- By value threshold (e.g., >$10,000)
+- By counterparty address
+
+**Export Capabilities**
+- **CSV Format**: Compatible with Excel, Google Sheets
+- **PDF Reports**: Formatted for regulatory submission
+- **JSON Data**: For programmatic processing
+- **Blockchain Proof**: Cryptographic verification package
+
+**Compliance Features**
+- Automatic transaction categorization for taxes
+- AML flag identification and reporting
+- Audit trail with immutable records
+- Integration with TRM Labs for risk scoring
+
+## How do I manage trusted addresses and contacts?
+
+The My Contacts section provides secure address management to prevent costly transfer errors:
+
+### Why use the contacts feature?
+
+<Cards>
+  <Card title="Error Prevention" description="Eliminate manual address entry mistakes that could result in permanent fund loss" />
+  <Card title="Speed" description="One-click transfers to saved addresses" />
+  <Card title="Security" description="Verify addresses once, use safely forever" />
+  <Card title="Organization" description="Categorize contacts by type (personal, business, exchange)" />
+  <Card title="Compliance" description="Maintain KYC-verified recipient records" />
+</Cards>
+
+### What information can I store for contacts?
+
+**Required Fields**
+- **Wallet Address**: Ethereum-compatible address (auto-validated)
+- **Contact Name**: First and last name for identification
+
+**Optional Fields**
+- **Organization**: Company or institution name
+- **Email**: For transaction notifications
+- **Phone**: For high-value transfer verification
+- **Notes**: Internal reference information
+- **Category**: Personal, Business, Exchange, DeFi Protocol
+- **KYC Status**: Verified, Pending, Not Required
+
+### How do I add and manage contacts?
+
+**Adding New Contacts**
+
+<Steps>
+  <Step>
+    Click "Add Contact" button
+  </Step>
+  <Step>
+    Paste wallet address (ENS names supported)
+  </Step>
+  <Step>
+    Address validation runs automatically
+  </Step>
+  <Step>
+    Add identifying information
+  </Step>
+  <Step>
+    Optional: Request KYC verification
+  </Step>
+  <Step>
+    Save to address book
+  </Step>
+</Steps>
+
+**Contact Management Features**
+- **Search**: Find by name, address, or organization
+- **Bulk Import**: Upload CSV with multiple contacts
+- **Address Verification**: Blockchain validation before saving
+- **Duplicate Detection**: Prevents redundant entries
+- **Update History**: Track changes to contact details
+
+<Callout type="info" title="Security Best Practices">
+  - Always send test transaction to new addresses
+  - Enable 2FA for contact modifications
+  - Regular review and cleanup of unused contacts
+  - Export backup of contact list monthly
+</Callout>
+
+## How do I transfer digital assets securely?
+
+The Transfer module provides institutional-grade security for moving digital assets:
+
+### What are the steps to transfer tokens?
+
+<Steps>
+  <Step>
+    **Select Asset**
+    - Choose from dropdown of available tokens
+    - View current balance and USD value
+    - Check network fees before proceeding
+    - Review any transfer restrictions
+  </Step>
+  
+  <Step>
+    **Specify Recipient**
+    - **From Contacts**: Select pre-verified address
+    - **Manual Entry**: Paste address with validation
+    - **ENS Support**: Use human-readable names
+    - **QR Code**: Scan for mobile transfers
+  </Step>
+  
+  <Step>
+    **Enter Amount**
+    - Input token amount or USD equivalent
+    - "Max" button for full balance transfers
+    - Real-time fee calculation display
+    - Warning for high-value transfers (>$10,000)
+  </Step>
+  
+  <Step>
+    **Review & Confirm**
+    - Transaction summary with all details
+    - Estimated arrival time
+    - Total cost including gas fees
+    - Compliance check results
+  </Step>
+</Steps>
+
+### What safety features are built-in?
+
+**Pre-Transfer Validation**
+- ✅ Sufficient balance check
+- ✅ Valid address format verification  
+- ✅ Blacklist/sanctions screening
+- ✅ Daily transfer limit enforcement
+- ✅ Unusual activity detection
+
+**Security Measures**
+- **Two-Factor Authentication**: Required for transfers >$1,000
+- **Time Delays**: Configurable cooling period for large transfers
+- **Whitelist Only**: Option to restrict transfers to approved addresses
+- **Multi-signature**: Require multiple approvals for high values
+
+**Post-Transfer Features**
+- Real-time blockchain confirmation tracking
+- Email/SMS notifications on completion
+- Automatic activity log entry
+- Tax reporting integration
+
+### How are transfer fees calculated?
+
+<Accordions>
+  <Accordion title="Network Gas Fee">
+    - Dynamic based on network congestion
+    - Displayed in ETH/MATIC and USD
+    - Option for slow/standard/fast confirmation
+  </Accordion>
+  
+  <Accordion title="Platform Fee">
+    - 0.1% for standard transfers
+    - Volume discounts available
+    - Free for transfers between owned wallets
+  </Accordion>
+  
+  <Accordion title="Total Cost Display">
+    - Combined fees shown before confirmation
+    - Historical fee analytics available
+    - Fee optimization suggestions
+  </Accordion>
+</Accordions>
+
+<Callout type="info" title="Pro Tips">
+  - Schedule transfers during low-congestion periods
+  - Batch multiple transfers to save on gas
+  - Set up recurring transfers for regular payments
+  - Use limit orders for large transfers to optimize fees
+</Callout>

@@ -1,76 +1,212 @@
 ---
-title: "Hedera"
+title: "Hedera: Enterprise-Grade Hashgraph for Regulated Industries"
+description: "Deploy on Hedera Hashgraph for enterprise applications requiring regulatory compliance, predictable fees, and energy efficiency. Compare Hedera's unique consensus with traditional blockchains."
+keywords: ["Hedera Hashgraph", "HBAR", "enterprise blockchain", "regulated industries", "hashgraph consensus", "energy efficient", "predictable fees"]
 ---
 
-<div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
-  <div style={{ flex: '0 0 15%' }}>
-  ![Hedera](../../../img/blockchain-logos/hedera-logo.png)
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<div className="flex items-start gap-6 mb-8">
+  <div className="flex-shrink-0 w-16">
+    ![Hedera](../../../img/blockchain-logos/hedera-logo.png)
   </div>
-  <div style={{ flex: '1', paddingLeft: '1rem' }}>
-    <ul>
-
-Hedera is a public distributed ledger technology (DLT) network that was launched
-in August 2018 by Hedera Hashgraph, LLC. It uses the Hashgraph consensus
-algorithm, which is a unique and novel approach to achieving consensus in a
-distributed network. Hedera's native cryptocurrency is called HBAR, and it is
-used to power the network's services, including smart contracts, file storage,
-and regular transactions.
-
-    </ul>
-
+  <div className="flex-1">
+    <p className="text-lg mb-4">
+      Hedera is the only public network built on hashgraph consensus, delivering enterprise-grade performance with predictable fees and carbon-negative energy consumption. Governed by a council of global enterprises including Google, IBM, and Boeing, Hedera provides the stability and compliance features required for regulated industries.
+    </p>
   </div>
 </div>
 
-Hedera focuses on providing high throughput, low latency, and fair transaction
-ordering, making it suitable for enterprise-grade applications. Unlike
-blockchain-based systems, Hedera's Hashgraph algorithm ensures fast, fair, and
-secure transactions without compromising decentralization.
+## Which industries benefit most from Hedera?
 
-## Mainnet and testnet
+<Cards>
+  <Card title="Financial Services" description="Banks and payment processors requiring predictable transaction costs, regulatory compliance, and millisecond settlement times for cross-border payments." />
+  <Card title="Healthcare & Life Sciences" description="Organizations managing patient data, drug traceability, and clinical trials where data integrity and privacy are paramount." />
+  <Card title="Government & Public Sector" description="Agencies implementing digital identity, voting systems, and public records that require transparency and immutable audit trails." />
+  <Card title="Supply Chain & Logistics" description="Enterprises tracking products from origin to consumer, requiring fair transaction ordering and tamper-proof record keeping." />
+</Cards>
 
-SettleMint supports, the **Hedera Mainnet** and the **Hedera Testnet**.
+<Callout type="info">
+  **Regulatory Advantage**: Hedera's governing council includes major enterprises ensuring compliance with financial regulations, data protection laws, and industry standards from day one.
+</Callout>
 
-The Mainnet is the primary public Hedera production network, where actual-value
-transactions occur. Each transaction requires payment of a transaction fee,
-payable in HBAR, the native cryptocurrency. The Testnet, on the other hand, is
-an environment used for testing and experimentation. Testnet transactions use
-test HBAR, which have no real-world value, ensuring no risk of real fund loss
-during development and testing.
+Hedera's Hashgraph consensus algorithm provides mathematically proven security with fair transaction ordering and energy efficiency that blockchain-based systems cannot match.
 
-You can think of the Testnet as a sandbox for developers and the Mainnet as the
-official production network. This setup is similar to the concept of production
-versus staging servers in software development.
+## How does Hedera compare to traditional blockchains?
 
-## Consensus mechanism
+<Tabs items={['Performance', 'Economics', 'Governance', 'Sustainability']}>
+  <Tab value="Performance">
+    - **Throughput**: 10,000+ TPS (vs 15 TPS for Ethereum)
+    - **Latency**: 3-5 second finality (vs 12+ minutes for Ethereum)
+    - **Fairness**: Mathematically proven fair transaction ordering
+    - **Security**: Asynchronous Byzantine Fault Tolerance (aBFT)
+  </Tab>
+  <Tab value="Economics">
+    - **Predictable Fees**: $0.0001 per transaction (fixed USD pricing)
+    - **No Gas Auctions**: Fees don't fluctuate based on network demand
+    - **Energy Cost**: 0.00017 kWh per transaction (carbon negative)
+    - **Staking Rewards**: 3-6% annual yield for HBAR holders
+  </Tab>
+  <Tab value="Governance">
+    - **Council Members**: 39 global enterprises (Google, IBM, Boeing, etc.)
+    - **Term Limits**: No single entity controls the network long-term
+    - **Compliance**: Built-in regulatory compliance frameworks
+    - **Transparency**: Public treasury and development funding
+  </Tab>
+  <Tab value="Sustainability">
+    - **Carbon Negative**: Offsets more carbon than it produces
+    - **Energy Efficient**: 99.99% more efficient than Bitcoin
+    - **Sustainable Council**: Members committed to ESG goals
+    - **Green Innovation**: Funds environmental blockchain projects
+  </Tab>
+</Tabs>
 
-Hedera uses the Hashgraph consensus algorithm, which is based on a directed
-acyclic graph (DAG). This algorithm provides several advantages:
+## Which Hedera networks are supported?
 
-    -	`High Throughput`: The network can process thousands of transactions per second.
-    -	`Fairness`: Transactions are timestamped, ensuring fair ordering.
-    -	`Security`: It achieves asynchronous Byzantine Fault Tolerance (aBFT), the highest level of security for a consensus algorithm.
+<Cards>
+  <Card 
+    title="Hedera Mainnet" 
+    description="Production network with real HBAR for live applications. Features enterprise-grade SLAs, regulatory compliance, and predictable transaction costs."
+  />
+  <Card 
+    title="Hedera Testnet" 
+    description="Development environment with free test HBAR for experimentation. Mirrors mainnet functionality for comprehensive testing and validation."
+  />
+</Cards>
 
-In Hashgraph, each node in the network shares information (events) with other
-nodes, and through a process called gossip-about-gossip and virtual voting,
-consensus is reached efficiently and quickly. This method ensures that Hedera
-remains decentralized and resilient against attacks while maintaining high
-performance.
+<Callout type="tip">
+  **Cost Predictability**: Unlike Ethereum's variable gas fees, Hedera's transaction costs are fixed in USD equivalent, making it ideal for enterprise budgeting and cost forecasting.
+</Callout>
 
-## Json rpc relay
+## Why is Hashgraph consensus superior to blockchain?
 
-The Hedera JSON-RPC Relay is an open-source project implementing the Ethereum
-JSON-RPC standard. The JSON-RPC relay allows developers to interact with Hedera
-nodes using familiar Ethereum tools. This allows Ethereum developers and users
-to deploy, query, and execute contracts as they usually would.
+Hedera's Hashgraph consensus represents a fundamental breakthrough in distributed ledger technology, offering mathematical guarantees that traditional blockchain cannot provide.
 
-Hedera's JSON RPC relay is a complex software component that relies on multiple
-elements, including consensus nodes and the mirror node. This complexity can
-lead to issues such as connection `timeouts`, especially during smart contract
-deployments. One Ethereum transaction can generate more than ten Hedera
-transactions, which increases the likelihood of encountering these problems.
-However, these issues are typically limited to the initial contract deployment
-phase. Once a contract is successfully deployed, subsequent contract calls
-should not experience such problems.
+### Key Advantages Over Blockchain
 
-More information can be found on the
-[official Hedera website](https://hedera.com/).
+<Accordions>
+  <Accordion title="Asynchronous Byzantine Fault Tolerance (aBFT)">
+    **Highest Security Standard**: Hashgraph achieves aBFT, the gold standard for consensus algorithms
+    
+    **Mathematical Proof**: Unlike blockchain's probabilistic finality, Hashgraph provides mathematical certainty
+    
+    **Network Resilience**: Continues operating even when up to 1/3 of nodes are malicious or offline
+    
+    **No Forks**: Eliminates the possibility of chain splits and double-spending attacks
+  </Accordion>
+  
+  <Accordion title="Fair Transaction Ordering">
+    **Consensus Timestamps**: Every transaction receives a mathematically fair timestamp
+    
+    **No Front-Running**: Eliminates MEV (Maximum Extractable Value) exploitation common in blockchain
+    
+    **Predictable Ordering**: Transaction sequence is deterministic and cannot be manipulated
+    
+    **Enterprise Trust**: Critical for financial applications requiring fair market conditions
+  </Accordion>
+  
+  <Accordion title="Gossip-About-Gossip Protocol">
+    **Efficient Communication**: Nodes share information about what they know others know
+    
+    **Exponential Spread**: Information propagates across the network in log(n) time
+    
+    **Virtual Voting**: Consensus is reached without explicit voting rounds
+    
+    **Bandwidth Optimization**: Minimizes network communication overhead
+  </Accordion>
+</Accordions>
+
+### How Hashgraph Consensus Works
+
+<Steps>
+  <Step>
+    **Gossip Protocol**
+    
+    Nodes randomly select other nodes to share transaction information, creating a gossip graph of events.
+  </Step>
+  
+  <Step>
+    **Gossip About Gossip**
+    
+    Nodes also share information about what they've heard from others, creating a meta-layer of communication.
+  </Step>
+  
+  <Step>
+    **Virtual Voting**
+    
+    Instead of explicit voting, nodes mathematically determine how others would vote based on the gossip graph.
+  </Step>
+  
+  <Step>
+    **Consensus Timestamp**
+    
+    Transactions receive fair, consensus timestamps that determine their final order in the ledger.
+  </Step>
+</Steps>
+
+<Callout type="info">
+  **Performance Impact**: Hashgraph's efficiency means Hedera can process 10,000+ TPS with 3-5 second finality while maintaining the highest security standards, making it ideal for enterprise applications requiring both speed and certainty.
+</Callout>
+
+## How do you develop on Hedera with existing Ethereum tools?
+
+Hedera's JSON-RPC Relay enables seamless migration of Ethereum applications while providing access to Hedera's superior performance and predictable costs.
+
+### Ethereum Compatibility Layer
+
+<Cards>
+  <Card 
+    title="Familiar Development Tools" 
+    description="Use MetaMask, Remix, Hardhat, and other Ethereum tools without modification. Deploy Solidity contracts directly to Hedera."
+  />
+  <Card 
+    title="Existing DApp Migration" 
+    description="Port existing Ethereum dApps to Hedera with minimal code changes while gaining superior performance and lower costs."
+  />
+  <Card 
+    title="Developer Experience" 
+    description="Leverage existing Ethereum development skills and workflows while accessing Hedera's enterprise-grade features."
+  />
+</Cards>
+
+### Deployment Considerations
+
+<Callout type="warning">
+  **Initial Deployment**: Smart contract deployments may experience timeouts due to Hedera's comprehensive transaction processing. This is normal and limited to the initial deployment phase.
+</Callout>
+
+<Steps>
+  <Step>
+    **Configure RPC Endpoint**
+    
+    Update your development environment to use Hedera's JSON-RPC relay endpoint instead of Ethereum's.
+  </Step>
+  
+  <Step>
+    **Deploy Smart Contracts**
+    
+    Use familiar tools like Remix or Hardhat. Initial deployments may take longer due to Hedera's thorough validation process.
+  </Step>
+  
+  <Step>
+    **Integrate with Frontend**
+    
+    Connect your existing web3 frontend applications with no code changes required.
+  </Step>
+  
+  <Step>
+    **Monitor Performance**
+    
+    Enjoy faster transaction speeds and predictable costs compared to Ethereum mainnet.
+  </Step>
+</Steps>
+
+<Callout type="tip">
+  **Best Practice**: Test smart contract deployments on Hedera testnet first. Once deployed successfully, contract interactions will be significantly faster and cheaper than Ethereum.
+</Callout>
+
+More information can be found on the [official Hedera website](https://hedera.com/).

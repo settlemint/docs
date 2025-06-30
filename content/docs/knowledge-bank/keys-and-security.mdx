@@ -1,9 +1,21 @@
 ---
-title: "Private keys and security"
-description: A comprehensive guide to private key management in blockchain
+title: "Enterprise Blockchain Security: Private Key Management & Cryptographic Best Practices"
+description: "Comprehensive guide to enterprise-grade private key management, cryptographic security frameworks, and institutional-level blockchain security implementation."
 ---
 
-## Introduction to private keys
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Steps } from "fumadocs-ui/components/steps";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+
+# Enterprise Blockchain Security: Private Key Management & Cryptographic Best Practices
+
+<Callout type="warning">
+  Enterprise blockchain security requires institutional-grade private key management, multi-signature governance, and comprehensive cryptographic frameworks to protect digital assets and ensure regulatory compliance.
+</Callout>
+
+## Introduction to Enterprise Private Key Management
 
 Private keys are the cornerstone of blockchain security. They serve as proof of
 ownership and control over digital assets and smart contract interactions.
@@ -71,33 +83,77 @@ Example Ethereum private key (hex):
 A good key generation tool ensures randomness, prevents key reuse, and never
 exposes the key to insecure memory or external APIs.
 
-## Storing private keys
+## Enterprise-Grade Key Storage Solutions
 
-Storage is the most vulnerable aspect of private key management.
+<Tabs>
+  <Tab value="hsm" title="Hardware Security Modules">
+    <Card title="Enterprise HSM Implementation" description="Bank-grade security for institutional adoption">
+      **FIPS 140-2 Level 3/4 Compliance**:
+      - Tamper-evident hardware protection
+      - Cryptographic key lifecycle management
+      - Role-based access controls
+      - Audit logging and compliance reporting
+      
+      **Enterprise Benefits**:
+      - Insurance coverage eligibility
+      - Regulatory compliance (SOX, PCI DSS)
+      - High-availability clustering
+      - Integration with existing security infrastructure
+    </Card>
+  </Tab>
+  
+  <Tab value="mpc" title="Multi-Party Computation">
+    <Card title="Distributed Key Management" description="Eliminate single points of failure">
+      **MPC Security Architecture**:
+      - Threshold signature schemes
+      - Key sharding across multiple parties
+      - No single key reconstruction point
+      - Byzantine fault tolerance
+      
+      **Business Applications**:
+      - Decentralized treasury management
+      - Multi-organization governance
+      - Cross-border payment systems
+      - Institutional DeFi participation
+    </Card>
+  </Tab>
+  
+  <Tab value="custody" title="Institutional Custody">
+    <Card title="Third-Party Security" description="Professional asset management">
+      **Custodial Service Features**:
+      - Insurance coverage (up to $100M+)
+      - 24/7 monitoring and support
+      - Compliance with institutional requirements
+      - Integration with trading platforms
+      
+      **Risk Management**:
+      - Segregated asset storage
+      - Multi-signature security
+      - Regular security audits
+      - Disaster recovery procedures
+    </Card>
+  </Tab>
+</Tabs>
 
-<br></br>
-If keys are stored improperly, they can be leaked, corrupted, or lost. Secure
-storage methods are essential for both individual users and enterprise systems.
-
-Key storage options include:
-
-- Hardware wallets (e.g., Ledger, Trezor) for physical isolation
-- Encrypted keystore files (e.g., JSON-V3 for Ethereum)
-- Secure elements in mobile devices (e.g., iOS Secure Enclave, Android Keystore)
-- Custodial wallets with trusted third-party key management
-- HSMs (Hardware Security Modules) in enterprise infrastructures
-- Cold storage using air-gapped systems or paper wallets
-
-Best practices for key storage:
-
-- Use hardware devices where possible
-- Encrypt keys at rest using strong passphrases
-- Backup keys securely in multiple locations
-- Avoid storing plain-text keys on disk or in source code
-- Rotate keys periodically if applicable
-
-Loss of private keys leads to irreversible loss of funds. Multiple layers of
-protection and redundancy should always be considered.
+<Accordions>
+  <Accordion title="Enterprise Storage Best Practices">
+    **Security Framework Implementation**:
+    - Implement defense-in-depth strategies
+    - Use hardware-backed key storage where possible
+    - Encrypt keys at rest with enterprise-grade algorithms
+    - Establish secure backup and recovery procedures
+    - Implement key rotation policies and procedures
+  </Accordion>
+  
+  <Accordion title="Compliance & Governance">
+    **Regulatory Requirements**:
+    - Maintain audit trails for all key operations
+    - Implement segregation of duties
+    - Document key management policies
+    - Regular security assessments and penetration testing
+    - Incident response and breach notification procedures
+  </Accordion>
+</Accordions>
 
 ## Using private keys to sign data
 

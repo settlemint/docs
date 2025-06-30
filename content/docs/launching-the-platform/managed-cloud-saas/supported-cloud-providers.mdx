@@ -1,17 +1,32 @@
 ---
-title: "Supported cloud providers"
-description: Overview of cloud providers supported by the SettleMint platform
+title: "Which cloud providers support enterprise blockchain deployment requirements?"
+description: Complete guide to cloud provider selection for enterprise blockchain deployment including compliance, regional data residency, and enterprise service integration
 ---
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 
 ## Overview
 
-When launching a blockchain development project, you need to decide where your
-project will be stored. SettleMint offers you the flexibility to deploy in the
-cloud of your choice, and easily build cross-cloud provider and
-cross-geographical region networks.
+When launching an enterprise blockchain development project, selecting the right cloud provider is critical for meeting compliance requirements, data residency mandates, and integration needs. SettleMint offers you the flexibility to deploy in the cloud of your choice, and easily build cross-cloud provider and cross-geographical region networks.
+
+## Enterprise cloud provider selection criteria
+
+<Accordions>
+  <Accordion title="How do I choose the right cloud provider for regulatory compliance?">
+    Consider data residency requirements (GDPR, CCPA), industry certifications (SOC 2, ISO 27001, FedRAMP), and regional compliance frameworks. Financial services may require specific certifications, while healthcare needs HIPAA compliance. Government contracts often mandate specific security clearances.
+  </Accordion>
+  
+  <Accordion title="What integration capabilities should I evaluate for enterprise deployments?">
+    Evaluate native enterprise services like identity management (Active Directory integration), VPN connectivity, dedicated network connections, enterprise support tiers, and existing vendor relationships. Consider total ecosystem costs including data transfer, storage, and compute.
+  </Accordion>
+  
+  <Accordion title="How do regional availability and latency affect blockchain performance?">
+    Choose regions close to your users and data sources to minimize latency. For global deployments, consider multi-region strategies. Some blockchain networks perform better with consistent, low-latency connections between nodes.
+  </Accordion>
+</Accordions>
 
 Every deployment uses Kubernetes as an orchestration layer for all the different
 services. Kubernetes is a widely used open-source system for automating the

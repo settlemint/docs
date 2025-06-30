@@ -1,23 +1,37 @@
 ---
-title: "Hyperledger besu"
+title: "Hyperledger Besu: Enterprise Ethereum for Consortiums"
+description: "Deploy Hyperledger Besu for permissioned enterprise blockchain networks. Compare Besu's QBFT consensus, privacy features, and EEA compliance for consortium applications."
+keywords: ["Hyperledger Besu", "enterprise Ethereum", "permissioned blockchain", "QBFT consensus", "consortium", "EEA", "privacy"]
 ---
 
-<div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
-  <div style={{ flex: '0 0 15%' }}>
-  ![Besu](../../../img/blockchain-logos/besu-logo.png)
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<div className="flex items-start gap-6 mb-8">
+  <div className="flex-shrink-0 w-16">
+    ![Hyperledger Besu](../../../img/blockchain-logos/besu-logo.png)
   </div>
-  <div style={{ flex: '1', paddingLeft: '1rem' }}>
-    <ul>
-
-Enterprise Ethereum is the permissioned blockchain version of public Ethereum.
-The two major Enterprise Ethereum clients are **Hyperledger Besu and Quorum**.
-Both clients have implemented a permission layer, which only allows known nodes,
-designed specifically for use in a consortium environment, to join the network.
-
-    </ul>
-
+  <div className="flex-1">
+    <p className="text-lg mb-4">
+      Hyperledger Besu is the leading open-source enterprise Ethereum client, enabling organizations to build permissioned consortium networks with full Ethereum compatibility. Backed by the Linux Foundation and designed for enterprise-grade security, privacy, and governance.
+    </p>
   </div>
 </div>
+
+## Which enterprises benefit from Hyperledger Besu?
+
+<Cards>
+  <Card title="Financial Consortiums" description="Banks and financial institutions building trade finance, settlement networks, and cross-border payment systems with known participants." />
+  <Card title="Supply Chain Networks" description="Manufacturers, retailers, and logistics providers creating transparent, auditable supply chains with controlled access and data privacy." />
+  <Card title="Healthcare Alliances" description="Healthcare organizations sharing patient data, research, and medical records while maintaining HIPAA compliance and access controls." />
+  <Card title="Government Networks" description="Public sector agencies building inter-agency networks for citizen services, voting systems, and regulatory compliance platforms." />
+</Cards>
+
+<Callout type="info">
+  **Enterprise Trust**: Hyperledger Besu provides the security and governance features enterprises need while maintaining full compatibility with Ethereum's development ecosystem.
+</Callout>
 
 ## What is hyperledger besu?
 

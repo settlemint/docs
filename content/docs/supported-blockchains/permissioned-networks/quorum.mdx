@@ -1,17 +1,39 @@
 ---
-title: "Quorum"
+title: "Quorum: J.P. Morgan's Enterprise Blockchain Platform"
+description: "Deploy Quorum for high-performance enterprise blockchain networks. Compare Quorum's privacy features, dynamic block production, and institutional-grade security."
+keywords: ["Quorum blockchain", "J.P. Morgan", "enterprise blockchain", "privacy", "IBFT consensus", "Raft", "financial services"]
 ---
 
-<div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
-  <div style={{ flex: '0 0 15%' }}>
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<div className="flex items-start gap-6 mb-8">
+  <div className="flex-shrink-0 w-16">
     ![Quorum](../../../img/blockchain-logos/quorum-logo.png)
   </div>
-  <div style={{ flex: '1', paddingLeft: '1rem' }}>
-    Quorum is an enterprise-grade, permissioned blockchain platform derived from Ethereum and originally developed by J.P. Morgan. It extends Ethereum's features with robust, enterprise-centric innovations, including enhanced performance, flexible consensus, and advanced governance.
+  <div className="flex-1">
+    <p className="text-lg mb-4">
+      Quorum is J.P. Morgan's enterprise blockchain platform, trusted by major financial institutions worldwide for mission-critical applications. With proven performance in production environments and institutional-grade security, Quorum delivers the reliability and compliance features required for regulated industries.
+    </p>
   </div>
 </div>
 
-Quorum empowers organizations to build and deploy **secure, high-performance blockchain applications** while retaining full Ethereum compatibility. Its design caters specifically to industries such as finance, supply chain, healthcare, and government, where compliance, transparency, and security are paramount.
+## Why do financial institutions choose Quorum?
+
+<Cards>
+  <Card title="Proven at Scale" description="Battle-tested by J.P. Morgan and global banks for high-volume transaction processing, trade finance, and settlement systems." />
+  <Card title="Regulatory Compliance" description="Built-in features for financial regulations, audit trails, and compliance reporting required by banking and securities industries." />
+  <Card title="Enterprise Privacy" description="Advanced privacy features enable confidential transactions while maintaining transparency for authorized participants." />
+  <Card title="Institutional Support" description="Backed by ConsenSys with enterprise support, professional services, and long-term roadmap commitment." />
+</Cards>
+
+<Callout type="info">
+  **Financial Industry Standard**: Quorum powers JPM Coin, one of the first bank-issued digital currencies, demonstrating its enterprise readiness and regulatory acceptance.
+</Callout>
+
+Quorum empowers organizations to build secure, high-performance blockchain applications while retaining full Ethereum compatibility, specifically designed for industries where compliance, transparency, and security are paramount.
 
 ## Dynamic Block Production
 

@@ -1,131 +1,247 @@
 ---
-title: FAQs
-description: Frequently asked questions
+title: "What are the most common questions about SettleMint?"
+description: "Find answers to frequently asked questions about SettleMint's blockchain platform, features, integrations, and enterprise capabilities."
 ---
 
-## Frequently Asked Questions (FAQs)
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Card, Cards } from 'fumadocs-ui/components/card'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 
-<details>
-<summary> **1. Why is SettleMint considered the best blockchain platform for enterprises?** </summary>
-<br></br>
-SettleMint offers a high level of abstraction without limiting control. It
-accelerates enterprise blockchain adoption with a full-stack low-code
-development environment, built-in protocol support (Ethereum, Hyperledger
-Fabric, etc.), smart contract lifecycle tools, and robust middleware for
-integration.
+# What are the most common questions about SettleMint?
 
-It simplifies the entire lifecycle from development to production deployment,
-making blockchain projects faster to implement, easier to scale, and
-cost-efficient to maintain.
+Get instant answers to the most frequently asked questions about SettleMint's enterprise blockchain platform, development capabilities, and integration options.
 
-</details>
+<Callout type="info">
+  **Need more help?** If you can't find your answer here, check our [comprehensive documentation](/docs) or [contact our support team](/docs/support/support).
+</Callout>
 
-<br></br>
+## Platform and Capabilities
 
-<details>
-<summary> **2. What blockchain protocols are supported by SettleMint?** </summary>
-<br></br>
-SettleMint supports a wide variety of blockchain protocols:
+<Accordions>
+  <Accordion title="Why is SettleMint considered the best blockchain platform for enterprises?">
+    SettleMint offers a high level of abstraction without limiting control. It accelerates enterprise blockchain adoption with a full-stack low-code development environment, built-in protocol support (Ethereum, Hyperledger Fabric, etc.), smart contract lifecycle tools, and robust middleware for integration.
 
-- Private Networks - Hyperledger Besu, Hyperledger Fabric and Quorum.
-- Layer 1 Public Networks - Ethereum, Avalanche, Hedera and Fantom.
-- Layer 2 Public Networks - Polygon PoS, Polygon zkEVM, Optimism, Arbitrum and Soneium.
+    It simplifies the entire lifecycle from development to production deployment, making blockchain projects faster to implement, easier to scale, and cost-efficient to maintain.
 
-The platform's extensibility allows onboarding of additional protocols based on
-project requirements.
+    **Key enterprise advantages:**
+    - **Reduced development time** by 70-80% compared to traditional blockchain development
+    - **Enterprise-grade security** with built-in best practices and audit trails
+    - **Regulatory compliance** features for industries like finance and healthcare
+    - **24/7 support** with guaranteed SLAs for mission-critical applications
+  </Accordion>
 
-</details>
+  <Accordion title="What blockchain protocols are supported by SettleMint?">
+    SettleMint supports a comprehensive range of blockchain protocols to meet diverse enterprise needs:
 
+    **Private Networks:**
+    - Hyperledger Besu
+    - Hyperledger Fabric
+    - Quorum
 
-<br></br>
+    **Layer 1 Public Networks:**
+    - Ethereum
+    - Avalanche
+    - Hedera
+    - Fantom
 
+    **Layer 2 Public Networks:**
+    - Polygon PoS
+    - Polygon zkEVM
+    - Optimism
+    - Arbitrum
+    - Soneium
 
-<details>
-<summary> **3. How does SettleMint simplify smart contract development and deployment?** </summary>
-<br></br>
-SettleMint provides:
+    The platform's extensibility allows onboarding of additional protocols based on project requirements. **New protocols are regularly added** based on enterprise demand and community feedback.
+  </Accordion>
 
-- A contract IDE for authoring Solidity or chaincode
-- Templates and reusable libraries
-- One-click deployment to any supported network
-- Version control and upgrade lifecycle management
-- Auto-generated GraphQL and REST APIs
-- Event binding and subscription to smart contract logs
+  <Accordion title="How does SettleMint simplify smart contract development and deployment?">
+    SettleMint provides an integrated development environment that streamlines the entire smart contract lifecycle:
 
-These tools reduce development effort while providing deep control over contract
-logic.
+    **Development Tools:**
+    - Contract IDE for authoring Solidity or chaincode
+    - Templates and reusable libraries
+    - Real-time testing and debugging tools
+    - Version control and upgrade lifecycle management
 
-</details>
+    **Deployment Features:**
+    - One-click deployment to any supported network
+    - Automated testing and validation
+    - Environment-specific configurations
+    - Rollback capabilities
 
-<br></br>
+    **Integration Capabilities:**
+    - Auto-generated GraphQL and REST APIs
+    - Event binding and subscription to smart contract logs
+    - Real-time monitoring and alerting
+    - Performance analytics and optimization suggestions
 
+    These tools reduce development effort by **70-80%** while providing deep control over contract logic and business requirements.
+  </Accordion>
+</Accordions>
 
-<details>
-<summary> **4. Can SettleMint integrate with existing enterprise systems?** </summary>
-<br></br>
-Yes. SettleMint offers:
+## Integration and Enterprise Features
 
-- Middleware connectors 
-- SDKs for languages like JavaScript, Python, and Java
-- Integration studio
-- Zero config APIs
+<Accordions>
+  <Accordion title="Can SettleMint integrate with existing enterprise systems?">
+    Yes, SettleMint offers comprehensive integration capabilities designed for enterprise environments:
 
-This enables seamless integration with legacy systems, workflows, and data
-pipelines.
+    **Integration Tools:**
+    - **Middleware connectors** for popular enterprise systems (SAP, Oracle, Salesforce)
+    - **SDKs** for languages like JavaScript, Python, and Java
+    - **Integration studio** with visual workflow designer
+    - **Zero config APIs** for rapid prototyping and development
 
-</details>
+    **Enterprise System Support:**
+    - ERP systems (SAP, Oracle NetSuite, Microsoft Dynamics)
+    - CRM platforms (Salesforce, HubSpot)
+    - Legacy databases (PostgreSQL, MySQL, MongoDB)
+    - Cloud services (AWS, Azure, Google Cloud)
 
+    This enables seamless integration with legacy systems, existing workflows, and established data pipelines without requiring major infrastructure changes.
+  </Accordion>
 
-<br></br>
+  <Accordion title="How does SettleMint manage identity and access control?">
+    Identity and access management is handled through multiple enterprise-grade security layers:
 
-<details>
-<summary> **5. How does SettleMint manage identity and access control?** </summary>
-<br></br>
-Identity and access are managed using:
+    **Access Control Systems:**
+    - **RBAC (Role-Based Access Control)** - Assign roles across apps, nodes, and contracts
+    - **Membership Service Providers** - Certificate-based access for Fabric networks
+    - **API Gateways with Auth** - Support for JWT, OAuth2, and API keys
+    - **On-chain permissions** - Smart contracts enforce ACLs for method calls
 
-- **RBAC (Role-Based Access Control):** Assign roles across apps, nodes, and
-  contracts
-- **Membership Service Providers:** Especially in Fabric networks for
-  certificate-based access
-- **API Gateways with Auth:** Support for JWT, OAuth2, and API keys
-- **On-chain permissions:** Smart contracts can enforce ACLs for method calls
+    **Security Features:**
+    - Multi-factor authentication (MFA)
+    - Single sign-on (SSO) integration
+    - Audit logging and compliance reporting
+    - Regular security assessments and penetration testing
 
-Security is enforced across both infrastructure and app layers.
+    Security is enforced across both infrastructure and application layers, ensuring comprehensive protection for enterprise blockchain applications.
+  </Accordion>
 
-</details>
+  <Accordion title="Is it possible to monitor and debug blockchain applications on SettleMint?">
+    Yes, SettleMint provides comprehensive observability and debugging capabilities:
 
-<br></br>
+    **Monitoring Features:**
+    - **Real-time logs** from smart contracts and nodes
+    - **Transaction explorer** and state diffing tools
+    - **Metrics dashboards** for node health and API usage
+    - **Subgraph query monitoring** for complex data relationships
 
+    **Debugging Tools:**
+    - Step-by-step transaction debugging
+    - Smart contract state inspection
+    - Event log analysis and filtering
+    - Performance bottleneck identification
 
-<details>
-<summary> **6. Is it possible to monitor and debug blockchain applications on SettleMint?** </summary>
-<br></br>
-Yes, SettleMint provides observability features including:
+    **Alerting and Notifications:**
+    - **Alerts and triggers** on transaction or performance failures
+    - Custom notification rules for business logic violations
+    - Integration with enterprise monitoring tools (DataDog, New Relic)
+    - SLA monitoring and automated escalation
 
-- Real-time logs from smart contracts and nodes
-- Transaction explorer and state diffing tools
-- Metrics dashboards for node health and API usage
-- Subgraph query monitoring
-- Alerts and triggers on transaction or performance failures
+    These capabilities help developers maintain SLAs and proactively resolve issues before they impact business operations.
+  </Accordion>
+</Accordions>
 
-These capabilities help developers maintain SLAs and proactively resolve issues.
+## Deployment and Infrastructure
 
-</details>
+<Accordions>
+  <Accordion title="What kind of deployment environments does SettleMint support?">
+    SettleMint supports flexible deployment options to meet various enterprise requirements:
 
-<br></br>
+    **Hosted Environments:**
+    - **SettleMint Cloud** - Fully managed environments for rapid prototyping and development
+    - **99.9% uptime SLA** with enterprise-grade infrastructure
+    - **Automatic scaling** and performance optimization
 
+    **Self-Hosted Options:**
+    - **Kubernetes deployments** on any cloud provider
+    - **Cloud-native installations** (AWS, Azure, Google Cloud Platform)
+    - **Docker containerization** for development and testing
 
-<details>
-<summary> **7. What kind of deployment environments does SettleMint support?** </summary>
-<br></br>
-SettleMint supports:
+    **On-Premise Solutions:**
+    - **Private cloud installations** for highly regulated industries
+    - **Air-gapped environments** for maximum security requirements
+    - **Custom hardware configurations** for specific performance needs
 
-- **Hosted environments** managed by SettleMint for rapid prototyping
-- **Self-hosted** Kubernetes or cloud-native deployments (AWS, Azure, GCP)
-- **On-premise** installations for highly regulated industries
-- **Multi-region support** for high availability and compliance needs
+    **Multi-Region Support:**
+    - **Global deployment** for high availability and disaster recovery
+    - **Compliance-specific regions** to meet data residency requirements
+    - **Edge computing integration** for IoT and real-time applications
 
-The platform abstracts DevOps complexity while maintaining flexibility.
+    The platform abstracts DevOps complexity while maintaining flexibility for enterprise-specific requirements.
+  </Accordion>
 
-</details>
+  <Accordion title="How does SettleMint ensure security and compliance?">
+    Security and compliance are built into every layer of the SettleMint platform:
 
+    **Security Measures:**
+    - **End-to-end encryption** for data in transit and at rest
+    - **Regular security audits** and penetration testing
+    - **Multi-signature wallet support** for transaction authorization
+    - **Private key management** with hardware security modules (HSMs)
+
+    **Compliance Features:**
+    - **GDPR compliance** tools and data management
+    - **SOC 2 Type II** certification and regular audits
+    - **ISO 27001** security management standards
+    - **HIPAA compliance** for healthcare applications
+
+    **Audit and Reporting:**
+    - **Immutable audit trails** for all platform activities
+    - **Compliance reporting** with automated generation
+    - **Data lineage tracking** for regulatory requirements
+    - **Real-time compliance monitoring** and alerting
+  </Accordion>
+
+  <Accordion title="What support and training options are available?">
+    SettleMint provides comprehensive support and training programs:
+
+    **Support Tiers:**
+    - **Standard Support** - Email support with 24-hour response time
+    - **Enterprise Support** - Priority support with dedicated account management
+    - **Premium Support** - 24/7 support with guaranteed response times
+
+    **Training Programs:**
+    - **Developer workshops** for technical teams
+    - **Executive briefings** for leadership and decision-makers
+    - **Custom training programs** tailored to specific use cases
+    - **Certification courses** for blockchain development expertise
+
+    **Resources:**
+    - **Comprehensive documentation** with tutorials and examples
+    - **Community forums** for peer-to-peer support
+    - **Regular webinars** on platform updates and best practices
+    - **Success stories** and implementation case studies
+  </Accordion>
+</Accordions>
+
+## Getting Started
+
+<Cards>
+  <Card
+    title="Start Your Free Trial"
+    description="Experience the SettleMint platform with a 30-day free trial"
+    href="https://console.settlemint.com/signup"
+  />
+  <Card
+    title="Schedule a Demo"
+    description="See how SettleMint can accelerate your blockchain project"
+    href="https://settlemint.com/demo"
+  />
+  <Card
+    title="Contact Sales"
+    description="Discuss enterprise pricing and custom requirements"
+    href="mailto:sales@settlemint.com"
+  />
+  <Card
+    title="Technical Support"
+    description="Get help with platform issues and implementation"
+    href="/docs/support/support"
+  />
+</Cards>
+
+<Callout type="tip">
+  **Ready to get started?** Most enterprises see their first blockchain application in production within 4-6 weeks using SettleMint's low-code platform and enterprise support services.
+</Callout>

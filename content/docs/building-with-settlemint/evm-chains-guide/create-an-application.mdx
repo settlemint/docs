@@ -1,66 +1,60 @@
 ---
-title: Create an application
-description: Guide to creating a blockchain application on SettleMint
+title: "How to Create Your First Blockchain Application in 2 Minutes"
+description: "Step-by-step guide to creating blockchain applications and organizations on SettleMint. Set up team collaboration, manage billing, and deploy your first blockchain project. Includes UI, CLI, and SDK examples for developers."
 ---
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 
-<div
-  style={{
-    backgroundColor: "#e1eafd",
-    color: "#356fee",
-    padding: "0.5px 10px 10px 10px",
-    borderRadius: "10px",
-    fontSize: "18px",
-    fontWeight: "bold",
-    lineHeight: "1.5",
-    textAlign: "left",
-  }}
->
-  Summary
-  <div
-    style={{
-      fontSize: "16px",
-      fontWeight: "normal",
-      marginTop: "5px",
-      marginBottom: "2px",
-    }}
-  >
-    To get started on the SettleMint platform, you need to create an
-    organization by going to the homepage or clicking the grid icon, then
-    selecting "create new organization." You'll need to enter a name and
-    complete the billing setup using Stripe to activate it.
-    <br> </br>
-    Once your organization is ready, you need to invite your team members by
-    entering their email addresses, selecting their roles, and sending the
-    invitation. After that, you need to create an application within the
-    organization by giving it a name and confirming.
-    <br> </br>
-    You can manage your organization and applications from the dashboard, change
-    names, invite more members, or delete resources when needed. You can also
-    create and manage applications using the SDK CLI or SDK JS if you prefer to
-    work programmatically.
-    <br> </br>
+<Callout type="info">
+**Quick Application Setup**: Create your first blockchain application in under 2 minutes. Organizations provide team collaboration, billing management, and project organization - everything needed for enterprise blockchain development.
+</Callout>
+
+<Callout type="question">
+**Common Question**: "What's the difference between an organization and an application? How should I structure my blockchain projects?"
+</Callout>
+
+**Answer**: 
+- **Organization** = Your company/team workspace with billing, members, and permissions
+- **Application** = Individual blockchain project (like a dApp, smart contract suite, or use case)
+- **Best practice**: One organization per company, multiple applications per use case
+
+## Why do you need to understand SettleMint's project structure?
+
+<Callout type="question">
+**Common Question**: "I just want to deploy smart contracts. Why do I need to set up organizations and applications first?"
+</Callout>
+
+**Answer**: SettleMint's structure enables enterprise-grade blockchain development with proper governance, team collaboration, and cost management from day one. This prevents common issues like unclear billing, security gaps, and deployment chaos.
+
+### SettleMint hierarchy explained
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+  <div>
+    ![Organization and applications](../../../img/building-with-settlemint/organization_and_application.png)
+  </div>
+  <div>
+    <Card className="p-4">
+      <h4 className="font-semibold mb-3">Enterprise Structure Benefits</h4>
+      <ul className="space-y-2 text-sm">
+        <li>**🏢 Organization-level billing** - Clear cost allocation per team/client</li>
+        <li>**👥 Role-based access control** - Secure team collaboration</li>
+        <li>**📋 Project isolation** - Separate environments prevent conflicts</li>
+        <li>**📊 Usage tracking** - Monitor resources across all projects</li>
+      </ul>
+    </Card>
   </div>
 </div>
 
-## How to create an organization and application in SettleMint platform
+### When to create multiple organizations
 
-An organization is the highest level of hierarchy in SettleMint. It's at this
-level that you can create and manage blockchain applications, invite team
-members to collaborate and manage billing.
-
-![Organization and applications](../../../img/building-with-settlemint/organization_and_application.png)
-
-![Add organization](../../../img/building-with-settlemint/add-org.png)
-
-You created your first organization when you signed up to use the SettleMint
-platform, but you can create as many organizations as you want, e.g. for your
-company, departments, teams, clients, etc. Organizations help you structure your
-work, manage collaboration, and keep your invoices clearly organized.
+**Recommended structure**:
+- **One organization per company/department** for billing and governance
+- **Multiple applications per organization** for different use cases
+- **Example**: "Acme Corp" organization with "Supply Chain", "Payments", and "Identity" applications
 
 <div className="flex flex-col md:flex-row items-start gap-8">
 

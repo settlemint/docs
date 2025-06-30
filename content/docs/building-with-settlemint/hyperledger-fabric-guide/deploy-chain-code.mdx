@@ -1,49 +1,31 @@
 ---
-title: "Deploy chaincode"
-description: Guide to deploy chaincode
+title: "How to Deploy Enterprise Chaincode for Business Logic Implementation"
+description: Complete guide to developing, deploying, and managing Hyperledger Fabric chaincode for enterprise blockchain applications with TypeScript
 ---
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Steps } from "fumadocs-ui/components/steps";
 import { Card } from "fumadocs-ui/components/card";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 
-<div
-  style={{
-    backgroundColor: "#e1eafd",
-    color: "#356fee",
-    padding: "0.5px 10px 10px 10px",
-    borderRadius: "10px",
-    fontSize: "18px",
-    fontWeight: "bold",
-    lineHeight: "1.5",
-    textAlign: "left",
-  }}
->
-  Summary
-  <div style={{ fontSize: "16px", fontWeight: "normal", marginTop: "5px" }}>
-    The process starts by defining a clean and structured chaincode using
-    TypeScript. Transaction functions are added to handle common operations,
-    creating new entries, reading existing ones, updating data, and deleting
-    records. These functions follow familiar CRUD patterns but are designed to
-    work within the immutable environment of a blockchain. Events are emitted
-    during each transaction to make state changes observable by off-chain
-    systems or external services.
-    <br> </br>
-    Once the code is ready, it's compiled and packaged into a deployable
-    archive. The chaincode is then installed on peers, approved by
-    organizations, and committed to a Fabric channel using a lifecycle
-    management script. If needed, an init function can be invoked to populate
-    default data or configure initial state.
-    <br> </br>
-    After deployment, functions can be tested directly by invoking or querying
-    them through the provided CLI. This end-to-end workflow, from writing the
-    chaincode to interacting with it on-chain, follows a consistent and
-    repeatable pattern, making it easier to manage chaincode across different
-    stages of development and deployment.
-    <br> </br>
-  </div>
-</div>
+<Callout type="info" title="Enterprise Chaincode Development">
+Enterprise blockchain applications require robust business logic implementation through chaincode. This guide covers end-to-end chaincode development, from TypeScript implementation to production deployment, with enterprise-grade lifecycle management and testing procedures.
+</Callout>
+
+## Why Do Enterprises Need Custom Chaincode for Business Logic?
+
+Enterprise organizations deploy custom chaincode when they require:
+
+- **Business Rule Enforcement**: Implement complex business logic and compliance rules on-chain
+- **Data Validation**: Ensure data integrity and business rule compliance at the network level
+- **Process Automation**: Automate multi-party business processes with smart contracts
+- **Regulatory Compliance**: Embed compliance checks and audit trails directly in business logic
+- **Integration Capabilities**: Connect blockchain state with external systems and APIs
+
+<Card title="Development Timeline" icon="code">
+**Typical enterprise chaincode development**: 2-4 weeks for initial development, 1-2 weeks for testing and deployment, plus ongoing maintenance and upgrades.
+</Card>
 
 ## Learning with a asset transfer chaincode example
 

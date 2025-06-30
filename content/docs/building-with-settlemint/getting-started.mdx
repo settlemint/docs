@@ -1,9 +1,32 @@
 ---
-title: "Getting started"
-description: Overview of blockchain development process
+title: "How to Build Blockchain Applications in Minutes, Not Months"
+description: "Complete guide to blockchain development with SettleMint - from EVM and Hyperledger Fabric networks to production-ready dApps. Build enterprise blockchain solutions 10x faster with no-code tools, smart contract templates, and managed infrastructure."
 ---
 
-## Select between EVM and Fabric chains, or start with pre-built application kits
+import { Card } from 'fumadocs-ui/components/card'
+import { Steps, Step } from 'fumadocs-ui/components/steps'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion'
+
+<Callout type="info">
+**For Enterprise Teams & Developers**: Skip months of blockchain infrastructure setup and focus on building your business logic. SettleMint provides everything needed to deploy production-ready blockchain applications in days, not months.
+</Callout>
+
+## Which blockchain platform should you choose for your project?
+
+<Callout type="question">
+**Common Question**: "I'm building a blockchain application but don't know which platform to choose. What are the key differences between EVM chains, Hyperledger Fabric, and pre-built application kits?"
+</Callout>
+
+**Answer**: Your choice depends on your project requirements:
+- **EVM chains** (Ethereum, Polygon, etc.) for public/permissionless applications with cryptocurrency features
+- **Hyperledger Fabric** for private enterprise networks with strict data privacy requirements  
+- **Application kits** for rapid prototyping with pre-built smart contracts and UI components
+
+### Development time comparison:
+- **Traditional blockchain development**: 6-12 months
+- **With SettleMint**: 2-4 weeks from concept to production
 
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 mb-8">
   {/* EVM Chain Development */}
@@ -98,7 +121,19 @@ description: Overview of blockchain development process
   </Card>
 </div>
 
-## Select between SaaS and Self-Managed
+## Should you use managed SaaS or self-hosted infrastructure?
+
+<Callout type="question">
+**Common Question**: "What's the difference between SettleMint's managed SaaS and self-hosted options? Which one should I choose for my enterprise blockchain project?"
+</Callout>
+
+**Answer**: Choose based on your organization's requirements:
+- **SaaS** for fast time-to-market with zero DevOps overhead (recommended for most projects)
+- **Self-managed** for strict compliance requirements or existing Kubernetes infrastructure
+
+### Cost & time implications:
+- **SaaS**: Production-ready in 1-2 days, no infrastructure costs
+- **Self-managed**: 1-2 weeks setup, full control over infrastructure and compliance
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 mb-8">
   {/* SaaS Deployment */}
@@ -151,792 +186,531 @@ description: Overview of blockchain development process
   </Card>
 </div>
 
-## EVM development overview
+## How to build and deploy EVM blockchain applications step-by-step
 
-{/* Section 1: Platform Setup & Environment Preparation */}
+<Callout type="info">
+**Complete Development Timeline**: Following this guide, you can have a production-ready EVM blockchain application running in **2-3 weeks** instead of the typical 6-12 months with traditional blockchain development.
+</Callout>
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Platform setup & environment preparation</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "1",
-            "Sign up at console.settlemint.com using a corporate email.",
-            "Sign Up",
-            "https://console.settlemint.com/",
-          ],
-          [
-            "2",
-            "Once logged in, create a new organization",
-            "Create organization",
-            "/documentation/building-with-settlemint/setup-account-and-billing",
-          ],
-          [
-            "3",
-            "Invite collaborators and assign them roles such as Admin or User.",
-            "Add team members",
-            "/documentation/platform-components/blockchain-infrastructure/consortium-manager",
-          ],
-          [
-            "4",
-            "Within the organization, create an application",
-            "Create Application",
-            "/documentation/building-with-settlemint/evm-chains-guide/create-an-application",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+<Accordions>
+<Accordion title="Platform setup & environment preparation (Day 1: 2-4 hours)">
 
-{/* Section 2: Blockchain network & node deployment */}
+**What you'll accomplish**: Set up your SettleMint workspace, invite team members, and create your first blockchain application project.
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Blockchain network & node deployment</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "5",
-            "Add an EVM blockchain network using the 'Add Network' option.",
-            "Add network",
-            "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes",
-          ],
-          [
-            "6",
-            "Deploy remaining nodes for byzantine fault tolerance and distaster recovery",
-            "Add nodes",
-            "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#2-add-blockchain-nodes",
-          ],
-          [
-            "7",
-            "Add the Blockchain Explorer (Insights) to view transactions and logs.",
-            "Add insights",
-            "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#4-add-blockchain-explorer",
-          ],
-          [
-            "8",
-            "Optionally add a load balancer to distribute traffic across nodes.",
-            "Add load balancer",
-            "/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#3-add-load-balancer",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+<Steps>
+<Step>
 
-{/* Section 3: Smart contract development & deployment */}
+### Sign up for SettleMint Console
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Smart contract development & deployment</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "9",
-            "Setup private keys and attach them to a node for Tx Signer",
-            "Add private keys",
-            "/documentation/building-with-settlemint/evm-chains-guide/add-private-keys",
-          ],
-          [
-            "10",
-            "Add Code Studio IDE to create development environment",
-            "Setup code studio",
-            "/documentation/building-with-settlemint/evm-chains-guide/setup-code-studio",
-          ],
-          [
-            "11",
-            "Develop your smart contract code or use one of the templates",
-            "Develop contract",
-            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#1-lets-start-with-the-solidity-smart-contract-code",
-          ],
-          [
-            "12",
-            "Write test scripts and test your smart contract ",
-            "Test contract",
-            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#5-test-the-smart-contract",
-          ],
-          [
-            "13",
-            "Compile smart contract and get the ABI",
-            "Compile contract",
-            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#4-compile-the-smart-contract-code",
-          ],
-          [
-            "14",
-            "Deploy contract to the network",
-            "Deploy contract",
-            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#6-deploy-the-smart-contract-to-platform-network",
-          ],
-          [
-            "15",
-            "Note the deployed contract address",
-            "Get contract address",
-            "/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#deployed-contract-address",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+Visit [console.settlemint.com](https://console.settlemint.com/) and create your account using a corporate email address.
 
-{/* Section 4: Setup middlewares and get APIs */}
+**Time required**: 5 minutes
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Setup middlewares and get APIs</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "16",
-            "Add smart contract portal Middleware and get write APIs for your contract",
-            "Smart contract portal",
-            "/documentation/building-with-settlemint/evm-chains-guide/setup-api-portal",
-          ],
-          [
-            "17",
-            "Add Graph Middleware and write subgraph files in IDE",
-            "Setup subgraph",
-            "/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#subgraph-deployment-process",
-          ],
-          [
-            "18",
-            "Build and deploy sub-graphs to setup indexing",
-            "Deploy subgraph",
-            "/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#codegen-build-and-deploy-subgraph",
-          ],
-          [
-            "19",
-            "Do a transaction from API Portal",
-            "Write data on chain",
-            "/documentation/building-with-settlemint/evm-chains-guide/setup-api-portal#4-how-to-configure-rest-api-requests-in-the-portal",
-          ],
-          [
-            "20",
-            "Read indexed data from Graph middleware",
-            "Read data from chain",
-            "/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#graph-middleware---querying-data",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+</Step>
+<Step>
 
-{/* Section 5: Off-Chain database, storage & integrations */}
+### Create your organization
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Off-Chain database, storage & integrations</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "21",
-            "Add Hasura to provision a PostgreSQL database with GraphQL APIs.",
-            "Setup hasura",
-            "/documentation/building-with-settlemint/evm-chains-guide/setup-offchain-database",
-          ],
-          [
-            "22",
-            "Add MinIO or IPFS for centralized/decentralized file storage.",
-            "Add storage",
-            "/documentation/building-with-settlemint/evm-chains-guide/setup-storage",
-          ],
-          [
-            "23",
-            "Enable Integration Studio for creating custom APIs and flows",
-            "Add integration studio",
-            "/documentation/building-with-settlemint/evm-chains-guide/integration-studio",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+Once logged in, [create a new organization](/documentation/building-with-settlemint/setup-account-and-billing) to manage your blockchain projects and team.
 
-{/* Section 6: Deploy frontend and other services */}
+**Time required**: 10 minutes
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Deploy frontend and other services</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "24",
-            "Use custom deployment module to deploy frontend or other services",
-            "Deploy frontend",
-            "/documentation/building-with-settlemint/evm-chains-guide/deploy-custom-services",
-          ],
-          [
-            "25",
-            "Monitor RAM, CPU, and disk usage or apply upgrades.",
-            "Monitoring dashboards",
-            "/documentation/platform-components/usage-and-logs/monitoring-tools",
-          ],
-          [
-            "26",
-            "Reach out to us for further assistance or technical support",
-            "Get support",
-            "/documentation/support/support",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+</Step>
+<Step>
 
-## Fabric development overview
+### Add team members and assign roles
 
-{/* Section 1: Platform Setup & Network Configuration */}
+[Invite collaborators](/documentation/platform-components/blockchain-infrastructure/consortium-manager) and assign them roles such as Admin or User for proper access control.
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Platform setup & network configuration</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "1",
-            "Sign up at console.settlemint.com using a corporate email.",
-            "Sign Up",
-            "https://console.settlemint.com/",
-          ],
-          [
-            "2",
-            "Once logged in, create a new organization",
-            "Create organization",
-            "/documentation/building-with-settlemint/setup-account-and-billing",
-          ],
-          [
-            "3",
-            "Invite collaborators and assign them roles such as Admin or User.",
-            "Add team members",
-            "/documentation/platform-components/blockchain-infrastructure/consortium-manager",
-          ],
-          [
-            "4",
-            "Within the organization, create an application",
-            "Create Application",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/create-an-application",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+**Time required**: 15 minutes
 
-{/* Section 2: Blockchain network & node deployment */}
+</Step>
+<Step>
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Blockchain network & nodes deployment</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "5",
-            "Add an Fabric blockchain network using the 'Add Network' option.",
-            "Add network",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes",
-          ],
-          [
-            "6",
-            "Deploy remaining nodes for fault tolerance and distaster recovery",
-            "Add nodes",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes#2-add-blockchain-nodes",
-          ],
-          [
-            "7",
-            "Add the Blockchain Explorer to view transactions and logs.",
-            "Add insights",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes#hyperledger-fabric-explorer",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+### Create your first application
 
-{/* Section 3: Chaincode Development & Deployment */}
+Within your organization, [create an application](/documentation/building-with-settlemint/evm-chains-guide/create-an-application) to start building your blockchain solution.
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Chaincode development & deployment</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "8",
-            "Write chaincode in the code studio IDE",
-            "Write Chaincode",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code",
-          ],
-          [
-            "9",
-            "Package the chaincode",
-            "Package Chaincode",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code#1-compile-and-package-chaincode",
-          ],
-          [
-            "10",
-            "Commit and initialize chaincode",
-            "Commit and initialize chaincode",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code#5-commit-chaincode",
-          ],
-          [
-            "11",
-            "Deploy FabConnect middeware to get APIs on your chaincode",
-            "Deploy FabConnect",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/setup-fabconnect-middleware",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+**Time required**: 10 minutes
 
-{/* Section 5: Off-Chain database, storage & integrations */}
+</Step>
+</Steps>
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Off-Chain database, storage & integrations</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "12",
-            "Add Hasura to provision a PostgreSQL database with GraphQL APIs.",
-            "Setup hasura",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/setup-offchain-database",
-          ],
-          [
-            "13",
-            "Add MinIO or IPFS for centralized/decentralized file storage.",
-            "Add storage",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/setup-storage",
-          ],
-          [
-            "14",
-            "Enable Integration Studio for creating custom APIs and flows",
-            "Add integration studio",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/integration-studio",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+**Outcome**: Your development environment is ready, and your team can collaborate on blockchain development.
 
-{/* Section 6: Deploy frontend and other services */}
+</Accordion>
 
-<details
-  data-card="true"
-  className="group relative border border-gray-200 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-700 overflow-hidden mb-3"
->
-  <summary className="font-semibold px-6 py-4 text-base flex justify-between items-center cursor-pointer border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-    <span>Deploy frontend and other services</span>
-    <svg
-      className="w-4 h-4 text-gray-600 dark:text-gray-300 transform transition-transform group-open:rotate-90"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </summary>
-  <div className="overflow-x-auto w-full px-6 pb-4">
-    <table className="table-auto w-full text-left text-sm text-gray-800 dark:text-gray-200">
-      <tbody>
-        {[
-          [
-            "15",
-            "Use Custom Deployment module to deploy frontend or other services",
-            "Deploy frontend",
-            "/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-custom-services",
-          ],
-          [
-            "16",
-            "Monitor RAM, CPU, and disk usage or apply upgrades.",
-            "Monitoring dashboards",
-            "/documentation/platform-components/usage-and-logs/monitoring-tools",
-          ],
-          [
-            "17",
-            "Reach out to us for further assistance or technical support",
-            "Get support",
-            "/documentation/support/support",
-          ],
-        ].map(([step, action, link, url]) => (
-          <tr
-            key={step}
-            className="border-b border-gray-100 dark:border-gray-800"
-          >
-            <td className="py-2 pl-6 font-medium text-gray-700 dark:text-gray-300">
-              {step}
-            </td>
-            <td className="py-2">{action}</td>
-            <td className="py-2">
-              <a
-                href={url}
-                className="text-blue-600 dark:text-blue-400 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link}
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</details>
+<Accordion title="Blockchain network & node deployment (Days 2-3: 4-6 hours)">
+
+**What you'll accomplish**: Deploy a production-ready blockchain network with multiple nodes, load balancing, and monitoring tools.
+
+<Steps>
+<Step>
+
+### Add EVM blockchain network
+
+[Add an EVM blockchain network](/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes) using the 'Add Network' option. Choose from Ethereum, Polygon, or other EVM-compatible chains.
+
+**Time required**: 30 minutes
+
+</Step>
+<Step>
+
+### Deploy additional blockchain nodes
+
+[Add more nodes](/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#2-add-blockchain-nodes) for Byzantine fault tolerance and disaster recovery. Recommended: minimum 3 nodes for production.
+
+**Time required**: 45 minutes per node
+
+</Step>
+<Step>
+
+### Add blockchain explorer (Insights)
+
+[Deploy the blockchain explorer](/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#4-add-blockchain-explorer) to view transactions, blocks, and network statistics in real-time.
+
+**Time required**: 20 minutes
+
+</Step>
+<Step>
+
+### Configure load balancer (optional)
+
+[Add a load balancer](/documentation/building-with-settlemint/evm-chains-guide/add-network-and-nodes#3-add-load-balancer) to distribute traffic across nodes for better performance and reliability.
+
+**Time required**: 30 minutes
+
+</Step>
+</Steps>
+
+**Outcome**: Your blockchain network is running with high availability and monitoring capabilities.
+
+</Accordion>
+
+<Accordion title="Smart contract development & deployment (Week 2: 1-2 weeks)">
+
+**What you'll accomplish**: Build, test, and deploy your smart contracts using SettleMint's integrated development environment with pre-built templates.
+
+<Callout type="tip">
+**Development Acceleration**: Use SettleMint's smart contract templates to reduce development time from weeks to days. Templates include common patterns like ERC-20 tokens, NFTs, and multi-signature wallets.
+</Callout>
+
+<Steps>
+<Step>
+
+### Setup private keys and transaction signing
+
+[Configure private keys](/documentation/building-with-settlemint/evm-chains-guide/add-private-keys) and attach them to a node for secure transaction signing.
+
+**Time required**: 15 minutes
+
+</Step>
+<Step>
+
+### Setup Code Studio IDE
+
+[Add Code Studio](/documentation/building-with-settlemint/evm-chains-guide/setup-code-studio) to create a fully-featured development environment with syntax highlighting, debugging, and deployment tools.
+
+**Time required**: 10 minutes
+
+</Step>
+<Step>
+
+### Develop your smart contract
+
+[Write your smart contract code](/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#1-lets-start-with-the-solidity-smart-contract-code) or customize one of the available templates for faster development.
+
+**Time required**: 3-10 days (depending on complexity)
+
+</Step>
+<Step>
+
+### Test your smart contract
+
+[Write and run test scripts](/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#5-test-the-smart-contract) to ensure your contract works correctly before deployment.
+
+**Time required**: 1-2 days
+
+</Step>
+<Step>
+
+### Compile smart contract
+
+[Compile your contract](/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#4-compile-the-smart-contract-code) to generate the ABI (Application Binary Interface) needed for frontend integration.
+
+**Time required**: 5 minutes
+
+</Step>
+<Step>
+
+### Deploy to blockchain network
+
+[Deploy your contract](/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#6-deploy-the-smart-contract-to-platform-network) to your blockchain network with one-click deployment.
+
+**Time required**: 10 minutes
+
+</Step>
+<Step>
+
+### Record contract address
+
+[Save the deployed contract address](/documentation/building-with-settlemint/evm-chains-guide/deploy-smart-contracts#deployed-contract-address) for API integration and frontend development.
+
+**Time required**: 2 minutes
+
+</Step>
+</Steps>
+
+**Outcome**: Your smart contracts are deployed and ready for integration with APIs and frontend applications.
+
+</Accordion>
+
+<Accordion title="Setup APIs and data indexing (Days 1-2 of Week 3: 6-8 hours)">
+
+**What you'll accomplish**: Create REST and GraphQL APIs for your smart contracts, set up data indexing for fast queries, and test end-to-end functionality.
+
+<Steps>
+<Step>
+
+### Deploy smart contract API portal
+
+[Add the API portal middleware](/documentation/building-with-settlemint/evm-chains-guide/setup-api-portal) to automatically generate REST APIs for all your smart contract functions.
+
+**Time required**: 30 minutes
+
+</Step>
+<Step>
+
+### Configure The Graph indexing
+
+[Set up Graph middleware](/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#subgraph-deployment-process) and write subgraph files to index blockchain data for fast querying.
+
+**Time required**: 2-3 hours
+
+</Step>
+<Step>
+
+### Deploy subgraph indexer
+
+[Build and deploy your subgraph](/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#codegen-build-and-deploy-subgraph) to start indexing blockchain events and transactions.
+
+**Time required**: 45 minutes
+
+</Step>
+<Step>
+
+### Test API integration
+
+[Execute transactions via API Portal](/documentation/building-with-settlemint/evm-chains-guide/setup-api-portal#4-how-to-configure-rest-api-requests-in-the-portal) to verify your smart contract functions work correctly through REST endpoints.
+
+**Time required**: 30 minutes
+
+</Step>
+<Step>
+
+### Query indexed data
+
+[Read data using GraphQL](/documentation/building-with-settlemint/evm-chains-guide/setup-graph-middleware#graph-middleware---querying-data) to verify your indexing is working and data is queryable.
+
+**Time required**: 30 minutes
+
+</Step>
+</Steps>
+
+**Outcome**: Your smart contracts have full API coverage and fast data querying capabilities for frontend integration.
+
+</Accordion>
+
+<Accordion title="Off-chain database, storage & integrations (Days 3-4 of Week 3: 4-6 hours)">
+
+**What you'll accomplish**: Add traditional database capabilities, file storage, and custom business logic to complement your blockchain infrastructure.
+
+<Steps>
+<Step>
+
+### Setup PostgreSQL with Hasura
+
+[Add Hasura](/documentation/building-with-settlemint/evm-chains-guide/setup-offchain-database) to provision a PostgreSQL database with automatically generated GraphQL APIs.
+
+**Time required**: 45 minutes
+
+</Step>
+<Step>
+
+### Configure file storage
+
+[Add MinIO or IPFS](/documentation/building-with-settlemint/evm-chains-guide/setup-storage) for centralized or decentralized file storage to handle documents, images, and large data files.
+
+**Time required**: 30 minutes
+
+</Step>
+<Step>
+
+### Enable Integration Studio
+
+[Set up Integration Studio](/documentation/building-with-settlemint/evm-chains-guide/integration-studio) for creating custom APIs, business flows, and third-party integrations.
+
+**Time required**: 1 hour
+
+</Step>
+</Steps>
+
+**Outcome**: Your application now has full-stack capabilities with both on-chain and off-chain data management.
+
+</Accordion>
+
+<Accordion title="Deploy frontend and go live (Week 4: 2-3 days)">
+
+**What you'll accomplish**: Deploy your frontend application, set up monitoring, and launch your production blockchain application.
+
+<Steps>
+<Step>
+
+### Deploy frontend application
+
+[Use the custom deployment module](/documentation/building-with-settlemint/evm-chains-guide/deploy-custom-services) to deploy your React, Vue, or Angular frontend with automatic SSL and domain management.
+
+**Time required**: 2-4 hours
+
+</Step>
+<Step>
+
+### Setup monitoring and alerting
+
+[Configure monitoring dashboards](/documentation/platform-components/usage-and-logs/monitoring-tools) to track RAM, CPU, disk usage, and set up automated alerts.
+
+**Time required**: 1 hour
+
+</Step>
+<Step>
+
+### Get production support
+
+[Contact SettleMint support](/documentation/support/support) for production launch assistance, performance optimization, and ongoing technical support.
+
+**Time required**: As needed
+
+</Step>
+</Steps>
+
+**Outcome**: Your blockchain application is live in production with full monitoring and support.
+
+</Accordion>
+</Accordions>
+
+## How to build enterprise Hyperledger Fabric applications step-by-step
+
+<Callout type="info">
+**Enterprise Blockchain Timeline**: Hyperledger Fabric applications typically require **2-4 weeks** for development with SettleMint, compared to 8-18 months with traditional enterprise blockchain development approaches.
+</Callout>
+
+<Accordions>
+
+<Accordion title="Platform setup & network configuration (Day 1: 2-4 hours)">
+
+**What you'll accomplish**: Set up your SettleMint workspace for enterprise Hyperledger Fabric development with proper access controls and governance.
+
+<Steps>
+<Step>
+
+### Sign up for SettleMint Console
+
+Visit [console.settlemint.com](https://console.settlemint.com/) and create your account using a corporate email address.
+
+**Time required**: 5 minutes
+
+</Step>
+<Step>
+
+### Create your organization
+
+[Create a new organization](/documentation/building-with-settlemint/setup-account-and-billing) to manage your enterprise blockchain projects and team permissions.
+
+**Time required**: 10 minutes
+
+</Step>
+<Step>
+
+### Add team members with role-based access
+
+[Invite collaborators](/documentation/platform-components/blockchain-infrastructure/consortium-manager) and assign enterprise roles such as Admin, Developer, or Auditor.
+
+**Time required**: 15 minutes
+
+</Step>
+<Step>
+
+### Create Fabric application
+
+[Create a Hyperledger Fabric application](/documentation/building-with-settlemint/hyperledger-fabric-guide/create-an-application) with proper consortium and governance settings.
+
+**Time required**: 10 minutes
+
+</Step>
+</Steps>
+
+**Outcome**: Your enterprise blockchain workspace is configured with proper governance and access controls.
+
+</Accordion>
+
+<Accordion title="Fabric network & nodes deployment (Days 2-3: 4-6 hours)">
+
+**What you'll accomplish**: Deploy a production-ready Hyperledger Fabric network with multiple organizations, channels, and enterprise-grade security.
+
+<Steps>
+<Step>
+
+### Add Fabric blockchain network
+
+[Add a Hyperledger Fabric network](/documentation/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes) with proper channel configuration and MSP settings.
+
+**Time required**: 45 minutes
+
+</Step>
+<Step>
+
+### Deploy additional nodes
+
+[Add more peer and orderer nodes](/documentation/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes#2-add-blockchain-nodes) for fault tolerance and multi-organization support.
+
+**Time required**: 30 minutes per node
+
+</Step>
+<Step>
+
+### Add Fabric Explorer
+
+[Deploy the blockchain explorer](/documentation/building-with-settlemint/hyperledger-fabric-guide/add-network-and-nodes#hyperledger-fabric-explorer) for transaction monitoring and network visualization.
+
+**Time required**: 20 minutes
+
+</Step>
+</Steps>
+
+**Outcome**: Your enterprise Fabric network is running with proper governance and monitoring.
+
+</Accordion>
+
+<Accordion title="Chaincode development & deployment (Week 2: 1-2 weeks)">
+
+**What you'll accomplish**: Develop, test, and deploy your business logic as chaincode with enterprise governance and approval workflows.
+
+<Steps>
+<Step>
+
+### Write chaincode in Code Studio
+
+[Develop your chaincode](/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code) using Go, Node.js, or Java in the integrated development environment.
+
+**Time required**: 3-10 days
+
+</Step>
+<Step>
+
+### Package the chaincode
+
+[Compile and package your chaincode](/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code#1-compile-and-package-chaincode) for deployment across the network.
+
+**Time required**: 30 minutes
+
+</Step>
+<Step>
+
+### Commit and initialize chaincode
+
+[Commit and initialize chaincode](/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-chain-code#5-commit-chaincode) with proper endorsement policies and governance approval.
+
+**Time required**: 45 minutes
+
+</Step>
+<Step>
+
+### Deploy FabConnect middleware
+
+[Deploy FabConnect](/documentation/building-with-settlemint/hyperledger-fabric-guide/setup-fabconnect-middleware) to generate REST APIs for your chaincode functions.
+
+**Time required**: 30 minutes
+
+</Step>
+</Steps>
+
+**Outcome**: Your chaincode is deployed with full API access and enterprise governance.
+
+</Accordion>
+
+<Accordion title="Enterprise data management (Week 3: 3-4 days)">
+
+**What you'll accomplish**: Add enterprise-grade off-chain data management, secure file storage, and business system integrations.
+
+<Steps>
+<Step>
+
+### Setup PostgreSQL with Hasura
+
+[Add enterprise database](/documentation/building-with-settlemint/hyperledger-fabric-guide/setup-offchain-database) with role-based access control and GraphQL APIs.
+
+**Time required**: 1 hour
+
+</Step>
+<Step>
+
+### Configure secure file storage
+
+[Add MinIO or IPFS](/documentation/building-with-settlemint/hyperledger-fabric-guide/setup-storage) with enterprise security and compliance features.
+
+**Time required**: 45 minutes
+
+</Step>
+<Step>
+
+### Enable Integration Studio
+
+[Set up Integration Studio](/documentation/building-with-settlemint/hyperledger-fabric-guide/integration-studio) for ERP, CRM, and other enterprise system integrations.
+
+**Time required**: 2 hours
+
+</Step>
+</Steps>
+
+**Outcome**: Your blockchain application integrates seamlessly with existing enterprise systems.
+
+</Accordion>
+
+<Accordion title="Production deployment (Week 4: 2-3 days)">
+
+**What you'll accomplish**: Deploy enterprise frontend applications with proper security, monitoring, and support for production operations.
+
+<Steps>
+<Step>
+
+### Deploy enterprise frontend
+
+[Deploy your frontend application](/documentation/building-with-settlemint/hyperledger-fabric-guide/deploy-custom-services) with enterprise security, authentication, and role-based access.
+
+**Time required**: 4-6 hours
+
+</Step>
+<Step>
+
+### Setup enterprise monitoring
+
+[Configure comprehensive monitoring](/documentation/platform-components/usage-and-logs/monitoring-tools) for compliance, audit trails, and performance tracking.
+
+**Time required**: 2 hours
+
+</Step>
+<Step>
+
+### Get enterprise support
+
+[Access enterprise support](/documentation/support/support) for production operations, compliance assistance, and 24/7 technical support.
+
+**Time required**: As needed
+
+</Step>
+</Steps>
+
+**Outcome**: Your enterprise blockchain application is production-ready with full compliance and support.
+
+</Accordion>
+</Accordions>

@@ -1,25 +1,37 @@
 ---
-title: "Optimism"
+title: "Optimism: Ethereum's Optimistic Rollup for DeFi"
+description: "Deploy on Optimism for fast, low-cost Ethereum scaling with optimistic rollup technology. Compare Optimism's EVM compatibility, DeFi ecosystem, and governance model."
+keywords: ["Optimism", "OP token", "optimistic rollup", "Ethereum Layer 2", "DeFi", "EVM compatible", "DAO governance"]
 ---
 
-<div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
-  <div style={{ flex: '0 0 15%' }}>
-  ![Optimism](../../../img/blockchain-logos/optimism-logo.png)
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+<div className="flex items-start gap-6 mb-8">
+  <div className="flex-shrink-0 w-16">
+    ![Optimism](../../../img/blockchain-logos/optimism-logo.png)
   </div>
-  <div style={{ flex: '1', paddingLeft: '1rem' }}>
-    <ul>
-
-Optimism was launched in March 2021 by Optimism PBC, and has its own
-cryptocurrency since May 2022 called OP. It is a layer 2 scaling solution for
-Ethereum that focusses on security, scalability and ease-of-use. Optimism uses
-optimistic rollup technology to process transactions off-chain, which allows it
-to offer significantly faster transaction speeds and lower fees than Ethereum
-mainnet.
-
-    </ul>
-
+  <div className="flex-1">
+    <p className="text-lg mb-4">
+      Optimism is Ethereum's leading optimistic rollup, powering a $1.5+ billion DeFi ecosystem with projects like Uniswap, Aave, and Synthetix. Built for security, simplicity, and sustainability, Optimism delivers 10x lower costs and faster finality while maintaining full Ethereum compatibility.
+    </p>
   </div>
 </div>
+
+## Which projects thrive on Optimism?
+
+<Cards>
+  <Card title="DeFi Protocols" description="Uniswap, Aave, Synthetix, and other major DeFi platforms leveraging Optimism's low fees and Ethereum security for better user experience." />
+  <Card title="NFT Marketplaces" description="OpenSea, Foundation, and creators using Optimism for affordable NFT minting and trading without compromising on security." />
+  <Card title="DAO Governance" description="Organizations using OP governance tokens and Optimism's infrastructure for decentralized decision-making and treasury management." />
+  <Card title="Social & Gaming" description="Web3 social platforms and blockchain games requiring frequent transactions with minimal costs for user engagement." />
+</Cards>
+
+<Callout type="info">
+  **Public Goods Funding**: Optimism dedicates a portion of sequencer revenue to funding public goods, supporting Ethereum ecosystem development and open-source innovation.
+</Callout>
 
 # The basics
 
@@ -30,35 +42,93 @@ Optimism network is secured by a decentralized network of validators, and it is
 governed by a DAO (decentralized autonomous organization). This ensures that
 Optimism is not controlled by any single entity.
 
-## Mainnet and testnet
+## How does Optimism deliver Ethereum security with Layer 2 speed?
 
-SettleMint supports, the **OP Mainnet** and the **OP Goerlli Testnet**.
+<Tabs items={['Performance', 'Economics', 'Ecosystem']}>
+  <Tab value="Performance">
+    - **Transaction Speed**: 1-5 seconds vs 12+ minutes on Ethereum
+    - **Throughput**: 2,000+ TPS capacity
+    - **Withdrawal Time**: 7 days (standard optimistic rollup security)
+    - **Block Time**: 2 seconds average
+  </Tab>
+  <Tab value="Economics">
+    - **Gas Costs**: 90%+ reduction from Ethereum mainnet
+    - **DeFi Operations**: $0.10-2.00 per transaction
+    - **NFT Trading**: $0.50-5.00 per trade
+    - **OP Token Utility**: Governance participation and gas payment
+  </Tab>
+  <Tab value="Ecosystem">
+    - **Total Value Locked**: $1.5+ billion in DeFi protocols
+    - **Major DApps**: Uniswap, Aave, Synthetix, Worldcoin
+    - **Daily Transactions**: 500K+ daily transactions
+    - **Developer Tools**: Full Ethereum compatibility
+  </Tab>
+</Tabs>
 
-The Mainnet is the primary public Optimism production blockchain, where
-actual-value transactions take place. Each transaction requires payment of a
-transaction fee, payable in the native coin OP. The Testnet is an instance of
-the blockchain to be used for testing and experimentation. There are also coins
-used in the Testnet but they have no value, so there is no risk of real fund.
+## Available Networks
 
-You can consider the Testnet as a prototype and the Mainnet as the official
-production blockchain. Or think of this as an analog to production versus
-staging servers.
+<Cards>
+  <Card 
+    title="OP Mainnet" 
+    description="Production optimistic rollup with ETH for gas fees and OP for governance. Home to major DeFi protocols and $1.5B+ TVL."
+  />
+  <Card 
+    title="OP Sepolia Testnet" 
+    description="Development environment with free test ETH for experimentation. Perfect for testing DeFi integrations and optimistic rollup features."
+  />
+</Cards>
 
-## Consensus mechanism
+## Why choose optimistic rollups for your Layer 2 strategy?
 
-The Optimism consensus algorithm is a hybrid system that combines **optimistic
-rollups** with a **sequencer**. Optimistic rollups assume that all transactions
-are valid unless proven otherwise, which allows transactions to be processed
-off-chain, resulting in faster and cheaper transactions.
+Optimism's optimistic rollup technology provides a balanced approach to scaling, prioritizing security and simplicity while delivering significant performance improvements.
 
-The sequencer is a node that is responsible for proposing batches of
-transactions to the Arbitrum network. The sequencer is not trusted by the
-network, and any node can challenge the sequencer's proposal if they believe
-that it contains invalid transactions.
+### Optimistic Rollup Benefits
 
-The Optimism consensus algorithm is scalable, secure, and decentralized.
-However, it has a seven-day withdrawal period and relies on a centralized
-sequencer.
+<Steps>
+  <Step>
+    **Optimistic Execution**
+    
+    Transactions are assumed valid by default, enabling fast processing without complex validity proofs.
+  </Step>
+  
+  <Step>
+    **Fraud Proof Security**
+    
+    Anyone can challenge invalid transactions during a 7-day window, ensuring network security through economic incentives.
+  </Step>
+  
+  <Step>
+    **EVM Equivalence**
+    
+    Full Ethereum Virtual Machine compatibility means existing contracts deploy without modification.
+  </Step>
+  
+  <Step>
+    **Ethereum Settlement**
+    
+    Final settlement on Ethereum mainnet provides ultimate security and decentralization.
+  </Step>
+</Steps>
 
-More information can be found on the
-[official Optimism website](https://console.optimism.io/).
+### OP Stack: Modular Blockchain Infrastructure
+
+<Cards>
+  <Card 
+    title="Customizable Rollups" 
+    description="Build custom Layer 2 chains using the open-source OP Stack, sharing security and liquidity with the Optimism ecosystem."
+  />
+  <Card 
+    title="Superchain Vision" 
+    description="Join the emerging Superchain network of interoperable OP Stack chains, creating a unified scaling ecosystem."
+  />
+  <Card 
+    title="Governance Participation" 
+    description="OP token holders vote on protocol upgrades, public goods funding, and network parameters in the Optimism Collective."
+  />
+</Cards>
+
+<Callout type="tip">
+  **Enterprise Adoption**: Coinbase's Base chain uses OP Stack technology, validating Optimism's infrastructure for enterprise-scale applications.
+</Callout>
+
+More information can be found on the [official Optimism website](https://console.optimism.io/).

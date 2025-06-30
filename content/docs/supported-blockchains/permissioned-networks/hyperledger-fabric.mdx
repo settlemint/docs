@@ -1,28 +1,39 @@
 ---
-title: "Hyperledger fabric"
+title: "Hyperledger Fabric: Modular Enterprise Blockchain Framework"
+description: "Deploy Hyperledger Fabric for modular enterprise blockchain networks. Compare Fabric's channel architecture, chaincode flexibility, and consortium governance features."
+keywords: ["Hyperledger Fabric", "enterprise blockchain", "modular architecture", "channels", "chaincode", "consortium", "permissioned network"]
 ---
 
-<div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
-  <div style={{ flex: '0 0 15%' }}>
-  ![Fabric](../../../img/blockchain-logos/fabric-logo.png)
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<div className="flex items-start gap-6 mb-8">
+  <div className="flex-shrink-0 w-16">
+    ![Hyperledger Fabric](../../../img/blockchain-logos/fabric-logo.png)
   </div>
-  <div style={{ flex: '1', paddingLeft: '1rem' }}>
-    <ul>
-
-Hyperledger Fabric is an open source enterprise-grade permissioned distributed
-ledger technology (DLT) platform, designed for use in enterprise contexts, that
-delivers some key differentiating capabilities over other popular distributed
-ledger or blockchain platforms.
-
-    </ul>
-
+  <div className="flex-1">
+    <p className="text-lg mb-4">
+      Hyperledger Fabric is the world's most widely adopted enterprise blockchain framework, powering consortium networks for Fortune 500 companies across industries. With its modular architecture and flexible governance model, Fabric enables organizations to build custom blockchain solutions that meet specific business requirements.
+    </p>
   </div>
 </div>
 
-Fabric has a highly modular and configurable architecture, enabling innovation,
-versatility and optimization for a broad range of industry use cases including
-banking, finance, insurance, healthcare, human resources, supply chain and even
-digital music delivery.
+## Which industries rely on Hyperledger Fabric?
+
+<Cards>
+  <Card title="Global Supply Chains" description="Walmart, Maersk, and other giants use Fabric for end-to-end supply chain visibility, product traceability, and compliance verification." />
+  <Card title="Trade Finance" description="Banks and trade organizations building letter of credit systems, trade documentation, and cross-border transaction networks." />
+  <Card title="Healthcare Networks" description="Medical institutions sharing patient records, drug traceability, and clinical trial data with strict privacy and compliance controls." />
+  <Card title="Identity Management" description="Government and enterprise identity solutions requiring fine-grained access controls and privacy-preserving verification." />
+</Cards>
+
+<Callout type="info">
+  **Industry Leadership**: Hyperledger Fabric powers more enterprise blockchain deployments than any other platform, with proven scalability and flexibility for complex business networks.
+</Callout>
+
+Fabric's highly modular and configurable architecture enables innovation, versatility, and optimization for diverse industry use cases including banking, finance, insurance, healthcare, human resources, supply chain, and digital asset management.
 
 Fabric is the first distributed ledger platform to support smart contracts
 authored in general-purpose programming languages such as Java, Go and Node.js,
