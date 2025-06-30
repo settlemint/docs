@@ -6,7 +6,7 @@ keywords: ["asset tokenization UI", "blockchain frontend customization", "Next.j
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Cards, Card } from 'fumadocs-ui/components/card';
-import { Steps } from 'fumadocs-ui/components/steps';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { FileCode2, Palette, Component, Globe, Zap, Lock } from 'lucide-react';
@@ -169,16 +169,16 @@ The modular open-source platform enables fast deployment of asset tokenization s
 ## Component customization guide
 
 <Steps>
-  <Steps.Step>
+  <Step>
     **Identify components to customize**
     
     Navigate to `kit/dapp/src/components/` and explore:
     - **Asset components**: Modify for your asset types (real estate, securities, carbon credits)
     - **Authentication**: Adapt for your KYC/AML providers
     - **Dashboard widgets**: Create industry-specific analytics
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Apply domain-specific modifications**
     
     ```tsx
@@ -202,9 +202,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
       );
     }
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Implement design system**
     
     Create a unified design system:
@@ -227,9 +227,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
       },
     };
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Test across devices**
     
     Ensure responsive design:
@@ -237,7 +237,7 @@ The modular open-source platform enables fast deployment of asset tokenization s
     - Tablet: 768px - 1024px  
     - Desktop: 1024px+
     - 4K displays: 2560px+
-  </Steps.Step>
+  </Step>
 </Steps>
 
 ## Creating custom routes and views
@@ -394,7 +394,7 @@ The modular open-source platform enables fast deployment of asset tokenization s
 ## Enterprise branding implementation
 
 <Steps>
-  <Steps.Step>
+  <Step>
     **Define your design tokens**
     
     ```typescript
@@ -436,9 +436,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
       },
     };
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Configure Tailwind CSS**
     
     ```javascript
@@ -461,9 +461,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
       ],
     };
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Replace brand assets**
     
     Asset specifications:
@@ -483,9 +483,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
     │   └── gradient.webp  # Background gradients
     └── icons/             # Custom icon set
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Implement theme switching**
     
     ```tsx
@@ -508,7 +508,7 @@ The modular open-source platform enables fast deployment of asset tokenization s
       );
     }
     ```
-  </Steps.Step>
+  </Step>
 </Steps>
 
 <Callout type="warning">
@@ -718,7 +718,7 @@ The modular open-source platform enables fast deployment of asset tokenization s
 ## Development workflow and deployment
 
 <Steps>
-  <Steps.Step>
+  <Step>
     **Set up development environment**
     
     ```bash
@@ -737,9 +737,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
     # NEXT_PUBLIC_CHAIN_ID=1
     # API_KEY=your-api-key
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Start development server**
     
     ```bash
@@ -753,9 +753,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
     # Enable debug logging
     DEBUG=atk:* bun dev
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Build for production**
     
     ```bash
@@ -775,9 +775,9 @@ The modular open-source platform enables fast deployment of asset tokenization s
     # Analyze bundle size
     ANALYZE=true bun run build
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Deploy to production**
     
     Deployment options:
@@ -797,7 +797,7 @@ The modular open-source platform enables fast deployment of asset tokenization s
     ```bash
     kubectl apply -f k8s/deployment.yaml
     ```
-  </Steps.Step>
+  </Step>
 </Steps>
 
 <Callout type="success">

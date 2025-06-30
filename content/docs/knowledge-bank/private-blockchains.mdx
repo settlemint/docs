@@ -3,7 +3,10 @@ title: "What are private blockchains? Complete enterprise guide to permissioned 
 description: "Understand private blockchain benefits for business: 1000x faster than public networks, enterprise-grade privacy, and regulatory compliance. Learn when to choose private vs public blockchain."
 ---
 
-import { Callout, Tabs, Tab, Steps, Accordion, AccordionItem } from 'fumadocs-ui/components/callout';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Steps } from 'fumadocs-ui/components/steps';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Card } from 'fumadocs-ui/components/card';
 
 ## What are private blockchains and why do enterprises prefer them?
@@ -79,8 +82,8 @@ Understanding the right blockchain type is critical for project success and ROI:
 
 ## Which private blockchain platforms should enterprises choose?
 
-<Accordion type="single" collapsible>
-  <AccordionItem value="besu" title="Hyperledger Besu - Best for Ethereum-compatible enterprise applications">
+<Accordions>
+  <Accordion title="Hyperledger Besu - Best for Ethereum-compatible enterprise applications">
     **Business value proposition:** Leverage existing Ethereum developer skills while gaining enterprise privacy and control.
 
     **Key enterprise features:**
@@ -98,9 +101,9 @@ Understanding the right blockchain type is critical for project success and ROI:
     - **ConsenSys Quorum merger:** Unified enterprise Ethereum platform
     - **Central bank digital currencies:** Multiple CBDC pilots worldwide
     - **Trade finance consortiums:** Faster letter of credit processing
-  </AccordionItem>
+  </Accordion>
 
-  <AccordionItem value="fabric" title="Hyperledger Fabric - Best for complex B2B consortiums">
+  <Accordion title="Hyperledger Fabric - Best for complex B2B consortiums">
     **Business value proposition:** Maximum flexibility for complex multi-organization workflows with granular privacy controls.
 
     **Key enterprise advantages:**
@@ -119,9 +122,9 @@ Understanding the right blockchain type is critical for project success and ROI:
     - **We.Trade:** European trade finance platform (8 major banks)
     - **TradeLens:** Maersk's shipping platform (150+ ports)
     - **IBM Food Trust:** Walmart's food safety network (2,000+ suppliers)
-  </AccordionItem>
+  </Accordion>
 
-  <AccordionItem value="quorum" title="Quorum - Best for financial services">
+  <Accordion title="Quorum - Best for financial services">
     **Business value proposition:** Built specifically for financial institutions by JPMorgan, now merged with Hyperledger Besu.
 
     **Financial services focus:**
@@ -131,9 +134,9 @@ Understanding the right blockchain type is critical for project success and ROI:
     - **Regulatory compliance:** Designed for banking regulations
 
     **Legacy note:** Quorum has been integrated into Hyperledger Besu as of 2021, combining the best of both platforms.
-  </AccordionItem>
+  </Accordion>
 
-  <AccordionItem value="corda" title="R3 Corda - Best for financial and legal workflows">
+  <Accordion title="R3 Corda - Best for financial and legal workflows">
     **Business value proposition:** Designed specifically for financial institutions with point-to-point privacy.
 
     **Unique advantages:**
@@ -152,8 +155,8 @@ Understanding the right blockchain type is critical for project success and ROI:
     - **Marco Polo:** Trade finance network (30+ banks)
     - **B3i:** Insurance industry blockchain (15+ insurers)
     - **SIX Digital Exchange:** Swiss stock exchange platform
-  </AccordionItem>
-</Accordion>
+  </Accordion>
+</Accordions>
 
 ## Technical deep dive
 

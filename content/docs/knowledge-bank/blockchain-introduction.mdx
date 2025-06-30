@@ -3,7 +3,10 @@ title: "What is blockchain? Complete guide to understanding blockchain technolog
 description: "Master blockchain fundamentals for business leaders. Learn how blockchain works, why enterprises adopt it, and practical applications across finance, supply chain, and healthcare with real ROI metrics."
 ---
 
-import { Callout, Tabs, Tab, Steps, Accordion, AccordionItem } from 'fumadocs-ui/components/callout';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Steps } from 'fumadocs-ui/components/steps';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Card } from 'fumadocs-ui/components/card';
 
 ## What is blockchain and why should business leaders care?
@@ -69,8 +72,8 @@ Blockchain eliminates intermediaries by creating a **shared, tamper-proof digita
 Blockchain's cryptographic security has enabled **95% of Fortune 500 companies** to explore blockchain pilots, with many meeting strict regulatory requirements including GDPR, HIPAA, and SOX compliance.
 </Callout>
 
-<Accordion type="single" collapsible>
-  <AccordionItem value="hashing" title="What is cryptographic hashing and why does it secure blockchain?">
+<Accordions>
+  <Accordion title="What is cryptographic hashing and why does it secure blockchain?">
     **Business impact:** Hashing creates tamper-evident records that automatically detect any unauthorized changes to transaction data.
 
     **How it works:** A cryptographic hash function takes any input (transaction, document, entire block) and produces a unique fixed-size "fingerprint." Even changing one character creates a completely different hash.
@@ -82,9 +85,9 @@ Blockchain's cryptographic security has enabled **95% of Fortune 500 companies**
     - **Compliance:** Regulatory filings maintain provable integrity
 
     **Real example:** JPMorgan's blockchain platform processes $6 billion daily in transactions, with hash-linked blocks ensuring no transaction can be secretly modified.
-  </AccordionItem>
+  </Accordion>
 
-  <AccordionItem value="nonce" title="What is a nonce and how does it prevent double-spending?">
+  <Accordion title="What is a nonce and how does it prevent double-spending?">
     **Business value:** Nonces prevent duplicate transactions and ensure proper ordering, eliminating the double-spending problem that costs traditional payment systems billions annually.
 
     **Technical function:** A nonce ("number only used once") is a unique value that makes each transaction or block hash different. In proof-of-work systems, miners adjust nonces to create valid blocks.
@@ -96,9 +99,9 @@ Blockchain's cryptographic security has enabled **95% of Fortune 500 companies**
     - **Inventory management:** Eliminates duplicate entries
 
     **Cost impact:** Eliminates the estimated **$24 billion** lost annually to payment fraud and double-spending across global payment networks.
-  </AccordionItem>
+  </Accordion>
 
-  <AccordionItem value="keys" title="How do public/private keys secure digital transactions?">
+  <Accordion title="How do public/private keys secure digital transactions?">
     **Executive summary:** Public/private key cryptography replaces usernames and passwords with mathematically-secured digital identities that can't be stolen or forged.
 
     **Business security model:**
@@ -113,8 +116,8 @@ Blockchain's cryptographic security has enabled **95% of Fortune 500 companies**
     - **Regulatory compliance:** Meets digital signature legal requirements
 
     **Real-world impact:** The European Central Bank's digital euro pilot relies on public/private key infrastructure to secure over **€1 trillion** in potential digital transactions.
-  </AccordionItem>
-</Accordion>
+  </Accordion>
+</Accordions>
 
 ## How are blockchain records structured? Understanding block architecture
 

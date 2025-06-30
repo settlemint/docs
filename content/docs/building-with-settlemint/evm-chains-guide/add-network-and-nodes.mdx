@@ -5,7 +5,8 @@ description: "Complete guide to deploying EVM blockchain networks on SettleMint.
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
-import { Steps } from "fumadocs-ui/components/steps";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Card } from "fumadocs-ui/components/card";
 import React from "react";
 
@@ -212,42 +213,32 @@ For EVM Chains, SettleMint allows you to set key genesis file paramters for a cu
 
 ## How do I optimize my blockchain network for gas efficiency?
 
-<Accordion>
-  <Accordion.Item value="gas-optimization">
-    <Accordion.Trigger>Gas Optimization Strategies</Accordion.Trigger>
-    <Accordion.Content>
-      <div className="space-y-4">
-        **Network-Level Optimizations:**
-        - **Block time**: Shorter blocks = faster confirmation, higher overhead
-        - **Gas limit**: Higher limits = more complex transactions per block
-        - **Gas price**: Lower prices = cheaper transactions, slower processing
-        
-        **Development Optimizations:**
-        - Use Layer 2 networks (Polygon, Arbitrum) for 90%+ gas savings
-        - Batch multiple operations in single transactions
-        - Optimize smart contract code for minimal gas consumption
-        - Use events instead of storage for non-critical data
-      </div>
-    </Accordion.Content>
-  </Accordion.Item>
+<Accordions>
+  <Accordion title="Gas Optimization Strategies">
+    **Network-Level Optimizations:**
+    - **Block time**: Shorter blocks = faster confirmation, higher overhead
+    - **Gas limit**: Higher limits = more complex transactions per block
+    - **Gas price**: Lower prices = cheaper transactions, slower processing
+    
+    **Development Optimizations:**
+    - Use Layer 2 networks (Polygon, Arbitrum) for 90%+ gas savings
+    - Batch multiple operations in single transactions
+    - Optimize smart contract code for minimal gas consumption
+    - Use events instead of storage for non-critical data
+  </Accordion>
   
-  <Accordion.Item value="multi-chain">
-    <Accordion.Trigger>Multi-Chain Deployment Strategy</Accordion.Trigger>
-    <Accordion.Content>
-      <div className="space-y-4">
-        **Recommended Deployment Pattern:**
-        1. **Development**: Private Besu network (free, fast testing)
-        2. **Staging**: Public testnet (realistic gas estimation)
-        3. **Production**: Mainnet deployment (real user adoption)
-        
-        **Cross-Chain Considerations:**
-        - Use same smart contract addresses across networks
-        - Implement chain ID validation in frontend
-        - Test bridge functionality between L1/L2 networks
-      </div>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion>
+  <Accordion title="Multi-Chain Deployment Strategy">
+    **Recommended Deployment Pattern:**
+    1. **Development**: Private Besu network (free, fast testing)
+    2. **Staging**: Public testnet (realistic gas estimation)
+    3. **Production**: Mainnet deployment (real user adoption)
+    
+    **Cross-Chain Considerations:**
+    - Use same smart contract addresses across networks
+    - Implement chain ID validation in frontend
+    - Test bridge functionality between L1/L2 networks
+  </Accordion>
+</Accordions>
 
 ## How do I manage my blockchain network after deployment?
 

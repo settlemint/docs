@@ -4,7 +4,11 @@ description: "Learn how to implement enterprise-grade user management, KYC verif
 keywords: ["asset tokenization user management", "blockchain KYC verification", "role-based access control", "tokenization compliance", "user lifecycle management", "blockchain identity management", "digital asset permissions", "tokenization platform users", "KYC AML blockchain", "enterprise user governance"]
 ---
 
-import { Callout, Cards, Steps, Tabs, Tab, Accordion, AccordionItem } from 'fumadocs-ui/components/callout';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Cards } from 'fumadocs-ui/components/card';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Users, Shield, Key, Activity, CheckCircle, AlertCircle, Database, TrendingUp } from 'lucide-react';
 
 ## Who needs blockchain user management?
@@ -26,8 +30,8 @@ The user profile section within the asset tokenization kit serves as a centraliz
 
 ## How does automated user onboarding work?
 
-<Accordion>
-  <AccordionItem title="What happens during user registration?">
+<Accordions>
+  <Accordion title="What happens during user registration?">
     The automated onboarding process includes:
     1. **Email verification** (2FA optional)
     2. **Automatic wallet generation** using HD wallet derivation
@@ -37,18 +41,18 @@ The user profile section within the asset tokenization kit serves as a centraliz
     6. **Compliance screening** against global watchlists
     
     Average onboarding time: **3-5 minutes** for basic users, **24-48 hours** for institutional accounts.
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="How are blockchain wallets secured?">
+  <Accordion title="How are blockchain wallets secured?">
     Wallet security architecture:
     - **Key Management**: Hardware Security Module (HSM) integration
     - **Multi-sig Support**: 2-of-3 default, configurable up to 15-of-20
     - **Recovery Options**: Social recovery, time-locked backups
     - **Access Controls**: Biometric authentication, session management
     - **Audit Trail**: Every wallet interaction logged on-chain
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="What KYC providers are integrated?">
+  <Accordion title="What KYC providers are integrated?">
     Pre-integrated KYC/AML providers:
     
     | Provider | Features | Processing Time |
@@ -58,28 +62,28 @@ The user profile section within the asset tokenization kit serves as a centraliz
     | Chainalysis | Blockchain analytics, sanctions screening | Real-time |
     | ComplyAdvantage | PEP screening, adverse media checks | 30 seconds |
     | Refinitiv | Global watchlist screening | Real-time |
-  </AccordionItem>
-</Accordion>
+  </Accordion>
+</Accordions>
 
 ## User profile architecture
 
 <Cards>
-  <Cards.Card
+  <Card
     icon={<Users />}
     title="Identity Management"
     description="Unified profiles linking off-chain identity with on-chain addresses"
   />
-  <Cards.Card
+  <Card
     icon={<Key />}
     title="Access Control"
     description="Granular permissions with 50+ predefined role templates"
   />
-  <Cards.Card
+  <Card
     icon={<Activity />}
     title="Activity Tracking"
     description="Real-time monitoring of all user actions and transactions"
   />
-  <Cards.Card
+  <Card
     icon={<Database />}
     title="Data Analytics"
     description="Behavioral analysis and risk scoring algorithms"
@@ -165,7 +169,7 @@ The profile interface is divided into multiple functional tabs such as Details, 
 ## Role management and permissions
 
 <Steps>
-  <Steps.Step>
+  <Step>
     **Understanding role hierarchy**
     
     The platform implements a hierarchical role system:
@@ -180,9 +184,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
       F --> G[Investor]
       G --> H[Viewer]
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Configuring role permissions**
     
     Each role has granular permissions:
@@ -204,9 +208,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
       ]
     };
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Implementing role changes**
     
     Role updates trigger automated workflows:
@@ -215,9 +219,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
     3. Notification to user and compliance team
     4. Audit log entry with justification
     5. Access token refresh
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Monitoring role usage**
     
     Track permission utilization:
@@ -225,13 +229,13 @@ The profile interface is divided into multiple functional tabs such as Details, 
     - Role elevation requests
     - Suspicious permission patterns
     - Compliance violations
-  </Steps.Step>
+  </Step>
 </Steps>
 
 ## KYC verification workflow
 
-<Accordion>
-  <AccordionItem title="What documents are required for KYC?">
+<Accordions>
+  <Accordion title="What documents are required for KYC?">
     Document requirements by user type:
     
     **Individual Investors**
@@ -251,9 +255,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
     - Income verification ($200k+ individual/$300k+ joint)
     - Net worth statement ($1M+ excluding residence)
     - CPA/attorney verification letter
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="How long does KYC verification take?">
+  <Accordion title="How long does KYC verification take?">
     Processing times by verification level:
     
     | Level | Automated Check | Manual Review | Total Time |
@@ -264,9 +268,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
     | Accredited | 15 minutes | 4-8 hours | 4-8 hours |
     
     Express verification available for pre-verified users from partner platforms.
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="What happens if KYC is rejected?">
+  <Accordion title="What happens if KYC is rejected?">
     Rejection handling process:
     
     1. **Automated notification** with specific rejection reasons
@@ -281,8 +285,8 @@ The profile interface is divided into multiple functional tabs such as Details, 
     - Expired documents (18%)
     - Watchlist hits requiring manual review (12%)
     - Incomplete information (9%)
-  </AccordionItem>
-</Accordion>
+  </Accordion>
+</Accordions>
 
 ## User holdings management
 
@@ -354,8 +358,8 @@ The profile interface is divided into multiple functional tabs such as Details, 
 
 ![Users events](../../../img/application-kits/user-event-logs.png)
 
-<Accordion>
-  <AccordionItem title="What events are tracked?">
+<Accordions>
+  <Accordion title="What events are tracked?">
     Comprehensive event logging includes:
     
     **Authentication Events**
@@ -381,9 +385,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
     - Report generation
     - Data exports
     - Configuration changes
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="How can I search and filter events?">
+  <Accordion title="How can I search and filter events?">
     Advanced filtering capabilities:
     
     ```typescript
@@ -405,9 +409,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
       severity: 'WARNING'
     });
     ```
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="How long are events retained?">
+  <Accordion title="How long are events retained?">
     Event retention policies:
     
     | Event Category | Retention Period | Storage Location |
@@ -419,32 +423,32 @@ The profile interface is divided into multiple functional tabs such as Details, 
     | Temporary Events | 90 days | Cache layer |
     
     All events are cryptographically signed and tamper-proof.
-  </AccordionItem>
-</Accordion>
+  </Accordion>
+</Accordions>
 
 ## Integration with external systems
 
 <Cards>
-  <Cards.Card
+  <Card
     title="CRM Integration"
     description="Sync with Salesforce, HubSpot, or custom CRM systems"
   />
-  <Cards.Card
+  <Card
     title="Compliance APIs"
     description="Real-time screening with Chainalysis, Elliptic, ComplyAdvantage"
   />
-  <Cards.Card
+  <Card
     title="Identity Providers"
     description="SSO with Auth0, Okta, Azure AD, or custom SAML"
   />
-  <Cards.Card
+  <Card
     title="Analytics Platforms"
     description="Export to Tableau, PowerBI, or custom data warehouses"
   />
 </Cards>
 
 <Steps>
-  <Steps.Step>
+  <Step>
     **Configure webhook endpoints**
     
     ```typescript
@@ -462,9 +466,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
       }
     };
     ```
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Map data fields**
     
     Create field mappings between systems:
@@ -472,9 +476,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
     - Custom attribute sync
     - Status translations
     - Timezone conversions
-  </Steps.Step>
+  </Step>
   
-  <Steps.Step>
+  <Step>
     **Test integration**
     
     Validation checklist:
@@ -482,7 +486,7 @@ The profile interface is divided into multiple functional tabs such as Details, 
     - ✓ Data integrity verification
     - ✓ Error handling scenarios
     - ✓ Performance benchmarks
-  </Steps.Step>
+  </Step>
 </Steps>
 
 ## Best practices for user management
@@ -556,8 +560,8 @@ The profile interface is divided into multiple functional tabs such as Details, 
 
 ## Troubleshooting common issues
 
-<Accordion>
-  <AccordionItem title="User cannot complete KYC verification">
+<Accordions>
+  <Accordion title="User cannot complete KYC verification">
     Diagnostic steps:
     1. Check document quality (300 DPI minimum)
     2. Verify address format matches ID
@@ -570,9 +574,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
     - Use desktop instead of mobile
     - Update to latest browser version
     - Disable ad blockers
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="Wallet generation fails">
+  <Accordion title="Wallet generation fails">
     Troubleshooting checklist:
     - ✓ Check HD wallet derivation path
     - ✓ Verify entropy source availability
@@ -585,9 +589,9 @@ The profile interface is divided into multiple functional tabs such as Details, 
     - `E002`: Storage encryption failed
     - `E003`: Derivation path conflict
     - `E004`: RPC timeout
-  </AccordionItem>
+  </Accordion>
   
-  <AccordionItem title="Performance degradation with large user base">
+  <Accordion title="Performance degradation with large user base">
     Optimization strategies:
     
     **Database**
@@ -604,28 +608,28 @@ The profile interface is divided into multiple functional tabs such as Details, 
     - Horizontal scaling
     - Load balancer tuning
     - Geographic distribution
-  </AccordionItem>
-</Accordion>
+  </Accordion>
+</Accordions>
 
 ## Enterprise deployment considerations
 
 <Cards>
-  <Cards.Card
+  <Card
     icon={<TrendingUp />}
     title="Scalability"
     description="Supports 1M+ users with proper infrastructure"
   />
-  <Cards.Card
+  <Card
     icon={<Shield />}
     title="Security"
     description="SOC 2 Type II compliant architecture"
   />
-  <Cards.Card
+  <Card
     icon={<Database />}
     title="Data Privacy"
     description="GDPR, CCPA, and LGPD compliant"
   />
-  <Cards.Card
+  <Card
     icon={<Activity />}
     title="Monitoring"
     description="Real-time dashboards and alerting"

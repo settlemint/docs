@@ -3,7 +3,10 @@ title: "What are public blockchains? Complete business guide to permissionless n
 description: "Understand public blockchain benefits for business: global reach, transparency, and $2 trillion market access. Learn when to choose public blockchain vs private for your applications."
 ---
 
-import { Callout, Tabs, Tab, Steps, Accordion, AccordionItem } from 'fumadocs-ui/components/callout';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Steps } from 'fumadocs-ui/components/steps';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Card } from 'fumadocs-ui/components/card';
 
 ## What are public blockchains and when should businesses use them?
@@ -104,8 +107,8 @@ Public blockchains offer unique value propositions that private networks cannot 
 
 The choice of public blockchain significantly impacts your project's success, costs, and user experience:
 
-<Accordion type="single" collapsible>
-  <AccordionItem value="ethereum" title="Ethereum - When is it worth the premium for maximum security and adoption?">
+<Accordions>
+  <Accordion title="Ethereum - When is it worth the premium for maximum security and adoption?">
     **Business value proposition:** The most secure and decentralized platform with the largest ecosystem, but comes with higher costs.
 
     **Key advantages:**
@@ -129,9 +132,9 @@ The choice of public blockchain significantly impacts your project's success, co
     - **Daily transactions:** 1.2M+ (despite high fees)
     - **Developer activity:** 60% of blockchain developers
     - **Total value locked:** $25B+ across DeFi protocols
-  </AccordionItem>
+  </Accordion>
 
-  <AccordionItem value="layer2" title="Layer 2 Solutions - How to get Ethereum benefits at 100x lower cost?">
+  <Accordion title="Layer 2 Solutions - How to get Ethereum benefits at 100x lower cost?">
     **Business rationale:** Inherit Ethereum's security while achieving affordable transaction costs and fast confirmation times.
 
     **Top Layer 2 options:**
@@ -159,9 +162,9 @@ The choice of public blockchain significantly impacts your project's success, co
     - **Maximum compatibility needed:** Choose Arbitrum
     - **Gaming or consumer apps:** Polygon offers best user experience
     - **DeFi applications:** Arbitrum provides deepest liquidity integration
-  </AccordionItem>
+  </Accordion>
 
-  <AccordionItem value="alternatives" title="Alternative Layer 1s - When do specialized blockchains make sense?">
+  <Accordion title="Alternative Layer 1s - When do specialized blockchains make sense?">
     **Solana:** Best for high-frequency trading and gaming
     - **Performance:** 65,000 transactions per second
     - **Cost:** $0.00025 per transaction
@@ -185,8 +188,8 @@ The choice of public blockchain significantly impacts your project's success, co
     - **Enterprise compliance requirements?** Evaluate Avalanche
     - **Cost is primary concern?** BNB Chain might work
     - **Maximum security and decentralization?** Stick with Ethereum/L2s
-  </AccordionItem>
-</Accordion>
+  </Accordion>
+</Accordions>
 
 ## Public blockchain architecture deep dive: bitcoin, ethereum, and polygon
 
