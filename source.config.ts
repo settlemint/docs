@@ -16,6 +16,7 @@ export const docs = defineDocs({
 });
 
 export default defineConfig({
+  lastModifiedTime: "git",
   mdxOptions: {
     remarkPlugins: [remarkInstall, remarkAdmonition, remarkMermaid],
     rehypeCodeOptions: {
