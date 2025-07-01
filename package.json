@@ -51,7 +51,7 @@
     "@fumadocs/cli": "0.2.1",
     "@tailwindcss/postcss": "4.1.11",
     "@types/mdx": "2.0.13",
-    "@types/node": "24.0.7",
+    "@types/node": "24.0.8",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
