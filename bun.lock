@@ -34,7 +34,7 @@
         "react-dom": "19.1.0",
         "tailwind-merge": "3.3.1",
         "tailwindcss-animate": "1.0.7",
-        "ultracite": "5.0.46",
+        "ultracite": "5.0.47",
       },
       "devDependencies": {
         "@eslint/eslintrc": "3.3.1",
@@ -2085,7 +2085,7 @@
 
     "uint8arrays": ["uint8arrays@5.1.0", "", { "dependencies": { "multiformats": "^13.0.0" } }, "sha512-vA6nFepEmlSKkMBnLBaUMVvAC4G3CTmO58C12y4sq6WPDOR7mOFYOi7GlrQ4djeSbP6JG9Pv9tJDM97PedRSww=="],
 
-    "ultracite": ["ultracite@5.0.46", "", { "dependencies": { "@clack/prompts": "^0.11.0", "commander": "^14.0.0", "deepmerge": "^4.3.1", "jsonc-parser": "^3.3.1", "vitest": "^3.2.4" }, "bin": { "ultracite": "dist/index.js" } }, "sha512-ZO8+8kaF8BvXs7ga4I3ZtHIpQ2nwZfukltPHwx7+lyv3aDBzlgY91V7ZHdHjkEOqTDzW67iBwebe9lvsS8eOjw=="],
+    "ultracite": ["ultracite@5.0.47", "", { "dependencies": { "@clack/prompts": "^0.11.0", "commander": "^14.0.0", "deepmerge": "^4.3.1", "jsonc-parser": "^3.3.1", "vitest": "^3.2.4" }, "bin": { "ultracite": "dist/index.js" } }, "sha512-herZIwthOKodt+npUA+QqCzP3d2xMKGiUptefq2IeWHgc1cCQ/+/SvK7Ou0E46Z5dgOTEIjSbVY8x92E+nLaOQ=="],
 
     "unbox-primitive": ["unbox-primitive@1.1.0", "", { "dependencies": { "call-bound": "^1.0.3", "has-bigints": "^1.0.2", "has-symbols": "^1.1.0", "which-boxed-primitive": "^1.1.1" } }, "sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw=="],
 
