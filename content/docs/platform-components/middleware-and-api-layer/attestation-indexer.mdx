@@ -334,7 +334,7 @@ const config = {
 // Connect to the blockchain
 const provider = new ethers.JsonRpcProvider(config.rpcUrl);
 const signer = new ethers.Wallet(config.privateKey, provider);
-const EAS = new EAS(config.easAddress);
+const eas = new EAS(config.easAddress);
 eas.connect(signer);
 
 // Create an encoder that matches our schema structure
@@ -365,11 +365,12 @@ async function createAttestation() {
       },
     });
 
-    // Wait for confirmation and get the result
-    const receipt = await tx.wait();
+    // Wait for confirmation and get the full transaction receipt
+    const newAttestationUID = await tx.wait();
+    
     console.log(
       "✅ Attestation created successfully! UID:",
-      receipt.attestationUID
+      newAttestationUID
     );
   } catch (error) {
     console.error("❌ Error creating attestation:", error.message);
@@ -414,7 +415,7 @@ const config = {
 async function verifyAttestation(attestationUID) {
   // Setup our blockchain connection
   const provider = new ethers.JsonRpcProvider(config.rpcUrl);
-  const EAS = new EAS(config.easAddress);
+  const eas = new EAS(config.easAddress);
   eas.connect(provider);
 
   console.log("🔍 Verifying attestation:", attestationUID);
