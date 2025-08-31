@@ -20,7 +20,7 @@
     "@radix-ui/react-slot": "1.2.3",
     "@settlemint/sdk-blockscout": "2.6.1",
     "@settlemint/sdk-cli": "2.6.1",
-    "@settlemint/sdk-eas": "2.6.0",
+    "@settlemint/sdk-eas": "2.6.1",
     "@settlemint/sdk-hasura": "2.6.1",
     "@settlemint/sdk-ipfs": "2.6.1",
     "@settlemint/sdk-minio": "2.6.1",
