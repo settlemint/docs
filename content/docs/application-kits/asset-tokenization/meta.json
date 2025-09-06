@@ -4,6 +4,7 @@
   "pages": [
     "introduction",
     "deployment",
+    "smart-protocol",
     "signup-and-login",
     "user-management",
     "asset-designer",
