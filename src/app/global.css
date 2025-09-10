@@ -370,6 +370,7 @@ th {
 
 #nd-page {
   background-color: var(--background);
+  max-width: 100%;
   @apply rounded-t-lg;
 }
 
