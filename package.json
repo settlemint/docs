@@ -16,7 +16,7 @@
     "generate-sdk-docs": "bun scripts/generate-sdk-docs.ts"
   },
   "dependencies": {
-    "@next/third-parties": "15.5.2",
+    "@next/third-parties": "15.5.3",
     "@radix-ui/react-slot": "1.2.3",
     "@settlemint/sdk-blockscout": "2.6.2",
     "@settlemint/sdk-cli": "2.6.2",
@@ -38,7 +38,7 @@
     "fumadocs-ui": "15.7.10",
     "gray-matter": "4.0.3",
     "lucide-react": "0.543.0",
-    "next": "15.5.2",
+    "next": "15.5.3",
     "posthog-js": "1.262.0",
     "posthog-node": "5.8.2",
     "prettier": "3.6.2",
@@ -60,7 +60,7 @@
     "tailwindcss": "4.1.13",
     "typescript": "5.9.2",
     "eslint": "9.35.0",
-    "eslint-config-next": "15.5.2",
+    "eslint-config-next": "15.5.3",
     "@eslint/eslintrc": "3.3.1",
     "@eslint/js": "9.35.0"
   }
