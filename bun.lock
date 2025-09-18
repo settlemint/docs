@@ -34,7 +34,7 @@
         "react-dom": "19.1.1",
         "tailwind-merge": "3.3.1",
         "tailwindcss-animate": "1.0.7",
-        "ultracite": "5.3.8",
+        "ultracite": "5.3.9",
       },
       "devDependencies": {
         "@eslint/eslintrc": "3.3.1",
@@ -2117,7 +2117,7 @@
 
     "uint8arrays": ["uint8arrays@5.1.0", "", { "dependencies": { "multiformats": "^13.0.0" } }, "sha512-vA6nFepEmlSKkMBnLBaUMVvAC4G3CTmO58C12y4sq6WPDOR7mOFYOi7GlrQ4djeSbP6JG9Pv9tJDM97PedRSww=="],
 
-    "ultracite": ["ultracite@5.3.8", "", { "dependencies": { "@clack/prompts": "^0.11.0", "deepmerge": "^4.3.1", "jsonc-parser": "^3.3.1", "nypm": "^0.6.1", "trpc-cli": "^0.10.2", "vitest": "^3.2.4", "zod": "^4.1.5" }, "bin": { "ultracite": "dist/index.js" } }, "sha512-WAziUkB6n/o4Pp98DpF2rdMz7S89mybl9klqTUWzytmr7uluPejRYh0Sw2gAAJ9vlpOJ4YBlvqMUWEmOqw20/Q=="],
+    "ultracite": ["ultracite@5.3.9", "", { "dependencies": { "@clack/prompts": "^0.11.0", "deepmerge": "^4.3.1", "jsonc-parser": "^3.3.1", "nypm": "^0.6.1", "trpc-cli": "^0.10.2", "vitest": "^3.2.4", "zod": "^4.1.5" }, "bin": { "ultracite": "dist/index.js" } }, "sha512-85rzcGk+KKF3jhBGLYQj57JYAQ50Mun6PAifN4B6cCmCI8GNjgvUbp0f4DlpOfl92mq8CzouCzzcVxwcNNmTmw=="],
 
     "unbox-primitive": ["unbox-primitive@1.1.0", "", { "dependencies": { "call-bound": "^1.0.3", "has-bigints": "^1.0.2", "has-symbols": "^1.1.0", "which-boxed-primitive": "^1.1.1" } }, "sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw=="],
 
