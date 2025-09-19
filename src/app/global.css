@@ -390,6 +390,23 @@ th {
 
 #nd-toc {
   background-color: var(--sidebar-background);
+  position: fixed !important;
+  right: 0 !important;
+  top: 4rem !important;
+  height: calc(100vh - 4rem) !important;
+  z-index: 50 !important;
+  overflow-y: auto !important;
+  width: auto !important;
+  min-width: 250px !important;
+  max-width: 300px !important;
+  padding-top: 2rem !important;
+}
+
+/* Hide TOC on smaller screens to prevent overlap */
+@media (max-width: 1024px) {
+  #nd-toc {
+    display: none !important;
+  }
 }
 
 #nd-toc > div {
