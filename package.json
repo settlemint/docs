@@ -39,7 +39,7 @@
     "gray-matter": "4.0.3",
     "lucide-react": "0.544.0",
     "next": "15.5.3",
-    "posthog-js": "1.266.0",
+    "posthog-js": "1.266.2",
     "posthog-node": "5.8.5",
     "prettier": "3.6.2",
     "react": "19.1.1",
