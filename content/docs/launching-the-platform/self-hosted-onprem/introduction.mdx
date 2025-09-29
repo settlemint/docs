@@ -146,6 +146,31 @@ We recommend:
 
 </Callout>
 
+## Which cloud services map to the on-premise prerequisites?
+
+Even in self-hosted environments, many teams prototype or run hybrid deployments on public cloud infrastructure. The table
+below maps each prerequisite capability to the closest managed service names from the major providers and includes a suggested
+production-ready baseline size.
+
+| Capability | AWS (Recommended Size) | Microsoft Azure (Recommended Size) | Google Cloud (Recommended Size) |
+| --- | --- | --- | --- |
+| Kubernetes control plane & worker nodes | Amazon Elastic Kubernetes Service (Amazon EKS) with three **m5.2xlarge** worker nodes per environment | Azure Kubernetes Service (AKS) with three **Standard_D8ds_v5** node pool instances | Google Kubernetes Engine (GKE) with three **e2-standard-8** nodes in the default pool |
+| Managed PostgreSQL database | Amazon RDS for PostgreSQL on **db.m5.large** with Multi-AZ enabled | Azure Database for PostgreSQL – Flexible Server on **Standard_D4ds_v5** with zone redundant high availability | Cloud SQL for PostgreSQL on a **db-custom-4-16384** instance (4 vCPU, 16GB RAM) with high availability |
+| Managed Redis cache | Amazon ElastiCache for Redis **cache.r6g.large** (primary + replica) | Azure Cache for Redis **Premium P1** (6GB) with zone redundancy | Memorystore for Redis **M2 tier** (5GB) in high-availability mode |
+| Object storage for backups and artifacts | Amazon Simple Storage Service (S3) **Standard** tier with at least 1TB initial allocation | Azure Blob Storage **Hot** tier with geo-redundant storage (RA-GRS) and 1TB initial allocation | Google Cloud Storage **Standard** dual-region bucket with 1TB initial allocation |
+| Secrets management | AWS Secrets Manager (Standard tier, sized for ~5K secrets with automatic rotation) | Azure Key Vault (Standard tier with soft-delete and purge protection) | Google Secret Manager (Standard tier with automatic replication) |
+| Logging and metrics | Amazon Managed Service for Prometheus + Amazon Managed Grafana, sized for 10K active series and 100GB/day logs in CloudWatch | Azure Monitor with Log Analytics workspace (100GB/day commitment tier) plus Azure Managed Grafana | Cloud Monitoring + Cloud Logging with a 100GB/day log bucket and Managed Service for Prometheus |
+| External load balancing & TLS termination | AWS Application Load Balancer (ALB) with two Availability Zones and AWS Certificate Manager for TLS | Azure Application Gateway v2 (Medium SKU, autoscaling) with Azure Key Vault-issued certificates | Google Cloud External Application Load Balancer with Google Certificate Manager-managed certificates |
+| DNS management | Amazon Route 53 public hosted zone (multi-region, latency-based routing optional) | Azure DNS zone with redundant name servers across regions | Cloud DNS managed zone with regional redundancy |
+
+<Callout type="info">
+  **Sizing guidance**
+
+  Start with the recommended sizes above for production pilots. Scale each service based on transaction throughput, smart
+  contract execution volume, and retention requirements for logs and backups. Apply the same multipliers used in the
+  infrastructure sizing section when planning for staging, disaster recovery, or regional expansion.
+</Callout>
+
 ## What do I need before starting enterprise blockchain deployment?
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
