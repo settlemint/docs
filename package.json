@@ -58,7 +58,7 @@
     "babel-plugin-react-compiler": "19.1.0-rc.3",
     "postcss": "8.5.6",
     "tailwindcss": "4.1.13",
-    "typescript": "5.9.2",
+    "typescript": "5.9.3",
     "eslint": "9.36.0",
     "eslint-config-next": "15.5.4",
     "@eslint/eslintrc": "3.3.1",
