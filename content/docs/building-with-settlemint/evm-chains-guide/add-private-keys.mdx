@@ -295,6 +295,63 @@ Remember that for networks that require gas to perform a transaction, the user
 wallet should contain enough funds to cover the gas price. You can fund it using
 the address displayed in the list.
 
+### Create user wallet via Smart Contract Portal (REST)
+
+#### Prerequisites
+
+- Ensure your HD User Wallets are deployed. See [Create and setup user wallets](#create-and-setup-user-wallets).
+- Ensure the Smart Contract Portal is deployed. See [API Portal Setup](/building-with-settlemint/evm-chains-guide/setup-api-portal).
+
+#### Steps
+
+1. Open your Smart Contract Portal middleware and go to the `REST` tab.
+2. In the left menu, expand `Wallet` and select `POST /wallets`.
+3. Fill the request body:
+   - `keyVaultId`: Unique name/ID of your HD User Wallets instance (for example, `user-wallets-17938`).
+   - `walletInfo.name`: Label for the generated user wallet (for example, `user A`).
+   - `walletInfo.walletIndex`: Index of the wallet to derive (0-based integer).
+
+![Portal REST - POST /wallets request](../../../img/building-with-settlemint/portal-wallets-post.png)
+
+```json
+{
+  "keyVaultId": "user-wallets-17938",
+  "walletInfo": {
+    "name": "user A",
+    "walletIndex": 0
+  }
+}
+```
+
+![HD wallet unique name (keyVaultId)](../../../img/building-with-settlemint/hd-wallet-unique-name.png)
+
+4. Send the request. On success, the response contains the new wallet `address` and its `derivationPath`.
+5. Verify the wallet: go to `Private keys` → open your HD wallet → `User Wallets` tab; the new wallet appears in the list.
+
+![User wallets list showing new wallet](../../../img/building-with-settlemint/user-wallets-list.png)
+
+<Callout type="tip">
+  Use unique names and keep track of each `walletIndex` you allocate to avoid duplicates.
+</Callout>
+
+#### HTTP request example (cURL)
+
+To call the endpoint directly, obtain the base URL from the portal's **Connect** tab and use your access token.
+
+```bash
+curl https://<your-portal-base>/wallets \
+  --request POST \
+  --header 'Content-Type: application/json' \
+  --header 'x-auth-token: <ACCESS_TOKEN>' \
+  --data '{
+    "keyVaultId": "user-wallets-03a52",
+    "walletInfo": {
+      "name": "wallet name for user A",
+      "walletIndex": 0
+    }
+  }'
+```
+
 <br /><br />
 <div style={{
   backgroundColor: "#D1E5E8",
