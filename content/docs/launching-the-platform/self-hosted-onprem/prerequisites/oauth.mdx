@@ -136,9 +136,17 @@ auth:
 ## Validation
 
 <Steps>
-  ### Verify OAuth client is properly configured ### Confirm redirect URIs match
-  your domain ### Check JWT signing key is generated and saved ### Validate
-  required scopes are enabled
+  ### Verify OAuth client configuration
+  Ensure the client ID and secret are active and linked to the correct project or tenant.
+
+  ### Confirm redirect URIs match your domain
+  Compare the redirect URIs configured in the provider with the platform callback URLs to avoid mismatches.
+
+  ### Check JWT signing key storage
+  Verify that the generated signing key is stored securely and available to the platform services.
+
+  ### Validate required scopes are enabled
+  Confirm the provider grants the scopes (for example, `openid`, `profile`, `email`) expected by the platform.
 </Steps>
 
 ## Troubleshooting
