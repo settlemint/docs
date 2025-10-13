@@ -114,7 +114,7 @@ Enterprise customers receive dedicated registry credentials with access to enter
 View all available configuration options for enterprise deployment:
 
 ```bash
-helm show values oci://registry.settlemint.com/settlemint-platform/SettleMint --version 7.0.0
+helm show values oci://harbor.settlemint.com/settlemint/settlemint --version v7.31.11
 ```
 
 <Callout type="warning">
@@ -537,9 +537,9 @@ support:
 Install the platform:
 
 ```bash
-helm upgrade --install SettleMint oci://registry.settlemint.com/settlemint-platform/SettleMint \
+helm upgrade --install SettleMint oci://harbor.settlemint.com/settlemint/settlemint \
   --namespace SettleMint \
-  --version 7.0.0 \
+  --version v7.31.11 \
   --create-namespace \
   --values values.yaml
 ```
@@ -779,7 +779,7 @@ If you encounter issues during installation:
 1. Debug the installation:
 
 ```bash
-helm upgrade --install --debug --dry-run SettleMint oci://registry.settlemint.com/settlemint-platform/SettleMint \
+helm upgrade --install --debug --dry-run SettleMint oci://harbor.settlemint.com/settlemint/settlemint \
   --namespace SettleMint \
   --values values.yaml
 ```
