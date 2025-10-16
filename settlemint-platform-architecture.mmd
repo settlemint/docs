@@ -1,0 +1,110 @@
+flowchart LR
+    subgraph external["External Access"]
+       direction TB
+       ExtUser["External Users"]
+       ThirdParty["Third-Party APIs"]
+       Firewall["Firewall"]
+       ClientIngress["Client Ingress Controller<br><b>[REQUIRED]</b><br>LB Provisioning"]
+    end
+
+    subgraph platform["Platform Core"]
+       direction TB
+       Ingress["SettleMint Ingress NGINX<br><b>[REQUIRED]</b><br>Traffic Routing"]
+       App["Application Frontend<br><b>[REQUIRED]</b>"]
+       API["API Service<br><b>[REQUIRED]</b>"]
+       Job["Job Workers<br><b>[REQUIRED]</b>"]
+       DeployWorker["Deploy Worker<br><b>[REQUIRED]</b>"]
+       Singleton["Singleton<br><b>[REQUIRED]</b>"]
+       Docs["Documentation<br>[OPTIONAL]"]
+    end
+
+    subgraph deployments["Deployed Services"]
+       direction TB
+       BesuNode["Besu Nodes"]
+       Subgraphs["Subgraphs"]
+    end
+
+    subgraph supporting["Supporting Services Layer"]
+       direction TB
+       PostgreSQL["PostgreSQL<br><b>[REQUIRED]</b>"]
+       Redis["Redis<br><b>[REQUIRED]</b>"]
+       Vault["Secret Manager<br><b>[REQUIRED]</b>"]
+       Storage["S3-Compatible Storage<br><b>[REQUIRED]</b>"]
+       OAuth["OAuth Provider<br><b>[REQUIRED]</b>"]
+       Observability["Observability<br><b>[REQUIRED]</b>"]
+    end
+
+    subgraph legend["Legend"]
+       direction TB
+       L1["Solid = Internal"]
+       L2["Dashed = Optional"]
+       L3["Thick = Deployment"]
+       L4["<b>[REQUIRED]</b>"]
+       L5["[OPTIONAL]"]
+    end
+
+    ExtUser -- HTTPS --> Firewall
+    ThirdParty -- HTTPS --> Firewall
+    Firewall --> ClientIngress
+    ClientIngress ==> Ingress
+    Ingress == Traffic ==> App
+    Ingress == Traffic ==> API
+    Ingress -.-> BesuNode
+    Ingress -.-> Subgraphs
+    App --> API
+    App --> OAuth
+    API --> Job
+    API --> PostgreSQL
+    API --> Redis
+    API --> Vault
+    API --> Storage
+    API --> OAuth
+    API --> Observability
+    API <--> DeployWorker
+    API --> Singleton
+    DeployWorker --> Storage
+    DeployWorker --> Vault
+    DeployWorker --> Observability
+    Singleton --> Storage
+    Singleton --> Observability
+    Job --> PostgreSQL
+    Job --> Redis
+    Job --> Observability
+    DeployWorker ==> BesuNode
+    DeployWorker ==> Subgraphs
+    BesuNode --> Observability
+    Subgraphs --> Observability
+
+    ExtUser:::externalStyle
+    ThirdParty:::externalStyle
+    Firewall:::externalStyle
+    ClientIngress:::externalStyle
+    Ingress:::platformStyle
+    App:::platformStyle
+    API:::platformStyle
+    Job:::platformStyle
+    DeployWorker:::platformStyle
+    Singleton:::platformStyle
+    Docs:::optionalStyle
+    PostgreSQL:::supportingStyle
+    Redis:::supportingStyle
+    Vault:::supportingStyle
+    Storage:::supportingStyle
+    OAuth:::supportingStyle
+    Observability:::supportingStyle
+    BesuNode:::deploymentStyle
+    Subgraphs:::deploymentStyle
+    L1:::legendStyle
+    L2:::legendStyle
+    L3:::legendStyle
+    L4:::legendStyle
+    L5:::legendStyle
+
+    classDef externalStyle fill:#e1f5ff,stroke:#0077b6,stroke-width:2px,color:#000
+    classDef platformStyle fill:#d4f1d4,stroke:#2d6a4f,stroke-width:2px,color:#000
+    classDef supportingStyle fill:#fff3cd,stroke:#f4a261,stroke-width:2px,color:#000
+    classDef deploymentStyle fill:#e8d7ff,stroke:#7209b7,stroke-width:2px,color:#000
+    classDef requiredStyle fill:#ffe5e5,stroke:#d62828,stroke-width:3px,color:#000
+    classDef optionalStyle fill:#e5e5e5,stroke:#6c757d,stroke-width:2px,color:#000,stroke-dasharray: 5 5
+    classDef legendStyle fill:#f8f9fa,stroke:#6c757d,stroke-width:1px,color:#000
+    classDef notesStyle fill:#fff9e6,stroke:#997a00,stroke-width:1px,color:#000
