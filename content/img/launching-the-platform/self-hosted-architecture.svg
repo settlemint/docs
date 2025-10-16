@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">SettleMint Self-Hosted Platform Architecture</title>
+  <desc id="desc">Diagram showing user access, platform services, blockchain runtime and integrations deployed inside an enterprise-controlled network.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fbff" />
+      <stop offset="100%" stop-color="#eef4ff" />
+    </linearGradient>
+    <style type="text/css"><![CDATA[
+      text { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; fill: #1f2a37; }
+      .title { font-size: 22px; font-weight: 600; }
+      .subtitle { font-size: 16px; fill: #4b5563; }
+      .caption { font-size: 14px; fill: #4b5563; }
+      .box { fill: #ffffff; stroke: #d1d5db; stroke-width: 1.5; rx: 12; }
+      .accent { fill: #1d4ed8; font-size: 16px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+      .label { font-size: 15px; font-weight: 600; }
+      .bullet { font-size: 14px; fill: #4b5563; }
+      .arrow { stroke: #1d4ed8; stroke-width: 2.5; marker-end: url(#arrowhead); fill: none; }
+      .dashed { stroke-dasharray: 6 4; }
+    ]]></style>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1d4ed8" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="960" height="520" fill="url(#bg)" rx="24" />
+  <text x="480" y="52" class="title" text-anchor="middle">SettleMint Platform – Self-Hosted Architecture Overview</text>
+  <text x="480" y="80" class="subtitle" text-anchor="middle">All components operate within the organization&rsquo;s secured network perimeter</text>
+  <rect x="60" y="110" width="840" height="360" fill="#ffffff" stroke="#bfdbfe" stroke-width="2" rx="20" />
+  <text x="80" y="140" class="accent">Enterprise Network Boundary</text>
+  <rect x="90" y="170" width="220" height="280" class="box" />
+  <text x="200" y="200" class="label" text-anchor="middle">Access &amp; Control</text>
+  <text x="110" y="230" class="bullet">• Identity &amp; SSO providers</text>
+  <text x="110" y="255" class="bullet">• Policy enforcement (RBAC)</text>
+  <text x="110" y="280" class="bullet">• Audit &amp; logging pipelines</text>
+  <text x="110" y="305" class="bullet">• Secrets &amp; key management</text>
+  <text x="110" y="330" class="bullet">• Monitoring &amp; alerting</text>
+  <rect x="340" y="170" width="280" height="280" class="box" />
+  <text x="480" y="200" class="label" text-anchor="middle">SettleMint Platform Services</text>
+  <text x="360" y="230" class="bullet">• Console &amp; orchestration APIs</text>
+  <text x="360" y="255" class="bullet">• Developer workspaces &amp; CI/CD</text>
+  <text x="360" y="280" class="bullet">• Smart contract lifecycle tooling</text>
+  <text x="360" y="305" class="bullet">• Catalog of templates &amp; connectors</text>
+  <text x="360" y="330" class="bullet">• Automation for network management</text>
+  <rect x="650" y="170" width="220" height="280" class="box" />
+  <text x="760" y="200" class="label" text-anchor="middle">Blockchain Runtime Layer</text>
+  <text x="670" y="230" class="bullet">• Managed protocol nodes</text>
+  <text x="670" y="255" class="bullet">• Consensus &amp; state services</text>
+  <text x="670" y="280" class="bullet">• API gateways / RPC endpoints</text>
+  <text x="670" y="305" class="bullet">• Event streams &amp; relays</text>
+  <text x="670" y="330" class="bullet">• Backup &amp; recovery routines</text>
+  <path d="M 310 250 H 335" class="arrow" />
+  <path d="M 620 250 H 645" class="arrow" />
+  <path d="M 620 320 H 645" class="arrow" />
+  <rect x="120" y="420" width="720" height="40" fill="#1d4ed8" opacity="0.08" stroke="#1d4ed8" stroke-width="1.5" rx="12" />
+  <text x="480" y="445" class="subtitle" text-anchor="middle">Deploys on customer-managed Kubernetes or OpenShift clusters with enterprise integrations</text>
+  <rect x="80" y="50" width="150" height="40" fill="#1d4ed8" rx="10" opacity="0.12" />
+  <text x="155" y="75" class="subtitle" text-anchor="middle">Enterprise Users</text>
+  <circle cx="155" cy="100" r="26" fill="#1d4ed8" opacity="0.12" stroke="#1d4ed8" stroke-width="1.5" />
+  <text x="155" y="105" text-anchor="middle" class="label" fill="#1d4ed8">Teams</text>
+  <path d="M 155 126 V 170" class="arrow" />
+  <rect x="60" y="110" width="840" height="360" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-dasharray="12 8" rx="20" />
+  <rect x="700" y="60" width="200" height="70" fill="#10b981" opacity="0.12" stroke="#10b981" stroke-width="1.5" rx="14" />
+  <text x="800" y="90" class="label" text-anchor="middle" fill="#047857">Enterprise Systems</text>
+  <text x="800" y="110" class="caption" text-anchor="middle">ERP • Core banking • Data lakes</text>
+  <path d="M 800 130 V 170" class="arrow dashed" />
+</svg>

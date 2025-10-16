@@ -14,7 +14,7 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
     ![Settlemint](../../../img/using-the-platform/on-prem.webp)
   </div>
   <div style={{ flex: '1', paddingLeft: '1rem' }}>
-    <ul>
+    <div>
 
 SettleMint can be deployed within an organization’s own air-gapped
 infrastructure, providing enhanced security, data sovereignty, and compliance
@@ -24,7 +24,25 @@ Kubernetes and OpenShift, without reliance on external hosting or cloud
 dependencies. This enables seamless deployment across multiple clusters and
 regions, supporting highly distributed, hybrid blockchain architectures.
 
-    </ul>
+## Architecture at a glance
+
+<figure>
+  <img
+    src={require("../../../img/launching-the-platform/self-hosted-architecture.svg")}
+    alt="High-level view of SettleMint components operating within an enterprise-controlled environment"
+  />
+  <figcaption>
+    The self-hosted platform keeps access controls, SettleMint services, and the blockchain runtime inside the enterprise
+    network boundary while integrating with corporate identity providers, observability tooling, and downstream systems.
+  </figcaption>
+</figure>
+
+The diagram illustrates how administrators and developer teams authenticate through the organization’s identity provider,
+manage projects via the SettleMint control plane, and operate blockchain nodes within clusters they control. Supporting
+services such as logging, monitoring, key management, and enterprise line-of-business integrations remain within the same
+security perimeter, ensuring regulatory compliance and operational consistency across environments.
+
+    </div>
 
   </div>
 </div>
