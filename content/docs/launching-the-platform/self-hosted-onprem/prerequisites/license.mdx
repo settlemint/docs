@@ -29,7 +29,7 @@ import { Steps } from "fumadocs-ui/components/steps";
 
 <Callout type="warning">
   Treat the license and registry credentials as secrets. Store them in your
-  secret manager (for example, 1Password with `op://` references) and never
+  secret manager and never
   commit plaintext values to version control.
 </Callout>
 
@@ -46,8 +46,7 @@ Your license contains the following fields:
 <Callout type="success">
 ### Required values for platform installation
 
-Add the following block to your `values.yaml` (use `op://` or your secret
-manager references instead of plaintext):
+Add the following block to your `values.yaml`:
 
 ```yaml
 license:
