@@ -133,11 +133,11 @@ Create a values file (values.yaml) with your configuration:
 imagePullCredentials:
   registries:
     harbor:
-    enabled: true
-      registry: "harbor.settlemint.com"
-      username: '<registry-username>'
-      password: '<registry-password>'
-      email: '<registry-email>'
+      enabled: true
+        registry: "harbor.settlemint.com"
+        username: '<registry-username>'
+        password: '<registry-password>'
+        email: '<registry-email>'
 
 license:
   accountName: <registry-username>
@@ -292,7 +292,7 @@ support:
     enabled: false
     sharedSecret: "<shared-secret>"
     cluster:
-      replicaCount:<replicas>
+      replicaCount: <replicas>
       apiAuth: "<username>:<password>"
       storage:
         storageClassName: "local-path"
