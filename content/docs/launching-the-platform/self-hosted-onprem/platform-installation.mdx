@@ -53,7 +53,9 @@ Before starting the installation, ensure you have completed enterprise-grade pre
     - ✅ Validated infrastructure meets [enterprise requirements](/launching-the-platform/self-hosted-onprem/infrastructure-requirements)
     - ✅ Helm 3.x installed and configured
     - ✅ kubectl access with cluster-admin permissions
+    - ✅ SettleMint license issued (includes registry credentials)
     - ✅ Container registry access credentials
+    - ✅ SMTP server configured if using passwordless email login
   </Card>
 
   <Card>
@@ -68,7 +70,7 @@ Before starting the installation, ensure you have completed enterprise-grade pre
 
 <Callout type="warning">
   **Enterprise Security Validation**
-  
+
   Before proceeding with production deployment, ensure your security team has reviewed and approved:
   - Network firewall rules and ingress configuration
   - SSL/TLS certificate chain and rotation procedures
@@ -83,11 +85,11 @@ Before starting the installation, ensure you have completed enterprise-grade pre
   <Accordion title="What is the recommended deployment workflow for enterprise environments?">
     Enterprise deployments should follow a phased approach: 1) Deploy to development environment, 2) Security and compliance review, 3) Deploy to staging for user acceptance testing, 4) Production deployment with gradual rollout, 5) Post-deployment monitoring and validation.
   </Accordion>
-  
+
   <Accordion title="How do I ensure zero-downtime updates in production?">
     Use Helm's rolling update capabilities with proper readiness probes, configure multiple replicas for all services, implement proper health checks, and use blue-green deployment strategies for critical updates.
   </Accordion>
-  
+
   <Accordion title="What monitoring should be in place before production deployment?">
     Implement comprehensive monitoring including application metrics (Prometheus), centralized logging (Loki/ELK), distributed tracing, infrastructure monitoring, security event logging, and automated alerting for critical services.
   </Accordion>
@@ -128,29 +130,57 @@ Before configuring production values, have your security team review all availab
 Create a values file (values.yaml) with your configuration:
 
 ```yaml
+imagePullCredentials:
+  registries:
+    harbor:
+      enabled: true
+        registry: "harbor.settlemint.com"
+        username: '<registry-username>'
+        password: '<registry-password>'
+        email: '<registry-email>'
+
+license:
+  accountName: <registry-username>
+  accountToken: <registry-password>
+  email: <registry-email>
+  expirationDate: <expirationDate>
+  blockchainNetworks:
+    limit: 3
+  blockchainNodes:
+    limit: 4
+  loadBalancers:
+    limit: 5
+  privateKeys:
+    limit: 5
+  smartContractSets:
+    limit: 5
+  storages:
+    limit: 5
+  middlewares:
+    limit: 5
+  integrations:
+    limit: 5
+  insights:
+    limit: 5
+  customDeployments:
+    limit: 5
+  signature: <signature>
+
 ingress:
   enabled: true
-  className: "nginx"
+  className: "<your-ingressClass>" # client ingress classname
   host: '<your-domain>'
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/proxy-ssl-server-name: "on"
-    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    cert-manager.io/cluster-issuer: "letsencrypt"  # If using cert-manager
-  tls:
-    - secretName: 'platform-tls'
-      hosts:
-        - '<your-domain>'
-        - '*.<your-domain>'
+  annotations: {}
+  tls: []
+    #- secretName: 'platform-tls'
+    #  hosts:
+    #    - '<your-domain>'
+    #    - '*.<your-domain>'
 
 redis:
   host: '<redis-host>'
   port: '<redis-port>'
   password: '<redis-password>'
-  tls: true
 
 postgresql:
   host: '<postgresql-host>'
@@ -158,11 +188,45 @@ postgresql:
   user: '<postgresql-user>'
   password: '<postgresql-password>'
   database: '<database-name>'
-  sslMode: require
+
+vault:
+  enabled: true
+  address: '<vault-address>'
+  roleId: '<vault-role-id>'
+  secretId: '<vault-secret-id>'
+  namespace: 'vault'
+
+googleSecretManager:
+  enabled: false
+  projectId: "<project-id>"
+  credentials: "<json-creds>"
+
+awsSecretManager:
+  enabled: false
+  region: "<region>"
+  accessKeyId: "<access-key>"
+  secretAccessKey: "<secret-access-key>"
+
+azureKeyVault:
+  enabled: false
+  vaultUrl: "<vault-url>"
+  tenantId: "<tenant-id>"
+  clientId: "<client-id>"
+  clientSecret: "<client-secret>"
+  useManagedIdentity: false
+  managedIdentityClientId: ""
 
 auth:
   jwtSigningKey: '<your-jwt-signing-key>'
   providers:
+    passwordless:
+      enabled: true
+      from: "<from-email>"
+      server:
+        host: "<smtp-host>"
+        port: "<smtp-port>"
+        user: "<smtp-user>"
+        password: "<smtp-password>"
     google:
       enabled: true
       clientID: '<google-client-id>'
@@ -173,26 +237,134 @@ auth:
       clientSecret: '<microsoft-client-secret>'
       tenantId: '<microsoft-tenant-id>'
 
-vault:
-  address: '<vault-address>'
-  roleId: '<vault-role-id>'
-  secretId: '<vault-secret-id>'
-  namespace: 'vault'
+app:
+  metrics:
+    enabled: true
+  replicaCount: '<replicas>'
+  resources:
+    requests:
+      cpu: '<cpu-request>'
+      memory: '<memory-request>'
+
+api:
+  metrics:
+    enabled: true
+  replicaCount: '<replicas>'
+  resources:
+    requests:
+      cpu: '<cpu-request>'
+      memory: '<memory-request>'
+
+job:
+  metrics:
+    enabled: true
+  resources:
+    requests:
+      cpu: '<cpu-request>'
+      memory: '<memory-request>'
+
+deployWorker:
+  metrics:
+    enabled: true
+  resources:
+    requests:
+      cpu: '<cpu-request>'
+      memory: '<memory-request>'
+  replicaCount: 5
+
+docs:
+  replicaCount: '<replicas>'
+  resources:
+    requests:
+      cpu: '<cpu-request>'
+      memory: '<memory-request>'
+
+singleton:
+  metrics:
+    enabled: true
+  resources:
+    requests:
+      cpu: '<cpu-request>'
+      memory: '<memory-request>'
+
+support:
+  ipfs-cluster:
+    enabled: false
+    sharedSecret: "<shared-secret>"
+    cluster:
+      replicaCount: <replicas>
+      apiAuth: "<username>:<password>"
+      storage:
+        storageClassName: "local-path"
+    ipfs:
+      replicaCount: <replicas>
+      storage:
+        storageClassName: "local-path"
+    ingress:
+      hosts:
+        - host: "<your-ipfs-domain>"
+
+observability:
+  enabled: true
+  metrics-server:
+    enabled: true
+    service:
+      labels:
+        kubernetes.io/cluster-service: "true"
+        kubernetes.io/name: "Metrics-server"
+  kube-state-metrics:
+    enabled: true
+  victoria-metrics-single:
+    enabled: true
+  alloy:
+    enabled: true
+    clustername: "dev"
+    endpoints:
+      external:
+        prometheus:
+          enabled: false
+          url: ""
+        loki:
+          enabled: false
+          url: ""
+        otel:
+          enabled: false
+          url: ""
+  grafana:
+    enabled: true
+    auth:
+      username: <grafana-username>
+      password: <grafana-password>
+    ingress:
+      enabled: true
+      hosts:
+        - <your-grafana-domain>
+    grafana.ini:
+      server:
+        root_url: https://<your-grafana-domain>
+  tempo:
+    enabled: true
+    tempoQuery:
+      service:
+        port: 4318
+  loki:
+    enabled: true
+    gateway:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution: null
+  prometheus-node-exporter:
+    enabled: true
 
 features:
-  observability:
-    metrics:
+  billing:
+    enabled: false
+    autoDelete:
       enabled: true
-      apiUrl: '<victoria-metrics-url>'
-    logs:
-      enabled: true
-      apiUrl: '<loki-url>'
   deploymentEngine:
     platform:
       domain:
-        hostname: '<your-domain>'
-    clusterManager:
-      domain:
+        tls: true
         hostname: '<your-domain>'
     state:
       connectionUrl: 's3://<bucket-name>?region=<region>'
@@ -203,11 +375,6 @@ features:
           accessKeyId: '<aws-access-key>'
           secretAccessKey: '<aws-secret-key>'
           region: '<aws-region>'
-        # azure:
-        #   # -- Azure storage account name
-        #   storageAccount: '<azure-storage-account>'
-        #   # -- Azure storage account key
-        #   storageKey: '<azure-storage-key>'
     targets:
       - id: '<cluster-id>'
         name: '<cluster-name>'
@@ -224,7 +391,13 @@ features:
                 enabled: true
             namespace:
               single:
+                enabled: true
                 name: '<namespace>'
+                runAsUser: 2024
+                fsGroup: 2024
+              multiple:
+                enabled: false
+                prefix: "sm"
             domains:
               service:
                 tls: true
@@ -234,159 +407,16 @@ features:
             ingress:
               ingressClass: '<ingress-class>'
             capabilities:
-              mixedLoadBalancers: false
-
-app:
-  replicaCount: '<replicas>'
-api:
-  replicaCount: '<replicas>'
-  existingSecret: '<platform-secret>'
-job:
-  resources:
-    requests:
-      cpu: '<cpu-request>'
-      memory: '<memory-request>'
-  autoscaling:
-    enabled: true
-deployWorker:
-  resources:
-    requests:
-      cpu: '<cpu-request>'
-      memory: '<memory-request>'
-  autoscaling:
-    enabled: true
-clusterManager:
-  replicaCount: '<replicas>'
-docs:
-  replicaCount: '<replicas>'
-
-imagePullCredentials:
-  registries:
-    harbor:
-      enabled: true
-      registry: "harbor.settlemint.com"
-      username: '<registry-username>'
-      password: '<registry-password>'
-      email: '<registry-email>'
-
-support:
-  kubernetes-replicator:
-    enabled: true
-
-features:
-  billing:
+              mixedLoadBalancers: true
+              nodePorts:
+                enabled: true
+                range:
+                  min: 30000
+                  max: 32767
+  advancedDeploymentConfig:
     enabled: false
-    alerting:
-      slack:
-        enabled: false
-        webhookUrl: ''
-    stripe:
-      apiSecret: ''
-      webhookSecret: ''
-      webhookUrl: ''
-      apiLiveMode: false
-      taxRateId: ''
-      publishableKey: ''
-    autoDelete:
-      enabled: false
-    emailUsageExcel:
-      enabled: true
-
-  privateKeys:
-    hsm:
-      awsKms:
-        enabled: false
-    txsigner:
-      image:
-        registry: ghcr.io
-        repository: settlemint/btp-signer
-        tag: '7.6.10'
-
-  networks:
-    besu:
-      image:
-        registry: docker.io
-        repository: hyperledger/besu
-        tag: '24.12.2'
-    quorum:
-      image:
-        registry: docker.io
-        repository: quorumengineering/quorum
-        tag: '24.4.1'
-    geth:
-      image:
-        registry: docker.io
-        repository: ethereum/client-go
-        tag: 'alltools-v1.13.4'
-    fabric:
-      ca:
-        image:
-          registry: docker.io
-          repository: hyperledger/fabric-ca
-          tag: '1.5.13'
-      orderer:
-        image:
-          registry: docker.io
-          repository: hyperledger/fabric-orderer
-          tag: '2.5.10'
-      tools:
-        image:
-          registry: docker.io
-          repository: hyperledger/fabric-tools
-          tag: '2.5.10'
-      peer:
-        image:
-          registry: docker.io
-          repository: hyperledger/fabric-peer
-          tag: '2.5.10'
-      couchdb:
-        image:
-          registry: docker.io
-          repository: apache/couchdb
-          tag: '3.4.2'
-      dind:
-        image:
-          registry: docker.io
-          repository: library/docker
-          tag: '24.0.7-alpine3.18'
-    mainnets:
-      enabled: true
-      ethereumMetricsExporter:
-        image:
-          registry: docker.io
-          repository: ethpandaops/ethereum-metrics-exporter
-          tag: '0.26.0'
-
-  smartContractSets:
-    etherscan:
-      apiKeys:
-        etherscan: ""
-        polyscan: ""
-        zkevmpolyscan: ""
-        bscscan: ""
-        arbiscan: ""
-        optimistic: ""
-    IDE:
-      image:
-        registry: ghcr.io
-        repository: settlemint/btp-ide
-        tag: 'v7.6.5'
-    sets:
-      - id: starterkit-asset-tokenization
-        name: Asset Tokenization
-        image:
-          registry: ghcr.io
-          repository: settlemint/starterkit-asset-tokenization
-          tag: '0.0.11'
-      # ... (other sets can be added as needed)
-
   customDomains:
     enabled: false
-    outerIngressClass: "nginx"
-    email: ""
-
-  crons:
-    cleanup: "0 */10 * * * *"
 ```
 
 <Callout>
@@ -400,136 +430,289 @@ features:
 <summary>Click to see a complete example values file</summary>
 
 ```yaml
-ingress:
-  enabled: true
-  className: "nginx"
-  host: "example.company.com"
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/proxy-ssl-server-name: "on"
-    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    cert-manager.io/cluster-issuer: "letsencrypt"
-  tls:
-    - secretName: "example-tls"
-      hosts:
-        - "example.company.com"
-        - "*.example.company.com"
-
-redis:
-  host: "redis.example.local"
-  port: "6379"
-  password: "abc123password"
-  tls: true
-
-postgresql:
-  host: "postgresql.example.local"
-  port: "5432"
-  user: "db_user"
-  password: "xyz789password"
-  database: "platform_db"
-  sslMode: require
-
-auth:
-  jwtSigningKey: "abc123jwt456xyz789signing000key111example"
-  providers:
-    google:
-      enabled: true
-      clientID: "example-123456789.apps.googleusercontent.com"
-      clientSecret: "abcdef-example-google-secret"
-
-vault:
-  address: "http://vault.example.local:8200"
-  roleId: "abc123-role-id"
-  secretId: "xyz789-secret-id"
-  namespace: "vault"
-
-features:
-  observability:
-    metrics:
-      enabled: true
-      apiUrl: "http://metrics.example.local/api/v1"
-    logs:
-      enabled: true
-      apiUrl: "http://logs.example.local/api/v1"
-  deploymentEngine:
-    platform:
-      domain:
-        hostname: "example.company.com"
-    state:
-      connectionUrl: "s3-compatible-endpoint-url"
-      secretsProvider: "passphrase"
-      credentials:
-        encryptionKey: "abc123encryption456key789example000key"
-        aws:
-          accessKeyId: "EXAMPLEKEYID123456"
-          secretAccessKey: "abc123example456secret789key000aws"
-          region: "us-east-1"
-        azure:
-          storageAccount: "example-storage-account"
-          storageKey: "abc123example456key789key000azure"
-        google:
-          project: "example-project-id"
-          credentials: |
-            <google credentials json>
-    targets:
-      - id: "example"
-        name: "Example Cluster"
-        icon: "kubernetes"
-        clusters:
-          - id: "main"
-            name: "Main"
-            icon: "global"
-            location:
-              lat: 0.0000
-              lon: 0.0000
-            connection:
-              sameCluster:
-                enabled: true
-            namespace:
-              single:
-                name: "example"
-            domains:
-              service:
-                tls: true
-                hostname: "example.company.com"
-            storage:
-              storageClass: "standard"
-            ingress:
-              ingressClass: "nginx"
-
-app:
-  replicaCount: "2"
-api:
-  replicaCount: "2"
-  existingSecret: "example-secret"
-job:
-  resources:
-    requests:
-      cpu: "100m"
-      memory: "512Mi"
-deployWorker:
-  resources:
-    requests:
-      cpu: "100m"
-      memory: "512Mi"
-clusterManager:
-  replicaCount: "2"
-
 imagePullCredentials:
   registries:
     harbor:
       enabled: true
       registry: "harbor.settlemint.com"
-      username: "example_user"
-      password: "abc123registry456password"
-      email: "example@company.com"
+      username: "sm_rat_example"
+      password: "passw0rd"
+      email: "example@example.com"
+license:
+  accountName: sm_rat_example
+  accountToken: passw0rd
+  email: roderik@settlemint.com
+  expirationDate: 2030-11-11
+  blockchainNetworks:
+    limit: 4
+  blockchainNodes:
+    limit: 6
+  loadBalancers:
+    limit: 6
+  privateKeys:
+    limit: 6
+  smartContractSets:
+    limit: 6
+  storages:
+    limit: 6
+  middlewares:
+    limit: 6
+  integrations:
+    limit: 6
+  insights:
+    limit: 6
+  customDeployments:
+    limit: 6
+  signature: "0xkldjfg90898dkjfghsf0994jdf7bghbdkj4fgjg9430ebae0dc9e77887aad2a33066e984ebbe6e3282fd6ab5d23bdcd82320jdfkbornb835hs84nglb63htblbnnb"
+ingress:
+  enabled: true
+  host: settlemint.example.com
+
+redis:
+  host: "development-redis.development.svc.cluster.local"
+  port: 6379
+  password: passw0rd
+postgresql:
+  enabled: true
+  host: development-postgresql.development.svc.cluster.local
+  port: 5432
+  user: settlemint
+  password: passw0rd
+  database: settlemint
+auth:
+  # -- generate a secure random string to secure the cookie and JWT token: openssl rand -base64 32
+  jwtSigningKey: "K8/Jkdfn78BdhffKfngkasnsdhg+OaHZ63sSI="
+  providers:
+    passwordless:
+      enabled: true
+      from: "no-reply@example.com"
+      server:
+        host: "smtp.gmail.com"
+        port: "465"
+        user: "admin"
+        password: "passw0rd"
+    google:
+      enabled: false
+      clientID: ""
+      clientSecret: ""
+vault:
+  enabled: true
+  address: http://vault.development.svc.cluster.local:8200
+  namespace: admin
+  roleId: "dev-role-id"
+  secretId: "dev-secret-id"
+
+googleSecretManager:
+  enabled: false
+  projectId: ""
+  credentials: ""
+
+awsSecretManager:
+  enabled: false
+  region: "eu-central-1"
+  accessKeyId: ""
+  secretAccessKey: ""
+
+azureKeyVault:
+  enabled: false
+  vaultUrl: ""
+  tenantId: ""
+  clientId: ""
+  clientSecret: ""
+  useManagedIdentity: false
+  managedIdentityClientId: ""
+
+api:
+  metrics:
+    enabled: true
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "100m"
+
+app:
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "100m"
+
+deployWorker:
+  metrics:
+    enabled: true
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "100m"
+  replicaCount: 5
+
+job:
+  metrics:
+    enabled: true
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "100m"
+
+singleton:
+  metrics:
+    enabled: true
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "100m"
 
 support:
-  kubernetes-replicator:
+  ipfs-cluster:
+    enabled: false
+    sharedSecret: ""
+    cluster:
+      replicaCount: 2
+      apiAuth: "admin:passw0rd"
+      storage:
+        storageClassName: "local-path"
+    ipfs:
+      replicaCount: 2
+      storage:
+        storageClassName: "local-path"
+    ingress:
+      hosts:
+        - host: "ipfs.settlemint.example.com"
+
+observability:
+  enabled: true
+  metrics-server:
     enabled: true
+    service:
+      labels:
+        kubernetes.io/cluster-service: "true"
+        kubernetes.io/name: "Metrics-server"
+  kube-state-metrics:
+    enabled: true
+  victoria-metrics-single:
+    enabled: true
+    server:
+      ingress:
+        enabled: true
+        hosts:
+          - name: "metrics.settlemint.example.com"
+            path: /
+            port: http
+  alloy:
+    enabled: true
+    clustername: "dev"
+    endpoints:
+      external:
+        prometheus:
+          enabled: false
+          url: ""
+        loki:
+          enabled: false
+          url: ""
+        otel:
+          enabled: false
+          url: ""
+  grafana:
+    enabled: true
+    auth:
+      username: admin
+      password: passw0rd
+    ingress:
+      enabled: true
+      hosts:
+        - grafana.settlemint.example.com
+    grafana.ini:
+      server:
+        root_url: https://grafana.settlemint.example.com
+  tempo:
+    enabled: true
+    tempoQuery:
+      service:
+        port: 4318
+      ingress:
+        enabled: true
+        ingressClassName: settlemint-nginx
+        hosts:
+          - "traces.settlemint.example.com"
+  loki:
+    enabled: true
+    gateway:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution: null
+      ingress:
+        enabled: true
+        hosts:
+          - host: "logs.settlemint.example.com"
+            paths:
+              - path: /
+                pathType: Prefix
+  prometheus-node-exporter:
+    enabled: true
+
+features:
+  billing:
+    enabled: false
+    autoDelete:
+      enabled: true
+  deploymentEngine:
+    platform:
+      domain:
+        tls: true
+        hostname: settlemint.example.com
+    state:
+      connectionUrl: "s3://pulumi?region=eu-central-1&endpoint=minio.development.svc.cluster.local:9000&disableSSL=true&s3ForcePathStyle=true"
+      secretsProvider: "passphrase"
+      credentials:
+        encryptionKey: "passw0rd123"
+        aws:
+          accessKeyId: "DHfkkj8sdfjKhasdfk*"
+          secretAccessKey: "NkhjkHKjhdfjn7383hHBmdfkjshsdff38"
+          region: eu-central-1
+    targets:
+      - id: "local"
+        name: "Local"
+        icon: "kubernetes"
+        clusters:
+          - id: k8s
+            name: k8s
+            icon: "global"
+            location:
+              lat: 50.8505
+              lon: 4.3488
+            namespace:
+              single:
+                enabled: true
+                name: deployments
+                runAsUser: 2024
+                fsGroup: 2024
+              multiple:
+                enabled: false
+                prefix: "sm"
+            connection:
+              sameCluster:
+                enabled: true
+              kubeconfig:
+                enabled: false
+                kubeconfig: ""
+            domains:
+              service:
+                tls: true
+                hostname: settlemint.example.com
+            storage:
+              storageClass: "local-path"
+            ingress:
+              ingressClass: "settlemint-nginx"
+            capabilities:
+              mixedLoadBalancers: true
+              nodePorts:
+                enabled: true
+                range:
+                  min: 30000
+                  max: 32767
+  advancedDeploymentConfig:
+    enabled: true
+  customDomains:
+    enabled: false
 ```
 
 </details>
@@ -539,7 +722,7 @@ Install the platform:
 ```bash
 helm upgrade --install SettleMint oci://harbor.settlemint.com/settlemint/settlemint \
   --namespace SettleMint \
-  --version v7.31.11 \
+  --version v7.33.0 \
   --create-namespace \
   --values values.yaml
 ```
@@ -716,7 +899,7 @@ Storage class recommendations per cloud provider:
 
 ```yaml
 ingress:
-  ingressClass: "nginx" # Ingress controller class name
+  ingressClass: "nginx" # Ingress controller class name of client ingress
 ```
 
 The ingress class should match your installed ingress controller. Common
