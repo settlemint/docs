@@ -3,6 +3,7 @@
   "position": 2,
   "pages": [
     "overview",
+    "license",
     "ingress-controller",
     "domain-and-tls",
     "oauth",

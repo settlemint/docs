@@ -101,6 +101,11 @@ Before installing the SettleMint Platform in enterprise environments, you'll nee
     - User identity management
     - [Setup Guide](/launching-the-platform/self-hosted/prerequisites/oauth)
 
+    ### Email (SMTP) for Passwordless Login
+    - Required to send sign-in links or codes
+    - Provide host, port, user, password, and from address
+    - Configure under `auth.providers.passwordless` in your Helm values
+
   </Tab>
 </Tabs>
 
@@ -142,12 +147,14 @@ required for the platform installation.
 <Callout type="success">
 ### Information collection checklist
 
+- [ ] SettleMint license and registry credentials
 - [ ] Domain and TLS certificates
 - [ ] Database connection strings
 - [ ] Redis credentials
 - [ ] S3 bucket details
 - [ ] Vault access tokens
 - [ ] OAuth client credentials
+- [ ] SMTP server details (if using passwordless email login)
 - [ ] Metrics endpoints
 
 </Callout>

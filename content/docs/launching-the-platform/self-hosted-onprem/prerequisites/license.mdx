@@ -1,0 +1,130 @@
+---
+title: "License"
+description: Obtain and configure your SettleMint Platform license and registry credentials for self-hosted installation
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card } from "fumadocs-ui/components/card";
+import { Steps } from "fumadocs-ui/components/steps";
+
+## Overview
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Purpose
+    - Unlocks platform installation and features
+    - Provides private registry credentials
+    - Encodes usage limits and entitlements
+    - Used by Helm during deployment
+  </Card>
+
+  <Card>
+    ### Key Details
+    - Issued by SettleMint team
+    - Includes account name, token, email, expiry
+    - Contains feature limits and signature
+    - Should be stored securely via secret manager
+  </Card>
+</div>
+
+<Callout type="warning">
+  Treat the license and registry credentials as secrets. Store them in your
+  secret manager (for example, 1Password with `op://` references) and never
+  commit plaintext values to version control.
+</Callout>
+
+## License contents
+
+Your license contains the following fields:
+
+- Account information: `accountName`, `accountToken`, `email`, `expirationDate`
+- Feature limits: `blockchainNetworks`, `blockchainNodes`, `loadBalancers`, `privateKeys`, `smartContractSets`, `storages`, `middlewares`, `integrations`, `insights`, `customDeployments`
+- Signature: cryptographic `signature` to validate authenticity
+
+## Information collection
+
+<Callout type="success">
+### Required values for platform installation
+
+Add the following block to your `values.yaml` (use `op://` or your secret
+manager references instead of plaintext):
+
+```yaml
+license:
+  accountName: sm_rat_clientname
+  accountToken: password
+  email: email
+  expirationDate: 2027-01-01
+  blockchainNetworks:
+    limit: 4
+  blockchainNodes:
+    limit: 10
+  loadBalancers:
+    limit: 10
+  privateKeys:
+    limit: 10
+  smartContractSets:
+    limit: 10
+  storages:
+    limit: 10
+  middlewares:
+    limit: 10
+  integrations:
+    limit: 10
+  insights:
+    limit: 10
+  customDeployments:
+    limit: 100
+  signature: "signature"
+```
+
+</Callout>
+
+## Validation
+
+<Steps>
+  ### Verify registry access
+  Use the provided credentials to log in to the SettleMint registry:
+
+  ```bash
+  helm registry login harbor.settlemint.com \
+    --username <accountName> \
+    --password <accountToken>
+  ```
+
+  ### Confirm expiry
+  Ensure `expirationDate` is valid for your deployment timeline.
+
+  ### Validate signature presence
+  Confirm the `signature` field is present and stored securely.
+</Steps>
+
+## Next steps
+
+- Continue with other prerequisites
+- Insert the `license:` block into your values file if not already
+- Proceed to [Platform Installation](/launching-the-platform/self-hosted-onprem/platform-installation) and complete Step 3
+
+## Troubleshooting
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Invalid credentials
+    - Recheck `accountName` and `accountToken`
+    - Confirm access to `harbor.settlemint.com`
+    - Verify the license has not expired
+  </Card>
+
+  <Card>
+    ### Missing signature
+    - Contact your SettleMint account team
+    - Ensure your license package includes a `signature`
+  </Card>
+</div>
+
+<Callout type="info">
+  Need help? Contact <a href="mailto:support@settlemint.com">support@settlemint.com</a>.
+  Your account manager can reissue or update your license if required.
+</Callout>
+
+
