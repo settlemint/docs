@@ -154,6 +154,7 @@ jobs:
           bun run build
         env:
           NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker container
         if: github.event_name == 'pull_request' || github.event_name == 'push'
@@ -169,7 +170,8 @@ jobs:
         uses: settlemint/shared-actions/.github/actions/build-status-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
-          workflow_status: ${{ steps.qa-tests.outcome == 'success' && 'success' || 'failure' }}
+          workflow_status:
+            ${{ steps.qa-tests.outcome == 'success' && 'success' || 'failure' }}
 
       # Skip redundant notification - handled by consolidated step at the end
 
@@ -233,7 +235,8 @@ jobs:
         with:
           pr_number: ${{ github.event.pull_request.number }}
           is_draft: ${{ github.event.pull_request.draft }}
-          has_approval: ${{ steps.pr-review-check.outputs.has_approval == 'true' }}
+          has_approval:
+            ${{ steps.pr-review-check.outputs.has_approval == 'true' }}
           qa_status: ${{ steps.pr-review-check.outputs.qa_status }}
 
       # Consolidated Slack notification - updates existing message or creates one if needed
@@ -264,7 +267,8 @@ jobs:
           pr_number: ${{ github.event.pull_request.number }}
           pr_author: ${{ github.event.pull_request.user.login }}
           pr_author_type: ${{ github.event.pull_request.user.type }}
-          has_approval: ${{ steps.pr-review-check.outputs.has_approval == 'true' }}
+          has_approval:
+            ${{ steps.pr-review-check.outputs.has_approval == 'true' }}
           qa_status: ${{ steps.pr-review-check.outputs.qa_status }}
           is_draft: ${{ github.event.pull_request.draft }}
           merge_method: "squash"
