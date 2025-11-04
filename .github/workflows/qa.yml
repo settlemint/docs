@@ -82,7 +82,7 @@ jobs:
         if: |
           github.event_name == 'pull_request' &&
           github.event.pull_request.draft == false
-        uses: settlemint/asset-tokenization-kit/.github/actions/build-status-labeler@main
+        uses: settlemint/shared-actions/.github/actions/build-status-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           workflow_status: "running"
@@ -92,7 +92,7 @@ jobs:
         if: |
           github.event_name == 'pull_request' &&
           github.event.pull_request.draft == false
-        uses: settlemint/asset-tokenization-kit/.github/actions/slack-pr-notifier@main
+        uses: settlemint/shared-actions/.github/actions/slack-pr-notifier@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           pr_title: ${{ github.event.pull_request.title }}
@@ -109,7 +109,7 @@ jobs:
           github.event_name == 'push' ||
           (github.event_name == 'pull_request' && github.event.pull_request.draft == false) ||
           github.event_name == 'pull_request_review'
-        uses: settlemint/asset-tokenization-kit/.github/actions/setup-dependencies@main
+        uses: settlemint/shared-actions/.github/actions/setup-dependencies@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           npm_token: ${{ env.NPM_TOKEN }}
@@ -154,6 +154,7 @@ jobs:
           bun run build
         env:
           NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker container
         if: github.event_name == 'pull_request' || github.event_name == 'push'
@@ -166,10 +167,11 @@ jobs:
           always() &&
           github.event_name == 'pull_request' &&
           steps.qa-tests.conclusion != 'skipped'
-        uses: settlemint/asset-tokenization-kit/.github/actions/build-status-labeler@main
+        uses: settlemint/shared-actions/.github/actions/build-status-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
-          workflow_status: ${{ steps.qa-tests.outcome == 'success' && 'success' || 'failure' }}
+          workflow_status:
+            ${{ steps.qa-tests.outcome == 'success' && 'success' || 'failure' }}
 
       # Skip redundant notification - handled by consolidated step at the end
 
@@ -179,7 +181,7 @@ jobs:
         if: |
           github.event_name == 'pull_request' &&
           (github.event.action == 'opened' || github.event.action == 'synchronize')
-        uses: settlemint/asset-tokenization-kit/.github/actions/pr-labeler@main
+        uses: settlemint/shared-actions/.github/actions/pr-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           pr_title: ${{ github.event.pull_request.title }}
@@ -191,7 +193,7 @@ jobs:
       - name: Run secret scanning
         id: secret-scan
         if: github.event_name == 'pull_request'
-        uses: settlemint/asset-tokenization-kit/.github/actions/secret-scanner@main
+        uses: settlemint/shared-actions/.github/actions/secret-scanner@main
         continue-on-error: true
 
       # Label secret scanning results (PR only)
@@ -200,7 +202,7 @@ jobs:
           always() &&
           github.event_name == 'pull_request' &&
           steps.secret-scan.conclusion != 'skipped'
-        uses: settlemint/asset-tokenization-kit/.github/actions/build-status-labeler@main
+        uses: settlemint/shared-actions/.github/actions/build-status-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           workflow_status:
@@ -215,7 +217,7 @@ jobs:
         if: |
           always() &&
           (github.event_name == 'pull_request' || github.event_name == 'pull_request_review')
-        uses: settlemint/asset-tokenization-kit/.github/actions/pr-review-check@main
+        uses: settlemint/shared-actions/.github/actions/pr-review-check@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           pr_author: ${{ github.event.pull_request.user.login }}
@@ -229,11 +231,12 @@ jobs:
         if: |
           always() &&
           (github.event_name == 'pull_request' || github.event_name == 'pull_request_review')
-        uses: settlemint/asset-tokenization-kit/.github/actions/pr-status-labeler@main
+        uses: settlemint/shared-actions/.github/actions/pr-status-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           is_draft: ${{ github.event.pull_request.draft }}
-          has_approval: ${{ steps.pr-review-check.outputs.has_approval == 'true' }}
+          has_approval:
+            ${{ steps.pr-review-check.outputs.has_approval == 'true' }}
           qa_status: ${{ steps.pr-review-check.outputs.qa_status }}
 
       # Consolidated Slack notification - updates existing message or creates one if needed
@@ -243,7 +246,7 @@ jobs:
           steps.label-final-status.conclusion == 'success' &&
           (github.event_name == 'pull_request' || github.event_name == 'pull_request_review') &&
           github.event.pull_request.draft == false
-        uses: settlemint/asset-tokenization-kit/.github/actions/slack-pr-notifier@main
+        uses: settlemint/shared-actions/.github/actions/slack-pr-notifier@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           pr_title: ${{ github.event.pull_request.title }}
@@ -259,12 +262,13 @@ jobs:
         if: |
           always() &&
           (github.event_name == 'pull_request' || github.event_name == 'pull_request_review')
-        uses: settlemint/asset-tokenization-kit/.github/actions/auto-merge@main
+        uses: settlemint/shared-actions/.github/actions/auto-merge@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           pr_author: ${{ github.event.pull_request.user.login }}
           pr_author_type: ${{ github.event.pull_request.user.type }}
-          has_approval: ${{ steps.pr-review-check.outputs.has_approval == 'true' }}
+          has_approval:
+            ${{ steps.pr-review-check.outputs.has_approval == 'true' }}
           qa_status: ${{ steps.pr-review-check.outputs.qa_status }}
           is_draft: ${{ github.event.pull_request.draft }}
           merge_method: "squash"
@@ -302,14 +306,14 @@ jobs:
           SLACK_CHANNEL_ID: op://platform/slack-bot/SLACK_CHANNEL_ID
 
       - name: Label PR as merged
-        uses: settlemint/asset-tokenization-kit/.github/actions/pr-status-labeler@main
+        uses: settlemint/shared-actions/.github/actions/pr-status-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           is_draft: false
           is_merged: true
 
       - name: Update Slack notification for merged PR
-        uses: settlemint/asset-tokenization-kit/.github/actions/slack-pr-notifier@main
+        uses: settlemint/shared-actions/.github/actions/slack-pr-notifier@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           pr_title: ${{ github.event.pull_request.title }}
@@ -354,14 +358,14 @@ jobs:
           SLACK_CHANNEL_ID: op://platform/slack-bot/SLACK_CHANNEL_ID
 
       - name: Label PR as abandoned
-        uses: settlemint/asset-tokenization-kit/.github/actions/pr-status-labeler@main
+        uses: settlemint/shared-actions/.github/actions/pr-status-labeler@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           is_draft: false
           is_abandoned: true
 
       - name: Update Slack notification for abandoned PR
-        uses: settlemint/asset-tokenization-kit/.github/actions/slack-pr-notifier@main
+        uses: settlemint/shared-actions/.github/actions/slack-pr-notifier@main
         with:
           pr_number: ${{ github.event.pull_request.number }}
           pr_title: ${{ github.event.pull_request.title }}
