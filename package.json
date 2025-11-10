@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@next/third-parties": "15.5.6",
-    "@radix-ui/react-slot": "1.2.3",
+    "@radix-ui/react-slot": "1.2.4",
     "@settlemint/sdk-blockscout": "2.6.2",
     "@settlemint/sdk-cli": "2.6.2",
     "@settlemint/sdk-eas": "2.6.2",
