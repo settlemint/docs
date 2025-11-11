@@ -157,6 +157,7 @@ jobs:
         if: github.event_name == 'pull_request' || github.event_name == 'push'
         id: qa-tests
         run: |
+          bunx next typegen
           bun run check-types
           bun run build
         env:
