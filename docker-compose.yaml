@@ -1,0 +1,18 @@
+
+services:
+  asset-tokenization-kit-content:
+    image: ghcr.io/settlemint/codestudio-asset-tokenization-kit:2.0.0-main.128231
+    container_name: asset-tokenization-kit-content
+    volumes:
+      - ./content/docs/asset-tokenization-kit:/dest
+      - ./public/images:/dest-images
+    command:
+      - sh
+      - -c
+      - >
+        rm -rf /dest/* /dest/.[!.]* /dest/..?* 2>/dev/null || true &&
+        cp -r /usecase/kit/dapp/content/docs/* /dest/ &&
+        sed -i.bak 's/"title": "Documentation"/"title": "Asset Tokenization Kit (beta)"/g' /dest/meta.json &&
+        rm -f /dest/meta.json.bak &&
+        rm -rf /dest-images/* /dest-images/.[!.]* /dest-images/..?* 2>/dev/null || true &&
+        cp -r /usecase/kit/dapp/public/images/* /dest-images/ 2>/dev/null || true

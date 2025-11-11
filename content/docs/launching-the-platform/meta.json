@@ -1,5 +1,0 @@
-{
-  "title": "Launching the Platform",
-  "icon": "Rocket",
-  "pages": ["managed-cloud-saas", "self-hosted-onprem"]
-}

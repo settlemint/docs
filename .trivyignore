@@ -1,8 +1,0 @@
-# Trivy ignore file for documentation with example credentials
-# These files contain placeholder/example credentials in documentation, not real secrets
-
-# Platform installation documentation with example GCP service account JSON
-content/docs/launching-the-platform/self-hosted-onprem/platform-installation.mdx:393
-
-# Storage prerequisites documentation with example GCP service account JSON  
-content/docs/launching-the-platform/self-hosted-onprem/prerequisites/storage.mdx:218 

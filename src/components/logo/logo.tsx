@@ -1,11 +1,10 @@
 "use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import type { PropsWithChildren } from "react";
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import LogoHorizontalDark from "./logos/settlemint-logo-h-dm.svg";
 import LogoHorizontalLight from "./logos/settlemint-logo-h-lm.svg";
 import LogoIconDark from "./logos/settlemint-logo-i-dm.svg";
@@ -26,11 +25,13 @@ export function Logo({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    startTransition(() => {
+      setMounted(true);
+    });
   }, []);
 
   if (!mounted) {
-    return <Skeleton className={cn("rounded-md", className)} />;
+    return null;
   }
 
   const getLogoSrc = () => {

@@ -1,0 +1,532 @@
+---
+title: Deployment Guide
+description:
+  Complete deployment guide for launching enterprise-grade asset tokenization platforms - from development to production with automated infrastructure and compliance tools
+pageTitle: Deployment Guide - Production deployment and infrastructure
+tags: [deployment, infrastructure, production, devops]
+---
+
+## How do I deploy an asset tokenization platform?
+
+Deploying an enterprise asset tokenization platform traditionally takes months and millions in development costs. With SettleMint's Asset Tokenization Kit, financial institutions and enterprises can launch production-ready tokenization platforms in under 30 minutes.
+
+### Who uses the Asset Tokenization Kit?
+
+- **Banks & Financial Institutions**: Launching digital securities and CBDCs
+- **Asset Managers**: Creating tokenized funds and investment products  
+- **Corporations**: Issuing digital bonds and tokenized equity
+- **Government Entities**: Deploying digital currencies and bonds
+- **FinTech Startups**: Building innovative tokenization solutions
+
+### What problems does rapid deployment solve?
+
+<Cards>
+  <Card title="Time to Market" description="Launch in days instead of months" />
+  <Card title="Cost Reduction" description="Save 90% on development costs" />
+  <Card title="Compliance Ready" description="Pre-built regulatory controls" />
+  <Card title="Security" description="Enterprise-grade infrastructure from day one" />
+  <Card title="Scalability" description="Handle millions of transactions automatically" />
+</Cards>
+
+## Quick Start: How do I begin deployment?
+
+<Steps>
+  <Step>
+    ### Create Your SettleMint Organization
+    
+    1. Navigate to the SettleMint platform
+    2. Create your organization account (takes 2 minutes)
+    3. Complete KYB verification for production access
+    
+    For detailed setup: [Account Setup Guide](/building-with-settlemint/setup-account-and-billing)
+  </Step>
+  
+  <Step>
+    ### Deploy the Asset Tokenization Kit
+    
+    Select "Add application" and choose "Asset tokenization kit" from the marketplace:
+    
+    ![Deploy asset tokenization kit - Application marketplace](/images/btp/application-kits/add-kit-ui.png)
+  </Step>
+  
+  <Step>
+    ### Configure Your Blockchain Network
+    
+    Choose your deployment network based on your requirements:
+    
+    - **Ethereum Mainnet**: For public tokenized assets
+    - **Polygon**: For high-volume, low-cost transactions
+    - **Private Networks**: For regulatory compliance (CBDC, securities)
+    - **Hyperledger Besu**: For enterprise consortiums
+  </Step>
+</Steps>
+
+![Select network and resources for asset tokenization](/images/btp/application-kits/select-kit-resources.png)
+
+## What's the difference between development and production environments?
+
+<Tabs defaultValue="development">
+  <Tab value="development" label="Development Environment">
+    ### For Testing and Prototyping
+    
+    **Infrastructure**: Shared SaaS environment optimized for cost-efficiency
+    
+    **Resource Allocation**: 
+    - 1 validator node + 1 non-validator node
+    - 2 vCPUs, 4GB RAM per node
+    - 100GB SSD storage
+    - 1,000 TPS capacity
+    
+    **Best For**:
+    - Proof of concepts and demos
+    - Integration testing
+    - Smart contract development
+    - Training and education
+    
+    **Cost**: Starting at €500/month
+    **Deployment Time**: 5 minutes
+  </Tab>
+  
+  <Tab value="production" label="Production Environment">
+    ### For Live Digital Assets
+    
+    **Infrastructure**: Dedicated cluster with 99.95% uptime SLA
+    
+    **Resource Allocation**:
+    - 4 validator nodes + 2 non-validator nodes  
+    - 8 vCPUs, 32GB RAM per node
+    - 1TB NVMe storage with automatic backups
+    - 10,000+ TPS capacity
+    
+    **Enterprise Features**:
+    - Geographic distribution across 3 availability zones
+    - Automated failover and disaster recovery
+    - DDoS protection and Web Application Firewall
+    - 24/7 monitoring and support
+    - Compliance reporting (SOC2, ISO 27001)
+    
+    **Cost**: Starting at €5,000/month
+    **Deployment Time**: 30 minutes
+  </Tab>
+</Tabs>
+
+### How do I scale my deployment?
+
+**Dynamic Scaling Options**:
+- **Vertical Scaling**: Upgrade CPU/RAM without downtime
+- **Horizontal Scaling**: Add nodes for higher throughput
+- **Geographic Expansion**: Deploy to new regions
+- **Auto-scaling**: Automatic resource adjustment based on load
+
+**Scaling Triggers**:
+- Transaction volume exceeds 80% capacity
+- Storage usage approaches limits
+- Response time degradation
+- Business growth requirements
+
+## How do I deploy the user interface for my tokenization platform?
+
+The Asset Tokenization Kit includes a production-ready web interface that your users will interact with. This white-label solution can be customized with your branding and deployed in minutes.
+
+### What does the frontend interface include?
+
+**Issuer Portal Features**:
+- Asset creation and management dashboard
+- Compliance and KYC management tools
+- Real-time analytics and reporting
+- Multi-signature transaction approval
+
+**Investor Portal Features**:
+- Portfolio management dashboard
+- Trading and transfer interface
+- Document vault and reporting
+- Mobile-responsive design
+
+### Container Deployment Configuration
+
+Deploy the frontend using our optimized container image:
+
+| Configuration | Description | Recommended Settings |
+| --- | --- | --- |
+| **Container Image** | Pre-built frontend with latest security patches | `ghcr.io/settlemint/asset-tokenization-kit:latest` |
+| **Port Configuration** | HTTPS endpoint for secure access | `443` (with SSL termination) |
+| **Resource Limits** | Ensure smooth performance | 2 CPU, 4GB RAM minimum |
+| **Health Checks** | Automatic recovery from failures | `/health` endpoint every 30s |
+| **Replicas** | High availability setup | 3 instances across zones |
+
+### How do I control access to the platform?
+
+**Access Control Options**:
+
+**🌐 Public Access** 
+- **Use Case**: Demo environments, public token sales
+- **Security**: Rate limiting, DDoS protection
+- **Features**: Read-only access to public data
+
+**🔒 Organization Members Only**
+- **Use Case**: Internal platforms, private securities
+- **Authentication**: SSO integration (SAML, OAuth)
+- **Audit**: Complete access logs for compliance
+
+**🎯 Custom Access Rules**
+- IP whitelisting for specific regions
+- Multi-factor authentication (MFA)
+- Role-based access control (RBAC)
+- Time-based access windows
+
+### What environment variables do I need to configure?
+
+Configure these secure environment variables for backend integration:
+
+| Variable | Purpose | Security Level |
+| --- | --- | --- |
+| `SETTLEMINT_INSTANCE` | Platform instance identifier | Public |
+| `SETTLEMINT_ACCESS_TOKEN` | API authentication token | 🔒 Secret |
+| `SETTLEMINT_HD_PRIVATE_KEY` | Transaction signing key | 🔴 Critical |
+| `SETTLEMINT_BLOCKSCOUT_UI_ENDPOINT` | Blockchain explorer URL | Public |
+| `SETTLEMINT_HASURA_ENDPOINT` | GraphQL API endpoint | Internal |
+| `SETTLEMINT_HASURA_DATABASE_URL` | Database connection | 🔒 Secret |
+| `SETTLEMINT_HASURA_ADMIN_SECRET` | Admin API access | 🔴 Critical |
+| `SETTLEMINT_PORTAL_GRAPHQL_ENDPOINT` | Portal API endpoint | Internal |
+| `SETTLEMINT_THEGRAPH_SUBGRAPHS_ENDPOINTS` | Indexing service URLs | Public |
+
+<Callout type="warning" title="Security Best Practices">
+  ✅ **DO**:
+  - Use hardware security modules (HSM) for private keys
+  - Rotate tokens every 90 days
+  - Implement secret scanning in CI/CD
+  - Use vault services (HashiCorp, AWS Secrets)
+  
+  ❌ **DON'T**:
+  - Commit secrets to version control
+  - Share credentials via email/Slack
+  - Use the same keys across environments
+  - Log sensitive values
+</Callout>
+
+### How do I set up a custom domain?
+
+**Custom Domain Configuration**:
+
+1. **Choose Your Domain**: 
+   - `tokens.yourcompany.com` (recommended)
+   - `digital-assets.yourbank.com`
+   - `cbdc.centralbank.gov`
+
+2. **SSL Certificate**: 
+   - Automatic Let's Encrypt integration
+   - Support for custom certificates
+   - Wildcard certificates supported
+
+3. **DNS Configuration**:
+   ```
+   Type: CNAME
+   Host: tokens
+   Target: your-deployment.settlemint.app
+   TTL: 300
+   ```
+
+4. **Propagation**: Usually complete within 15 minutes
+
+**White-Label Customization Options**:
+- Custom logo and favicon
+- Brand colors and typography
+- Custom email templates
+- Tailored legal disclaimers
+- Multi-language support (25+ languages)
+
+## What are the key benefits of containerized deployment?
+
+**🚀 Rapid Deployment**
+- Launch new environments in 5 minutes
+- Zero-downtime updates with rolling deployments
+- Automatic rollback on failures
+
+**🔒 Enhanced Security**
+- Isolated runtime environments
+- Immutable infrastructure
+- Automated security patches
+- Container scanning for vulnerabilities
+
+**📈 Scalability**
+- Handle 10x traffic spikes automatically
+- Geographic load balancing
+- CDN integration for global performance
+
+**💰 Cost Efficiency**
+- Pay only for resources used
+- Automatic scaling down during low usage
+- 70% cost savings vs traditional hosting
+
+## How do I set up local development for customization?
+
+Local development enables you to customize the Asset Tokenization Kit to match your specific business requirements. Whether you're adding custom features or integrating with existing systems, our development environment provides everything you need.
+
+### Why develop locally?
+
+- **Custom Features**: Add industry-specific functionality
+- **Integration Testing**: Connect with your existing systems
+- **Compliance Customization**: Implement jurisdiction-specific rules
+- **UI/UX Modifications**: Match your brand guidelines perfectly
+
+### Development Setup Options
+
+Access our open-source codebase: [GitHub - Asset Tokenization Kit](https://github.com/settlemint/asset-tokenization-kit)
+
+Choose your development approach:
+
+<Tabs defaultValue="quickstart">
+  <Tab value="quickstart" label="Quick Start ⚡">
+    **Quick Start with Predeployed Contracts**
+    - **Time to Start**: 5 minutes
+    - **Best For**: Frontend customization, UI development
+    - **Includes**: Pre-deployed smart contracts on testnet
+  </Tab>
+  
+  <Tab value="custom" label="Full Customization 🛠️">
+    **Full Customization Setup**
+    - **Time to Start**: 30 minutes  
+    - **Best For**: Custom smart contracts, deep integration
+    - **Includes**: Complete control over all components
+  </Tab>
+</Tabs>
+
+### Quick Start: Predeployed Setup (5 minutes)
+
+Perfect for teams who want to start building immediately without deploying contracts:
+
+```bash
+# Step 1: Install dependencies (30 seconds)
+bun install
+
+# Step 2: Authenticate with SettleMint (1 minute)
+bunx settlemint login
+bunx settlemint connect
+
+# Step 3: Setup and launch the application (2 minutes)
+cd kit/dapp
+bun codegen:settlemint  # Generate TypeScript types
+bun addresses           # Configure contract addresses
+bun dev                 # Start development server
+```
+
+**What's included in predeployed setup?**
+- ✅ Smart contracts deployed on Polygon Mumbai testnet
+- ✅ Pre-configured Graph Protocol indexing
+- ✅ Sample tokens for testing (USDC, ETH, BTC)
+- ✅ Test wallets with funds
+- ✅ Complete API documentation
+
+**Access your local platform**: [http://localhost:3000](http://localhost:3000)
+
+<Callout type="info" title="First-time setup tip">
+  The first account you create receives admin privileges automatically. Use a secure password!
+</Callout>
+
+### Advanced: Full Customization Setup (30 minutes)
+
+For teams building custom tokenization logic or integrating with existing smart contracts:
+
+#### What can you customize?
+
+- **Smart Contracts**: Add custom token standards, compliance rules
+- **Business Logic**: Implement industry-specific workflows
+- **Integration**: Connect with existing ERP/CRM systems
+- **Compliance**: Add jurisdiction-specific requirements
+- **UI/UX**: Complete frontend redesign
+
+#### Prerequisites & Installation
+
+**Required Tools**:
+
+1. **Foundry** (Smart Contract Development)
+   ```bash
+   # Install latest version (v0.3.0+)
+   curl -L https://foundry.paradigm.xyz | bash
+   foundryup
+   ```
+   Documentation: [Foundry Book](https://book.getfoundry.sh/getting-started/installation)
+
+2. **Node.js** (v20.18.1 or higher)
+   ```bash
+   # Install via fnm (recommended)
+   curl -fsSL https://fnm.vercel.app/install | bash
+   fnm install 20
+   fnm use 20
+   ```
+   Alternative: [fnm GitHub](https://github.com/Schniz/fnm)
+
+#### Step-by-Step Deployment Process
+
+<Steps>
+  <Step>
+    ### Initial Setup (2 minutes)
+    ```bash
+    bun install                    # Install all dependencies
+    bun settlemint login          # Authenticate with platform
+    bun settlemint connect        # Connect to your blockchain
+    ```
+  </Step>
+  
+  <Step>
+    ### Deploy Smart Contracts (5 minutes)
+    ```bash
+    cd kit/contracts
+    bun deploy:remote             # Deploy to selected network
+    # ✅ Contracts deployed to: 0x123...abc
+    ```
+  </Step>
+  
+  <Step>
+    ### Deploy Indexing Infrastructure (3 minutes)
+    ```bash
+    cd ../subgraph
+    bun deploy:remote             # Deploy Graph Protocol subgraph
+    # ✅ Subgraph available at: https://api.thegraph.com/...
+    ```
+  </Step>
+  
+  <Step>
+    ### Generate TypeScript Bindings (1 minute)
+    ```bash
+    cd ../../
+    bun codegen                   # Generate type-safe interfaces
+    ```
+  </Step>
+  
+  <Step>
+    ### Configure Application (2 minutes)
+    ```bash
+    cd kit/dapp
+    bun addresses                 # Set contract addresses
+    bun db:push                   # Initialize database schema
+    ```
+  </Step>
+  
+  <Step>
+    ### Launch Development Server (1 minute)
+    ```bash
+    bun dev                       # Start on http://localhost:3000
+    ```
+  </Step>
+</Steps>
+
+**Deployment Checklist**:
+- [ ] Smart contracts verified on block explorer
+- [ ] Subgraph syncing correctly (check status)
+- [ ] Database migrations completed
+- [ ] Admin account created
+- [ ] Test transaction successful
+
+<Callout type="warning" title="Common Issues & Solutions">
+  - **"Contract deployment failed"**: Check wallet has sufficient gas
+  - **"Subgraph sync error"**: Verify contract addresses match
+  - **"Type generation failed"**: Ensure contracts compiled successfully
+</Callout>
+
+### How do I customize the database schema?
+
+The Asset Tokenization Kit uses a flexible database architecture that can be extended for your specific needs:
+
+#### Common Database Customizations
+
+**Adding Custom Fields**:
+- KYC/AML data (verification levels, documents)
+- Business-specific metadata (credit scores, collateral details)
+- Regulatory fields (tax IDs, jurisdiction data)
+- Integration IDs (ERP references, banking details)
+
+#### Database Modification Process
+
+<Steps>
+  <Step>
+    **Modify Schema** 📝
+    ```bash
+    # Navigate to database schema
+    cd kit/dapp/src/lib/db
+    
+    # Edit schema files with your custom fields
+    # Example: Add accreditation status to users
+    ```
+  </Step>
+  
+  <Step>
+    **Apply Schema Changes** 🔄
+    ```bash
+    cd kit/dapp
+    bun db:push                    # Update database structure
+    ```
+  </Step>
+  
+  <Step>
+    **Register with GraphQL** 🔗
+    ```bash
+    settlemint hasura track -a     # Track new tables/columns
+    ```
+  </Step>
+  
+  <Step>
+    **Regenerate Types** 🏗️
+    ```bash
+    bun codegen --force           # Update TypeScript definitions
+    ```
+  </Step>
+  
+  <Step>
+    **Test Changes** ✅
+    ```bash
+    bun dev                       # Verify in development
+    ```
+  </Step>
+</Steps>
+
+#### Authentication Schema Customization
+
+**Extending User Profiles**:
+
+When modifying authentication-related tables (user, session, account, verification):
+
+1. Update `additionalFields` in `kit/dapp/src/lib/auth/auth.ts`:
+   ```typescript
+   additionalFields: {
+     accreditedInvestor: boolean,
+     kycLevel: 'none' | 'basic' | 'enhanced',
+     jurisdiction: string,
+   }
+   ```
+
+2. Clear browser cookies and re-authenticate to see changes
+
+3. Reference: [Better Auth Core Schema](https://www.better-auth.com/docs/concepts/database#core-schema)
+
+<Callout type="info" title="Best Practices">
+  - Always backup database before schema changes
+  - Test migrations in development first
+  - Document custom fields for team members
+  - Plan for data migration in production
+</Callout>
+
+#### Production Database Considerations
+
+<Accordions>
+  <Accordion title="Performance Optimization">
+    - Add indexes for frequently queried fields
+    - Implement database partitioning for large datasets
+    - Use read replicas for analytics queries
+    - Enable automatic backups (daily minimum)
+  </Accordion>
+  
+  <Accordion title="Security">
+    - Encrypt sensitive fields at rest
+    - Implement row-level security (RLS)
+    - Audit database access logs
+    - Regular security assessments
+  </Accordion>
+  
+  <Accordion title="Compliance">
+    - Data retention policies
+    - GDPR right-to-deletion support
+    - Audit trail for all modifications
+    - Geographic data residency options
+  </Accordion>
+</Accordions>

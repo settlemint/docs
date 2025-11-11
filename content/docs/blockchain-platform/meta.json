@@ -1,0 +1,22 @@
+{
+  "title": "Blockchain Platform",
+  "root": true,
+  "pages": [
+    "about-settlemint",
+    "launching-the-platform",
+    "supported-blockchains",
+    "platform-components",
+    "building-with-settlemint",
+    "use-case-guides",
+    "blockchain-and-ai",
+    "application-kits",
+    "knowledge-bank",
+    "support",
+    "account-billing",
+    "releases",
+    "reference",
+    "terms-and-policies",
+    "security",
+    "release-notes"
+  ]
+}

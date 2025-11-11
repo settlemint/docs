@@ -1,0 +1,176 @@
+---
+title: "PostgreSQL"
+description:
+  Setup and configure PostgreSQL database for your self-hosted platform
+---
+
+
+## Overview
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Primary Database
+    - User data and configurations
+    - Platform state
+    - Application data
+    - Minimum version: PostgreSQL 13+
+  </Card>
+
+  <Card>
+    ### Key Features
+    - High availability
+    - Data persistence
+    - Backup support
+    - Performance monitoring
+  </Card>
+</div>
+
+## Deployment options
+
+<Tabs items={['Managed Service (Recommended)', 'Helm Chart']}>
+  <Tab value="Managed Service (Recommended)">
+    ### Cloud Provider Options
+
+    <Steps>
+      ### Digital Ocean Managed Database
+      - Create new database cluster
+      - Choose PostgreSQL 13+
+      - Select plan (minimum 2 vCPU, 4GB RAM)
+      - Enable connection pooling (recommended: 50 connections)
+
+      ### Neon Serverless PostgreSQL
+      - Create new project
+      - Set up new database
+      - Enable connection pooling
+      - Note the connection string
+
+      ### Other Providers
+      - Amazon RDS
+      - Google Cloud SQL
+      - Azure Database for PostgreSQL
+    </Steps>
+
+    <Callout type="info">
+      **Benefits**
+      - Automatic backups
+      - High availability
+      - Security patches
+      - Performance monitoring
+    </Callout>
+
+  </Tab>
+
+  <Tab value="Helm Chart">
+    ### Bitnami PostgreSQL Chart
+
+    <Steps>
+      ### Install PostgreSQL
+      ```bash
+      helm upgrade --install postgresql oci://registry-1.docker.io/bitnamicharts/postgresql \
+        --namespace postgresql \
+        --version 14.3.3 \
+        --create-namespace \
+        --set global.postgresql.auth.username=platform \
+        --set global.postgresql.auth.password=your-secure-password \
+        --set global.postgresql.auth.database=platform
+      ```
+
+      ### Wait for deployment
+      ```bash
+      kubectl -n postgresql get pods -w
+      ```
+    </Steps>
+
+    <Callout type="warning">
+      **For Production Use**
+      - Configure proper resource limits
+      - Set up regular backups
+      - Consider high availability setup
+    </Callout>
+
+  </Tab>
+</Tabs>
+
+## Requirements
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card>
+    ### Minimum Specifications
+    - PostgreSQL 13 or higher
+    - 2 vCPU cores
+    - 4GB RAM
+    - 20GB storage
+  </Card>
+
+  <Card>
+    ### Recommended Features
+    - Connection pooling
+    - Automated backups
+    - Point-in-time recovery
+    - SSL/TLS encryption
+  </Card>
+</div>
+
+## Information collection
+
+<Callout type="success">
+### Required values for platform installation
+
+- [ ] Database hostname
+- [ ] Port number (default: 5432)
+- [ ] Database name
+- [ ] Username
+- [ ] Password
+- [ ] SSL mode (e.g., `require`)
+
+```yaml
+postgresql:
+  host: "your-db-host"
+  port: 5432
+  user: "platform"
+  password: "your-secure-password"
+  database: "platform"
+  sslMode: "require" # or "disable" for local development
+```
+
+</Callout>
+
+## Validation
+
+<Steps>
+  ### Test PostgreSQL connection
+  ```bash
+  # Using psql client
+  psql "postgres://username:password@hostname:5432/dbname?sslmode=require"
+
+# Or using connection string
+
+psql "postgresql://username:password@hostname:5432/dbname?sslmode=require"
+
+```
+</Steps>
+
+## Troubleshooting
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<Card>
+  ### Connection Failures
+  - Verify credentials
+  - Check network/firewall rules
+  - Confirm SSL/TLS settings
+  - Validate connection string format
+</Card>
+
+<Card>
+  ### Performance Issues
+  - Check connection pool settings
+  - Monitor resource usage
+  - Review query performance
+  - Verify index usage
+</Card>
+</div>
+
+<Callout type="info">
+Need help? Contact [support@settlemint.com](mailto:support@settlemint.com) if you encounter any issues.
+</Callout>
+```

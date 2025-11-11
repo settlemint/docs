@@ -1,0 +1,9 @@
+{
+  "title": "Security and Auth",
+  "pages": [
+    "private-keys",
+    "user-wallets",
+    "personal-access-tokens",
+    "application-access-tokens"
+  ]
+}

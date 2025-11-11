@@ -1,0 +1,22 @@
+{
+  "title": "Knowledge Bank",
+  "pages": [
+    "blockchain-introduction",
+    "public-blockchains",
+    "private-blockchains",
+    "besu-transaction-flow",
+    "fabric-transaction-flow",
+    "blockchain-app-design",
+    "smart-contracts",
+    "solidity",
+    "subgraphs",
+    "chaincode",
+    "keys-and-security",
+    "bfsi-blockchain-usecases",
+    "public-sector-usecases",
+    "industrial-usecases",
+    "supply-chain",
+    "art-gaming-usecases",
+    "blockchain-ai-usecases"
+  ]
+}
