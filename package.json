@@ -7,7 +7,7 @@
     "build": "bun generate-sdk-docs && next build",
     "dev": "bun generate-sdk-docs && next dev",
     "start": "bun generate-sdk-docs && next start",
-    "postinstall": "fumadocs-mdx",
+    "postinstall": "fumadocs-mdx && next typegen",
     "lint": "eslint",
     "check-types": "tsc --noEmit",
     "format": "prettier --write .",
