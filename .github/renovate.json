@@ -27,6 +27,20 @@
       "groupName": "SettleMint SDK",
       "groupSlug": "settlemint",
       "matchPackageNames": ["/^@settlemint//"]
+    },
+    {
+      "matchManagers": ["docker-compose"],
+      "matchDatasources": ["docker"],
+      "matchFileNames": ["docker-compose.yml"],
+      "matchPackageNames": [
+        "ghcr.io/settlemint/codestudio-asset-tokenization-kit"
+      ],
+      "matchCurrentValue": "/^2\\.0\\.0(?:-.+)?$/",
+      "allowedVersions": "/^2\\.0\\.0(?:-(?:beta|rc|main)\\.[0-9]+)?$/",
+      "versioning": "regex:^(?<major>2)\\.(?<minor>0)\\.(?<patch>0)(?:-(?<prerelease>(?:beta|rc|main))\\.(?<build>[0-9]+))?$",
+      "ignoreUnstable": false,
+      "respectLatest": false,
+      "automerge": true
     }
   ],
   "hostRules": [
