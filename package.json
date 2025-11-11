@@ -33,7 +33,7 @@
     "ai": "5.0.92",
     "class-variance-authority": "0.7.1",
     "fumadocs-core": "16.0.9",
-    "fumadocs-mdx": "13.0.6",
+    "fumadocs-mdx": "13.0.7",
     "fumadocs-typescript": "4.0.13",
     "fumadocs-ui": "16.0.9",
     "hast-util-to-jsx-runtime": "2.3.6",
