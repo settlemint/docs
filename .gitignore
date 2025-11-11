@@ -31,3 +31,5 @@ content/docs/asset-tokenization-kit/*
 
 content/docs/sdk/*
 !content/docs/sdk/.gitkeep
+
+public/images/screenshots/*
