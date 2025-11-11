@@ -19,18 +19,23 @@ async function generateSnippet(sdkDocsPath: string, outputFilename: string) {
   );
   const content = lines.slice(aboutIndex).join("\n");
 
-  const targetDir = join(__dirname, "..", "content", "snippets", "dev-tools");
+  const targetDir = join(__dirname, "..", "content", "docs", "sdk");
   console.log(`[Generate SDK Docs] Creating target directory: ${targetDir}`);
   await mkdir(targetDir, { recursive: true });
 
   const outputPath = join(targetDir, outputFilename);
   console.log(`[Generate SDK Docs] Writing content to: ${outputPath}`);
-  // replace 'https://github.com/settlemint/sdk/tree/v2.2.0/sdk/cli/docs/settlemint.md)' with '/building-with-settlemint/cli/command-reference'
+  // replace 'https://github.com/settlemint/sdk/tree/v2.2.0/sdk/cli/docs/settlemint.md' with '/sdk/cli/command-reference'
   const updatedContent = content.replace(
     /https:\/\/github\.com\/settlemint\/sdk\/tree\/.*?\/sdk\/cli\/docs\/settlemint\.md/,
-    "/building-with-settlemint/cli/command-reference"
+    "/sdk/cli/command-reference"
   );
-  await writeFile(outputPath, escapeContent(updatedContent));
+  
+  // Add frontmatter to the content
+  const frontmatter = generateSnippetFrontmatter(outputFilename);
+  const contentWithFrontmatter = `${frontmatter}\n\n${escapeContent(updatedContent)}`;
+  
+  await writeFile(outputPath, contentWithFrontmatter);
 
   console.log(
     "[Generate SDK Docs] SDK documentation generation completed successfully!"
@@ -166,7 +171,7 @@ async function generateMetaJsonFiles(
 async function generateCliCommandDocs() {
   console.log("[Generate SDK Docs] Starting CLI command reference download...");
 
-  const targetDir = join(__dirname, "..", "content", "snippets", "dev-tools");
+  const targetDir = join(__dirname, "..", "content", "docs", "sdk");
   const { skip, previousUpload } = await shouldSkipCliDocsDownload(targetDir);
 
   if (skip) {
@@ -183,7 +188,7 @@ async function generateCliCommandDocs() {
   const cliReferenceTargetDir = join(
     __dirname,
     "..",
-    "content/docs/building-with-settlemint/cli"
+    "content/docs/sdk/cli"
   );
 
   while (filesToProcess.length > 0) {
@@ -287,13 +292,15 @@ function addFrontmatter(path: string, content: string): string {
   if (title === "settlemint") {
     return `---
 title: "Command reference"
-description: CLI command reference for SettleMint platform
+description: "CLI command reference for SettleMint platform"
 ---
 
 ${content}`;
   }
+  const formattedTitle = escapeTitle(title);
   return `---
-title: ${escapeTitle(title)}
+title: "${formattedTitle}"
+description: "CLI command documentation for ${formattedTitle}"
 ---
 
 ${content}`;
@@ -303,10 +310,76 @@ function escapeTitle(title: string): string {
   return title.charAt(0).toUpperCase() + title.slice(1).replace(/-/g, " ");
 }
 
+function generateSnippetFrontmatter(filename: string): string {
+  // Remove .mdx extension and generate title
+  const nameWithoutExt = filename.replace(/\.mdx$/, "");
+  
+  // Map filenames to titles
+  const titleMap: Record<string, string> = {
+    index: "SDK CLI",
+    viem: "Viem SDK",
+    minio: "MinIO SDK",
+    portal: "Portal SDK",
+    hasura: "Hasura SDK",
+    blockscout: "Blockscout SDK",
+    ipfs: "IPFS SDK",
+    "the-graph": "The Graph SDK",
+    eas: "EAS SDK",
+  };
+
+  const title = titleMap[nameWithoutExt] || escapeTitle(nameWithoutExt);
+  
+  // Generate description based on the SDK
+  const descriptionMap: Record<string, string> = {
+    index: "Command-line interface for interacting with the SettleMint platform",
+    viem: "Lightweight wrapper for Viem client configuration with SettleMint",
+    minio: "SDK for MinIO object storage integration with SettleMint",
+    portal: "SDK for SettleMint API Portal integration",
+    hasura: "SDK for Hasura GraphQL engine integration with SettleMint",
+    blockscout: "SDK for Blockscout blockchain explorer integration",
+    ipfs: "SDK for IPFS (InterPlanetary File System) integration",
+    "the-graph": "SDK for The Graph protocol integration with SettleMint",
+    eas: "SDK for Ethereum Attestation Service (EAS) integration",
+  };
+
+  const description = descriptionMap[nameWithoutExt] || `SDK documentation for ${title}`;
+
+  return `---
+title: "${title}"
+description: "${description}"
+---`;
+}
+
+async function generateSdkMetaJson() {
+  console.log("[Generate SDK Docs] Generating SDK meta.json file");
+
+  const sdkDir = join(__dirname, "..", "content", "docs", "sdk");
+  const metaPath = join(sdkDir, "meta.json");
+
+  const metaContent = {
+    title: "SDK",
+    root: true,
+    pages: [
+      "index",
+      "viem",
+      "minio",
+      "portal",
+      "hasura",
+      "blockscout",
+      "ipfs",
+      "the-graph",
+      "eas",
+    ],
+  };
+
+  await writeFile(metaPath, JSON.stringify(metaContent, null, 2));
+  console.log(`[Generate SDK Docs] Created: ${metaPath}`);
+}
+
 // Execute the functions
 await generateSnippet(
   "./node_modules/@settlemint/sdk-cli/README.md",
-  "cli.mdx"
+  "index.mdx"
 );
 await generateSnippet(
   "./node_modules/@settlemint/sdk-viem/README.md",
@@ -341,3 +414,4 @@ await generateSnippet(
   "eas.mdx"
 );
 await generateCliCommandDocs();
+await generateSdkMetaJson();

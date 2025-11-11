@@ -1,0 +1,4 @@
+{
+  "label": "Dev Tools",
+  "pages": ["code-studio", "ai-code-assistant", "sdk", "cli", "mcp"]
+}

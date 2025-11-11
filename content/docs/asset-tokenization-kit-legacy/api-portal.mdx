@@ -1,0 +1,497 @@
+---
+title: API Portal
+description:
+  Complete API reference for tokenization platforms. REST & GraphQL APIs for bonds, stablecoins, equity tokens. 150+ endpoints with enterprise-grade security and 99.9% uptime.
+pageTitle: API Portal - REST & GraphQL API reference
+tags: [api, rest, graphql, integration, developer]
+---
+
+## What is the Asset Tokenization API Portal?
+
+<Callout>
+**For developers integrating tokenization into existing systems:** The API Portal provides comprehensive programmatic access to all tokenization features through REST and GraphQL interfaces. This enables seamless integration of digital assets into banking systems, trading platforms, and enterprise applications without touching blockchain code directly.
+</Callout>
+
+## Who uses the Tokenization APIs?
+
+### Primary Users
+- **System Integrators** connecting tokenization to core banking systems
+- **FinTech Developers** building digital asset applications
+- **Trading Platforms** adding tokenized asset support
+- **Enterprise IT Teams** automating treasury operations
+- **Third-party Vendors** creating value-added services
+
+### Problems Solved
+- **Integration Complexity:** Pre-built connectors for major platforms
+- **Blockchain Abstraction:** No Web3 knowledge required
+- **Performance:** Sub-100ms response times at scale
+- **Security:** Enterprise-grade authentication and encryption
+- **Compliance:** Built-in regulatory controls in every endpoint
+
+## How to get started with APIs?
+
+### Step 1: Generate API Key
+
+![Create API Key](/images/btp/application-kits/create-api-key.png)
+
+<Steps>
+  <Step>
+    **Navigate to API Keys tab in the portal**
+  </Step>
+  
+  <Step>
+    **Click "Create API Key" button**
+  </Step>
+  
+  <Step>
+    **Name your key** (e.g., "Production API", "Mobile App", "Integration Layer")
+  </Step>
+  
+  <Step>
+    **Set optional expiry date** for temporary access
+  </Step>
+  
+  <Step>
+    **Copy and securely store** the generated key
+  </Step>
+</Steps>
+
+<Callout type="warn">
+**Security Best Practices:**
+- Never expose keys in frontend code
+- Use environment variables for storage
+- Rotate keys quarterly
+- Set expiry dates for temporary access
+- Use separate keys per environment
+</Callout>
+
+### Step 2: Authentication
+
+All API requests require authentication via header:
+```
+x-api-key: YOUR_GENERATED_KEY_HERE
+```
+
+**Example Request:**
+```bash
+curl -X GET https://api.settlemint.com/api/bond \
+  -H "x-api-key: sm_prod_a1b2c3d4e5f6g7h8i9j0" \
+  -H "Content-Type: application/json"
+```
+
+### Step 3: Access Documentation
+
+![API Portal](/images/btp/application-kits/api-portal.png)
+
+The interactive Swagger documentation provides:
+- **Live API Testing:** Try endpoints with real data
+- **Code Generation:** Export client libraries in 10+ languages
+- **Request Examples:** Copy-paste ready samples
+- **Response Schemas:** Detailed field descriptions
+- **Error Codes:** Comprehensive troubleshooting guide
+
+![API Response](/images/btp/application-kits/api-response.png)
+
+## What APIs are available?
+
+### Bond Management APIs
+
+**For tokenizing debt instruments and managing their lifecycle:**
+
+| Method | Endpoint | Purpose | Use Case |
+|--------|----------|---------|----------|
+| GET | `/api/bond` | List all bonds | Display bond marketplace |
+| GET | `/api/bond/{address}` | Get bond details | Show bond information page |
+| POST | `/api/bond/factory` | Deploy new bond | Issue corporate/government bonds |
+| POST | `/api/bond/mint` | Issue bond tokens | Primary market issuance |
+| POST | `/api/bond/transfer` | Transfer ownership | Secondary market trading |
+| POST | `/api/bond/mature` | Mark as matured | Trigger redemption period |
+| POST | `/api/bond/redeem` | Redeem for principal | Investor cash-out |
+| PATCH | `/api/bond/set-yield-schedule` | Configure interest | Set coupon payments |
+
+**Real-world example:**
+```javascript
+// Issue a $10M corporate bond
+const response = await fetch('/api/bond/factory', {
+  method: 'POST',
+  headers: {
+    'x-api-key': 'YOUR_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: "Apple Inc 2025 Bond",
+    symbol: "AAPL25",
+    faceValue: 1000,
+    totalSupply: 10000,
+    couponRate: 5.5,
+    maturityDate: "2025-12-31"
+  })
+});
+```
+
+### Stablecoin Operations APIs
+
+**For managing fiat-backed digital currencies:**
+
+| Method | Endpoint | Purpose | Use Case |
+|--------|----------|---------|----------|
+| GET | `/api/stablecoin` | List stablecoins | Show available currencies |
+| POST | `/api/stablecoin/factory` | Deploy stablecoin | Launch USDC, EURC |
+| POST | `/api/stablecoin/mint` | Create new supply | Issue against reserves |
+| POST | `/api/stablecoin/burn` | Reduce supply | Redeem for fiat |
+| POST | `/api/stablecoin/transfer` | Send payment | P2P transactions |
+| PUT | `/api/stablecoin/freeze` | Freeze account | Compliance action |
+| PATCH | `/api/stablecoin/update-collateral` | Update reserves | Proof of reserves |
+
+**Integration example:**
+```javascript
+// Process cross-border payment
+const payment = await fetch('/api/stablecoin/transfer', {
+  method: 'POST',
+  headers: {
+    'x-api-key': 'YOUR_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    token: "0x123...",
+    from: "0xABC...",
+    to: "0xDEF...",
+    amount: "1000000", // $1,000 USDC
+    memo: "Invoice #12345"
+  })
+});
+```
+
+### Equity Token APIs
+
+**For digital share management:**
+
+| Method | Endpoint | Purpose | Use Case |
+|--------|----------|---------|----------|
+| GET | `/api/equity` | List equity tokens | Show cap table |
+| POST | `/api/equity/factory` | Create equity token | Issue shares |
+| POST | `/api/equity/mint` | Issue new shares | Funding rounds |
+| POST | `/api/equity/transfer` | Transfer shares | Secondary sales |
+| DELETE | `/api/equity/burn` | Cancel shares | Buybacks |
+| PUT | `/api/equity/block-user` | Restrict holder | Compliance |
+
+**Cap table automation:**
+```javascript
+// Issue Series A shares
+const seriesA = await fetch('/api/equity/factory', {
+  method: 'POST',
+  headers: {
+    'x-api-key': 'YOUR_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: "Startup Inc Series A Preferred",
+    symbol: "STRT-A",
+    totalShares: 1000000,
+    pricePerShare: 10,
+    liquidationPreference: 1.5,
+    votingRights: true
+  })
+});
+```
+
+### Fund Token APIs
+
+**For tokenized investment vehicles:**
+
+| Method | Endpoint | Purpose | Use Case |
+|--------|----------|---------|----------|
+| GET | `/api/fund` | List funds | Fund marketplace |
+| POST | `/api/fund/factory` | Create fund | Launch new fund |
+| POST | `/api/fund/mint` | Issue fund tokens | Investor subscription |
+| POST | `/api/fund/withdraw` | Redeem tokens | Investor exit |
+| PATCH | `/api/fund/update-nav` | Update NAV | Daily pricing |
+
+### Cryptocurrency APIs
+
+**For utility and governance tokens:**
+
+| Method | Endpoint | Purpose | Use Case |
+|--------|----------|---------|----------|
+| GET | `/api/cryptocurrency` | List tokens | Token directory |
+| POST | `/api/cryptocurrency/factory` | Deploy token | Launch utility token |
+| POST | `/api/cryptocurrency/mint` | Create supply | Rewards distribution |
+| POST | `/api/cryptocurrency/withdraw` | Claim tokens | User withdrawals |
+
+### Supporting APIs
+
+#### User & Identity Management
+```javascript
+// KYC verification check
+GET /api/user/wallet/{address}
+// Returns user KYC status, tier, limits
+
+// Bulk user import
+POST /api/user/bulk-import
+// Import existing customer base
+```
+
+#### Transaction Monitoring
+```javascript
+// Get transaction history
+GET /api/transaction/address/{address}
+// Returns paginated transaction list
+
+// Real-time transaction feed
+GET /api/transaction/timeline
+// WebSocket for live updates
+```
+
+#### Analytics & Reporting
+```javascript
+// Asset statistics
+GET /api/asset-stats/{address}
+// Returns supply, holders, volume
+
+// Portfolio valuation
+GET /api/asset-balance/portfolio/{wallet}
+// Returns all token holdings
+```
+
+#### Market Data Integration
+```javascript
+// Get exchange rates
+GET /api/providers/exchange-rates/USD
+// Returns current FX rates
+
+// Update asset price
+PATCH /api/providers/asset-price/{assetId}
+// Oracle price updates
+```
+
+## How to integrate with existing systems?
+
+### Banking System Integration
+
+**Core Banking Connection:**
+```javascript
+// Temenos T24 Integration Example
+class T24TokenizationBridge {
+  async createDigitalAsset(accountData) {
+    // Map T24 account to token
+    const token = await tokenizationAPI.createBond({
+      issuer: accountData.customerId,
+      amount: accountData.balance,
+      currency: accountData.currency,
+      maturity: accountData.maturityDate
+    });
+    
+    // Update T24 with token reference
+    await t24API.updateAccount({
+      accountId: accountData.id,
+      tokenAddress: token.address,
+      tokenStatus: 'ACTIVE'
+    });
+  }
+}
+```
+
+### ERP Integration
+
+**SAP Integration Pattern:**
+```javascript
+// SAP Treasury Integration
+const sapTreasuryConnector = {
+  async syncBondIssuance(bondData) {
+    // Create bond on blockchain
+    const bond = await api.bond.factory(bondData);
+    
+    // Update SAP with blockchain reference
+    await sap.createFinancialInstrument({
+      type: 'BOND',
+      blockchainId: bond.address,
+      amount: bondData.totalSupply * bondData.faceValue
+    });
+  }
+};
+```
+
+### Trading Platform Integration
+
+**Exchange Integration:**
+```javascript
+// Add tokenized assets to order book
+class TokenizedAssetExchange {
+  async addListingSupport(tokenAddress) {
+    const token = await api.getTokenDetails(tokenAddress);
+    
+    return exchange.addTradingPair({
+      base: token.symbol,
+      quote: 'USD',
+      contract: tokenAddress,
+      decimals: token.decimals,
+      minOrder: 0.01
+    });
+  }
+}
+```
+
+## What are the performance specifications?
+
+### API Performance Metrics
+- **Response Time:** &lt;100ms average, &lt;500ms 99th percentile
+- **Throughput:** 10,000 requests/second per instance
+- **Availability:** 99.9% uptime SLA
+- **Global Coverage:** CDN endpoints in 15 regions
+
+### Rate Limits
+- **Standard Tier:** 1,000 requests/minute
+- **Professional:** 10,000 requests/minute
+- **Enterprise:** Unlimited with dedicated infrastructure
+
+### Batch Operations
+```javascript
+// Batch mint tokens for 1000 investors
+POST /api/bond/batch-mint
+{
+  "operations": [
+    {"to": "0x123...", "amount": "1000"},
+    {"to": "0x456...", "amount": "2000"},
+    // ... up to 1000 operations
+  ]
+}
+```
+
+## How secure are the APIs?
+
+### Security Features
+- **Encryption:** TLS 1.3 for all connections
+- **Authentication:** API key + optional OAuth2
+- **Authorization:** Role-based access control
+- **Audit Trail:** Complete request logging
+- **DDoS Protection:** Cloudflare enterprise
+
+### Compliance Controls
+- **IP Whitelisting:** Restrict access by location
+- **Transaction Limits:** Configurable per API key
+- **Suspicious Activity Detection:** ML-based monitoring
+- **Regulatory Reporting:** Automated compliance exports
+
+## What SDK support is available?
+
+### Official SDKs
+
+<Tabs defaultValue="javascript">
+  <Tab value="javascript" label="JavaScript/TypeScript">
+    ```bash
+    npm install @settlemint/tokenization-sdk
+    ```
+  </Tab>
+  
+  <Tab value="python" label="Python">
+    ```bash
+    pip install settlemint-tokenization
+    ```
+  </Tab>
+  
+  <Tab value="java" label="Java">
+    ```xml
+    <dependency>
+      <groupId>com.settlemint</groupId>
+      <artifactId>tokenization-sdk</artifactId>
+    </dependency>
+    ```
+  </Tab>
+  
+  <Tab value="go" label="Go">
+    ```bash
+    go get github.com/settlemint/tokenization-go
+    ```
+  </Tab>
+</Tabs>
+
+### SDK Example Usage
+```typescript
+import { TokenizationClient } from '@settlemint/tokenization-sdk';
+
+const client = new TokenizationClient({
+  apiKey: process.env.SETTLEMINT_API_KEY,
+  network: 'mainnet'
+});
+
+// Issue a bond
+const bond = await client.bonds.create({
+  name: 'Corporate Bond 2024',
+  symbol: 'CB24',
+  faceValue: 1000,
+  supply: 10000,
+  couponRate: 5.5
+});
+
+// Monitor events
+client.events.on('Transfer', (event) => {
+  console.log(`Bond transferred: ${event.from} -> ${event.to}`);
+});
+```
+
+## Frequently asked questions
+
+<Accordions>
+  <Accordion title="Can I test APIs without deploying to mainnet?">
+    Yes, all APIs work on testnet. Use testnet API keys and endpoints for development.
+  </Accordion>
+  
+  <Accordion title="How do I handle blockchain transaction failures?">
+    APIs return transaction hashes. Monitor status and implement retry logic for failures.
+  </Accordion>
+  
+  <Accordion title="What's the difference between REST and GraphQL endpoints?">
+    REST is simpler for basic operations. GraphQL allows complex queries and reduces API calls.
+  </Accordion>
+  
+  <Accordion title="Can I subscribe to real-time events?">
+    Yes, use WebSocket endpoints for real-time updates on transfers, mints, and other events.
+  </Accordion>
+  
+  <Accordion title="How do I migrate from another tokenization platform?">
+    We provide migration APIs and professional services for seamless transitions.
+  </Accordion>
+  
+  <Accordion title="What happens if API keys are compromised?">
+    Immediately revoke compromised keys in the portal. All actions are logged for forensics.
+  </Accordion>
+</Accordions>
+
+## API quick reference
+
+### Most Used Endpoints
+
+<Cards>
+  <Card title="Asset Creation">
+    - `POST /api/{asset-type}/factory` - Deploy new assets
+    - `POST /api/{asset-type}/mint` - Issue tokens
+    - `POST /api/{asset-type}/transfer` - Transfer ownership
+  </Card>
+  
+  <Card title="Asset Management">
+    - `GET /api/{asset-type}` - List assets
+    - `GET /api/{asset-type}/{address}` - Get details
+    - `PATCH /api/{asset-type}/{address}` - Update parameters
+  </Card>
+  
+  <Card title="Compliance & Control">
+    - `PUT /api/{asset-type}/access-control/grant-role` - Permissions
+    - `PUT /api/{asset-type}/block-user` - Restrictions
+    - `GET /api/transaction/address/{address}` - Audit trail
+  </Card>
+  
+  <Card title="Analytics & Reporting">
+    - `GET /api/asset-stats/{address}` - Asset metrics
+    - `GET /api/asset-balance/portfolio/{wallet}` - Holdings
+    - `GET /api/transaction/timeline` - Activity feed
+  </Card>
+</Cards>
+
+## Next steps
+
+Ready to integrate tokenization APIs?
+
+- [Get API Key](https://platform.settlemint.com/api-keys)
+- [Download OpenAPI Spec](https://api.settlemint.com/swagger/json)
+- [Explore SDK Documentation](https://github.com/settlemint/tokenization-sdk)
+- [Join Developer Community](https://discord.gg/settlemint)

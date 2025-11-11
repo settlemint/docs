@@ -1,6 +1,0 @@
-{
-  "label": "SettleMint CLI",
-  "title": "SettleMint CLI",
-  "icon": "Square-code",
-  "pages": ["command-reference", "settlemint"]
-}

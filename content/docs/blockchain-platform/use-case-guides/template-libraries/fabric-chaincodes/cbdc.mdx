@@ -1,0 +1,570 @@
+---
+title: "CBDC Chaincode"
+description: "Educational CBDC chaincode template for prototyping central bank digital currency systems on Hyperledger Fabric."
+---
+
+## Disclaimer
+
+This chaincode is provided solely for educational and prototyping purposes. - It
+must not be used in live financial environments without thorough auditing,
+testing, and tailoring for legal, regulatory, and security requirements. - CBDC
+systems involve complex central banking policies, cryptographic controls,
+compliance audits, and jurisdictional regulations that this simplified
+implementation does not cover. - Any real-world deployment of such a contract
+must go through a complete security audit, formal verification, and regulatory
+alignment in the context of the target financial system.
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/hyperledger/fabric-contract-api-go/contractapi"
+)
+
+// Regex pattern for account ID validation
+var idPattern = regexp.MustCompile(`^[a-zA-Z0-9_.-]{4,64}$`)
+
+const (
+	RoleCentralBank     = "centralbank"
+	RoleRetailBank      = "retailbank"
+	RoleAuditor         = "auditor"
+	RetailTransferCap   = 100000
+	MultisigThreshold   = 500000
+)
+
+// CBDCContract defines the chaincode structure
+type CBDCContract struct {
+	contractapi.Contract
+}
+
+// Account represents a CBDC wallet
+type Account struct {
+	Owner      string            `json:"owner"`
+	Balance    uint64            `json:"balance"`
+	CreatedAt  string            `json:"createdAt"`
+	LastActive string            `json:"lastActive"`
+	Frozen     bool              `json:"frozen"`
+	Tags       map[string]string `json:"tags"`
+	History    []TransactionLog  `json:"history"`
+}
+
+// TransactionLog stores audit trails for an account
+type TransactionLog struct {
+	Action       string `json:"action"`
+	Amount       uint64 `json:"amount,omitempty"`
+	Counterparty string `json:"counterparty,omitempty"`
+	Timestamp    string `json:"timestamp"`
+	Initiator    string `json:"initiator"`
+}
+
+// Role mapping from MSP ID
+func getRoleFromMSP(msp string) string {
+	switch strings.ToLower(msp) {
+	case "centralbankmsp":
+		return RoleCentralBank
+	case "retailbankmsp":
+		return RoleRetailBank
+	case "auditormsp":
+		return RoleAuditor
+	default:
+		return ""
+	}
+}
+
+// Role-based access control
+func (c *CBDCContract) hasRole(ctx contractapi.TransactionContextInterface, allowedRoles ...string) bool {
+	mspID, err := ctx.GetClientIdentity().GetMSPID()
+	if err != nil {
+		return false
+	}
+	role := getRoleFromMSP(mspID)
+	for _, r := range allowedRoles {
+		if r == role {
+			return true
+		}
+	}
+	return false
+}
+
+// Enforce transfer caps for retail banks
+func (c *CBDCContract) enforceTransactionCap(ctx contractapi.TransactionContextInterface, amount uint64) error {
+	mspID, err := ctx.GetClientIdentity().GetMSPID()
+	if err != nil {
+		return fmt.Errorf("unable to determine MSPID")
+	}
+	role := getRoleFromMSP(mspID)
+	if role == RoleRetailBank && amount > RetailTransferCap {
+		return fmt.Errorf("transfer amount exceeds retail bank cap of %d", RetailTransferCap)
+	}
+	return nil
+}
+
+// If multisig approval is needed
+func (c *CBDCContract) multisigApprovalRequired(amount uint64) bool {
+	return amount > MultisigThreshold
+}
+
+// Stub for future multisig enforcement
+func (c *CBDCContract) verifyMultisigApproval(ctx contractapi.TransactionContextInterface, txID string) error {
+	return nil // To be implemented
+}
+
+// Account ID validation
+func validateID(id string) error {
+	if !idPattern.MatchString(id) {
+		return fmt.Errorf("invalid account ID format")
+	}
+	return nil
+}
+
+// Create or load account, and persist if new
+func (c *CBDCContract) getOrCreateAccount(ctx contractapi.TransactionContextInterface, id string) (*Account, error) {
+	a, err := c.getAccount(ctx, id)
+	if err == nil {
+		return a, nil
+	}
+	ts, _ := ctx.GetStub().GetTxTimestamp()
+	timestamp := time.Unix(ts.Seconds, int64(ts.Nanos)).Format(time.RFC3339)
+	newAccount := &Account{
+		Owner:      id,
+		Balance:    0,
+		CreatedAt:  timestamp,
+		LastActive: timestamp,
+		Frozen:     false,
+		Tags:       make(map[string]string),
+		History:    []TransactionLog{},
+	}
+	if err := c.saveAccount(ctx, id, newAccount); err != nil {
+		return nil, err
+	}
+	return newAccount, nil
+}
+
+// Load existing account from state
+func (c *CBDCContract) getAccount(ctx contractapi.TransactionContextInterface, id string) (*Account, error) {
+	data, err := ctx.GetStub().GetState(id)
+	if err != nil {
+		return nil, err
+	}
+	if data == nil {
+		return nil, fmt.Errorf("account not found")
+	}
+	var acc Account
+	if err := json.Unmarshal(data, &acc); err != nil {
+		return nil, err
+	}
+	return &acc, nil
+}
+
+// Persist account to world state
+func (c *CBDCContract) saveAccount(ctx contractapi.TransactionContextInterface, id string, acc *Account) error {
+	data, err := json.Marshal(acc)
+	if err != nil {
+		return err
+	}
+	return ctx.GetStub().PutState(id, data)
+}
+
+// Get client identity
+func (c *CBDCContract) GetInvoker(ctx contractapi.TransactionContextInterface) (string, error) {
+	id, err := ctx.GetClientIdentity().GetID()
+	if err != nil || id == "" {
+		return "", fmt.Errorf("unable to retrieve or validate invoker ID")
+	}
+	return id, nil
+}
+
+// Central bank can issue tokens
+func (c *CBDCContract) IssueTokens(ctx contractapi.TransactionContextInterface, recipient string, amount uint64) error {
+	if !c.hasRole(ctx, RoleCentralBank) {
+		return fmt.Errorf("only central bank can issue tokens")
+	}
+	if err := validateID(recipient); err != nil {
+		return err
+	}
+	if amount == 0 {
+		return fmt.Errorf("amount must be greater than zero")
+	}
+	invoker, err := c.GetInvoker(ctx)
+	if err != nil {
+		return err
+	}
+	account, err := c.getOrCreateAccount(ctx, recipient)
+	if err != nil {
+		return err
+	}
+	if account.Frozen {
+		return fmt.Errorf("account is frozen")
+	}
+	ts, _ := ctx.GetStub().GetTxTimestamp()
+	timestamp := time.Unix(ts.Seconds, int64(ts.Nanos)).Format(time.RFC3339)
+	account.Balance += amount
+	account.LastActive = timestamp
+	account.History = append(account.History, TransactionLog{"ISSUE", amount, recipient, timestamp, invoker})
+	if err := c.saveAccount(ctx, recipient, account); err != nil {
+		return err
+	}
+	return ctx.GetStub().SetEvent("TokensIssued", []byte(fmt.Sprintf("%s:%d", recipient, amount)))
+}
+
+// Central bank can burn tokens
+func (c *CBDCContract) BurnTokens(ctx contractapi.TransactionContextInterface, account string, amount uint64) error {
+	if !c.hasRole(ctx, RoleCentralBank) {
+		return fmt.Errorf("only central bank can burn tokens")
+	}
+	if err := validateID(account); err != nil {
+		return err
+	}
+	if amount == 0 {
+		return fmt.Errorf("amount must be greater than zero")
+	}
+	invoker, err := c.GetInvoker(ctx)
+	if err != nil {
+		return err
+	}
+	a, err := c.getAccount(ctx, account)
+	if err != nil {
+		return err
+	}
+	if a.Frozen {
+		return fmt.Errorf("account is frozen")
+	}
+	if a.Balance < amount {
+		return fmt.Errorf("insufficient balance")
+	}
+	ts, _ := ctx.GetStub().GetTxTimestamp()
+	timestamp := time.Unix(ts.Seconds, int64(ts.Nanos)).Format(time.RFC3339)
+	a.Balance -= amount
+	a.LastActive = timestamp
+	a.History = append(a.History, TransactionLog{"BURN", amount, "", timestamp, invoker})
+	if err := c.saveAccount(ctx, account, a); err != nil {
+		return err
+	}
+	return ctx.GetStub().SetEvent("TokensBurned", []byte(fmt.Sprintf("%s:%d", account, amount)))
+}
+
+// Freeze an account
+func (c *CBDCContract) FreezeAccount(ctx contractapi.TransactionContextInterface, account string) error {
+	if !c.hasRole(ctx, RoleCentralBank) {
+		return fmt.Errorf("only central bank can freeze accounts")
+	}
+	a, err := c.getAccount(ctx, account)
+	if err != nil {
+		return err
+	}
+	a.Frozen = true
+	return c.saveAccount(ctx, account, a)
+}
+
+// Unfreeze an account
+func (c *CBDCContract) UnfreezeAccount(ctx contractapi.TransactionContextInterface, account string) error {
+	if !c.hasRole(ctx, RoleCentralBank) {
+		return fmt.Errorf("only central bank can unfreeze accounts")
+	}
+	a, err := c.getAccount(ctx, account)
+	if err != nil {
+		return err
+	}
+	a.Frozen = false
+	return c.saveAccount(ctx, account, a)
+}
+
+// Get account balance with no access control (can be restricted further)
+func (c *CBDCContract) GetBalance(ctx contractapi.TransactionContextInterface, account string) (uint64, error) {
+	a, err := c.getAccount(ctx, account)
+	if err != nil {
+		return 0, err
+	}
+	return a.Balance, nil
+}
+
+// Get transaction history
+func (c *CBDCContract) GetHistory(ctx contractapi.TransactionContextInterface, account string) ([]TransactionLog, error) {
+	a, err := c.getAccount(ctx, account)
+	if err != nil {
+		return nil, err
+	}
+	return a.History, nil
+}
+
+// Get account tags
+func (c *CBDCContract) GetTags(ctx contractapi.TransactionContextInterface, account string) (map[string]string, error) {
+	a, err := c.getAccount(ctx, account)
+	if err != nil {
+		return nil, err
+	}
+	return a.Tags, nil
+}
+
+// Admin can tag accounts
+func (c *CBDCContract) AdminAddTag(ctx contractapi.TransactionContextInterface, account, key, value string) error {
+	if !c.hasRole(ctx, RoleCentralBank) {
+		return fmt.Errorf("only central bank can tag accounts")
+	}
+	if len(key) > 32 || len(value) > 64 {
+		return fmt.Errorf("tag key/value too long")
+	}
+	a, err := c.getAccount(ctx, account)
+	if err != nil {
+		return err
+	}
+	a.Tags[key] = value
+	return c.saveAccount(ctx, account, a)
+}
+
+// Chaincode entry point
+func main() {
+	chaincode, err := contractapi.NewChaincode(new(CBDCContract))
+	if err != nil {
+		panic(fmt.Sprintf("Error creating CBDC chaincode: %v", err))
+	}
+	if err := chaincode.Start(); err != nil {
+		panic(fmt.Sprintf("Error starting CBDC chaincode: %v", err))
+	}
+}
+
+```
+
+This CBDC (Central Bank Digital Currency) chaincode is written for Hyperledger
+Fabric and is intended strictly for educational and prototyping purposes. It is
+not production-ready and must not be deployed in a live financial system without
+substantial auditing, rigorous testing, and tailoring to specific regulatory and
+operational requirements. Real-world CBDC implementations are complex, involving
+monetary policy, central banking rules, and advanced security mechanisms, none
+of which are fully captured in this simplified contract. The contract does not
+include protections against replay attacks, does not implement cryptographic
+signature verification, lacks privacy guarantees, and omits enforcement for
+multisignature approvals or advanced compliance policies.
+
+
+Conceptually, this chaincode simulates a basic CBDC management system deployed
+on a permissioned Hyperledger Fabric network. It provides core features that a
+central bank might need to issue and manage digital fiat currency. These
+features include the ability to issue or burn currency, freeze or unfreeze
+accounts, set metadata tags on accounts, enforce role-based access, and maintain
+an account-level audit trail. Additionally, it includes a mechanism to apply
+transaction limits for retail banks. The contract uses Go and the Fabric
+Contract API and relies on standard transaction context interfaces to interact
+with the ledger state.
+
+The system recognizes three roles based on the MSP ID of the organization
+invoking a transaction. The central bank has full administrative control,
+allowing it to issue and burn tokens, freeze or unfreeze accounts, and add tags.
+Retail banks are permitted to interact with the system under certain
+constraints, such as a transfer cap. Auditors are not yet integrated but are
+envisioned as read-only participants. These roles are determined by mapping the
+MSP ID to predefined role labels, and permissions are enforced using a utility
+method that checks if the invoker’s role is among those allowed for a specific
+operation.
+
+Data in the system is centered around the concept of an account. Each account
+includes an owner ID, token balance, creation and last active timestamps, a
+frozen flag, a tag map for metadata, and a list of transaction logs that serve
+as the audit trail. When an account is created, it is initialized with default
+values, and every transaction affecting the account updates its state and
+appends a corresponding entry to its history. Account state is stored in the
+ledger as a serialized JSON object.
+
+The chaincode allows the central bank to issue tokens to any valid account.
+Before issuing, it checks that the recipient ID is properly formatted, that the
+amount is positive, and that the target account is not frozen. It then updates
+the account balance, sets the last active timestamp, and logs the issuance
+event. The burning of tokens follows a similar logic but deducts from the
+account balance and ensures that the balance is sufficient to cover the burn
+request. Both actions emit chaincode events for external observability.
+
+Accounts can be frozen or unfrozen by the central bank. When an account is
+frozen, it becomes ineligible for token issuance or burning. This provides a
+simple control mechanism for suspending suspicious or non-compliant actors in
+the system. In addition to these lifecycle operations, the chaincode supports
+tagging, allowing the central bank to attach short metadata entries to accounts.
+This could be used for tagging accounts as KYC-verified, associating them with a
+branch ID, or any other administrative classification.
+
+Several querying functions are exposed, including the ability to read an
+account’s balance, view its transaction history, or retrieve its metadata tags.
+Currently, these functions are unrestricted, meaning that any network
+participant can query any account’s data. In a real-world deployment, this would
+need to be restricted to protect financial privacy and enforce access policies,
+potentially using Fabric’s private data collections or attribute-based access
+control.
+
+The chaincode also introduces a concept of transaction caps for retail banks. A
+configurable threshold ensures that retail banks cannot process high-value
+operations beyond a specified amount. However, these caps do not apply to the
+central bank, which retains full authority over token issuance and burning.
+Additionally, there is a placeholder mechanism for enforcing multisignature
+approvals on high-value transactions. While the code identifies when such an
+approval would be required, it does not currently implement any logic to
+validate multiple approvals or signatures. This remains a stub for future
+enhancement.
+
+
+This chaincode implements a simplified CBDC (Central Bank Digital Currency)
+logic using the Hyperledger Fabric framework. It demonstrates the key
+responsibilities of a central bank in managing digital token issuance and
+enforcement controls.
+
+---
+
+## Key Functionalities
+
+- Role-based access via MSP ID mapping (Central Bank, Retail Bank, Auditor)
+- Token issuance and burning (by Central Bank only)
+- Account freezing and unfreezing
+- Transfer caps for Retail Banks
+- Metadata tagging for accounts
+- Transaction history logging
+- Event emission for observability
+- Uses `contractapi` in Go for implementation
+
+---
+
+## Roles
+
+Roles are inferred from MSP IDs:
+
+```go
+const (
+    RoleCentralBank = "centralbank"
+    RoleRetailBank  = "retailbank"
+    RoleAuditor     = "auditor"
+)
+
+Role resolution is done using:
+
+func getRoleFromMSP(msp string) string {
+    switch strings.ToLower(msp) {
+    case "centralbankmsp":
+        return RoleCentralBank
+    case "retailbankmsp":
+        return RoleRetailBank
+    case "auditormsp":
+        return RoleAuditor
+    default:
+        return ""
+    }
+}
+```
+
+---
+
+## Account Structure
+
+```go
+type Account struct {
+    Owner      string
+    Balance    uint64
+    CreatedAt  string
+    LastActive string
+    Frozen     bool
+    Tags       map[string]string
+    History    []TransactionLog
+}
+```
+
+Each account maintains metadata, balance, timestamps, and a full transaction
+log.
+
+---
+
+## Transaction Logging
+
+Audit logs are captured using:
+
+```go
+type TransactionLog struct {
+    Action       string
+    Amount       uint64
+    Counterparty string
+    Timestamp    string
+    Initiator    string
+}
+```
+
+---
+
+## Token Issuance (Central Bank Only)
+
+```go
+func (c *CBDCContract) IssueTokens(ctx contractapi.TransactionContextInterface, recipient string, amount uint64) error
+```
+
+- Only accessible by centralbank role
+- Fails if recipient is frozen
+- Updates balance and appends to history
+- Emits TokensIssued event
+
+---
+
+## Token Burning (Central Bank Only)
+
+```go
+func (c *CBDCContract) BurnTokens(ctx contractapi.TransactionContextInterface, account string, amount uint64) error
+```
+
+- Deducts from account
+- Fails if frozen or underfunded
+- Emits TokensBurned event
+
+---
+
+## Account Freezing
+
+```go
+func (c *CBDCContract) FreezeAccount(ctx contractapi.TransactionContextInterface, account string) error
+func (c *CBDCContract) UnfreezeAccount(ctx contractapi.TransactionContextInterface, account string) error
+```
+
+- Only the central bank may freeze/unfreeze accounts
+- Prevents future operations on frozen accounts
+
+---
+
+## Metadata Tagging
+
+```go
+func (c *CBDCContract) AdminAddTag(ctx contractapi.TransactionContextInterface, account, key, value string) error
+```
+
+- Adds key-value metadata (e.g., "kyc": "verified")
+- Length restrictions: key ≤ 32, value ≤ 64
+
+---
+
+## Account Queries
+
+```go
+func (c *CBDCContract) GetBalance(ctx, account string) (uint64, error)
+func (c *CBDCContract) GetHistory(ctx, account string) ([]TransactionLog, error)
+func (c *CBDCContract) GetTags(ctx, account string) (map[string]string, error)
+```
+
+- Currently unrestricted
+- Should be secured using role-based visibility or private data
+
+---
+
+## Transfer Cap for Retail Banks
+
+Retail banks are restricted from performing operations above a defined
+threshold:
+
+```go
+const RetailTransferCap = 100000
+```
+
+Enforced via:
+
+```go
+func (c *CBDCContract) enforceTransactionCap(ctx contractapi.TransactionContextInterface, amount uint64) error
+```
+
+---

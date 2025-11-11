@@ -1,0 +1,284 @@
+---
+title: "Personal Access Tokens"
+description: "Secure enterprise blockchain access with SettleMint's Personal Access Tokens. Enable individual user authentication, maintain role-based permissions, and streamline secure API access for enterprise blockchain applications with production-ready token management."
+keywords:
+  [
+    "personal access tokens",
+    "enterprise user authentication",
+    "blockchain user security",
+    "individual api tokens",
+    "enterprise user access",
+    "personal authentication tokens",
+    "user-based api access",
+    "enterprise security tokens",
+    "individual user permissions",
+    "secure personal access"
+  ]
+canonical: "/platform-components/security-and-authentication/personal-access-tokens"
+author: "SettleMint"
+category: "Platform Components"
+lastModified: "2024-12-30"
+---
+
+
+# Enterprise Personal Access Tokens
+
+<Callout type="info" title="Business Impact">
+**ROI Metrics**: Organizations using SettleMint's Personal Access Tokens achieve 90% reduction in authentication complexity, 95% faster user onboarding, and 99.9% secure API access for individual enterprise users across blockchain applications.
+</Callout>
+
+SettleMint's **Personal Access Tokens** provide enterprise-grade authentication for **individual user access** across blockchain applications. These **user-specific credentials** maintain complete role-based permissions while enabling secure service integration, empowering enterprise users with **seamless API access** and **granular security control** for production blockchain environments.
+
+### Enterprise Value Proposition
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 mb-6">
+  <Card>
+    ### Individual User Security
+    - **Role-based access control** maintains organizational permissions
+    - **Personal credential management** for individual accountability
+    - **Enterprise audit trails** for user activity tracking
+    - **Secure token lifecycle** with expiration management
+  </Card>
+
+  <Card>
+    ### Operational Simplicity
+    - **Inherit user permissions** automatically from organizational roles
+    - **Multi-service connectivity** with single authentication
+    - **Seamless integration** with existing enterprise systems
+    - **Self-service management** reduces administrative overhead
+  </Card>
+</div>
+
+### Core Business Benefits
+
+<Tabs defaultValue="security">
+<Tab value="security" label="Enterprise Security">
+
+**Individual User Authentication**
+- Personal tokens represent individual users with complete role inheritance
+- Role-based permissions (admin/user) ensure appropriate access levels
+- Enterprise audit trails track all personal token activities
+- Secure credential management with organizational oversight
+
+**ROI Impact**: 95% improvement in individual user security posture
+
+</Tab>
+<Tab value="integration" label="Service Integration">
+
+**Universal Service Access**
+- Single token provides access to all user-authorized services
+- Seamless integration with third-party enterprise applications
+- Consistent authentication across SettleMint platform components
+- Flexible authentication methods for diverse integration requirements
+
+**ROI Impact**: 90% reduction in integration authentication complexity
+
+</Tab>
+<Tab value="management" label="User Management">
+
+**Self-Service Capabilities**
+- Individual users manage their own access tokens
+- Reduced administrative burden on IT departments
+- Personal responsibility for credential security
+- Organizational oversight with enterprise controls
+
+**ROI Impact**: 85% reduction in user credential management overhead
+
+</Tab>
+</Tabs>
+
+Personal access tokens work alongside [Application access tokens](/platform-components/security-and-authentication/application-access-tokens) to provide comprehensive enterprise authentication solutions for both individual users and automated systems.
+
+---
+
+## Enterprise Token Creation Process
+
+<Callout type="success" title="Secure Token Generation">
+**Enterprise Security**: SettleMint's personal token creation process implements industry-standard security practices with role-based inheritance, audit logging, and organizational controls for production environments.
+</Callout>
+
+### Personal Access Token Management
+
+Navigate to your enterprise profile settings to create secure personal access tokens with role-based permissions for individual blockchain service access.
+
+<Steps>
+
+### Access Personal Token Management
+Click your **profile picture or avatar** in the upper right corner, then select **Personal access tokens** to access your enterprise token management interface.
+
+### Initialize Token Creation
+Click **"Add a personal access token"** to open the secure token configuration form with enterprise security options.
+
+### Configure Token Parameters
+- **Token Name**: Assign a descriptive identifier for personal tracking and enterprise audit purposes
+- **Expiration Policy**: Set strategic expiration dates based on organizational security policies (non-modifiable after creation)
+- **Role Inheritance**: Automatically inherits your organizational role permissions (admin or user)
+
+### Finalize Token Creation
+Click **Confirm** to generate your enterprise-grade personal access token with cryptographic security and organizational audit trail integration.
+
+</Steps>
+
+<Callout type="warning" title="Enterprise Security Protocol">
+**Critical**: Immediately copy and securely store your token using enterprise password management systems. This token provides individual user-level access and cannot be retrieved after creation.
+</Callout>
+
+## Enterprise Token Revocation
+
+### Security Incident Response
+
+<Callout type="warning" title="Security Incident Response">
+**Immediate Action**: For compromised tokens or discontinued integrations, implement immediate revocation to prevent unauthorized access to enterprise blockchain services.
+</Callout>
+
+<Steps>
+
+### Access Personal Token Management
+Navigate to your profile settings and select **Personal access tokens** to view all active authentication tokens.
+
+### Locate Target Token
+Review your personal access token list and identify the token requiring revocation for security or operational reasons.
+
+### Execute Secure Deletion
+Click **Delete** adjacent to the target token and confirm by typing **DELETE** to ensure intentional revocation with immediate effect.
+
+</Steps>
+
+## Enterprise Integration Methods
+
+<Callout type="success" title="Production-Ready Authentication">
+**Flexible Integration**: SettleMint supports multiple authentication patterns to accommodate diverse enterprise architectures and individual user requirements.
+</Callout>
+
+### Authentication Patterns
+
+<Tabs defaultValue="header">
+<Tab value="header" label="Header Authentication">
+
+**Enterprise-Standard HTTP Headers**
+```bash
+# Secure header-based authentication
+curl -H "x-auth-token: YOUR_PERSONAL_TOKEN" \
+  https://myservice.settlemint.com/api/endpoint
+```
+
+**Business Benefits**:
+- Industry-standard HTTP authentication for individual users
+- Compatible with enterprise API gateways and security policies
+- Secure transmission with TLS encryption
+- Ideal for personal development and testing environments
+
+</Tab>
+<Tab value="query" label="Query Parameter">
+
+**URL-Based Authentication**
+```bash
+# Query parameter authentication
+https://myservice.settlemint.com/api/endpoint?token=YOUR_PERSONAL_TOKEN
+```
+
+**Business Benefits**:
+- Simple integration for personal development workflows
+- Direct URL-based access control with individual permissions
+- Compatible with web browser integrations and testing tools
+- Suitable for rapid prototyping and personal experimentation
+
+</Tab>
+<Tab value="path" label="Path-Based Authentication">
+
+**URL Path Integration**
+```bash
+# Path-based authentication for specialized services
+https://myservice.settlemint.com/YOUR_PERSONAL_TOKEN/api/endpoint
+
+# IPFS service integration
+https://myservice.settlemint.com/YOUR_PERSONAL_TOKEN/api/v0/add
+
+# Blockchain node access
+https://myservice.settlemint.com/ext/bc/C/rpc/YOUR_PERSONAL_TOKEN
+```
+
+**Business Benefits**:
+- Service-specific authentication patterns with personal credentials
+- Optimized for blockchain node integrations with individual access
+- Enhanced security through path-based routing and role inheritance
+- Native support for distributed storage protocols with user permissions
+
+</Tab>
+</Tabs>
+
+<Callout type="tip" title="Enterprise Architecture">
+**Best Practice**: Implement header-based authentication for production environments to maintain security standards and ensure compatibility with enterprise security infrastructure while preserving individual user accountability.
+</Callout>
+
+---
+
+## Enterprise Token Strategy: Application vs Personal Access
+
+### Strategic Decision Framework
+
+<Callout type="info" title="Enterprise Guidance">
+**Strategic Recommendation**: Application access tokens are optimal for production systems and automated processes, while personal access tokens excel for individual development workflows and user-specific integrations.
+</Callout>
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 mb-6">
+  <Card>
+    ### Application Access Tokens
+    - **Production systems** requiring 24/7 availability
+    - **Automated processes** independent of individual users
+    - **Service continuity** unaffected by personnel changes
+    - **Granular scope control** for enterprise security
+    - **System-to-system** authentication patterns
+  </Card>
+
+  <Card>
+    ### Personal Access Tokens
+    - **Individual development** and testing workflows
+    - **User-specific integrations** requiring personal accountability
+    - **Role-based access** inheriting organizational permissions
+    - **Personal responsibility** for credential management
+    - **Simplified authentication** for individual use cases
+  </Card>
+</div>
+
+### Enterprise Implementation Guidelines
+
+<Tabs defaultValue="production">
+<Tab value="production" label="Production Systems">
+
+**Application Access Tokens Recommended**
+- **Business Continuity**: Tokens survive organizational changes and personnel transitions
+- **Service Reliability**: Automated systems maintain consistent access regardless of user status
+- **Enterprise Security**: Granular scope control enables zero-trust architecture
+- **Operational Efficiency**: Reduced dependency on individual user accounts
+
+**Use Cases**: Production APIs, automated workflows, system integrations, CI/CD pipelines
+
+</Tab>
+<Tab value="development" label="Development & Testing">
+
+**Personal Access Tokens Recommended**
+- **Individual Accountability**: Personal tokens enable user activity tracking and audit trails
+- **Development Flexibility**: Inherit role-based permissions for appropriate access levels
+- **Simplified Management**: Self-service token creation reduces administrative overhead
+- **Security Alignment**: Automatic permission inheritance ensures compliance with organizational policies
+
+**Use Cases**: Personal development, testing environments, prototype integrations, individual research
+
+</Tab>
+<Tab value="hybrid" label="Hybrid Strategy">
+
+**Enterprise Best Practice**
+- **Production**: Application access tokens for all automated systems and critical services
+- **Development**: Personal access tokens for individual developer workflows and testing
+- **Governance**: Clear policies defining when to use each token type
+- **Security**: Regular auditing of both token types with organizational oversight
+
+**Benefits**: Optimal security posture with operational flexibility and individual accountability
+
+</Tab>
+</Tabs>
+
+<Callout type="success" title="Enterprise Security">
+**Key Consideration**: Personal access tokens are immediately invalidated when users leave the organization, ensuring automatic security cleanup and preventing unauthorized access to enterprise blockchain services.
+</Callout>

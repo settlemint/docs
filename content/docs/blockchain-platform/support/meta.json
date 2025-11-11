@@ -1,0 +1,5 @@
+{
+  "label": "Get Support",
+  "position": 5,
+  "pages": ["support", "slas", "faqs"]
+}

@@ -1,47 +1,45 @@
-import { remarkMermaid } from "@theguild/remark-mermaid";
 import {
-  rehypeCodeDefaultOptions,
-  remarkAdmonition,
-} from "fumadocs-core/mdx-plugins";
-import { remarkInstall } from "fumadocs-docgen";
-import {
-  defineCollections,
   defineConfig,
   defineDocs,
-} from "fumadocs-mdx/config";
-import { transformerTwoslash } from "fumadocs-twoslash";
+  frontmatterSchema,
+  metaSchema,
+} from 'fumadocs-mdx/config';
 import { z } from "zod";
-export const docs = defineDocs({
-  dir: "content/docs",
-});
 
-export default defineConfig({
-  lastModifiedTime: "git",
-  mdxOptions: {
-    remarkPlugins: [remarkInstall, remarkAdmonition, remarkMermaid],
-    rehypeCodeOptions: {
-      themes: {
-        light: "github-light",
-        dark: "github-dark",
-      },
-      transformers: [
-        ...(rehypeCodeDefaultOptions.transformers ?? []),
-        transformerTwoslash(),
-      ],
+// You can customise Zod schemas for frontmatter and `meta.json` here
+// see https://fumadocs.dev/docs/mdx/collections
+export const docs = defineDocs({
+  dir: 'content/docs',
+  docs: {
+    schema: frontmatterSchema.extend({
+      /**
+       * Full page title for SEO and browser tab.
+       * Used in search engine results and browser titles.
+       */
+      pageTitle: z.string().optional(),
+
+      /**
+       * Meta description for SEO.
+       * Used in search engine results and social media previews.
+       */
+      description: z.string(),
+
+      /**
+       * Additional keywords for SEO.
+       */
+      keywords: z.array(z.string()).optional(),
+    }),
+    postprocess: {
+      includeProcessedMarkdown: true,
     },
+  },
+  meta: {
+    schema: metaSchema,
   },
 });
 
-export const blogPosts = defineCollections({
-  type: "doc",
-  dir: "content/release-notes",
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-    icon: z.string().optional(),
-    full: z.boolean().optional(),
-    _openapi: z.object({}).passthrough().optional(),
-    author: z.string(),
-    date: z.string().date().or(z.date()),
-  }),
+export default defineConfig({
+  mdxOptions: {
+    // MDX options
+  },
 });

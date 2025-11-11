@@ -54,7 +54,7 @@ In the project directory, you can run:
 bun run dev
 ```
 
-This starts the development server with hot-reload enabled. 
+This starts the development server with hot-reload enabled.
 Navigate to /documentation
 
 ### Build

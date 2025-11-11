@@ -1,0 +1,20 @@
+{
+  "title": "Asset Tokenization (legacy)",
+  "root": true,
+  "pages": [
+    "index",
+    "deployment",
+    "smart-protocol",
+    "signup-and-login",
+    "user-management",
+    "asset-designer",
+    "asset-classes",
+    "asset-manager",
+    "portfolio-manager",
+    "xvp-settlement",
+    "api-portal",
+    "ui-customization",
+    "use-cases",
+    "release-notes"
+  ]
+}

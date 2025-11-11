@@ -1,0 +1,344 @@
+---
+title: Signup & Login
+description:
+  Enterprise-grade authentication setup for digital asset platforms - implement secure user onboarding, wallet creation, and multi-factor authentication for tokenization applications
+pageTitle: Signup & Login - Authentication and user onboarding
+tags: [authentication, security, onboarding, passkeys, webauthn]
+---
+
+## How do I access my asset tokenization platform?
+
+Accessing your tokenization platform requires enterprise-grade security setup to protect digital assets worth millions. This guide walks you through the secure onboarding process that financial institutions and enterprises use to safeguard tokenized securities.
+
+### Who needs secure platform access?
+
+- **Platform Administrators**: Managing the entire tokenization ecosystem
+- **Asset Issuers**: Creating and managing tokenized securities
+- **Compliance Officers**: Overseeing regulatory requirements
+- **Investors**: Accessing and managing digital asset portfolios
+- **Auditors**: Reviewing platform operations and transactions
+
+### What security challenges does this solve?
+
+<Cards>
+  <Card title="Identity Verification" description="Ensure only authorized users access the platform" />
+  <Card title="Wallet Security" description="Protect private keys from theft or loss" />
+  <Card title="Transaction Authorization" description="Prevent unauthorized asset transfers" />
+  <Card title="Account Recovery" description="Secure backup methods for lost credentials" />
+  <Card title="Regulatory Compliance" description="Meet KYC/AML requirements" />
+</Cards>
+
+## Step 1: How do I find my platform URL?
+
+Locate your unique platform endpoint in the SettleMint dashboard:
+
+![Access your tokenization platform endpoint](/images/btp/application-kits/access-endpoint.png)
+
+**Where to find your endpoint**:
+
+<Steps>
+  <Step>
+    Navigate to Custom Deployments section
+  </Step>
+  <Step>
+    Click the "Connect" tab
+  </Step>
+  <Step>
+    Copy your secure HTTPS endpoint
+  </Step>
+  <Step>
+    Bookmark for easy access
+  </Step>
+</Steps>
+
+<Callout type="warning" title="Security tip">
+  Your platform URL is unique and secured with SSL/TLS encryption. Never access through unsecured HTTP connections.
+</Callout>
+
+## Step 2: How do I create my admin account?
+
+The first user to register automatically receives platform administrator privileges:
+
+![Secure signup process for asset tokenization platform](/images/btp/application-kits/sign-up.png)
+
+### What information is required for signup?
+
+**Account Creation Fields**:
+- **Email Address**: Corporate email for notifications
+- **Password**: Minimum 12 characters with complexity requirements
+- **Organization**: Company name for multi-tenant setup
+- **Role Selection**: Admin, Issuer, or Investor
+
+**First User Privileges**:
+- Full platform administration rights
+- User management capabilities
+- Asset creation permissions
+- System configuration access
+- Compliance monitoring tools
+
+### Why does the first user get admin rights?
+
+This design enables rapid platform deployment while maintaining security:
+- Immediate platform control without external configuration
+- Simplified onboarding for proof-of-concepts
+- Clear ownership establishment
+- Audit trail starts from account creation
+
+## Step 3: How do I secure my wallet with PIN protection?
+
+After account creation, you must establish transaction security:
+
+### What is the 6-digit PIN used for?
+
+The PIN serves as your transaction authorization key:
+- **Asset Transfers**: Confirm before sending tokens
+- **Smart Contract Interactions**: Authorize blockchain operations
+- **Administrative Actions**: Approve critical platform changes
+- **Wallet Access**: Additional layer beyond password
+
+### PIN Security Best Practices:
+
+<Callout type="warning" title="Security Best Practices">
+  **DO**:
+  - Use a unique PIN not used elsewhere
+  - Change PIN quarterly
+  - Enable biometric unlock on mobile
+  - Use different PINs for test/production
+  
+  **DON'T**:
+  - Use birthdays or sequential numbers
+  - Share PIN with anyone
+  - Write PIN near computer
+  - Use same PIN as bank cards
+</Callout>
+
+## Step 4: How do I save my recovery codes?
+
+The platform generates one-time recovery codes for emergency access:
+
+### What are recovery codes used for?
+
+**Emergency Scenarios**:
+- Lost authentication device
+- Forgotten PIN
+- Compromised primary credentials
+- Employee offboarding
+- Disaster recovery
+
+### How should I store recovery codes?
+
+<Accordions>
+  <Accordion title="Password Manager (Recommended)">
+    Encrypted digital vault for secure storage
+  </Accordion>
+  <Accordion title="Hardware Security Module">
+    For enterprise deployments requiring maximum security
+  </Accordion>
+  <Accordion title="Bank Safety Deposit">
+    Physical backup for high-value accounts
+  </Accordion>
+  <Accordion title="Split Storage">
+    Divide codes between secure locations for redundancy
+  </Accordion>
+</Accordions>
+
+<Callout type="error" title="Critical Warning">
+  Recovery codes are shown only once. After closing the screen, they cannot be retrieved. Loss of recovery codes while locked out means permanent account loss.
+</Callout>
+
+![Secure wallet setup with recovery codes](/images/btp/application-kits/secure-wallet.png)
+
+## How do passkeys provide passwordless authentication?
+
+The Asset Tokenization Kit implements FIDO2/WebAuthn passkeys for bank-grade security without passwords:
+
+### What are passkeys?
+
+Passkeys are cryptographic credentials that replace passwords entirely:
+- **Technology**: Public-key cryptography (FIDO2/WebAuthn standard)
+- **Storage**: Secure enclave on your device or cloud keychain
+- **Security**: Phishing-proof, no shared secrets
+- **User Experience**: One-touch biometric authentication
+
+### How do passkeys work for asset tokenization?
+
+<Tabs defaultValue="registration">
+  <Tab value="registration" label="Registration Process">
+    <Steps>
+      <Step>
+        Platform generates cryptographic challenge
+      </Step>
+      <Step>
+        Device creates unique public/private key pair
+      </Step>
+      <Step>
+        Private key stored in device secure enclave
+      </Step>
+      <Step>
+        Public key registered with platform
+      </Step>
+      <Step>
+        No sensitive data leaves your device
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab value="authentication" label="Authentication Flow">
+    <Steps>
+      <Step>
+        Click "Sign in with passkey"
+      </Step>
+      <Step>
+        Device prompts for biometric (Face ID, fingerprint)
+      </Step>
+      <Step>
+        Device signs challenge with private key
+      </Step>
+      <Step>
+        Platform verifies signature with public key
+      </Step>
+      <Step>
+        Instant secure access granted
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+### Why are passkeys superior for financial platforms?
+
+<Accordions>
+  <Accordion title="Security Benefits">
+    - **Phishing Immune**: Cannot be stolen via fake websites
+    - **No Password Reuse**: Unique key for each platform
+    - **Breach Resistant**: No password database to hack
+    - **Quantum Safe**: Resistant to future computing threats
+  </Accordion>
+  
+  <Accordion title="Compliance Advantages">
+    - **Strong Authentication**: Exceeds PSD2/MFA requirements
+    - **Audit Trail**: Every authentication cryptographically verified
+    - **Non-repudiation**: User cannot deny transactions
+    - **GDPR Compliant**: No passwords stored or transmitted
+  </Accordion>
+</Accordions>
+
+### Which devices support passkeys?
+
+**Desktop Platforms**:
+- **macOS**: Safari with Touch ID (Ventura+)
+- **Windows**: Edge/Chrome with Windows Hello
+- **Linux**: Chrome/Firefox with FIDO2 keys
+
+**Mobile Devices**:
+- **iOS**: iPhone/iPad with Face ID or Touch ID (iOS 16+)
+- **Android**: Devices with biometric sensors (Android 9+)
+
+**Cross-Platform Sync**:
+- Apple iCloud Keychain
+- Google Password Manager
+- 1Password, Dashlane (passkey support)
+- Hardware keys (YubiKey 5+)
+
+## How do I combine passkeys with other authentication methods?
+
+Enterprise deployments often require multiple authentication factors:
+
+### Available Authentication Methods:
+
+<Tabs defaultValue="passkeys">
+  <Tab value="passkeys" label="Passkeys (Primary)">
+    - Biometric authentication
+    - Hardware security keys
+    - Platform authenticators
+  </Tab>
+  
+  <Tab value="mfa" label="Multi-Factor Authentication">
+    - SMS OTP (not recommended for high-value)
+    - TOTP apps (Google Authenticator, Authy)
+    - Push notifications
+    - Email verification
+  </Tab>
+  
+  <Tab value="enterprise" label="Enterprise Integration">
+    - **SAML 2.0**: Okta, Auth0, Azure AD
+    - **OAuth 2.0**: Google Workspace, Microsoft 365
+    - **LDAP**: Corporate directory integration
+    - **Custom SSO**: API-based integration
+  </Tab>
+</Tabs>
+
+### Recommended Security Configurations:
+
+**For Individual Investors**:
+- Passkey + TOTP backup
+- Recovery codes in password manager
+
+**For Corporate Users**:
+- SSO + Passkey
+- Hardware key requirement for admins
+- IP whitelisting
+
+**For High-Value Accounts** (>$10M):
+- Passkey + Hardware key + Time delays
+- Multi-signature requirements
+- Geographic restrictions
+
+## What happens after successful authentication?
+
+Once authenticated, you gain access to the complete asset tokenization platform:
+
+![Asset tokenization platform dashboard after login](/images/btp/application-kits/atk-dashboard.png)
+
+### Available Platform Modules:
+
+**For Administrators**:
+- User & role management
+- Platform configuration
+- Compliance monitoring
+- System health dashboard
+
+**For Asset Issuers**:
+- Asset creation wizard
+- Token management tools
+- Investor relations portal
+- Distribution controls
+
+**For Investors**:
+- Portfolio overview
+- Trading interface
+- Transaction history
+- Document vault
+
+### Security Features Post-Login:
+
+- **Session Management**: Configurable timeout periods
+- **Activity Monitoring**: Real-time suspicious activity alerts
+- **Transaction Limits**: Daily/monthly thresholds
+- **Audit Logging**: Every action recorded with timestamp
+- **Emergency Lockdown**: Instant account freeze option
+
+### Best Practices for Ongoing Security:
+
+<Accordions>
+  <Accordion title="Regular Security Reviews">
+    - Monthly access log review
+    - Quarterly permission audit
+    - Annual penetration testing
+  </Accordion>
+  
+  <Accordion title="Employee Training">
+    - Phishing awareness
+    - Secure key handling
+    - Incident response procedures
+  </Accordion>
+  
+  <Accordion title="Backup Strategies">
+    - Multiple passkey devices
+    - Documented recovery procedures
+    - Regular recovery drills
+  </Accordion>
+</Accordions>
+
+<Callout type="info">
+  By following this comprehensive security setup, your asset tokenization platform maintains institutional-grade security while providing seamless user experience for managing digital assets worth millions.
+</Callout>

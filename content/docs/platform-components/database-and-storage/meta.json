@@ -1,5 +1,0 @@
-{
-  "title": "Database and Storage",
-  "icon": "Database",
-  "pages": ["hasura-backend-as-a-service", "ipfs-storage", "s3-storage"]
-}
