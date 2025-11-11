@@ -18,6 +18,9 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://console.settlemint.com"
+  ),
   other: {
     "color-scheme": "light dark",
   },
