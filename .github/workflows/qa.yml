@@ -135,6 +135,13 @@ jobs:
           username: ${{ env.HARBOR_USER }}
           password: ${{ env.HARBOR_PASS }}
 
+      - name: Launch docker-compose services
+        shell: bash
+        run: |
+          if [[ -f docker-compose.yml ]]; then
+            docker compose -f docker-compose.yml up -d
+          fi
+
       - name: Version
         id: version
         shell: bash
