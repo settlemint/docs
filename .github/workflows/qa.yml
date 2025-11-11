@@ -167,6 +167,7 @@ jobs:
       - name: Build Docker container
         if: github.event_name == 'pull_request' || github.event_name == 'push'
         run: |
+          bunx next typegen
           bun run docker
 
       # Label QA results (PR only)
