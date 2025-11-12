@@ -15,10 +15,6 @@ services:
         sed -i.bak 's/"title": "Documentation"/"title": "Asset Tokenization Kit (beta)"/g' /dest/meta.json &&
         rm -f /dest/meta.json.bak &&
         mkdir -p /tmp/preserve-images &&
-        cp -r /dest-images/btp /tmp/preserve-images/ 2>/dev/null || true &&
-        cp -r /dest-images/release-notes /tmp/preserve-images/ 2>/dev/null || true &&
-        rm -rf /dest-images/* /dest-images/.[!.]* /dest-images/..?* 2>/dev/null || true &&
-        cp -r /usecase/kit/dapp/public/images/* /dest-images/ 2>/dev/null || true &&
-        cp -r /tmp/preserve-images/btp /dest-images/ 2>/dev/null || true &&
-        cp -r /tmp/preserve-images/release-notes /dest-images/ 2>/dev/null || true &&
-        rm -rf /tmp/preserve-images
+        rm -rf /dest-images/atk 2>/dev/null || true &&
+        mkdir -p /dest-images/atk &&
+        cp -r /usecase/kit/dapp/public/atk/* /dest-images/atk/ 2>/dev/null || true &&
