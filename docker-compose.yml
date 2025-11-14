@@ -1,7 +1,7 @@
 
 services:
   asset-tokenization-kit-content:
-    image: ghcr.io/settlemint/codestudio-asset-tokenization-kit:2.0.0-main.131541
+    image: ghcr.io/settlemint/codestudio-asset-tokenization-kit:2.0.0-main.131691
     container_name: asset-tokenization-kit-content
     volumes:
       - ./content/docs/asset-tokenization-kit:/dest
