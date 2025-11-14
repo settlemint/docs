@@ -5,7 +5,7 @@ services:
     container_name: asset-tokenization-kit-content
     volumes:
       - ./content/docs/asset-tokenization-kit:/dest
-      - ./public/images:/dest-images
+      - ./public/atk:/dest-images
     command:
       - sh
       - -c
@@ -15,6 +15,5 @@ services:
         sed -i.bak 's/"title": "Documentation"/"title": "Asset Tokenization Kit (beta)"/g' /dest/meta.json &&
         rm -f /dest/meta.json.bak &&
         mkdir -p /tmp/preserve-images &&
-        rm -rf /dest-images/atk 2>/dev/null || true &&
-        mkdir -p /dest-images/atk &&
-        cp -r /usecase/kit/dapp/public/atk/* /dest-images/atk/ 2>/dev/null || true &&
+        rm -rf /dest-images/* 2>/dev/null || true &&
+        cp -r /usecase/kit/dapp/public/atk/* /dest-images/ 2>/dev/null || true

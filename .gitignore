@@ -33,3 +33,4 @@ content/docs/sdk/*
 !content/docs/sdk/.gitkeep
 
 public/images/screenshots/*
+public/atk
