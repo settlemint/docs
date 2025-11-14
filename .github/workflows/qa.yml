@@ -55,7 +55,7 @@ jobs:
       NPM_TOKEN: ""
     steps:
       - name: Checkout repository
-        uses: namespacelabs/nscloud-checkout-action@v7
+        uses: namespacelabs/nscloud-checkout-action@v8
         with:
           fetch-depth: 0
 
@@ -297,7 +297,7 @@ jobs:
       SLACK_CHANNEL_ID: ""
     steps:
       - name: Checkout repository
-        uses: namespacelabs/nscloud-checkout-action@v7
+        uses: namespacelabs/nscloud-checkout-action@v8
         with:
           fetch-depth: ${{ github.event_name == 'push' && 2 || 0 }}
 
@@ -349,7 +349,7 @@ jobs:
       SLACK_CHANNEL_ID: ""
     steps:
       - name: Checkout repository
-        uses: namespacelabs/nscloud-checkout-action@v7
+        uses: namespacelabs/nscloud-checkout-action@v8
         with:
           fetch-depth: ${{ github.event_name == 'push' && 2 || 0 }}
 
