@@ -64,6 +64,6 @@
     "eslint-config-next": "16.0.6",
     "eslint": "9.39.1",
     "@eslint/eslintrc": "3.3.3",
-    "prettier": "3.7.3"
+    "prettier": "3.7.4"
   }
 }
