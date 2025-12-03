@@ -40,7 +40,7 @@
     "hast-util-to-jsx-runtime": "2.3.6",
     "lucide-react": "0.555.0",
     "mermaid": "11.12.2",
-    "next": "16.0.6",
+    "next": "16.0.7",
     "posthog-js": "1.299.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
