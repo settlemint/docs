@@ -38,7 +38,7 @@
     "fumadocs-typescript": "4.0.13",
     "fumadocs-ui": "16.2.2",
     "hast-util-to-jsx-runtime": "2.3.6",
-    "lucide-react": "0.555.0",
+    "lucide-react": "0.556.0",
     "mermaid": "11.12.2",
     "next": "16.0.7",
     "posthog-js": "1.302.2",
