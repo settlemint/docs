@@ -15,7 +15,7 @@
     "docker": "bash -c \"docker buildx build . --provenance true --sbom true --platform=linux/amd64,linux/arm64 -t ghcr.io/settlemint/btp-docs:${VERSION:-7.0.0-dev.$(date +%s)} --push --progress=plain\""
   },
   "dependencies": {
-    "@ai-sdk/openai": "2.0.77",
+    "@ai-sdk/openai": "2.0.79",
     "@ai-sdk/react": "2.0.108",
     "@next/third-parties": "16.0.7",
     "@radix-ui/react-accordion": "1.2.12",
