@@ -1,19 +1,19 @@
-
 services:
   asset-tokenization-kit-content:
-    image: ghcr.io/settlemint/codestudio-asset-tokenization-kit:2.0.0-main.148412
+    image: ghcr.io/settlemint/codestudio-dalp:2.0.3-main.153061
     container_name: asset-tokenization-kit-content
     volumes:
       - ./content/docs/asset-tokenization-kit:/dest
       - ./public/atk:/dest-images
+      - ./public/docs:/dest-docs
     command:
       - sh
-      - -c
+      - -cx
       - >
-        rm -rf /dest/* /dest/.[!.]* /dest/..?* 2>/dev/null || true &&
-        cp -r /usecase/kit/dapp/content/docs/* /dest/ &&
-        sed -i.bak 's/"title": "Documentation"/"title": "Asset Tokenization Kit (beta)"/g' /dest/meta.json &&
-        rm -f /dest/meta.json.bak &&
-        mkdir -p /tmp/preserve-images &&
-        rm -rf /dest-images/* 2>/dev/null || true &&
-        cp -r /usecase/kit/dapp/public/atk/* /dest-images/ 2>/dev/null || true
+        rm -rf /dest/* /dest/.[!.]* /dest/..?* 2>/dev/null || true && cp -r
+        /usecase/kit/dapp/content/docs/* /dest/ && sed -i.bak 's/"title":
+        "Documentation"/"title": "Asset Tokenization Kit (beta)"/g'
+        /dest/meta.json && rm -f /dest/meta.json.bak && mkdir -p
+        /tmp/preserve-images && rm -rf /dest-images/* 2>/dev/null || true && cp
+        -r /usecase/kit/dapp/public/atk/* /dest-images/ 2>/dev/null || true &&
+        cp -r /usecase/kit/dapp/public/docs/* /dest-docs/ 2>/dev/null || true
