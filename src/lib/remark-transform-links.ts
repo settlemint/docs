@@ -106,6 +106,10 @@ function shouldSkipUrl(url: string): boolean {
   }
 
   // Skip static assets and special paths
+  // Note: /api/ is NOT excluded here because section rules may transform it
+  // (e.g., ATK's /api/ -> /asset-tokenization-kit/api/ for API documentation).
+  // The migrate-links.ts script excludes /api/ differently because it adds
+  // the /documentation/ basePath, which shouldn't apply to Next.js API routes.
   if (
     url.startsWith("/images/") ||
     url.startsWith("/ingest/") ||
@@ -191,7 +195,9 @@ function transformUrl(
       // Already has section prefix, return as-is (Next.js will add basePath)
       return url;
     } else if (section) {
-      // Add section prefix for links within the same section
+      // Add section prefix for relative links within section content.
+      // This assumes links like /glossary in ATK content should become /asset-tokenization-kit/glossary.
+      // For intentional cross-section links, use the full section path (e.g., /sdk/viem).
       return `/${section}${url}`;
     }
     // For links outside any section, return as-is (Next.js will add basePath)
