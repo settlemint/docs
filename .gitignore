@@ -34,3 +34,7 @@ content/docs/sdk/*
 
 public/images/screenshots/*
 public/atk
+public/docs
+
+# AI planning docs
+plans/

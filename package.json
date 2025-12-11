@@ -11,6 +11,7 @@
     "lint": "eslint",
     "check-types": "tsc --noEmit",
     "format": "prettier --write .",
+    "check-links": "bun scripts/check-links.ts",
     "generate-sdk-docs": "bun scripts/generate-sdk-docs.ts",
     "docker": "bash -c \"docker buildx build . --provenance true --sbom true --platform=linux/amd64,linux/arm64 -t ghcr.io/settlemint/btp-docs:${VERSION:-7.0.0-dev.$(date +%s)} --push --progress=plain\""
   },
@@ -41,6 +42,7 @@
     "lucide-react": "0.559.0",
     "mermaid": "11.12.2",
     "next": "16.0.8",
+    "next-validate-link": "1.6.3",
     "posthog-js": "1.304.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
@@ -53,6 +55,7 @@
     "zod": "4.1.13"
   },
   "devDependencies": {
+    "glob": "13.0.0",
     "@tailwindcss/postcss": "4.1.17",
     "@types/mdx": "2.0.13",
     "@types/node": "25.0.0",

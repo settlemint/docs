@@ -162,6 +162,11 @@ jobs:
           NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check links
+        if: github.event_name == 'pull_request' || github.event_name == 'push'
+        run: |
+          bun run check-links
+
       - name: Build Docker container
         if: github.event_name == 'pull_request' || github.event_name == 'push'
         run: |
