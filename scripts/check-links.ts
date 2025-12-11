@@ -15,12 +15,13 @@ async function checkLinks() {
   console.log(`[Check Links] Found ${pages.length} pages in source`);
 
   // Build the URL map for validation
+  // For catch-all routes [[...slug]], value should be string[] directly
   const populate: Record<
     string,
-    Array<{ value: { slug: string[] }; hashes: string[] }>
+    Array<{ value: string[]; hashes: string[] }>
   > = {
     "[[...slug]]": pages.map((page) => ({
-      value: { slug: page.slugs },
+      value: page.slugs,
       hashes: [], // Skip heading validation for now
     })),
   };
