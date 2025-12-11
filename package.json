@@ -31,7 +31,7 @@
     "@settlemint/sdk-portal": "2.6.4",
     "@settlemint/sdk-thegraph": "2.6.4",
     "@settlemint/sdk-viem": "2.6.4",
-    "ai": "5.0.109",
+    "ai": "5.0.110",
     "class-variance-authority": "0.7.1",
     "fumadocs-core": "16.2.4",
     "fumadocs-mdx": "13.0.8",
