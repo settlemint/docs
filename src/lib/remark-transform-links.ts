@@ -17,13 +17,14 @@ const SECTION_LINK_RULES: Record<
 > = {
   // ATK content uses /docs/... links which should become /asset-tokenization-kit/...
   // Note: basePath (/documentation) is added automatically by Next.js at runtime
+  // Patterns use (\/|$) to match both /docs/ and /docs (without trailing slash)
   "asset-tokenization-kit": [
     {
-      pattern: /^\/docs\//,
+      pattern: /^\/docs(\/|$)/,
       replacement: "/asset-tokenization-kit/",
     },
     {
-      pattern: /^\/api\//,
+      pattern: /^\/api(\/|$)/,
       replacement: "/asset-tokenization-kit/api/",
     },
   ],
@@ -31,7 +32,7 @@ const SECTION_LINK_RULES: Record<
   // Blockchain platform content may use various patterns
   "blockchain-platform": [
     {
-      pattern: /^\/docs\//,
+      pattern: /^\/docs(\/|$)/,
       replacement: "/blockchain-platform/",
     },
   ],
@@ -39,7 +40,7 @@ const SECTION_LINK_RULES: Record<
   // SDK content
   sdk: [
     {
-      pattern: /^\/docs\//,
+      pattern: /^\/docs(\/|$)/,
       replacement: "/sdk/",
     },
   ],
@@ -47,7 +48,7 @@ const SECTION_LINK_RULES: Record<
   // Legacy ATK content
   "asset-tokenization-kit-legacy": [
     {
-      pattern: /^\/docs\//,
+      pattern: /^\/docs(\/|$)/,
       replacement: "/asset-tokenization-kit-legacy/",
     },
   ],
@@ -88,8 +89,19 @@ function shouldSkipUrl(url: string): boolean {
     return true;
   }
 
+  // Skip protocol-relative URLs (e.g., //cdn.example.com/path)
+  if (url.startsWith("//")) {
+    return true;
+  }
+
   // Skip anchor-only links
   if (url.startsWith("#")) {
+    return true;
+  }
+
+  // Skip URLs that already have the basePath prefix
+  // This prevents double-prefixing if migrate-links.ts has been run
+  if (url.startsWith("/documentation/")) {
     return true;
   }
 
@@ -168,12 +180,8 @@ function transformUrl(
   // Fall back: for other root-relative links, add section prefix if within a section
   // Note: basePath (/documentation) is added automatically by Next.js at runtime
   if (url.startsWith("/")) {
-    const knownSections = [
-      "asset-tokenization-kit",
-      "blockchain-platform",
-      "sdk",
-      "asset-tokenization-kit-legacy",
-    ];
+    // Derive known sections from SECTION_LINK_RULES to avoid duplication
+    const knownSections = Object.keys(SECTION_LINK_RULES);
 
     const startsWithSection = knownSections.some(
       (s) => url.startsWith(`/${s}/`) || url === `/${s}`

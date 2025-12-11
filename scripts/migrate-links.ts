@@ -10,26 +10,34 @@ const DRY_RUN = process.argv.includes("--dry-run");
  * This script finds all root-relative links that don't already have
  * the /documentation/ prefix and adds it.
  *
+ * IMPORTANT: This script is designed for one-time migration of legacy content.
+ * The remark-transform-links plugin handles link transformation at build time,
+ * so this script should NOT be run on content that will be processed by that plugin.
+ * Running both would result in double-prefixed links.
+ *
  * Usage:
  *   bun scripts/migrate-links.ts          # Apply changes
  *   bun scripts/migrate-links.ts --dry-run # Preview changes without writing
  */
 
+// Type for replacement functions that match String.replace callback signature
+type ReplaceFn = (substring: string, ...args: string[]) => string;
+
 // Patterns to transform (root-relative without basePath)
 // These patterns match links that start with / but NOT /documentation/, /images/, /api/, etc.
-const LINK_PATTERNS = [
+const LINK_PATTERNS: Array<{ regex: RegExp; replace: ReplaceFn }> = [
   // Markdown links: [text](/path) - but not [text](/documentation/...) or [text](/images/...) etc.
   {
     regex:
       /(\[[^\]]+\]\()\/(?!documentation\/|images\/|api\/|ingest\/|_next\/)([^)]+\))/g,
-    replace: (match: string, prefix: string, path: string) =>
+    replace: (_match: string, prefix: string, path: string) =>
       `${prefix}${BASE_PATH}/${path}`,
   },
   // JSX href in Card/other components: href="/path" - but not href="/documentation/..." etc.
   {
     regex:
       /href="\/(?!documentation\/|images\/|api\/|ingest\/|_next\/)([^"]+)"/g,
-    replace: (match: string, path: string) => `href="${BASE_PATH}/${path}"`,
+    replace: (_match: string, path: string) => `href="${BASE_PATH}/${path}"`,
   },
 ];
 
@@ -54,7 +62,7 @@ async function migrateLinks() {
       const matches = [...newContent.matchAll(pattern.regex)];
       fileChanges += matches.length;
 
-      newContent = newContent.replace(pattern.regex, pattern.replace as never);
+      newContent = newContent.replace(pattern.regex, pattern.replace);
     }
 
     if (fileChanges > 0) {

@@ -38,7 +38,6 @@
     "fumadocs-mdx": "13.0.8",
     "fumadocs-typescript": "4.0.14",
     "fumadocs-ui": "16.2.4",
-    "glob": "13.0.0",
     "hast-util-to-jsx-runtime": "2.3.6",
     "lucide-react": "0.559.0",
     "mermaid": "11.12.2",
@@ -56,6 +55,7 @@
     "zod": "4.1.13"
   },
   "devDependencies": {
+    "glob": "13.0.0",
     "@tailwindcss/postcss": "4.1.17",
     "@types/mdx": "2.0.13",
     "@types/node": "25.0.0",
