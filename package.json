@@ -41,7 +41,7 @@
     "hast-util-to-jsx-runtime": "2.3.6",
     "lucide-react": "0.559.0",
     "mermaid": "11.12.2",
-    "next": "16.0.9",
+    "next": "16.0.10",
     "next-validate-link": "1.6.3",
     "posthog-js": "1.304.0",
     "react": "19.2.1",
