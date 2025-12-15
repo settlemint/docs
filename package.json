@@ -43,7 +43,7 @@
     "mermaid": "11.12.2",
     "next": "16.0.10",
     "next-validate-link": "1.6.3",
-    "posthog-js": "1.306.1",
+    "posthog-js": "1.306.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-medium-image-zoom": "5.4.0",
